@@ -23,8 +23,8 @@ export const env = createEnv({
     // AIRTABLE_TOKEN: z.string().min(1),
     // AIRTABLE_BASE_ID: z.string().min(1),
     // AIRTABLE_TABLE_ID: z.string().min(1),
-    // SCREENSHOTONE_ACCESS_KEY: z.string().min(1),
-    // SCREENSHOTONE_SECRET_KEY: z.string().min(1),
+    SCREENSHOTONE_ACCESS_KEY: z.string().min(1),
+    SCREENSHOTONE_SECRET_KEY: z.string().min(1),
   },
 
   /**

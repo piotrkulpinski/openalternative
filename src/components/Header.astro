@@ -1,0 +1,24 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import Container from "~/components/Container.astro"
+import { config } from "~/config"
+import { listVariants } from "~/styles"
+
+type Props = HTMLAttributes<"div"> & {}
+
+const { class: className, ...props } = Astro.props
+---
+
+<nav class:list={["w-full py-3", className]} {...props}>
+  <Container class="flex min-w-0 items-center gap-3">
+    <h1 class="font-semibold text-lg">
+      <a href="/">{config.title}</a>
+    </h1>
+
+    <div class:list={["ml-auto text-gray-600 text-sm", listVariants({ size: "lg" })]}>
+      <a href="/alternatives" class="hover:text-black"> Alternatives</a>
+      <a href="/submit" class="hover:text-black"> Submit</a>
+      <a href="/submit" class="hover:text-black"> Sign In</a>
+    </div>
+  </Container>
+</nav>

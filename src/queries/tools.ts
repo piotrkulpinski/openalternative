@@ -29,6 +29,7 @@ export const getToolQuery = gql(`
     tools(slug: $slug) {
       id
       name
+      slug
       description
       website
       category {

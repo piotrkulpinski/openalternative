@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets"
 import type { GetToolsQuery } from "~/.graphql/graphql"
 import { Star } from "lucide-astro"
 import Card from "~/components/ui/Card.astro"
@@ -20,11 +21,12 @@ const { tool } = Astro.props
   {
     tool.website && (
       <div class="flex items-center justify-center p-1.5 rounded-md bg-white shadow-md shadow-gray-800/5 ring-1 ring-gray-900/5">
-        <img
+        <Image
           src={`https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${tool.website}&size=96`}
           alt=""
           width={96}
           height={96}
+          loading="eager"
           class="size-8 rounded"
         />
       </div>
@@ -36,7 +38,7 @@ const { tool } = Astro.props
       <h3 class="text-lg font-semibold">{tool.name}</h3>
 
       <span class={badgeVariants({ size: "sm" })}>
-        <Star class="size-3" />
+        <Star class="size-3 -ml-0.5 text-gray-400" />
         {getRandomNumber(0, 25000).toLocaleString()} stars
       </span>
     </div>
@@ -49,14 +51,10 @@ const { tool } = Astro.props
   {
     !!tool.category.length && (
       <div class:list={["mt-auto", listVariants({ size: "sm" })]}>
-        <span class={badgeVariants({ theme: "pink" })}>
-          {tool.category[0].name}
-        </span>
+        <span class={badgeVariants({ theme: "pink" })}>{tool.category[0].name}</span>
 
         {tool.category.length > 1 && (
-          <span class="text-gray-500 text-2xs">
-            +{tool.category.length - 1} more
-          </span>
+          <span class="text-gray-500 text-2xs">+{tool.category.length - 1} more</span>
         )}
       </div>
     )

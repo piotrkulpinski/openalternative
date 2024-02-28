@@ -1,3 +1,11 @@
-<div class="container mx-auto w-full px-5 md:px-6 lg:px-8 max-w-7xl pt-8 pb-20">
+---
+import type { HTMLAttributes } from "astro/types"
+
+type Props = HTMLAttributes<"div"> & {}
+
+const { class: className, ...props } = Astro.props
+---
+
+<div class:list={["container mx-auto w-full px-5 md:px-6 lg:px-8 max-w-5xl", className]} {...props}>
   <slot />
 </div>

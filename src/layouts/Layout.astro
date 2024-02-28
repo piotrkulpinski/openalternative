@@ -1,6 +1,10 @@
 ---
 import { ViewTransitions } from "astro:transitions"
 import Container from "~/components/Container.astro"
+import Header from "~/components/Header.astro"
+import Footer from "~/components/Footer.astro"
+
+import "@fontsource-variable/inter"
 
 interface Props {
   title: string
@@ -22,9 +26,35 @@ const { title } = Astro.props
     <ViewTransitions />
   </head>
 
-  <body class="bg-zinc-50">
+  <body class="flex flex-col gap-20 min-h-screen bg-zinc-50">
+    <Header />
+
     <Container>
       <slot />
     </Container>
+
+    <Footer />
+
+    <style is:global>
+      :root {
+        --headline-font-features: "case", "ss01", "ss03", "cv01", "cv06", "cv10";
+        --body-font-features: "case", "ss01", "ss03";
+      }
+
+      body {
+        font-feature-settings: var(--body-font-features);
+        text-rendering: optimizeLegibility !important;
+        -webkit-font-smoothing: antialiased !important;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-feature-settings: var(--heading-font-features);
+      }
+    </style>
   </body>
 </html>

@@ -1,4 +1,8 @@
-/** @type {import('tailwindcss').Config} */
+import type { Config } from "tailwindcss"
+import colors from "tailwindcss/colors"
+import defaultTheme from "tailwindcss/defaultTheme"
+import plugin from "tailwindcss/plugin"
+
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
 
@@ -26,7 +30,26 @@ export default {
       6: "0.06em",
     },
 
-    extend: {},
+    extend: {
+      colors: {
+        gray: colors.zinc,
+      },
+
+      fontFamily: {
+        sans: ["Inter Variable", ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
-  plugins: [],
-}
+
+  plugins: [
+    require("@tailwindcss/typography"),
+    plugin(({ addComponents }) => {
+      addComponents({
+        "a, button": {
+          transition: "all 0.15s ease-out",
+          cursor: "pointer",
+        },
+      })
+    }),
+  ],
+} satisfies Config

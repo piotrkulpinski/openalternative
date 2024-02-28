@@ -1,20 +1,24 @@
 ---
-import { Plus } from "lucide-astro"
-import { listVariants } from "~/styles"
+import { Mail, Plus } from "lucide-astro"
+import { buttonVariants, listVariants } from "~/styles"
 ---
 
 <div class="flex flex-col items-start gap-3">
-  <div class="text-gray-600">
-    <p>
-      Discover <strong>open source alternatives</strong> to popular software. We’ve
-      curated 200+ open source alternatives to tools that businesses require in day-to-day
-      operations.
+  <div class="prose prose-zinc text-gray-600 leading-relaxed">
+    <p class="lead">
+      Discover <strong>open source alternatives</strong> to popular software.<br />We’ve curated
+      200+ open source alternatives to tools that businesses require in day-to-day operations.
     </p>
   </div>
 
   <div class:list={["mt-4", listVariants()]}>
-    <a href="/submit" class=""><Plus /> Submit your tool</a>
-    <button class="" id="subscribe">Subscribe</button>
+    <a href="/submit" class={buttonVariants({ theme: "primary" })}>
+      <Plus class="size-4" /> Submit your tool
+    </a>
+
+    <button id="subscribe" class={buttonVariants({ theme: "secondary" })}>
+      <Mail class="size-4" /> Subscribe
+    </button>
   </div>
 </div>
 
