@@ -9,12 +9,12 @@ export const env = createEnv({
   server: {
     GRAPHQL_ENDPOINT: z.string().url().min(1),
     GRAPHQL_TOKEN: z.string().min(1),
-    GITHUB_TOKEN: z.string().min(1),
-    AIRTABLE_TOKEN: z.string().min(1),
-    AIRTABLE_BASE_ID: z.string().min(1),
-    AIRTABLE_TABLE_ID: z.string().min(1),
-    SCREENSHOTONE_ACCESS_KEY: z.string().min(1),
-    SCREENSHOTONE_SECRET_KEY: z.string().min(1),
+    // GITHUB_TOKEN: z.string().min(1),
+    // AIRTABLE_TOKEN: z.string().min(1),
+    // AIRTABLE_BASE_ID: z.string().min(1),
+    // AIRTABLE_TABLE_ID: z.string().min(1),
+    // SCREENSHOTONE_ACCESS_KEY: z.string().min(1),
+    // SCREENSHOTONE_SECRET_KEY: z.string().min(1),
   },
 
   /**
