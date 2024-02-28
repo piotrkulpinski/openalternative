@@ -1,0 +1,64 @@
+---
+import type { GetToolsQuery } from "~/.graphql/graphql"
+import { Star } from "lucide-astro"
+import Card from "~/components/ui/Card.astro"
+import type { RemoveNull } from "~/env"
+import { getRandomNumber } from "@curiousleaf/utils"
+import { badgeVariants, listVariants } from "~/styles"
+
+type Props = {
+  tool: Pick<
+    NonNullable<RemoveNull<GetToolsQuery["tools"]>>[number],
+    "id" | "slug" | "website" | "name" | "description" | "category"
+  >
+}
+
+const { tool } = Astro.props
+---
+
+<Card href={`/tools/${tool.slug}`}>
+  {
+    tool.website && (
+      <div class="flex items-center justify-center p-1.5 rounded-md bg-white shadow-md shadow-gray-800/5 ring-1 ring-gray-900/5">
+        <img
+          src={`https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${tool.website}&size=96`}
+          alt=""
+          width={96}
+          height={96}
+          class="size-8 rounded"
+        />
+      </div>
+    )
+  }
+
+  <div class={listVariants({ direction: "column" })}>
+    <div class={listVariants()}>
+      <h3 class="text-lg font-semibold">{tool.name}</h3>
+
+      <span class={badgeVariants({ size: "sm" })}>
+        <Star class="size-3" />
+        {getRandomNumber(0, 25000).toLocaleString()} stars
+      </span>
+    </div>
+
+    <p class="text-gray-600 text-sm line-clamp-2">
+      {tool.description}
+    </p>
+  </div>
+
+  {
+    !!tool.category.length && (
+      <div class:list={["mt-auto", listVariants({ size: "sm" })]}>
+        <span class={badgeVariants({ theme: "pink" })}>
+          {tool.category[0].name}
+        </span>
+
+        {tool.category.length > 1 && (
+          <span class="text-gray-500 text-2xs">
+            +{tool.category.length - 1} more
+          </span>
+        )}
+      </div>
+    )
+  }
+</Card>

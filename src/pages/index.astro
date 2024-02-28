@@ -1,8 +1,10 @@
 ---
 import Layout from "~/layouts/Layout.astro"
+import ToolCard from "~/components/tools/ToolCard.astro"
 import { client } from "~/services/apollo"
 import { getToolsQuery } from "~/queries/tools"
 import type { RemoveNull } from "~/env"
+import Grid from "~/components/Grid.astro"
 
 const { data } = await client.query({
   query: getToolsQuery,
@@ -20,8 +22,8 @@ const tools = data.tools as RemoveNull<typeof data.tools>
       <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
     </p>
 
-    <div class="flex flex-col gap-2">
-      {tools?.map((tool) => <a href={`/tools/${tool.slug}`}>{tool.name}</a>)}
-    </div>
+    <Grid>
+      {tools?.map((tool) => <ToolCard tool={tool} />)}
+    </Grid>
   </main>
 </Layout>

@@ -1,0 +1,20 @@
+---
+import Pattern from "~/components/pattern/Pattern.astro"
+
+type Props = {
+  href: string
+}
+
+const { href } = Astro.props
+---
+
+<a
+  href={href}
+  class="group relative flex p-6 bg-white border rounded-md shadow-sm overflow-clip hover:bg-zinc-50"
+>
+  <div class="relative z-10 flex flex-col items-start gap-4 grow">
+    <slot />
+  </div>
+
+  <Pattern width={74} height={56} x="50%" y="-6" squares={[[0, 1]]} />
+</a>
