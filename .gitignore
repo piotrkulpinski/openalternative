@@ -20,6 +20,10 @@ pnpm-debug.log*
 .env.test.local
 .env.production.local
 
+# Wrangler
+.wrangler
+.dev.vars
+
 # GraphQL
 .graphql
 

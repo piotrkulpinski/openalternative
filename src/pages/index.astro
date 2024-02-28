@@ -5,6 +5,8 @@ import { client } from "~/services/apollo"
 import { getToolsQuery } from "~/queries/tools"
 import type { RemoveNull } from "~/env"
 import Grid from "~/components/Grid.astro"
+import Intro from "~/components/Intro.astro"
+import Filters from "~/components/Filters.astro"
 
 const { data } = await client.query({
   query: getToolsQuery,
@@ -14,16 +16,15 @@ const tools = data.tools as RemoveNull<typeof data.tools>
 ---
 
 <Layout title="Open Source Alternatives">
-  <main class="m-4">
-    <h1>Welcome to <span class="text-gradient">Astro</span></h1>
-    <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.<br
-      />
-      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-    </p>
+  <main class="flex flex-col gap-12">
+    <Intro />
 
-    <Grid>
-      {tools?.map((tool) => <ToolCard tool={tool} />)}
-    </Grid>
+    <div class="flex items-start gap-6">
+      <Filters />
+
+      <Grid>
+        {tools?.map((tool) => <ToolCard tool={tool} />)}
+      </Grid>
+    </div>
   </main>
 </Layout>

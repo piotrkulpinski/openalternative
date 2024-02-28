@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
-    "preview": "astro preview",
+    "preview": "wrangler pages dev ./dist",
     "astro": "astro",
     "codegen:compile": "graphql-codegen",
     "codegen:watch": "graphql-codegen -w",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@apollo/client": "^3.9.2",
     "@astrojs/check": "^0.5.6",
+    "@astrojs/cloudflare": "^9.0.2",
     "@astrojs/tailwind": "^5.1.0",
     "@biomejs/biome": "^1",
     "@curiousleaf/utils": "^1.0.16",

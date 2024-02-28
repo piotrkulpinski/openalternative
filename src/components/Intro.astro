@@ -1,0 +1,29 @@
+---
+import { Plus } from "lucide-astro"
+import { listVariants } from "~/styles"
+---
+
+<div class="flex flex-col items-start gap-3">
+  <div class="text-gray-600">
+    <p>
+      Discover <strong>open source alternatives</strong> to popular software. We’ve
+      curated 200+ open source alternatives to tools that businesses require in day-to-day
+      operations.
+    </p>
+  </div>
+
+  <div class:list={["mt-4", listVariants()]}>
+    <a href="/submit" class=""><Plus /> Submit your tool</a>
+    <button class="" id="subscribe">Subscribe</button>
+  </div>
+</div>
+
+<script>
+  // Find all buttons with the `alert` class on the page.
+  const button = document.getElementById("subscribe")
+
+  // Handle clicks on the button.
+  button?.addEventListener("click", () => {
+    alert("Button was clicked!")
+  })
+</script>
