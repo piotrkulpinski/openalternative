@@ -1,7 +1,41 @@
 ---
 import Container from "~/components/Container.astro"
+import Pattern from "~/components/pattern/Pattern.astro"
+import { config } from "~/config"
+import { listVariants } from "~/styles"
+
+const alternatives = [
+  { name: "Notion", slug: "notion" },
+  { name: "Salesforce", slug: "salesforce" },
+  { name: "HubSpot", slug: "hubspot" },
+  { name: "Typeform", slug: "typeform" },
+  { name: "Calendly", slug: "calendly" },
+]
 ---
 
-<div class="bg-white border-t mt-auto pt-8 pb-20">
-  <Container>cze</Container>
+<div class="relative bg-white border-t mt-auto pt-8 pb-20 overflow-hidden">
+  <Container class="relative z-10 flex justify-between gap-6 md:gap-8">
+    <div class="">{config.title}</div>
+
+    <div class:list={[" text-sm", listVariants({ direction: "column" })]}>
+      <h4 class="mb-2 font-semibold">Explore</h4>
+      <a href="/alternatives" class="text-gray-600 hover:text-black">Alternatives</a>
+      <a href="/categories" class="text-gray-600 hover:text-black">Categories</a>
+      <a href="/technologies" class="text-gray-600 hover:text-black">Technologies</a>
+      <a href="/languages" class="text-gray-600 hover:text-black">Languages</a>
+    </div>
+
+    <div class:list={["text-sm", listVariants({ direction: "column" })]}>
+      <h4 class="mb-2 font-semibold">Big Tech Alternatives</h4>
+      {
+        alternatives.map((alternative) => (
+          <a href={`/alternative-to/${alternative.slug}`} class="text-gray-600 hover:text-black">
+            {alternative.name} Alternatives
+          </a>
+        ))
+      }
+    </div>
+  </Container>
+
+  <Pattern width={124} height={86} x="50%" y="-50%" />
 </div>

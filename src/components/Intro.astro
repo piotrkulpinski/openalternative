@@ -1,25 +1,30 @@
 ---
+import type { HTMLAttributes } from "astro/types"
 import { Mail, Plus } from "lucide-astro"
 import { buttonVariants, listVariants } from "~/styles"
+
+type Props = HTMLAttributes<"div"> & {
+  title?: string
+  description?: string
+}
+
+const { title, description, ...props } = Astro.props
 ---
 
 <div class="flex flex-col items-start gap-3">
+  {title && <h1 class="text-2xl font-bold text-gray-900">{title}</h1>}
+
   <div class="prose prose-zinc text-gray-600 leading-relaxed">
-    <p class="lead">
-      Discover <strong>open source alternatives</strong> to popular software.<br />We’ve curated
-      200+ open source alternatives to tools that businesses require in day-to-day operations.
-    </p>
+    <slot name="description" />
   </div>
 
-  <div class:list={["mt-4", listVariants()]}>
-    <a href="/submit" class={buttonVariants({ theme: "primary" })}>
-      <Plus class="size-4" /> Submit your tool
-    </a>
-
-    <button id="subscribe" class={buttonVariants({ theme: "secondary" })}>
-      <Mail class="size-4" /> Subscribe
-    </button>
-  </div>
+  {
+    Astro.slots.has("default") && (
+      <div class:list={["mt-4", listVariants()]}>
+        <slot />
+      </div>
+    )
+  }
 </div>
 
 <script>

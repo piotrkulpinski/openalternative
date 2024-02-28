@@ -6,7 +6,7 @@ type Props = HTMLAttributes<"div"> & {
   height: number
   x: string | number
   y: string | number
-  squares: Array<[x: number, y: number]>
+  squares?: Array<[x: number, y: number]>
 }
 
 const { class: className, width, height, x, y, squares, ...rest } = Astro.props
@@ -21,7 +21,7 @@ const { class: className, width, height, x, y, squares, ...rest } = Astro.props
 >
   <svg
     aria-hidden="true"
-    class="absolute inset-x-0 inset-y-[-30%] h-[160%] w-full skew-y-[-15deg] fill-black/[0.02] stroke-black/5"
+    class="absolute inset-x-0 inset-y-[-30%] h-[160%] w-full skew-y-[-10deg] fill-black/[0.02] stroke-black/5"
   >
     <defs>
       <pattern id="pattern" width={width} height={height} patternUnits="userSpaceOnUse" x={x} y={y}>

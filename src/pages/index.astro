@@ -7,6 +7,8 @@ import type { RemoveNull } from "~/env"
 import Grid from "~/components/Grid.astro"
 import Intro from "~/components/Intro.astro"
 import Filters from "~/components/Filters.astro"
+import { Mail, Plus } from "lucide-astro"
+import { buttonVariants } from "~/styles"
 
 const { data } = await client.query({
   query: getToolsQuery,
@@ -17,7 +19,20 @@ const tools = data.tools as RemoveNull<typeof data.tools>
 
 <Layout title="Open Source Alternatives">
   <main class="flex flex-col gap-12">
-    <Intro />
+    <Intro>
+      <p class="lead" slot="description">
+        Discover <strong>open source alternatives</strong> to popular software.<br />We’ve curated
+        200+ open source alternatives to tools that businesses require in day-to-day operations.
+      </p>
+
+      <a href="/submit" class={buttonVariants({ theme: "primary" })}>
+        <Plus class="size-4" /> Submit your tool
+      </a>
+
+      <button id="subscribe" class={buttonVariants({ theme: "secondary" })}>
+        <Mail class="size-4" /> Subscribe
+      </button>
+    </Intro>
 
     <div class="flex items-start gap-6">
       <!-- <Filters /> -->

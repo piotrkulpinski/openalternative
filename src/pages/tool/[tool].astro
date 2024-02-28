@@ -7,7 +7,7 @@ import { getScreenshotUrl } from "~/services/screenshotone"
 import { response } from "~/utils/response"
 import Pattern from "~/components/pattern/Pattern.astro"
 import Favicon from "~/components/Favicon.astro"
-import { badgeVariants, listVariants } from "~/styles"
+import { badgeVariants, buttonVariants, listVariants } from "~/styles"
 
 export const getStaticPaths = async () => {
   const { data } = await client.query({
@@ -47,7 +47,7 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
 
       {
         !!tool.category?.length && (
-          <div class:list={["mt-auto", listVariants()]}>
+          <div class:list={[listVariants()]}>
             {tool.category.map((category) => (
               <a
                 href={`/category/${category?.slug}`}
@@ -59,11 +59,32 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
           </div>
         )
       }
+
+      <div class:list={["mt-auto", listVariants({ size: "lg" })]}>
+        {
+          tool.website && (
+            <a href={tool.website} class={buttonVariants({ theme: "primary" })} target="_blank">
+              Visit Website
+            </a>
+          )
+        }
+        {
+          tool.repository && (
+            <a
+              href={tool.repository}
+              class={buttonVariants({ theme: "secondary" })}
+              target="_blank"
+            >
+              Repository
+            </a>
+          )
+        }
+      </div>
     </div>
 
     {
       imageUrl && (
-        <div class="relative z-10 basis-1/2">
+        <div class="relative z-10 basis-1/2 flex items-center justify-center p-1.5 rounded-md bg-white shadow-lg shadow-gray-800/5 ring-1 ring-gray-900/5">
           <Image src={imageUrl} alt="" width={1280} height={1024} loading="eager" class="rounded" />
         </div>
       )
