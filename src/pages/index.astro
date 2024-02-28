@@ -1,0 +1,28 @@
+---
+import Layout from "~/layouts/Layout.astro"
+import Card from "~/components/Card.astro"
+import { client } from "~/services/apollo"
+import { getToolsQuery } from "~/queries/tools"
+import type { RemoveNull } from "~/env"
+
+const { data } = await client.query({
+  query: getToolsQuery,
+})
+
+const tools = data.tools as RemoveNull<typeof data.tools>
+---
+
+<Layout title="Welcome to Astro.">
+  <main class="m-4">
+    <h1>Welcome to <span class="text-gradient">Astro</span></h1>
+    <p class="instructions">
+      To get started, open the directory <code>src/pages</code> in your project.<br
+      />
+      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
+    </p>
+
+    <div class="flex flex-col gap-2">
+      {tools?.map((tool) => <strong>{tool.name}</strong>)}
+    </div>
+  </main>
+</Layout>
