@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets"
+import type { HTMLAttributes } from "astro/types"
+
+type Props = HTMLAttributes<"div"> & {
+  url: string
+}
+
+const { class: className, url, ...props } = Astro.props
+---
+
+<div
+  class:list={[
+    "flex items-center justify-center p-1.5 rounded-md bg-white shadow-md shadow-gray-800/5 ring-1 ring-gray-900/5",
+    className,
+  ]}
+  {...props}
+>
+  <Image
+    src={`https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=96`}
+    alt=""
+    width={96}
+    height={96}
+    loading="eager"
+    class="size-8 rounded"
+  />
+</div>

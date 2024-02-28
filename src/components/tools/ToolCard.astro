@@ -1,11 +1,11 @@
 ---
-import { Image } from "astro:assets"
 import type { GetToolsQuery } from "~/.graphql/graphql"
 import { Star } from "lucide-astro"
 import Card from "~/components/ui/Card.astro"
 import type { RemoveNull } from "~/env"
 import { getRandomNumber } from "@curiousleaf/utils"
 import { badgeVariants, listVariants } from "~/styles"
+import Favicon from "~/components/Favicon.astro"
 
 type Props = {
   tool: Pick<
@@ -17,21 +17,8 @@ type Props = {
 const { tool } = Astro.props
 ---
 
-<Card href={`/tools/${tool.slug}`}>
-  {
-    tool.website && (
-      <div class="flex items-center justify-center p-1.5 rounded-md bg-white shadow-md shadow-gray-800/5 ring-1 ring-gray-900/5">
-        <Image
-          src={`https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${tool.website}&size=96`}
-          alt=""
-          width={96}
-          height={96}
-          loading="eager"
-          class="size-8 rounded"
-        />
-      </div>
-    )
-  }
+<Card href={`/tool/${tool.slug}`}>
+  {tool.website && <Favicon url={tool.website} />}
 
   <div class={listVariants({ direction: "column" })}>
     <div class={listVariants()}>

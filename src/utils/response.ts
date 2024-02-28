@@ -1,4 +1,4 @@
-export const status = async (status: number, url: string) => {
+export const response = async (status: number, url: string) => {
   const res = await fetch(url)
 
   return new Response(res.body, {
