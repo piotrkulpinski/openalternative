@@ -1,6 +1,5 @@
 ---
 import Layout from "~/layouts/Layout.astro"
-import Card from "~/components/Card.astro"
 import { client } from "~/services/apollo"
 import { getToolsQuery } from "~/queries/tools"
 import type { RemoveNull } from "~/env"
@@ -12,7 +11,7 @@ const { data } = await client.query({
 const tools = data.tools as RemoveNull<typeof data.tools>
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Open Source Alternatives">
   <main class="m-4">
     <h1>Welcome to <span class="text-gradient">Astro</span></h1>
     <p class="instructions">
@@ -22,7 +21,7 @@ const tools = data.tools as RemoveNull<typeof data.tools>
     </p>
 
     <div class="flex flex-col gap-2">
-      {tools?.map((tool) => <strong>{tool.name}</strong>)}
+      {tools?.map((tool) => <a href={`/tools/${tool.slug}`}>{tool.name}</a>)}
     </div>
   </main>
 </Layout>

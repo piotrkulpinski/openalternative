@@ -1,0 +1,19 @@
+---
+import { client } from "~/services/apollo"
+import { getToolsSlugsQuery } from "~/queries/tools"
+import Layout from "~/layouts/Layout.astro"
+
+export const getStaticPaths = async () => {
+  const { data } = await client.query({
+    query: getToolsSlugsQuery,
+  })
+
+  return data.tools?.map((tool) => ({ params: { tool: tool?.slug } })) ?? []
+}
+
+const { tool } = Astro.params
+---
+
+<Layout title="Open Source Alternatives">
+  <div>Good tool, {tool}!</div>
+</Layout>

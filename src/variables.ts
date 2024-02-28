@@ -2,6 +2,16 @@ import { createEnv } from "@t3-oss/env-core"
 import { z } from "zod"
 
 export const env = createEnv({
+  // https://docs.astro.build/pl/guides/environment-variables/#default-environment-variables
+  shared: {
+    MODE: z.enum(["development", "production"]).nullish(),
+    PROD: z.boolean().nullish(),
+    DEV: z.boolean().nullish(),
+    BASE_URL: z.string().nullish(),
+    SITE: z.string().url().nullish(),
+    ASSETS_PREFIX: z.string().nullish(),
+  },
+
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app isn't
    * built with invalid env vars.
@@ -56,6 +66,3 @@ export const env = createEnv({
    */
   emptyStringAsUndefined: true,
 })
-
-export const isDev = process.env.NODE_ENV === "development"
-export const isProd = process.env.NODE_ENV === "production"
