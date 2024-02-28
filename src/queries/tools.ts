@@ -8,7 +8,6 @@ export const getToolsQuery = gql(`
       slug
       description
       website
-      repository
       category {
         id
         name
@@ -33,6 +32,7 @@ export const getToolQuery = gql(`
       slug
       description
       website
+      repository
       category {
         id
         name
