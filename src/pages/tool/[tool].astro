@@ -30,7 +30,7 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
 
 <Layout title="Open Source Alternatives">
   <div
-    class="relative flex gap-6 p-6 bg-white border rounded-lg shadow overflow-clip md:p-8 md:gap-8"
+    class="relative flex flex-col gap-6 p-6 bg-white border rounded-lg shadow overflow-clip md:p-8 md:gap-8 md:flex-row"
     transition:name={`tool ${tool.id} box`}
   >
     <div class="relative z-10 flex flex-col gap-4 grow">
@@ -42,7 +42,7 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
         </h1>
       </div>
 
-      <div class="prose prose-zinc prose-xl text-gray-600 leading-relaxed max-w-sm">
+      <div class="prose prose-zinc prose-lg text-gray-600 !leading-relaxed md:max-w-sm md:prose-xl">
         <p transition:name={`tool ${tool.id} description`}>{tool.description}</p>
       </div>
 
@@ -93,7 +93,7 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
 
     {
       imageUrl && (
-        <div class="relative z-10 basis-1/2 flex items-center justify-center p-1.5 rounded-md bg-white shadow-lg shadow-gray-800/5 ring-1 ring-gray-900/5">
+        <div class="relative z-10 basis-1/2 self-start flex items-center justify-center p-1.5 rounded-md bg-white shadow-lg shadow-gray-800/5 ring-1 ring-gray-900/5">
           <Image
             src={imageUrl}
             alt=""

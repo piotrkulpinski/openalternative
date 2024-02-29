@@ -13,9 +13,9 @@ const alternatives = [
 ]
 ---
 
-<div class="relative bg-white border-t border-gray-200/60 mt-auto pt-8 pb-12 overflow-hidden">
-  <Container class="relative z-10 flex justify-between gap-6 md:gap-8">
-    <div class:list={["w-1/2", listVariants({ direction: "column", size: "lg" })]}>
+<div class="relative bg-white border-t border-gray-200/60 mt-auto py-8 overflow-hidden">
+  <Container class="relative z-10 flex flex-col justify-between gap-8 sm:flex-row md:gap-10">
+    <div class:list={["flex-1 md:w-1/2", listVariants({ direction: "column", size: "lg" })]}>
       <Logo />
 
       <div class="prose prose-sm leading-normal">
