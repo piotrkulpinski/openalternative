@@ -1,6 +1,6 @@
 export const config = {
   title: "OpenAlternative",
-  tagline: "The easiest way to collect anything online",
+  tagline: "Discover open source alternatives to popular software",
   description:
-    "Putting together a directory website was time consuming. InputNest lets you focus on the content and makes the entire process effortless.",
+    "OpenAlternative is a platform that helps you find open source alternatives to popular software. We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations.",
 }

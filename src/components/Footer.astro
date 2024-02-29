@@ -35,7 +35,7 @@ const alternatives = [
           href="https://github.com/piotrkulpinski/openalternative"
           class="text-gray-600 hover:text-black"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer nofollow"
         >
           Source Code
         </a>
@@ -43,15 +43,15 @@ const alternatives = [
     </div>
 
     <div class:list={[" text-sm", listVariants({ direction: "column" })]}>
-      <h4 class="mb-2 font-semibold">Explore</h4>
+      <strong class="mb-2 font-semibold">Explore</strong>
       <a href="/alternatives" class="text-gray-600 hover:text-black">Alternatives</a>
       <a href="/categories" class="text-gray-600 hover:text-black">Categories</a>
-      <a href="/technologies" class="text-gray-600 hover:text-black">Technologies</a>
-      <a href="/languages" class="text-gray-600 hover:text-black">Languages</a>
+      <!-- <a href="/technologies" class="text-gray-600 hover:text-black">Technologies</a>
+      <a href="/languages" class="text-gray-600 hover:text-black">Languages</a> -->
     </div>
 
     <div class:list={["text-sm", listVariants({ direction: "column" })]}>
-      <h4 class="mb-2 font-semibold">Big Tech Alternatives</h4>
+      <strong class="mb-2 font-semibold">Big Tech Alternatives</strong>
       {
         alternatives.map((alternative) => (
           <a href={`/alternatives-to/${alternative.slug}`} class="text-gray-600 hover:text-black">

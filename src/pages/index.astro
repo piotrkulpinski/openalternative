@@ -15,7 +15,7 @@ const { data } = await client.query({
 })
 
 const tools = data.tools as RemoveNull<typeof data.tools>
-const title = config.title
+const title = `${config.tagline} – ${config.title}`
 
 // <a href="/submit" class={buttonVariants({ theme: "primary" })}>
 //   <Plus class="size-4" /> Submit your tool
@@ -30,13 +30,13 @@ const title = config.title
   <Intro>
     <h2 class="font-normal text-[21px] leading-normal text-gray-600" slot="description">
       Discover <strong class="text-black font-semibold">open source alternatives</strong> to popular
-      software.<br />We’ve curated 200+ open source alternatives to tools that businesses require in
-      day-to-day operations.
+      software.<br />We’ve curated some great open source alternatives to tools that your business
+      requires in day-to-day operations.
     </h2>
 
-    <a href="/alternatives" class={buttonVariants({ theme: "primary" })}>
+    <a href="/categories" class={buttonVariants({ theme: "primary" })}>
       <Blocks class="size-4 text-white/75" />
-      Browse alternatives
+      Browse categories
     </a>
   </Intro>
 
