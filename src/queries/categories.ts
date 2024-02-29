@@ -1,3 +1,4 @@
+import type { GetCategoriesQuery } from "~/.graphql/graphql"
 import { gql } from "../.graphql"
 
 export const getCategoriesQuery = gql(`
@@ -22,3 +23,6 @@ export const getCategoriesQuery = gql(`
     }
   }
 `)
+
+export type Categories = NonNullable<GetCategoriesQuery["categories"]>
+export type Category = NonNullable<Categories[number]>

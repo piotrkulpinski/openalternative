@@ -1,6 +1,5 @@
 import { gql } from "~/.graphql"
 import type { GetToolsQuery } from "~/.graphql/graphql"
-import type { RemoveNull } from "~/env"
 
 export const getToolsQuery = gql(`
   query GetTools($filter: JSON) {
@@ -25,5 +24,5 @@ export const getToolsQuery = gql(`
   }
 `)
 
-export type Tools = NonNullable<RemoveNull<GetToolsQuery["tools"]>>
-export type Tool = Tools[number]
+export type Tools = NonNullable<GetToolsQuery["tools"]>
+export type Tool = NonNullable<Tools[number]>

@@ -1,3 +1,4 @@
+import type { GetAlternativesQuery } from "~/.graphql/graphql"
 import { gql } from "../.graphql"
 
 export const getAlternativesQuery = gql(`
@@ -6,23 +7,6 @@ export const getAlternativesQuery = gql(`
       id
       name
       slug
-    }
-  }
-`)
-
-export const getAlternativesSlugsQuery = gql(`
-  query GetAlternativesSlugs {
-    alternatives {
-      slug
-    }
-  }
-`)
-
-export const getAlternativeQuery = gql(`
-  query GetAlternative($slug: String!) {
-    alternatives(slug: $slug) {
-      id
-      name
       description
       website
       tools {
@@ -31,6 +15,7 @@ export const getAlternativeQuery = gql(`
         slug
         description
         website
+        repository
         category {
           id
           name
@@ -40,3 +25,6 @@ export const getAlternativeQuery = gql(`
     }
   }
 `)
+
+export type Alternatives = NonNullable<GetAlternativesQuery["alternatives"]>
+export type Alternative = NonNullable<Alternatives[number]>

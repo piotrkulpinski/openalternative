@@ -1,13 +1,9 @@
 ---
-import { Image } from "astro:assets"
 import { client } from "~/services/apollo"
 import { getCategoriesQuery } from "~/queries/categories"
 import Layout from "~/layouts/Layout.astro"
 import { response } from "~/utils/response"
-import Pattern from "~/components/Pattern.astro"
-import Favicon from "~/components/Favicon.astro"
-import { badgeVariants, listVariants } from "~/styles"
-import ToolCard from "~/components/tools/ToolCard.astro"
+import ToolCard from "~/components/cards/ToolCard.astro"
 import Intro from "~/components/Intro.astro"
 import Grid from "~/components/Grid.astro"
 import type { Tool } from "~/queries/tools"
@@ -26,12 +22,7 @@ export const getStaticPaths = async () => {
   )
 }
 
-const { category } = Astro.props
-
-if (!category) {
-  return response(404, `${Astro.url}/404`)
-}
-
+const category = Astro.props.category!
 const title = `Best Open Source ${category.name} Tools`
 ---
 
@@ -45,6 +36,7 @@ const title = `Best Open Source ${category.name} Tools`
 
     <Grid>
       {category.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+      {!category.tools?.length && <p>No tools found.</p>}
     </Grid>
   </Intro>
 </Layout>

@@ -1,15 +1,14 @@
 ---
 import Layout from "~/layouts/Layout.astro"
-import ToolCard from "~/components/tools/ToolCard.astro"
+import ToolCard from "~/components/cards/ToolCard.astro"
 import { client } from "~/services/apollo"
 import { getToolsQuery } from "~/queries/tools"
 import type { RemoveNull } from "~/env"
 import Grid from "~/components/Grid.astro"
 import Intro from "~/components/Intro.astro"
-import Filters from "~/components/Filters.astro"
-import { Mail, Plus } from "lucide-astro"
 import { buttonVariants } from "~/styles"
 import { config } from "~/config"
+import { Blocks } from "lucide-astro"
 
 const { data } = await client.query({
   query: getToolsQuery,
@@ -29,13 +28,16 @@ const title = config.title
 
 <Layout title={title}>
   <Intro>
-    <h2 class="font-normal text-[20px] leading-normal text-gray-600" slot="description">
+    <h2 class="font-normal text-[21px] leading-normal text-gray-600" slot="description">
       Discover <strong class="text-black font-semibold">open source alternatives</strong> to popular
       software.<br />We’ve curated 200+ open source alternatives to tools that businesses require in
       day-to-day operations.
     </h2>
 
-    <a href="/alternatives" class={buttonVariants({ theme: "primary" })}>Browse alternatives</a>
+    <a href="/alternatives" class={buttonVariants({ theme: "primary" })}>
+      <Blocks class="size-4 text-white/75" />
+      Browse alternatives
+    </a>
   </Intro>
 
   <Grid>

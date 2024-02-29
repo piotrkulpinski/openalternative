@@ -24,12 +24,7 @@ export const getStaticPaths = async () => {
   )
 }
 
-const { tool } = Astro.props
-
-if (!tool) {
-  return response(404, `${Astro.url}/404`)
-}
-
+const tool = Astro.props.tool!
 const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website, tool.slug) : null
 ---
 
@@ -40,7 +35,7 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
   >
     <div class="relative z-10 flex flex-col gap-4 grow">
       <div class={listVariants({ size: "lg" })}>
-        {tool.website && <Favicon url={tool.website} transition:name={`tool ${tool.id} favicon`} />}
+        <Favicon url={tool.website} transition:name={`tool ${tool.id} favicon`} />
 
         <h1 class="text-2xl font-semibold" transition:name={`tool ${tool.id} title`}>
           {tool.name}
@@ -48,7 +43,7 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
       </div>
 
       <div class="prose prose-zinc text-gray-600 leading-relaxed max-w-sm">
-        <p class="lead" transition:name={`tool ${tool.id} description`}>{tool.description}</p>
+        <p transition:name={`tool ${tool.id} description`}>{tool.description}</p>
       </div>
 
       {
@@ -69,7 +64,12 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
       <div class:list={["mt-auto", listVariants({ size: "lg" })]}>
         {
           tool.website && (
-            <a href={tool.website} class={buttonVariants({ theme: "primary" })} target="_blank">
+            <a
+              href={tool.website}
+              class={buttonVariants({ theme: "primary" })}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <ExternalLink class="size-4 text-white/70" />
               Visit Website
             </a>
@@ -81,6 +81,7 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
               href={tool.repository}
               class={buttonVariants({ theme: "secondary" })}
               target="_blank"
+              rel="noopener noreferrer nofollow"
             >
               <Github class="size-4 text-black/60" />
               Repository

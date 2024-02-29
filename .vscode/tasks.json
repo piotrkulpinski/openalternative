@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "presentation": {
+    "clear": true,
+    "echo": false,
+    "focus": true,
+    "panel": "new",
+    "reveal": "silent",
+    "showReuseMessage": true
+  },
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "dev",
+      "command": "bun dev",
+      "isBackground": true,
+      "dependsOrder": "sequence",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "type": "shell",
+      "label": "codegen",
+      "command": "bun codegen:watch",
+      "isBackground": true,
+      "dependsOrder": "sequence",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
+}

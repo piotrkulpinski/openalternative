@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets"
+import { client } from "~/services/apollo"
+import { getAlternativesQuery } from "~/queries/alternatives"
+import Layout from "~/layouts/Layout.astro"
+import { response } from "~/utils/response"
+import Pattern from "~/components/Pattern.astro"
+import Favicon from "~/components/Favicon.astro"
+import { badgeVariants, buttonVariants, listVariants } from "~/styles"
+import ToolCard from "~/components/cards/ToolCard.astro"
+import Intro from "~/components/Intro.astro"
+import Grid from "~/components/Grid.astro"
+import type { Tool } from "~/queries/tools"
+import { ExternalLink } from "lucide-astro"
+import Card from "~/components/Card.astro"
+
+// Static Paths
+export const getStaticPaths = async () => {
+  const { data } = await client.query({
+    query: getAlternativesQuery,
+  })
+
+  return (
+    data.alternatives?.map((alternative) => ({
+      params: { alternative: alternative?.slug },
+      props: { alternative },
+    })) ?? []
+  )
+}
+
+const { alternative } = Astro.props
+
+if (!alternative) {
+  return response(404, `${Astro.url}/404`)
+}
+
+const title = `Best Open Source ${alternative.name} Tools`
+---
+
+<Layout title={title}>
+  <Intro title={title}>
+    <Favicon url={alternative.website} slot="prefix" />
+
+    <p slot="description">
+      A collection of the best open source
+      {
+        alternative.website ? (
+          <a href={alternative.website} target="_blank" rel="noopener noreferrer nofollow">
+            {alternative.name}
+          </a>
+        ) : (
+          alternative.name
+        )
+      }
+      alternatives. Find the best alternatives for {alternative.name} that are open source and free to
+      use.
+    </p>
+  </Intro>
+
+  <Grid>
+    {alternative.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+    {!alternative.tools?.length && <p>No alternatives found.</p>}
+  </Grid>
+</Layout>

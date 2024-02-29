@@ -3,10 +3,12 @@ import { Image } from "astro:assets"
 import type { HTMLAttributes } from "astro/types"
 
 type Props = HTMLAttributes<"div"> & {
-  url: string
+  url: string | null
 }
 
 const { class: className, url, ...props } = Astro.props
+
+if (!url) return
 ---
 
 <div

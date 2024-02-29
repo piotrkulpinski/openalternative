@@ -4,9 +4,10 @@ import Pattern from "~/components/Pattern.astro"
 
 type Props = HTMLAttributes<"div"> & {
   href: string
+  showPattern?: boolean
 }
 
-const { class: className, href, ...props } = Astro.props
+const { class: className, href, showPattern, ...props } = Astro.props
 ---
 
 <a
@@ -21,5 +22,5 @@ const { class: className, href, ...props } = Astro.props
     <slot />
   </div>
 
-  <Pattern width={76} height={56} x="50%" y="-6" squares={[[0, 1]]} />
+  {showPattern && <Pattern width={76} height={56} x="50%" y="-6" squares={[[0, 1]]} />}
 </a>

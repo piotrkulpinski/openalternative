@@ -1,0 +1,26 @@
+---
+import Card from "~/components/Card.astro"
+import { badgeVariants, listVariants } from "~/styles"
+import Favicon from "~/components/Favicon.astro"
+import type { Alternative } from "~/queries/alternatives"
+
+type Props = {
+  alternative: Pick<Alternative, "id" | "slug" | "website" | "name" | "description">
+}
+
+const alternative = Astro.props.alternative!
+---
+
+<Card href={`/alternatives-to/${alternative.slug}`}>
+  <Favicon url={alternative.website} />
+
+  <div class={listVariants({ direction: "column" })}>
+    <h2 class="text-lg font-semibold">
+      {alternative.name}
+    </h2>
+
+    <p class="text-gray-600 text-sm line-clamp-2">
+      {alternative.description}
+    </p>
+  </div>
+</Card>
