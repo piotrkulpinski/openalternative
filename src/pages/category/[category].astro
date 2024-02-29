@@ -1,34 +1,50 @@
 ---
 import { Image } from "astro:assets"
 import { client } from "~/services/apollo"
-import { getCategoriesSlugsQuery, getCategoryQuery } from "~/queries/categories"
+import { getCategoriesQuery } from "~/queries/categories"
 import Layout from "~/layouts/Layout.astro"
-import { getScreenshotUrl } from "~/services/screenshotone"
 import { response } from "~/utils/response"
 import Pattern from "~/components/Pattern.astro"
 import Favicon from "~/components/Favicon.astro"
 import { badgeVariants, listVariants } from "~/styles"
+import ToolCard from "~/components/tools/ToolCard.astro"
+import Intro from "~/components/Intro.astro"
+import Grid from "~/components/Grid.astro"
+import type { Tool } from "~/queries/tools"
 
+// Static Paths
 export const getStaticPaths = async () => {
   const { data } = await client.query({
-    query: getCategoriesSlugsQuery,
+    query: getCategoriesQuery,
   })
 
-  return data.categories?.map((category) => ({ params: { category: category?.slug } })) ?? []
+  return (
+    data.categories?.map((category) => ({
+      params: { category: category?.slug },
+      props: { category },
+    })) ?? []
+  )
 }
 
-const { data } = await client.query({
-  query: getCategoryQuery,
-  variables: { slug: Astro.params.category! },
-})
-
-const category = data.categories![0]
+const { category } = Astro.props
 
 if (!category) {
   return response(404, `${Astro.url}/404`)
 }
+
+const title = `Best Open Source ${category.name} Tools`
 ---
 
-<Layout title="Open Source Alternatives">
-  <h1 class="text-2xl font-semibold">Open Source {category.name} Tools</h1>
+<Layout title={title}>
+  <Intro title={title}>
+    <p slot="description">
+      A collection of the best open source {category.name} tools. Find the best tools for {
+        category.name
+      } that are open source and free to use.
+    </p>
+
+    <Grid>
+      {category.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+    </Grid>
+  </Intro>
 </Layout>

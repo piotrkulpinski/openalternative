@@ -38,9 +38,7 @@ const title = config.title
     <a href="/alternatives" class={buttonVariants({ theme: "primary" })}>Browse alternatives</a>
   </Intro>
 
-  <div class="flex items-start gap-6">
-    <Grid>
-      {tools?.map((tool) => <ToolCard tool={tool} />)}
-    </Grid>
-  </div>
+  <Grid>
+    {tools?.map((tool) => <ToolCard tool={tool} />)}
+  </Grid>
 </Layout>

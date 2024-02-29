@@ -1,7 +1,6 @@
 ---
 import type { HTMLAttributes } from "astro/types"
-import { Mail, Plus } from "lucide-astro"
-import { buttonVariants, listVariants } from "~/styles"
+import { listVariants } from "~/styles"
 
 type Props = HTMLAttributes<"div"> & {
   title?: string
@@ -12,7 +11,7 @@ const { title, description, ...props } = Astro.props
 ---
 
 <div class={listVariants({ direction: "column", size: "lg" })} {...props}>
-  {title && <h1 class="text-2xl font-bold text-gray-900">{title}</h1>}
+  {title && <h1 class="text-2xl font-semibold">{title}</h1>}
 
   <div class="prose prose-zinc text-gray-600 leading-normal">
     <slot name="description" />

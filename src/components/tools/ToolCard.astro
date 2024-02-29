@@ -1,18 +1,11 @@
 ---
-import type { GetToolsQuery } from "~/.graphql/graphql"
-import { Star } from "lucide-astro"
 import Card from "~/components/Card.astro"
-import type { RemoveNull } from "~/env"
-import { getRandomNumber } from "@curiousleaf/utils"
 import { badgeVariants, listVariants } from "~/styles"
 import Favicon from "~/components/Favicon.astro"
-import { getScreenshotUrl } from "~/services/screenshotone"
+import type { Tool } from "~/queries/tools"
 
 type Props = {
-  tool: Pick<
-    NonNullable<RemoveNull<GetToolsQuery["tools"]>>[number],
-    "id" | "slug" | "website" | "name" | "description" | "category"
-  >
+  tool: Pick<Tool, "id" | "slug" | "website" | "name" | "description" | "category">
 }
 
 const { tool } = Astro.props

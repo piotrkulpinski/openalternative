@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets"
 import { client } from "~/services/apollo"
-import { getToolsSlugsQuery, getToolQuery } from "~/queries/tools"
+import { getToolsQuery } from "~/queries/tools"
 import Layout from "~/layouts/Layout.astro"
 import { getScreenshotUrl } from "~/services/screenshotone"
 import { response } from "~/utils/response"
@@ -10,20 +10,21 @@ import Favicon from "~/components/Favicon.astro"
 import { badgeVariants, buttonVariants, listVariants } from "~/styles"
 import { ExternalLink, Github } from "lucide-astro"
 
+// Static Paths
 export const getStaticPaths = async () => {
   const { data } = await client.query({
-    query: getToolsSlugsQuery,
+    query: getToolsQuery,
   })
 
-  return data.tools?.map((tool) => ({ params: { tool: tool?.slug } })) ?? []
+  return (
+    data.tools?.map((tool) => ({
+      params: { tool: tool?.slug },
+      props: { tool },
+    })) ?? []
+  )
 }
 
-const { data } = await client.query({
-  query: getToolQuery,
-  variables: { slug: Astro.params.tool! },
-})
-
-const tool = data.tools![0]
+const { tool } = Astro.props
 
 if (!tool) {
   return response(404, `${Astro.url}/404`)
