@@ -1,6 +1,6 @@
 ---
 import Container from "~/components/Container.astro"
-import Pattern from "~/components/pattern/Pattern.astro"
+import Logo from "~/components/Logo.astro"
 import { config } from "~/config"
 import { listVariants } from "~/styles"
 
@@ -13,9 +13,34 @@ const alternatives = [
 ]
 ---
 
-<div class="relative bg-white border-t mt-auto pt-8 pb-20 overflow-hidden">
+<div class="relative bg-white border-t border-gray-200/60 mt-auto pt-8 pb-12 overflow-hidden">
   <Container class="relative z-10 flex justify-between gap-6 md:gap-8">
-    <div class="">{config.title}</div>
+    <div class:list={["w-1/2", listVariants({ direction: "column", size: "lg" })]}>
+      <Logo />
+
+      <div class="prose prose-sm leading-normal">
+        <p>
+          <strong>{config.title}</strong> is a community driven list of open source alternatives to proprietary
+          software and applications.
+        </p>
+        <p>
+          Our goal is to be your first stop when researching for a new open source service to help
+          you grow your business. We will help you find alternatives and reviews of the products you
+          already use.
+        </p>
+      </div>
+
+      <div class:list={["mt-4 text-sm", listVariants()]}>
+        <a
+          href="https://github.com/piotrkulpinski/openalternative"
+          class="text-gray-600 hover:text-black"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Source Code
+        </a>
+      </div>
+    </div>
 
     <div class:list={[" text-sm", listVariants({ direction: "column" })]}>
       <h4 class="mb-2 font-semibold">Explore</h4>
@@ -36,6 +61,4 @@ const alternatives = [
       }
     </div>
   </Container>
-
-  <Pattern width={124} height={86} x="50%" y="-50%" />
 </div>

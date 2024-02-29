@@ -11,10 +11,10 @@ type Props = HTMLAttributes<"div"> & {
 const { title, description, ...props } = Astro.props
 ---
 
-<div class="flex flex-col items-start gap-3">
+<div class={listVariants({ direction: "column", size: "lg" })} {...props}>
   {title && <h1 class="text-2xl font-bold text-gray-900">{title}</h1>}
 
-  <div class="prose prose-zinc text-gray-600 leading-relaxed">
+  <div class="prose prose-zinc text-gray-600 leading-normal">
     <slot name="description" />
   </div>
 
@@ -26,13 +26,3 @@ const { title, description, ...props } = Astro.props
     )
   }
 </div>
-
-<script>
-  // Find all buttons with the `alert` class on the page.
-  const button = document.getElementById("subscribe")
-
-  // Handle clicks on the button.
-  button?.addEventListener("click", () => {
-    alert("Button was clicked!")
-  })
-</script>

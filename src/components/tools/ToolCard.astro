@@ -1,11 +1,12 @@
 ---
 import type { GetToolsQuery } from "~/.graphql/graphql"
 import { Star } from "lucide-astro"
-import Card from "~/components/ui/Card.astro"
+import Card from "~/components/Card.astro"
 import type { RemoveNull } from "~/env"
 import { getRandomNumber } from "@curiousleaf/utils"
 import { badgeVariants, listVariants } from "~/styles"
 import Favicon from "~/components/Favicon.astro"
+import { getScreenshotUrl } from "~/services/screenshotone"
 
 type Props = {
   tool: Pick<
@@ -15,29 +16,32 @@ type Props = {
 }
 
 const { tool } = Astro.props
+
+// <span class={badgeVariants({ size: "sm" })}>
+//   <Star class="size-3 -ml-0.5 text-gray-400" />
+//   {getRandomNumber(0, 25000).toLocaleString()} stars
+// </span>
 ---
 
-<Card href={`/tool/${tool.slug}`}>
-  {tool.website && <Favicon url={tool.website} />}
+<Card href={`/tool/${tool.slug}`} transition:name={`tool ${tool.id} box`}>
+  {tool.website && <Favicon url={tool.website} transition:name={`tool ${tool.id} favicon`} />}
 
   <div class={listVariants({ direction: "column" })}>
     <div class={listVariants()}>
-      <h3 class="text-lg font-semibold">{tool.name}</h3>
-
-      <span class={badgeVariants({ size: "sm" })}>
-        <Star class="size-3 -ml-0.5 text-gray-400" />
-        {getRandomNumber(0, 25000).toLocaleString()} stars
-      </span>
+      <h3 class="text-lg font-semibold" transition:name={`tool ${tool.id} title`}>{tool.name}</h3>
     </div>
 
-    <p class="text-gray-600 text-sm line-clamp-2">
+    <p class="text-gray-600 text-sm line-clamp-2" transition:name={`tool ${tool.id} description`}>
       {tool.description}
     </p>
   </div>
 
   {
     !!tool.category.length && (
-      <div class:list={["mt-auto", listVariants({ size: "sm" })]}>
+      <div
+        class:list={["mt-auto", listVariants({ size: "sm" })]}
+        transition:name={`tool ${tool.id} categories`}
+      >
         <span class={badgeVariants({ theme: "pink" })}>{tool.category[0].name}</span>
 
         {tool.category.length > 1 && (

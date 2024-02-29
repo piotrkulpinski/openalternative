@@ -1,0 +1,17 @@
+---
+import { Image } from "astro:assets"
+import { config } from "~/config"
+import { listVariants } from "~/styles"
+---
+
+<a href="/" class:list={["font-semibold leading-tight", listVariants()]}>
+  <Image
+    src="/openalternative.svg"
+    alt="Logo"
+    height="100"
+    width="97"
+    loading="eager"
+    class="h-6 w-auto"
+  />
+  <slot />
+</a>

@@ -6,7 +6,7 @@ import type { RemoveNull } from "~/env"
 import Grid from "~/components/Grid.astro"
 import Intro from "~/components/Intro.astro"
 import Filters from "~/components/Filters.astro"
-import Card from "~/components/ui/Card.astro"
+import Card from "~/components/Card.astro"
 
 const { data } = await client.query({
   query: getCategoriesQuery,
@@ -17,25 +17,23 @@ const title = "Open Source Software Categories"
 ---
 
 <Layout title={title}>
-  <main class="flex flex-col gap-12">
-    <Intro title={title}>
-      <p class="lead" slot="description">
-        Browse top categories to find your best Open Source software options.
-      </p>
-    </Intro>
+  <Intro title={title}>
+    <p class="lead" slot="description">
+      Browse top categories to find your best Open Source software options.
+    </p>
+  </Intro>
 
-    <div class="flex items-start gap-6">
-      <!-- <Filters /> -->
+  <div class="flex items-start gap-6">
+    <!-- <Filters /> -->
 
-      <Grid>
-        {
-          categories?.map((category) => (
-            <Card href={`/category/${category?.slug}`}>
-              <h2 class="text-lg font-semibold">{category?.name}</h2>
-            </Card>
-          ))
-        }
-      </Grid>
-    </div>
-  </main>
+    <Grid>
+      {
+        categories?.map((category) => (
+          <Card href={`/category/${category?.slug}`}>
+            <h2 class="text-lg font-semibold">{category?.name}</h2>
+          </Card>
+        ))
+      }
+    </Grid>
+  </div>
 </Layout>

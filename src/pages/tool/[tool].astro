@@ -5,9 +5,10 @@ import { getToolsSlugsQuery, getToolQuery } from "~/queries/tools"
 import Layout from "~/layouts/Layout.astro"
 import { getScreenshotUrl } from "~/services/screenshotone"
 import { response } from "~/utils/response"
-import Pattern from "~/components/pattern/Pattern.astro"
+import Pattern from "~/components/Pattern.astro"
 import Favicon from "~/components/Favicon.astro"
 import { badgeVariants, buttonVariants, listVariants } from "~/styles"
+import { ExternalLink, Github } from "lucide-astro"
 
 export const getStaticPaths = async () => {
   const { data } = await client.query({
@@ -34,20 +35,24 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
 <Layout title="Open Source Alternatives">
   <div
     class="relative flex gap-6 p-6 bg-white border rounded-lg shadow overflow-clip md:p-8 md:gap-8"
+    transition:name={`tool ${tool.id} box`}
   >
     <div class="relative z-10 flex flex-col gap-4 grow">
       <div class={listVariants({ size: "lg" })}>
-        {tool.website && <Favicon url={tool.website} />}
-        <h1 class="text-2xl font-semibold">{tool.name}</h1>
+        {tool.website && <Favicon url={tool.website} transition:name={`tool ${tool.id} favicon`} />}
+
+        <h1 class="text-2xl font-semibold" transition:name={`tool ${tool.id} title`}>
+          {tool.name}
+        </h1>
       </div>
 
       <div class="prose prose-zinc text-gray-600 leading-relaxed max-w-sm">
-        <p class="lead">{tool.description}</p>
+        <p class="lead" transition:name={`tool ${tool.id} description`}>{tool.description}</p>
       </div>
 
       {
         !!tool.category?.length && (
-          <div class:list={[listVariants()]}>
+          <div class:list={[listVariants()]} transition:name={`tool ${tool.id} categories`}>
             {tool.category.map((category) => (
               <a
                 href={`/category/${category?.slug}`}
@@ -64,6 +69,7 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
         {
           tool.website && (
             <a href={tool.website} class={buttonVariants({ theme: "primary" })} target="_blank">
+              <ExternalLink class="size-4 text-white/70" />
               Visit Website
             </a>
           )
@@ -75,6 +81,7 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
               class={buttonVariants({ theme: "secondary" })}
               target="_blank"
             >
+              <Github class="size-4 text-black/60" />
               Repository
             </a>
           )
@@ -85,7 +92,14 @@ const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website
     {
       imageUrl && (
         <div class="relative z-10 basis-1/2 flex items-center justify-center p-1.5 rounded-md bg-white shadow-lg shadow-gray-800/5 ring-1 ring-gray-900/5">
-          <Image src={imageUrl} alt="" width={1280} height={1024} loading="eager" class="rounded" />
+          <Image
+            src={imageUrl}
+            alt=""
+            width={1280}
+            height={1024}
+            loading="eager"
+            class="rounded w-full h-auto"
+          />
         </div>
       )
     }

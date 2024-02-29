@@ -11,7 +11,7 @@ const { class: className, url, ...props } = Astro.props
 
 <div
   class:list={[
-    "flex items-center justify-center p-1.5 rounded-md bg-white shadow-md shadow-gray-800/5 ring-1 ring-gray-900/5",
+    "flex items-center justify-center p-1.5 size-10 rounded-md bg-white shadow-md shadow-gray-800/5 ring-1 ring-gray-900/5",
     className,
   ]}
   {...props}
@@ -22,6 +22,6 @@ const { class: className, url, ...props } = Astro.props
     width={96}
     height={96}
     loading="eager"
-    class="size-8 rounded"
+    class="size-full rounded aspect-square"
   />
 </div>
