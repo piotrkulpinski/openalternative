@@ -17,6 +17,7 @@ export const env = createEnv({
    * built with invalid env vars.
    */
   server: {
+    SITE_URL: z.string().url().min(1),
     GRAPHQL_ENDPOINT: z.string().url().min(1),
     GRAPHQL_TOKEN: z.string().min(1),
     // GITHUB_TOKEN: z.string().min(1),

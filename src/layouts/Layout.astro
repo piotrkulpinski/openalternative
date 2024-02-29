@@ -3,25 +3,50 @@ import { ViewTransitions } from "astro:transitions"
 import Container from "~/components/Container.astro"
 import Header from "~/components/Header.astro"
 import Footer from "~/components/Footer.astro"
+import { config } from "~/config"
+import { removeHttp } from "@curiousleaf/utils"
+import { env } from "~/variables"
 
 import "@fontsource-variable/inter"
 
 interface Props {
   title: string
+  description?: string
 }
 
-const { title } = Astro.props
+const { title, description } = Astro.props
+
+const canonicalURL = new URL(Astro.url.pathname, env.SITE_URL)
+const socialImageURL = new URL("/images/preview.png", Astro.url)
+const metaTitle = `${title} – ${config.title}`
+const metaDescription = description || config.description
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/openalternative.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+
+    <title>{metaTitle}</title>
+    <meta name="description" content={metaDescription} />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={metaTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:image" content={socialImageURL} />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content={removeHttp(Astro.site?.toString())} />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={metaTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={socialImageURL} />
 
     <ViewTransitions fallback="none" />
   </head>
