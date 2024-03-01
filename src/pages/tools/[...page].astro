@@ -1,0 +1,68 @@
+---
+import Layout from "~/layouts/Layout.astro"
+import ToolCard from "~/components/cards/ToolCard.astro"
+import { client } from "~/services/apollo"
+import { getToolsQuery } from "~/queries/tools"
+import type { RemoveNull } from "~/env"
+import Grid from "~/components/Grid.astro"
+import Intro from "~/components/Intro.astro"
+import { ArrowLeft, ArrowRight } from "lucide-astro"
+import { listVariants } from "~/styles"
+
+export const getStaticPaths = async ({ paginate }) => {
+  const { data } = await client.query({
+    query: getToolsQuery,
+  })
+
+  return paginate(data.tools, { pageSize: 24 })
+}
+
+const { page } = Astro.props
+
+const tools = page.data
+const title = "Best Open Source Tools"
+---
+
+<Layout title={title}>
+  <Intro title={title}>
+    <p slot="description">
+      Browse the best open source tools for developers, designers, and makers.
+    </p>
+  </Intro>
+
+  <Grid>
+    {tools?.map((tool) => <ToolCard tool={tool} />)}
+  </Grid>
+
+  <!-- Add pagination -->
+  <div class="flex items-center -mt-4">
+    {
+      page.url.prev && (
+        <a
+          href={page.url.prev}
+          class:list={[
+            "mr-auto text-gray-600 text-sm hover:text-black",
+            listVariants({ size: "sm" }),
+          ]}
+        >
+          <ArrowLeft class="size-4" />
+          Previous
+        </a>
+      )
+    }
+    {
+      page.url.next && (
+        <a
+          href={page.url.next}
+          class:list={[
+            "ml-auto text-gray-600 text-sm hover:text-black",
+            listVariants({ size: "sm" }),
+          ]}
+        >
+          Next
+          <ArrowRight class="size-4" />
+        </a>
+      )
+    }
+  </div>
+</Layout>

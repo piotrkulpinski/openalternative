@@ -12,10 +12,10 @@ import { Blocks } from "lucide-astro"
 
 const { data } = await client.query({
   query: getToolsQuery,
+  variables: { filter: null, pageSize: 12, orderBy: null, page: 1 },
 })
 
 const tools = data.tools as RemoveNull<typeof data.tools>
-const title = `${config.tagline} – ${config.title}`
 
 // <a href="/submit" class={buttonVariants({ theme: "primary" })}>
 //   <Plus class="size-4" /> Submit your tool

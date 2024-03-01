@@ -2,8 +2,8 @@ import { gql } from "~/.graphql"
 import type { GetToolsQuery } from "~/.graphql/graphql"
 
 export const getToolsQuery = gql(`
-  query GetTools($filter: JSON) {
-    tools(_filter: $filter, public: true) {
+  query GetTools($filter: JSON, $pageSize: JSON, $orderBy: JSON, $page: JSON) {
+    tools(_filter: $filter, _page_size: $pageSize, _order_by: $orderBy, _page: $page) {
       id
       name
       slug
