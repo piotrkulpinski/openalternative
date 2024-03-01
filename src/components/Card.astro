@@ -13,7 +13,7 @@ const { class: className, href, showPattern, ...props } = Astro.props
 <a
   href={href}
   class:list={[
-    "group relative flex flex-col p-6 bg-white border rounded-md shadow-sm overflow-clip hover:bg-zinc-50",
+    "card group relative flex flex-col p-6 bg-white border rounded-md shadow-sm overflow-clip hover:bg-zinc-50",
     className,
   ]}
   {...props}
@@ -24,3 +24,26 @@ const { class: className, href, showPattern, ...props } = Astro.props
 
   {showPattern && <Pattern width={76} height={56} x="50%" y="-6" squares={[[0, 1]]} />}
 </a>
+
+<style>
+  .card {
+    animation: fade-in linear forwards;
+    animation-timeline: view();
+    animation-range-start: 0;
+    animation-range-end: 25%;
+    transform-style: preserve-3d;
+  }
+
+  @keyframes fade-in {
+    from {
+      scale: 0.9;
+      opacity: 0;
+      transform: translateY(20px) perspective(250px) rotateX(-15deg);
+    }
+    to {
+      scale: 1;
+      opacity: 1;
+      transform: translateY(0) perspective(500px) rotateX(0deg);
+    }
+  }
+</style>
