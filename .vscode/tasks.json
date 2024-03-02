@@ -15,6 +15,9 @@
       "command": "bun dev",
       "isBackground": true,
       "dependsOrder": "sequence",
+      "options": {
+        "cwd": "${workspaceFolder}/web/"
+      },
       "runOptions": {
         "runOn": "folderOpen"
       }
@@ -25,6 +28,9 @@
       "command": "bun codegen:watch",
       "isBackground": true,
       "dependsOrder": "sequence",
+      "options": {
+        "cwd": "${workspaceFolder}/web/"
+      },
       "runOptions": {
         "runOn": "folderOpen"
       }

@@ -1,0 +1,25 @@
+---
+import Layout from "~/layouts/Layout.astro"
+import { client } from "~/services/apollo"
+import { getTopicsQuery, type Topic } from "~/queries/topics"
+import Grid from "~/components/Grid.astro"
+import Intro from "~/components/Intro.astro"
+import TopicCard from "~/components/cards/TopicCard.astro"
+
+const { data } = await client.query({
+  query: getTopicsQuery,
+})
+
+const topics = data.topics
+const title = "Open Source Software Topics"
+---
+
+<Layout title={title}>
+  <Intro title={title}>
+    <p slot="description">Browse top topics to find your best Open Source software options.</p>
+  </Intro>
+
+  <Grid>
+    {topics?.map((topic) => <TopicCard topic={topic as Topic} />)}
+  </Grid>
+</Layout>

@@ -1,0 +1,41 @@
+---
+import { client } from "~/services/apollo"
+import { getTopicsQuery } from "~/queries/topics"
+import Layout from "~/layouts/Layout.astro"
+import ToolCard from "~/components/cards/ToolCard.astro"
+import Intro from "~/components/Intro.astro"
+import Grid from "~/components/Grid.astro"
+import type { Tool } from "~/queries/tools"
+
+// Static Paths
+export const getStaticPaths = async () => {
+  const { data } = await client.query({
+    query: getTopicsQuery,
+  })
+
+  return (
+    data.topics?.map((topic) => ({
+      params: { topic: topic?.slug },
+      props: { topic },
+    })) ?? []
+  )
+}
+
+const topic = Astro.props.topic!
+const title = `Best Open Source Projects using ${topic.name}`
+---
+
+<Layout title={title}>
+  <Intro title={title}>
+    <p slot="description">
+      A collection of the best open source projects using {topic.name}. Find the best tools for {
+        topic.name
+      } that are open source and free to use.
+    </p>
+
+    <Grid>
+      {topic.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+      {!topic.tools?.length && <p>No tools found.</p>}
+    </Grid>
+  </Intro>
+</Layout>

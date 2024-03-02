@@ -1,0 +1,40 @@
+---
+import Card from "~/components/Card.astro"
+import { badgeVariants, listVariants } from "~/styles"
+import Favicon from "~/components/Favicon.astro"
+import type { Tool } from "~/queries/tools"
+import { Star } from "lucide-astro"
+import { getRandomNumber } from "@curiousleaf/utils"
+
+type Props = {
+  tool: Tool
+}
+
+const tool = Astro.props.tool!
+---
+
+<Card href={`/tool/${tool.slug}`} showPattern transition:name={`tool ${tool.id} box`}>
+  <Favicon url={tool.website} transition:name={`tool ${tool.id} favicon`} />
+
+  <div class={listVariants({ direction: "column" })}>
+    <div class={listVariants()}>
+      <h3 class="text-xl font-semibold" transition:name={`tool ${tool.id} title`}>{tool.name}</h3>
+    </div>
+
+    <p class="text-gray-600 text-sm line-clamp-2" transition:name={`tool ${tool.id} description`}>
+      {tool.description}
+    </p>
+  </div>
+
+  {
+    !!tool.category?.length && (
+      <div class:list={["mt-auto", listVariants({ size: "sm" })]}>
+        <span class={badgeVariants({ theme: "pink" })}>{tool.category[0]?.name}</span>
+
+        {tool.category.length > 1 && (
+          <span class="text-gray-500 text-xs">+{tool.category.length - 1} more</span>
+        )}
+      </div>
+    )
+  }
+</Card>

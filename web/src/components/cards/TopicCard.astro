@@ -1,0 +1,14 @@
+---
+import Card from "~/components/Card.astro"
+import type { Topic } from "~/queries/topics"
+
+type Props = {
+  topic: Pick<Topic, "id" | "name" | "slug">
+}
+
+const topic = Astro.props.topic!
+---
+
+<Card href={`/topic/${topic?.slug}`}>
+  <h2 class="text-lg font-semibold">{topic?.name}</h2>
+</Card>
