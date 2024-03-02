@@ -1,0 +1,50 @@
+---
+import type { HTMLAttributes } from "astro/types"
+
+type Props = HTMLAttributes<"div"> & {
+  width: number
+  height: number
+  x: string | number
+  y: string | number
+  squares?: Array<[x: number, y: number]>
+}
+
+const { class: className, width, height, x, y, squares, ...rest } = Astro.props
+---
+
+<div
+  class:list={[
+    "absolute inset-0 pointer-events-none [mask-image:linear-gradient(white,transparent)] group-hover:opacity-75",
+    className,
+  ]}
+  {...rest}
+>
+  <svg
+    aria-hidden="true"
+    class="absolute inset-x-0 inset-y-[-30%] h-[160%] w-full skew-y-[-10deg] fill-black/[0.02] stroke-black/5"
+  >
+    <defs>
+      <pattern id="pattern" width={width} height={height} patternUnits="userSpaceOnUse" x={x} y={y}>
+        <path d={`M.5 ${height}V.5H${width}`} fill="none"></path>
+      </pattern>
+    </defs>
+
+    <rect width="100%" height="100%" stroke-width={0} fill={`url(#pattern)`}></rect>
+
+    {
+      squares && (
+        <svg x={x} y={y} class="overflow-visible">
+          {squares.map(([x, y]) => (
+            <rect
+              stroke-width="0"
+              width={width + 1}
+              height={height + 1}
+              x={x * width}
+              y={y * height}
+            />
+          ))}
+        </svg>
+      )
+    }
+  </svg>
+</div>

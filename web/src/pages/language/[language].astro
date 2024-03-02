@@ -1,0 +1,41 @@
+---
+import { client } from "~/services/apollo"
+import { getLanguagesQuery } from "~/queries/languages"
+import Layout from "~/layouts/Layout.astro"
+import ToolCard from "~/components/cards/ToolCard.astro"
+import Intro from "~/components/Intro.astro"
+import Grid from "~/components/Grid.astro"
+import type { Tool } from "~/queries/tools"
+
+// Static Paths
+export const getStaticPaths = async () => {
+  const { data } = await client.query({
+    query: getLanguagesQuery,
+  })
+
+  return (
+    data.languages?.map((language) => ({
+      params: { language: language?.slug },
+      props: { language },
+    })) ?? []
+  )
+}
+
+const language = Astro.props.language!
+const title = `Top ${language.name} Open Source Projects`
+---
+
+<Layout title={title}>
+  <Intro title={title}>
+    <p slot="description">
+      A collection of the best open source software tools written in {language.name}. Find the most
+      popular and trending open source projects to learn from, contribute to, or use in your own
+      projects.
+    </p>
+
+    <Grid>
+      {language.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+      {!language.tools?.length && <p>No tools found.</p>}
+    </Grid>
+  </Intro>
+</Layout>

@@ -1,0 +1,7 @@
+name = "openalternative-assets"
+main = "src/index.ts"
+compatibility_date = "2024-02-23"
+
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "openalternative"

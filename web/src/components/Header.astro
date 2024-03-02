@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import Container from "~/components/Container.astro"
+import Logo from "~/components/Logo.astro"
+import { config } from "~/config"
+import { linkVariants, listVariants } from "~/styles"
+
+type Props = HTMLAttributes<"div"> & {}
+
+const { pathname } = Astro.url
+const { class: className, ...props } = Astro.props
+---
+
+<nav class:list={["flex items-center gap-3 w-full min-w-0 pt-3 md:pt-4", className]} {...props}>
+  {
+    pathname === "/" ? (
+      <h1>
+        <Logo>{config.title}</Logo>
+      </h1>
+    ) : (
+      <Logo>{config.title}</Logo>
+    )
+  }
+
+  <div class:list={["ml-auto text-sm max-sm:hidden", listVariants({ size: "lg" })]}>
+    <a href="/alternatives" class={linkVariants()}> Alternatives</a>
+    <a href="/categories" class={linkVariants()}> Categories</a>
+  </div>
+</nav>

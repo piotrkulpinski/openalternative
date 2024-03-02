@@ -1,0 +1,14 @@
+name = "openalternative-github"
+main = "src/index.ts"
+compatibility_date = "2024-02-23"
+workers_dev = false
+
+# Cron Triggers
+# Docs: https://developers.cloudflare.com/workers/platform/triggers/cron-triggers/
+# Configuration: https://developers.cloudflare.com/workers/wrangler/configuration/#triggers
+[triggers]
+crons = ["*/30 * * * *"]
+
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "openalternative"

@@ -1,0 +1,14 @@
+---
+import Card from "~/components/Card.astro"
+import type { Language } from "~/queries/languages"
+
+type Props = {
+  language: Pick<Language, "id" | "name" | "slug">
+}
+
+const language = Astro.props.language!
+---
+
+<Card href={`/language/${language?.slug}`}>
+  <h2 class="text-lg font-semibold">{language?.name}</h2>
+</Card>
