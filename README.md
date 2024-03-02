@@ -2,7 +2,7 @@
 
 This is a project to create a website for OpenAlternative, a non-profit organization that aims to provide alternative solutions to proprietary software.
 
-[](https://openalternative.to/screenshot.jpeg)
+[](https://openalternative.to/opengraph.png)
 
 ## 🚀 Project Structure
 

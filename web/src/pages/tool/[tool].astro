@@ -1,0 +1,182 @@
+---
+import { format } from "timeago.js"
+import { Image } from "astro:assets"
+import { client } from "~/services/apollo"
+import { getToolsQuery } from "~/queries/tools"
+import Layout from "~/layouts/Layout.astro"
+import { getScreenshotUrl } from "~/services/screenshotone"
+import Pattern from "~/components/Pattern.astro"
+import Favicon from "~/components/Favicon.astro"
+import { badgeVariants, buttonVariants, linkVariants, listVariants } from "~/styles"
+import { Bug, ExternalLink, GitFork, Github, Star } from "lucide-astro"
+
+// Static Paths
+export const getStaticPaths = async () => {
+  const { data } = await client.query({
+    query: getToolsQuery,
+  })
+
+  return (
+    data.tools?.map((tool) => ({
+      params: { tool: tool?.slug },
+      props: { tool },
+    })) ?? []
+  )
+}
+
+const tool = Astro.props.tool!
+const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website, tool.slug) : null
+
+const tags = [
+  { name: "Categories", items: tool.category, path: "category" },
+  { name: "Alternative To", items: tool.alternative, path: "alternatives-to" },
+  { name: "Languages", items: tool.language, path: "language" },
+  { name: "Topics", items: tool.topic, path: "topic" },
+]
+---
+
+<Layout title="Open Source Alternatives">
+  <div
+    class="relative flex flex-wrap gap-12 p-6 bg-white border rounded-lg shadow md:p-8"
+    transition:name={`tool ${tool.id} box`}
+  >
+    <div class="flex flex-col gap-6 flex-1">
+      <div class={listVariants({ size: "lg" })}>
+        <Favicon url={tool.website} transition:name={`tool ${tool.id} favicon`} />
+
+        <h1 class="text-3xl font-semibold" transition:name={`tool ${tool.id} title`}>
+          {tool.name}
+        </h1>
+      </div>
+
+      <ul class:list={["md:-mt-3", listVariants({ size: "sm" })]}>
+        {
+          tool.stars && (
+            <li>
+              <span class={badgeVariants({ theme: "gray", className: "!text-gray-500" })}>
+                <Star class="size-3.5 opacity-75 max-sm:hidden" />
+                <strong class="text-gray-700">{tool.stars.toLocaleString()}</strong>
+                Stars
+              </span>
+            </li>
+          )
+        }
+        {
+          tool.forks && (
+            <li>
+              <span class={badgeVariants({ theme: "gray", className: "!text-gray-500" })}>
+                <GitFork class="size-3.5 opacity-75 max-sm:hidden" />
+                <strong class="text-gray-700">{tool.forks.toLocaleString()}</strong>
+                Forks
+              </span>
+            </li>
+          )
+        }
+        {
+          tool.issues && (
+            <li>
+              <span class={badgeVariants({ theme: "gray", className: "!text-gray-500" })}>
+                <Bug class="size-3.5 opacity-75 max-sm:hidden" />
+                <strong class="text-gray-700">{tool.issues.toLocaleString()}</strong>
+                Issues
+              </span>
+            </li>
+          )
+        }
+      </ul>
+
+      <div class="prose prose-zinc prose-lg text-gray-600 !leading-relaxed md:max-w-sm">
+        <p transition:name={`tool ${tool.id} description`}>{tool.description}</p>
+      </div>
+
+      <ul class="mt-auto text-gray-500 text-sm space-y-1">
+        {
+          tool.commitDate && (
+            <li>
+              Last commited:{" "}
+              <strong class="font-medium text-gray-600" title={tool.commitDate}>
+                {format(tool.commitDate ?? "")}
+              </strong>
+            </li>
+          )
+        }
+        {
+          tool.license && (
+            <li>
+              License: <strong class="font-medium text-gray-600">{tool.license}</strong>
+            </li>
+          )
+        }
+      </ul>
+
+      <div class:list={["", listVariants({ size: "lg" })]}>
+        {
+          tool.website && (
+            <a
+              href={tool.website}
+              class={buttonVariants({ theme: "primary" })}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink class="size-4 opacity-60 max-sm:hidden" />
+              Visit Website
+            </a>
+          )
+        }
+        {
+          tool.repository && (
+            <a
+              href={tool.repository}
+              class={buttonVariants({ theme: "secondary" })}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+            >
+              <Github class="size-4 opacity-60 max-sm:hidden" />
+              View Repository
+            </a>
+          )
+        }
+      </div>
+    </div>
+
+    {
+      imageUrl && (
+        <div class="relative z-10 self-start max-md:order-last max-md:-m-4 max-md:mt-0 md:w-2/5 md:p-1.5 md:border md:rounded-md md:bg-white md:shadow lg:w-1/2">
+          <Image
+            src={imageUrl}
+            alt=""
+            width={1280}
+            height={1024}
+            loading="eager"
+            class="rounded w-full h-auto"
+          />
+        </div>
+      )
+    }
+
+    <div class="flex flex-col gap-8 w-full">
+      {
+        tags.map(
+          (tag) =>
+            !!tag.items?.length && (
+              <div class={listVariants({ direction: "column" })}>
+                <h3 class="font-semibold">{tag.name}:</h3>
+
+                <ul class:list={listVariants({ size: "sm" })}>
+                  {tag.items?.map((item) => (
+                    <li>
+                      <a href={`/${tag.path}/${item?.slug}`} class:list={[linkVariants()]}>
+                        {item?.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+        )
+      }
+    </div>
+
+    <Pattern width={76} height={56} x="50%" y="-6" squares={[[0, 1]]} class="bottom-auto h-96" />
+  </div>
+</Layout>
