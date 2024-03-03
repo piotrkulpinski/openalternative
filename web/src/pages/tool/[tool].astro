@@ -9,6 +9,7 @@ import Pattern from "~/components/Pattern.astro"
 import Favicon from "~/components/Favicon.astro"
 import { badgeVariants, buttonVariants, linkVariants, listVariants } from "~/styles"
 import { Bug, ExternalLink, GitFork, Github, Star } from "lucide-astro"
+import Intro from "~/components/Intro.astro"
 
 // Static Paths
 export const getStaticPaths = async () => {
@@ -25,6 +26,7 @@ export const getStaticPaths = async () => {
 }
 
 const tool = Astro.props.tool!
+const title = `${tool.name}: Open Source Alternative ${!!tool.alternative?.length ? `to ${tool.alternative?.map((a) => a?.name).join(", ")}` : ""}`
 const imageUrl = tool.website && tool.slug ? await getScreenshotUrl(tool.website, tool.slug) : null
 
 const tags = [
@@ -35,7 +37,7 @@ const tags = [
 ]
 ---
 
-<Layout title="Open Source Alternatives">
+<Layout title={title}>
   <div
     class="relative flex flex-wrap gap-12 p-6 bg-white border rounded-lg shadow md:p-8"
     transition:name={`tool ${tool.id} box`}
@@ -49,7 +51,7 @@ const tags = [
         </h1>
       </div>
 
-      <ul class:list={["md:-mt-3", listVariants({ size: "sm" })]}>
+      <ul class:list={["md:-mt-2", listVariants({ size: "sm" })]}>
         {
           tool.stars && (
             <li>
