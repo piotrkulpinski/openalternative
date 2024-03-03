@@ -6,6 +6,7 @@ import { getGithubQuery } from "./utils/github"
 
 export type Env = {
   // Learn more at https://developers.cloudflare.com/workers/configuration/environment-variables/
+  CLOUDFLARE_DEPLOY_HOOK_URL: string
   GITHUB_TOKEN: string
   AIRTABLE_TOKEN: string
   AIRTABLE_BASE_ID: string
@@ -61,9 +62,10 @@ export default {
       const promises = recordChunks.map(records => table.update(records, { typecast: true }))
 
       // Use Promise.all to perform the updates concurrently.
-      await Promise.all(promises).then(() => {
-        console.log("All records have been updated.")
-      })
+      await Promise.all(promises)
+
+      // Trigger a Cloudflare deploy
+      await fetch(env.CLOUDFLARE_DEPLOY_HOOK_URL, { method: "POST" })
     } catch (error) {
       // Handle any errors that occurred during the execution.
       console.error("An error occurred:", error)

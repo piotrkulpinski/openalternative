@@ -1,0 +1,12 @@
+---
+import Layout from "~/layouts/Layout.astro"
+import Intro from "~/components/Intro.astro"
+
+const title = "About Us"
+---
+
+<Layout title={title}>
+  <Intro title={title}>
+    <p slot="description">This is our about page</p>
+  </Intro>
+</Layout>
