@@ -7,17 +7,19 @@ import { config } from "~/config"
 import { removeHttp } from "@curiousleaf/utils"
 import { env } from "~/variables"
 
+import "~/styles/tailwind.css"
 import "@fontsource-variable/inter"
 
 interface Props {
   title: string
   description?: string
+  ogImage?: string
 }
 
-const { title, description } = Astro.props
+const { title, description, ogImage } = Astro.props
 
 const canonicalURL = new URL(Astro.url.pathname, env.SITE_URL)
-const socialImageURL = new URL("/opengraph.png", Astro.url)
+const socialImageURL = new URL(ogImage ?? "opengraph.png", Astro.url.origin)
 const metaTitle = `${title} – ${config.title}`
 const metaDescription = description || config.description
 ---

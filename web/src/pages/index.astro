@@ -6,9 +6,9 @@ import { getToolsQuery } from "~/queries/tools"
 import type { RemoveNull } from "~/env"
 import Grid from "~/components/Grid.astro"
 import Intro from "~/components/Intro.astro"
-import { buttonVariants } from "~/styles"
+import { buttonVariants, listVariants } from "~/styles"
 import { config } from "~/config"
-import { Blocks } from "lucide-astro"
+import { Blocks, Plus } from "lucide-astro"
 
 const { data } = await client.query({
   query: getToolsQuery,
@@ -26,10 +26,22 @@ const tools = data.tools as RemoveNull<typeof data.tools>
       requires in day-to-day operations.
     </h2>
 
-    <a href="/categories" class={buttonVariants({ theme: "primary" })}>
-      <Blocks class="size-4 text-white/75" />
-      Browse categories
-    </a>
+    <div class={listVariants()}>
+      <a
+        href="https://airtable.com/appcN6nvv5n1GpABK/pagzZyGl6fEI2RWDq/form"
+        class={buttonVariants({ theme: "primary" })}
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+      >
+        <Plus class="size-4 opacity-75" />
+        Submit a tool
+      </a>
+
+      <a href="/categories" class={buttonVariants({ theme: "secondary" })}>
+        <Blocks class="size-4 opacity-75" />
+        Browse categories
+      </a>
+    </div>
   </Intro>
 
   <Grid>
