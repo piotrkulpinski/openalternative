@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a,
+button {
+  transition: "all 0.15s ease-out";
+  cursor: "pointer";
+}
+
+strong {
+  font-weight: "600";
+}
