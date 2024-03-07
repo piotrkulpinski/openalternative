@@ -1,4 +1,5 @@
 export const config = {
+  email: "hello@openalternative.co",
   title: "OpenAlternative",
   tagline: "Discover Open Source Alternatives to Popular Software",
   description:
