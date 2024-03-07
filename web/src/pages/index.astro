@@ -8,7 +8,7 @@ import Grid from "~/components/Grid.astro"
 import Intro from "~/components/Intro.astro"
 import { buttonVariants, listVariants } from "~/styles"
 import { config } from "~/config"
-import { Blocks, Plus } from "lucide-astro"
+import { Blocks, Mail, Plus } from "lucide-astro"
 
 const { data } = await client.query({
   query: getToolsQuery,
@@ -37,9 +37,9 @@ const tools = data.tools as RemoveNull<typeof data.tools>
         Submit a tool
       </a>
 
-      <a href="/categories" class={buttonVariants({ theme: "secondary" })}>
-        <Blocks class="size-4 opacity-75" />
-        Browse categories
+      <a href="/subscribe" class={buttonVariants({ theme: "secondary" })}>
+        <Mail class="size-4 opacity-75" />
+        Subscribe
       </a>
     </div>
   </Intro>
