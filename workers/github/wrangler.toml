@@ -7,8 +7,4 @@ workers_dev = false
 # Docs: https://developers.cloudflare.com/workers/platform/triggers/cron-triggers/
 # Configuration: https://developers.cloudflare.com/workers/wrangler/configuration/#triggers
 [triggers]
-crons = ["*/30 * * * *"]
-
-[[r2_buckets]]
-binding = "R2_BUCKET"
-bucket_name = "openalternative"
+crons = ["0 * * * *"]

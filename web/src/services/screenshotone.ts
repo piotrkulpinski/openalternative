@@ -11,8 +11,6 @@ export const getScreenshotUrl = (url: string, filename: string) => {
     .blockTrackers(true)
     .blockCookieBanners(true)
     .blockAds(true)
-    .store(true)
-    .storagePath(`openalternative/${filename}`)
 
   return client.generateSignedTakeURL(options)
 }
