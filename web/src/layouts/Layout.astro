@@ -3,6 +3,7 @@ import { ViewTransitions } from "astro:transitions"
 import Container from "~/components/Container.astro"
 import Header from "~/components/Header.astro"
 import Footer from "~/components/Footer.astro"
+import PostHog from "~/components/PostHog.astro"
 import { config } from "~/config"
 import { removeHttp } from "@curiousleaf/utils"
 import { env } from "~/variables"
@@ -52,6 +53,7 @@ const metaDescription = description || config.description
     <meta name="twitter:image" content={socialImageURL} />
 
     <ViewTransitions fallback="none" />
+    <PostHog />
   </head>
 
   <body class="bg-zinc-50 text-black">

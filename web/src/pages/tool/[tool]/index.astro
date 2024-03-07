@@ -118,6 +118,7 @@ const tags = [
               class={buttonVariants({ theme: "primary" })}
               target="_blank"
               rel="noopener noreferrer"
+              id="tool-website"
             >
               <ExternalLink class="size-4 opacity-60 max-sm:hidden" />
               Visit Website
@@ -131,12 +132,27 @@ const tags = [
               class={buttonVariants({ theme: "secondary" })}
               target="_blank"
               rel="noopener noreferrer nofollow"
+              id="tool-repository"
             >
               <Github class="size-4 opacity-60 max-sm:hidden" />
               View Repository
             </a>
           )
         }
+
+        <script define:vars={{ id: tool.id }}>
+          window.posthog.group("tool", `id:${id}`)
+          const websiteLink = document.querySelector("#tool-website")
+          const repositoryLink = document.querySelector("#tool-repository")
+
+          websiteLink?.addEventListener("click", () => {
+            window.posthog.capture("website_clicked")
+          })
+
+          repositoryLink?.addEventListener("click", () => {
+            window.posthog.capture("repository_clicked")
+          })
+        </script>
       </div>
     </div>
 

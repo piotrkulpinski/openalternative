@@ -22,6 +22,7 @@ export const env = createEnv({
     GRAPHQL_TOKEN: z.string().min(1),
     SCREENSHOTONE_ACCESS_KEY: z.string().min(1),
     SCREENSHOTONE_SECRET_KEY: z.string().min(1),
+    POSTHOG_API_KEY: z.string().min(1),
   },
 
   /**
