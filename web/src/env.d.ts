@@ -7,6 +7,12 @@ interface ImportMeta {
   readonly env: z.infer<typeof env>
 }
 
+declare global {
+  interface Window {
+    posthog: any
+  }
+}
+
 export type ExpandRecursively<T> = T extends object
   ? T extends infer O
     ? { [K in keyof O]: ExpandRecursively<O[K]> }
