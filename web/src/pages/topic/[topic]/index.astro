@@ -32,10 +32,10 @@ const title = `Best Open Source Projects using ${topic.name}`
         topic.name
       } that are open source and free to use.
     </p>
-
-    <Grid>
-      {topic.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
-      {!topic.tools?.length && <p>No tools found.</p>}
-    </Grid>
   </Intro>
+
+  <Grid>
+    {topic.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+    {!topic.tools?.length && <p>No tools found.</p>}
+  </Grid>
 </Layout>

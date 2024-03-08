@@ -9,6 +9,7 @@ import Intro from "~/components/Intro.astro"
 import { buttonVariants, listVariants } from "~/styles"
 import { config } from "~/config"
 import { Blocks, Mail, Plus } from "lucide-astro"
+import { Image } from "astro:assets"
 
 const { data } = await client.query({
   query: getToolsQuery,
@@ -28,8 +29,21 @@ const tools = data.tools as RemoveNull<typeof data.tools>
 
     <div class={listVariants()}>
       <a
+        href="https://www.producthunt.com/posts/openalternative?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-openalternative"
+        target="_blank"
+      >
+        <Image
+          src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=443404&theme=light"
+          alt="OpenAlternative - Discover open source alternatives to popular software | Product Hunt"
+          style="width: 176px; height: 38px;"
+          width="176"
+          height="38"
+        />
+      </a>
+
+      <a
         href="https://airtable.com/appcN6nvv5n1GpABK/pagzZyGl6fEI2RWDq/form"
-        class={buttonVariants({ theme: "primary" })}
+        class={buttonVariants({ theme: "secondary" })}
         target="_blank"
         rel="noopener noreferrer nofollow"
       >
