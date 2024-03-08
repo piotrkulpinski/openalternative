@@ -32,10 +32,10 @@ const title = `Best Open Source ${category.name} Tools`
         category.name
       } that are open source and free to use.
     </p>
-
-    <Grid>
-      {category.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
-      {!category.tools?.length && <p>No tools found.</p>}
-    </Grid>
   </Intro>
+
+  <Grid>
+    {category.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+    {!category.tools?.length && <p>No tools found.</p>}
+  </Grid>
 </Layout>

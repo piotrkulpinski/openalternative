@@ -1,6 +1,7 @@
 ---
 import Layout from "~/layouts/Layout.astro"
 import Intro from "~/components/Intro.astro"
+import Prose from "~/components/Prose.astro"
 import { config } from "~/config"
 
 const title = "About Us"
@@ -14,9 +15,7 @@ const title = "About Us"
     </p>
   </Intro>
 
-  <div
-    class="prose prose-zinc prose-a:no-underline text-lg text-gray-800 leading-normal prose-a:px-0.5 prose-a:bg-fuchsia-600/[0.05] prose-a:border-b prose-a:border-fuchsia-600/20 prose-a:text-black/75 prose-a:hover:bg-fuchsia-600/10 prose-a:hover:text-black"
-  >
+  <Prose>
     <h2>Hi, Piotr here 👋</h2>
 
     <p>
@@ -77,5 +76,5 @@ const title = "About Us"
         target="_blank">GitHub</a
       >.
     </p>
-  </div>
+  </Prose>
 </Layout>

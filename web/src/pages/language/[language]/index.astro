@@ -32,10 +32,10 @@ const title = `Top ${language.name} Open Source Projects`
       popular and trending open source projects to learn from, contribute to, or use in your own
       projects.
     </p>
-
-    <Grid>
-      {language.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
-      {!language.tools?.length && <p>No tools found.</p>}
-    </Grid>
   </Intro>
+
+  <Grid>
+    {language.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+    {!language.tools?.length && <p>No tools found.</p>}
+  </Grid>
 </Layout>
