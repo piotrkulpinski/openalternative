@@ -7,7 +7,7 @@ import { getToolsQuery } from "~/queries/tools"
 import type { RemoveNull } from "~/env"
 import Grid from "~/components/Grid.astro"
 import Intro from "~/components/Intro.astro"
-import { buttonVariants, listVariants } from "~/styles"
+import { buttonVariants, inputVariants, listVariants } from "~/styles"
 import { config } from "~/config"
 import { Blocks, DollarSign, Mail, Plus } from "lucide-astro"
 import { Image } from "astro:assets"
@@ -42,20 +42,30 @@ const tools = data.tools as RemoveNull<typeof data.tools>
         />
       </a>
 
-      <a
-        href="https://airtable.com/appcN6nvv5n1GpABK/pagzZyGl6fEI2RWDq/form"
-        class={buttonVariants({ theme: "secondary" })}
+      <form
+        method="POST"
+        action="https://assets.mailerlite.com/jsonp/860414/forms/115156283238123220/subscribe"
         target="_blank"
-        rel="noopener noreferrer nofollow"
+        class={listVariants({ size: "sm" })}
       >
-        <Plus class="size-4 opacity-75" />
-        Submit a tool
-      </a>
-
-      <a href="/subscribe" class={buttonVariants({ theme: "secondary" })}>
-        <Mail class="size-4 opacity-75" />
-        Subscribe
-      </a>
+        <input type="hidden" name="ml-submit" value="1" aria-invalid="false" />
+        <div class="relative">
+          <Mail
+            class="absolute left-3 top-1/2 z-10 size-4 opacity-75 pointer-events-none -translate-y-1/2"
+          />
+          <input
+            type="email"
+            name="fields[email]"
+            data-inputmask=""
+            placeholder="Get weekly newsletter"
+            autocomplete="email"
+            aria-invalid="false"
+            required
+            class={inputVariants({ className: "pl-9" })}
+          />
+        </div>
+        <button type="submit" class={buttonVariants({ theme: "primary" })}>Subscribe</button>
+      </form>
     </div>
   </Intro>
 
