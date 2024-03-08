@@ -1,6 +1,7 @@
 ---
 import Layout from "~/layouts/Layout.astro"
 import ToolCard from "~/components/cards/ToolCard.astro"
+import Card from "~/components/Card.astro"
 import { client } from "~/services/apollo"
 import { getToolsQuery } from "~/queries/tools"
 import type { RemoveNull } from "~/env"
@@ -8,7 +9,7 @@ import Grid from "~/components/Grid.astro"
 import Intro from "~/components/Intro.astro"
 import { buttonVariants, listVariants } from "~/styles"
 import { config } from "~/config"
-import { Blocks, Mail, Plus } from "lucide-astro"
+import { Blocks, DollarSign, Mail, Plus } from "lucide-astro"
 import { Image } from "astro:assets"
 
 const { data } = await client.query({
@@ -59,6 +60,31 @@ const tools = data.tools as RemoveNull<typeof data.tools>
   </Intro>
 
   <Grid>
-    {tools?.map((tool) => <ToolCard tool={tool} />)}
+    {
+      tools?.map((tool, index) => (
+        <Fragment key={index}>
+          {index === 3 && (
+            <Card
+              href="https://buy.stripe.com/3cs7uy3zDdxyg7u9AA"
+              target="_blank"
+              class="col-span-2"
+              showPattern
+            >
+              <h3 class="text-2xl font-semibold text-gray-800">Advertise on {config.title}</h3>
+              <p class="text-gray-600">
+                Reach thousands of developers and businesses looking for open source alternatives to
+                popular software.
+              </p>
+
+              <span class:list={["mt-4", buttonVariants({ theme: "primary" })]}>
+                <DollarSign class="size-4 opacity-75" />
+                Advertise
+              </span>
+            </Card>
+          )}
+          <ToolCard tool={tool} />
+        </Fragment>
+      ))
+    }
   </Grid>
 </Layout>
