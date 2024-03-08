@@ -22,11 +22,7 @@ const { class: className, ...props } = Astro.props
   }
 
   <div class:list={["ml-auto text-sm max-sm:hidden", listVariants({ size: "lg" })]}>
-    <a
-      href={`mailto:${config.email}?subject=Advertise on ${config.title}`}
-      class={linkVariants()}
-      target="_blank"
-    >
+    <a href="https://buy.stripe.com/3cs7uy3zDdxyg7u9AA" class={linkVariants()} target="_blank">
       Advertise
     </a>
     <a href="/categories" class={linkVariants()}>Categories</a>
