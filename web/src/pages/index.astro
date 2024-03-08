@@ -70,31 +70,6 @@ const tools = data.tools as RemoveNull<typeof data.tools>
   </Intro>
 
   <Grid>
-    {
-      tools?.map((tool, index) => (
-        <Fragment key={index}>
-          {index === 3 && (
-            <Card
-              href="https://buy.stripe.com/3cs7uy3zDdxyg7u9AA"
-              target="_blank"
-              class="sm:col-span-2"
-              showPattern
-            >
-              <h3 class="text-2xl font-semibold text-gray-800">Advertise on {config.title}</h3>
-              <p class="text-gray-600">
-                Reach thousands of developers and businesses looking for open source alternatives to
-                popular software.
-              </p>
-
-              <span class:list={["mt-4", buttonVariants({ theme: "primary" })]}>
-                <DollarSign class="size-4 opacity-75" />
-                Advertise
-              </span>
-            </Card>
-          )}
-          <ToolCard tool={tool} />
-        </Fragment>
-      ))
-    }
+    {tools?.map((tool) => <ToolCard tool={tool} />)}
   </Grid>
 </Layout>

@@ -24,26 +24,15 @@ const tool = Astro.props.tool!
     </p>
   </div>
 
-  <div class:list={["mt-auto", listVariants({ size: "sm", className: "w-full" })]}>
-    {
-      tool.isFeatured && (
-        <span class={badgeVariants({ theme: "pink" })}>
-          <Award class="-mx-0.5 size-3 opacity-75 max-sm:hidden" />
-          Featured
-        </span>
-      )
-    }
+  {
+    !!tool.category?.length && (
+      <div class:list={["mt-auto", listVariants({ size: "sm", className: "w-full" })]}>
+        <span class={badgeVariants({ theme: "pink" })}>{tool.category[0]?.name}</span>
 
-    {
-      !!tool.category?.length && (
-        <>
-          <span class={badgeVariants({ theme: "gray" })}>{tool.category[0]?.name}</span>
-
-          {tool.category.length > 1 && (
-            <span class="text-gray-500 text-xs">+{tool.category.length - 1} more</span>
-          )}
-        </>
-      )
-    }
-  </div>
+        {tool.category.length > 1 && (
+          <span class="text-gray-500 text-xs">+{tool.category.length - 1} more</span>
+        )}
+      </div>
+    )
+  }
 </Card>
