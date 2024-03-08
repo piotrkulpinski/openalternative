@@ -34,6 +34,24 @@
       "runOptions": {
         "runOn": "folderOpen"
       }
+    },
+    {
+      "type": "shell",
+      "label": "worker-github: run",
+      "command": "npx wrangler dev --test-scheduled",
+      "isBackground": false,
+      "options": {
+        "cwd": "${workspaceFolder}/workers/github/"
+      },
+    },
+    {
+      "type": "shell",
+      "label": "worker-github: trigger",
+      "command": "curl 'http://localhost:8787/__scheduled?cron=*+*+*+*+*'",
+      "isBackground": false,
+      "options": {
+        "cwd": "${workspaceFolder}/workers/github/"
+      },
     }
   ]
 }

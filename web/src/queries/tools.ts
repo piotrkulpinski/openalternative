@@ -17,6 +17,7 @@ export const getToolsQuery = gql(`
       commitDate
       favicon
       screenshot
+      isFeatured
       category {
         id
         name

@@ -21,16 +21,30 @@ const { class: className, ...props } = Astro.props
     )
   }
 
-  <div class:list={["ml-auto text-sm max-sm:hidden", listVariants({ size: "lg" })]}>
-    <a href="https://buy.stripe.com/3cs7uy3zDdxyg7u9AA" class={linkVariants()} target="_blank">
+  <div class:list={["ml-auto text-gray-600 max-sm:hidden", listVariants({ size: "lg" })]}>
+    <a
+      href="/categories"
+      class:list={["hover:text-black", pathname.includes("categor") && "font-semibold"]}
+    >
+      Categories
+    </a>
+    <a
+      href="/alternatives"
+      class:list={["hover:text-black", pathname.includes("alternative") && "font-semibold"]}
+    >
+      Alternatives
+    </a>
+    <a
+      href="https://buy.stripe.com/3cs7uy3zDdxyg7u9AA"
+      target="_blank"
+      class:list={["hover:text-black"]}
+    >
       Advertise
     </a>
-    <a href="/categories" class={linkVariants()}>Categories</a>
-    <a href="/alternatives" class={linkVariants()}>Alternatives</a>
     <a
       href="https://airtable.com/appcN6nvv5n1GpABK/pagzZyGl6fEI2RWDq/form"
-      class={linkVariants()}
       target="_blank"
+      class:list={["hover:text-black"]}
     >
       Submit
     </a>
