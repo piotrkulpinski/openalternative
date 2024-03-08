@@ -15,8 +15,6 @@ export const getToolsQuery = gql(`
       issues
       license
       commitDate
-      favicon
-      screenshot
       isFeatured
       category {
         id

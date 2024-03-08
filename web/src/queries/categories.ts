@@ -3,7 +3,7 @@ import { gql } from "../.graphql"
 
 export const getCategoriesQuery = gql(`
   query GetCategories {
-    categories {
+    categories(_order_by: "name") {
       id
       name
       slug

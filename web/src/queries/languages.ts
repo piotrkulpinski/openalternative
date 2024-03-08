@@ -3,7 +3,7 @@ import { gql } from "../.graphql"
 
 export const getLanguagesQuery = gql(`
   query GetLanguages {
-    languages {
+    languages(_order_by: "name") {
       id
       name
       slug
