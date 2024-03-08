@@ -3,7 +3,7 @@ import { gql } from "../.graphql"
 
 export const getAlternativesQuery = gql(`
   query GetAlternatives {
-    alternatives {
+    alternatives(_order_by: "name") {
       id
       name
       slug
