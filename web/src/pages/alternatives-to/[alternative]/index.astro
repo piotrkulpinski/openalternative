@@ -57,7 +57,7 @@ const title = `Best Open Source ${alternative.name} Alternatives`
   </Intro>
 
   <Grid>
-    {alternative.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+    {alternative.tools?.map((tool) => <ToolCard tool={tool as unknown as Tool} />)}
     {!alternative.tools?.length && <p>No alternatives found.</p>}
   </Grid>
 </Layout>

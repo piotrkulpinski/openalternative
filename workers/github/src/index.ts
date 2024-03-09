@@ -22,7 +22,11 @@ export default {
 
       // Fetch all records/repos
       await table
-        .select({ pageSize: 50 })
+        .select({
+          fields: ["Repository"],
+          filterByFormula: "{Is Draft} = FALSE()",
+          pageSize: 50,
+        })
         .eachPage((records, fetchNextPage) => {
           for (const record of records) {
             repos.push({

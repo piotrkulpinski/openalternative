@@ -35,7 +35,7 @@ const title = `Best Open Source ${category.name} Tools`
   </Intro>
 
   <Grid>
-    {category.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+    {category.tools?.map((tool) => <ToolCard tool={tool as unknown as Tool} />)}
     {!category.tools?.length && <p>No tools found.</p>}
   </Grid>
 </Layout>
