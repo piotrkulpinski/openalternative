@@ -1,7 +1,7 @@
 ---
+import PHBadge from "~/images/ph-badge.svg?raw"
 import Layout from "~/layouts/Layout.astro"
 import ToolCard from "~/components/cards/ToolCard.astro"
-import Card from "~/components/Card.astro"
 import { client } from "~/services/apollo"
 import { getToolsQuery } from "~/queries/tools"
 import type { RemoveNull } from "~/env"
@@ -9,7 +9,7 @@ import Grid from "~/components/Grid.astro"
 import Intro from "~/components/Intro.astro"
 import { buttonVariants, inputVariants, listVariants } from "~/styles"
 import { config } from "~/config"
-import { Blocks, DollarSign, Mail, Plus } from "lucide-astro"
+import { Mail } from "lucide-astro"
 import { Image } from "astro:assets"
 
 const { data } = await client.query({
@@ -29,19 +29,6 @@ const tools = data.tools as RemoveNull<typeof data.tools>
     </h2>
 
     <div class={listVariants()}>
-      <a
-        href="https://www.producthunt.com/posts/openalternative?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-openalternative"
-        target="_blank"
-      >
-        <Image
-          src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=443404&theme=light"
-          alt="OpenAlternative - Discover open source alternatives to popular software | Product Hunt"
-          style="width: 176px; height: 38px;"
-          width="176"
-          height="38"
-        />
-      </a>
-
       <form
         method="POST"
         action="https://assets.mailerlite.com/jsonp/860414/forms/115156283238123220/subscribe"
