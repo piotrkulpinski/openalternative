@@ -19,8 +19,6 @@ export const getTopicsQuery = gql(`
         issues
         license
         commitDate
-        favicon
-        screenshot
         category {
           id
           name
