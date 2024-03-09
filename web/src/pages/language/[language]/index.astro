@@ -35,7 +35,7 @@ const title = `Top ${language.name} Open Source Projects`
   </Intro>
 
   <Grid>
-    {language.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+    {language.tools?.map((tool) => <ToolCard tool={tool as unknown as Tool} />)}
     {!language.tools?.length && <p>No tools found.</p>}
   </Grid>
 </Layout>

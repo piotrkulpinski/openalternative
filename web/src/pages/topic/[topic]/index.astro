@@ -35,7 +35,7 @@ const title = `Best Open Source Projects using ${topic.name}`
   </Intro>
 
   <Grid>
-    {topic.tools?.map((tool) => <ToolCard tool={tool as Tool} />)}
+    {topic.tools?.map((tool) => <ToolCard tool={tool as unknown as Tool} />)}
     {!topic.tools?.length && <p>No tools found.</p>}
   </Grid>
 </Layout>
