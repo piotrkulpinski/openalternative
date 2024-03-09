@@ -21,8 +21,6 @@ export const getAlternativesQuery = gql(`
         issues
         license
         commitDate
-        favicon
-        screenshot
         category {
           id
           name

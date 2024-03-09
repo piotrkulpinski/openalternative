@@ -19,8 +19,6 @@ export const getLanguagesQuery = gql(`
         issues
         license
         commitDate
-        favicon
-        screenshot
         category {
           id
           name
