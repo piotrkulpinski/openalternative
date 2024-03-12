@@ -26,6 +26,18 @@ Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page
 
 Any static assets, like images, can be placed in the `public/` directory.
 
+## Airtable
+
+The project is built on top of [Airtable](https://airtable.com) database. This allows me to quickly make changes and make use of the vast amount of extensions that Airtable has to offer.
+
+In order to build your own version of this project, you will need to create your own Airtable base and fill in the environment variables with the appropriate values.
+
+Easiest way to start is to duplicate the base I have created:
+
+```
+https://airtable.com/appBvWPZiYx4MPh6J/shrSwSYHdS3H7W2wL
+```
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
