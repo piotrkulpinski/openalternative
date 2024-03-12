@@ -9,7 +9,7 @@ type Props = HTMLAttributes<"div"> & {
 const { class: className, title, ...props } = Astro.props
 ---
 
-<div class:list={[className, listVariants({ direction: "column", size: "lg" })]} {...props}>
+<div class:list={[className, "gap-y-7", listVariants({ direction: "column" })]} {...props}>
   {
     title && (
       <div class={listVariants({ size: "lg" })}>
@@ -22,17 +22,11 @@ const { class: className, title, ...props } = Astro.props
 
   {
     Astro.slots.has("description") && (
-      <div class="prose prose-zinc prose-a:no-underline prose-lg text-gray-600 leading-normal">
+      <div class="-mt-4 prose prose-zinc prose-a:no-underline prose-lg text-gray-600 leading-normal">
         <slot name="description" />
       </div>
     )
   }
 
-  {
-    Astro.slots.has("default") && (
-      <div class:list={["mt-4", listVariants()]}>
-        <slot />
-      </div>
-    )
-  }
+  <slot />
 </div>
