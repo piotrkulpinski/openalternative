@@ -1,16 +1,16 @@
 ---
-import PHBadge from "~/images/ph-badge.svg?raw"
-import Layout from "~/layouts/Layout.astro"
-import ToolCard from "~/components/cards/ToolCard.astro"
-import { client } from "~/services/apollo"
-import { getToolsQuery } from "~/queries/tools"
-import type { RemoveNull } from "~/env"
+import { Image } from "astro:assets"
+import { Mail } from "lucide-astro"
 import Grid from "~/components/Grid.astro"
 import Intro from "~/components/Intro.astro"
-import { buttonVariants, inputVariants, listVariants } from "~/styles"
+import ToolCard from "~/components/cards/ToolCard.astro"
 import { config } from "~/config"
-import { Mail } from "lucide-astro"
-import { Image } from "astro:assets"
+import type { RemoveNull } from "~/env"
+import PHBadge from "~/images/ph-badge.svg?raw"
+import Layout from "~/layouts/Layout.astro"
+import { getToolsQuery } from "~/queries/tools"
+import { client } from "~/services/apollo"
+import { buttonVariants, inputVariants, listVariants } from "~/styles"
 
 const { data } = await client.query({
   query: getToolsQuery,
@@ -28,31 +28,83 @@ const tools = data.tools as RemoveNull<typeof data.tools>
       requires in day-to-day operations.
     </h2>
 
-    <div class={listVariants()}>
-      <form
-        method="POST"
-        action="https://assets.mailerlite.com/jsonp/860414/forms/115156283238123220/subscribe"
-        target="_blank"
-        class={listVariants({ size: "sm" })}
-      >
-        <input type="hidden" name="ml-submit" value="1" aria-invalid="false" />
-        <div class="relative">
-          <Mail
-            class="absolute left-3 top-1/2 z-10 size-4 opacity-75 pointer-events-none -translate-y-1/2"
+    <form
+      method="POST"
+      action="https://assets.mailerlite.com/jsonp/860414/forms/115156283238123220/subscribe"
+      target="_blank"
+      class={listVariants({ size: "sm" })}
+    >
+      <input type="hidden" name="ml-submit" value="1" aria-invalid="false" />
+      <div class="relative">
+        <Mail
+          class="absolute left-3 top-1/2 z-10 size-4 opacity-75 pointer-events-none -translate-y-1/2"
+        />
+        <input
+          type="email"
+          name="fields[email]"
+          data-inputmask=""
+          placeholder="Get weekly newsletter"
+          autocomplete="email"
+          aria-invalid="false"
+          required
+          class={inputVariants({ className: "pl-9" })}
+        />
+      </div>
+      <button type="submit" class={buttonVariants({ theme: "primary" })}>Subscribe</button>
+    </form>
+
+    <div class={listVariants({ direction: "column" })}>
+      <span class="text-[10px] text-gray-500 uppercase tracking-wide">Featured on</span>
+
+      <div class={listVariants({ className: "md:gap-x-6" })}>
+        <a
+          href="https://www.producthunt.com/posts/openalternative"
+          target="_blank"
+          class:list={[
+            "font-medium text-sm opacity-60 grayscale hover:opacity-100 hover:grayscale-0",
+            listVariants({ size: "sm" }),
+          ]}
+        >
+          <Image
+            src="/producthunt.svg"
+            width="24"
+            height="24"
+            alt="Product Hunt"
+            class="rounded-full"
           />
-          <input
-            type="email"
-            name="fields[email]"
-            data-inputmask=""
-            placeholder="Get weekly newsletter"
-            autocomplete="email"
-            aria-invalid="false"
-            required
-            class={inputVariants({ className: "pl-9" })}
+          Product Hunt
+        </a>
+
+        <a
+          href="https://news.ycombinator.com/item?id=39639386"
+          target="_blank"
+          class:list={[
+            "font-medium text-sm opacity-60 grayscale hover:opacity-100 hover:grayscale-0",
+            listVariants({ size: "sm" }),
+          ]}
+        >
+          <Image
+            src="/hackernews.svg"
+            width="24"
+            height="24"
+            alt="Hacker News"
+            class="rounded-full"
           />
-        </div>
-        <button type="submit" class={buttonVariants({ theme: "primary" })}>Subscribe</button>
-      </form>
+          Hacker News
+        </a>
+
+        <a
+          href="https://twitter.com/steventey/status/1765841867017437599"
+          target="_blank"
+          class:list={[
+            "font-medium text-sm opacity-60 grayscale hover:opacity-100 hover:grayscale-0",
+            listVariants({ size: "sm" }),
+          ]}
+        >
+          <Image src="/twitter.svg" width="24" height="24" alt="Twitter" class="rounded-full" />
+          Twitter
+        </a>
+      </div>
     </div>
   </Intro>
 
