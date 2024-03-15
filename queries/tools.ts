@@ -9,12 +9,7 @@ export const getToolsQuery = gql(`
       slug
       description
       website
-      repository
-      forks
       stars
-      issues
-      license
-      commitDate
       category {
         id
         name
