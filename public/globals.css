@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection {
+  @apply bg-primary;
+  @apply text-white;
+}
+
+:root {
+  --headline-font-features: "case", "ss01", "ss03", "cv01", "cv06", "cv10";
+  --body-font-features: "case", "ss01", "ss03";
+}
+
+body {
+  font-feature-settings: var(--body-font-features);
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-feature-settings: var(--heading-font-features);
+}
+
+a,
+button,
+label[for],
+[class*="group-hover"] {
+  @apply transition;
+  @apply ease-out;
+  @apply duration-150;
+  @apply cursor-pointer;
+}
+
+/* SVG Icons */
+svg[stroke="currentColor"]:not([class*="stroke"]) {
+  @apply stroke-[1.5];
+}
+
+svg[stroke="currentColor"]:not([class*="size"]) {
+  @apply size-icon;
+}
+
+.card {
+  animation: fade-in linear forwards;
+  animation-timeline: view();
+  animation-range-start: 0;
+  animation-range-end: 25%;
+  transform-style: preserve-3d;
+}
+
+@keyframes fade-in {
+  from {
+    scale: 0.9;
+    opacity: 0;
+    transform: translateY(20px) perspective(250px) rotateX(-15deg);
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+    transform: translateY(0) perspective(500px) rotateX(0deg);
+  }
+}

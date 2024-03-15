@@ -1,0 +1,10 @@
+[
+  {
+    "label": "Dev Server",
+    "command": "bun dev"
+  },
+  {
+    "label": "Codegen Watch",
+    "command": "bun codegen:watch"
+  }
+]
