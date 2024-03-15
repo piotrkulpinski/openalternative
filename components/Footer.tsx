@@ -1,8 +1,8 @@
 import { Heading, Series, cx } from "@curiousleaf/design"
-import { HTMLAttributes } from "react"
-import { Logo } from "./Logo"
-import { config } from "~/config"
 import Link from "next/link"
+import { HTMLAttributes } from "react"
+import { config } from "~/config"
+import { Logo } from "./Logo"
 
 export const Footer = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const alternatives = [
@@ -59,11 +59,25 @@ export const Footer = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           Explore
         </Heading>
 
-        <Link href="/about">About Us</Link>
-        <Link href="/categories">Categories</Link>
-        <Link href="/alternatives">Alternatives</Link>
-        <Link href="/languages">Languages</Link>
-        <Link href="/topics">Topics</Link>
+        <Link href="/about" prefetch={false}>
+          About Us
+        </Link>
+
+        <Link href="/categories" prefetch={false}>
+          Categories
+        </Link>
+
+        <Link href="/alternatives" prefetch={false}>
+          Alternatives
+        </Link>
+
+        <Link href="/languages" prefetch={false}>
+          Languages
+        </Link>
+
+        <Link href="/topics" prefetch={false}>
+          Topics
+        </Link>
       </Series>
 
       <Series direction="column" className="text-sm">
@@ -72,7 +86,11 @@ export const Footer = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         </Heading>
 
         {alternatives.map((alternative) => (
-          <Link key={alternative.slug} href={`/alternatives-to/${alternative.slug}`}>
+          <Link
+            key={alternative.slug}
+            href={`/alternatives-to/${alternative.slug}`}
+            prefetch={false}
+          >
             {alternative.name} Alternatives
           </Link>
         ))}

@@ -1,17 +1,17 @@
-import { format } from "timeago.js"
-import Link from "next/link"
-import Image from "next/image"
 import { Badge, Button, Card, CardPanel, Series } from "@curiousleaf/design"
 import { BugIcon, ExternalLinkIcon, GitForkIcon, GithubIcon, StarIcon } from "lucide-react"
+import { Metadata } from "next"
+import Image from "next/image"
+import Link from "next/link"
 import { notFound } from "next/navigation"
+import { cache } from "react"
+import { format } from "timeago.js"
+import { Box } from "~/components/Box"
+import { Favicon } from "~/components/Favicon"
+import { StaticPattern } from "~/components/pattern/StaticPattern"
 import { getToolQuery, getToolsQuery } from "~/queries/tools"
 import { getClient } from "~/services/apollo"
 import { getScreenshotUrl } from "~/services/screenshotone"
-import { Favicon } from "~/components/Favicon"
-import { Box } from "~/components/Box"
-import { StaticPattern } from "~/components/pattern/StaticPattern"
-import { cache } from "react"
-import { Metadata } from "next"
 import { parseMetadata } from "~/utils/metadata"
 
 export const dynamicParams = false
@@ -203,6 +203,7 @@ export default async function ToolPage({ params: { slug } }: PageParams) {
                         key={item?.id}
                         href={`/${tag.path}/${item?.slug}`}
                         className="border-b border-purple/20 bg-purple/[0.05] px-0.5 text-black/75 hover:bg-purple/10 hover:text-black"
+                        prefetch={false}
                       >
                         {item?.name}
                       </Link>
