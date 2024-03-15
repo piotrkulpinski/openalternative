@@ -1,5 +1,6 @@
 import { Container } from "@curiousleaf/design"
 import dynamic from "next/dynamic"
+import Script from "next/script"
 import type { Metadata } from "next"
 import { PostHogProvider } from "~/providers/PostHogProvider"
 import { Inter } from "next/font/google"
@@ -10,6 +11,7 @@ import { config } from "~/config"
 import { parseMetadata } from "~/utils/metadata"
 
 import "~/public/globals.css"
+import { env } from "~/env"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -34,11 +36,34 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <Footer />
           </Container>
 
-          <script
+          <Script
             src="https://beamanalytics.b-cdn.net/beam.min.js"
             data-token="9313d25a-c312-4908-ae7a-8622d8f0677a"
             async
           />
+
+          <Script
+            data-name="BMC-Widget"
+            data-cfasync="false"
+            src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+            data-id="piotrkulpinski"
+            data-description="Support me on Buy me a coffee!"
+            data-message=""
+            data-color="#FF6154"
+            data-position="Right"
+            data-x_margin="18"
+            data-y_margin="18"
+          />
+
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-8KPPXJCSJY" />
+          <Script id="google-analytics">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${env.NEXT_PUBLIC_GA_KEY}');
+            `}
+          </Script>
         </body>
       </PostHogProvider>
     </html>

@@ -29,6 +29,7 @@ export const env = createEnv({
    * For them to be exposed to the client, prefix them with `NEXT_PUBLIC_`.
    */
   client: {
+    NEXT_PUBLIC_GA_KEY: z.string().min(1),
     NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().url().min(1),
   },
@@ -39,6 +40,7 @@ export const env = createEnv({
   experimental__runtimeEnv: {
     PORT: process.env.PORT,
     VERCEL_URL: process.env.VERCEL_URL,
+    NEXT_PUBLIC_GA_KEY: process.env.NEXT_PUBLIC_GA_KEY,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
   },
