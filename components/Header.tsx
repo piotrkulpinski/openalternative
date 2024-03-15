@@ -1,11 +1,11 @@
 "use client"
 
 import { Series, cx } from "@curiousleaf/design"
-import { HTMLAttributes } from "react"
-import { Logo } from "./Logo"
-import { config } from "~/config"
-import { usePathname } from "next/navigation"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { HTMLAttributes } from "react"
+import { config } from "~/config"
+import { Logo } from "./Logo"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const pathname = usePathname()
@@ -40,6 +40,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             href={link.href}
             target={link.target}
             className={cx("hover:text-black", pathname.includes(link.href) && "font-semibold")}
+            prefetch={false}
           >
             {link.label}
           </Link>

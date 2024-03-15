@@ -1,10 +1,10 @@
 "use client"
 
-import { cx, Card as CardRoot, CardPanel } from "@curiousleaf/design"
+import { CardPanel, Card as CardRoot, cx } from "@curiousleaf/design"
+import { useMotionValue } from "framer-motion"
 import Link from "next/link"
 import { HTMLAttributes } from "react"
 import { DynamicPattern } from "./pattern/DynamicPattern"
-import { useMotionValue } from "framer-motion"
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   href: string
@@ -23,7 +23,7 @@ export const Card = ({ className, href, ...props }: CardProps) => {
 
   return (
     <CardRoot className="card group hover:bg-gray-50" onMouseMove={onMouseMove} asChild>
-      <Link href={href}>
+      <Link href={href} prefetch={false}>
         <CardPanel
           className={cx("relative z-10 flex flex-1 flex-col items-start gap-4", className)}
           {...props}
