@@ -1,8 +1,8 @@
 import { Series } from "@curiousleaf/design"
-import { Card } from "~/components/Card"
-import { Favicon } from "../Favicon"
 import { ComponentPropsWithoutRef } from "react"
+import { Card } from "~/components/Card"
 import { Alternative } from "~/queries/alternatives"
+import { Favicon } from "../Favicon"
 
 type AlternativeCardProps = Omit<ComponentPropsWithoutRef<typeof Card>, "href"> & {
   alternative: Partial<Alternative>

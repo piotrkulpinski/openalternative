@@ -12,6 +12,7 @@ import { StaticPattern } from "~/components/pattern/StaticPattern"
 import { getToolQuery, getToolsQuery } from "~/queries/tools"
 import { getClient } from "~/services/apollo"
 import { getScreenshotUrl } from "~/services/screenshotone"
+import { addSearchParamsToUrl } from "~/utils/helpers"
 import { parseMetadata } from "~/utils/metadata"
 
 export const dynamicParams = false
@@ -153,7 +154,7 @@ export default async function ToolPage({ params: { slug } }: PageParams) {
                 asChild
               >
                 <Link
-                  href={`${tool.website}?ref=openalternative`}
+                  href={addSearchParamsToUrl(tool.website, { ref: "openalternative" })}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
