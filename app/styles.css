@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS */
+:root {
+  font-family: Inter, sans-serif;
+  font-feature-settings:
+    "liga" 1,
+    /* Contextual Alternates */ "calt" 1,
+    /* Discretionary Ligatures */ "dlig" 1,
+    /* fSquare punctuation */ "ss07" 1,
+    /* Square quotes */ "ss08" 1,
+    /* Slashed zero */ "zero" 1,
+    /* Tabular numbers */ "tnum" 1,
+    /* Open six */ "cv03" 1,
+    /* Open nine */ "cv04" 1,
+    /* Alternate one */ "cv01" 1,
+    /* Flat-top three */ "cv09",
+    /* Open 4 */ "cv02" 1;
+}
+
+@supports (font-variation-settings: normal) {
+  /* Use variable font if supported */
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}
