@@ -92,7 +92,7 @@ export default async function About() {
 
         <p>
           Screenshots are generated automatically with{" "}
-          <a href="https://screenshotone.com" target="_blank" title="Screenshot API">
+          <a href="https://go.kulpinski.dev/screenshotone" target="_blank" title="Screenshot API">
             ScreenshotOne
           </a>
           . Highly recommended service for generating screenshots of websites.
