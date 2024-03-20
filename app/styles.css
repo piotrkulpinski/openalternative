@@ -26,3 +26,32 @@
     font-family: InterVariable, sans-serif;
   }
 }
+
+.dotted {
+  background-image: radial-gradient(circle at 1px 1px, hsla(240, 8%, 70%, 0.25) 1px, transparent 0);
+  background-size: 15px 15px;
+  background-position: 5px 5px;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent);
+  mask-image: linear-gradient(180deg, #000, transparent);
+}
+
+.fade-in {
+  animation: fade-in linear forwards;
+  animation-timeline: view();
+  animation-range-start: 0;
+  animation-range-end: 10%;
+  transform-style: preserve-3d;
+}
+
+@keyframes fade-in {
+  from {
+    scale: 0.9;
+    opacity: 0;
+    transform: translateY(20px) perspective(250px) rotateX(-15deg);
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+    transform: translateY(0) perspective(500px) rotateX(0deg);
+  }
+}

@@ -8,16 +8,29 @@
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@curiousleaf/utils": "^1.0.19",
+    "@libsql/client": "^0.5.6",
+    "@octokit/graphql": "^8.0.1",
+    "@prisma/adapter-libsql": "^5.11.0",
+    "@prisma/client": "^5.11.0",
+    "@radix-ui/react-slot": "^1.0.2",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
+    "@sindresorhus/slugify": "^2.2.1",
     "cva": "beta",
     "isbot": "^4.1.0",
+    "lucide-react": "^0.359.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "remix-typedjson": "^0.4.1",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.8.1",
@@ -34,6 +47,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.37",
+    "prisma": "^5.11.0",
     "supabase": "^1.150.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.1.6",
