@@ -46,8 +46,6 @@ export const Card = ({ ...props }: CardProps) => {
 
         {children}
       </div>
-
-      <div className="dotted absolute inset-0 z-0 dark:invert" />
     </NavLink>
   )
 }

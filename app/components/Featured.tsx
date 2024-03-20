@@ -24,6 +24,22 @@ export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) =
         </a>
 
         <a
+          href="https://www.indiehackers.com/post/how-i-grew-a-side-project-to-100k-unique-visitors-in-7-days-with-0-audience-15d48ea192"
+          target="_blank"
+          rel="nofollow noreferrer"
+          className="flex flex-wrap items-center gap-x-2 text-sm font-medium opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+        >
+          <img
+            src="/indiehackers.svg"
+            width="24"
+            height="24"
+            alt="Indie Hackers"
+            className="rounded-full"
+          />
+          Indie Hackers
+        </a>
+
+        <a
           href="https://news.ycombinator.com/item?id=39639386"
           target="_blank"
           rel="nofollow noreferrer"
@@ -47,22 +63,6 @@ export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) =
         >
           <img src="/twitter.svg" width="24" height="24" alt="Twitter" className="rounded-full" />
           Twitter
-        </a>
-
-        <a
-          href="https://www.indiehackers.com/post/how-i-grew-a-side-project-to-100k-unique-visitors-in-7-days-with-0-audience-15d48ea192"
-          target="_blank"
-          rel="nofollow noreferrer"
-          className="flex flex-wrap items-center gap-x-2 text-sm font-medium opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
-        >
-          <img
-            src="/indiehackers.svg"
-            width="24"
-            height="24"
-            alt="Indie Hackers"
-            className="rounded-full"
-          />
-          Indie Hackers
         </a>
       </div>
     </div>

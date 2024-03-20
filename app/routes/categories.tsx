@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { CardSimple } from "~/components/CardSimple"
 import { Intro } from "~/components/Intro"
-import { CategoryRecord } from "~/components/records/CategoryRecord"
 import { categoryManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 
@@ -30,7 +30,12 @@ export default function Index() {
 
       <div className="grid grid-cols-3 gap-8">
         {categories.map((category) => (
-          <CategoryRecord key={category.id} category={category} />
+          <CardSimple
+            key={category.id}
+            to={`/categories/${category.slug}`}
+            label={category.name}
+            caption={`${category.tools.length} tools`}
+          />
         ))}
       </div>
     </>

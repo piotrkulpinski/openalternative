@@ -1,7 +1,6 @@
 import type { MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { Intro } from "~/components/Intro"
-import { TopicRecord } from "~/components/records/TopicRecord"
 import { topicManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 
@@ -30,7 +29,12 @@ export default function Index() {
 
       <div className="grid grid-cols-3 gap-8">
         {topics.map((topic) => (
-          <TopicRecord key={topic.id} topic={topic} />
+          <CardSimple
+            key={topic.id}
+            to={`/topics/${topic.slug}`}
+            label={topic.name}
+            caption={`${topic.tools.length} tools`}
+          />
         ))}
       </div>
     </>

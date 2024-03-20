@@ -26,11 +26,13 @@
     "@sindresorhus/slugify": "^2.2.1",
     "cva": "beta",
     "isbot": "^4.1.0",
+    "ky": "^1.2.2",
     "lucide-react": "^0.359.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix-typedjson": "^0.4.1",
-    "timeago.js": "^4.0.2"
+    "timeago.js": "^4.0.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.8.1",

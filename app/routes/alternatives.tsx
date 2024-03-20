@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { Card } from "~/components/Card"
 import { Intro } from "~/components/Intro"
-import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { alternativeManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 
@@ -30,7 +30,13 @@ export default function Index() {
 
       <div className="grid grid-cols-3 gap-6">
         {alternatives.map((alternative) => (
-          <AlternativeRecord key={alternative.id} alternative={alternative} />
+          <Card
+            key={alternative.id}
+            to={`/alternatives-to/${alternative.slug}`}
+            name={alternative.name}
+            description={alternative.description}
+            website={alternative.website}
+          />
         ))}
       </div>
     </>

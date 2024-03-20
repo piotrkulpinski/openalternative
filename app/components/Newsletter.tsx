@@ -1,29 +1,11 @@
+import { useFetcher } from "@remix-run/react"
 import { cx } from "cva"
-import { FormEventHandler, HTMLAttributes, useState } from "react"
-import { Loader } from "./Loader"
+import { LoaderIcon } from "lucide-react"
+import { HTMLAttributes } from "react"
 
 export const Newsletter = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
-  const [responseMessage, setResponseMessage] = useState("")
-  const [isPending, setPending] = useState(false)
-
-  const onSubmit: FormEventHandler = async (e) => {
-    e.preventDefault()
-    setPending(true)
-
-    const formData = new FormData(e.target as HTMLFormElement)
-
-    const response = await fetch("/api/subscribe", {
-      method: "POST",
-      body: formData,
-    })
-
-    const data = await response.json()
-
-    if (data.message) {
-      setResponseMessage(data.message)
-      setPending(false)
-    }
-  }
+  const fetcher = useFetcher()
+  const data = fetcher.data as { success: boolean; message: string } | undefined
 
   return (
     <section className={cx("mt-auto space-y-1", className)} {...props}>
@@ -33,15 +15,13 @@ export const Newsletter = ({ children, className, ...props }: HTMLAttributes<HTM
         Get updates on new tools, alternatives, and other cool stuff.
       </p>
 
-      <div className="!mt-4">
-        {responseMessage && <p className="text-sm text-green-600">{responseMessage}</p>}
-
-        {!responseMessage && (
-          <form
-            method="post"
-            action="https://dashboard.mailerlite.com/jsonp/875209/forms/116159593851127329/subscribe"
+      <div className="!mt-4 space-y-2">
+        {!data?.success && (
+          <fetcher.Form
+            method="POST"
+            action="/api/subscribe"
             className="relative w-full max-w-xs"
-            onSubmit={onSubmit}
+            noValidate
           >
             <input
               name="email"
@@ -53,9 +33,21 @@ export const Newsletter = ({ children, className, ...props }: HTMLAttributes<HTM
             />
 
             <button className="absolute inset-y-1 right-1 inline-flex items-center justify-center rounded bg-current px-3 py-1 text-[13px] duration-200 hover:opacity-80">
-              <span className="invert">{isPending ? <Loader /> : "Subscribe"}</span>
+              <span className="invert">
+                {fetcher.state === "submitting" ? (
+                  <LoaderIcon className="size-4 animate-spin" />
+                ) : (
+                  "Subscribe"
+                )}
+              </span>
             </button>
-          </form>
+          </fetcher.Form>
+        )}
+
+        {data?.message && (
+          <p className={cx("text-sm", data.success ? "text-green-600" : "text-red-600")}>
+            {data.message}
+          </p>
         )}
       </div>
 

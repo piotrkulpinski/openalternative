@@ -1,6 +1,7 @@
 import type { MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { Featured } from "~/components/Featured"
+import { Grid } from "~/components/Grid"
 import { Prose } from "~/components/Prose"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { prisma } from "~/services.server/prisma"
@@ -33,11 +34,11 @@ export default function Index() {
         <Featured />
       </section>
 
-      <div className="grid grid-cols-3 gap-6">
+      <Grid>
         {tools.map((tool) => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
-      </div>
+      </Grid>
     </>
   )
 }
