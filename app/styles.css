@@ -29,8 +29,8 @@
 
 .dotted {
   background-image: radial-gradient(circle at 1px 1px, hsla(240, 8%, 70%, 0.25) 1px, transparent 0);
-  background-size: 15px 15px;
-  background-position: 5px 5px;
+  background-size: 20px 20px;
+  background-position: center 5px;
   -webkit-mask-image: linear-gradient(180deg, #000, transparent);
   mask-image: linear-gradient(180deg, #000, transparent);
 }
