@@ -1,6 +1,6 @@
 import { NavLink, type NavLinkProps } from "@remix-run/react"
-import { cx } from "cva"
 import { HTMLAttributes } from "react"
+import { cx } from "~/utils/cva"
 import { Favicon } from "./Favicon"
 
 type CardProps = HTMLAttributes<HTMLElement> &

@@ -1,5 +1,5 @@
-import { cx } from "cva"
 import { HTMLAttributes } from "react"
+import { cx } from "~/utils/cva"
 
 type FaviconProps = HTMLAttributes<HTMLDivElement> & {
   url: string | null
@@ -11,21 +11,28 @@ export const Favicon = ({ className, url, ...props }: FaviconProps) => {
   return (
     <div
       className={cx(
-        "flex size-9 items-center justify-center rounded-md bg-white p-1 shadow-md shadow-neutral-800/5 ring-1 ring-neutral-900/5 dark:bg-neutral-900 dark:ring-1 dark:ring-neutral-700/50",
+        "flex size-9 items-center justify-center rounded-md border bg-white p-1 dark:border-neutral-700 dark:bg-neutral-900",
         className
       )}
       {...props}
     >
-      <img
-        alt=""
-        loading="eager"
-        width="64"
-        height="64"
-        decoding="async"
-        data-nimg="1"
-        className="aspect-square size-full rounded"
-        src={`https://www.google.com/s2/favicons?sz=128&domain_url=${url}`}
-      />
+      <FaviconImage url={url} className="size-full" />
     </div>
+  )
+}
+
+export const FaviconImage = ({ className, url, ...props }: FaviconProps) => {
+  if (!url) return null
+
+  return (
+    <img
+      alt=""
+      loading="eager"
+      width="64"
+      height="64"
+      className={cx("aspect-square size-9 rounded", className)}
+      src={`https://www.google.com/s2/favicons?sz=128&domain_url=${url}`}
+      {...props}
+    />
   )
 }

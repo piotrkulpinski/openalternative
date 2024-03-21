@@ -2,7 +2,7 @@ import { Slot } from "@radix-ui/react-slot"
 import type { HTMLAttributes } from "react"
 import { forwardRef, isValidElement } from "react"
 
-import { VariantProps, cva, cx } from "cva"
+import { VariantProps, cva, cx } from "~/utils/cva"
 
 const seriesVariants = cva({
   base: "flex",

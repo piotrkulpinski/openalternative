@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "@remix-run/react"
-import { cx } from "cva"
 import { HTMLAttributes } from "react"
+import { cx } from "~/utils/cva"
 
 export const Navigation = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const { pathname } = useLocation()

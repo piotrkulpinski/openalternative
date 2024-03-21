@@ -1,5 +1,5 @@
 import { NavLink, NavLinkProps } from "@remix-run/react"
-import { cx } from "cva"
+import { cx } from "~/utils/cva"
 
 type CardSimpleProps = NavLinkProps & {
   label: string

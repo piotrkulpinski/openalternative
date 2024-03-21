@@ -1,9 +1,10 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
+import { CopyrightIcon, GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { format } from "timeago.js"
-import { Favicon } from "~/components/Favicon"
+import { FaviconImage } from "~/components/Favicon"
+import { Insights } from "~/components/Insights"
 import { Intro } from "~/components/Intro"
-import { Series } from "~/components/Series"
 import { toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 
@@ -27,23 +28,23 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 export default function ToolPage() {
   const { tool } = useTypedLoaderData<typeof loader>()
 
+  const insights = [
+    { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
+    { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
+    { label: "Last commit", value: format(tool.lastCommitDate ?? ""), icon: TimerIcon },
+    { label: "License", value: tool.license, icon: CopyrightIcon },
+  ]
+
   return (
-    <>
-      <Intro
-        prefix={<Favicon url={tool.website} />}
-        title={tool.name}
-        description={tool.description}
-      />
+    <div className="flex flex-wrap gap-12">
+      <div className="flex-1">
+        <Intro
+          prefix={<FaviconImage url={tool.website} />}
+          title={tool.name}
+          description={tool.description}
+        />
 
-      <div className="relative flex flex-col items-start gap-4 overflow-clip rounded-md border bg-neutral-50 p-5 dark:border-neutral-700/50 dark:bg-neutral-800/40">
-        <div className="flex flex-1 flex-col gap-6">
-          <Series size="lg">
-            <Favicon url={tool.website} />
-
-            <h1 className="text-3xl font-semibold">{tool.name}</h1>
-          </Series>
-
-          {/* <Series size="sm" className="md:-mt-2" asChild>
+        {/* <Series size="sm" className="md:-mt-2" asChild>
           <ul>
             {
               tool.stars !== null && (
@@ -81,27 +82,9 @@ export default function ToolPage() {
           </ul>
           </Series> */}
 
-          <div className="prose prose-zinc prose-lg !leading-relaxed text-gray-600 md:max-w-sm">
-            <p>{tool.description}</p>
-          </div>
+        <Insights insights={insights} className="text-sm" />
 
-          <ul className="mt-auto space-y-1 text-sm text-gray-500">
-            {tool.commitDate && (
-              <li>
-                Last commited:{" "}
-                <strong className="font-medium text-gray-600" title={tool.commitDate}>
-                  {format(tool.lastCommitDate ?? "")}
-                </strong>
-              </li>
-            )}
-            {tool.license && (
-              <li>
-                License: <strong className="font-medium text-gray-600">{tool.license}</strong>
-              </li>
-            )}
-          </ul>
-
-          {/* <div class:list={["", listVariants({ size: "lg" })]}>
+        {/* <div class:list={["", listVariants({ size: "lg" })]}>
             {
               tool.website && (
                 <a
@@ -131,22 +114,6 @@ export default function ToolPage() {
               )
             }
           </div> */}
-        </div>
-
-        {/* {
-          imageUrl && (
-            <div className="relative z-10 self-start max-md:order-last max-md:-m-4 max-md:mt-0 md:w-2/5 md:p-1.5 md:border md:rounded-md md:bg-white md:shadow lg:w-1/2">
-              <Image
-                src={imageUrl}
-                alt=""
-                width={1280}
-                height={1024}
-                loading="eager"
-                className="rounded w-full h-auto"
-              />
-            </div>
-          )
-        } */}
 
         {/* <div className="flex flex-col gap-8 w-full">
           {
@@ -173,6 +140,21 @@ export default function ToolPage() {
 
         <Pattern width={76} height={56} x="50%" y="-6" squares={[[0, 1]]} className="bottom-auto h-96" /> */}
       </div>
-    </>
+
+      {tool.website && (
+        <div className="relative z-10 self-start max-md:order-last max-md:-m-4 max-md:mt-0 md:w-2/5 md:rounded-md md:border md:p-1.5">
+          <img
+            src={
+              "https://openalternative.co/_next/image?url=https%3A%2F%2Fapi.screenshotone.com%2Ftake%3Furl%3Dhttps%253A%252F%252Fposthog.com%26cache%3Dtrue%26cache_ttl%3D2000000%26block_chats%3Dtrue%26block_trackers%3Dtrue%26block_cookie_banners%3Dtrue%26block_ads%3Dtrue%26access_key%3DoWVNWT8VvhigEQ%26signature%3D7f0e0f90b5375f79368cb0a0492ea1f04255d0757e42706ad9196f29b4829464&w=3840&q=75"
+            }
+            alt=""
+            width={1280}
+            height={1024}
+            loading="eager"
+            className="h-auto w-full rounded"
+          />
+        </div>
+      )}
+    </div>
   )
 }

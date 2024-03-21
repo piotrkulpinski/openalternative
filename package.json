@@ -31,6 +31,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix-typedjson": "^0.4.1",
+    "tailwind-merge": "^2.2.2",
     "timeago.js": "^4.0.2",
     "zod": "^3.22.4"
   },

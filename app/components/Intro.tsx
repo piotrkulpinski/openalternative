@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
-import { cx } from "cva"
 import { HTMLAttributes, ReactNode } from "react"
+import { cx } from "~/utils/cva"
 import { Prose } from "./Prose"
 import { Series } from "./Series"
 

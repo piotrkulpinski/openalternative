@@ -1,6 +1,6 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
-import { Favicon } from "~/components/Favicon"
+import { FaviconImage } from "~/components/Favicon"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
@@ -30,7 +30,7 @@ export default function Index() {
   return (
     <>
       <Intro
-        prefix={<Favicon url={alternative.website} />}
+        prefix={<FaviconImage url={alternative.website} />}
         title={`Best Open Source ${alternative.name} Alternatives`}
         description={
           <>

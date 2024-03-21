@@ -1,7 +1,7 @@
 import { useFetcher } from "@remix-run/react"
-import { cx } from "cva"
 import { LoaderIcon } from "lucide-react"
 import { HTMLAttributes } from "react"
+import { cx } from "~/utils/cva"
 
 export const Newsletter = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   const fetcher = useFetcher()

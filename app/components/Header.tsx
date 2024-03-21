@@ -1,6 +1,6 @@
 import { NavLink } from "@remix-run/react"
-import { cx } from "cva"
 import { HTMLAttributes } from "react"
+import { cx } from "~/utils/cva"
 
 export const Header = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
