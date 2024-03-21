@@ -7,6 +7,7 @@ import { Label } from "~/components/Label"
 import { Button } from "~/components/Button"
 import { SITE_NAME } from "~/utils/constants"
 import { action } from "./api.submit"
+import { TextArea } from "~/components/TextArea"
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -24,25 +25,11 @@ export default function SubmitPage() {
       />
 
       {data?.type !== "success" && (
-        <Prose className="text-pretty text-sm/normal">
-          <h3>Submission Checklist:</h3>
-
-          <p>
-            Please make sure the software you’re submitting meets the following criteria before
-            submitting:
-          </p>
-
-          <ul>
-            <li>It’s open source</li>
-            <li>It’s free to use or can be self-hosted</li>
-            <li>It’s actively maintained</li>
-            <li>It’s a good alternative to a proprietary software</li>
-          </ul>
-
+        <div className="flex flex-col-reverse items-start gap-12 lg:flex-row">
           <Form
             method="POST"
             action="/api/submit"
-            className="not-prose grid-auto-fill-xs mt-12 grid gap-6"
+            className="grid-auto-fill-xs grid w-full max-w-xl gap-6"
             noValidate
           >
             <div>
@@ -105,10 +92,10 @@ export default function SubmitPage() {
                 Description:
               </Label>
 
-              <Input
-                type="text"
+              <TextArea
                 name="description"
                 id="description"
+                rows={3}
                 placeholder="A platform that helps engineers build better products"
                 required
               />
@@ -124,7 +111,18 @@ export default function SubmitPage() {
               </Button>
             </div>
           </Form>
-        </Prose>
+
+          <Prose className="flex-1 text-pretty text-sm/normal">
+            <p>Please make sure the software you’re submitting meets the following criteria:</p>
+
+            <ul>
+              <li>It’s open source</li>
+              <li>It’s free to use or can be self-hosted</li>
+              <li>It’s actively maintained</li>
+              <li>It’s a good alternative to a proprietary software</li>
+            </ul>
+          </Prose>
+        </div>
       )}
 
       {data?.type === "success" && <p className="text-base text-green-600">{data.message}</p>}

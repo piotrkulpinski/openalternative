@@ -1,7 +1,7 @@
 import { InputHTMLAttributes, forwardRef } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
 
-const inputVariants = cva({
+export const inputVariants = cva({
   base: "w-full rounded-md border bg-transparent px-3 py-2 text-[13px] font-medium placeholder:text-inherit placeholder:opacity-40 disabled:opacity-50 dark:border-neutral-700",
 })
 

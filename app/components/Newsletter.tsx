@@ -42,7 +42,7 @@ export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>)
         )}
 
         {data?.type === "error" && (
-          <p className="text-sm text-red-600">{data.error.email?._errors[0]}</p>
+          <p className="text-xs text-red-600">{data.error.email?._errors[0]}</p>
         )}
         {data?.type === "success" && <p className="text-sm text-green-600">{data.message}</p>}
       </div>

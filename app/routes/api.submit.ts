@@ -1,5 +1,7 @@
 import { ActionFunctionArgs, TypedResponse, json } from "@remix-run/node"
+import slugify from "@sindresorhus/slugify"
 import { ZodFormattedError, z } from "zod"
+import { prisma } from "~/services.server/prisma"
 
 const submissionSchema = z.object({
   name: z.string().min(1),
@@ -7,7 +9,10 @@ const submissionSchema = z.object({
   repository: z
     .string()
     .url()
-    .refine((url) => url.includes("github.com"), "The repository must be a GitHub URL."),
+    .refine(
+      (url) => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
+      "The repository must be a valid GitHub URL with owner and repo name."
+    ),
   description: z.string().min(1).max(200),
 })
 
@@ -22,6 +27,21 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
   if (!parsed.success) {
     return json({ type: "error", error: parsed.error.format() })
   }
+
+  // Destructure the parsed data
+  const { name, website, repository, description } = parsed.data
+
+  // Save the tool to the database
+  await prisma.tool.create({
+    data: {
+      name,
+      website,
+      repository,
+      description,
+      slug: slugify(name, { decamelize: false }),
+      isDraft: true,
+    },
+  })
 
   // Return a success response
   return json({ type: "success", message: "Thank you for submitting!" })

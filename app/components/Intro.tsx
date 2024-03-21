@@ -20,7 +20,7 @@ export const Intro = ({ className, title, description, prefix, ...props }: Intro
       </Series>
 
       {description && (
-        <Prose>
+        <Prose className="max-w-none text-pretty">
           <h2 className="lead !font-normal !tracking-normal !text-neutral-600 dark:!text-neutral-400">
             {description}
           </h2>
