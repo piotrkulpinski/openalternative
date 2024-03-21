@@ -4,8 +4,7 @@ import { cx } from "~/utils/cva"
 import { Button } from "./Button"
 
 export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
-  const fetcher = useFetcher()
-  const data = fetcher.data as { success: boolean; message: string } | undefined
+  const { data, state, Form } = useFetcher<{ success: boolean; message: string }>()
 
   return (
     <section className={cx("mt-auto space-y-1", className)} {...props}>
@@ -17,7 +16,7 @@ export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>)
 
       <div className="!mt-4 space-y-2">
         {!data?.success && (
-          <fetcher.Form
+          <Form
             method="POST"
             action="/api/subscribe"
             className="relative w-full max-w-xs"
@@ -32,14 +31,10 @@ export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>)
               required
             />
 
-            <Button
-              size="sm"
-              className="absolute inset-y-1 right-1"
-              isPending={fetcher.state === "submitting"}
-            >
+            <Button size="sm" isPending={state !== "idle"} className="absolute inset-y-1 right-1">
               Subscribe
             </Button>
-          </fetcher.Form>
+          </Form>
         )}
 
         {data?.message && (

@@ -42,7 +42,11 @@ export default function ToolPage() {
   const insights = [
     { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
     { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
-    { label: "Last commit", value: format(tool.lastCommitDate ?? ""), icon: TimerIcon },
+    {
+      label: "Last commit",
+      value: tool.lastCommitDate && format(tool.lastCommitDate),
+      icon: TimerIcon,
+    },
     { label: "License", value: tool.license, icon: CopyrightIcon },
   ]
 
@@ -67,25 +71,20 @@ export default function ToolPage() {
               <Link
                 to={addSearchParamsToUrl(tool.website, { ref: "openalternative" })}
                 target="_blank"
-                rel="noopener noreferrer"
-                id="tool-website"
+                rel="noreferrer"
               >
                 Visit Website
               </Link>
             </Button>
           )}
+
           {tool.repository && (
             <Button
               variant="outline"
               prefix={<GithubIcon className="size-4 opacity-60 max-sm:hidden" />}
               asChild
             >
-              <Link
-                to={tool.repository}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
-                id="tool-repository"
-              >
+              <Link to={tool.repository} target="_blank" rel="noreferrer nofollow">
                 View Repository
               </Link>
             </Button>

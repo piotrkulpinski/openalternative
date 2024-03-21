@@ -13,7 +13,11 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
   const insights = [
     { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
     { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
-    { label: "Last commit", value: format(tool.lastCommitDate ?? ""), icon: TimerIcon },
+    {
+      label: "Last commit",
+      value: tool.lastCommitDate && format(tool.lastCommitDate),
+      icon: TimerIcon,
+    },
   ]
 
   return (
