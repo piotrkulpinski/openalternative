@@ -3,9 +3,11 @@ import { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 import { Button } from "./Button"
 import { H5 } from "./Heading"
+import { Input } from "./Input"
+import { action } from "~/routes/api.subscribe"
 
 export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
-  const { data, state, Form } = useFetcher<{ success: boolean; message: string }>()
+  const { data, state, Form } = useFetcher<typeof action>()
 
   return (
     <section className={cx("space-y-1", className)} {...props}>
@@ -16,20 +18,20 @@ export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>)
       </p>
 
       <div className="!mt-4 space-y-2">
-        {!data?.success && (
+        {data?.type !== "success" && (
           <Form
             method="POST"
             action="/api/subscribe"
             className="relative w-full max-w-xs"
             noValidate
           >
-            <input
-              name="email"
+            <Input
               type="email"
-              className="w-full rounded-md border bg-transparent px-3 py-2 pr-24 text-[13px] font-medium placeholder:text-inherit placeholder:opacity-40 disabled:opacity-50 dark:border-neutral-700"
+              name="email"
               placeholder="Enter your email..."
               data-1p-ignore
               required
+              className="pr-24"
             />
 
             <Button size="sm" isPending={state !== "idle"} className="absolute inset-y-1 right-1">
@@ -38,11 +40,10 @@ export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>)
           </Form>
         )}
 
-        {data?.message && (
-          <p className={cx("text-sm", data.success ? "text-green-600" : "text-red-600")}>
-            {data.message}
-          </p>
+        {data?.type === "error" && (
+          <p className="text-sm text-red-600">{data.error.email?._errors[0]}</p>
         )}
+        {data?.type === "success" && <p className="text-green-600">{data.message}</p>}
       </div>
     </section>
   )

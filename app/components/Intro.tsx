@@ -19,13 +19,13 @@ export const Intro = ({ className, title, description, prefix, ...props }: Intro
         <H1>{title}</H1>
       </Series>
 
-      <Prose>
-        {description && (
+      {description && (
+        <Prose>
           <h2 className="lead !font-normal !tracking-normal !text-neutral-600 dark:!text-neutral-400">
             {description}
           </h2>
-        )}
-      </Prose>
+        </Prose>
+      )}
     </div>
   )
 }

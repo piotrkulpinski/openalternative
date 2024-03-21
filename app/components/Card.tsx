@@ -29,7 +29,9 @@ export const Card = ({ ...props }: CardProps) => {
         <H3 className="truncate">{name}</H3>
 
         {isFeatured && (
-          <div className="ml-auto rounded border bg-neutral-200/60 px-1 py-px text-xs">Ad</div>
+          <div className="ml-auto rounded border bg-neutral-200/60 px-1 py-px text-xs">
+            Promoted
+          </div>
         )}
       </div>
 

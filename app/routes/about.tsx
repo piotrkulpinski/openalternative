@@ -2,7 +2,7 @@ import { SITE_NAME } from "~/utils/constants"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
 
-export default function Index() {
+export default function AboutPage() {
   return (
     <>
       <Intro
