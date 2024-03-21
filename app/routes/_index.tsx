@@ -13,6 +13,7 @@ export const meta: MetaFunction = () => {
 
 export const loader = async () => {
   const tools = await prisma.tool.findMany({
+    where: { isDraft: false },
     orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
     include: toolManyPayload,
   })

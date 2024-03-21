@@ -33,7 +33,7 @@ export default function Index() {
         {alternatives.map((alternative) => (
           <Card
             key={alternative.id}
-            to={`/alternatives-to/${alternative.slug}`}
+            to={`/alternatives/${alternative.slug}`}
             name={alternative.name}
             description={alternative.description}
             website={alternative.website}

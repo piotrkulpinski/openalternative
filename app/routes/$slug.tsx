@@ -27,7 +27,7 @@ export const meta: MetaFunction = () => {
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {
     const tool = await prisma.tool.findUniqueOrThrow({
-      where: { slug },
+      where: { slug, isDraft: false },
       include: toolOnePayload,
     })
 
