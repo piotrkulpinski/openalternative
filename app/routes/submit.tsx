@@ -1,7 +1,7 @@
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
 import { MetaFunction } from "@remix-run/node"
-import { useFetcher } from "@remix-run/react"
+import { useFetcher, useLocation } from "@remix-run/react"
 import { Input } from "~/components/Input"
 import { Label } from "~/components/Label"
 import { Button } from "~/components/Button"
@@ -13,7 +13,8 @@ export const meta: MetaFunction = () => {
 }
 
 export default function SubmitPage() {
-  const { data, state, Form } = useFetcher<typeof action>()
+  const { key } = useLocation()
+  const { data, state, Form } = useFetcher<typeof action>({ key: `submit-${key}` })
 
   return (
     <>
@@ -22,22 +23,22 @@ export default function SubmitPage() {
         description={`Help us grow the list of open source alternatives to proprietary software. Contribute to ${SITE_NAME} by submitting a new open source alternative.`}
       />
 
-      <Prose className="text-pretty text-sm/normal">
-        <h3>Submission Checklist:</h3>
+      {data?.type !== "success" && (
+        <Prose className="text-pretty text-sm/normal">
+          <h3>Submission Checklist:</h3>
 
-        <p>
-          Please make sure the software you’re submitting meets the following criteria before
-          submitting:
-        </p>
+          <p>
+            Please make sure the software you’re submitting meets the following criteria before
+            submitting:
+          </p>
 
-        <ul>
-          <li>It’s open source</li>
-          <li>It’s free to use or can be self-hosted</li>
-          <li>It’s actively maintained</li>
-          <li>It’s a good alternative to a proprietary software</li>
-        </ul>
+          <ul>
+            <li>It’s open source</li>
+            <li>It’s free to use or can be self-hosted</li>
+            <li>It’s actively maintained</li>
+            <li>It’s a good alternative to a proprietary software</li>
+          </ul>
 
-        {data?.type !== "success" && (
           <Form
             method="POST"
             action="/api/submit"
@@ -123,12 +124,10 @@ export default function SubmitPage() {
               </Button>
             </div>
           </Form>
-        )}
+        </Prose>
+      )}
 
-        {data?.type === "success" && (
-          <p className="mt-8 text-base text-green-600">{data.message}</p>
-        )}
-      </Prose>
+      {data?.type === "success" && <p className="text-base text-green-600">{data.message}</p>}
     </>
   )
 }

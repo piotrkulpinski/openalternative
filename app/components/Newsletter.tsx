@@ -1,4 +1,4 @@
-import { useFetcher } from "@remix-run/react"
+import { useFetcher, useLocation } from "@remix-run/react"
 import { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 import { Button } from "./Button"
@@ -7,7 +7,8 @@ import { Input } from "./Input"
 import { action } from "~/routes/api.subscribe"
 
 export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
-  const { data, state, Form } = useFetcher<typeof action>()
+  const { key } = useLocation()
+  const { data, state, Form } = useFetcher<typeof action>({ key: `newsletter-${key}` })
 
   return (
     <section className={cx("space-y-1", className)} {...props}>
@@ -43,7 +44,7 @@ export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>)
         {data?.type === "error" && (
           <p className="text-sm text-red-600">{data.error.email?._errors[0]}</p>
         )}
-        {data?.type === "success" && <p className="text-green-600">{data.message}</p>}
+        {data?.type === "success" && <p className="text-sm text-green-600">{data.message}</p>}
       </div>
     </section>
   )
