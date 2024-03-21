@@ -1,5 +1,6 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
+import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { Favicon } from "~/components/Favicon"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
@@ -11,12 +12,16 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
-  const alternative = await prisma.alternative.findUniqueOrThrow({
-    where: { slug },
-    include: alternativeOnePayload,
-  })
+  try {
+    const alternative = await prisma.alternative.findUniqueOrThrow({
+      where: { slug },
+      include: alternativeOnePayload,
+    })
 
-  return typedjson({ alternative })
+    return typedjson({ alternative })
+  } catch {
+    throw json(null, { status: 404, statusText: "Not Found" })
+  }
 }
 
 export default function Index() {
@@ -25,6 +30,7 @@ export default function Index() {
   return (
     <>
       <Intro
+        prefix={<Favicon url={alternative.website} />}
         title={`Best Open Source ${alternative.name} Alternatives`}
         description={
           <>
@@ -46,6 +52,8 @@ export default function Index() {
         {alternative.tools.map((tool) => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
+
+        {!alternative.tools?.length && <p>No alternatives found.</p>}
       </Grid>
     </>
   )

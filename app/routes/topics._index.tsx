@@ -1,5 +1,6 @@
 import type { MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { CardSimple } from "~/components/CardSimple"
 import { Intro } from "~/components/Intro"
 import { topicManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"

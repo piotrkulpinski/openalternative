@@ -17,7 +17,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
 
   return (
     <Card
-      to={tool.slug}
+      to={`/${tool.slug}`}
       name={tool.name}
       description={tool.description}
       website={tool.website}

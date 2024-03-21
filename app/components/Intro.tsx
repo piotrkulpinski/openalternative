@@ -1,18 +1,24 @@
+import { Slot } from "@radix-ui/react-slot"
 import { cx } from "cva"
 import { HTMLAttributes, ReactNode } from "react"
 import { Prose } from "./Prose"
+import { Series } from "./Series"
 
-type IntroProps = HTMLAttributes<HTMLElement> & {
+type IntroProps = Omit<HTMLAttributes<HTMLElement>, "prefix"> & {
   title: string
   description?: ReactNode
+  prefix?: ReactNode
 }
 
-export const Intro = ({ className, title, description, ...props }: IntroProps) => {
+export const Intro = ({ className, title, description, prefix, ...props }: IntroProps) => {
   return (
-    <Prose className={cx("max-w-none space-y-2", className)} {...props}>
-      <h1 className="m-0">{title}</h1>
+    <div className={cx("space-y-2", className)} {...props}>
+      <Series size="lg">
+        <Slot>{prefix}</Slot>
+        <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+      </Series>
 
-      {description && <p className="lead mt-2 text-balance">{description}</p>}
-    </Prose>
+      <Prose>{description && <p className="lead">{description}</p>}</Prose>
+    </div>
   )
 }
