@@ -1,6 +1,7 @@
 import type { MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { CardSimple } from "~/components/CardSimple"
+import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { topicManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
@@ -28,7 +29,7 @@ export default function Index() {
         description="Browse top topics to find your best Open Source software options."
       />
 
-      <div className="grid grid-cols-3 gap-8">
+      <Grid className="md:gap-8">
         {topics.map((topic) => (
           <CardSimple
             key={topic.id}
@@ -37,7 +38,7 @@ export default function Index() {
             caption={`${topic.tools.length} tools`}
           />
         ))}
-      </div>
+      </Grid>
     </>
   )
 }

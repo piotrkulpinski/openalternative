@@ -48,7 +48,7 @@ export const buttonVariants = cva({
 })
 
 export const buttonAffixVariants = cva({
-  base: "shrink-0 first:-ml-[0.21425em] last:-mr-[0.21425em] only:m-0",
+  base: "shrink-0 size-[1.25em] stroke-[1.75] first:-ml-[0.21425em] last:-mr-[0.21425em] only:m-0",
 })
 
 export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size" | "prefix"> &

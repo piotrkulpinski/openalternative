@@ -1,6 +1,7 @@
 import type { MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { CardSimple } from "~/components/CardSimple"
+import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { categoryManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
@@ -28,7 +29,7 @@ export default function Index() {
         description="Browse top categories to find your best Open Source software options."
       />
 
-      <div className="grid grid-cols-3 gap-8">
+      <Grid className="md:gap-8">
         {categories.map((category) => (
           <CardSimple
             key={category.id}
@@ -37,7 +38,7 @@ export default function Index() {
             caption={`${category.tools.length} tools`}
           />
         ))}
-      </div>
+      </Grid>
     </>
   )
 }

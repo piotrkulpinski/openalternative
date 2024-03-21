@@ -8,7 +8,7 @@ export const Navigation = ({ className, ...props }: HTMLAttributes<HTMLElement>)
   return (
     <nav
       className={cx(
-        "flex items-center gap-3 text-neutral-600 md:gap-4 dark:text-neutral-400",
+        "ml-auto flex items-center gap-3 text-neutral-600 md:gap-4 dark:text-neutral-400",
         className
       )}
       {...props}
