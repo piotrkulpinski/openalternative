@@ -18,7 +18,13 @@ export const Intro = ({ className, title, description, prefix, ...props }: Intro
         <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
       </Series>
 
-      <Prose>{description && <p className="lead">{description}</p>}</Prose>
+      <Prose>
+        {description && (
+          <h2 className="lead !font-normal !tracking-normal !text-neutral-600 dark:!text-neutral-400">
+            {description}
+          </h2>
+        )}
+      </Prose>
     </div>
   )
 }

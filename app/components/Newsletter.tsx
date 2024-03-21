@@ -1,15 +1,15 @@
 import { useFetcher } from "@remix-run/react"
-import { LoaderIcon } from "lucide-react"
 import { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
+import { Button } from "./Button"
 
-export const Newsletter = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const fetcher = useFetcher()
   const data = fetcher.data as { success: boolean; message: string } | undefined
 
   return (
     <section className={cx("mt-auto space-y-1", className)} {...props}>
-      <h3 className="font-medium">Newsletter</h3>
+      <h4 className="font-medium">Newsletter</h4>
 
       <p className="text-sm text-neutral-500">
         Get updates on new tools, alternatives, and other cool stuff.
@@ -32,15 +32,13 @@ export const Newsletter = ({ children, className, ...props }: HTMLAttributes<HTM
               required
             />
 
-            <button className="absolute inset-y-1 right-1 inline-flex items-center justify-center rounded bg-current px-3 py-1 text-[13px] duration-200 hover:opacity-80">
-              <span className="invert">
-                {fetcher.state === "submitting" ? (
-                  <LoaderIcon className="size-4 animate-spin" />
-                ) : (
-                  "Subscribe"
-                )}
-              </span>
-            </button>
+            <Button
+              size="sm"
+              className="absolute inset-y-1 right-1"
+              isPending={fetcher.state === "submitting"}
+            >
+              Subscribe
+            </Button>
           </fetcher.Form>
         )}
 
@@ -50,8 +48,6 @@ export const Newsletter = ({ children, className, ...props }: HTMLAttributes<HTM
           </p>
         )}
       </div>
-
-      {children}
     </section>
   )
 }

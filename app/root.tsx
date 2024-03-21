@@ -11,7 +11,7 @@ import stylesheet from "~/styles.css?url"
 export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: stylesheet },
-    { rel: "icon", href: "/favicon.png", type: "image/svg+xml" },
+    { rel: "icon", href: "/logo.svg", type: "image/svg+xml" },
     { rel: "preconnect", href: "https://rsms.me/" },
     { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   ]

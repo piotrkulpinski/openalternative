@@ -44,10 +44,4 @@ export const Series = forwardRef<HTMLDivElement, SeriesProps>((props, ref) => {
   )
 })
 
-Series.defaultProps = {
-  size: "md",
-  direction: "row",
-  asChild: false,
-}
-
 Series.displayName = "Series"

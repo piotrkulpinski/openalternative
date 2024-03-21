@@ -4,7 +4,7 @@ import { cx } from "~/utils/cva"
 export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <div className={cx("space-y-2", className)} {...props}>
-      <h4 className="text-[10px] uppercase text-gray-500">Featured on</h4>
+      <h4 className="text-[10px] uppercase text-gray-500">As featured on</h4>
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 md:gap-x-6">
         <a

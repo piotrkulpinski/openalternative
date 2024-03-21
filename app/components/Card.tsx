@@ -25,7 +25,7 @@ export const Card = ({ ...props }: CardProps) => {
       <div className="flex w-full flex-row flex-wrap items-center gap-x-3 gap-y-2">
         <Favicon url={website} />
 
-        <h4 className="text-lg font-semibold">{name}</h4>
+        <h3 className="text-lg font-semibold">{name}</h3>
 
         {isFeatured && (
           <div className="ml-auto rounded border bg-neutral-200/60 px-1 py-px text-xs">Ad</div>
