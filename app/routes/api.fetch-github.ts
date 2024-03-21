@@ -1,13 +1,11 @@
 import { graphql } from "@octokit/graphql"
 import { json } from "@remix-run/node"
 import { prisma } from "~/services.server/prisma"
+import { getToolScore } from "~/utils/helpers"
 
 type RepositoryData = {
   forkCount: number
   stargazerCount: number
-  issues: {
-    totalCount: number
-  }
   licenseInfo: {
     spdxId: string
   }
@@ -20,19 +18,19 @@ type RepositoryData = {
       }
     }
   }
-  repositoryTopics: {
-    nodes: {
-      topic: {
-        name: string
-      }
-    }[]
-  }
-  languages: {
-    nodes: {
-      name: string
-      color: string
-    }[]
-  }
+  // repositoryTopics: {
+  //   nodes: {
+  //     topic: {
+  //       name: string
+  //     }
+  //   }[]
+  // }
+  // languages: {
+  //   nodes: {
+  //     name: string
+  //     color: string
+  //   }[]
+  // }
 }
 
 const getRepoOwnerAndName = (url: string | null) => {
@@ -52,7 +50,7 @@ export async function action() {
     const headers = { authorization: `token ${process.env.GITHUB_TOKEN}` }
 
     const tools = await prisma.tool.findMany({
-      select: { id: true, repository: true },
+      select: { id: true, repository: true, bump: true },
     })
 
     const repos = tools
@@ -73,9 +71,6 @@ export async function action() {
       fragment repoProperties on Repository {
         forkCount
         stargazerCount
-        issues(states: OPEN) {
-          totalCount
-        }
         licenseInfo {
           spdxId
         }
@@ -112,25 +107,33 @@ export async function action() {
 
     // Fetch data from GitHub
     const result: Record<string, RepositoryData> = await graphql({ query, headers }).catch(
-      (error) => {
-        console.error(error)
-      }
+      (error) => console.error(error)
     )
 
     // Use Promise.all to perform the updates concurrently.
     await Promise.all(
       Object.entries(result).map(
-        ([id, { stargazerCount, forkCount, issues, licenseInfo, defaultBranchRef }]) =>
-          prisma.tool.update({
-            where: { id: parseInt(id.replace("repo", "")) },
-            data: {
-              stars: stargazerCount,
-              forks: forkCount,
-              issues: issues.totalCount,
-              license: licenseInfo.spdxId === "NOASSERTION" ? undefined : licenseInfo.spdxId,
-              lastCommitDate: new Date(defaultBranchRef.target.history.nodes[0].committedDate),
-            },
+        ([repoId, { stargazerCount, forkCount, licenseInfo, defaultBranchRef }]) => {
+          const id = parseInt(repoId.replace("repo", ""))
+          const tool = tools.find((tool) => tool.id === id)
+
+          const stars = stargazerCount
+          const forks = forkCount
+          const license = licenseInfo.spdxId === "NOASSERTION" ? undefined : licenseInfo.spdxId
+          const lastCommitDate = new Date(defaultBranchRef.target.history.nodes[0].committedDate)
+
+          const score = getToolScore({
+            stars,
+            forks,
+            lastCommitDate,
+            bump: tool?.bump,
           })
+
+          return prisma.tool.update({
+            where: { id },
+            data: { stars, forks, license, lastCommitDate, score },
+          })
+        }
       )
     )
   } catch (error) {

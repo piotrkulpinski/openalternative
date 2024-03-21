@@ -2,13 +2,14 @@ import { useFetcher } from "@remix-run/react"
 import { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 import { Button } from "./Button"
+import { H5 } from "./Heading"
 
 export const Newsletter = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const { data, state, Form } = useFetcher<{ success: boolean; message: string }>()
 
   return (
-    <section className={cx("mt-auto space-y-1", className)} {...props}>
-      <h4 className="font-medium">Newsletter</h4>
+    <section className={cx("space-y-1", className)} {...props}>
+      <H5 className="font-medium">Newsletter</H5>
 
       <p className="text-sm text-neutral-500">
         Get updates on new tools, alternatives, and other cool stuff.

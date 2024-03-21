@@ -32,6 +32,7 @@ export function Layout({ children }: PropsWithChildren) {
           <Navigation />
         </Header>
         {children}
+        <hr className="mt-auto dark:border-neutral-800" />
         <Newsletter />
         <Footer />
         <ScrollRestoration />

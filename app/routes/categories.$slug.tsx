@@ -1,5 +1,6 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { BackButton } from "~/components/BackButton"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
@@ -40,6 +41,8 @@ export default function TopicPage() {
 
         {!category.tools?.length && <p>No tools found.</p>}
       </Grid>
+
+      <BackButton to="/categories" />
     </>
   )
 }

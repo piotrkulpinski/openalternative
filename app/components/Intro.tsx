@@ -3,6 +3,7 @@ import { HTMLAttributes, ReactNode } from "react"
 import { cx } from "~/utils/cva"
 import { Prose } from "./Prose"
 import { Series } from "./Series"
+import { H1 } from "./Heading"
 
 type IntroProps = Omit<HTMLAttributes<HTMLElement>, "prefix"> & {
   title: string
@@ -15,7 +16,7 @@ export const Intro = ({ className, title, description, prefix, ...props }: Intro
     <div className={cx("space-y-2", className)} {...props}>
       <Series size="lg">
         <Slot>{prefix}</Slot>
-        <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+        <H1>{title}</H1>
       </Series>
 
       <Prose>

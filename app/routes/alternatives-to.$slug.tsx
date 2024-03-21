@@ -1,5 +1,6 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { BackButton } from "~/components/BackButton"
 import { FaviconImage } from "~/components/Favicon"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
@@ -55,6 +56,8 @@ export default function Index() {
 
         {!alternative.tools?.length && <p>No alternatives found.</p>}
       </Grid>
+
+      <BackButton to="/alternatives" />
     </>
   )
 }

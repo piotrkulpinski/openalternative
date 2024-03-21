@@ -14,7 +14,7 @@ export const buttonVariants = cva({
   variants: {
     variant: {
       solid: [
-        "!border-transparent text-black bg-current [&>*]:invert hover:opacity-90 dark:text-white",
+        "!border-transparent text-neutral-800 bg-current [&>*]:invert hover:opacity-90 dark:text-neutral-200",
       ],
       outline: [
         "border-neutral-200 hover:border-neutral-300 text-neutral-600",
@@ -113,7 +113,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
             {!isChildrenEmpty(child) && <span className="truncate">{child}</span>}
             <Slot className={buttonAffixVariants()}>{suffix}</Slot>
 
-            {!!isPending && <LoaderIcon className="absolute animate-spin" />}
+            {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
           </>
         )}
       </Slottable>

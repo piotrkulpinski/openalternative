@@ -4,6 +4,7 @@ import { Featured } from "~/components/Featured"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
+import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 
 export const meta: MetaFunction = () => {
@@ -11,7 +12,10 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async () => {
-  const tools = await prisma.tool.findMany()
+  const tools = await prisma.tool.findMany({
+    orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
+    include: toolManyPayload,
+  })
 
   return typedjson({ tools })
 }
