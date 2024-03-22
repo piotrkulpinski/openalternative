@@ -13,14 +13,14 @@ type IntroProps = Omit<HTMLAttributes<HTMLElement>, "prefix"> & {
 
 export const Intro = ({ className, title, description, prefix, ...props }: IntroProps) => {
   return (
-    <div className={cx("space-y-2", className)} {...props}>
+    <div className={cx("flex flex-col items-start gap-y-2", className)} {...props}>
       <Series size="lg">
         <Slot>{prefix}</Slot>
         <H1>{title}</H1>
       </Series>
 
       {description && (
-        <Prose className="max-w-none text-pretty">
+        <Prose className="max-w-none">
           <h2 className="lead !font-normal !tracking-normal !text-neutral-600 dark:!text-neutral-400">
             {description}
           </h2>

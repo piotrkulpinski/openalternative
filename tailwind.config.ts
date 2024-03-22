@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss"
 import plugin from "tailwindcss/plugin"
+import colors from "tailwindcss/colors"
 import defaultTheme from "tailwindcss/defaultTheme"
 
 export default {
@@ -7,6 +8,9 @@ export default {
 
   theme: {
     extend: {
+      borderColor: {
+        DEFAULT: colors.neutral["200"],
+      },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
       },

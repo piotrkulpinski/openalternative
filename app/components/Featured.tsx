@@ -4,9 +4,9 @@ import { cx } from "~/utils/cva"
 export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const featured = [
     {
-      name: "Product Hunt",
-      url: "https://www.producthunt.com/posts/openalternative",
-      icon: "/producthunt.svg",
+      name: "Hacker News",
+      url: "https://news.ycombinator.com/item?id=39639386",
+      icon: "/hackernews.svg",
     },
     {
       name: "Indie Hackers",
@@ -14,9 +14,9 @@ export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) =
       icon: "/indiehackers.svg",
     },
     {
-      name: "Hacker News",
-      url: "https://news.ycombinator.com/item?id=39639386",
-      icon: "/hackernews.svg",
+      name: "Product Hunt",
+      url: "https://www.producthunt.com/posts/openalternative",
+      icon: "/producthunt.svg",
     },
     {
       name: "Twitter",
@@ -29,7 +29,7 @@ export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) =
     <div className={cx("space-y-2", className)} {...props}>
       <h4 className="text-[10px] uppercase text-neutral-500">As featured on</h4>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-3 md:gap-x-6">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-3 sm:justify-center md:gap-x-6">
         {featured.map(({ name, url, icon }) => (
           <a
             key={name}
@@ -39,7 +39,7 @@ export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) =
             className="flex flex-wrap items-center gap-x-2 text-sm font-medium opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
           >
             <img src={icon} width="24" height="24" alt={name} className="rounded-full" />
-            {name}
+            <span className="max-sm:hidden">{name}</span>
           </a>
         ))}
       </div>

@@ -3,7 +3,6 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/reac
 import { PropsWithChildren } from "react"
 import { Footer } from "~/components/Footer"
 import { Header } from "~/components/Header"
-import { Navigation } from "~/components/Navigation"
 import { Newsletter } from "~/components/Newsletter"
 
 import stylesheet from "~/styles.css?url"
@@ -27,14 +26,22 @@ export function Layout({ children }: PropsWithChildren) {
         <Links />
       </head>
 
-      <body className="mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 bg-white p-8 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200">
-        <Header>
-          <Navigation />
-        </Header>
-        {children}
-        <hr className="mt-auto dark:border-neutral-800" />
-        <Newsletter />
-        <Footer />
+      <body className="bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200">
+        <div className="mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 p-8">
+          <Header />
+
+          {children}
+
+          <hr className="mt-auto dark:border-neutral-800" />
+
+          <Newsletter
+            title="Newsletter"
+            description="Get updates on new tools, alternatives, and other cool stuff."
+          />
+
+          <Footer />
+        </div>
+
         <ScrollRestoration />
         <Scripts />
       </body>

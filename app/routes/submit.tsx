@@ -2,20 +2,22 @@ import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
 import { MetaFunction } from "@remix-run/node"
 import { useFetcher, useLocation } from "@remix-run/react"
-import { Input } from "~/components/Input"
-import { Label } from "~/components/Label"
+import { Input } from "~/components/forms/Input"
+import { Label } from "~/components/forms/Label"
 import { Button } from "~/components/Button"
 import { SITE_NAME } from "~/utils/constants"
 import { action } from "./api.submit"
-import { TextArea } from "~/components/TextArea"
+import { TextArea } from "~/components/forms/TextArea"
+import { useId } from "react"
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
 }
 
 export default function SubmitPage() {
+  const id = useId()
   const { key } = useLocation()
-  const { data, state, Form } = useFetcher<typeof action>({ key: `submit-${key}` })
+  const { data, state, Form } = useFetcher<typeof action>({ key: `${id}-${key}` })
 
   return (
     <>
@@ -32,7 +34,7 @@ export default function SubmitPage() {
             className="grid-auto-fill-xs grid w-full max-w-xl gap-6"
             noValidate
           >
-            <div>
+            <div className="flex flex-col gap-1">
               <Label htmlFor="name" isRequired>
                 Name:
               </Label>
@@ -47,11 +49,11 @@ export default function SubmitPage() {
               />
 
               {data?.type === "error" && (
-                <p className="mt-1 text-xs text-red-600">{data.error.name?._errors[0]}</p>
+                <p className="text-xs text-red-600">{data.error.name?._errors[0]}</p>
               )}
             </div>
 
-            <div>
+            <div className="flex flex-col gap-1">
               <Label htmlFor="website" isRequired>
                 Website:
               </Label>
@@ -65,11 +67,11 @@ export default function SubmitPage() {
               />
 
               {data?.type === "error" && (
-                <p className="mt-1 text-xs text-red-600">{data.error.website?._errors[0]}</p>
+                <p className="text-xs text-red-600">{data.error.website?._errors[0]}</p>
               )}
             </div>
 
-            <div className="col-span-full">
+            <div className="col-span-full flex flex-col gap-1">
               <Label htmlFor="repository" isRequired>
                 Repository:
               </Label>
@@ -83,11 +85,11 @@ export default function SubmitPage() {
               />
 
               {data?.type === "error" && (
-                <p className="mt-1 text-xs text-red-600">{data.error.repository?._errors[0]}</p>
+                <p className="text-xs text-red-600">{data.error.repository?._errors[0]}</p>
               )}
             </div>
 
-            <div className="col-span-full">
+            <div className="col-span-full flex flex-col gap-1">
               <Label htmlFor="description" isRequired>
                 Description:
               </Label>
@@ -101,7 +103,7 @@ export default function SubmitPage() {
               />
 
               {data?.type === "error" && (
-                <p className="mt-1 text-xs text-red-600">{data.error.description?._errors[0]}</p>
+                <p className="text-xs text-red-600">{data.error.description?._errors[0]}</p>
               )}
             </div>
 

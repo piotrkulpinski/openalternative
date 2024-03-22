@@ -15,7 +15,7 @@ import { FaviconImage } from "~/components/Favicon"
 import { Insights } from "~/components/Insights"
 import { Intro } from "~/components/Intro"
 import { Series } from "~/components/Series"
-import { addSearchParamsToUrl } from "~/utils/helpers"
+import { updateUrlWithSearchParams } from "~/utils/helpers"
 import { toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { BackButton } from "~/components/BackButton"
@@ -71,7 +71,7 @@ export default function ToolPage() {
                 asChild
               >
                 <Link
-                  to={addSearchParamsToUrl(tool.website, { ref: "openalternative" })}
+                  to={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
                   target="_blank"
                   rel="noreferrer"
                 >
