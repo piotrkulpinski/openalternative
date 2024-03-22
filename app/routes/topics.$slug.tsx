@@ -1,11 +1,18 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { BackButton } from "~/components/BackButton"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
-import { topicOnePayload } from "~/services.server/api"
+import { TopicOne, topicOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+
+export const handle = {
+  Breadcrumb: ({ topic }: { topic: TopicOne }) => (
+    <BreadcrumbsLink to={`/topics/${topic.slug}`} label={topic.name} />
+  ),
+}
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -24,7 +31,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   }
 }
 
-export default function TopicPage() {
+export default function TopicsPage() {
   const { topic } = useTypedLoaderData<typeof loader>()
 
   return (
@@ -42,7 +49,7 @@ export default function TopicPage() {
         {!topic.tools?.length && <p>No tools found.</p>}
       </Grid>
 
-      <BackButton to="topics" />
+      <BackButton to="/topics" />
     </>
   )
 }

@@ -1,0 +1,20 @@
+import { NavLink, NavLinkProps } from "@remix-run/react"
+import { cx } from "~/utils/cva"
+
+export const NavigationLink = ({ className, ...props }: NavLinkProps) => {
+  return (
+    <NavLink
+      className={({ isActive }) =>
+        cx([
+          "flex items-center gap-2",
+          "-tracking-micro text-sm text-neutral-500 hover:text-neutral-800",
+          "dark:hover:text-neutral-200",
+          "group-only:font-medium group-only:text-neutral-800 group-only:dark:text-neutral-200",
+          isActive && "font-medium text-neutral-800 dark:text-neutral-200",
+          className,
+        ])
+      }
+      {...props}
+    />
+  )
+}

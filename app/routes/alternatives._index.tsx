@@ -19,7 +19,7 @@ export const loader = async () => {
   return typedjson({ alternatives })
 }
 
-export default function Index() {
+export default function AlternativesIndex() {
   const { alternatives } = useTypedLoaderData<typeof loader>()
 
   return (

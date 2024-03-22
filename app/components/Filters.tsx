@@ -25,6 +25,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
         <option value="name">Name</option>
         <option value="stars">Stars</option>
         <option value="forks">Forks</option>
+        <option value="commit">Last Commit</option>
       </Select>
     </div>
   )

@@ -1,21 +1,9 @@
 import { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
-import { Link, LinkProps } from "@remix-run/react"
 import { Series } from "./Series"
 import { H6 } from "./Heading"
 import { GithubIcon } from "lucide-react"
-
-const FooterLink = ({ className, ...props }: LinkProps) => {
-  return (
-    <Link
-      className={cx(
-        "text-sm text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200",
-        className
-      )}
-      {...props}
-    />
-  )
-}
+import { NavigationLink } from "./NavigationLink"
 
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
@@ -23,19 +11,19 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
       <Series className="text-sm/normal text-neutral-500 md:gap-x-4">
         <H6>Explore:</H6>
 
-        <FooterLink to="/categories">Categories</FooterLink>
-        <FooterLink to="/alternatives">Alternatives</FooterLink>
-        <FooterLink to="/languages">Languages</FooterLink>
-        <FooterLink to="/topics">Topics</FooterLink>
+        <NavigationLink to="/categories">Categories</NavigationLink>
+        <NavigationLink to="/alternatives">Alternatives</NavigationLink>
+        <NavigationLink to="/languages">Languages</NavigationLink>
+        <NavigationLink to="/topics">Topics</NavigationLink>
 
-        <FooterLink
+        <NavigationLink
           to="https://github.com/piotrkulpinski/openalternative"
           target="_blank"
           rel="nofollow noreferrer"
-          className="ml-auto flex items-center gap-1.5"
+          className="flex items-center gap-1.5 sm:ml-auto"
         >
-          <GithubIcon className="size-4" /> Source
-        </FooterLink>
+          <GithubIcon className="size-4 max-sm:hidden" /> Source
+        </NavigationLink>
       </Series>
 
       {children}

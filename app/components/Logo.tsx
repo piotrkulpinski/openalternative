@@ -1,8 +1,16 @@
 import { HTMLAttributes } from "react"
+import { cx } from "~/utils/cva"
 
-export const Logo = ({ ...props }: HTMLAttributes<SVGSVGElement>) => {
+export const Logo = ({ className, ...props }: HTMLAttributes<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 327 309" height="24" width="24" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 327 309"
+      height="24"
+      width="24"
+      className={cx("text-neutral-800 dark:text-neutral-200", className)}
+      {...props}
+    >
       <title>Logo</title>
       <path
         fill="currentColor"

@@ -8,6 +8,9 @@ export default {
 
   theme: {
     extend: {
+      letterSpacing: {
+        micro: "0.0125em",
+      },
       borderColor: {
         DEFAULT: colors.neutral["200"],
       },

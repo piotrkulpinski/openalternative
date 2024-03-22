@@ -19,7 +19,7 @@ export const loader = async () => {
   return typedjson({ categories })
 }
 
-export default function Index() {
+export default function CategoriesIndex() {
   const { categories } = useTypedLoaderData<typeof loader>()
 
   return (

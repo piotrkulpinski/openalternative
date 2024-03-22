@@ -7,7 +7,7 @@ import { Slottable } from "./Slottable"
 
 export const buttonVariants = cva({
   base: [
-    "relative inline-flex items-center justify-center border font-medium rounded-md transition hover:z-10",
+    "relative inline-flex items-center justify-center border font-medium -tracking-micro rounded-md transition hover:z-10",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 

@@ -16,9 +16,16 @@ import { Insights } from "~/components/Insights"
 import { Intro } from "~/components/Intro"
 import { Series } from "~/components/Series"
 import { updateUrlWithSearchParams } from "~/utils/helpers"
-import { toolOnePayload } from "~/services.server/api"
+import { ToolOne, toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { BackButton } from "~/components/BackButton"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+
+export const handle = {
+  Breadcrumb: ({ tool }: { tool: ToolOne }) => (
+    <BreadcrumbsLink to={`/${tool.slug}`} label={tool.name} />
+  ),
+}
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -37,7 +44,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   }
 }
 
-export default function ToolPage() {
+export default function ToolsPage() {
   const { tool } = useTypedLoaderData<typeof loader>()
 
   const insights = [
@@ -118,7 +125,7 @@ export default function ToolPage() {
         </div>
 
         {tool.website && (
-          <div className="relative z-10 self-start max-md:order-last max-md:-m-4 max-md:mt-0 md:w-2/5 md:rounded-md md:border md:p-1.5 lg:w-1/2">
+          <div className="relative z-10 self-start max-md:order-last md:w-2/5 md:rounded-md md:border md:p-1.5 lg:w-1/2">
             <img
               src={
                 "https://openalternative.co/_next/image?url=https%3A%2F%2Fapi.screenshotone.com%2Ftake%3Furl%3Dhttps%253A%252F%252Fposthog.com%26cache%3Dtrue%26cache_ttl%3D2000000%26block_chats%3Dtrue%26block_trackers%3Dtrue%26block_cookie_banners%3Dtrue%26block_ads%3Dtrue%26access_key%3DoWVNWT8VvhigEQ%26signature%3D7f0e0f90b5375f79368cb0a0492ea1f04255d0757e42706ad9196f29b4829464&w=3840&q=75"

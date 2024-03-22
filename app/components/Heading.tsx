@@ -11,8 +11,8 @@ export const headingVariants = cva({
       h2: "text-2xl",
       h3: "text-xl",
       h4: "text-lg",
-      h5: "text-base font-medium tracking-[-0.0125em]",
-      h6: "text-sm font-medium tracking-[-0.0125em]",
+      h5: "text-base font-medium tracking-micro",
+      h6: "text-sm font-medium tracking-micro",
     },
   },
 

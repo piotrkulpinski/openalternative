@@ -1,12 +1,19 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { BackButton } from "~/components/BackButton"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { FaviconImage } from "~/components/Favicon"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
-import { alternativeOnePayload } from "~/services.server/api"
+import { AlternativeOne, alternativeOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+
+export const handle = {
+  Breadcrumb: ({ alternative }: { alternative: AlternativeOne }) => (
+    <BreadcrumbsLink to={`/alternatives/${alternative.slug}`} label={alternative.name} />
+  ),
+}
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -25,7 +32,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   }
 }
 
-export default function Index() {
+export default function AlternativesPage() {
   const { alternative } = useTypedLoaderData<typeof loader>()
 
   return (

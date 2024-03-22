@@ -1,11 +1,18 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
-import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { TypedJsonResponse, typedjson, useTypedLoaderData } from "remix-typedjson"
 import { BackButton } from "~/components/BackButton"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { categoryOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+
+export const handle = {
+  Breadcrumb: ({ category }: Awaited<ReturnType<TypedJsonResponse<typeof loader>["json"]>>) => (
+    <BreadcrumbsLink to={`/categories/${category.slug}`} label={category.name} />
+  ),
+}
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -24,7 +31,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   }
 }
 
-export default function TopicPage() {
+export default function CategoriesPage() {
   const { category } = useTypedLoaderData<typeof loader>()
 
   return (

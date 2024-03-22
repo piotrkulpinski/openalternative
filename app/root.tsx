@@ -6,6 +6,17 @@ import { Header } from "~/components/Header"
 import { Newsletter } from "~/components/Newsletter"
 
 import stylesheet from "~/styles.css?url"
+import { Logo } from "./components/Logo"
+import { BreadcrumbsLink } from "./components/Breadcrumbs"
+import { SITE_NAME } from "./utils/constants"
+
+export const handle = {
+  Breadcrumb: () => (
+    <BreadcrumbsLink to="/" label={SITE_NAME}>
+      <Logo className="size-5" />
+    </BreadcrumbsLink>
+  ),
+}
 
 export const links: LinksFunction = () => {
   return [

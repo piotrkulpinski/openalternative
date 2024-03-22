@@ -28,6 +28,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     case "forks":
       orderBy = { forks: "desc" }
       break
+    case "commit":
+      orderBy = { lastCommitDate: "desc" }
+      break
     default:
       orderBy = { score: "desc" }
   }
