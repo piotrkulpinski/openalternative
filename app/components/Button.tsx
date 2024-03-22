@@ -13,12 +13,12 @@ export const buttonVariants = cva({
 
   variants: {
     variant: {
-      solid: [
-        "!border-transparent text-neutral-800 bg-current [&>*]:invert hover:opacity-90 dark:text-neutral-200",
-      ],
-      outline: [
+      fancy: "!border-transparent bg-pink-500 text-neutral-50 hover:bg-pink-600",
+      primary:
+        "!border-transparent text-neutral-950 bg-current [&>*]:invert hover:opacity-90 dark:text-neutral-50",
+      secondary: [
         "border-neutral-200 text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100",
-        "dark:text-neutral-400 dark:border-neutral-700 dark:hover:border-neutral-600 dark:hover:bg-neutral-800",
+        "dark:text-neutral-400 dark:border-neutral-700/50 dark:bg-neutral-800/40 dark:hover:border-neutral-700 dark:hover:bg-neutral-800",
       ],
     },
     size: {
@@ -42,7 +42,7 @@ export const buttonVariants = cva({
   ],
 
   defaultVariants: {
-    variant: "solid",
+    variant: "primary",
     size: "lg",
   },
 })

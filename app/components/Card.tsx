@@ -18,7 +18,7 @@ export const Card = ({ ...props }: CardProps) => {
   return (
     <NavLink
       className={cx(
-        "@container/card group relative flex flex-col items-start gap-4 overflow-clip rounded-md border bg-neutral-50 p-5 hover:border-neutral-300 dark:border-neutral-700/50 dark:bg-neutral-800/40 dark:hover:border-neutral-700",
+        "relative flex flex-col items-start gap-4 overflow-clip rounded-md border bg-neutral-50 p-5 hover:border-neutral-300 dark:border-neutral-700/50 dark:bg-neutral-800/40 dark:hover:border-neutral-700",
         className
       )}
       {...rest}

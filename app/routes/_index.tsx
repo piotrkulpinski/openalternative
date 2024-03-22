@@ -1,11 +1,14 @@
 import { Prisma } from "@prisma/client"
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
+import { Link } from "@remix-run/react"
+import { BlocksIcon, BracesIcon, TagIcon } from "lucide-react"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
-import { Featured } from "~/components/Featured"
+import { Button } from "~/components/Button"
 import { Filters } from "~/components/Filters"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { Newsletter } from "~/components/Newsletter"
+import { Series } from "~/components/Series"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
@@ -49,20 +52,32 @@ export default function Index() {
 
   return (
     <>
-      <section className="flex flex-col gap-y-6 sm:items-center sm:text-center">
+      <section className="flex flex-col gap-y-6 sm:items-start sm:text-start">
         <Intro
           title="Discover Open Source Alternatives to Popular Software."
           description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
-          className="items-center text-balance"
+          className="items-start text-pretty"
         />
 
-        <Newsletter placeholder="Get weekly newsletter" />
-
-        <Featured />
+        <Newsletter placeholder="Get weekly newsletter" buttonVariant="fancy" />
       </section>
 
       <Grid>
-        <Filters className="col-span-full" />
+        <div className="col-span-full flex items-center justify-between">
+          <Series>
+            <Button size="md" variant="secondary" prefix={<BlocksIcon />} asChild>
+              <Link to="/categories">Browse by Category</Link>
+            </Button>
+            <Button size="md" variant="secondary" prefix={<BracesIcon />} asChild>
+              <Link to="/languages">Browse by Language</Link>
+            </Button>
+            <Button size="md" variant="secondary" prefix={<TagIcon />} asChild>
+              <Link to="/topics">Browse by Topic</Link>
+            </Button>
+          </Series>
+
+          <Filters />
+        </div>
 
         {tools.map((tool) => (
           <ToolRecord key={tool.id} tool={tool} />

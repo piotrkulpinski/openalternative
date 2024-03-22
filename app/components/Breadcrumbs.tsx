@@ -1,5 +1,5 @@
 import { NavLinkProps, UIMatch, useMatches } from "@remix-run/react"
-import { HTMLAttributes, ReactNode } from "react"
+import { Fragment, HTMLAttributes, ReactNode } from "react"
 import { cx } from "~/utils/cva"
 import { NavigationLink } from "./NavigationLink"
 
@@ -31,11 +31,14 @@ const BreadcrumbsSeparator = ({ ...props }: HTMLAttributes<HTMLElement>) => {
   )
 }
 
-type BreadcrumbMatch = UIMatch<Record<string, unknown>, { Breadcrumb: () => JSX.Element }>
+type BreadcrumbMatch = UIMatch<
+  Record<string, unknown>,
+  { breadcrumb: (data?: unknown) => JSX.Element }
+>
 
 export const Breadcrumbs = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const matches = (useMatches() as unknown as BreadcrumbMatch[]).filter(
-    ({ handle }) => handle?.Breadcrumb
+    ({ handle }) => handle?.breadcrumb
   )
 
   return (
@@ -46,17 +49,18 @@ export const Breadcrumbs = ({ className, ...props }: HTMLAttributes<HTMLElement>
       {...props}
     >
       {matches.map(({ handle, data }, i) => (
-        <li
-          key={i}
-          className={cx("group contents", i > 0 && "max-md:hidden")}
-          itemProp="itemListElement"
-          itemScope
-          itemType="https://schema.org/ListItem"
-        >
-          {i > 0 && <BreadcrumbsSeparator />}
-          <handle.Breadcrumb {...data} />
-          <meta itemProp="position" content={`${i + 1}`} />
-        </li>
+        <Fragment key={i}>
+          <li
+            className={cx("group contents", i > 0 && "max-md:hidden")}
+            itemProp="itemListElement"
+            itemScope
+            itemType="https://schema.org/ListItem"
+          >
+            {i > 0 && <BreadcrumbsSeparator />}
+            {handle.breadcrumb(data)}
+            <meta itemProp="position" content={`${i + 1}`} />
+          </li>
+        </Fragment>
       ))}
     </ol>
   )

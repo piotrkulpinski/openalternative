@@ -1,12 +1,12 @@
-import { Tool } from "@prisma/client"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import { HTMLAttributes } from "react"
 import { format } from "timeago.js"
 import { Card } from "../Card"
 import { Insights } from "../Insights"
+import { ToolMany } from "~/services.server/api"
 
 type ToolRecordProps = HTMLAttributes<HTMLElement> & {
-  tool: Tool
+  tool: ToolMany
 }
 
 export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {

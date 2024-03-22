@@ -1,5 +1,5 @@
 import { useFetcher, useLocation } from "@remix-run/react"
-import { HTMLAttributes, useId } from "react"
+import { ComponentProps, HTMLAttributes, useId } from "react"
 import { Button } from "./Button"
 import { H5 } from "./Heading"
 import { Input } from "./forms/Input"
@@ -10,12 +10,14 @@ type NewsletterProps = HTMLAttributes<HTMLElement> & {
   title?: string
   description?: string
   placeholder?: string
+  buttonVariant?: ComponentProps<typeof Button>["variant"]
 }
 
 export const Newsletter = ({
   title,
   description,
   placeholder = "Enter your email...",
+  buttonVariant,
   ...props
 }: NewsletterProps) => {
   const id = useId()
@@ -45,7 +47,12 @@ export const Newsletter = ({
                 className="pr-24"
               />
 
-              <Button size="sm" isPending={state !== "idle"} className="absolute inset-y-1 right-1">
+              <Button
+                size="sm"
+                variant={buttonVariant}
+                isPending={state !== "idle"}
+                className="absolute inset-y-1 right-1"
+              >
                 Subscribe
               </Button>
             </Form>

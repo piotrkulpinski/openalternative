@@ -1,18 +1,5 @@
 import { Prisma } from "@prisma/client"
 
-// Tools
-export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({
-  alternatives: true,
-  categories: true,
-  languages: true,
-  topics: true,
-})
-
-export const toolManyPayload = Prisma.validator<Prisma.ToolInclude>()({})
-
-export type ToolOne = Prisma.ToolGetPayload<{ include: typeof toolOnePayload }>
-export type ToolMany = Prisma.ToolGetPayload<{ include: typeof toolManyPayload }>
-
 // Alternatives
 export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeInclude>()({
   tools: true,
@@ -62,3 +49,16 @@ export const topicManyPayload = Prisma.validator<Prisma.TopicInclude>()({
 
 export type TopicOne = Prisma.TopicGetPayload<{ include: typeof topicOnePayload }>
 export type TopicMany = Prisma.TopicGetPayload<{ include: typeof topicManyPayload }>
+
+// Tools
+export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({
+  alternatives: { orderBy: { name: "asc" }, include: alternativeManyPayload },
+  categories: { orderBy: { name: "asc" }, include: categoryManyPayload },
+  languages: { orderBy: { name: "asc" }, include: languageManyPayload },
+  topics: { orderBy: { name: "asc" }, include: topicManyPayload },
+})
+
+export const toolManyPayload = Prisma.validator<Prisma.ToolInclude>()({})
+
+export type ToolOne = Prisma.ToolGetPayload<{ include: typeof toolOnePayload }>
+export type ToolMany = Prisma.ToolGetPayload<{ include: typeof toolManyPayload }>

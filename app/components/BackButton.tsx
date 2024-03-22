@@ -5,7 +5,7 @@ export const BackButton = ({ className, ...props }: LinkProps) => {
   return (
     <Link
       className={cx(
-        "self-start text-sm text-neutral-600 hover:text-inherit dark:text-neutral-400",
+        "peer mt-auto self-start text-sm text-neutral-600 hover:text-inherit dark:text-neutral-400",
         className
       )}
       {...props}

@@ -9,9 +9,13 @@ import { LanguageOne, languageOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 
 export const handle = {
-  Breadcrumb: ({ language }: { language: LanguageOne }) => (
-    <BreadcrumbsLink to={`/languages/${language.slug}`} label={language.name} />
-  ),
+  breadcrumb: (data?: { language: LanguageOne }) => {
+    if (!data) return <BackButton to="/" />
+
+    const { slug, name } = data.language
+
+    return <BreadcrumbsLink to={`/languages/${slug}`} label={name} />
+  },
 }
 
 export const meta: MetaFunction = () => {
@@ -46,7 +50,7 @@ export default function LanguagesPage() {
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!language.tools?.length && <p>No tools found.</p>}
+        {!language.tools?.length && <p>No Open Source software found.</p>}
       </Grid>
 
       <BackButton to="/languages" />

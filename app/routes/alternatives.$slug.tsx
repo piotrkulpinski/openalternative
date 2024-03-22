@@ -10,9 +10,13 @@ import { AlternativeOne, alternativeOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 
 export const handle = {
-  Breadcrumb: ({ alternative }: { alternative: AlternativeOne }) => (
-    <BreadcrumbsLink to={`/alternatives/${alternative.slug}`} label={alternative.name} />
-  ),
+  breadcrumb: (data?: { alternative: AlternativeOne }) => {
+    if (!data) return <BackButton to="/" />
+
+    const { slug, name } = data.alternative
+
+    return <BreadcrumbsLink to={`/alternatives/${slug}`} label={name} />
+  },
 }
 
 export const meta: MetaFunction = () => {
@@ -51,7 +55,7 @@ export default function AlternativesPage() {
               alternative.name
             )}{" "}
             tools. Find the best alternatives for {alternative.name} that are open source and free
-            to use.
+            to use/self-hostable.
           </>
         }
       />
@@ -61,7 +65,7 @@ export default function AlternativesPage() {
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!alternative.tools?.length && <p>No alternatives found.</p>}
+        {!alternative.tools?.length && <p>No Open Source alternatives found.</p>}
       </Grid>
 
       <BackButton to="/alternatives" />

@@ -1,17 +1,21 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
-import { TypedJsonResponse, typedjson, useTypedLoaderData } from "remix-typedjson"
+import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
-import { categoryOnePayload } from "~/services.server/api"
+import { CategoryOne, categoryOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 
 export const handle = {
-  Breadcrumb: ({ category }: Awaited<ReturnType<TypedJsonResponse<typeof loader>["json"]>>) => (
-    <BreadcrumbsLink to={`/categories/${category.slug}`} label={category.name} />
-  ),
+  breadcrumb: (data?: { category: CategoryOne }) => {
+    if (!data) return <BackButton to="/" />
+
+    const { slug, name } = data.category
+
+    return <BreadcrumbsLink to={`/categories/${slug}`} label={name} />
+  },
 }
 
 export const meta: MetaFunction = () => {
@@ -46,7 +50,7 @@ export default function CategoriesPage() {
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!category.tools?.length && <p>No tools found.</p>}
+        {!category.tools?.length && <p>No Open Source software found.</p>}
       </Grid>
 
       <BackButton to="/categories" />

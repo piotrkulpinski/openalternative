@@ -29,7 +29,7 @@ export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) =
     <div className={cx("space-y-2", className)} {...props}>
       <h4 className="text-[10px] uppercase text-neutral-500">As featured on</h4>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-3 sm:justify-center md:gap-x-6">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-3 sm:justify-start md:gap-x-6">
         {featured.map(({ name, url, icon }) => (
           <a
             key={name}

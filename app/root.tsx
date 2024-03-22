@@ -11,7 +11,7 @@ import { BreadcrumbsLink } from "./components/Breadcrumbs"
 import { SITE_NAME } from "./utils/constants"
 
 export const handle = {
-  Breadcrumb: () => (
+  breadcrumb: () => (
     <BreadcrumbsLink to="/" label={SITE_NAME}>
       <Logo className="size-5" />
     </BreadcrumbsLink>
@@ -43,7 +43,7 @@ export function Layout({ children }: PropsWithChildren) {
 
           {children}
 
-          <hr className="mt-auto dark:border-neutral-800" />
+          <hr className="mt-auto peer-[[href]]:mt-0 dark:border-neutral-800" />
 
           <Newsletter
             title="Newsletter"

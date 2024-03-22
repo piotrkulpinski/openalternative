@@ -1,6 +1,7 @@
 import { SITE_NAME } from "~/utils/constants"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
+import { Featured } from "~/components/Featured"
 
 export default function AboutPage() {
   return (
@@ -9,6 +10,8 @@ export default function AboutPage() {
         title="About Us"
         description={`${SITE_NAME} is a community driven list of open source alternatives to proprietary software and applications.`}
       />
+
+      <Featured />
 
       <Prose>
         <h2>Hi, Piotr here 👋</h2>

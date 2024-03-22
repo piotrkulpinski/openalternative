@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node"
+import plur from "plur"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { CardSimple } from "~/components/CardSimple"
 import { Grid } from "~/components/Grid"
@@ -35,7 +36,7 @@ export default function TopicsIndex() {
             key={topic.id}
             to={`/topics/${topic.slug}`}
             label={topic.name}
-            caption={`${topic.tools.length} tools`}
+            caption={`${topic.tools.length} ${plur("tool", topic.tools.length)}`}
           />
         ))}
       </Grid>

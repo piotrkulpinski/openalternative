@@ -1,30 +1,27 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
-import { Link } from "@remix-run/react"
-import {
-  CopyrightIcon,
-  ExternalLinkIcon,
-  GitForkIcon,
-  GithubIcon,
-  StarIcon,
-  TimerIcon,
-} from "lucide-react"
+import { CopyrightIcon, GitForkIcon, HashIcon, StarIcon, TimerIcon } from "lucide-react"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { format } from "timeago.js"
-import { Button } from "~/components/Button"
 import { FaviconImage } from "~/components/Favicon"
-import { Insights } from "~/components/Insights"
 import { Intro } from "~/components/Intro"
 import { Series } from "~/components/Series"
-import { updateUrlWithSearchParams } from "~/utils/helpers"
 import { ToolOne, toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { H3 } from "~/components/Heading"
+import { Grid } from "~/components/Grid"
+import { AlternativeRecord } from "~/components/records/AlternativeRecord"
+import { Badge } from "~/components/Badge"
 
 export const handle = {
-  Breadcrumb: ({ tool }: { tool: ToolOne }) => (
-    <BreadcrumbsLink to={`/${tool.slug}`} label={tool.name} />
-  ),
+  breadcrumb: (data?: { tool: ToolOne }) => {
+    if (!data) return <BackButton to="/" />
+
+    const { slug, name } = data.tool
+
+    return <BreadcrumbsLink to={`/${slug}`} label={name} />
+  },
 }
 
 export const meta: MetaFunction = () => {
@@ -66,15 +63,14 @@ export default function ToolsPage() {
             prefix={<FaviconImage url={tool.website} />}
             title={tool.name}
             description={tool.description}
-            className="space-y-4"
+            className="gap-y-4"
           />
 
-          <Insights insights={insights} className="text-sm" />
-
-          <Series size="lg" className="mt-auto">
+          {/* <Series size="lg">
             {tool.website && (
               <Button
-                prefix={<ExternalLinkIcon className="size-4 opacity-60 max-sm:hidden" />}
+                variant="secondary"
+                prefix={<SquareArrowOutUpRightIcon className="max-sm:hidden" />}
                 asChild
               >
                 <Link
@@ -88,57 +84,90 @@ export default function ToolsPage() {
             )}
 
             {tool.repository && (
-              <Button
-                variant="outline"
-                prefix={<GithubIcon className="size-4 opacity-60 max-sm:hidden" />}
-                asChild
-              >
+              <Button variant="secondary" prefix={<GithubIcon className="max-sm:hidden" />} asChild>
                 <Link to={tool.repository} target="_blank" rel="noreferrer nofollow">
                   View Repository
                 </Link>
               </Button>
             )}
-          </Series>
+          </Series> */}
 
-          {/* <div className="flex flex-col gap-8 w-full">
-          {
-            tags.map(
-              (tag) =>
-                !!tag.items?.length && (
-                  <div className={listVariants({ direction: "column" })}>
-                    <h3 className="font-semibold">{tag.name}:</h3>
-
-                    <ul class:list={listVariants({ size: "sm" })}>
-                      {tag.items?.map((item) => (
-                        <li>
-                          <a href={`/${tag.path}/${item?.slug}`} class:list={[linkVariants()]}>
-                            {item?.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )
-            )
-        }
-        </div> */}
+          {/* Topics */}
+          {/* {!!tool.categories.length && (
+            <Series className="w-full">
+              {tool.categories?.map((category) => (
+                <Badge key={category.id} to={`/categorys/${category.slug}`}>
+                  <TagIcon className="size-[0.9em] stroke-[1.75] opacity-50" />
+                  {category.name}
+                </Badge>
+              ))}
+            </Series>
+          )} */}
         </div>
 
-        {tool.website && (
-          <div className="relative z-10 self-start max-md:order-last md:w-2/5 md:rounded-md md:border md:p-1.5 lg:w-1/2">
-            <img
-              src={
-                "https://openalternative.co/_next/image?url=https%3A%2F%2Fapi.screenshotone.com%2Ftake%3Furl%3Dhttps%253A%252F%252Fposthog.com%26cache%3Dtrue%26cache_ttl%3D2000000%26block_chats%3Dtrue%26block_trackers%3Dtrue%26block_cookie_banners%3Dtrue%26block_ads%3Dtrue%26access_key%3DoWVNWT8VvhigEQ%26signature%3D7f0e0f90b5375f79368cb0a0492ea1f04255d0757e42706ad9196f29b4829464&w=3840&q=75"
-              }
-              alt=""
-              width={1280}
-              height={1024}
-              loading="eager"
-              className="h-auto w-full rounded"
-            />
-          </div>
-        )}
+        {/* <div className="rounded-lg border bg-neutral-50 p-6">
+          <Insights insights={insights} className="text-sm" />
+
+          {!!tool.languages.length && (
+            <Series direction="column">
+              <H5>Written in:</H5>
+
+              <Series className="w-full">
+                {tool.languages?.map((language) => (
+                  <h5 key={language.id}>
+                    <NavigationLink to={`/languages/${language.slug}`}>
+                      <span className="size-2.5 rounded-full bg-red-500" />
+                      {language.name}
+                    </NavigationLink>
+                  </h5>
+                ))}
+              </Series>
+            </Series>
+          )}
+        </div> */}
       </div>
+
+      {tool.website && (
+        <div className="relative z-10 h-96 w-full self-start max-md:order-last md:rounded-md md:border md:p-1.5">
+          <img
+            src="https://openalternative.co/_next/image?url=https%3A%2F%2Fapi.screenshotone.com%2Ftake%3Furl%3Dhttps%253A%252F%252Fposthog.com%26cache%3Dtrue%26cache_ttl%3D2000000%26block_chats%3Dtrue%26block_trackers%3Dtrue%26block_cookie_banners%3Dtrue%26block_ads%3Dtrue%26access_key%3DoWVNWT8VvhigEQ%26signature%3D7f0e0f90b5375f79368cb0a0492ea1f04255d0757e42706ad9196f29b4829464&w=3840&q=75"
+            alt=""
+            width={1280}
+            height={1024}
+            loading="eager"
+            className="size-full rounded object-cover"
+          />
+        </div>
+      )}
+
+      {/* Alternatives */}
+      {!!tool.alternatives.length && (
+        <Series size="lg" direction="column">
+          <H3>{tool.name} is an Open Source alternative to:</H3>
+
+          <Grid className="w-full">
+            {tool.alternatives?.map((alternative) => (
+              <AlternativeRecord key={alternative.id} alternative={alternative} />
+            ))}
+          </Grid>
+        </Series>
+      )}
+
+      {/* Topics */}
+      {!!tool.topics.length && (
+        <Series size="lg" direction="column">
+          <H3>Topics related to {tool.name}:</H3>
+
+          <Series className="w-full">
+            {tool.topics?.map((topic) => (
+              <Badge key={topic.id} to={`/topics/${topic.slug}`}>
+                <HashIcon className="size-[0.9em] stroke-[1.75] opacity-50" />
+                {topic.slug}
+              </Badge>
+            ))}
+          </Series>
+        </Series>
+      )}
 
       <BackButton to="/" />
     </>

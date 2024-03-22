@@ -9,9 +9,13 @@ import { TopicOne, topicOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 
 export const handle = {
-  Breadcrumb: ({ topic }: { topic: TopicOne }) => (
-    <BreadcrumbsLink to={`/topics/${topic.slug}`} label={topic.name} />
-  ),
+  breadcrumb: (data?: { topic: TopicOne }) => {
+    if (!data) return <BackButton to="/" />
+
+    const { slug, name } = data.topic
+
+    return <BreadcrumbsLink to={`/topics/${slug}`} label={name} />
+  },
 }
 
 export const meta: MetaFunction = () => {
@@ -46,7 +50,7 @@ export default function TopicsPage() {
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!topic.tools?.length && <p>No tools found.</p>}
+        {!topic.tools?.length && <p>No Open Source software found.</p>}
       </Grid>
 
       <BackButton to="/topics" />

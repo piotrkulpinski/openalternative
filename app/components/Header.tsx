@@ -20,8 +20,8 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
         <Navigation className="max-lg:hidden" />
 
-        <Button size="sm" variant="outline" prefix={<PlusIcon />} className="-my-1.5" asChild>
-          <Link to="/submit">Submit Tool</Link>
+        <Button size="sm" variant="secondary" prefix={<PlusIcon />} className="-my-1.5" asChild>
+          <Link to="/submit">Submit</Link>
         </Button>
       </div>
 
