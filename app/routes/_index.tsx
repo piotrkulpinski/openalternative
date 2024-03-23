@@ -12,6 +12,7 @@ import { Series } from "~/components/Series"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+import { SITE_TAGLINE } from "~/utils/constants"
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -54,7 +55,7 @@ export default function Index() {
     <>
       <section className="flex flex-col gap-y-6 sm:items-start sm:text-start">
         <Intro
-          title="Discover Open Source Alternatives to Popular Software."
+          title={SITE_TAGLINE}
           description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
           className="items-start text-pretty"
         />

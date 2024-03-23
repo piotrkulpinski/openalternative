@@ -27,14 +27,6 @@
   }
 }
 
-.dotted {
-  background-image: radial-gradient(circle at 1px 1px, hsla(240, 8%, 70%, 0.25) 1px, transparent 0);
-  background-size: 20px 20px;
-  background-position: center 5px;
-  -webkit-mask-image: linear-gradient(180deg, #000, transparent);
-  mask-image: linear-gradient(180deg, #000, transparent);
-}
-
 .fade-in {
   animation: fade-in linear forwards;
   animation-timeline: view();
@@ -54,4 +46,12 @@
     opacity: 1;
     transform: translateY(0) perspective(500px) rotateX(0deg);
   }
+}
+
+select:not([size]) {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoZXZyb24tZG93biI+PHBhdGggZD0ibTYgOSA2IDYgNi02Ii8+PC9zdmc+");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25em 1.25em;
+  padding-right: 2.5rem;
 }

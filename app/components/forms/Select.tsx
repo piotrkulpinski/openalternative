@@ -9,7 +9,11 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
   const { className, ...rest } = props
 
   return (
-    <select ref={ref} className={cx(inputVariants({ hoverable: true, className }))} {...rest} />
+    <select
+      ref={ref}
+      className={cx(inputVariants({ hoverable: true, className }), "py-1.5")}
+      {...rest}
+    />
   )
 })
 
