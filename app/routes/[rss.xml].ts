@@ -22,15 +22,15 @@ export const loader = async () => {
       ${tools
         .map(
           (tool) => `
-        <item>
-          <title><![CDATA[${tool.name}]]></title>
-          <description><![CDATA[${tool.description}]]></description>
-          <pubDate>${tool.createdAt.toUTCString()}</pubDate>
-          <link>${url}/${tool.slug}</link>
-          <guid isPermaLink="false">${tool.id}</guid>
-        </item>`
+      <item>
+        <title><![CDATA[${tool.name}]]></title>
+        <description><![CDATA[${tool.description}]]></description>
+        <pubDate>${tool.createdAt.toUTCString()}</pubDate>
+        <link>${url}/${tool.slug}</link>
+        <guid isPermaLink="false">${tool.id}</guid>
+      </item>`
         )
-        .join("")}
+        .join("\n")}
     </channel>
   </rss>`
 
