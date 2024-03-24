@@ -13,6 +13,7 @@ import { H3 } from "~/components/Heading"
 import { Grid } from "~/components/Grid"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { Badge } from "~/components/Badge"
+import { JSON_HEADERS } from "~/utils/constants"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -35,7 +36,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       include: toolOnePayload,
     })
 
-    return typedjson({ tool })
+    return typedjson({ tool }, JSON_HEADERS)
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }

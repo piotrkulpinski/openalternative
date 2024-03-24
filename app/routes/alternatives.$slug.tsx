@@ -8,6 +8,7 @@ import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { AlternativeOne, alternativeOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+import { JSON_HEADERS } from "~/utils/constants"
 
 export const handle = {
   breadcrumb: (data?: { alternative: AlternativeOne }) => {
@@ -30,7 +31,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       include: alternativeOnePayload,
     })
 
-    return typedjson({ alternative })
+    return typedjson({ alternative }, JSON_HEADERS)
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }

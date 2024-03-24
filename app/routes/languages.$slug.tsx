@@ -7,6 +7,7 @@ import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { LanguageOne, languageOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+import { JSON_HEADERS, JSON_HEADERS } from "~/utils/constants"
 
 export const handle = {
   breadcrumb: (data?: { language: LanguageOne }) => {
@@ -29,7 +30,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       include: languageOnePayload,
     })
 
-    return typedjson({ language })
+    return typedjson({ language }, JSON_HEADERS)
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }

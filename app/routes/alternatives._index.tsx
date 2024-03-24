@@ -5,6 +5,7 @@ import { Intro } from "~/components/Intro"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { alternativeManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+import { JSON_HEADERS } from "~/utils/constants"
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -16,7 +17,7 @@ export const loader = async () => {
     include: alternativeManyPayload,
   })
 
-  return typedjson({ alternatives })
+  return typedjson({ alternatives }, JSON_HEADERS)
 }
 
 export default function AlternativesIndex() {

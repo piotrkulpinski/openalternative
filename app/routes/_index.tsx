@@ -12,7 +12,7 @@ import { Series } from "~/components/Series"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { SITE_TAGLINE } from "~/utils/constants"
+import { JSON_HEADERS, SITE_TAGLINE } from "~/utils/constants"
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -45,7 +45,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     include: toolManyPayload,
   })
 
-  return typedjson({ tools })
+  return typedjson({ tools }, JSON_HEADERS)
 }
 
 export default function Index() {

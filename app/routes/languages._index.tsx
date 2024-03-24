@@ -6,6 +6,7 @@ import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { languageManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+import { JSON_HEADERS } from "~/utils/constants"
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -17,7 +18,7 @@ export const loader = async () => {
     include: languageManyPayload,
   })
 
-  return typedjson({ languages })
+  return typedjson({ languages }, JSON_HEADERS)
 }
 
 export default function LanguagesIndex() {

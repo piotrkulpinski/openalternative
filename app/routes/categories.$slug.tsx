@@ -7,6 +7,7 @@ import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { CategoryOne, categoryOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+import { JSON_HEADERS } from "~/utils/constants"
 
 export const handle = {
   breadcrumb: (data?: { category: CategoryOne }) => {
@@ -29,7 +30,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       include: categoryOnePayload,
     })
 
-    return typedjson({ category })
+    return typedjson({ category }, JSON_HEADERS)
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
