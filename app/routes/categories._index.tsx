@@ -1,5 +1,5 @@
-import type { MetaFunction } from "@remix-run/node"
-import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { json, type MetaFunction } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { CategoryRecord } from "~/components/records/CategoryRecord"
@@ -7,8 +7,10 @@ import { categoryManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 
-export const meta: MetaFunction = () => {
-  return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const { title, description } = data?.meta || {}
+
+  return [{ title }, { name: "description", content: description }]
 }
 
 export const loader = async () => {
@@ -17,18 +19,20 @@ export const loader = async () => {
     include: categoryManyPayload,
   })
 
-  return typedjson({ categories }, JSON_HEADERS)
+  const meta = {
+    title: "Open Source Software Categories",
+    description: "Browse top categories to find your best Open Source software options.",
+  }
+
+  return json({ meta, categories }, JSON_HEADERS)
 }
 
 export default function CategoriesIndex() {
-  const { categories } = useTypedLoaderData<typeof loader>()
+  const { meta, categories } = useLoaderData<typeof loader>()
 
   return (
     <>
-      <Intro
-        title="Open Source Software Categories"
-        description="Browse top categories to find your best Open Source software options."
-      />
+      <Intro {...meta} />
 
       <Grid className="md:gap-8">
         {categories.map((category) => (

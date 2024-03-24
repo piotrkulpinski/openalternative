@@ -2,9 +2,10 @@ import { HTMLAttributes } from "react"
 import { Card } from "~/components/Card"
 import plur from "plur"
 import { AlternativeMany } from "~/services.server/api"
+import { SerializeFrom } from "@remix-run/node"
 
 type AlternativeRecordProps = HTMLAttributes<HTMLElement> & {
-  alternative: AlternativeMany
+  alternative: SerializeFrom<AlternativeMany>
   showCount?: boolean
 }
 

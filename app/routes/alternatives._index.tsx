@@ -1,14 +1,14 @@
-import type { MetaFunction } from "@remix-run/node"
-import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { MetaFunction, json, useLoaderData } from "@remix-run/react"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { alternativeManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS } from "~/utils/constants"
 
-export const meta: MetaFunction = () => {
-  return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const { title, description } = data?.meta || {}
+
+  return [{ title }, { name: "description", content: description }]
 }
 
 export const loader = async () => {
@@ -17,18 +17,20 @@ export const loader = async () => {
     include: alternativeManyPayload,
   })
 
-  return typedjson({ alternatives }, JSON_HEADERS)
+  const meta = {
+    title: "Open Source Software Alternatives",
+    description: "Browse top alternatives to find your best Open Source software tools.",
+  }
+
+  return json({ meta, alternatives })
 }
 
 export default function AlternativesIndex() {
-  const { alternatives } = useTypedLoaderData<typeof loader>()
+  const { meta, alternatives } = useLoaderData<typeof loader>()
 
   return (
     <>
-      <Intro
-        title="Open Source Software Alternatives"
-        description="Browse top alternatives to find your best Open Source software tools."
-      />
+      <Intro {...meta} />
 
       <Grid>
         {alternatives.map((alternative) => (

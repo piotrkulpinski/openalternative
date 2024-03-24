@@ -2,9 +2,10 @@ import { HTMLAttributes } from "react"
 import plur from "plur"
 import { LanguageMany } from "~/services.server/api"
 import { CardSimple } from "~/components/CardSimple"
+import { SerializeFrom } from "@remix-run/node"
 
 type LanguageRecordProps = HTMLAttributes<HTMLElement> & {
-  language: LanguageMany
+  language: SerializeFrom<LanguageMany>
 }
 
 export const LanguageRecord = ({ language, ...props }: LanguageRecordProps) => {

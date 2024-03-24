@@ -1,5 +1,5 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
-import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { useLoaderData } from "@remix-run/react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Grid } from "~/components/Grid"
@@ -19,8 +19,10 @@ export const handle = {
   },
 }
 
-export const meta: MetaFunction = () => {
-  return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const { title, description } = data?.meta || {}
+
+  return [{ title }, { name: "description", content: description }]
 }
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
@@ -30,21 +32,23 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       include: categoryOnePayload,
     })
 
-    return typedjson({ category }, JSON_HEADERS)
+    const meta = {
+      title: `Best Open Source ${category.name} Tools`,
+      description: `A collection of the best open source ${category.name} tools. Find the best tools for ${category.name} that are open source and free to use/self-hostable.`,
+    }
+
+    return json({ meta, category }, JSON_HEADERS)
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
 export default function CategoriesPage() {
-  const { category } = useTypedLoaderData<typeof loader>()
+  const { meta, category } = useLoaderData<typeof loader>()
 
   return (
     <>
-      <Intro
-        title={`Best Open Source ${category.name} Tools`}
-        description={`A collection of the best open source ${category.name} tools. Find the best tools for ${category.name} that are open source and free to use.`}
-      />
+      <Intro {...meta} />
 
       <Grid>
         {category.tools.map((tool) => (

@@ -4,9 +4,10 @@ import { format } from "timeago.js"
 import { Card } from "../Card"
 import { Insights } from "../Insights"
 import { ToolMany } from "~/services.server/api"
+import { SerializeFrom } from "@remix-run/node"
 
 type ToolRecordProps = HTMLAttributes<HTMLElement> & {
-  tool: ToolMany
+  tool: SerializeFrom<ToolMany>
 }
 
 export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {

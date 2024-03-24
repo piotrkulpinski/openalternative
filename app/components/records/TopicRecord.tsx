@@ -2,9 +2,10 @@ import { HTMLAttributes } from "react"
 import plur from "plur"
 import { TopicMany } from "~/services.server/api"
 import { CardSimple } from "~/components/CardSimple"
+import { SerializeFrom } from "@remix-run/node"
 
 type TopicRecordProps = HTMLAttributes<HTMLElement> & {
-  topic: TopicMany
+  topic: SerializeFrom<TopicMany>
 }
 
 export const TopicRecord = ({ topic, ...props }: TopicRecordProps) => {

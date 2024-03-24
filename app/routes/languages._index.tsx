@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node"
-import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { json, useLoaderData } from "@remix-run/react"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { LanguageRecord } from "~/components/records/LanguageRecord"
@@ -7,8 +7,10 @@ import { languageManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 
-export const meta: MetaFunction = () => {
-  return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const { title, description } = data?.meta || {}
+
+  return [{ title }, { name: "description", content: description }]
 }
 
 export const loader = async () => {
@@ -17,18 +19,20 @@ export const loader = async () => {
     include: languageManyPayload,
   })
 
-  return typedjson({ languages }, JSON_HEADERS)
+  const meta = {
+    title: "Most Popular Languages used in Open Source Software",
+    description: "Browse top languages to find your best Open Source software options.",
+  }
+
+  return json({ meta, languages }, JSON_HEADERS)
 }
 
 export default function LanguagesIndex() {
-  const { languages } = useTypedLoaderData<typeof loader>()
+  const { meta, languages } = useLoaderData<typeof loader>()
 
   return (
     <>
-      <Intro
-        title="Most Popular Languages used in Open Source Software"
-        description="Browse top languages to find your best Open Source software options."
-      />
+      <Intro {...meta} />
 
       <Grid className="md:gap-8">
         {languages.map((language) => (

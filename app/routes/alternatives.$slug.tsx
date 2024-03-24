@@ -20,8 +20,10 @@ export const handle = {
   },
 }
 
-export const meta: MetaFunction = () => {
-  return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const { title, description } = data?.meta || {}
+
+  return [{ title }, { name: "description", content: description }]
 }
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
@@ -31,20 +33,25 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       include: alternativeOnePayload,
     })
 
-    return typedjson({ alternative }, JSON_HEADERS)
+    const meta = {
+      title: `Best Open Source ${alternative.name} Alternatives`,
+      description: `A collection of the best open source ${alternative.name} tools. Find the best alternatives for ${alternative.name} that are open source and free to use/self-hostable.`,
+    }
+
+    return typedjson({ meta, alternative }, JSON_HEADERS)
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
 export default function AlternativesPage() {
-  const { alternative } = useTypedLoaderData<typeof loader>()
+  const { meta, alternative } = useTypedLoaderData<typeof loader>()
 
   return (
     <>
       <Intro
         prefix={<FaviconImage url={alternative.website} />}
-        title={`Best Open Source ${alternative.name} Alternatives`}
+        title={meta.title}
         description={
           <>
             A collection of the best open source{" "}

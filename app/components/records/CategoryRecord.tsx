@@ -2,9 +2,10 @@ import { HTMLAttributes } from "react"
 import plur from "plur"
 import { CategoryMany } from "~/services.server/api"
 import { CardSimple } from "~/components/CardSimple"
+import { SerializeFrom } from "@remix-run/node"
 
 type CategoryRecordProps = HTMLAttributes<HTMLElement> & {
-  category: CategoryMany
+  category: SerializeFrom<CategoryMany>
 }
 
 export const CategoryRecord = ({ category, ...props }: CategoryRecordProps) => {

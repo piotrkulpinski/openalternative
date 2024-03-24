@@ -12,7 +12,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   return (
     <>
       <div className={cx("flex items-center gap-3 md:gap-4", className)} {...props}>
-        <button type="button" onClick={() => setNavOpen(!isNavOpen)} className="md:hidden">
+        <button type="button" onClick={() => setNavOpen(!isNavOpen)} className="lg:hidden">
           <MenuIcon className="size-6 stroke-[1.5]" />
         </button>
 
