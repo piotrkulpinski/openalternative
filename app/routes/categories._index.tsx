@@ -1,12 +1,11 @@
 import type { MetaFunction } from "@remix-run/node"
-import plur from "plur"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
-import { CardSimple } from "~/components/CardSimple"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
+import { CategoryRecord } from "~/components/records/CategoryRecord"
 import { categoryManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS, JSON_HEADERS } from "~/utils/constants"
+import { JSON_HEADERS } from "~/utils/constants"
 
 export const meta: MetaFunction = () => {
   return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
@@ -33,12 +32,7 @@ export default function CategoriesIndex() {
 
       <Grid className="md:gap-8">
         {categories.map((category) => (
-          <CardSimple
-            key={category.id}
-            to={`/categories/${category.slug}`}
-            label={category.name}
-            caption={`${category.tools.length} ${plur("tool", category.tools.length)}`}
-          />
+          <CategoryRecord key={category.id} category={category} />
         ))}
       </Grid>
     </>

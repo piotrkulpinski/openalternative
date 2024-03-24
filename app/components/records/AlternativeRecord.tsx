@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react"
-import { Card } from "../Card"
+import { Card } from "~/components/Card"
 import plur from "plur"
 import { AlternativeMany } from "~/services.server/api"
 
@@ -19,7 +19,7 @@ export const AlternativeRecord = ({ alternative, showCount, ...props }: Alternat
     >
       {showCount && (
         <span className="text-xs text-neutral-500">
-          {alternative.tools.length} {plur("alternative", alternative.tools.length)}
+          {alternative._count.tools} {plur("alternative", alternative._count.tools)}
         </span>
       )}
     </Card>

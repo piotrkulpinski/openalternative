@@ -1,21 +1,19 @@
 import { remember } from "@epic-web/remember"
-import { createClient } from "@libsql/client"
-import { PrismaLibSQL } from "@prisma/adapter-libsql"
 import { PrismaClient } from "@prisma/client"
 import chalk from "chalk"
 
-const libsql = createClient({
-  url: `${process.env.TURSO_DATABASE_URL}`,
-  authToken: `${process.env.TURSO_AUTH_TOKEN}`,
-})
+// const libsql = createClient({
+//   url: `${process.env.TURSO_DATABASE_URL}`,
+//   authToken: `${process.env.TURSO_AUTH_TOKEN}`,
+// })
 
-const adapter = new PrismaLibSQL(libsql)
+// const adapter = new PrismaLibSQL(libsql)
 
 export const prisma = remember("prisma", () => {
   const logThreshold = 50
 
   const client = new PrismaClient({
-    adapter,
+    // adapter,
     log: [
       { level: "query", emit: "event" },
       { level: "error", emit: "stdout" },

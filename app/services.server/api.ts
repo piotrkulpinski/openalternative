@@ -6,7 +6,7 @@ export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeInclude>
 })
 
 export const alternativeManyPayload = Prisma.validator<Prisma.AlternativeInclude>()({
-  tools: { select: { id: true } },
+  _count: { select: { tools: true } },
 })
 
 export type AlternativeOne = Prisma.AlternativeGetPayload<{ include: typeof alternativeOnePayload }>
@@ -20,7 +20,7 @@ export const categoryOnePayload = Prisma.validator<Prisma.CategoryInclude>()({
 })
 
 export const categoryManyPayload = Prisma.validator<Prisma.CategoryInclude>()({
-  tools: { select: { id: true } },
+  _count: { select: { tools: true } },
 })
 
 export type CategoryOne = Prisma.CategoryGetPayload<{ include: typeof categoryOnePayload }>
@@ -32,7 +32,7 @@ export const languageOnePayload = Prisma.validator<Prisma.LanguageInclude>()({
 })
 
 export const languageManyPayload = Prisma.validator<Prisma.LanguageInclude>()({
-  tools: { select: { id: true } },
+  _count: { select: { tools: true } },
 })
 
 export type LanguageOne = Prisma.LanguageGetPayload<{ include: typeof languageOnePayload }>
@@ -44,7 +44,7 @@ export const topicOnePayload = Prisma.validator<Prisma.TopicInclude>()({
 })
 
 export const topicManyPayload = Prisma.validator<Prisma.TopicInclude>()({
-  tools: { select: { id: true } },
+  _count: { select: { tools: true } },
 })
 
 export type TopicOne = Prisma.TopicGetPayload<{ include: typeof topicOnePayload }>

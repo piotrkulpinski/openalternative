@@ -16,9 +16,7 @@
   "dependencies": {
     "@curiousleaf/utils": "^1.0.19",
     "@epic-web/remember": "^1.0.2",
-    "@libsql/client": "^0.5.6",
     "@octokit/graphql": "^8.0.1",
-    "@prisma/adapter-libsql": "^5.11.0",
     "@prisma/client": "^5.11.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@remix-run/node": "^2.8.1",

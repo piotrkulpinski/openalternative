@@ -1,9 +1,8 @@
 import type { MetaFunction } from "@remix-run/node"
-import plur from "plur"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
-import { CardSimple } from "~/components/CardSimple"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
+import { LanguageRecord } from "~/components/records/LanguageRecord"
 import { languageManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
@@ -33,12 +32,7 @@ export default function LanguagesIndex() {
 
       <Grid className="md:gap-8">
         {languages.map((language) => (
-          <CardSimple
-            key={language.id}
-            to={`/languages/${language.slug}`}
-            label={language.name}
-            caption={`${language.tools.length} ${plur("tool", language.tools.length)}`}
-          />
+          <LanguageRecord key={language.id} language={language} />
         ))}
       </Grid>
     </>
