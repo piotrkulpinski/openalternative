@@ -26,18 +26,6 @@ export const categoryManyPayload = Prisma.validator<Prisma.CategoryInclude>()({
 export type CategoryOne = Prisma.CategoryGetPayload<{ include: typeof categoryOnePayload }>
 export type CategoryMany = Prisma.CategoryGetPayload<{ include: typeof categoryManyPayload }>
 
-// Languages
-export const languageOnePayload = Prisma.validator<Prisma.LanguageInclude>()({
-  tools: true,
-})
-
-export const languageManyPayload = Prisma.validator<Prisma.LanguageInclude>()({
-  _count: { select: { tools: true } },
-})
-
-export type LanguageOne = Prisma.LanguageGetPayload<{ include: typeof languageOnePayload }>
-export type LanguageMany = Prisma.LanguageGetPayload<{ include: typeof languageManyPayload }>
-
 // Topics
 export const topicOnePayload = Prisma.validator<Prisma.TopicInclude>()({
   tools: true,
@@ -50,12 +38,27 @@ export const topicManyPayload = Prisma.validator<Prisma.TopicInclude>()({
 export type TopicOne = Prisma.TopicGetPayload<{ include: typeof topicOnePayload }>
 export type TopicMany = Prisma.TopicGetPayload<{ include: typeof topicManyPayload }>
 
+// Languages
+export const languageOnePayload = Prisma.validator<Prisma.LanguageInclude>()({
+  tools: { include: { tool: true } },
+})
+
+export const languageManyPayload = Prisma.validator<Prisma.LanguageInclude>()({
+  _count: { select: { tools: true } },
+})
+
+export type LanguageOne = Prisma.LanguageGetPayload<{ include: typeof languageOnePayload }>
+export type LanguageMany = Prisma.LanguageGetPayload<{ include: typeof languageManyPayload }>
+
 // Tools
 export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({
   alternatives: { orderBy: { name: "asc" }, include: alternativeManyPayload },
   categories: { orderBy: { name: "asc" }, include: categoryManyPayload },
-  languages: { orderBy: { name: "asc" }, include: languageManyPayload },
-  topics: { orderBy: { name: "asc" }, include: topicManyPayload },
+  topics: { orderBy: { slug: "asc" }, include: topicManyPayload },
+  languages: {
+    orderBy: { percentage: "desc" },
+    include: { language: { include: languageManyPayload } },
+  },
 })
 
 export const toolManyPayload = Prisma.validator<Prisma.ToolInclude>()({})

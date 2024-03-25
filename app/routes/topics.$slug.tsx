@@ -1,3 +1,4 @@
+import { titleCase } from "@curiousleaf/utils"
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { BackButton } from "~/components/BackButton"
@@ -14,9 +15,9 @@ export const handle = {
   breadcrumb: (data?: { topic: TopicOne }) => {
     if (!data) return <BackButton to="/" />
 
-    const { slug, name } = data.topic
+    const { slug } = data.topic
 
-    return <BreadcrumbsLink to={`/topics/${slug}`} label={name} />
+    return <BreadcrumbsLink to={`/topics/${slug}`} label={titleCase(slug)} />
   },
 }
 
@@ -37,9 +38,11 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       include: topicOnePayload,
     })
 
+    const name = titleCase(topic.slug)
+
     const meta = {
-      title: `Best Open Source Projects using ${topic.name}`,
-      description: `A collection of the best open source projects using ${topic.name}. Find the best tools for ${topic.name} that are open source and free to use/self-hostable.`,
+      title: `Best Open Source Projects using ${name}`,
+      description: `A collection of the best open source projects using ${name}. Find the best tools for ${name} that are open source and free to use/self-hostable.`,
     }
 
     return json({ meta, topic }, JSON_HEADERS)

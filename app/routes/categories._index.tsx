@@ -43,6 +43,8 @@ export default function CategoriesIndex() {
         {categories.map((category) => (
           <CategoryRecord key={category.id} category={category} />
         ))}
+
+        {!categories.length && <p>No categories found.</p>}
       </Grid>
     </>
   )

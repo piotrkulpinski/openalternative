@@ -69,15 +69,6 @@ export default function ToolsPage() {
   const { tool } = useLoaderData<typeof loader>()
 
   const insights = [
-    // {
-    //   label: "Repository",
-    //   value: (
-    //     <Link to={tool.repository ?? ""} target="_blank" rel="noreferrer nofollow">
-    //       View <ArrowUpRightIcon className="inline-block size-3.5" />
-    //     </Link>
-    //   ),
-    //   icon: GithubIcon,
-    // },
     { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
     { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
     {
@@ -152,20 +143,23 @@ export default function ToolsPage() {
           <H5>Repository details:</H5>
           <Insights insights={insights} className="text-sm" />
 
-          <Series direction="column">
-            <H5>Written in:</H5>
+          {!!tool.languages.length && (
+            <Series direction="column">
+              <H5>Written in:</H5>
 
-            <Series>
-              {tool.languages?.map((language) => (
-                <h6 key={language.id}>
+              {tool.languages?.map(({ percentage, language }) => (
+                <h6 key={language.slug}>
                   <NavigationLink to={`/languages/${language.slug}`}>
-                    <span className="size-2 rounded-full bg-red-500" />
-                    {language.name}
+                    <span
+                      className="size-2 rounded-full"
+                      style={{ backgroundColor: language.color ?? undefined }}
+                    />
+                    {language.name} ({percentage}%)
                   </NavigationLink>
                 </h6>
               ))}
             </Series>
-          </Series>
+          )}
 
           {tool.repository && (
             <Button
@@ -203,7 +197,7 @@ export default function ToolsPage() {
 
           <Series className="w-full">
             {tool.topics?.map((topic) => (
-              <Badge key={topic.id} to={`/topics/${topic.slug}`}>
+              <Badge key={topic.slug} to={`/topics/${topic.slug}`}>
                 <HashIcon className="size-[0.9em] stroke-[1.75] opacity-50" />
                 {topic.slug}
               </Badge>

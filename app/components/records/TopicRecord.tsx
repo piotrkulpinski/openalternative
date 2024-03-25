@@ -12,7 +12,7 @@ export const TopicRecord = ({ topic, ...props }: TopicRecordProps) => {
   return (
     <CardSimple
       to={`/topics/${topic.slug}`}
-      label={topic.name}
+      label={topic.slug}
       caption={`${topic._count.tools} ${plur("tool", topic._count.tools)}`}
       {...props}
     />

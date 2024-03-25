@@ -42,6 +42,8 @@ export default function AlternativesIndex() {
         {alternatives.map((alternative) => (
           <AlternativeRecord key={alternative.id} alternative={alternative} showCount />
         ))}
+
+        {!alternatives.length && <p>No alternatives found.</p>}
       </Grid>
     </>
   )

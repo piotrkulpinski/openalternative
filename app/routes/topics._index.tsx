@@ -20,7 +20,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
 
 export const loader = async () => {
   const topics = await prisma.topic.findMany({
-    orderBy: { name: "asc" },
+    orderBy: { slug: "asc" },
     include: topicManyPayload,
   })
 
@@ -41,8 +41,10 @@ export default function TopicsIndex() {
 
       <Grid className="md:gap-8">
         {topics.map((topic) => (
-          <TopicRecord key={topic.id} topic={topic} />
+          <TopicRecord key={topic.slug} topic={topic} />
         ))}
+
+        {!topics.length && <p>No topics found.</p>}
       </Grid>
     </>
   )

@@ -1,10 +1,11 @@
 import { NavLink, NavLinkProps } from "@remix-run/react"
 import { cx } from "~/utils/cva"
 import { H5 } from "./Heading"
+import { ReactNode } from "react"
 
 type CardSimpleProps = NavLinkProps & {
-  label: string
-  caption?: string
+  label: ReactNode
+  caption?: ReactNode
 }
 
 export const CardSimple = ({ ...props }: CardSimpleProps) => {

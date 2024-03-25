@@ -56,7 +56,7 @@ export default function LanguagesPage() {
       <Intro {...meta} />
 
       <Grid>
-        {language.tools.map((tool) => (
+        {language.tools.map(({ tool }) => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
