@@ -15,7 +15,8 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:push": "prisma db push --skip-generate",
     "db:reset": "prisma migrate reset",
-    "postinstall": "prisma generate"
+    "preinstall": "bun run db:migrate:deploy",
+    "postinstall": "bun run db:generate"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.540.0",
