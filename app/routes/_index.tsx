@@ -1,8 +1,7 @@
 import { Prisma } from "@prisma/client"
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { Link } from "@remix-run/react"
+import { Link, json, useLoaderData } from "@remix-run/react"
 import { BlocksIcon, BracesIcon, TagIcon } from "lucide-react"
-import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { Button } from "~/components/Button"
 import { Filters } from "~/components/Filters"
 import { Grid } from "~/components/Grid"
@@ -12,11 +11,8 @@ import { Series } from "~/components/Series"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS, SITE_TAGLINE } from "~/utils/constants"
-
-export const meta: MetaFunction = () => {
-  return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
-}
+import { JSON_HEADERS, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const order = new URL(request.url).searchParams.get("order")
@@ -45,11 +41,19 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     include: toolManyPayload,
   })
 
-  return typedjson({ tools }, JSON_HEADERS)
+  return json({ tools }, JSON_HEADERS)
+}
+
+export const meta: MetaFunction<typeof loader> = ({ matches }) => {
+  return getMetaTags({
+    title: SITE_TAGLINE,
+    description: SITE_DESCRIPTION,
+    parentMeta: matches.find(({ id }) => id === "root")?.meta,
+  })
 }
 
 export default function Index() {
-  const { tools } = useTypedLoaderData<typeof loader>()
+  const { tools } = useLoaderData<typeof loader>()
 
   return (
     <>

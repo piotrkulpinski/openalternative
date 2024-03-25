@@ -1,6 +1,5 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
 import { CopyrightIcon, GitForkIcon, HashIcon, StarIcon, TimerIcon } from "lucide-react"
-import { typedjson, useTypedLoaderData } from "remix-typedjson"
 import { format } from "timeago.js"
 import { FaviconImage } from "~/components/Favicon"
 import { Intro } from "~/components/Intro"
@@ -14,6 +13,8 @@ import { Grid } from "~/components/Grid"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { Badge } from "~/components/Badge"
 import { JSON_HEADERS } from "~/utils/constants"
+import { useLoaderData } from "@remix-run/react"
+import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -25,8 +26,14 @@ export const handle = {
   },
 }
 
-export const meta: MetaFunction = () => {
-  return [{ title: "OpenAlternative" }, { name: "description", content: "Welcome to Remix!" }]
+export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
+  const { meta, tool } = data || {}
+
+  return getMetaTags({
+    title: meta?.title,
+    description: tool?.description,
+    parentMeta: matches.find(({ id }) => id === "root")?.meta,
+  })
 }
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
@@ -36,14 +43,18 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       include: toolOnePayload,
     })
 
-    return typedjson({ tool }, JSON_HEADERS)
+    const meta = {
+      title: `${tool.name}: Open Source Alternative ${tool.alternatives.length ? `to ${tool.alternatives.map((a) => a?.name).join(", ")}` : ""}`,
+    }
+
+    return json({ meta, tool }, JSON_HEADERS)
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
 export default function ToolsPage() {
-  const { tool } = useTypedLoaderData<typeof loader>()
+  const { tool } = useLoaderData<typeof loader>()
 
   const insights = [
     { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },

@@ -11,6 +11,10 @@
     "typecheck": "tsc",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
+    "db:migrate": "prisma migrate dev --name ",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:push": "prisma db push --skip-generate",
+    "db:reset": "prisma migrate reset",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -31,9 +35,8 @@
     "ky": "^1.2.2",
     "lucide-react": "^0.359.0",
     "plur": "^5.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "remix-typedjson": "^0.4.1",
+    "react": "canary",
+    "react-dom": "canary",
     "tailwind-merge": "^2.2.2",
     "timeago.js": "^4.0.2",
     "zod": "^3.22.4"

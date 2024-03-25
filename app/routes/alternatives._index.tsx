@@ -4,11 +4,17 @@ import { Intro } from "~/components/Intro"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { alternativeManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+import { JSON_HEADERS } from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   const { title, description } = data?.meta || {}
 
-  return [{ title }, { name: "description", content: description }]
+  return getMetaTags({
+    title,
+    description,
+    parentMeta: matches.find(({ id }) => id === "root")?.meta,
+  })
 }
 
 export const loader = async () => {
@@ -22,7 +28,7 @@ export const loader = async () => {
     description: "Browse top alternatives to find your best Open Source software tools.",
   }
 
-  return json({ meta, alternatives })
+  return json({ meta, alternatives }, JSON_HEADERS)
 }
 
 export default function AlternativesIndex() {

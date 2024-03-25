@@ -65,7 +65,7 @@ type GetToolScoreProps = {
  * @param props.bump - An optional bump to the final score.
  * @returns The calculated score for the tool.
  */
-export const getToolScore = ({ stars, forks, lastCommitDate, bump = 0 }: GetToolScoreProps) => {
+export const getToolScore = ({ stars, forks, lastCommitDate, bump }: GetToolScoreProps) => {
   const timeSinceLastCommit = Date.now() - (lastCommitDate?.getTime() || 0)
   const daysSinceLastCommit = timeSinceLastCommit / (1000 * 60 * 60 * 24)
 
@@ -73,5 +73,5 @@ export const getToolScore = ({ stars, forks, lastCommitDate, bump = 0 }: GetTool
   const forksScore = forks * 0.75
   const lastCommitPenalty = daysSinceLastCommit * 0.5
 
-  return Math.round(starsScore + forksScore - lastCommitPenalty + bump)
+  return Math.round(starsScore + forksScore - lastCommitPenalty + (bump || 0))
 }

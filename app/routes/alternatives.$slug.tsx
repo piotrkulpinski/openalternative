@@ -1,5 +1,5 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
-import { typedjson, useTypedLoaderData } from "remix-typedjson"
+import { useLoaderData } from "@remix-run/react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { FaviconImage } from "~/components/Favicon"
@@ -9,6 +9,7 @@ import { ToolRecord } from "~/components/records/ToolRecord"
 import { AlternativeOne, alternativeOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   breadcrumb: (data?: { alternative: AlternativeOne }) => {
@@ -20,10 +21,14 @@ export const handle = {
   },
 }
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   const { title, description } = data?.meta || {}
 
-  return [{ title }, { name: "description", content: description }]
+  return getMetaTags({
+    title,
+    description,
+    parentMeta: matches.find(({ id }) => id === "root")?.meta,
+  })
 }
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
@@ -38,14 +43,14 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       description: `A collection of the best open source ${alternative.name} tools. Find the best alternatives for ${alternative.name} that are open source and free to use/self-hostable.`,
     }
 
-    return typedjson({ meta, alternative }, JSON_HEADERS)
+    return json({ meta, alternative }, JSON_HEADERS)
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
 export default function AlternativesPage() {
-  const { meta, alternative } = useTypedLoaderData<typeof loader>()
+  const { meta, alternative } = useLoaderData<typeof loader>()
 
   return (
     <>

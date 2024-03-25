@@ -6,11 +6,16 @@ import { LanguageRecord } from "~/components/records/LanguageRecord"
 import { languageManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   const { title, description } = data?.meta || {}
 
-  return [{ title }, { name: "description", content: description }]
+  return getMetaTags({
+    title,
+    description,
+    parentMeta: matches.find(({ id }) => id === "root")?.meta,
+  })
 }
 
 export const loader = async () => {

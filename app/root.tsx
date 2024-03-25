@@ -1,4 +1,4 @@
-import { LinksFunction } from "@remix-run/node"
+import { LinksFunction, MetaFunction } from "@remix-run/node"
 import { SpeedInsights } from "@vercel/speed-insights/remix"
 import { Analytics } from "@vercel/analytics/react"
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
@@ -26,6 +26,20 @@ export const links: LinksFunction = () => {
     { rel: "icon", href: "/logo.svg", type: "image/svg+xml" },
     { rel: "preconnect", href: "https://rsms.me/" },
     { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
+  ]
+}
+
+export const meta: MetaFunction = ({ location }) => {
+  const url = `https://openalternative.co`
+  const currentUrl = `${url}${location.pathname}${location.search}`
+  const canonicalUrl = `${url}${location.pathname}`
+
+  return [
+    { tagName: "link", rel: "canonical", href: canonicalUrl },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: currentUrl },
+    { property: "og:site_name", content: SITE_NAME },
   ]
 }
 

@@ -28,6 +28,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
       description={tool.description}
       website={tool.website}
       isFeatured={tool.isFeatured}
+      prefetch="intent"
       {...props}
     >
       <Insights insights={insights} className="mt-auto" />

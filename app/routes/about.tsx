@@ -2,14 +2,35 @@ import { SITE_NAME } from "~/utils/constants"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
 import { Featured } from "~/components/Featured"
+import { MetaFunction, json } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
+import { getMetaTags } from "~/utils/meta"
+
+export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
+  const { title, description } = data?.meta || {}
+
+  return getMetaTags({
+    title,
+    description,
+    parentMeta: matches.find(({ id }) => id === "root")?.meta,
+  })
+}
+
+export const loader = () => {
+  const meta = {
+    title: "About Us",
+    description: `${SITE_NAME} is a community driven list of open source alternatives to proprietary software and applications.`,
+  }
+
+  return json({ meta })
+}
 
 export default function AboutPage() {
+  const { meta } = useLoaderData<typeof loader>()
+
   return (
     <>
-      <Intro
-        title="About Us"
-        description={`${SITE_NAME} is a community driven list of open source alternatives to proprietary software and applications.`}
-      />
+      <Intro {...meta} />
 
       <Featured />
 
