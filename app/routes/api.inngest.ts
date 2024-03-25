@@ -5,13 +5,13 @@ import { generateToolFavicon } from "~/functions.server/generateToolFavicon"
 import { cronUpdateTools } from "~/functions.server/cronUpdateTools"
 import { fetchGithubRepo } from "~/functions.server/fetchGithubRepo"
 
-export const config = {
-  runtime: "edge",
-}
+// export const config = {
+//   runtime: "edge",
+// }
 
 const handler = serve({
   client: inngest,
-  streaming: "allow",
+  // streaming: "allow",
   functions: [cronUpdateTools, fetchGithubRepo, generateToolScreenshot, generateToolFavicon],
 })
 
