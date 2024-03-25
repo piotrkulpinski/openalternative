@@ -75,3 +75,54 @@ export const getToolScore = ({ stars, forks, lastCommitDate, bump }: GetToolScor
 
   return Math.round(starsScore + forksScore - lastCommitPenalty + (bump || 0))
 }
+
+type ProjectMetrics = {
+  stars: number
+  forks: number
+  contributors: number
+  recentActivity: {
+    issuesCreated: number
+    prsCreated: number
+    issuesResolved: number
+    prsMerged: number
+  }
+  openIssues: number
+  closedIssues: number
+  watchers: number
+}
+
+export const calculateHealthScore = (metrics: ProjectMetrics) => {
+  // Define weights (these can be adjusted based on what you prioritize)
+  const weights = {
+    stars: 0.1,
+    forks: 0.1,
+    contributors: 0.2,
+    recentActivityScore: 0.4, // Aggregate of recent activities
+    issueResolutionEfficiency: 0.1,
+    watchers: 0.1,
+  }
+
+  // Calculating parts of the score
+  const recentActivityScore =
+    (metrics.recentActivity.issuesCreated +
+      metrics.recentActivity.prsCreated +
+      metrics.recentActivity.issuesResolved +
+      metrics.recentActivity.prsMerged) /
+    4 // Average of recent activity metrics
+
+  let issueResolutionEfficiency = metrics.closedIssues / (metrics.openIssues + metrics.closedIssues)
+
+  // Normalize undefined scenarios, e.g., division by 0
+  if (!isFinite(issueResolutionEfficiency)) issueResolutionEfficiency = 0
+
+  // Calculating total health score
+  const score =
+    metrics.stars * weights.stars +
+    metrics.forks * weights.forks +
+    metrics.contributors * weights.contributors +
+    recentActivityScore * weights.recentActivityScore +
+    issueResolutionEfficiency * weights.issueResolutionEfficiency +
+    metrics.watchers * weights.watchers
+
+  return score
+}

@@ -53,7 +53,7 @@ export function Layout({ children }: PropsWithChildren) {
       </head>
 
       <body className="bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200">
-        <div className="mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 p-8">
+        <div className="@container/main mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 p-8">
           <Header />
 
           {children}

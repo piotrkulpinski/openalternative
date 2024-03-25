@@ -7,7 +7,7 @@ import { Slottable } from "./Slottable"
 
 export const buttonVariants = cva({
   base: [
-    "relative inline-flex items-center justify-center border font-medium -tracking-micro rounded-md transition hover:z-10",
+    "group relative inline-flex items-center justify-center border font-medium -tracking-micro rounded-md transition hover:z-10",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
@@ -17,8 +17,8 @@ export const buttonVariants = cva({
       primary:
         "!border-transparent text-neutral-950 bg-current [&>*]:invert hover:opacity-90 dark:text-neutral-50",
       secondary: [
-        "border-neutral-200 text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100",
-        "dark:text-neutral-400 dark:border-neutral-700/50 dark:bg-neutral-800/40 dark:hover:border-neutral-700 dark:hover:bg-neutral-800",
+        "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100",
+        "dark:text-neutral-400 dark:bg-transparent dark:border-neutral-700/50 dark:bg-neutral-800/40 dark:hover:border-neutral-700 dark:hover:bg-neutral-800",
       ],
     },
     size: {

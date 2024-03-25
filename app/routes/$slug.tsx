@@ -1,5 +1,13 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
-import { CopyrightIcon, GitForkIcon, HashIcon, StarIcon, TimerIcon } from "lucide-react"
+import {
+  CopyrightIcon,
+  GitForkIcon,
+  HashIcon,
+  MoveRightIcon,
+  StarIcon,
+  TagIcon,
+  TimerIcon,
+} from "lucide-react"
 import { format } from "timeago.js"
 import { FaviconImage } from "~/components/Favicon"
 import { Intro } from "~/components/Intro"
@@ -8,13 +16,17 @@ import { ToolOne, toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { H3 } from "~/components/Heading"
+import { H3, H5 } from "~/components/Heading"
 import { Grid } from "~/components/Grid"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { Badge } from "~/components/Badge"
 import { JSON_HEADERS } from "~/utils/constants"
-import { useLoaderData } from "@remix-run/react"
+import { Link, useLoaderData } from "@remix-run/react"
 import { getMetaTags } from "~/utils/meta"
+import { updateUrlWithSearchParams } from "~/utils/helpers"
+import { Button } from "~/components/Button"
+import { Insights } from "~/components/Insights"
+import { NavigationLink } from "~/components/NavigationLink"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -57,6 +69,15 @@ export default function ToolsPage() {
   const { tool } = useLoaderData<typeof loader>()
 
   const insights = [
+    // {
+    //   label: "Repository",
+    //   value: (
+    //     <Link to={tool.repository ?? ""} target="_blank" rel="noreferrer nofollow">
+    //       View <ArrowUpRightIcon className="inline-block size-3.5" />
+    //     </Link>
+    //   ),
+    //   icon: GithubIcon,
+    // },
     { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
     { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
     {
@@ -69,20 +90,19 @@ export default function ToolsPage() {
 
   return (
     <>
-      <div className="flex flex-wrap gap-12">
-        <div className="flex flex-1 flex-col items-start gap-4 md:gap-6">
-          <Intro
-            prefix={<FaviconImage url={tool.website} />}
-            title={tool.name}
-            description={tool.description}
-            className="gap-y-4"
-          />
+      <div className="@3xl/main:grid-cols-3 grid items-start gap-6">
+        <div className="@3xl/main:col-span-2 flex flex-1 flex-col items-start gap-10 md:gap-12">
+          <div className="flex flex-col items-start gap-4 md:gap-6">
+            <Intro
+              prefix={<FaviconImage url={tool.website} />}
+              title={tool.name}
+              description={tool.description}
+              className="gap-y-4"
+            />
 
-          {/* <Series size="lg">
             {tool.website && (
               <Button
-                variant="secondary"
-                prefix={<SquareArrowOutUpRightIcon className="max-sm:hidden" />}
+                suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
                 asChild
               >
                 <Link
@@ -90,67 +110,78 @@ export default function ToolsPage() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Visit Website
+                  View Website
                 </Link>
               </Button>
             )}
+          </div>
 
-            {tool.repository && (
-              <Button variant="secondary" prefix={<GithubIcon className="max-sm:hidden" />} asChild>
-                <Link to={tool.repository} target="_blank" rel="noreferrer nofollow">
-                  View Repository
-                </Link>
-              </Button>
-            )}
-          </Series> */}
+          {tool.website && (
+            <div className="relative z-10 w-full self-start max-md:order-last md:rounded-md md:border md:p-1.5">
+              <img
+                src="https://openalternative.co/_next/image?url=https%3A%2F%2Fapi.screenshotone.com%2Ftake%3Furl%3Dhttps%253A%252F%252Fposthog.com%26cache%3Dtrue%26cache_ttl%3D2000000%26block_chats%3Dtrue%26block_trackers%3Dtrue%26block_cookie_banners%3Dtrue%26block_ads%3Dtrue%26access_key%3DoWVNWT8VvhigEQ%26signature%3D7f0e0f90b5375f79368cb0a0492ea1f04255d0757e42706ad9196f29b4829464&w=3840&q=75"
+                alt=""
+                width={1280}
+                height={1024}
+                loading="eager"
+                className="aspect-video size-full rounded object-cover object-top"
+              />
+            </div>
+          )}
 
           {/* Topics */}
-          {/* {!!tool.categories.length && (
-            <Series className="w-full">
-              {tool.categories?.map((category) => (
-                <Badge key={category.id} to={`/categorys/${category.slug}`}>
-                  <TagIcon className="size-[0.9em] stroke-[1.75] opacity-50" />
-                  {category.name}
-                </Badge>
-              ))}
-            </Series>
-          )} */}
-        </div>
-
-        {/* <div className="rounded-lg border bg-neutral-50 p-6">
-          <Insights insights={insights} className="text-sm" />
-
-          {!!tool.languages.length && (
+          {!!tool.categories.length && (
             <Series direction="column">
-              <H5>Written in:</H5>
+              <H5>Categories:</H5>
 
-              <Series className="w-full">
-                {tool.languages?.map((language) => (
-                  <h5 key={language.id}>
-                    <NavigationLink to={`/languages/${language.slug}`}>
-                      <span className="size-2.5 rounded-full bg-red-500" />
-                      {language.name}
+              <Series>
+                {tool.categories?.map((category) => (
+                  <h6 key={category.id}>
+                    <NavigationLink to={`/categories/${category.slug}`}>
+                      <TagIcon className="size-[0.9em] stroke-[1.75] opacity-50" />
+                      {category.name}
                     </NavigationLink>
-                  </h5>
+                  </h6>
                 ))}
               </Series>
             </Series>
           )}
-        </div> */}
-      </div>
-
-      {tool.website && (
-        <div className="relative z-10 h-96 w-full self-start max-md:order-last md:rounded-md md:border md:p-1.5">
-          <img
-            src="https://openalternative.co/_next/image?url=https%3A%2F%2Fapi.screenshotone.com%2Ftake%3Furl%3Dhttps%253A%252F%252Fposthog.com%26cache%3Dtrue%26cache_ttl%3D2000000%26block_chats%3Dtrue%26block_trackers%3Dtrue%26block_cookie_banners%3Dtrue%26block_ads%3Dtrue%26access_key%3DoWVNWT8VvhigEQ%26signature%3D7f0e0f90b5375f79368cb0a0492ea1f04255d0757e42706ad9196f29b4829464&w=3840&q=75"
-            alt=""
-            width={1280}
-            height={1024}
-            loading="eager"
-            className="size-full rounded object-cover"
-          />
         </div>
-      )}
+
+        <div className="sticky top-4 flex flex-col gap-3 rounded-lg border bg-neutral-50 px-6 py-5">
+          <H5>Repository details:</H5>
+          <Insights insights={insights} className="text-sm" />
+
+          <Series direction="column">
+            <H5>Written in:</H5>
+
+            <Series>
+              {tool.languages?.map((language) => (
+                <h6 key={language.id}>
+                  <NavigationLink to={`/languages/${language.slug}`}>
+                    <span className="size-2 rounded-full bg-red-500" />
+                    {language.name}
+                  </NavigationLink>
+                </h6>
+              ))}
+            </Series>
+          </Series>
+
+          {tool.repository && (
+            <Button
+              size="md"
+              variant="secondary"
+              suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
+              className="mt-2"
+              asChild
+            >
+              <Link to={tool.repository} target="_blank" rel="noreferrer nofollow">
+                View Repository
+              </Link>
+            </Button>
+          )}
+        </div>
+      </div>
 
       {/* Alternatives */}
       {!!tool.alternatives.length && (
