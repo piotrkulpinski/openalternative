@@ -8,12 +8,12 @@ type CardProps = HTMLAttributes<HTMLElement> &
   NavLinkProps & {
     name: string
     description?: string | null
-    website: string | null
+    faviconUrl: string | null
     isFeatured?: boolean
   }
 
 export const Card = ({ ...props }: CardProps) => {
-  const { children, className, name, description, website, isFeatured, ...rest } = props
+  const { children, className, name, description, faviconUrl, isFeatured, ...rest } = props
 
   return (
     <NavLink
@@ -24,7 +24,7 @@ export const Card = ({ ...props }: CardProps) => {
       {...rest}
     >
       <div className="flex w-full items-center gap-x-3 gap-y-2">
-        <Favicon url={website} />
+        <Favicon src={faviconUrl} />
 
         <H3 className="truncate">{name}</H3>
 

@@ -6,8 +6,8 @@ const cfg: S3ClientConfig = {
   maxAttempts: 5,
   retryMode: "standard",
   credentials: {
-    accessKeyId: process.env.ACCESS_KEY_ID!,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.S3_ACCESS_KEY!,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
   },
   // endpoint: process.env.S3_ENDPOINT ?? "http://localhost:4566",
   forcePathStyle: true,
@@ -15,11 +15,11 @@ const cfg: S3ClientConfig = {
 
 export const s3Client = new S3Client(cfg)
 
-export async function uploadToS3Storage(screenshot: Buffer, bucket: string, key: string) {
+export async function uploadToS3Storage(screenshot: Buffer, key: string) {
   const upload = new Upload({
     client: s3Client,
     params: {
-      Bucket: bucket,
+      Bucket: process.env.S3_BUCKET!,
       Key: key,
       Body: screenshot,
       StorageClass: "STANDARD",

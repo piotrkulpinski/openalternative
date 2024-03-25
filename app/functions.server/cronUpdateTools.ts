@@ -3,7 +3,7 @@ import { prisma } from "~/services.server/prisma"
 import { getRepoOwnerAndName } from "~/utils/github"
 
 export const cronUpdateTools = inngest.createFunction(
-  { id: "cron.update-tools" },
+  { id: "update-tools" },
   // Execute the function every 8 hours
   { cron: "0 0,8,16 * * *" },
 
@@ -25,7 +25,7 @@ export const cronUpdateTools = inngest.createFunction(
 
         if (repo) {
           return step.sendEvent("fetch-github-repo", {
-            name: "cron.fetch-github-repo",
+            name: "fetch-github-repo",
             data: { id, owner: repo.owner, name: repo.name },
           })
         }

@@ -85,7 +85,7 @@ export default function ToolsPage() {
         <div className="@3xl/main:col-span-2 flex flex-1 flex-col items-start gap-10 md:gap-12">
           <div className="flex flex-col items-start gap-4 md:gap-6">
             <Intro
-              prefix={<FaviconImage url={tool.website} />}
+              prefix={<FaviconImage src={tool.faviconUrl} />}
               title={tool.name}
               description={tool.description}
               className="gap-y-4"
@@ -107,17 +107,17 @@ export default function ToolsPage() {
             )}
           </div>
 
-          {tool.website && (
-            <div className="relative z-10 w-full self-start max-md:order-last md:rounded-md md:border md:p-1.5">
-              <img
-                src="https://openalternative.co/_next/image?url=https%3A%2F%2Fapi.screenshotone.com%2Ftake%3Furl%3Dhttps%253A%252F%252Fposthog.com%26cache%3Dtrue%26cache_ttl%3D2000000%26block_chats%3Dtrue%26block_trackers%3Dtrue%26block_cookie_banners%3Dtrue%26block_ads%3Dtrue%26access_key%3DoWVNWT8VvhigEQ%26signature%3D7f0e0f90b5375f79368cb0a0492ea1f04255d0757e42706ad9196f29b4829464&w=3840&q=75"
-                alt=""
-                width={1280}
-                height={1024}
-                loading="eager"
-                className="aspect-video size-full rounded object-cover object-top"
-              />
-            </div>
+          {tool.screenshotUrl && (
+            // <div className="relative z-10 w-full self-start max-md:order-last md:rounded-md md:border md:p-1.5">
+            <img
+              src={tool.screenshotUrl}
+              alt=""
+              width={1280}
+              height={1024}
+              loading="eager"
+              className="aspect-video size-full rounded-md border object-cover object-top"
+            />
+            // </div>
           )}
 
           {/* Topics */}

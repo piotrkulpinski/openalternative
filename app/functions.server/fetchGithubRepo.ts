@@ -4,9 +4,9 @@ import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { RepositoryQueryResult, repositoryQuery, calculateHealthScore } from "~/utils/github"
 
-export const cronFetchGithubRepo = inngest.createFunction(
-  { id: "cron.fetch-github-repo", retries: 0 },
-  { event: "cron.fetch-github-repo" },
+export const fetchGithubRepo = inngest.createFunction(
+  { id: "fetch-github-repo", retries: 0 },
+  { event: "fetch-github-repo" },
 
   async ({ event, step, logger }) => {
     const { id, owner, name } = event.data

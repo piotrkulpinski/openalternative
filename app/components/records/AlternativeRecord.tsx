@@ -15,7 +15,7 @@ export const AlternativeRecord = ({ alternative, showCount, ...props }: Alternat
       to={`/alternatives/${alternative.slug}`}
       name={alternative.name}
       description={alternative.description}
-      website={alternative.website}
+      faviconUrl={`https://www.google.com/s2/favicons?sz=128&domain_url=${alternative.website}`}
       {...props}
     >
       {showCount && (

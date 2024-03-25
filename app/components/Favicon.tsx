@@ -2,11 +2,11 @@ import { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 
 type FaviconProps = HTMLAttributes<HTMLDivElement> & {
-  url: string | null
+  src: string | null
 }
 
-export const Favicon = ({ className, url, ...props }: FaviconProps) => {
-  if (!url) return null
+export const Favicon = ({ className, src, ...props }: FaviconProps) => {
+  if (!src) return null
 
   return (
     <div
@@ -16,13 +16,13 @@ export const Favicon = ({ className, url, ...props }: FaviconProps) => {
       )}
       {...props}
     >
-      <FaviconImage url={url} className="size-full" />
+      <FaviconImage src={src} className="size-full" />
     </div>
   )
 }
 
-export const FaviconImage = ({ className, url, ...props }: FaviconProps) => {
-  if (!url) return null
+export const FaviconImage = ({ className, src, ...props }: FaviconProps) => {
+  if (!src) return null
 
   return (
     <img
@@ -31,7 +31,7 @@ export const FaviconImage = ({ className, url, ...props }: FaviconProps) => {
       width="64"
       height="64"
       className={cx("aspect-square size-9 rounded", className)}
-      src={`https://www.google.com/s2/favicons?sz=128&domain_url=${url}`}
+      src={src}
       {...props}
     />
   )

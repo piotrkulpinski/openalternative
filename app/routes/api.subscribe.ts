@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, TypedResponse, json } from "@remix-run/node"
-import ky from "ky"
+import { got } from "got"
 import { ZodFormattedError, z } from "zod"
 
 const subscriberSchema = z.object({
@@ -19,17 +19,12 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
     return json({ type: "error", error: parsed.error.format() })
   }
 
-  const response = await ky.post("https://connect.mailerlite.com/api/subscribers", {
-    body: JSON.stringify(parsed.data),
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}`,
-    },
-  })
-
-  if (!response.ok) {
-    throw new Error(`Fetch error: ${response}`)
-  }
+  await got
+    .post("https://connect.mailerlite.com/api/subscribers", {
+      json: parsed.data,
+      headers: { authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}` },
+    })
+    .json()
 
   // Return a success response
   return json({ type: "success", message: "Thank you for subscribing!" })

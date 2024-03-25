@@ -26,7 +26,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
       to={`/${tool.slug}`}
       name={tool.name}
       description={tool.description}
-      website={tool.website}
+      faviconUrl={tool.faviconUrl}
       isFeatured={tool.isFeatured}
       prefetch="intent"
       {...props}
