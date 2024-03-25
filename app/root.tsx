@@ -8,7 +8,7 @@ import { Header } from "~/components/Header"
 import { Newsletter } from "~/components/Newsletter"
 import { Logo } from "./components/Logo"
 import { BreadcrumbsLink } from "./components/Breadcrumbs"
-import { SITE_NAME } from "./utils/constants"
+import { SITE_NAME, SITE_URL } from "./utils/constants"
 
 import stylesheet from "~/styles.css?url"
 
@@ -23,16 +23,15 @@ export const handle = {
 export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: stylesheet },
-    { rel: "icon", href: "/logo.svg", type: "image/svg+xml" },
+    { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
     { rel: "preconnect", href: "https://rsms.me/" },
     { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   ]
 }
 
 export const meta: MetaFunction = ({ location }) => {
-  const url = `https://openalternative.co`
-  const currentUrl = `${url}${location.pathname}${location.search}`
-  const canonicalUrl = `${url}${location.pathname}`
+  const currentUrl = `${SITE_URL}${location.pathname}${location.search}`
+  const canonicalUrl = `${SITE_URL}${location.pathname}`
 
   return [
     { tagName: "link", rel: "canonical", href: canonicalUrl },
