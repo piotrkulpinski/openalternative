@@ -1,6 +1,7 @@
 import { ActionFunctionArgs, TypedResponse, json } from "@remix-run/node"
 import slugify from "@sindresorhus/slugify"
 import { ZodFormattedError, z } from "zod"
+import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 
 const submissionSchema = z.object({
@@ -32,7 +33,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
   const { name, website, repository, description } = parsed.data
 
   // Save the tool to the database
-  await prisma.tool.create({
+  const tool = await prisma.tool.create({
     data: {
       name,
       website,
@@ -42,6 +43,9 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
       isDraft: true,
     },
   })
+
+  // Send an event to the Inngest pipeline
+  await inngest.send({ event: "tool.created", data: tool })
 
   // Return a success response
   return json({ type: "success", message: "Thank you for submitting!" })

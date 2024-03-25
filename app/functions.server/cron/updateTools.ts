@@ -1,10 +1,9 @@
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { getRepoOwnerAndName } from "~/utils/github"
-import { fetchGithubRepo } from "./fetch/fetchGithubRepo"
 
-export const updateTools = inngest.createFunction(
-  { id: "update-tools" },
+export const cronUpdateTools = inngest.createFunction(
+  { id: "cron.update-tools" },
   // Execute the function every 8 hours
   { cron: "0 0,8,16 * * *" },
 
@@ -12,7 +11,7 @@ export const updateTools = inngest.createFunction(
     // Fetch the tools
     const tools = await step.run("find-tools", async () => {
       return await prisma.tool.findMany({
-        select: { id: true, repository: true },
+        select: { id: true, repository: true, website: true },
       })
     })
 
@@ -25,8 +24,8 @@ export const updateTools = inngest.createFunction(
         const repo = getRepoOwnerAndName(repository)
 
         if (repo) {
-          return step.invoke("fetch-github-repo", {
-            function: fetchGithubRepo,
+          return step.sendEvent("fetch-github-repo", {
+            name: "cron.fetch-github-repo",
             data: { id, owner: repo.owner, name: repo.name },
           })
         }

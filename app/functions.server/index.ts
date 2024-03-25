@@ -1,7 +1,9 @@
 import { z } from "zod"
 
-import { fetchGithubRepo } from "./fetch/fetchGithubRepo"
-import { updateTools } from "./updateTools"
+import { cronFetchGithubRepo } from "./cron/fetchGithubRepo"
+import { cronUpdateTools } from "./cron/updateTools"
+import { toolCreated } from "./tool/created"
+import { Tool } from "@prisma/client"
 
 const fetchGithubRepoSchema = z.object({
   id: z.number(),
@@ -10,12 +12,17 @@ const fetchGithubRepoSchema = z.object({
 })
 
 export type Events = {
-  "fetch.github-repo": { data: z.infer<typeof fetchGithubRepoSchema> }
+  "cron.fetch-github-repo": { data: z.infer<typeof fetchGithubRepoSchema> }
+
+  // Tools
+  "tool.created": { data: Tool }
 }
 
 export const functions = [
-  updateTools,
-
   // Fetches
-  fetchGithubRepo,
+  cronUpdateTools,
+  cronFetchGithubRepo,
+
+  // Tools
+  toolCreated,
 ]
