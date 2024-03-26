@@ -13,7 +13,8 @@ export const CardSimple = ({ ...props }: CardSimpleProps) => {
 
   return (
     <NavLink
-      className={cx("group -my-2 flex min-w-0 items-center gap-4 py-2", className)}
+      className={cx("fade-in group -my-2 flex min-w-0 items-center gap-4 py-2", className)}
+      unstable_viewTransition
       {...rest}
     >
       <H5 className="truncate group-hover:underline" asChild>

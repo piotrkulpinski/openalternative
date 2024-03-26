@@ -60,7 +60,7 @@ model Language {
 model ToolLanguage {
   toolId     Int
   languageSlug String
-  percentage Float
+  percentage Float?
   tool       Tool     @relation(fields: [toolId], references: [id])
   language   Language @relation(fields: [languageSlug], references: [slug])
 

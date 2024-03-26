@@ -8,6 +8,7 @@ export const BackButton = ({ className, ...props }: LinkProps) => {
         "peer mt-auto self-start text-sm text-neutral-600 hover:text-inherit dark:text-neutral-400",
         className
       )}
+      unstable_viewTransition
       {...props}
     >
       ⟵ back

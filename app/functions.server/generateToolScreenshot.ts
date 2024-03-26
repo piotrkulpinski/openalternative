@@ -7,10 +7,15 @@ export const generateToolScreenshot = inngest.createFunction(
   { event: "tool.created" },
 
   async ({ event, step, logger }) => {
-    const { id, slug, website } = event.data
+    const { id, slug, website, screenshotUrl } = event.data
 
     if (!website) {
       logger.warn(`Tool ${id} does not have a website URL`)
+      return
+    }
+
+    if (screenshotUrl) {
+      logger.info(`Tool ${id} already has a screenshot`)
       return
     }
 

@@ -40,7 +40,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
     const meta = {
       title: `Best Open Source ${alternative.name} Alternatives`,
-      description: `A collection of the best open source ${alternative.name} tools. Find the best alternatives for ${alternative.name} that are open source and free to use/self-hostable.`,
+      description: `A collection of the best open source ${alternative.name} alternatives. Find the best alternatives for ${alternative.name} that are open source and free to use/self-hostable.`,
     }
 
     return json({ meta, alternative }, JSON_HEADERS)
@@ -71,8 +71,8 @@ export default function AlternativesPage() {
             ) : (
               alternative.name
             )}{" "}
-            tools. Find the best alternatives for {alternative.name} that are open source and free
-            to use/self-hostable.
+            alternatives. Find the best alternatives for {alternative.name} that are open source and
+            free to use/self-hostable.
           </>
         }
       />

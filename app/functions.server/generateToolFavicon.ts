@@ -8,27 +8,29 @@ export const generateToolFavicon = inngest.createFunction(
   { event: "tool.created" },
 
   async ({ event, step, logger }) => {
-    const { id, slug, website } = event.data
+    const { id, slug, website, faviconUrl } = event.data
 
     if (!website) {
       logger.warn(`Tool ${id} does not have a website URL`)
       return
     }
 
-    const faviconUrl = await step.run("store-screenshot", async () => {
-      const apiUrl = `https://www.google.com/s2/favicons?sz=128&domain_url=${website}`
-      const apiResponse = await got.head(apiUrl)
-      const contentLocation = apiResponse.headers["content-location"]!
-      const { body } = await got(contentLocation, { responseType: "buffer" })
-      const extention = contentLocation.split(".").pop()
+    if (faviconUrl) {
+      logger.info(`Tool ${id} already has a favicon`)
+      return
+    }
 
-      return await uploadToS3Storage(body, `${slug}/favicon.${extention}`)
+    const location = await step.run("store-screenshot", async () => {
+      const url = `https://www.google.com/s2/favicons?sz=128&domain_url=${website}`
+      const { body } = await got(url, { responseType: "buffer" })
+
+      return await uploadToS3Storage(body, `${slug}/favicon.png`)
     })
 
     await step.run("update-tool", async () => {
       return await prisma.tool.update({
         where: { id },
-        data: { faviconUrl },
+        data: { faviconUrl: location },
       })
     })
   }

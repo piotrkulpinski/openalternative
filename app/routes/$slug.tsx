@@ -20,7 +20,7 @@ import { Grid } from "~/components/Grid"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { Badge } from "~/components/Badge"
 import { JSON_HEADERS } from "~/utils/constants"
-import { Link, useLoaderData } from "@remix-run/react"
+import { useLoaderData } from "@remix-run/react"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/helpers"
 import { Button } from "~/components/Button"
@@ -77,15 +77,11 @@ export default function ToolsPage() {
       icon: TimerIcon,
     },
     { label: "License", value: tool.license, icon: CopyrightIcon },
-    // { label: "Health score", value: tool.score, icon: ActivityIcon },
   ]
 
   return (
-    <>
-      <div
-        className="@3xl/main:grid-cols-3 grid items-start gap-6"
-        style={{ viewTransitionName: `tool` }}
-      >
+    <div className="flex flex-col gap-12" style={{ viewTransitionName: "tool" }}>
+      <div className="@3xl/main:grid-cols-3 grid items-start gap-6">
         <div className="@3xl/main:col-span-2 flex flex-1 flex-col items-start gap-10 md:gap-12">
           <div className="flex flex-col items-start gap-4 md:gap-6">
             <div className="flex w-full flex-col items-start gap-y-4">
@@ -114,58 +110,41 @@ export default function ToolsPage() {
                 suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
                 asChild
               >
-                <Link
-                  to={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
+                <a
+                  href={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
                   target="_blank"
                   rel="noreferrer"
                 >
                   View Website
-                </Link>
+                </a>
               </Button>
             )}
           </div>
 
           {tool.screenshotUrl && (
-            // <div className="relative z-10 w-full self-start max-md:order-last md:rounded-md md:border md:p-1.5">
             <img
               src={tool.screenshotUrl}
               alt=""
               width={1280}
               height={1024}
               loading="eager"
-              className="aspect-video size-full rounded-md border object-cover object-top"
+              className="aspect-video size-full rounded-md border object-cover object-top dark:border-neutral-700/50"
             />
-            // </div>
           )}
 
           {/* Categories */}
           {!!tool.categories.length && (
             <Series direction="column">
-              <H5>Categories:</H5>
+              <H3>Categories:</H3>
 
               <Series>
                 {tool.categories?.map((category) => (
-                  <h6 key={category.id}>
-                    <NavigationLink to={`/categories/${category.slug}`}>
-                      <TagIcon className="size-[0.9em] stroke-[1.75] opacity-50" />
-                      {category.name}
-                    </NavigationLink>
-                  </h6>
+                  <Badge key={category.id} to={`/categories/${category.slug}`}>
+                    <TagIcon className="mr-0.5 size-[0.9em] stroke-[1.75] opacity-50" />
+                    {category.name}
+                  </Badge>
                 ))}
               </Series>
-            </Series>
-          )}
-
-          {/* Alternatives */}
-          {!!tool.alternatives.length && (
-            <Series size="lg" direction="column">
-              <H3>{tool.name} is an Open Source alternative to:</H3>
-
-              <Grid className="w-full">
-                {tool.alternatives?.map((alternative) => (
-                  <AlternativeRecord key={alternative.id} alternative={alternative} />
-                ))}
-              </Grid>
             </Series>
           )}
 
@@ -187,7 +166,7 @@ export default function ToolsPage() {
         </div>
 
         <div className="sticky top-4 flex flex-col gap-6">
-          <div className="flex flex-col gap-5 rounded-lg border bg-neutral-50 px-6 py-5">
+          <div className="flex flex-col gap-5 rounded-lg border px-6 py-5 dark:border-neutral-700/50">
             <Series direction="column">
               <H5>Repository details:</H5>
               <Insights insights={insights} className="text-sm" />
@@ -219,16 +198,29 @@ export default function ToolsPage() {
                 className="mt-1"
                 asChild
               >
-                <Link to={tool.repository} target="_blank" rel="noreferrer nofollow">
+                <a href={tool.repository} target="_blank" rel="noreferrer nofollow">
                   View Repository
-                </Link>
+                </a>
               </Button>
             )}
           </div>
         </div>
       </div>
 
+      {/* Alternatives */}
+      {!!tool.alternatives.length && (
+        <Series size="lg" direction="column">
+          <H3>{tool.name} is an Open Source alternative to:</H3>
+
+          <Grid className="w-full">
+            {tool.alternatives?.map((alternative) => (
+              <AlternativeRecord key={alternative.id} alternative={alternative} />
+            ))}
+          </Grid>
+        </Series>
+      )}
+
       <BackButton to="/" />
-    </>
+    </div>
   )
 }

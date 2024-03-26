@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client"
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { Link, json, useLoaderData } from "@remix-run/react"
+import { NavLink, json, useLoaderData } from "@remix-run/react"
 import { BlocksIcon, BracesIcon, TagIcon } from "lucide-react"
 import { Button } from "~/components/Button"
 import { Filters } from "~/components/Filters"
@@ -71,13 +71,19 @@ export default function Index() {
         <div className="col-span-full flex items-center justify-between">
           <Series>
             <Button size="md" variant="secondary" prefix={<BlocksIcon />} asChild>
-              <Link to="/categories">Browse by Category</Link>
+              <NavLink to="/categories" prefetch="intent" unstable_viewTransition>
+                Browse by Category
+              </NavLink>
             </Button>
             <Button size="md" variant="secondary" prefix={<BracesIcon />} asChild>
-              <Link to="/languages">Browse by Language</Link>
+              <NavLink to="/languages" prefetch="intent" unstable_viewTransition>
+                Browse by Language
+              </NavLink>
             </Button>
             <Button size="md" variant="secondary" prefix={<TagIcon />} asChild>
-              <Link to="/topics">Browse by Topic</Link>
+              <NavLink to="/topics" prefetch="intent" unstable_viewTransition>
+                Browse by Topic
+              </NavLink>
             </Button>
           </Series>
 

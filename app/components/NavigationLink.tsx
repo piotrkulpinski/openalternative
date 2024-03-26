@@ -12,6 +12,7 @@ export const NavigationLink = ({ className, ...props }: NavLinkProps) => {
           className,
         ])
       }
+      unstable_viewTransition
       {...props}
     />
   )

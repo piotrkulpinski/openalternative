@@ -9,7 +9,7 @@ export const fetchGithubRepo = inngest.createFunction(
   { event: "fetch-github-repo" },
 
   async ({ event, step, logger }) => {
-    const { id, owner, name } = event.data
+    const { id, owner, name, bump } = event.data
 
     const { repository } = await step
       .run("fetch-github-repo", async () => {
@@ -43,6 +43,7 @@ export const fetchGithubRepo = inngest.createFunction(
       lastCommitDate: new Date(
         repository.defaultBranchRef.target.history.edges[0].node.committedDate
       ),
+      bump,
     }
 
     const score = await step.run("calculate-health-score", async () => {
@@ -99,7 +100,6 @@ export const fetchGithubRepo = inngest.createFunction(
                 },
                 create: {
                   percentage,
-                  // tool: { connect: { id } },
                   language: {
                     connectOrCreate: {
                       where: { slug },
