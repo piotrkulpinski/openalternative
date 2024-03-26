@@ -15,7 +15,6 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:push": "prisma db push --skip-generate",
     "db:reset": "prisma migrate reset",
-    "preinstall": "bun run db:migrate:deploy",
     "postinstall": "bun run db:generate"
   },
   "dependencies": {
