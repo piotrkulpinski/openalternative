@@ -33,7 +33,6 @@ export const fetchGithubRepo = inngest.createFunction(
       })
 
     logger.info(`Fetched repository ${id}: ${owner}/${name}`)
-    logger.info(repository.languages)
 
     // Extract and transform the necessary metrics
     const metrics = {

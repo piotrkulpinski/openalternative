@@ -55,7 +55,11 @@ export default function AlternativesPage() {
   return (
     <>
       <Intro
-        prefix={<FaviconImage url={alternative.website} />}
+        prefix={
+          <FaviconImage
+            src={`https://www.google.com/s2/favicons?sz=128&domain_url=${alternative.website}`}
+          />
+        }
         title={meta.title}
         description={
           <>

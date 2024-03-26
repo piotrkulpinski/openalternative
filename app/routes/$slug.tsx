@@ -77,6 +77,7 @@ export default function ToolsPage() {
       icon: TimerIcon,
     },
     { label: "License", value: tool.license, icon: CopyrightIcon },
+    // { label: "Health score", value: tool.score, icon: ActivityIcon },
   ]
 
   return (
@@ -120,7 +121,7 @@ export default function ToolsPage() {
             // </div>
           )}
 
-          {/* Topics */}
+          {/* Categories */}
           {!!tool.categories.length && (
             <Series direction="column">
               <H5>Categories:</H5>
@@ -137,74 +138,78 @@ export default function ToolsPage() {
               </Series>
             </Series>
           )}
-        </div>
 
-        <div className="sticky top-4 flex flex-col gap-3 rounded-lg border bg-neutral-50 px-6 py-5">
-          <H5>Repository details:</H5>
-          <Insights insights={insights} className="text-sm" />
+          {/* Alternatives */}
+          {!!tool.alternatives.length && (
+            <Series size="lg" direction="column">
+              <H3>{tool.name} is an Open Source alternative to:</H3>
 
-          {!!tool.languages.length && (
-            <Series direction="column">
-              <H5>Written in:</H5>
-
-              {tool.languages?.map(({ percentage, language }) => (
-                <h6 key={language.slug}>
-                  <NavigationLink to={`/languages/${language.slug}`}>
-                    <span
-                      className="size-2 rounded-full"
-                      style={{ backgroundColor: language.color ?? undefined }}
-                    />
-                    {language.name} ({percentage}%)
-                  </NavigationLink>
-                </h6>
-              ))}
+              <Grid className="w-full">
+                {tool.alternatives?.map((alternative) => (
+                  <AlternativeRecord key={alternative.id} alternative={alternative} />
+                ))}
+              </Grid>
             </Series>
           )}
 
-          {tool.repository && (
-            <Button
-              size="md"
-              variant="secondary"
-              suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
-              className="mt-2"
-              asChild
-            >
-              <Link to={tool.repository} target="_blank" rel="noreferrer nofollow">
-                View Repository
-              </Link>
-            </Button>
+          {/* Topics */}
+          {!!tool.topics.length && (
+            <Series size="lg" direction="column">
+              <H3>Related topics:</H3>
+
+              <Series className="w-full">
+                {tool.topics?.map((topic) => (
+                  <Badge key={topic.slug} to={`/topics/${topic.slug}`}>
+                    <HashIcon className="size-[0.9em] stroke-[1.75] opacity-50" />
+                    {topic.slug}
+                  </Badge>
+                ))}
+              </Series>
+            </Series>
           )}
         </div>
+
+        <div className="sticky top-4 flex flex-col gap-6">
+          <div className="flex flex-col gap-5 rounded-lg border bg-neutral-50 px-6 py-5">
+            <Series direction="column">
+              <H5>Repository details:</H5>
+              <Insights insights={insights} className="text-sm" />
+            </Series>
+
+            {!!tool.languages.length && (
+              <Series direction="column">
+                <H5>Written in:</H5>
+
+                {tool.languages?.map(({ percentage, language }) => (
+                  <h6 key={language.slug}>
+                    <NavigationLink to={`/languages/${language.slug}`}>
+                      <span
+                        className="size-2 rounded-full"
+                        style={{ backgroundColor: language.color ?? undefined }}
+                      />
+                      {language.name} <span className="opacity-50">({percentage}%)</span>
+                    </NavigationLink>
+                  </h6>
+                ))}
+              </Series>
+            )}
+
+            {tool.repository && (
+              <Button
+                size="md"
+                variant="secondary"
+                suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
+                className="mt-1"
+                asChild
+              >
+                <Link to={tool.repository} target="_blank" rel="noreferrer nofollow">
+                  View Repository
+                </Link>
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
-
-      {/* Alternatives */}
-      {!!tool.alternatives.length && (
-        <Series size="lg" direction="column">
-          <H3>{tool.name} is an Open Source alternative to:</H3>
-
-          <Grid className="w-full">
-            {tool.alternatives?.map((alternative) => (
-              <AlternativeRecord key={alternative.id} alternative={alternative} />
-            ))}
-          </Grid>
-        </Series>
-      )}
-
-      {/* Topics */}
-      {!!tool.topics.length && (
-        <Series size="lg" direction="column">
-          <H3>Topics related to {tool.name}:</H3>
-
-          <Series className="w-full">
-            {tool.topics?.map((topic) => (
-              <Badge key={topic.slug} to={`/topics/${topic.slug}`}>
-                <HashIcon className="size-[0.9em] stroke-[1.75] opacity-50" />
-                {topic.slug}
-              </Badge>
-            ))}
-          </Series>
-        </Series>
-      )}
 
       <BackButton to="/" />
     </>

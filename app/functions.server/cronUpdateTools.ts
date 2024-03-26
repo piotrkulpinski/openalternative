@@ -7,16 +7,13 @@ export const cronUpdateTools = inngest.createFunction(
   // Execute the function every 8 hours
   { cron: "0 0,8,16 * * *" },
 
-  async ({ step, logger }) => {
+  async ({ step }) => {
     // Fetch the tools
     const tools = await step.run("find-tools", async () => {
       return await prisma.tool.findMany({
         select: { id: true, repository: true, website: true },
       })
     })
-
-    // Log the number of repositories fetched
-    logger.info(`Started fetching ${tools.length} repositories`)
 
     // Trigger a new event for each repository
     await Promise.all(
