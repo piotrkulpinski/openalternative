@@ -6,7 +6,7 @@ export const inputVariants = cva({
 
   variants: {
     hoverable: {
-      true: "hover:bg-neutral-50 hover:border-neutral-300 dark:hover:bg-neutral-800 dark:hover:border-neutral-700",
+      true: "cursor-pointer hover:bg-neutral-50 hover:border-neutral-300 dark:hover:bg-neutral-800 dark:hover:border-neutral-700",
     },
   },
 })

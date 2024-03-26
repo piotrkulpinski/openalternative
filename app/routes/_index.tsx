@@ -68,21 +68,24 @@ export default function Index() {
       </section>
 
       <Grid>
-        <div className="col-span-full flex items-center justify-between">
-          <Series>
+        <div className="col-span-full flex flex-wrap items-center justify-between gap-4">
+          <Series className="flex-nowrap max-sm:gap-1.5">
             <Button size="md" variant="secondary" prefix={<BlocksIcon />} asChild>
               <NavLink to="/categories" prefetch="intent" unstable_viewTransition>
-                Browse by Category
+                <span className="max-sm:hidden">Browse by Category</span>
+                <span className="sm:hidden">Categories</span>
               </NavLink>
             </Button>
             <Button size="md" variant="secondary" prefix={<BracesIcon />} asChild>
               <NavLink to="/languages" prefetch="intent" unstable_viewTransition>
-                Browse by Language
+                <span className="max-sm:hidden">Browse by Language</span>
+                <span className="sm:hidden">Languages</span>
               </NavLink>
             </Button>
             <Button size="md" variant="secondary" prefix={<TagIcon />} asChild>
               <NavLink to="/topics" prefetch="intent" unstable_viewTransition>
-                Browse by Topic
+                <span className="max-sm:hidden">Browse by Topic</span>
+                <span className="sm:hidden">Topics</span>
               </NavLink>
             </Button>
           </Series>

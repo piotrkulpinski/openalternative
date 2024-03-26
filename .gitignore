@@ -3,3 +3,12 @@ node_modules
 /.cache
 /build
 .env
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# macOS-specific files
+.DS_Store

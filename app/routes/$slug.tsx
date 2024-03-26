@@ -1,21 +1,12 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
-import {
-  CopyrightIcon,
-  GitForkIcon,
-  HashIcon,
-  MoveRightIcon,
-  StarIcon,
-  TagIcon,
-  TimerIcon,
-} from "lucide-react"
-import { format } from "timeago.js"
+import { HashIcon, MoveRightIcon, TagIcon } from "lucide-react"
 import { FaviconImage } from "~/components/Favicon"
 import { Series } from "~/components/Series"
 import { ToolOne, toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { H1, H3, H5 } from "~/components/Heading"
+import { H1, H3 } from "~/components/Heading"
 import { Grid } from "~/components/Grid"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { Badge } from "~/components/Badge"
@@ -24,9 +15,8 @@ import { useLoaderData } from "@remix-run/react"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/helpers"
 import { Button } from "~/components/Button"
-import { Insights } from "~/components/Insights"
-import { NavigationLink } from "~/components/NavigationLink"
 import { Prose } from "~/components/Prose"
+import { RepositoryDetails } from "~/components/RepositoryDetails"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -68,22 +58,11 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 export default function ToolsPage() {
   const { tool } = useLoaderData<typeof loader>()
 
-  const insights = [
-    { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
-    { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
-    {
-      label: "Last commit",
-      value: tool.lastCommitDate && format(tool.lastCommitDate),
-      icon: TimerIcon,
-    },
-    { label: "License", value: tool.license, icon: CopyrightIcon },
-  ]
-
   return (
     <div className="flex flex-col gap-12" style={{ viewTransitionName: "tool" }}>
-      <div className="@3xl/main:grid-cols-3 grid items-start gap-6">
-        <div className="@3xl/main:col-span-2 flex flex-1 flex-col items-start gap-10 md:gap-12">
-          <div className="flex flex-col items-start gap-4 md:gap-6">
+      <div className="grid items-start gap-6 md:grid-cols-3">
+        <div className="flex flex-1 flex-wrap items-start gap-10 md:col-span-2 md:gap-12">
+          <div className="flex flex-1 flex-col items-start gap-4 md:gap-6">
             <div className="flex w-full flex-col items-start gap-y-4">
               <Series size="lg" className="w-full">
                 <FaviconImage
@@ -121,6 +100,8 @@ export default function ToolsPage() {
             )}
           </div>
 
+          <RepositoryDetails tool={tool} className="max-sm:w-full md:hidden" />
+
           {tool.screenshotUrl && (
             <img
               src={tool.screenshotUrl}
@@ -128,7 +109,7 @@ export default function ToolsPage() {
               width={1280}
               height={1024}
               loading="eager"
-              className="aspect-video size-full rounded-md border object-cover object-top dark:border-neutral-700/50"
+              className="aspect-video h-auto w-full rounded-md border object-cover object-top dark:border-neutral-700/50"
             />
           )}
 
@@ -165,46 +146,7 @@ export default function ToolsPage() {
           )}
         </div>
 
-        <div className="sticky top-4 flex flex-col gap-6">
-          <div className="flex flex-col gap-5 rounded-lg border px-6 py-5 dark:border-neutral-700/50">
-            <Series direction="column">
-              <H5>Repository details:</H5>
-              <Insights insights={insights} className="text-sm" />
-            </Series>
-
-            {!!tool.languages.length && (
-              <Series direction="column">
-                <H5>Written in:</H5>
-
-                {tool.languages?.map(({ percentage, language }) => (
-                  <h6 key={language.slug}>
-                    <NavigationLink to={`/languages/${language.slug}`}>
-                      <span
-                        className="size-2 rounded-full"
-                        style={{ backgroundColor: language.color ?? undefined }}
-                      />
-                      {language.name} <span className="opacity-50">({percentage}%)</span>
-                    </NavigationLink>
-                  </h6>
-                ))}
-              </Series>
-            )}
-
-            {tool.repository && (
-              <Button
-                size="md"
-                variant="secondary"
-                suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
-                className="mt-1"
-                asChild
-              >
-                <a href={tool.repository} target="_blank" rel="noreferrer nofollow">
-                  View Repository
-                </a>
-              </Button>
-            )}
-          </div>
-        </div>
+        <RepositoryDetails tool={tool} className="sticky top-6 max-md:hidden" />
       </div>
 
       {/* Alternatives */}

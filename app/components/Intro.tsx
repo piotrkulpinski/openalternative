@@ -11,7 +11,15 @@ type IntroProps = Omit<HTMLAttributes<HTMLElement>, "prefix"> & {
   suffix?: ReactNode
 }
 
-export const Intro = ({ className, title, description, prefix, suffix, ...props }: IntroProps) => {
+export const Intro = ({
+  children,
+  className,
+  title,
+  description,
+  prefix,
+  suffix,
+  ...props
+}: IntroProps) => {
   return (
     <div className={cx("flex w-full flex-col items-start gap-y-2", className)} {...props}>
       <Series size="lg" className="w-full">
@@ -27,6 +35,8 @@ export const Intro = ({ className, title, description, prefix, suffix, ...props 
           </h2>
         </Prose>
       )}
+
+      {children}
     </div>
   )
 }
