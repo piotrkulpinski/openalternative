@@ -10,13 +10,12 @@ import {
 } from "lucide-react"
 import { format } from "timeago.js"
 import { FaviconImage } from "~/components/Favicon"
-import { Intro } from "~/components/Intro"
 import { Series } from "~/components/Series"
 import { ToolOne, toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { H3, H5 } from "~/components/Heading"
+import { H1, H3, H5 } from "~/components/Heading"
 import { Grid } from "~/components/Grid"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { Badge } from "~/components/Badge"
@@ -27,6 +26,7 @@ import { updateUrlWithSearchParams } from "~/utils/helpers"
 import { Button } from "~/components/Button"
 import { Insights } from "~/components/Insights"
 import { NavigationLink } from "~/components/NavigationLink"
+import { Prose } from "~/components/Prose"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -82,15 +82,32 @@ export default function ToolsPage() {
 
   return (
     <>
-      <div className="@3xl/main:grid-cols-3 grid items-start gap-6">
+      <div
+        className="@3xl/main:grid-cols-3 grid items-start gap-6"
+        style={{ viewTransitionName: `tool` }}
+      >
         <div className="@3xl/main:col-span-2 flex flex-1 flex-col items-start gap-10 md:gap-12">
           <div className="flex flex-col items-start gap-4 md:gap-6">
-            <Intro
-              prefix={<FaviconImage src={tool.faviconUrl} />}
-              title={tool.name}
-              description={tool.description}
-              className="gap-y-4"
-            />
+            <div className="flex w-full flex-col items-start gap-y-4">
+              <Series size="lg" className="w-full">
+                <FaviconImage
+                  src={tool.faviconUrl}
+                  style={{ viewTransitionName: `tool-favicon` }}
+                />
+                <H1 style={{ viewTransitionName: `tool-title` }}>{tool.name}</H1>
+              </Series>
+
+              {tool.description && (
+                <Prose>
+                  <h2
+                    className="lead !font-normal !tracking-normal !text-neutral-600 dark:!text-neutral-400"
+                    style={{ viewTransitionName: `tool-description` }}
+                  >
+                    {tool.description}
+                  </h2>
+                </Prose>
+              )}
+            </div>
 
             {tool.website && (
               <Button

@@ -29,6 +29,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
       faviconUrl={tool.faviconUrl}
       isFeatured={tool.isFeatured}
       prefetch="intent"
+      unstable_viewTransition
       {...props}
     >
       <Insights insights={insights} className="mt-auto" />
