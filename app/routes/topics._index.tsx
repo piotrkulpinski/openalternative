@@ -1,7 +1,9 @@
-import { json, type MetaFunction } from "@remix-run/node"
+import { getPageParams } from "@curiousleaf/utils"
+import { LoaderFunctionArgs, json, type MetaFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
+import { Pagination } from "~/components/Pagination"
 import { TopicRecord } from "~/components/records/TopicRecord"
 import { topicManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
@@ -18,22 +20,24 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   })
 }
 
-export const loader = async () => {
-  const topics = await prisma.topic.findMany({
-    orderBy: { slug: "asc" },
-    include: topicManyPayload,
-  })
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const { take, skip } = getPageParams(request, 150)
+
+  const [topics, topicCount] = await Promise.all([
+    prisma.topic.findMany({ orderBy: { slug: "asc" }, include: topicManyPayload, take, skip }),
+    prisma.topic.count(),
+  ])
 
   const meta = {
     title: "Open Source Software Topics",
     description: "Browse top topics to find your best Open Source software options.",
   }
 
-  return json({ meta, topics }, JSON_HEADERS)
+  return json({ meta, topics, topicCount }, JSON_HEADERS)
 }
 
 export default function TopicsIndex() {
-  const { meta, topics } = useLoaderData<typeof loader>()
+  const { meta, topics, topicCount } = useLoaderData<typeof loader>()
 
   return (
     <>
@@ -46,6 +50,8 @@ export default function TopicsIndex() {
 
         {!topics.length && <p>No topics found.</p>}
       </Grid>
+
+      <Pagination totalCount={topicCount} pageSize={150} />
     </>
   )
 }
