@@ -6,5 +6,10 @@ export const SITE_DESCRIPTION =
 
 export const JSON_HEADERS =
   process.env.NODE_ENV === "development"
-    ? { headers: { "Cache-Control": "public, max-age=3600, stale-while-revalidate=3600" } }
+    ? {
+        headers: {
+          "Cache-Control":
+            "public, max-age=3600, stale-while-revalidate=3600, stale-if-error=86400",
+        },
+      }
     : undefined

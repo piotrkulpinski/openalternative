@@ -33,7 +33,10 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
       {...props}
     >
       {({ isTransitioning }) => (
-        <Card style={isTransitioning ? { viewTransitionName: "tool" } : undefined}>
+        <Card
+          className="fade-in"
+          style={isTransitioning ? { viewTransitionName: "tool" } : undefined}
+        >
           <Card.Header>
             <Favicon
               src={tool.faviconUrl}
