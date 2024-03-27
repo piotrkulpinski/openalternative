@@ -1,12 +1,11 @@
-import { LinkProps } from "@remix-run/react"
-import { cx } from "~/utils/cva"
-import { NavigationLink } from "./NavigationLink"
 import { MoveLeftIcon } from "lucide-react"
+import { PaginationLink } from "./PaginationLink"
+import { ComponentProps } from "react"
 
-export const BackButton = ({ className, ...props }: LinkProps) => {
+export const BackButton = ({ ...props }: ComponentProps<typeof PaginationLink>) => {
   return (
-    <NavigationLink className={cx("peer mt-auto self-start", className)} end {...props}>
-      <MoveLeftIcon className="size-5" /> back
-    </NavigationLink>
+    <PaginationLink prefix={<MoveLeftIcon />} {...props}>
+      back
+    </PaginationLink>
   )
 }
