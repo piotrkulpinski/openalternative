@@ -61,3 +61,23 @@ select:not([size]) {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9JyNmZmYnIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJyBjbGFzcz0nbHVjaWRlIGx1Y2lkZS1jaGV2cm9uLWRvd24nPjxwYXRoIGQ9J202IDkgNiA2IDYtNicvPjwvc3ZnPg==");
   }
 }
+
+/* Buy me a coffee */
+#bmc-wbtn {
+  @apply !size-12;
+}
+
+#bmc-wbtn img {
+  @apply !size-7;
+}
+
+#bmc-wbtn + div {
+  @apply !right-20;
+  @apply !bottom-6;
+  @apply !shadow-none;
+  @apply !border;
+  @apply !font-sans;
+  @apply !text-sm;
+  @apply !py-1.5;
+  @apply !px-3;
+}
