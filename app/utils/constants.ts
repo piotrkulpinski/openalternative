@@ -1,4 +1,4 @@
-export const SITE_URL = "https://openalternative.co"
+export const SITE_URL = import.meta.env.VITE_SITE_URL
 export const SITE_NAME = "OpenAlternative"
 export const SITE_TAGLINE = "Discover Open Source Alternatives to Popular Software"
 export const SITE_DESCRIPTION =
