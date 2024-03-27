@@ -1,5 +1,5 @@
 export const loader = async () => {
-  const url = process.env.SITE_URL ?? ""
+  const url = import.meta.env.VITE_SITE_URL ?? ""
 
   const robotText = `
     User-agent: *
