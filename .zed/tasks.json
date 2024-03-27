@@ -1,0 +1,10 @@
+[
+  {
+    "label": "Bun Dev",
+    "command": "bun dev"
+  },
+  {
+    "label": "Inngest Dev",
+    "command": "npx inngest-cli@latest dev -u http://localhost:5173/api/inngest"
+  }
+]
