@@ -38,6 +38,7 @@
     "isbot": "^4.1.0",
     "lucide-react": "^0.359.0",
     "plur": "^5.1.0",
+    "posthog-js": "^1.116.6",
     "react": "canary",
     "react-dom": "canary",
     "tailwind-merge": "^2.2.2",

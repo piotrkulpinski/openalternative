@@ -57,11 +57,11 @@ export default function Index() {
 
   return (
     <>
-      <section className="flex flex-col gap-y-6 sm:items-start sm:text-start">
+      <section className="flex flex-col gap-y-6">
         <Intro
           title={SITE_TAGLINE}
           description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
-          className="items-start text-pretty"
+          className="max-w-xl text-pretty"
         />
 
         <Newsletter placeholder="Get weekly newsletter" buttonVariant="fancy" />

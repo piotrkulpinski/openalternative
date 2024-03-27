@@ -1,14 +1,15 @@
 import { LinksFunction, MetaFunction } from "@remix-run/node"
 import { SpeedInsights } from "@vercel/speed-insights/remix"
 import { Analytics } from "@vercel/analytics/react"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
-import { PropsWithChildren } from "react"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
+import { PropsWithChildren, useEffect } from "react"
 import { Footer } from "~/components/Footer"
 import { Header } from "~/components/Header"
 import { Newsletter } from "~/components/Newsletter"
 import { Logo } from "./components/Logo"
 import { BreadcrumbsLink } from "./components/Breadcrumbs"
 import { SITE_NAME, SITE_URL } from "./utils/constants"
+import { posthog } from "posthog-js"
 
 import stylesheet from "~/styles.css?url"
 
@@ -43,6 +44,12 @@ export const meta: MetaFunction = ({ location }) => {
 }
 
 export function Layout({ children }: PropsWithChildren) {
+  const location = useLocation()
+
+  useEffect(() => {
+    posthog.capture("$pageview")
+  }, [location])
+
   return (
     <html lang="en">
       <head>
