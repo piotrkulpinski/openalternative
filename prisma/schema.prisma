@@ -1,0 +1,73 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Tool {
+  id             Int            @id @default(autoincrement())
+  name           String
+  slug           String         @unique
+  website        String?
+  repository     String?
+  description    String?
+  stars          Int            @default(0)
+  forks          Int            @default(0)
+  license        String?
+  score          Int            @default(0)
+  bump           Int?
+  faviconUrl     String?
+  screenshotUrl  String?
+  isDraft        Boolean        @default(false)
+  isFeatured     Boolean        @default(false)
+  lastCommitDate DateTime?
+  updatedAt      DateTime       @updatedAt
+  createdAt      DateTime       @default(now())
+  alternatives   Alternative[]
+  categories     Category[]
+  languages      ToolLanguage[]
+  topics         Topic[]
+}
+
+model Alternative {
+  id          Int     @id @default(autoincrement())
+  description String?
+  name        String
+  slug        String  @unique
+  website     String?
+  tools       Tool[]
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  slug  String @unique
+  tools Tool[]
+}
+
+model Language {
+  slug  String         @id @unique
+  name  String
+  color String?
+  tools ToolLanguage[]
+}
+
+model ToolLanguage {
+  toolId     Int
+  languageSlug String
+  percentage Float?
+  tool       Tool     @relation(fields: [toolId], references: [id])
+  language   Language @relation(fields: [languageSlug], references: [slug])
+
+  @@id([toolId, languageSlug])
+}
+
+model Topic {
+  slug  String @id @unique
+  tools Tool[]
+}

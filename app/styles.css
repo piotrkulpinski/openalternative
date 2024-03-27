@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS */
+:root {
+  font-family: Inter, sans-serif;
+  font-feature-settings:
+    "liga" 1,
+    /* Contextual Alternates */ "calt" 1,
+    /* Discretionary Ligatures */ "dlig" 1,
+    /* fSquare punctuation */ "ss07" 1,
+    /* Square quotes */ "ss08" 1,
+    /* Slashed zero */ "zero" 1,
+    /* Tabular numbers */ "tnum" 1,
+    /* Open six */ "cv03" 1,
+    /* Open nine */ "cv04" 1,
+    /* Alternate one */ "cv01" 1,
+    /* Flat-top three */ "cv09",
+    /* Open 4 */ "cv02" 1;
+}
+
+@supports (font-variation-settings: normal) {
+  /* Use variable font if supported */
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}
+
+.fade-in {
+  animation: fade-in linear forwards;
+  animation-timeline: view();
+  animation-range-start: 0;
+  animation-range-end: 15%;
+  transform-style: preserve-3d;
+}
+
+@keyframes fade-in {
+  from {
+    scale: 0.9;
+    opacity: 0;
+    transform: translateY(20px) perspective(250px) rotateX(-15deg);
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+    transform: translateY(0) perspective(500px) rotateX(0deg);
+  }
+}
+
+select:not([size]) {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9J2N1cnJlbnRDb2xvcicgc3Ryb2tlLXdpZHRoPScyJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIGNsYXNzPSdsdWNpZGUgbHVjaWRlLWNoZXZyb24tZG93bic+PHBhdGggZD0nbTYgOSA2IDYgNi02Jy8+PC9zdmc+");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25em 1.25em;
+  padding-right: 2.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  select:not([size]) {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9JyNmZmYnIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJyBjbGFzcz0nbHVjaWRlIGx1Y2lkZS1jaGV2cm9uLWRvd24nPjxwYXRoIGQ9J202IDkgNiA2IDYtNicvPjwvc3ZnPg==");
+  }
+}
