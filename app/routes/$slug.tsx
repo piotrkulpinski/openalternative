@@ -10,7 +10,7 @@ import { H1, H3 } from "~/components/Heading"
 import { Grid } from "~/components/Grid"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { Badge } from "~/components/Badge"
-import { JSON_HEADERS } from "~/utils/constants"
+import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
 import { useLoaderData } from "@remix-run/react"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/helpers"
@@ -35,6 +35,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   return getMetaTags({
     title: meta?.title,
     description: tool?.description,
+    ogImage: `${SITE_URL}/${tool?.slug}.png`,
     parentMeta: matches.find(({ id }) => id === "root")?.meta,
   })
 }
