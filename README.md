@@ -1,4 +1,4 @@
-![OpenAlternative](https://openalternative.co/screen.png)
+![OpenAlternative](https://openalternative.co/opengraph.png)
 
 <p align="center" style="margin-top: 20px">
   <p align="center">
@@ -22,6 +22,11 @@
    </a>
 </p>
 
+<p align="center">
+  <a href="https://www.producthunt.com/posts/openalternative?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-openalternative" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=443404&theme=light&period=daily" alt="OpenAlternative - Discover open source alternatives to popular software | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+  <a href="https://www.producthunt.com/posts/openalternative?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-openalternative" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=443404&theme=light" alt="OpenAlternative - Discover open source alternatives to popular software | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+</p>
+
 ## About this project
 
 OpenAlternative is a community driven list of open source alternatives to proprietary software and applications.
@@ -30,54 +35,42 @@ Our goal is to be your first stop when researching for a new open source service
 
 Join us in creating the biggest directory of open source software.
 
-## Recognition
+## Development
 
-<p align="center">
-  <a href="https://www.producthunt.com/posts/openalternative?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-openalternative" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=443404&theme=light&period=daily" alt="OpenAlternative - Discover open source alternatives to popular software | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-  <a href="https://www.producthunt.com/posts/openalternative?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-openalternative" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=443404&theme=light" alt="OpenAlternative - Discover open source alternatives to popular software | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-</p>
+OpenAlternative is currently written in [Remix](https://remix.run). Please refer to the [Remix documentation](https://docs.remix.run) for more information.
 
-## Airtable
+## 🧞 Commands
 
-The project is built on top of [Airtable](https://airtable.com) database. This allows me to quickly make changes and make use of the vast amount of extensions that Airtable has to offer.
+All commands are run from the root of the project, from a terminal:
 
-In order to build your own version of this project, you will need to create your own Airtable base and fill in the environment variables with the appropriate values.
+| Command         | Action                                       |
+| :-------------- | :------------------------------------------- |
+| `bun install`   | Installs dependencies                        |
+| `bun run dev`   | Starts local dev server at `localhost:5173`  |
+| `bun run build` | Build your production site to `./build/`     |
+| `bun run start` | Preview your build locally, before deploying |
 
-Easiest way to start is to duplicate the base I have created:
+## Deployment
 
-```
-https://airtable.com/appBvWPZiYx4MPh6J/shrSwSYHdS3H7W2wL
-```
+First, build your app for production:
 
-## Getting Started
-
-First, run the development server:
-
-```
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```sh
+bun run build
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+Then run the app in production mode:
 
-You can start editing the page by modifying pages/index.tsx. The page auto-updates as you edit the file.
+```sh
+bun start
+```
 
-API routes can be accessed on http://localhost:3000/api/hello. This endpoint can be edited in pages/api/hello.ts.
+Now you'll need to pick a host to deploy it to.
 
-The pages/api directory is mapped to /api/\*. Files in this directory are treated as API routes instead of React pages.
+### DIY
 
-This project uses next/font to automatically optimize and load Inter, a custom Google Font.
+If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
 
-## Learn More
+Make sure to deploy the output of `bun run build`
 
-To learn more about Next.js, take a look at the following resources:
-
-- Next.js Documentation - learn about Next.js features and API.
-- Learn Next.js - an interactive Next.js tutorial.
-
-You can check out the Next.js GitHub repository - your feedback and contributions are welcome!
+- `build/server`
+- `build/client`
