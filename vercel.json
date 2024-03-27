@@ -20,5 +20,11 @@
       "source": "/topic/:path*",
       "destination": "/topics/:path*"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron",
+      "schedule": "0 0,8,16 * * *"
+    }
   ]
 }
