@@ -9,6 +9,7 @@ import { CopyrightIcon, GitForkIcon, MoveRightIcon, StarIcon, TimerIcon } from "
 import { Insights } from "./Insights"
 import { Button } from "./Button"
 import { NavigationLink } from "./NavigationLink"
+import { posthog } from "posthog-js"
 
 type RepositoryDetailsProps = HTMLAttributes<HTMLElement> & {
   tool: SerializeFrom<ToolOne>
@@ -62,6 +63,7 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
           size="md"
           variant="secondary"
           suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
+          onClick={() => posthog.capture("repository_clicked", { url: tool.repository })}
           className="mt-1"
           asChild
         >
