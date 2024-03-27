@@ -79,6 +79,19 @@ export function Layout({ children }: PropsWithChildren) {
         <Scripts />
         <SpeedInsights />
         <Analytics />
+
+        <script
+          data-name="BMC-Widget"
+          data-cfasync="false"
+          src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+          data-id="piotrkulpinski"
+          data-description="Support me on Buy me a coffee!"
+          data-message="Support the site 🫶"
+          data-color="#EC4899"
+          data-position="Right"
+          data-x_margin="18"
+          data-y_margin="18"
+        />
       </body>
     </html>
   )
