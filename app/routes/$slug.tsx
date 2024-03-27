@@ -125,7 +125,7 @@ export default function ToolsPage() {
               <Series>
                 {tool.categories?.map((category) => (
                   <Badge key={category.id} to={`/categories/${category.slug}`}>
-                    <TagIcon className="mr-0.5 size-[0.9em] stroke-[1.75] opacity-50" />
+                    <TagIcon className="mr-0.5 size-[0.9em] opacity-50" />
                     {category.name}
                   </Badge>
                 ))}
@@ -141,7 +141,7 @@ export default function ToolsPage() {
               <Series className="w-full">
                 {tool.topics?.map((topic) => (
                   <Badge key={topic.slug} to={`/topics/${topic.slug}`}>
-                    <HashIcon className="size-[0.9em] stroke-[1.75] opacity-50" />
+                    <HashIcon className="size-[0.9em] opacity-50" />
                     {topic.slug}
                   </Badge>
                 ))}

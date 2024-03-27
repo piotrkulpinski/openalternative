@@ -1,17 +1,12 @@
-import { Link, LinkProps } from "@remix-run/react"
+import { LinkProps } from "@remix-run/react"
 import { cx } from "~/utils/cva"
+import { NavigationLink } from "./NavigationLink"
+import { MoveLeftIcon } from "lucide-react"
 
 export const BackButton = ({ className, ...props }: LinkProps) => {
   return (
-    <Link
-      className={cx(
-        "peer mt-auto self-start text-sm text-neutral-600 hover:text-inherit dark:text-neutral-400",
-        className
-      )}
-      unstable_viewTransition
-      {...props}
-    >
-      ⟵ back
-    </Link>
+    <NavigationLink className={cx("peer mt-auto self-start", className)} end {...props}>
+      <MoveLeftIcon className="size-5" /> back
+    </NavigationLink>
   )
 }
