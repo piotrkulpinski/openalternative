@@ -17,6 +17,7 @@ import { updateUrlWithSearchParams } from "~/utils/helpers"
 import { Button } from "~/components/Button"
 import { Prose } from "~/components/Prose"
 import { RepositoryDetails } from "~/components/RepositoryDetails"
+import { posthog } from "posthog-js"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -67,16 +68,17 @@ export default function ToolsPage() {
               <Series size="lg" className="w-full">
                 <FaviconImage
                   src={tool.faviconUrl}
-                  style={{ viewTransitionName: `tool-favicon` }}
+                  style={{ viewTransitionName: "tool-favicon" }}
                 />
-                <H1 style={{ viewTransitionName: `tool-title` }}>{tool.name}</H1>
+
+                <H1 style={{ viewTransitionName: "tool-title" }}>{tool.name}</H1>
               </Series>
 
               {tool.description && (
                 <Prose>
                   <h2
                     className="lead !font-normal !tracking-normal !text-neutral-600 dark:!text-neutral-400"
-                    style={{ viewTransitionName: `tool-description` }}
+                    style={{ viewTransitionName: "tool-description" }}
                   >
                     {tool.description}
                   </h2>
@@ -87,6 +89,7 @@ export default function ToolsPage() {
             {tool.website && (
               <Button
                 suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
+                onClick={() => posthog.capture("website_clicked", { url: tool.website })}
                 asChild
               >
                 <a

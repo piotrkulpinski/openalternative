@@ -1,4 +1,4 @@
-import { SITE_NAME } from "~/utils/constants"
+import { SITE_NAME, SITE_TAGLINE } from "~/utils/constants"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
 import { Featured } from "~/components/Featured"
@@ -35,78 +35,85 @@ export default function AboutPage() {
       <Featured />
 
       <Prose>
-        <h2>Hi, Piotr here 👋</h2>
+        <h2>What is OpenAlternative?</h2>
+        <p>
+          <a href="https://openalternative.co" title={SITE_TAGLINE}>
+            OpenAlternative
+          </a>{" "}
+          is a community driven list of open source alternatives to proprietary software and
+          applications. The goal of the site is to be your first stop when researching for a new
+          open source service to help you grow your business. It will help you find alternatives and
+          reviews of the products you already use.
+        </p>
+
+        <h2>How did OpenAlternative get started?</h2>
 
         <p>
-          I was collecting nice open-source companies for quite some time now. Mostly to take some
-          inspiration and learn from their code.
+          The project started as a weekend project to learn a new technology and try something new
+          and fun from scratch. It gained a lot of traction early on (
+          <a href="https://kulp.in/launch" target="_blank" rel="noreferrer">
+            100k unique visitors
+          </a>{" "}
+          in one week,{" "}
+          <a
+            href="https://news.ycombinator.com/item?id=39639386"
+            target="_blank"
+            rel="noreferrer nofollow"
+          >
+            #1 on Hacker News
+          </a>
+          ) so it was clear that there was a need for a site like this.
         </p>
 
         <p>
-          Last week, I though it would be fun to learn this Astro thing everyone’s talking about. So
-          I thought building a directory website out of this collection was pretty good idea.
+          I’ve always been a fan of open source software and I’ve always wanted to contribute to the
+          community in some way. I thought that creating a list of open source alternatives to
+          proprietary software and applications would be a great way to give back to the community.
         </p>
-
-        <p>
-          After 2 days of building, OpenAlternative was born. It’s a community driven list of open
-          source alternatives to proprietary software and applications.
-        </p>
-
-        <p>Enjoy and feel free to contribute!</p>
 
         <h2>Tools Used</h2>
-        <h3>Frontend</h3>
-        <p>
-          For the frontend, I used{" "}
-          <a href="https://astro.build/" target="_blank" rel="noreferrer">
-            Astro
-          </a>
-          . It’s a new static site generator that’s really fast and fun to work with. Working with
-          Astro feels like working with a modern framework like React or Vue, but it’s actually a
-          static site generator.
-        </p>
-        <p>
-          A great addition to Astro is the ViewTransitions API support. It’s a really cool feature
-          that allows you to add page transitions to your website with just a few lines of code.
-        </p>
-
-        <p>
-          I also used{" "}
-          <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">
-            Tailwind CSS
-          </a>{" "}
-          for styling. It’s a utility-first CSS framework that’s really easy to use and makes
-          building websites a breeze.
-        </p>
-
-        <h3>Backend</h3>
-        <p>
-          For the database, I used{" "}
-          <a href="https://kulp.in/airtable" target="_blank" rel="noreferrer">
-            Airtable
-          </a>
-          . It’s a really cool tool that allows you to create databases with a really nice UI. It
-          also has a really nice API that makes it easy to work with.
-        </p>
-
-        <p>
-          Screenshots are generated automatically with{" "}
-          <a
-            href="https://kulp.in/screenshotone"
-            target="_blank"
-            title="Screenshot API"
-            rel="noreferrer"
-          >
-            ScreenshotOne
-          </a>
-          . Highly recommended service for generating screenshots of websites.
-        </p>
+        <ul>
+          <li>
+            <a href="https://remix.run" target="_blank" rel="noreferrer nofollow">
+              Remix
+            </a>
+            - Web framework
+          </li>
+          <li>
+            <a href="https://github.com" target="_blank" rel="noreferrer nofollow">
+              GitHub
+            </a>
+            - Repository data
+          </li>
+          <li>
+            <a
+              href="https://kulp.in/screenshotone"
+              target="_blank"
+              title="Screenshot API"
+              rel="noreferrer"
+            >
+              ScreenshotOne
+            </a>
+            - Generating Screenshots
+          </li>
+          <li>
+            <a
+              href="https://kulp.in/airtable"
+              target="_blank"
+              title="Screenshot API"
+              rel="noreferrer nofollow"
+            >
+              Airtable
+            </a>
+            - Database
+          </li>
+        </ul>
 
         <h2>Contribute</h2>
         <p>
           If you have any suggestions for open source alternatives to proprietary software and
-          applications, feel free to contribute to the list. You can also contribute by adding new
-          categories or improving the website. The source code is available on{" "}
+          applications, feel free to contribute to the list. You can also contribute by suggesting
+          new categories or improving the website. The source code is available on{" "}
           <a
             href="https://github.com/piotrkulpinski/openalternative"
             target="_blank"
@@ -115,6 +122,14 @@ export default function AboutPage() {
             GitHub
           </a>
           .
+        </p>
+
+        <p>
+          Enjoy and feel free to contribute!
+          <br />–{" "}
+          <a href="https://twitter.com/piotrkulpinski" target="_blank" rel="noreferrer">
+            Piotr Kulpinski
+          </a>
         </p>
       </Prose>
     </>
