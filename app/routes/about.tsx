@@ -87,17 +87,6 @@ export default function AboutPage() {
           </li>
           <li>
             <a
-              href="https://kulp.in/screenshotone"
-              target="_blank"
-              title="Screenshot API"
-              rel="noreferrer"
-            >
-              ScreenshotOne
-            </a>
-            - Generating Screenshots
-          </li>
-          <li>
-            <a
               href="https://kulp.in/airtable"
               target="_blank"
               title="Screenshot API"
@@ -106,6 +95,28 @@ export default function AboutPage() {
               Airtable
             </a>
             - Database
+          </li>
+          <li>
+            <a
+              href="https://kulp.in/screenstudio"
+              target="_blank"
+              title="Screen recorder for Mac"
+              rel="noreferrer"
+            >
+              Screen Studio
+            </a>
+            - Screen recording for marketing videos
+          </li>
+          <li>
+            <a
+              href="https://kulp.in/screenshotone"
+              target="_blank"
+              title="Screenshot API"
+              rel="noreferrer"
+            >
+              ScreenshotOne
+            </a>
+            - Generating website screenshots
           </li>
         </ul>
 
