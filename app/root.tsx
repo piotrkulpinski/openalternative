@@ -1,6 +1,5 @@
 import { LinksFunction, MetaFunction } from "@remix-run/node"
 import { SpeedInsights } from "@vercel/speed-insights/remix"
-import { Analytics } from "@vercel/analytics/react"
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
 import { PropsWithChildren, useEffect } from "react"
 import { Footer } from "~/components/Footer"
@@ -78,7 +77,6 @@ export function Layout({ children }: PropsWithChildren) {
         <ScrollRestoration />
         <Scripts />
         <SpeedInsights />
-        <Analytics />
 
         {/* Plausible */}
         <script
