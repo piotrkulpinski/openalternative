@@ -80,6 +80,14 @@ export function Layout({ children }: PropsWithChildren) {
         <SpeedInsights />
         <Analytics />
 
+        {/* Plausible */}
+        <script
+          defer
+          data-domain="openalternative.co"
+          src="https://plausible.kulpinski.dev/js/script.js"
+        />
+
+        {/* Buy me a coffee */}
         <script
           data-name="BMC-Widget"
           data-cfasync="false"
