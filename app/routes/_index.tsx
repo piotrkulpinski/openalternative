@@ -11,8 +11,18 @@ import { Series } from "~/components/Series"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
+import { JSON_HEADERS, SITE_DESCRIPTION } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
+
+export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
+  const { meta } = data || {}
+
+  return getMetaTags({
+    title: meta?.title,
+    description: SITE_DESCRIPTION,
+    parentMeta: matches.find(({ id }) => id === "root")?.meta,
+  })
+}
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const order = new URL(request.url).searchParams.get("order")
@@ -41,27 +51,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     include: toolManyPayload,
   })
 
-  return json({ tools }, JSON_HEADERS)
-}
+  const meta = {
+    title: `Discover ${tools.length} Open Source Alternatives to Popular Software`,
+  }
 
-export const meta: MetaFunction<typeof loader> = ({ matches }) => {
-  return getMetaTags({
-    title: SITE_TAGLINE,
-    description: SITE_DESCRIPTION,
-    parentMeta: matches.find(({ id }) => id === "root")?.meta,
-  })
+  return json({ meta, tools }, JSON_HEADERS)
 }
 
 export default function Index() {
-  const { tools } = useLoaderData<typeof loader>()
+  const { meta, tools } = useLoaderData<typeof loader>()
 
   return (
     <>
       <section className="flex flex-col gap-y-6">
         <Intro
-          title={SITE_TAGLINE}
+          title={meta?.title}
           description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
-          className="max-w-xl text-pretty"
+          className="max-w-[40rem] text-pretty"
         />
 
         <Newsletter placeholder="Get weekly newsletter" buttonVariant="fancy" />

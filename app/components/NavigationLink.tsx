@@ -3,7 +3,7 @@ import { cva } from "cva"
 
 export const navigationLinkVariants = cva({
   base: [
-    "group flex items-center gap-2 text-sm -tracking-micro",
+    "group flex items-center gap-2 self-start text-sm -tracking-micro",
     "text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200",
   ],
   variants: {

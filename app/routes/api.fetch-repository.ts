@@ -109,6 +109,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       data: { isDraft: true },
     })
 
-    console.error(error)
+    console.error(`Failed to fetch repository ${owner}/${name}`, error)
   }
 }
