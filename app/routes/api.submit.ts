@@ -45,8 +45,11 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
   })
 
   // Send an event to the Inngest pipeline
-  await inngest.send({ event: "tool.created", data: tool })
+  await inngest.send({ name: "tool.created", data: { id: tool.id } })
 
   // Return a success response
-  return json({ type: "success", message: "Thank you for submitting!" })
+  return json({
+    type: "success",
+    message: "Thank you for submitting! We'll review your tool soon.",
+  })
 }
