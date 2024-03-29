@@ -119,7 +119,7 @@ export default function ToolsPage() {
 
           {/* Categories */}
           {!!tool.categories.length && (
-            <Series direction="column">
+            <Series direction="column" className="w-full">
               <H3>Categories:</H3>
 
               <Series>
@@ -135,7 +135,7 @@ export default function ToolsPage() {
 
           {/* Topics */}
           {!!tool.topics.length && (
-            <Series size="lg" direction="column">
+            <Series size="lg" direction="column" className="w-full">
               <H3>Related topics:</H3>
 
               <Series className="w-full">

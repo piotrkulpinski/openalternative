@@ -22,6 +22,7 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
     {
       label: "Last commit",
       value: tool.lastCommitDate && format(tool.lastCommitDate),
+      title: tool.lastCommitDate ?? undefined,
       icon: TimerIcon,
     },
     { label: "License", value: tool.license, icon: CopyrightIcon },
