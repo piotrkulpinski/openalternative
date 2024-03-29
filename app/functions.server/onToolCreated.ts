@@ -72,6 +72,7 @@ export const onToolCreated = inngest.createFunction(
       const url = `https://api.screenshotone.com/take?${screenshotParams.toString()}`
       const response = await got.get(url).json<{ store: { location: string } }>()
 
+      console.info(response)
       console.info("✨ Screenshot generated for:", tool.slug)
 
       return response.store.location
