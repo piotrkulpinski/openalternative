@@ -56,7 +56,7 @@ export default function CategoriesPage() {
       <Intro {...meta} />
 
       <Grid>
-        {category.tools.map((tool) => (
+        {category.tools.map(({ tool }) => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 

@@ -4,8 +4,8 @@ import { Prose } from "./Prose"
 import { Series } from "./Series"
 import { H1 } from "./Heading"
 
-type IntroProps = Omit<HTMLAttributes<HTMLElement>, "prefix"> & {
-  title: string
+type IntroProps = Omit<HTMLAttributes<HTMLElement>, "title" | "prefix"> & {
+  title: ReactNode
   description?: ReactNode
   prefix?: ReactNode
   suffix?: ReactNode

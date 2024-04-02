@@ -2,8 +2,8 @@ import { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 import { Series } from "./Series"
 import { H6 } from "./Heading"
-import { GithubIcon } from "lucide-react"
 import { NavigationLink } from "./NavigationLink"
+import { SITE_EMAIL } from "~/utils/constants"
 
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
@@ -17,12 +17,19 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         <NavigationLink to="/topics">Topics</NavigationLink>
 
         <NavigationLink
+          to={`mailto:${SITE_EMAIL}`}
+          target="_blank"
+          rel="nofollow noreferrer"
+          className="sm:ml-auto"
+        >
+          Contact
+        </NavigationLink>
+        <NavigationLink
           to="https://github.com/piotrkulpinski/openalternative"
           target="_blank"
           rel="nofollow noreferrer"
-          className="flex items-center gap-1.5 sm:ml-auto"
         >
-          <GithubIcon className="size-4 max-sm:hidden" /> Source
+          Source Code
         </NavigationLink>
       </Series>
 

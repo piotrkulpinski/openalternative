@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# db backups
+db-backup-*
