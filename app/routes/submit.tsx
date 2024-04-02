@@ -62,7 +62,7 @@ export default function SubmitPage() {
                 required
               />
 
-              {data?.type === "error" && (
+              {data?.error?.name && (
                 <p className="text-xs text-red-600">{data.error.name?._errors[0]}</p>
               )}
             </div>
@@ -80,7 +80,7 @@ export default function SubmitPage() {
                 required
               />
 
-              {data?.type === "error" && (
+              {data?.error?.website && (
                 <p className="text-xs text-red-600">{data.error.website?._errors[0]}</p>
               )}
             </div>
@@ -98,7 +98,7 @@ export default function SubmitPage() {
                 required
               />
 
-              {data?.type === "error" && (
+              {data?.error?.repository && (
                 <p className="text-xs text-red-600">{data.error.repository?._errors[0]}</p>
               )}
             </div>
@@ -116,7 +116,7 @@ export default function SubmitPage() {
                 required
               />
 
-              {data?.type === "error" && (
+              {data?.error?.description && (
                 <p className="text-xs text-red-600">{data.error.description?._errors[0]}</p>
               )}
             </div>
