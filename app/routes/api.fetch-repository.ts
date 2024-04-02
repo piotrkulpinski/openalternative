@@ -11,7 +11,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const schema = z.object({
-    id: z.number(),
+    id: z.string(),
     owner: z.string(),
     name: z.string(),
     bump: z.number().nullable(),
@@ -26,6 +26,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       owner,
       name,
       headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
+    }).catch(async (error) => {
+      // if the repository check fails, set the tool as draft
+      await prisma.tool.update({
+        where: { id },
+        data: { isDraft: true },
+      })
+
+      console.error(`Failed to fetch repository ${owner}/${name}`, error)
     })) as RepositoryQueryResult
 
     // Extract and transform the necessary metrics
@@ -53,12 +61,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }))
 
     // Prepare languages data
-    const languages = repository.languages.edges.map(({ size, node }) => ({
-      percentage: Math.round((size / repository.languages.totalSize) * 100),
-      name: node.name,
-      slug: slugify(node.name),
-      color: node.color,
-    }))
+    const languages = repository.languages.edges
+      .map(({ size, node }) => ({
+        percentage: Math.round((size / repository.languages.totalSize) * 100),
+        name: node.name,
+        slug: slugify(node.name),
+        color: node.color,
+      }))
+      .filter(({ percentage }) => percentage > 17.5)
 
     // Update the tool
     return await prisma.tool.update({
@@ -73,42 +83,47 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         // Topics
         topics: {
           connectOrCreate: topics.map(({ slug }) => ({
-            where: { slug },
-            create: { slug },
+            where: {
+              toolId_topicSlug: {
+                toolId: id,
+                topicSlug: slug,
+              },
+            },
+            create: {
+              topic: {
+                connectOrCreate: {
+                  where: { slug },
+                  create: { slug },
+                },
+              },
+            },
           })),
         },
 
         // Languages
         languages: {
-          connectOrCreate: languages
-            .filter(({ percentage }) => percentage > 17.5)
-            .map(({ percentage, name, slug, color }) => ({
-              where: {
-                toolId_languageSlug: {
-                  toolId: id,
-                  languageSlug: slug,
+          connectOrCreate: languages.map(({ percentage, name, slug, color }) => ({
+            where: {
+              toolId_languageSlug: {
+                toolId: id,
+                languageSlug: slug,
+              },
+            },
+            create: {
+              percentage,
+              language: {
+                connectOrCreate: {
+                  where: { slug },
+                  create: { name, slug, color },
                 },
               },
-              create: {
-                percentage,
-                language: {
-                  connectOrCreate: {
-                    where: { slug },
-                    create: { name, slug, color },
-                  },
-                },
-              },
-            })),
+            },
+          })),
         },
       },
     })
   } catch (error) {
-    // if the repository check fails, set the tool as draft
-    await prisma.tool.update({
-      where: { id },
-      data: { isDraft: true },
-    })
-
-    console.error(`Failed to fetch repository ${owner}/${name}`, error)
+    console.error(`Failed to update repository ${owner}/${name}`, error)
+    throw new Error(`Failed to update repository ${owner}/${name}`)
   }
 }

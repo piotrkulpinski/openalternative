@@ -48,7 +48,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     })
 
     const meta = {
-      title: `${tool.name}: Open Source Alternative ${tool.alternatives.length ? `to ${tool.alternatives.map((a) => a?.name).join(", ")}` : ""}`,
+      title: `${tool.name}: Open Source Alternative ${tool.alternatives.length ? `to ${tool.alternatives.map(({ alternative }) => alternative?.name).join(", ")}` : ""}`,
     }
 
     return json({ meta, tool }, JSON_HEADERS)
@@ -123,7 +123,7 @@ export default function ToolsPage() {
               <H3>Categories:</H3>
 
               <Series>
-                {tool.categories?.map((category) => (
+                {tool.categories?.map(({ category }) => (
                   <Badge key={category.id} to={`/categories/${category.slug}`}>
                     <TagIcon className="mr-0.5 size-[0.9em] opacity-50" />
                     {category.name}
@@ -139,7 +139,7 @@ export default function ToolsPage() {
               <H3>Related topics:</H3>
 
               <Series className="w-full">
-                {tool.topics?.map((topic) => (
+                {tool.topics?.map(({ topic }) => (
                   <Badge key={topic.slug} to={`/topics/${topic.slug}`}>
                     <HashIcon className="size-[0.9em] opacity-50" />
                     {topic.slug}
@@ -159,7 +159,7 @@ export default function ToolsPage() {
           <H3>{tool.name} is an Open Source alternative to:</H3>
 
           <Grid className="w-full">
-            {tool.alternatives?.map((alternative) => (
+            {tool.alternatives?.map(({ alternative }) => (
               <AlternativeRecord key={alternative.id} alternative={alternative} />
             ))}
           </Grid>
