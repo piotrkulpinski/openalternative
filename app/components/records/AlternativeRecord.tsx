@@ -19,6 +19,7 @@ export const AlternativeRecord = ({ alternative, showCount, ...props }: Alternat
         <Card.Header>
           <Favicon
             src={`https://www.google.com/s2/favicons?sz=128&domain_url=${alternative.website}`}
+            title={alternative.name}
           />
 
           <H3 className="truncate">{alternative.name}</H3>

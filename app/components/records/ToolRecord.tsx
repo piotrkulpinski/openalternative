@@ -37,6 +37,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
           <Card.Header>
             <Favicon
               src={tool.faviconUrl}
+              title={tool.name}
               style={isTransitioning ? { viewTransitionName: `tool-favicon` } : undefined}
             />
 

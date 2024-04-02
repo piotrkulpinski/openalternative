@@ -3,9 +3,10 @@ import { cx } from "~/utils/cva"
 
 type FaviconProps = HTMLAttributes<HTMLDivElement> & {
   src: string | null
+  title?: string | null
 }
 
-export const Favicon = ({ className, src, ...props }: FaviconProps) => {
+export const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
   if (!src) return null
 
   return (
@@ -16,17 +17,17 @@ export const Favicon = ({ className, src, ...props }: FaviconProps) => {
       )}
       {...props}
     >
-      <FaviconImage src={src} className="size-full" />
+      <FaviconImage src={src} title={title} className="size-full" />
     </div>
   )
 }
 
-export const FaviconImage = ({ className, src, ...props }: FaviconProps) => {
+export const FaviconImage = ({ className, src, title, ...props }: FaviconProps) => {
   if (!src) return null
 
   return (
     <img
-      alt=""
+      alt={title ? `Favicon of ${title} website` : undefined}
       loading="eager"
       width="64"
       height="64"

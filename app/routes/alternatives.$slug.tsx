@@ -58,6 +58,7 @@ export default function AlternativesPage() {
         prefix={
           <FaviconImage
             src={`https://www.google.com/s2/favicons?sz=128&domain_url=${alternative.website}`}
+            title={alternative.name}
           />
         }
         title={meta.title}
