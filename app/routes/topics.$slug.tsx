@@ -59,7 +59,7 @@ export default function TopicsPage() {
       <Intro {...meta} />
 
       <Grid>
-        {topic.tools.map((tool) => (
+        {topic.tools.map(({ tool }) => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 

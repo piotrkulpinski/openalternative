@@ -1,8 +1,9 @@
+import { Tool } from "@prisma/client"
 import { fetch as webFetch } from "@remix-run/web-fetch"
 import { EventSchemas, Inngest } from "inngest"
 
 type Events = {
-  "tool.created": { data: { id: number } }
+  "tool.created": { data: { id: Tool["id"] } }
 }
 
 export const inngest = new Inngest({

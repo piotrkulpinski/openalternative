@@ -78,7 +78,7 @@ export default function AlternativesPage() {
       />
 
       <Grid>
-        {alternative.tools.map((tool) => (
+        {alternative.tools.map(({ tool }) => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 

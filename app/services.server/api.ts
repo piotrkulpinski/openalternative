@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client"
 
 // Alternatives
 export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeInclude>()({
-  tools: true,
+  tools: { include: { tool: true } },
 })
 
 export const alternativeManyPayload = Prisma.validator<Prisma.AlternativeInclude>()({
@@ -16,7 +16,7 @@ export type AlternativeMany = Prisma.AlternativeGetPayload<{
 
 // Categories
 export const categoryOnePayload = Prisma.validator<Prisma.CategoryInclude>()({
-  tools: true,
+  tools: { include: { tool: true } },
 })
 
 export const categoryManyPayload = Prisma.validator<Prisma.CategoryInclude>()({
@@ -28,7 +28,7 @@ export type CategoryMany = Prisma.CategoryGetPayload<{ include: typeof categoryM
 
 // Topics
 export const topicOnePayload = Prisma.validator<Prisma.TopicInclude>()({
-  tools: true,
+  tools: { include: { tool: true } },
 })
 
 export const topicManyPayload = Prisma.validator<Prisma.TopicInclude>()({
@@ -52,9 +52,18 @@ export type LanguageMany = Prisma.LanguageGetPayload<{ include: typeof languageM
 
 // Tools
 export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({
-  alternatives: { orderBy: { name: "asc" }, include: alternativeManyPayload },
-  categories: { orderBy: { name: "asc" }, include: categoryManyPayload },
-  topics: { orderBy: { slug: "asc" }, include: topicManyPayload },
+  alternatives: {
+    orderBy: { alternative: { name: "asc" } },
+    include: { alternative: { include: alternativeManyPayload } },
+  },
+  categories: {
+    orderBy: { category: { name: "asc" } },
+    include: { category: { include: categoryManyPayload } },
+  },
+  topics: {
+    orderBy: { topic: { slug: "asc" } },
+    include: { topic: { include: topicManyPayload } },
+  },
   languages: {
     orderBy: { percentage: "desc" },
     include: { language: { include: languageManyPayload } },
