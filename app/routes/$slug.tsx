@@ -69,6 +69,7 @@ export default function ToolsPage() {
               <Series size="lg" className="w-full">
                 <FaviconImage
                   src={tool.faviconUrl}
+                  title={tool.name}
                   style={{ viewTransitionName: "tool-favicon" }}
                 />
 
@@ -109,7 +110,7 @@ export default function ToolsPage() {
           {tool.screenshotUrl && (
             <img
               src={tool.screenshotUrl}
-              alt=""
+              alt={`Screenshot of ${tool.name} website`}
               width={1280}
               height={1024}
               loading="eager"
