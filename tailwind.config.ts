@@ -26,6 +26,16 @@ export default {
         lg: "18rem",
         xl: "20rem",
       },
+
+      keyframes: {
+        shimmer: {
+          from: { left: "-90%" },
+          to: { left: "90%" },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 1.25s cubic-bezier(0.5, 0.25, 0.25, 0.5) infinite",
+      },
     },
   },
   plugins: [

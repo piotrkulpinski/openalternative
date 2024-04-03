@@ -7,8 +7,6 @@ type FaviconProps = HTMLAttributes<HTMLDivElement> & {
 }
 
 export const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
-  if (!src) return null
-
   return (
     <div
       className={cx(

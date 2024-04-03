@@ -8,6 +8,7 @@ import { SerializeFrom } from "@remix-run/node"
 import { NavLink } from "@remix-run/react"
 import { H3 } from "../Heading"
 import { Favicon } from "../Favicon"
+import { Shimmer } from "../Shimmer"
 
 type ToolRecordProps = HTMLAttributes<HTMLElement> & {
   tool: SerializeFrom<ToolMany>
@@ -68,5 +69,31 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
         </Card>
       )}
     </NavLink>
+  )
+}
+
+export const ToolRecordSkeleton = ({ ...props }: HTMLAttributes<HTMLElement>) => {
+  const insights = [
+    { label: "Stars", value: "", icon: StarIcon },
+    { label: "Forks", value: "", icon: GitForkIcon },
+    { label: "Last commit", value: "", icon: TimerIcon },
+  ]
+
+  return (
+    <Card>
+      <Card.Header>
+        <Favicon src={null} />
+
+        <H3 className="w-2/3 rounded bg-current opacity-10">&nbsp;</H3>
+      </Card.Header>
+
+      <div className="w-full space-y-1">
+        <div className="h-5 w-full rounded bg-current opacity-5" />
+        <div className="h-5 w-2/3 rounded bg-current opacity-5" />
+      </div>
+
+      <Insights insights={insights} className="opacity-50" />
+      <Shimmer />
+    </Card>
   )
 }
