@@ -1,14 +1,17 @@
+import { getPageParams } from "@curiousleaf/utils"
 import { Prisma } from "@prisma/client"
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { NavLink, json, useLoaderData } from "@remix-run/react"
+import { Await, NavLink, defer, useLoaderData } from "@remix-run/react"
 import { BlocksIcon, BracesIcon, TagIcon } from "lucide-react"
+import { Suspense } from "react"
 import { Button } from "~/components/Button"
 import { Filters } from "~/components/Filters"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { Newsletter } from "~/components/Newsletter"
+import { Pagination } from "~/components/Pagination"
 import { Series } from "~/components/Series"
-import { ToolRecord } from "~/components/records/ToolRecord"
+import { ToolRecord, ToolRecordSkeleton } from "~/components/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
@@ -23,7 +26,8 @@ export const meta: MetaFunction<typeof loader> = ({ matches }) => {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const order = new URL(request.url).searchParams.get("order")
+  const { take, skip, order } = getPageParams<{ order: string }>(request, 60)
+
   let orderBy: Prisma.ToolOrderByWithRelationInput
 
   switch (order) {
@@ -43,27 +47,29 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       orderBy = { score: "desc" }
   }
 
-  const tools = await prisma.tool.findMany({
+  const tools = prisma.tool.findMany({
     where: { isDraft: false },
     orderBy: [{ isFeatured: "desc" }, orderBy],
     include: toolManyPayload,
+    take,
+    skip,
   })
 
-  const meta = {
-    title: `Discover ${tools.length} Open Source Alternatives to Popular Software`,
-  }
+  const toolCount = await prisma.tool.count({
+    where: { isDraft: false },
+  })
 
-  return json({ meta, tools }, JSON_HEADERS)
+  return defer({ tools: Promise.resolve().then(() => tools), toolCount }, JSON_HEADERS)
 }
 
 export default function Index() {
-  const { tools } = useLoaderData<typeof loader>()
+  const { tools, toolCount } = useLoaderData<typeof loader>()
 
   return (
     <>
       <section className="flex flex-col gap-y-6">
         <Intro
-          title={`Discover ${tools.length} Open Source Alternatives to Popular Software`}
+          title={`Discover ${toolCount} Open Source Alternatives to Popular Software`}
           description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
           className="max-w-[40rem] text-pretty"
         />
@@ -97,10 +103,24 @@ export default function Index() {
           <Filters />
         </div>
 
-        {tools.map((tool) => (
-          <ToolRecord key={tool.id} tool={tool} />
-        ))}
+        <Suspense
+          fallback={Array.from({ length: 9 }).map((_, i) => (
+            <ToolRecordSkeleton key={i} />
+          ))}
+        >
+          <Await resolve={tools}>
+            {(tools) => (
+              <>
+                {tools.map((tool) => (
+                  <ToolRecord key={tool.id} tool={tool} />
+                ))}
+              </>
+            )}
+          </Await>
+        </Suspense>
       </Grid>
+
+      <Pagination totalCount={toolCount} pageSize={60} className="col-span-full" />
     </>
   )
 }

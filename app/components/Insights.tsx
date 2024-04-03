@@ -15,7 +15,7 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
     <ul className={cx("w-full text-xs", className)} {...props}>
       {insights.map(({ label, value, title, icon: Icon }) => (
         <Fragment key={label}>
-          {(!!value || value === 0) && (
+          {value !== null && (
             <li className="flex min-w-0 items-center gap-3 py-1">
               <p className="flex items-center gap-1.5 truncate text-neutral-500">
                 <Icon className="size-[1.1em] shrink-0 opacity-75" /> {label}
