@@ -97,7 +97,7 @@ export default function ToolsPage() {
                 <a
                   href={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="nofollow noreferrer"
                 >
                   View Website
                 </a>

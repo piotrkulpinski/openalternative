@@ -40,7 +40,7 @@ export default function AboutPage() {
           <a href="https://openalternative.co" title={SITE_TAGLINE}>
             OpenAlternative
           </a>{" "}
-          is a community driven list of open source alternatives to proprietary software and
+          –s a community driven list of open source alternatives to proprietary software and
           applications. The goal of the site is to be your first stop when researching for a new
           open source service to help you grow your business. It will help you find alternatives and
           reviews of the products you already use.
@@ -54,7 +54,7 @@ export default function AboutPage() {
           <a href="https://kulp.in/launch" target="_blank" rel="noreferrer">
             100k unique visitors
           </a>{" "}
-          in one week,{" "}
+          –n one week,{" "}
           <a
             href="https://news.ycombinator.com/item?id=39639386"
             target="_blank"
@@ -76,14 +76,14 @@ export default function AboutPage() {
           <li>
             <a href="https://remix.run" target="_blank" rel="noreferrer nofollow">
               Remix
-            </a>
-            - Web framework
+            </a>{" "}
+            – Web framework
           </li>
           <li>
             <a href="https://github.com" target="_blank" rel="noreferrer nofollow">
               GitHub
-            </a>
-            - Repository data
+            </a>{" "}
+            – Repository data
           </li>
           <li>
             <a
@@ -93,19 +93,19 @@ export default function AboutPage() {
               rel="noreferrer nofollow"
             >
               Airtable
-            </a>
-            - Database
+            </a>{" "}
+            – Database
           </li>
           <li>
             <a
               href="https://kulp.in/screenstudio"
               target="_blank"
               title="Screen recorder for Mac"
-              rel="noreferrer"
+              rel="noreferrer nofollow"
             >
               Screen Studio
-            </a>
-            - Screen recording for marketing videos
+            </a>{" "}
+            – Screen recording for marketing videos
           </li>
           <li>
             <a
@@ -115,8 +115,8 @@ export default function AboutPage() {
               rel="noreferrer"
             >
               ScreenshotOne
-            </a>
-            - Generating website screenshots
+            </a>{" "}
+            – Generating website screenshots
           </li>
         </ul>
 
@@ -128,17 +128,51 @@ export default function AboutPage() {
           <a
             href="https://github.com/piotrkulpinski/openalternative"
             target="_blank"
-            rel="noreferrer"
+            rel="noreferrer nofollow"
           >
             GitHub
           </a>
           .
         </p>
 
+        <p>Enjoy and feel free to contribute!</p>
+
+        <h2>About the Author</h2>
         <p>
-          Enjoy and feel free to contribute!
+          I’m a software developer and entrepreneur. I’ve been building web applications for over 10
+          years. I’m passionate about open source software and I love to contribute to the community
+          in any way I can.
+        </p>
+        <p>Some of my other projects:</p>
+        <ul>
+          <li>
+            <a
+              href="https://chipmunktheme.com/?utm_source=Chipmunk+Theme&utm_medium=web&utm_campaign=Family"
+              target="_blank"
+              title="Build directory websites in WordPress"
+              rel="noreferrer"
+            >
+              Chipmunk Theme
+            </a>{" "}
+            – WordPress theme for building directory websites
+          </li>
+          <li>
+            <a
+              href="https://superstash.co/?utm_source=Chipmunk+Theme&utm_medium=web&utm_campaign=Family"
+              target="_blank"
+              title="No-code directory website builder"
+              rel="noreferrer"
+            >
+              Superstash
+            </a>{" "}
+            – No-code directory website builder
+          </li>
+        </ul>
+        <p>
+          I’m always looking for new projects to work on and new people to collaborate with. Feel
+          free to reach out to me if you have any questions or suggestions.
           <br />–{" "}
-          <a href="https://twitter.com/piotrkulpinski" target="_blank" rel="noreferrer">
+          <a href="https://twitter.com/piotrkulpinski" target="_blank" rel="noreferrer nofollow">
             Piotr Kulpinski
           </a>
         </p>
