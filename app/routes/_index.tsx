@@ -26,7 +26,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches }) => {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { take, skip, order } = getPageParams<{ order: string }>(request, 60)
+  const { take, skip, order } = getPageParams<{ order: string }>(request, 45)
 
   let orderBy: Prisma.ToolOrderByWithRelationInput
 
@@ -120,7 +120,7 @@ export default function Index() {
         </Suspense>
       </Grid>
 
-      <Pagination totalCount={toolCount} pageSize={60} className="col-span-full" />
+      <Pagination totalCount={toolCount} pageSize={45} className="col-span-full" />
     </>
   )
 }

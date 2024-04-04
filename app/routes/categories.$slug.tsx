@@ -12,7 +12,7 @@ import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   breadcrumb: (data?: { category: CategoryOne }) => {
-    if (!data) return <BackButton to="/" />
+    if (!data?.category) return <BackButton to="/" />
 
     const { slug, name } = data.category
 
@@ -38,7 +38,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     })
 
     const meta = {
-      title: `Best Open Source ${category.name} Tools`,
+      title: `Best Open Source ${category.name} Software`,
       description: `A collection of the best open source ${category.name} tools. Find the best tools for ${category.name} that are open source and free to use/self-hostable.`,
     }
 

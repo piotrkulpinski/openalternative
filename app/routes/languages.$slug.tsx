@@ -12,7 +12,7 @@ import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   breadcrumb: (data?: { language: LanguageOne }) => {
-    if (!data) return <BackButton to="/" />
+    if (!data?.language) return <BackButton to="/" />
 
     const { slug, name } = data.language
 

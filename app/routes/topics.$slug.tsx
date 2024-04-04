@@ -13,7 +13,7 @@ import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   breadcrumb: (data?: { topic: TopicOne }) => {
-    if (!data) return <BackButton to="/" />
+    if (!data?.topic) return <BackButton to="/" />
 
     const { slug } = data.topic
 

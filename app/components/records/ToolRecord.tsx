@@ -80,7 +80,7 @@ export const ToolRecordSkeleton = ({ ...props }: HTMLAttributes<HTMLElement>) =>
   ]
 
   return (
-    <Card>
+    <Card className="pointer-events-none" {...props}>
       <Card.Header>
         <Favicon src={null} />
 
