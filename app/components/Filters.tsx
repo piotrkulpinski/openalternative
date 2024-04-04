@@ -64,7 +64,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
         ))}
       </Select>
 
-      {query ? <input type="hidden" name="order" value={order} /> : null}
+      {query && order && <input type="hidden" name="order" value={order} />}
     </Form>
   )
 }
