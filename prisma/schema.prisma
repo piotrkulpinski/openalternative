@@ -13,8 +13,8 @@ model Tool {
   id             String              @id @default(cuid())
   name           String
   slug           String              @unique
-  website        String?             @unique
-  repository     String?             @unique
+  website        String              @unique
+  repository     String              @unique
   description    String?
   stars          Int                 @default(0)
   forks          Int                 @default(0)
@@ -39,7 +39,7 @@ model Alternative {
   description String?
   name        String
   slug        String              @unique
-  website     String?
+  website     String              @unique
   updatedAt   DateTime            @updatedAt
   createdAt   DateTime            @default(now())
   tools       AlternativeToTool[]

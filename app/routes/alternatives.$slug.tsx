@@ -1,9 +1,13 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
-import { useLoaderData } from "@remix-run/react"
+import { Link, useLoaderData } from "@remix-run/react"
+import { MoveRightIcon } from "lucide-react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { FaviconImage } from "~/components/Favicon"
+import { Button } from "~/components/Button"
+import { Card } from "~/components/Card"
+import { Favicon } from "~/components/Favicon"
 import { Grid } from "~/components/Grid"
+import { H3 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { AlternativeOne, alternativeOnePayload } from "~/services.server/api"
@@ -55,30 +59,40 @@ export default function AlternativesPage() {
   return (
     <>
       <Intro
-        prefix={
-          <FaviconImage
-            src={`https://www.google.com/s2/favicons?sz=128&domain_url=${alternative.website}`}
-            title={alternative.name}
-          />
-        }
         title={meta.title}
-        description={
-          <>
-            A collection of the best open source{" "}
-            {alternative.website ? (
-              <a href={alternative.website} target="_blank" rel="noopener noreferrer nofollow">
-                {alternative.name}
-              </a>
-            ) : (
-              alternative.name
-            )}{" "}
-            alternatives. Find the best alternatives for {alternative.name} that are open source and
-            free to use/self-hostable.
-          </>
-        }
+        description={`Find the best alternatives to ${alternative.name} that are open source and free to use/self-hostable.`}
       />
 
       <Grid>
+        <Card className="group bg-white" asChild>
+          <Link to={alternative.website} target="_blank" rel="noopener noreferrer nofollow">
+            <Card.Header>
+              <Favicon
+                src={`https://www.google.com/s2/favicons?sz=128&domain_url=${alternative.website}`}
+                title={alternative.name}
+              />
+
+              <H3 className="truncate">{alternative.name}</H3>
+            </Card.Header>
+
+            {alternative.description && (
+              <p className="relative -tracking-0.5 line-clamp-4 text-sm/normal text-neutral-500">
+                {alternative.description}
+              </p>
+            )}
+
+            <Button
+              variant="secondary"
+              size="md"
+              className="mt-auto pointer-events-none"
+              suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
+              asChild
+            >
+              <span>Visit Website</span>
+            </Button>
+          </Link>
+        </Card>
+
         {alternative.tools.map(({ tool }) => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
