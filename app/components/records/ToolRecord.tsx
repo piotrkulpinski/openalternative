@@ -9,6 +9,7 @@ import { NavLink } from "@remix-run/react"
 import { H3 } from "../Heading"
 import { Favicon } from "../Favicon"
 import { Shimmer } from "../Shimmer"
+import { Badge } from "../Badge"
 
 type ToolRecordProps = HTMLAttributes<HTMLElement> & {
   tool: SerializeFrom<ToolMany>
@@ -49,11 +50,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
               {tool.name}
             </H3>
 
-            {tool.isFeatured && (
-              <div className="ml-auto rounded bg-neutral-200/60 px-1.5 py-0.5 text-xs text-neutral-600 dark:bg-neutral-700/60 dark:text-neutral-200">
-                Promoted
-              </div>
-            )}
+            {tool.isFeatured && <Badge className="ml-auto">Promoted</Badge>}
           </Card.Header>
 
           {tool.description && (

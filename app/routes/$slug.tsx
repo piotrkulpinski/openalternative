@@ -9,7 +9,7 @@ import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { H1, H3 } from "~/components/Heading"
 import { Grid } from "~/components/Grid"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
-import { Badge } from "~/components/Badge"
+import { Tag } from "~/components/Tag"
 import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
 import { useLoaderData } from "@remix-run/react"
 import { getMetaTags } from "~/utils/meta"
@@ -125,10 +125,10 @@ export default function ToolsPage() {
 
               <Series>
                 {tool.categories?.map(({ category }) => (
-                  <Badge key={category.id} to={`/categories/${category.slug}`}>
+                  <Tag key={category.id} to={`/categories/${category.slug}`}>
                     <TagIcon className="mr-0.5 size-[0.9em] opacity-50" />
                     {category.name}
-                  </Badge>
+                  </Tag>
                 ))}
               </Series>
             </Series>
@@ -141,10 +141,10 @@ export default function ToolsPage() {
 
               <Series className="w-full">
                 {tool.topics?.map(({ topic }) => (
-                  <Badge key={topic.slug} to={`/topics/${topic.slug}`}>
+                  <Tag key={topic.slug} to={`/topics/${topic.slug}`}>
                     <HashIcon className="size-[0.9em] opacity-50" />
                     {topic.slug}
-                  </Badge>
+                  </Tag>
                 ))}
               </Series>
             </Series>

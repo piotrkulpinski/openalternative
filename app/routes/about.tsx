@@ -40,7 +40,7 @@ export default function AboutPage() {
           <a href="https://openalternative.co" title={SITE_TAGLINE}>
             OpenAlternative
           </a>{" "}
-          –s a community driven list of open source alternatives to proprietary software and
+          is a community driven list of open source alternatives to proprietary software and
           applications. The goal of the site is to be your first stop when researching for a new
           open source service to help you grow your business. It will help you find alternatives and
           reviews of the products you already use.
