@@ -15,6 +15,7 @@ import { ToolRecord, ToolRecordSkeleton } from "~/components/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
+import { getSearchQuery } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches }) => {
@@ -26,50 +27,78 @@ export const meta: MetaFunction<typeof loader> = ({ matches }) => {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { take, skip, order } = getPageParams<{ order: string }>(request, 45)
+  const { take, skip, query, order } = getPageParams<{ query: string; order: string }>(request, 45)
+  const search = getSearchQuery(query)
 
-  let orderBy: Prisma.ToolOrderByWithRelationInput
+  let orderBy: Prisma.ToolOrderByWithRelationAndSearchRelevanceInput
 
-  switch (order) {
-    case "name":
-      orderBy = { name: "asc" }
-      break
-    case "stars":
-      orderBy = { stars: "desc" }
-      break
-    case "forks":
-      orderBy = { forks: "desc" }
-      break
-    case "commit":
-      orderBy = { lastCommitDate: "desc" }
-      break
-    default:
-      orderBy = { score: "desc" }
+  if (search) {
+    orderBy = {
+      _relevance: {
+        search,
+        fields: ["name", "description"],
+        sort: Prisma.SortOrder.desc,
+      },
+    }
+  } else {
+    switch (order) {
+      case "name":
+        orderBy = { name: "asc" }
+        break
+      case "stars":
+        orderBy = { stars: "desc" }
+        break
+      case "forks":
+        orderBy = { forks: "desc" }
+        break
+      case "commit":
+        orderBy = { lastCommitDate: "desc" }
+        break
+      default:
+        orderBy = { score: "desc" }
+    }
+  }
+
+  const where = {
+    isDraft: false,
+    ...(search && {
+      OR: [
+        { name: { search } },
+        { description: { search } },
+        { topics: { some: { topic: { slug: { equals: query } } } } },
+        { languages: { some: { language: { slug: { equals: query } } } } },
+        { alternatives: { some: { alternative: { name: { search } } } } },
+      ],
+    }),
   }
 
   const tools = prisma.tool.findMany({
-    where: { isDraft: false },
-    orderBy: [{ isFeatured: "desc" }, orderBy],
-    include: toolManyPayload,
+    where,
     take,
     skip,
+    orderBy: [{ isFeatured: "desc" }, orderBy],
+    include: toolManyPayload,
   })
 
-  const toolCount = await prisma.tool.count({
-    where: { isDraft: false },
-  })
+  const [toolCount, toolTotalCount] = await Promise.all([
+    prisma.tool.count({ where }),
+    prisma.tool.count({ where: { isDraft: false } }),
+  ])
 
-  return defer({ tools: Promise.resolve().then(() => tools), toolCount }, JSON_HEADERS)
+  return defer(
+    { tools: Promise.resolve().then(() => tools), toolCount, toolTotalCount },
+    JSON_HEADERS
+  )
 }
 
 export default function Index() {
-  const { tools, toolCount } = useLoaderData<typeof loader>()
+  const { tools, toolCount, toolTotalCount } = useLoaderData<typeof loader>()
 
   return (
     <>
       <section className="flex flex-col gap-y-6">
         <Intro
-          title={`Discover ${toolCount} Open Source Alternatives to Popular Software`}
+          title={`Discover ${toolTotalCount} Open Source Alternatives to Popular Software`}
           description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
           className="max-w-[40rem] text-pretty"
         />
@@ -79,7 +108,7 @@ export default function Index() {
 
       <Grid>
         <div className="col-span-full flex flex-wrap items-center justify-between gap-4">
-          <Series className="flex-nowrap max-sm:gap-1.5">
+          <Series size="sm" className="flex-nowrap max-sm:gap-1.5">
             <Button size="md" variant="secondary" prefix={<BlocksIcon />} asChild>
               <NavLink to="/categories" prefetch="intent" unstable_viewTransition>
                 <span className="max-sm:hidden">Browse by Category</span>
@@ -114,6 +143,8 @@ export default function Index() {
                 {tools.map((tool) => (
                   <ToolRecord key={tool.id} tool={tool} />
                 ))}
+
+                {!tools.length && <p>No tools found.</p>}
               </>
             )}
           </Await>

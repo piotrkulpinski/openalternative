@@ -39,6 +39,7 @@
     "lucide-react": "^0.359.0",
     "plur": "^5.1.0",
     "posthog-js": "^1.116.6",
+    "radash": "^12.1.0",
     "react": "canary",
     "react-dom": "canary",
     "satori": "^0.10.13",
