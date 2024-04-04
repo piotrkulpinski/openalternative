@@ -76,7 +76,7 @@ export default function AlternativesPage() {
             </Card.Header>
 
             {alternative.description && (
-              <p className="relative -tracking-0.5 line-clamp-4 text-sm/normal text-neutral-500">
+              <p className="relative -tracking-0.5 line-clamp-4 text-sm/normal text-neutral-600 dark:text-neutral-400">
                 {alternative.description}
               </p>
             )}

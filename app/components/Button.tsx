@@ -13,7 +13,7 @@ export const buttonVariants = cva({
 
   variants: {
     variant: {
-      fancy: "!border-transparent bg-pink-600 text-neutral-50 hover:bg-pink-600",
+      fancy: "!border-transparent bg-pink-600 text-neutral-50 hover:bg-pink-700",
       primary:
         "!border-transparent text-neutral-950 bg-current [&>*]:invert hover:opacity-90 dark:text-neutral-50",
       secondary: [
