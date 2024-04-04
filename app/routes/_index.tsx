@@ -14,7 +14,7 @@ import { Series } from "~/components/Series"
 import { ToolRecord, ToolRecordSkeleton } from "~/components/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
+import { JSON_HEADERS, SITE_DESCRIPTION, SITE_TAGLINE, TOOLS_PER_PAGE } from "~/utils/constants"
 import { getSearchQuery } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 
@@ -27,7 +27,8 @@ export const meta: MetaFunction<typeof loader> = ({ matches }) => {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { take, skip, query, order } = getPageParams<{ query: string; order: string }>(request, 45)
+  type Params = { query?: string; order?: string }
+  const { take, skip, query, order } = getPageParams<Params>(request, TOOLS_PER_PAGE)
   const search = getSearchQuery(query)
 
   let orderBy: Prisma.ToolFindManyArgs["orderBy"]
@@ -74,33 +75,31 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     }),
   }
 
-  const tools = prisma.tool.findMany({
-    where,
-    take,
-    skip,
-    orderBy,
-    include: toolManyPayload,
+  const tools = Promise.resolve().then(() => {
+    return prisma.tool.findMany({
+      where,
+      take,
+      skip,
+      orderBy,
+      include: toolManyPayload,
+    })
   })
 
-  const [toolCount, toolTotalCount] = await Promise.all([
-    prisma.tool.count({ where }),
-    prisma.tool.count({ where: { isDraft: false } }),
-  ])
+  const toolCount = Promise.resolve().then(() => {
+    return prisma.tool.count({ where })
+  })
 
-  return defer(
-    { tools: Promise.resolve().then(() => tools), toolCount, toolTotalCount },
-    JSON_HEADERS
-  )
+  return defer({ tools, toolCount }, JSON_HEADERS)
 }
 
 export default function Index() {
-  const { tools, toolCount, toolTotalCount } = useLoaderData<typeof loader>()
+  const { tools, toolCount } = useLoaderData<typeof loader>()
 
   return (
     <>
       <section className="flex flex-col gap-y-6">
         <Intro
-          title={`Discover ${toolTotalCount} Open Source Alternatives to Popular Software`}
+          title="Discover Open Source Alternatives to Popular Software"
           description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
           className="max-w-[40rem] text-pretty"
         />
@@ -153,7 +152,17 @@ export default function Index() {
         </Suspense>
       </Grid>
 
-      <Pagination totalCount={toolCount} pageSize={45} className="col-span-full" />
+      <Suspense>
+        <Await resolve={toolCount}>
+          {(toolCount) => (
+            <Pagination
+              totalCount={toolCount}
+              pageSize={TOOLS_PER_PAGE}
+              className="col-span-full"
+            />
+          )}
+        </Await>
+      </Suspense>
     </>
   )
 }

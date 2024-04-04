@@ -5,6 +5,9 @@ export const SITE_TAGLINE = "Open Source Alternatives to Popular Software"
 export const SITE_DESCRIPTION =
   "OpenAlternative is a community-driven list of open source alternatives to proprietary software and applications. Discover the best tools for your needs."
 
+export const TOOLS_PER_PAGE = 45
+export const TOPICS_PER_PAGE = 150
+
 export const JSON_HEADERS =
   process.env.NODE_ENV === "development"
     ? {
