@@ -16,6 +16,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
       <button type="button" onClick={() => setNavOpen(!isNavOpen)} className="lg:hidden">
         <MenuIcon className={cx("size-6 stroke-[1.5]", isNavOpen && "hidden")} />
         <XIcon className={cx("size-6 stroke-[1.5]", !isNavOpen && "hidden")} />
+        <span className="sr-only">Toggle navigation</span>
       </button>
 
       <Breadcrumbs className="mr-auto" />

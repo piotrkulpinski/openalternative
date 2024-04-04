@@ -21,7 +21,9 @@ export const CardSimple = ({ ...props }: CardSimpleProps) => {
         <h3>{label}</h3>
       </H5>
       <span className="h-px flex-1 bg-current opacity-15"></span>
-      {caption && <span className="shrink-0 text-xs text-neutral-500">{caption}</span>}
+      {caption && (
+        <span className="shrink-0 text-xs text-neutral-600 dark:text-neutral-400">{caption}</span>
+      )}
     </NavLink>
   )
 }

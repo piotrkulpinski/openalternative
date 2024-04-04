@@ -55,7 +55,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
 
           {tool.description && (
             <p
-              className="-tracking-0.5 line-clamp-2 text-sm/normal text-neutral-500"
+              className="-tracking-0.5 line-clamp-2 text-sm/normal text-neutral-600 dark:text-neutral-400"
               style={isTransitioning ? { viewTransitionName: `tool-description` } : undefined}
             >
               {tool.description}

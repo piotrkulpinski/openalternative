@@ -26,7 +26,7 @@ export const AlternativeRecord = ({ alternative, showCount, ...props }: Alternat
         </Card.Header>
 
         {alternative.description && (
-          <p className="-tracking-0.5 line-clamp-2 text-sm/normal text-neutral-500">
+          <p className="-tracking-0.5 line-clamp-2 text-sm/normal text-neutral-600 dark:text-neutral-400">
             {alternative.description}
           </p>
         )}
