@@ -43,8 +43,12 @@ export const Pagination = ({
         prefix={<MoveLeftIcon />}
         rel="prev"
       >
-        previous
+        prev
       </PaginationLink>
+
+      <p className="text-sm text-neutral-500 md:hidden">
+        Page {currentPage} of {pageCount}
+      </p>
 
       <div className="flex items-center flex-wrap gap-3 max-md:hidden">
         <span className="text-sm text-neutral-500">Page:</span>

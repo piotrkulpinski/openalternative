@@ -82,7 +82,7 @@ export default function AlternativesPage() {
             )}
 
             <Button
-              variant="secondary"
+              variant="fancy"
               size="md"
               className="mt-auto pointer-events-none"
               suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}

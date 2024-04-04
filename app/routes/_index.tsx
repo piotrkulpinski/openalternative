@@ -15,7 +15,7 @@ import { ToolRecord, ToolRecordSkeleton } from "~/components/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS, SITE_DESCRIPTION, SITE_TAGLINE, TOOLS_PER_PAGE } from "~/utils/constants"
-import { getSearchQuery } from "~/utils/helpers"
+import { getSearchQuery, isMobileAgent } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches }) => {
@@ -28,7 +28,10 @@ export const meta: MetaFunction<typeof loader> = ({ matches }) => {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   type Params = { query?: string; order?: string }
-  const { take, skip, query, order } = getPageParams<Params>(request, TOOLS_PER_PAGE)
+
+  const isMobile = isMobileAgent(request.headers.get("user-agent"))
+  const postsPerPage = isMobile ? TOOLS_PER_PAGE / 3 : TOOLS_PER_PAGE
+  const { take, skip, query, order } = getPageParams<Params>(request, postsPerPage)
   const search = getSearchQuery(query)
 
   let orderBy: Prisma.ToolFindManyArgs["orderBy"]
@@ -89,11 +92,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return prisma.tool.count({ where })
   })
 
-  return defer({ tools, toolCount }, JSON_HEADERS)
+  return defer({ tools, toolCount, postsPerPage }, JSON_HEADERS)
 }
 
 export default function Index() {
-  const { tools, toolCount } = useLoaderData<typeof loader>()
+  const { tools, toolCount, postsPerPage } = useLoaderData<typeof loader>()
 
   return (
     <>
@@ -155,11 +158,7 @@ export default function Index() {
       <Suspense>
         <Await resolve={toolCount}>
           {(toolCount) => (
-            <Pagination
-              totalCount={toolCount}
-              pageSize={TOOLS_PER_PAGE}
-              className="col-span-full"
-            />
+            <Pagination totalCount={toolCount} pageSize={postsPerPage} className="col-span-full" />
           )}
         </Await>
       </Suspense>
