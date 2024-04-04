@@ -13,7 +13,7 @@ import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   breadcrumb: (data?: { alternative: AlternativeOne }) => {
-    if (!data) return <BackButton to="/" />
+    if (!data?.alternative) return <BackButton to="/" />
 
     const { slug, name } = data.alternative
 

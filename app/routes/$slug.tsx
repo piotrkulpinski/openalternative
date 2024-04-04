@@ -21,7 +21,7 @@ import { posthog } from "posthog-js"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
-    if (!data) return <BackButton to="/" />
+    if (!data?.tool) return <BackButton to="/" />
 
     const { slug, name } = data.tool
 

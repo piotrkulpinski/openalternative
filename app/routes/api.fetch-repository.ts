@@ -52,7 +52,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const stars = metrics.stars
     const forks = metrics.forks
     const license =
-      repository.licenseInfo.spdxId === "NOASSERTION" ? undefined : repository.licenseInfo.spdxId
+      repository.licenseInfo.spdxId === "NOASSERTION" ? null : repository.licenseInfo.spdxId
     const lastCommitDate = metrics.lastCommitDate
 
     // Prepare topics data
