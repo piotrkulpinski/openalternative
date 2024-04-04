@@ -30,7 +30,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { take, skip, query, order } = getPageParams<{ query: string; order: string }>(request, 45)
   const search = getSearchQuery(query)
 
-  let orderBy: Prisma.ToolOrderByWithRelationAndSearchRelevanceInput
+  let orderBy: Prisma.ToolFindManyArgs["orderBy"]
 
   if (search) {
     orderBy = {
@@ -57,6 +57,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       default:
         orderBy = { score: "desc" }
     }
+
+    orderBy = [{ isFeatured: "desc" }, orderBy]
   }
 
   const where = {
@@ -76,7 +78,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     where,
     take,
     skip,
-    orderBy: [{ isFeatured: "desc" }, orderBy],
+    orderBy,
     include: toolManyPayload,
   })
 
