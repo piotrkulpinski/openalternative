@@ -48,3 +48,15 @@ export const updateQueryString = (
   // Return the updated search string
   return searchParams.toString()
 }
+
+/**
+ * Extracts and formats a search query from a given string.
+ *
+ * @param str The string to be formatted into a search query.
+ * @returns The formatted search query string.
+ */
+export const getSearchQuery = (str: string | undefined) => {
+  if (!str) return undefined
+
+  return str.trim().replace(/\s+/g, " & ")
+}

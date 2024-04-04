@@ -1,32 +1,70 @@
-import { useSearchParams, useNavigate, useLocation } from "@remix-run/react"
-import { ChangeEventHandler, HTMLAttributes } from "react"
+import { Form, useLocation, useNavigation, useSearchParams } from "@remix-run/react"
+import { HTMLAttributes, useMemo, useRef } from "react"
 import { cx } from "~/utils/cva"
-import { H6 } from "./Heading"
 import { Select } from "./forms/Select"
-import { updateQueryString } from "~/utils/helpers"
+import { Input } from "./forms/Input"
+import { LoaderIcon, SearchIcon } from "lucide-react"
 
 export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+  const { key } = useLocation()
+  const { state } = useNavigation()
+  const formRef = useRef<HTMLFormElement>(null)
   const [params] = useSearchParams()
-  const { pathname, search } = useLocation()
-  const navigate = useNavigate()
+  const query = useMemo(() => params.get("query") ?? undefined, [params])
+  const order = useMemo(() => params.get("order") ?? undefined, [params])
 
-  const handleOrderChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const value = e.target.value
-    const queryString = updateQueryString(search, { order: value })
-
-    navigate(`${pathname}?${queryString}`)
-  }
+  const orderOptions = [
+    { value: "score", label: "Score" },
+    { value: "name", label: "Name" },
+    { value: "stars", label: "Stars" },
+    { value: "forks", label: "Forks" },
+    { value: "commit", label: "Last Commit" },
+  ]
 
   return (
-    <div className={cx("flex items-center gap-2", className)} {...props}>
-      <H6>Order by:</H6>
-      <Select value={params.get("order") ?? undefined} onChange={handleOrderChange}>
-        <option value="score">Default</option>
-        <option value="name">Name</option>
-        <option value="stars">Stars</option>
-        <option value="forks">Forks</option>
-        <option value="commit">Last Commit</option>
+    <Form
+      key={key}
+      ref={formRef}
+      className={cx("flex items-center gap-2 lg:flex-1", className)}
+      {...props}
+    >
+      <div className={cx("relative flex-1 max-sm:w-40", className)} {...props}>
+        <Input
+          name="query"
+          defaultValue={query}
+          placeholder="Search tools"
+          className="!pr-6 py-1.5 w-full outline-none"
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus={typeof query !== "undefined"}
+        />
+
+        <div className="absolute right-2 top-1/2 p-0.5 -translate-y-1/2 inline-flex opacity-60 pointer-events-none">
+          {state === "loading" ? (
+            <LoaderIcon className="size-[1em] animate-spin" />
+          ) : (
+            <SearchIcon className="size-[1em]" />
+          )}
+        </div>
+      </div>
+
+      <Select
+        name="order"
+        defaultValue={order ?? ""}
+        disabled={!!query}
+        onChange={() => formRef.current?.submit()}
+      >
+        <option value="" disabled>
+          Order by
+        </option>
+
+        {orderOptions.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
       </Select>
-    </div>
+
+      {query ? <input type="hidden" name="order" value={order} /> : null}
+    </Form>
   )
 }
