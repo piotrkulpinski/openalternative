@@ -5,6 +5,7 @@ import defaultTheme from "tailwindcss/defaultTheme"
 
 export default {
   content: ["./app/**/*.{js,ts,jsx,tsx,mdx}"],
+  darkMode: "class",
 
   theme: {
     extend: {
@@ -41,6 +42,7 @@ export default {
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/container-queries"),
+    require("tailwindcss-animate"),
     plugin(({ matchUtilities, theme }) => {
       matchUtilities(
         {
