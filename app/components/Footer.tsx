@@ -11,8 +11,8 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
       <Series className="text-sm/normal text-neutral-500 md:gap-x-4">
         <H6>Explore:</H6>
 
-        <NavigationLink to="/categories">Categories</NavigationLink>
         <NavigationLink to="/alternatives">Alternatives</NavigationLink>
+        <NavigationLink to="/categories">Categories</NavigationLink>
         <NavigationLink to="/languages">Languages</NavigationLink>
         <NavigationLink to="/topics">Topics</NavigationLink>
 

@@ -12,29 +12,27 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   const [isNavOpen, setNavOpen] = useState(false)
 
   return (
-    <>
-      <div className={cx("flex items-center gap-3 md:gap-4", className)} {...props}>
-        <button type="button" onClick={() => setNavOpen(!isNavOpen)} className="lg:hidden">
-          <MenuIcon className={cx("size-6 stroke-[1.5]", isNavOpen && "hidden")} />
-          <XIcon className={cx("size-6 stroke-[1.5]", !isNavOpen && "hidden")} />
-        </button>
+    <div className={cx("flex flex-wrap items-center gap-3 md:gap-4", className)} {...props}>
+      <button type="button" onClick={() => setNavOpen(!isNavOpen)} className="lg:hidden">
+        <MenuIcon className={cx("size-6 stroke-[1.5]", isNavOpen && "hidden")} />
+        <XIcon className={cx("size-6 stroke-[1.5]", !isNavOpen && "hidden")} />
+      </button>
 
-        <Breadcrumbs className="mr-auto" />
+      <Breadcrumbs className="mr-auto" />
 
-        <Navigation className="max-lg:hidden" />
+      <Navigation className="max-lg:hidden" />
 
-        <Series size="sm">
-          <Button size="sm" variant="secondary" prefix={<PlusIcon />} className="-my-1.5" asChild>
-            <Link to="/submit" unstable_viewTransition>
-              Submit
-            </Link>
-          </Button>
+      <Series size="sm">
+        <Button size="sm" variant="secondary" prefix={<PlusIcon />} className="-my-1.5" asChild>
+          <Link to="/submit" unstable_viewTransition>
+            Submit
+          </Link>
+        </Button>
 
-          <ThemeSwitcher />
-        </Series>
-      </div>
+        <ThemeSwitcher />
+      </Series>
 
-      {isNavOpen && <Navigation className="lg:hidden" />}
-    </>
+      {isNavOpen && <Navigation className="mt-2 w-full lg:hidden" showAllLinks />}
+    </div>
   )
 }
