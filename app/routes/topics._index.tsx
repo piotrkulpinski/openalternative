@@ -7,7 +7,7 @@ import { Pagination } from "~/components/Pagination"
 import { TopicRecord } from "~/components/records/TopicRecord"
 import { topicManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS } from "~/utils/constants"
+import { JSON_HEADERS, TOPICS_PER_PAGE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
@@ -21,7 +21,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { take, skip } = getPageParams(request, 150)
+  const { take, skip } = getPageParams(request, TOPICS_PER_PAGE)
 
   const [topics, topicCount] = await Promise.all([
     prisma.topic.findMany({ orderBy: { slug: "asc" }, include: topicManyPayload, take, skip }),
@@ -51,7 +51,7 @@ export default function TopicsIndex() {
         {!topics.length && <p>No topics found.</p>}
       </Grid>
 
-      <Pagination totalCount={topicCount} pageSize={150} />
+      <Pagination totalCount={topicCount} pageSize={TOPICS_PER_PAGE} />
     </>
   )
 }
