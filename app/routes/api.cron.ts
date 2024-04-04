@@ -10,6 +10,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 
   const tools = await prisma.tool.findMany({
+    where: { isDraft: false },
     select: { id: true, repository: true, website: true, bump: true },
   })
 
