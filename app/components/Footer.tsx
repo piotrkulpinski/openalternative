@@ -3,7 +3,7 @@ import { cx } from "~/utils/cva"
 import { Series } from "./Series"
 import { H6 } from "./Heading"
 import { NavigationLink } from "./NavigationLink"
-import { SITE_EMAIL } from "~/utils/constants"
+import { GITHUB_URL, SITE_EMAIL, TWITTER_URL } from "~/utils/constants"
 import { GithubIcon, TwitterIcon } from "lucide-react"
 
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
@@ -26,21 +26,11 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           Contact
         </NavigationLink>
 
-        <NavigationLink
-          to="https://twitter.com/ossalternative"
-          target="_blank"
-          title="Twitter"
-          rel="nofollow noreferrer"
-        >
+        <NavigationLink to={TWITTER_URL} target="_blank" title="Twitter" rel="nofollow noreferrer">
           <TwitterIcon className="size-[1.44em]" />
         </NavigationLink>
 
-        <NavigationLink
-          to="https://github.com/piotrkulpinski/openalternative"
-          target="_blank"
-          title="Source Code"
-          rel="nofollow noreferrer"
-        >
+        <NavigationLink to={GITHUB_URL} target="_blank" title="Source" rel="nofollow noreferrer">
           <GithubIcon className="size-[1.44em]" />
         </NavigationLink>
       </Series>
