@@ -1,6 +1,7 @@
 import { graphql } from "@octokit/graphql"
-import { ActionFunctionArgs } from "@remix-run/node"
+import { ActionFunctionArgs, json } from "@remix-run/node"
 import { z } from "zod"
+import { JSON_HEADERS } from "~/utils/constants"
 import { RepositoryStarsQueryResult, repositoryStarsQuery } from "~/utils/github"
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -9,8 +10,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     name: z.string(),
   })
 
-  const json = await request.json()
-  const { owner, name } = schema.parse(json)
+  const payload = await request.json()
+  const { owner, name } = schema.parse(payload)
 
   try {
     const { repository } = await graphql<RepositoryStarsQueryResult>({
@@ -20,7 +21,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
     })
 
-    return repository.stargazerCount
+    return json(repository.stargazerCount, JSON_HEADERS)
   } catch (error) {
     console.error(`Failed to fetch repository stars ${owner}/${name}`, error)
     throw new Error(`Failed to fetch repository stars ${owner}/${name}`)
