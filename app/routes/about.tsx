@@ -86,34 +86,25 @@ export default function AboutPage() {
             – Repository data
           </li>
           <li>
-            <a
-              href="https://kulp.in/airtable"
-              target="_blank"
-              title="Screenshot API"
-              rel="noreferrer nofollow"
-            >
+            <a href="https://kulp.in/airtable" target="_blank" rel="noreferrer nofollow">
               Airtable
             </a>{" "}
             – Database
           </li>
           <li>
-            <a
-              href="https://kulp.in/screenstudio"
-              target="_blank"
-              title="Screen recorder for Mac"
-              rel="noreferrer nofollow"
-            >
+            <a href="https://kulp.in/screenstudio" target="_blank" rel="noreferrer nofollow">
               Screen Studio
             </a>{" "}
             – Screen recording for marketing videos
           </li>
           <li>
-            <a
-              href="https://kulp.in/screenshotone"
-              target="_blank"
-              title="Screenshot API"
-              rel="noreferrer"
-            >
+            <a href="https://kulp.in/typefully" target="_blank" rel="nofollow noreferrer">
+              Typefully
+            </a>{" "}
+            – Twitter scheduling/analytics
+          </li>
+          <li>
+            <a href="https://kulp.in/screenshotone" target="_blank" rel="noreferrer">
               ScreenshotOne
             </a>{" "}
             – Generating website screenshots
