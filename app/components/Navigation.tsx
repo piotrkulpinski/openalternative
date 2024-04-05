@@ -22,6 +22,7 @@ export const Navigation = ({ className, showAllLinks, ...props }: NavigationProp
           <NavigationLink to="/categories">Categories</NavigationLink>
           <NavigationLink to="/languages">Languages</NavigationLink>
           <NavigationLink to="/topics">Topics</NavigationLink>
+          <NavigationLink to="/submit">Submit</NavigationLink>
         </>
       )}
 

@@ -9,6 +9,7 @@ import { ThemeSwitcher } from "./ThemeSwitcher"
 import { Series } from "./Series"
 import { Badge } from "./Badge"
 import { RepositoryStarsQueryResult } from "~/utils/github"
+import { Ping } from "./Ping"
 
 type HeaderProps = HTMLAttributes<HTMLElement> & {
   repositoryQuery: Promise<RepositoryStarsQueryResult>
@@ -55,10 +56,17 @@ export const Header = ({ className, repositoryQuery, ...props }: HeaderProps) =>
             rel="nofollow noreferrer"
           >
             Star
+            <Ping className="absolute -right-1 -top-1 pointer-events-none" />
           </a>
         </Button>
 
-        <Button size="sm" variant="secondary" prefix={<PlusIcon />} className="-my-1.5" asChild>
+        <Button
+          size="sm"
+          variant="secondary"
+          prefix={<PlusIcon />}
+          className="-my-1.5 max-sm:hidden"
+          asChild
+        >
           <Link to="/submit" unstable_viewTransition>
             Submit
           </Link>
