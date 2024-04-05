@@ -9,7 +9,7 @@ export const TOOLS_PER_PAGE = 45
 export const TOPICS_PER_PAGE = 150
 
 export const JSON_HEADERS =
-  process.env.NODE_ENV === "development"
+  import.meta.env.NODE_ENV === "development"
     ? {
         headers: {
           "Cache-Control":

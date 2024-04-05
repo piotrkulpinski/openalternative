@@ -42,6 +42,12 @@ export type RepositoryQueryResult = {
   }
 }
 
+export type RepositoryStarsQueryResult = {
+  repository: {
+    stargazerCount: number
+  }
+}
+
 export const repositoryQuery = `query RepositoryQuery($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
     stargazerCount
@@ -87,6 +93,12 @@ export const repositoryQuery = `query RepositoryQuery($owner: String!, $name: St
         }
       }
     }
+  }
+}`
+
+export const repositoryStarsQuery = `query RepositoryQuery($owner: String!, $name: String!) {
+  repository(owner: $owner, name: $name) {
+    stargazerCount
   }
 }`
 
