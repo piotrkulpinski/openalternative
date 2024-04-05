@@ -59,6 +59,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
 export default function ToolsPage() {
   const { tool } = useLoaderData<typeof loader>()
+  // const repo = getRepoOwnerAndName(tool.repository)
 
   return (
     <div className="flex flex-col gap-12" style={{ viewTransitionName: "tool" }}>
@@ -151,7 +152,17 @@ export default function ToolsPage() {
           )}
         </div>
 
-        <RepositoryDetails tool={tool} className="sticky top-6 max-md:hidden" />
+        <div className="sticky top-6 max-md:hidden">
+          <RepositoryDetails tool={tool} />
+
+          {/* {repo && (
+            <img
+              src={`https://api.star-history.com/svg?repos=${repo?.owner}/${repo?.name}&type=Date`}
+              alt="Star History"
+              loading="lazy"
+            />
+          )} */}
+        </div>
       </div>
 
       {/* Alternatives */}

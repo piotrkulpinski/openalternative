@@ -1,6 +1,14 @@
-import { LinksFunction, MetaFunction } from "@remix-run/node"
+import { LinksFunction, MetaFunction, defer } from "@remix-run/node"
 import { SpeedInsights } from "@vercel/speed-insights/remix"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+  useLocation,
+} from "@remix-run/react"
 import { PropsWithChildren, useEffect } from "react"
 import { ThemeProvider } from "next-themes"
 import { Footer } from "~/components/Footer"
@@ -8,10 +16,12 @@ import { Header } from "~/components/Header"
 import { Newsletter } from "~/components/Newsletter"
 import { Logo } from "./components/Logo"
 import { BreadcrumbsLink } from "./components/Breadcrumbs"
-import { SITE_NAME, SITE_URL } from "./utils/constants"
+import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
 import { posthog } from "posthog-js"
 
 import stylesheet from "~/styles.css?url"
+import { graphql } from "@octokit/graphql"
+import { RepositoryStarsQueryResult, repositoryStarsQuery } from "./utils/github"
 
 export const handle = {
   breadcrumb: () => (
@@ -43,7 +53,19 @@ export const meta: MetaFunction = ({ location }) => {
   ]
 }
 
+export const loader = async () => {
+  const repositoryQuery = graphql<RepositoryStarsQueryResult>({
+    query: repositoryStarsQuery,
+    owner: "piotrkulpinski",
+    name: "openalternative",
+    headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
+  })
+
+  return defer({ repositoryQuery }, JSON_HEADERS)
+}
+
 export function Layout({ children }: PropsWithChildren) {
+  const { repositoryQuery } = useLoaderData<typeof loader>()
   const location = useLocation()
 
   useEffect(() => {
@@ -67,7 +89,7 @@ export function Layout({ children }: PropsWithChildren) {
           disableTransitionOnChange
         >
           <div className="@container/main mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 p-8">
-            <Header />
+            <Header repositoryQuery={repositoryQuery} />
 
             {children}
 

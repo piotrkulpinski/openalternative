@@ -2,7 +2,7 @@ import { InputHTMLAttributes, forwardRef } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
 
 export const inputVariants = cva({
-  base: "rounded-md border appearance-none bg-transparent px-3 py-2 text-[13px] font-medium placeholder:text-inherit placeholder:opacity-50 disabled:opacity-50 dark:border-neutral-700",
+  base: "rounded-md border appearance-none bg-transparent px-3 py-2 text-[13px]/tight font-medium placeholder:text-inherit placeholder:opacity-50 disabled:opacity-50 dark:border-neutral-700",
 
   variants: {
     hoverable: {
