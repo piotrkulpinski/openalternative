@@ -152,7 +152,7 @@ export default function ToolsPage() {
           )}
         </div>
 
-        <div className="sticky top-6 max-md:hidden">
+        <div className="sticky top-14 max-md:hidden">
           <RepositoryDetails tool={tool} />
 
           {/* {repo && (
