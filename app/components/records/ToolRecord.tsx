@@ -4,7 +4,6 @@ import { format } from "timeago.js"
 import { Card } from "../Card"
 import { Insights } from "../Insights"
 import { ToolMany } from "~/services.server/api"
-import { SerializeFrom } from "@remix-run/node"
 import { NavLink } from "@remix-run/react"
 import { H3 } from "../Heading"
 import { Favicon } from "../Favicon"
@@ -12,7 +11,7 @@ import { Shimmer } from "../Shimmer"
 import { Badge } from "../Badge"
 
 type ToolRecordProps = HTMLAttributes<HTMLElement> & {
-  tool: SerializeFrom<ToolMany>
+  tool: ToolMany
 }
 
 export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
