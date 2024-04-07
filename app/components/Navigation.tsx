@@ -15,11 +15,11 @@ export const Navigation = ({ className, showAllLinks, ...props }: NavigationProp
       className={cx("flex flex-col gap-y-2 gap-x-4 lg:flex-row lg:items-center", className)}
       {...props}
     >
-      <NavigationLink to="/alternatives">Alternatives</NavigationLink>
+      <NavigationLink to="/categories">Categories</NavigationLink>
 
       {showAllLinks && (
         <>
-          <NavigationLink to="/categories">Categories</NavigationLink>
+          <NavigationLink to="/alternatives">Alternatives</NavigationLink>
           <NavigationLink to="/languages">Languages</NavigationLink>
           <NavigationLink to="/topics">Topics</NavigationLink>
           <NavigationLink to="/submit">Submit</NavigationLink>
