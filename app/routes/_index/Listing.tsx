@@ -24,10 +24,6 @@ export const Listing = () => {
     }
   )
 
-  if (error) {
-    return <div>Failed to load</div>
-  }
-
   if (isLoading) {
     return (
       <Grid>
@@ -38,7 +34,11 @@ export const Listing = () => {
     )
   }
 
-  if (!data?.tools) {
+  if (error) {
+    return <div>Failed to load</div>
+  }
+
+  if (!data?.toolCount) {
     return <p>No tools found.</p>
   }
 

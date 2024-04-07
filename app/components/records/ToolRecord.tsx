@@ -9,9 +9,10 @@ import { H3 } from "../Heading"
 import { Favicon } from "../Favicon"
 import { Shimmer } from "../Shimmer"
 import { Badge } from "../Badge"
+import { SerializeFrom } from "@remix-run/node"
 
 type ToolRecordProps = HTMLAttributes<HTMLElement> & {
-  tool: ToolMany
+  tool: ToolMany | SerializeFrom<ToolMany>
 }
 
 export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
