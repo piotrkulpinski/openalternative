@@ -1,28 +1,19 @@
 import useSWR from "swr"
-import qs from "qs"
 import { Grid } from "~/components/Grid"
 import { Pagination } from "~/components/Pagination"
 import { ToolRecord, ToolRecordSkeleton } from "~/components/records/ToolRecord"
 import { ToolMany } from "~/services.server/api"
-import { type ToolsSearchParams, useToolsContext } from "~/store/tools"
-import { TOOLS_PER_PAGE } from "~/utils/constants"
+import { useToolsContext } from "~/store/tools"
+import { SWR_CONFIG, TOOLS_PER_PAGE } from "~/utils/constants"
+import { fetcher } from "~/utils/fetchers"
 
 export const Listing = () => {
   const searchParams = useToolsContext((s) => s.searchParams)
 
-  const fetcher = async ({ url, params }: { url: string; params: ToolsSearchParams }) => {
-    const r = await fetch(`${url}?${qs.stringify(params)}`)
-    return r.json()
-  }
-
   const { data, error, isLoading } = useSWR<{ tools: ToolMany[]; toolCount: number }>(
-    { url: "/api/tools", params: searchParams },
+    { url: "/api/tools", ...searchParams },
     fetcher,
-    {
-      refreshInterval: 1000 * 60,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
+    SWR_CONFIG
   )
 
   if (isLoading) {

@@ -53,35 +53,10 @@ svg:not([class*="stroke"]) {
 }
 
 select:not([size]) {
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9J2N1cnJlbnRDb2xvcicgc3Ryb2tlLXdpZHRoPScyJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIGNsYXNzPSdsdWNpZGUgbHVjaWRlLWNoZXZyb24tZG93bic+PHBhdGggZD0nbTYgOSA2IDYgNi02Jy8+PC9zdmc+");
-  background-position: right 0.75rem center;
-  background-repeat: no-repeat;
-  background-size: 1.25em 1.25em;
-  padding-right: 2.5rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  select:not([size]) {
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9JyNmZmYnIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJyBjbGFzcz0nbHVjaWRlIGx1Y2lkZS1jaGV2cm9uLWRvd24nPjxwYXRoIGQ9J202IDkgNiA2IDYtNicvPjwvc3ZnPg==");
-  }
-}
-
-/* Buy me a coffee */
-#bmc-wbtn {
-  @apply !size-12;
-}
-
-#bmc-wbtn img {
-  @apply !size-7;
-}
-
-#bmc-wbtn + div {
-  @apply !right-20;
-  @apply !bottom-6;
-  @apply !shadow-none;
-  @apply !border;
-  @apply !font-sans;
-  @apply !text-sm;
-  @apply !py-1.5;
-  @apply !px-3;
+  @apply bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9J2N1cnJlbnRDb2xvcicgc3Ryb2tlLXdpZHRoPScyJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIGNsYXNzPSdsdWNpZGUgbHVjaWRlLWNoZXZyb24tZG93bic+PHBhdGggZD0nbTYgOSA2IDYgNi02Jy8+PC9zdmc+')];
+  @apply dark:bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9JyNmZmYnIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJyBjbGFzcz0nbHVjaWRlIGx1Y2lkZS1jaGV2cm9uLWRvd24nPjxwYXRoIGQ9J202IDkgNiA2IDYtNicvPjwvc3ZnPg==')];
+  @apply bg-no-repeat;
+  @apply bg-[right_0.75rem_center];
+  @apply bg-[length:1.25em_1.25em];
+  @apply pr-10;
 }

@@ -10,28 +10,25 @@ import { ThemeSwitcher } from "./ThemeSwitcher"
 import { Series } from "./Series"
 import { Badge } from "./Badge"
 import { Ping } from "./Ping"
-import { GITHUB_URL } from "~/utils/constants"
+import { GITHUB_URL, SWR_CONFIG } from "~/utils/constants"
 import { getRepoOwnerAndName } from "~/utils/github"
+import qs from "qs"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)
   const repo = getRepoOwnerAndName(GITHUB_URL)
   const formatter = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-  const fetcher = async (url: string) => {
-    const r = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(repo),
-      headers: { "Content-Type": "application/json" },
-    })
-    return await r.json()
+  const fetcher = async ({ url, owner, name }: { url: string; owner: string; name: string }) => {
+    const r = await fetch(`${url}?${qs.stringify({ owner, name })}`)
+    return r.json()
   }
 
-  const { data, error, isLoading } = useSWR<number>("/api/fetch-repository-stars", fetcher, {
-    refreshInterval: 1000 * 60,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  })
+  const { data, error, isLoading } = useSWR<number>(
+    { url: "/api/fetch-repository-stars", ...repo },
+    fetcher,
+    SWR_CONFIG
+  )
 
   return (
     <div

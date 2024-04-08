@@ -1,17 +1,19 @@
 import { graphql } from "@octokit/graphql"
-import { ActionFunctionArgs, json } from "@remix-run/node"
+import { LoaderFunctionArgs, json } from "@remix-run/node"
 import { z } from "zod"
 import { JSON_HEADERS } from "~/utils/constants"
 import { RepositoryStarsQueryResult, repositoryStarsQuery } from "~/utils/github"
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const url = new URL(request.url)
+  const searchParams = Object.fromEntries(url.searchParams)
+
   const schema = z.object({
     owner: z.string(),
     name: z.string(),
   })
 
-  const payload = await request.json()
-  const { owner, name } = schema.parse(payload)
+  const { owner, name } = schema.parse(searchParams)
 
   try {
     const { repository } = await graphql<RepositoryStarsQueryResult>({
