@@ -1,11 +1,12 @@
-import { getCurrentPage, getPageLink } from "@curiousleaf/utils"
-import { useLocation, useSearchParams } from "@remix-run/react"
+import { getCurrentPage } from "@curiousleaf/utils"
+import { useLocation } from "@remix-run/react"
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import { HTMLAttributes, useMemo } from "react"
 import { cx } from "~/utils/cva"
 import { PaginationLink } from "./PaginationLink"
 import { UsePaginationProps, usePagination } from "~/hooks/usePagination"
 import { navigationLinkVariants } from "./NavigationLink"
+import qs, { ParsedQs } from "qs"
 
 export type PaginationProps = HTMLAttributes<HTMLElement> & Omit<UsePaginationProps, "currentPage">
 
@@ -17,8 +18,8 @@ export const Pagination = ({
   ...props
 }: PaginationProps) => {
   const { pathname } = useLocation()
-  const [params] = useSearchParams()
-  const currentPage = useMemo(() => getCurrentPage(params.get("page")), [params])
+  const params = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+  const currentPage = useMemo(() => getCurrentPage(params.page as string), [params])
   const pageCount = Math.ceil(totalCount / pageSize)
 
   const paginationRange = usePagination({
@@ -30,6 +31,11 @@ export const Pagination = ({
 
   if (paginationRange.length <= 1) {
     return null
+  }
+
+  const getPageLink = (params: ParsedQs, pathname: string, page: number) => {
+    params.page = page.toString()
+    return `${pathname}?${qs.stringify(params)}`
   }
 
   return (
