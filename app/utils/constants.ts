@@ -1,3 +1,5 @@
+import { SWRConfiguration } from "swr"
+
 export const SITE_URL = import.meta.env.VITE_SITE_URL
 export const SITE_EMAIL = import.meta.env.VITE_SITE_EMAIL
 export const SITE_NAME = "OpenAlternative"
@@ -10,6 +12,12 @@ export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
 
 export const TOOLS_PER_PAGE = 45
 export const TOPICS_PER_PAGE = 150
+
+export const SWR_CONFIG: SWRConfiguration = {
+  refreshInterval: 1000 * 60,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+}
 
 export const JSON_HEADERS =
   import.meta.env.NODE_ENV === "development"

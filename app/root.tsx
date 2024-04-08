@@ -15,7 +15,7 @@ import stylesheet from "~/styles.css?url"
 
 export const handle = {
   breadcrumb: () => (
-    <BreadcrumbsLink to="/" label={SITE_NAME}>
+    <BreadcrumbsLink to="/" label={SITE_NAME} reloadDocument>
       <Logo className="size-5 shrink-0" />
     </BreadcrumbsLink>
   ),

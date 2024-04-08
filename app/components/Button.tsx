@@ -18,7 +18,7 @@ export const buttonVariants = cva({
         "!border-transparent text-neutral-950 bg-current [&>*]:invert hover:opacity-90 dark:text-neutral-50",
       secondary: [
         "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100",
-        "dark:text-neutral-400 dark:bg-transparent dark:border-neutral-700/50 dark:bg-neutral-800/40 dark:hover:border-neutral-700 dark:hover:bg-neutral-800",
+        "dark:text-neutral-400 dark:bg-transparent dark:border-neutral-700 dark:bg-neutral-800/40 dark:hover:border-neutral-600 dark:hover:bg-neutral-800",
       ],
     },
     size: {
