@@ -1,26 +1,18 @@
 import { getCurrentPage } from "@curiousleaf/utils"
 import { Prisma } from "@prisma/client"
 import { LoaderFunctionArgs, json } from "@remix-run/node"
-import { z } from "zod"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
+import { toolsSearchParamsSchema } from "~/store/tools"
 import { JSON_HEADERS, TOOLS_PER_PAGE } from "~/utils/constants"
-import { getSearchQuery, isMobileAgent } from "~/utils/helpers"
+import { isMobileAgent } from "~/utils/helpers"
+import { getSearchQuery } from "~/utils/queryString"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
 
-  const schema = z.object({
-    page: z.string().nullish(),
-    query: z.string().nullish(),
-    order: z.string().nullish().default("score"),
-  })
-
-  const { page, query, order } = schema.parse({
-    page: url.searchParams.get("page"),
-    query: url.searchParams.get("query"),
-    order: url.searchParams.get("order"),
-  })
+  const searchParams = Object.fromEntries(url.searchParams)
+  const { page, query, order } = toolsSearchParamsSchema.parse(searchParams)
 
   const isMobile = isMobileAgent(request.headers.get("user-agent"))
   const currentPage = getCurrentPage(page)

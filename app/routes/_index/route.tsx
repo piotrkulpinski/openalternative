@@ -1,21 +1,18 @@
-import { getPageParams } from "@curiousleaf/utils"
-import { Prisma } from "@prisma/client"
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { NavLink, defer, useLoaderData } from "@remix-run/react"
+import type { MetaFunction } from "@remix-run/node"
+import { NavLink, useSearchParams } from "@remix-run/react"
 import { BlocksIcon, BracesIcon, TagIcon } from "lucide-react"
 import { Button } from "~/components/Button"
 import { Filters } from "~/components/Filters"
 import { Intro } from "~/components/Intro"
 import { Newsletter } from "~/components/Newsletter"
 import { Series } from "~/components/Series"
-import { toolManyPayload } from "~/services.server/api"
-import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS, SITE_DESCRIPTION, SITE_TAGLINE, TOOLS_PER_PAGE } from "~/utils/constants"
-import { getSearchQuery, isMobileAgent } from "~/utils/helpers"
+import { SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { Listing } from "./Listing"
+import { useRef } from "react"
+import { ToolsContext, ToolsStore, createToolsStore, toolsSearchParamsSchema } from "~/store/tools"
 
-export const meta: MetaFunction<typeof loader> = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   return getMetaTags({
     title: SITE_TAGLINE,
     description: SITE_DESCRIPTION,
@@ -23,80 +20,16 @@ export const meta: MetaFunction<typeof loader> = ({ matches }) => {
   })
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  type Params = { query?: string; order?: string }
-
-  const isMobile = isMobileAgent(request.headers.get("user-agent"))
-  const postsPerPage = isMobile ? TOOLS_PER_PAGE / 3 : TOOLS_PER_PAGE
-  const { take, skip, query, order } = getPageParams<Params>(request, postsPerPage)
-  const search = getSearchQuery(query)
-
-  let orderBy: Prisma.ToolFindManyArgs["orderBy"]
-
-  if (search) {
-    orderBy = {
-      _relevance: {
-        search,
-        fields: ["name", "description"],
-        sort: Prisma.SortOrder.desc,
-      },
-    }
-  } else {
-    switch (order) {
-      case "name":
-        orderBy = { name: "asc" }
-        break
-      case "stars":
-        orderBy = { stars: "desc" }
-        break
-      case "forks":
-        orderBy = { forks: "desc" }
-        break
-      case "commit":
-        orderBy = { lastCommitDate: "desc" }
-        break
-      default:
-        orderBy = { score: "desc" }
-    }
-
-    orderBy = [{ isFeatured: "desc" }, orderBy]
-  }
-
-  const where = {
-    isDraft: false,
-    ...(search && {
-      OR: [
-        { name: { search } },
-        { description: { search } },
-        { topics: { some: { topic: { slug: { equals: query } } } } },
-        { languages: { some: { language: { slug: { equals: query } } } } },
-        { alternatives: { some: { alternative: { name: { search } } } } },
-      ],
-    }),
-  }
-
-  const tools = Promise.resolve().then(() => {
-    return prisma.tool.findMany({
-      where,
-      take,
-      skip,
-      orderBy,
-      include: toolManyPayload,
-    })
-  })
-
-  const toolCount = Promise.resolve().then(() => {
-    return prisma.tool.count({ where })
-  })
-
-  return defer({ tools, toolCount, postsPerPage }, JSON_HEADERS)
-}
-
 export default function Index() {
-  const { postsPerPage } = useLoaderData<typeof loader>()
+  const [searchParams] = useSearchParams()
+  const storeRef = useRef<ToolsStore>()
+  const toolsSearchParams = toolsSearchParamsSchema.parse(Object.fromEntries(searchParams))
+
+  // Store is created once and reused across renders
+  storeRef.current = createToolsStore(toolsSearchParams)
 
   return (
-    <>
+    <ToolsContext.Provider value={storeRef.current}>
       <section className="flex flex-col gap-y-6">
         <Intro
           title="Discover Open Source Alternatives to Popular Software"
@@ -107,7 +40,9 @@ export default function Index() {
         <Newsletter placeholder="Get weekly newsletter" buttonVariant="fancy" />
       </section>
 
-      <div className="col-span-full flex flex-wrap items-center justify-between gap-4">
+      <div className="-mb-6 flex flex-wrap items-center justify-between gap-4">
+        <Filters />
+
         <Series size="sm" className="flex-nowrap max-sm:gap-1.5">
           <Button size="md" variant="secondary" prefix={<BlocksIcon />} asChild>
             <NavLink to="/alternatives" prefetch="intent" unstable_viewTransition>
@@ -115,12 +50,14 @@ export default function Index() {
               <span className="sm:hidden">Alternatives</span>
             </NavLink>
           </Button>
+
           <Button size="md" variant="secondary" prefix={<BracesIcon />} asChild>
             <NavLink to="/languages" prefetch="intent" unstable_viewTransition>
               <span className="max-sm:hidden">Browse by Language</span>
               <span className="sm:hidden">Languages</span>
             </NavLink>
           </Button>
+
           <Button size="md" variant="secondary" prefix={<TagIcon />} asChild>
             <NavLink to="/topics" prefetch="intent" unstable_viewTransition>
               <span className="max-sm:hidden">Browse by Topic</span>
@@ -128,11 +65,9 @@ export default function Index() {
             </NavLink>
           </Button>
         </Series>
-
-        <Filters />
       </div>
 
       <Listing />
-    </>
+    </ToolsContext.Provider>
   )
 }
