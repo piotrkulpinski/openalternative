@@ -57,22 +57,17 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       OR: [
         { name: { search } },
         { description: { search } },
-        { topics: { some: { topic: { slug: { equals: query } } } } },
-        { languages: { some: { language: { slug: { equals: query } } } } },
+        { topics: { some: { topic: { slug: { equals: query ?? undefined } } } } },
+        { languages: { some: { language: { slug: { equals: query ?? undefined } } } } },
         { alternatives: { some: { alternative: { name: { search } } } } },
       ],
     }),
   }
 
-  const tools = await prisma.tool.findMany({
-    where,
-    take,
-    skip,
-    orderBy,
-    include: toolManyPayload,
-  })
-
-  const toolCount = await prisma.tool.count({ where })
+  const [tools, toolCount] = await Promise.all([
+    prisma.tool.findMany({ where, take, skip, orderBy, include: toolManyPayload }),
+    prisma.tool.count({ where }),
+  ])
 
   return json({ tools, toolCount }, JSON_HEADERS)
 }
