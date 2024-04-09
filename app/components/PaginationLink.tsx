@@ -31,7 +31,9 @@ export const PaginationLink = ({
       <Slot className="size-5 duration-150 group-hover:-translate-x-0.5 group-hover:scale-105">
         {prefix}
       </Slot>
+
       {children}
+
       <Slot className="size-5 duration-150 group-hover:translate-x-0.5 group-hover:scale-105">
         {suffix}
       </Slot>

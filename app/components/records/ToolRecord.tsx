@@ -1,9 +1,11 @@
+import { Hit as AlgoliaHit } from "instantsearch.js"
+import { Highlight } from "react-instantsearch-hooks-web"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import { HTMLAttributes } from "react"
 import { format } from "timeago.js"
 import { Card } from "../Card"
 import { Insights } from "../Insights"
-import { ToolMany } from "~/services.server/api"
+import { ToolMany, ToolOne } from "~/services.server/api"
 import { NavLink } from "@remix-run/react"
 import { H3 } from "../Heading"
 import { Favicon } from "../Favicon"
@@ -47,7 +49,11 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
               className="truncate"
               style={isTransitioning ? { viewTransitionName: `tool-title` } : undefined}
             >
-              {tool.name}
+              <Highlight
+                hit={tool as AlgoliaHit<ToolOne>}
+                attribute="name"
+                classNames={{ highlighted: "bg-pink-600 text-white" }}
+              />
             </H3>
 
             {tool.isFeatured && <Badge className="ml-auto">Promoted</Badge>}
@@ -58,7 +64,11 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
               className="-tracking-0.5 line-clamp-2 text-sm/normal text-neutral-600 dark:text-neutral-400"
               style={isTransitioning ? { viewTransitionName: `tool-description` } : undefined}
             >
-              {tool.description}
+              <Highlight
+                hit={tool as AlgoliaHit<ToolOne>}
+                attribute="description"
+                classNames={{ highlighted: "bg-pink-600 text-white" }}
+              />
             </p>
           )}
 

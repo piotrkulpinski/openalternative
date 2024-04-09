@@ -49,7 +49,6 @@
     "radash": "^12.1.0",
     "react": "canary",
     "react-dom": "canary",
-    "react-instantsearch": "^7.7.1",
     "react-instantsearch-hooks-server": "^6.47.3",
     "react-instantsearch-hooks-web": "^6.47.3",
     "remix-utils": "^7.5.0",
