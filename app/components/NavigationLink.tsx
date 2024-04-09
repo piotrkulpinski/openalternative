@@ -1,10 +1,11 @@
 import { NavLink, NavLinkProps } from "@remix-run/react"
 import { cva } from "cva"
+import { ElementRef, forwardRef } from "react"
 
 export const navigationLinkVariants = cva({
   base: [
-    "group flex items-center gap-2 p-0.5 -m-0.5 self-start text-sm -tracking-micro enabled:cursor-pointer",
-    "text-neutral-500 disabled:opacity-50 enabled:hover:text-neutral-800 enabled:dark:hover:text-neutral-200",
+    "group flex items-center gap-2 p-0.5 -m-0.5 text-sm -tracking-micro cursor-pointer",
+    "text-neutral-500 disabled:opacity-50 hover:text-neutral-800 dark:hover:text-neutral-200",
   ],
   variants: {
     isActive: {
@@ -13,12 +14,17 @@ export const navigationLinkVariants = cva({
   },
 })
 
-export const NavigationLink = ({ className, ...props }: NavLinkProps) => {
-  return (
-    <NavLink
-      className={({ isActive }) => navigationLinkVariants({ isActive, className })}
-      unstable_viewTransition
-      {...props}
-    />
-  )
-}
+export const NavigationLink = forwardRef<ElementRef<typeof NavLink>, NavLinkProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <NavLink
+        ref={ref}
+        className={({ isActive }) => navigationLinkVariants({ isActive, className })}
+        unstable_viewTransition
+        {...props}
+      />
+    )
+  }
+)
+
+NavigationLink.displayName = "NavigationLink"

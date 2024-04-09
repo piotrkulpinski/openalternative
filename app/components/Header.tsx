@@ -1,10 +1,20 @@
-import { Link } from "@remix-run/react"
+import { NavLink } from "@remix-run/react"
+import { ClientOnly } from "remix-utils/client-only"
 import useSWR from "swr"
-import { HTMLAttributes, useState } from "react"
+import { HTMLAttributes, useEffect, useState } from "react"
 import { cx } from "~/utils/cva"
 import { Button } from "./Button"
-import { GithubIcon, LoaderIcon, MenuIcon, PlusIcon, XIcon } from "lucide-react"
-import { Navigation } from "./Navigation"
+import {
+  BlocksIcon,
+  BracesIcon,
+  GithubIcon,
+  LoaderIcon,
+  MenuIcon,
+  PlusIcon,
+  SmilePlusIcon,
+  TagIcon,
+  XIcon,
+} from "lucide-react"
 import { Breadcrumbs } from "./Breadcrumbs"
 import { ThemeSwitcher } from "./ThemeSwitcher"
 import { Series } from "./Series"
@@ -12,17 +22,29 @@ import { Badge } from "./Badge"
 import { Ping } from "./Ping"
 import { GITHUB_URL, SWR_CONFIG } from "~/utils/constants"
 import { getRepoOwnerAndName } from "~/utils/github"
-import qs from "qs"
+import { NavigationLink, navigationLinkVariants } from "./NavigationLink"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./DropdownMenu"
+import { fetcher } from "~/utils/fetchers"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)
   const repo = getRepoOwnerAndName(GITHUB_URL)
   const formatter = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-  const fetcher = async ({ url, owner, name }: { url: string; owner: string; name: string }) => {
-    const r = await fetch(`${url}?${qs.stringify({ owner, name })}`)
-    return r.json()
-  }
+  // Close the mobile navigation when the user presses the "Escape" key
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setNavOpen(false)
+    }
+
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [])
 
   const { data, error, isLoading } = useSWR<number>(
     { url: "/api/fetch-repository-stars", ...repo },
@@ -46,10 +68,39 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
       <Breadcrumbs className="mr-auto" />
 
-      <Navigation className="max-lg:hidden" />
+      <nav className="contents max-lg:hidden">
+        <DropdownMenu>
+          <DropdownMenuTrigger className={navigationLinkVariants()}>Browse</DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <NavigationLink to="/categories">
+                <BlocksIcon className="size-4 opacity-75" /> Categories
+              </NavigationLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <NavigationLink to="/alternatives">
+                <SmilePlusIcon className="size-4 opacity-75" /> Alternatives
+              </NavigationLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <NavigationLink to="/languages">
+                <BracesIcon className="size-4 opacity-75" /> Languages
+              </NavigationLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <NavigationLink to="/topics">
+                <TagIcon className="size-4 opacity-75" /> Topics
+              </NavigationLink>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <NavigationLink to="/about">About</NavigationLink>
+      </nav>
 
       <Series size="sm">
-        <ThemeSwitcher />
+        <ClientOnly>{() => <ThemeSwitcher />}</ClientOnly>
 
         <Button
           size="sm"
@@ -80,13 +131,22 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           className="-my-1.5 max-sm:hidden"
           asChild
         >
-          <Link to="/submit" unstable_viewTransition>
+          <NavLink to="/submit" unstable_viewTransition>
             Submit
-          </Link>
+          </NavLink>
         </Button>
       </Series>
 
-      {isNavOpen && <Navigation className="mt-2 w-full lg:hidden" showAllLinks />}
+      {isNavOpen && (
+        <nav className="mt-2 flex flex-col gap-y-2 w-full lg:hidden">
+          <NavigationLink to="/categories">Categories</NavigationLink>
+          <NavigationLink to="/alternatives">Alternatives</NavigationLink>
+          <NavigationLink to="/languages">Languages</NavigationLink>
+          <NavigationLink to="/topics">Topics</NavigationLink>
+          <NavigationLink to="/submit">Submit</NavigationLink>
+          <NavigationLink to="/about">About</NavigationLink>
+        </nav>
+      )}
     </div>
   )
 }
