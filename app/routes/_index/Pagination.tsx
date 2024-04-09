@@ -1,6 +1,6 @@
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import { HTMLAttributes, RefObject } from "react"
-import { usePagination, type UsePaginationProps } from "react-instantsearch-hooks-web"
+import { usePagination, type UsePaginationProps } from "react-instantsearch"
 import { PaginationLink } from "~/components/PaginationLink"
 import { cx } from "~/utils/cva"
 
@@ -27,8 +27,7 @@ export const Pagination = ({ className, listingRef, ...props }: PaginationProps)
 
   const refinePage = (e: React.MouseEvent<HTMLElement>, page: number) => {
     e.preventDefault()
-    console.log(listingRef.current)
-    // listingRef.current?.scrollIntoView({ behavior: "smooth" })
+    listingRef.current?.scrollIntoView({ behavior: "smooth" })
     refine(page)
   }
 
@@ -48,7 +47,7 @@ export const Pagination = ({ className, listingRef, ...props }: PaginationProps)
       </PaginationLink>
 
       <p className="text-sm text-neutral-500 md:hidden">
-        Page {currentRefinement} of {nbPages}
+        Page {currentRefinement + 1} of {nbPages}
       </p>
 
       <div className="flex items-center flex-wrap gap-3 max-md:hidden">

@@ -58,5 +58,5 @@ select:not([size]) {
   @apply bg-no-repeat;
   @apply bg-[right_0.75rem_center];
   @apply bg-[length:1.25em_1.25em];
-  @apply pr-10;
+  @apply pr-8;
 }
