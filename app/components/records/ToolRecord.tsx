@@ -10,7 +10,6 @@ import { ToolMany, ToolOne } from "~/services.server/api"
 import { NavLink } from "@remix-run/react"
 import { H3 } from "../Heading"
 import { Favicon } from "../Favicon"
-import { Shimmer } from "../Shimmer"
 import { Badge } from "../Badge"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
@@ -93,31 +92,5 @@ const ToolHighlight = ({ tool, attribute }: { tool: Tool; attribute: keyof Tool 
       attribute={attribute}
       classNames={{ highlighted: "bg-pink-600 text-white" }}
     />
-  )
-}
-
-export const ToolRecordSkeleton = ({ ...props }: HTMLAttributes<HTMLElement>) => {
-  const insights = [
-    { label: "Stars", value: "", icon: StarIcon },
-    { label: "Forks", value: "", icon: GitForkIcon },
-    { label: "Last commit", value: "", icon: TimerIcon },
-  ]
-
-  return (
-    <Card className="pointer-events-none" {...props}>
-      <Card.Header>
-        <Favicon src={null} />
-
-        <H3 className="w-2/3 rounded bg-current opacity-10">&nbsp;</H3>
-      </Card.Header>
-
-      <div className="w-full space-y-1">
-        <div className="h-5 w-full rounded bg-current opacity-5" />
-        <div className="h-5 w-2/3 rounded bg-current opacity-5" />
-      </div>
-
-      <Insights insights={insights} className="opacity-50" />
-      <Shimmer />
-    </Card>
   )
 }
