@@ -1,3 +1,4 @@
+import { type SerializeFrom } from "@remix-run/node"
 import { Hit as AlgoliaHit } from "instantsearch.js"
 import { Highlight } from "react-instantsearch"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
@@ -11,10 +12,11 @@ import { H3 } from "../Heading"
 import { Favicon } from "../Favicon"
 import { Shimmer } from "../Shimmer"
 import { Badge } from "../Badge"
-import { SerializeFrom } from "@remix-run/node"
+
+type Tool = ToolMany | SerializeFrom<ToolMany>
 
 type ToolRecordProps = HTMLAttributes<HTMLElement> & {
-  tool: ToolMany | SerializeFrom<ToolMany>
+  tool: Tool
 }
 
 export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
@@ -49,11 +51,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
               className="truncate"
               style={isTransitioning ? { viewTransitionName: `tool-title` } : undefined}
             >
-              <Highlight
-                hit={tool as AlgoliaHit<ToolOne>}
-                attribute="name"
-                classNames={{ highlighted: "bg-pink-600 text-white" }}
-              />
+              <ToolHighlight tool={tool} attribute="name" />
             </H3>
 
             {tool.isFeatured && <Badge className="ml-auto">Promoted</Badge>}
@@ -64,11 +62,16 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
               className="-tracking-0.5 line-clamp-2 text-sm/normal text-neutral-600 dark:text-neutral-400"
               style={isTransitioning ? { viewTransitionName: `tool-description` } : undefined}
             >
-              <Highlight
-                hit={tool as AlgoliaHit<ToolOne>}
-                attribute="description"
-                classNames={{ highlighted: "bg-pink-600 text-white" }}
-              />
+              <ToolHighlight tool={tool} attribute="name" />
+              {(tool as AlgoliaHit<ToolOne>)._highlightResult ? (
+                <Highlight
+                  hit={tool as AlgoliaHit<ToolOne>}
+                  attribute="description"
+                  classNames={{ highlighted: "bg-pink-600 text-white" }}
+                />
+              ) : (
+                tool.description
+              )}
             </p>
           )}
 
@@ -76,6 +79,20 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
         </Card>
       )}
     </NavLink>
+  )
+}
+
+const ToolHighlight = ({ tool, attribute }: { tool: Tool; attribute: keyof Tool }) => {
+  if (!(tool as AlgoliaHit<Tool>)._highlightResult) {
+    return <>{tool[attribute]}</>
+  }
+
+  return (
+    <Highlight
+      hit={tool as AlgoliaHit<Tool>}
+      attribute={attribute}
+      classNames={{ highlighted: "bg-pink-600 text-white" }}
+    />
   )
 }
 

@@ -6,7 +6,7 @@ import { cx } from "~/utils/cva"
 import { PaginationLink } from "./PaginationLink"
 import { UsePaginationProps, usePagination } from "~/hooks/usePagination"
 import { navigationLinkVariants } from "./NavigationLink"
-import qs, { ParsedQs } from "qs"
+import queryString from "query-string"
 
 export type PaginationProps = HTMLAttributes<HTMLElement> & Omit<UsePaginationProps, "currentPage">
 
@@ -18,7 +18,7 @@ export const Pagination = ({
   ...props
 }: PaginationProps) => {
   const { pathname } = useLocation()
-  const params = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+  const params = queryString.parse(window.location.search)
   const currentPage = useMemo(() => getCurrentPage(params.page as string), [params])
   const pageCount = Math.ceil(totalCount / pageSize)
 
@@ -33,9 +33,9 @@ export const Pagination = ({
     return null
   }
 
-  const getPageLink = (params: ParsedQs, pathname: string, page: number) => {
+  const getPageLink = (params: Record<string, unknown>, pathname: string, page: number) => {
     params.page = page.toString()
-    return `${pathname}?${qs.stringify(params)}`
+    return `${pathname}?${queryString.stringify(params)}`
   }
 
   return (

@@ -1,4 +1,4 @@
-import qs from "qs"
+import queryString from "query-string"
 
 type FetcherProps = {
   url: string
@@ -6,6 +6,6 @@ type FetcherProps = {
 }
 
 export const fetcher = async ({ url, ...params }: FetcherProps) => {
-  const r = await fetch(`${url}?${qs.stringify(params)}`)
+  const r = await fetch(`${url}?${queryString.stringify(params)}`)
   return r.json()
 }

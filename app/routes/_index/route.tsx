@@ -1,13 +1,9 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { NavLink, useLoaderData, useLocation } from "@remix-run/react"
+import { useLoaderData, useLocation } from "@remix-run/react"
 import { renderToString } from "react-dom/server"
-import { BlocksIcon, BracesIcon, TagIcon } from "lucide-react"
-import { InstantSearchSSRProvider } from "react-instantsearch"
-import { getServerState } from "react-instantsearch-core"
-import { Button } from "~/components/Button"
+import { InstantSearchSSRProvider, getServerState } from "react-instantsearch"
 import { Intro } from "~/components/Intro"
 import { Newsletter } from "~/components/Newsletter"
-import { Series } from "~/components/Series"
 import { SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { Search } from "./Search"
@@ -46,29 +42,6 @@ export default function Index() {
       <InstantSearchSSRProvider key={key} {...serverState}>
         <Search url={url} />
       </InstantSearchSSRProvider>
-
-      <Series size="sm" className="flex-nowrap max-sm:gap-1.5">
-        <Button size="md" variant="secondary" prefix={<BlocksIcon />} asChild>
-          <NavLink to="/alternatives" prefetch="intent" unstable_viewTransition>
-            <span className="max-sm:hidden">Browse by Alternative</span>
-            <span className="sm:hidden">Alternatives</span>
-          </NavLink>
-        </Button>
-
-        <Button size="md" variant="secondary" prefix={<BracesIcon />} asChild>
-          <NavLink to="/languages" prefetch="intent" unstable_viewTransition>
-            <span className="max-sm:hidden">Browse by Language</span>
-            <span className="sm:hidden">Languages</span>
-          </NavLink>
-        </Button>
-
-        <Button size="md" variant="secondary" prefix={<TagIcon />} asChild>
-          <NavLink to="/topics" prefetch="intent" unstable_viewTransition>
-            <span className="max-sm:hidden">Browse by Topic</span>
-            <span className="sm:hidden">Topics</span>
-          </NavLink>
-        </Button>
-      </Series>
     </>
   )
 }
