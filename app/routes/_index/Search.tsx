@@ -1,12 +1,13 @@
 import { ComponentProps, useRef } from "react"
 import { InstantSearch, Configure } from "react-instantsearch-hooks-web"
-import { searchClient } from "~/services.server/algolia"
 import { history } from "instantsearch.js/es/lib/routers"
-import { Listing } from "./Listing"
 import { Pagination } from "./Pagination"
 import { SearchBox } from "./SearchBox"
 import { UiState } from "instantsearch.js"
 import { SortBy } from "./SortBy"
+import { Listing } from "./Listing"
+import { searchClient } from "~/services.server/algolia"
+import { Refinements } from "./Refinements"
 
 export const Search = ({ url }: { url: URL | string }) => {
   const listingRef = useRef<HTMLDivElement>(null)
@@ -62,20 +63,7 @@ export const Search = ({ url }: { url: URL | string }) => {
           <SearchBox className="flex-1" />
         </div>
 
-        {/* <div className="mb-5 flex touch-pan-x space-x-3 overflow-x-scroll">
-          <H5>Alternatives</H5>
-          <RefinementList
-            attribute="alternatives"
-            operator="and"
-            classNames={{
-              list: "flex space-x-2",
-              item: "my-1",
-              label:
-                "block rounded-full bg-gray-800 hover:bg-gray-700 transitions-colors px-4 py-1.5 font-medium text-gray-100 cursor-pointer selected:bg-red-600",
-              selectedItem: "selected",
-            }}
-          />
-        </div> */}
+        <Refinements />
         <Listing />
       </div>
 
