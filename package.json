@@ -23,8 +23,9 @@
     "@curiousleaf/utils": "^1.0.22",
     "@epic-web/remember": "^1.0.2",
     "@octokit/graphql": "^8.0.1",
-    "@prisma/client": "^5.11.0",
+    "@prisma/client": "^5.12.1",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
@@ -49,8 +50,8 @@
     "radash": "^12.1.0",
     "react": "canary",
     "react-dom": "canary",
-    "react-instantsearch-hooks-server": "^6.47.3",
-    "react-instantsearch-hooks-web": "^6.47.3",
+    "react-instantsearch": "^7.7.1",
+    "react-instantsearch-core": "^7.7.1",
     "remix-utils": "^7.5.0",
     "satori": "^0.10.13",
     "swr": "^2.2.5",
@@ -77,7 +78,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.37",
-    "prisma": "^5.11.0",
+    "prisma": "^5.12.1",
     "supabase": "^1.150.0",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
@@ -89,11 +90,11 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "trustedDependencies": ["supabase"],
   "prettier": {
     "semi": false,
     "singleQuote": false,
     "trailingComma": "es5",
     "printWidth": 100
-  }
+  },
+  "trustedDependencies": ["@prisma/client", "@prisma/engines", "prisma", "supabase"]
 }

@@ -1,13 +1,12 @@
 import { ComponentProps, useRef } from "react"
-import { InstantSearch, Configure } from "react-instantsearch-hooks-web"
+import { ClientOnly } from "remix-utils/client-only"
+import { InstantSearch } from "react-instantsearch"
 import { history } from "instantsearch.js/es/lib/routers"
 import { Pagination } from "./Pagination"
-import { SearchBox } from "./SearchBox"
 import { UiState } from "instantsearch.js"
-import { SortBy } from "./SortBy"
 import { Listing } from "./Listing"
 import { searchClient } from "~/services.server/algolia"
-import { Refinements } from "./Refinements"
+import { Filters } from "./Filters"
 
 export const Search = ({ url }: { url: URL | string }) => {
   const listingRef = useRef<HTMLDivElement>(null)
@@ -19,51 +18,61 @@ export const Search = ({ url }: { url: URL | string }) => {
     routing: {
       router: history({
         cleanUrlOnDispose: false,
-        getLocation: () => (typeof window === "undefined" ? new URL(url) : window.location),
+        getLocation: () => {
+          return (typeof window === "undefined" ? new URL(url) : window.location) as Location
+        },
       }),
+
       stateMapping: {
         stateToRoute(uiState) {
           const indexUiState = uiState[indexName] || {}
 
           return {
-            q: indexUiState.query,
-            genres: indexUiState.refinementList?.genres,
+            query: indexUiState.query,
+            sortBy: indexUiState.sortBy,
+            page: indexUiState.page,
+            hitsPerPage: indexUiState.hitsPerPage,
+            stars: indexUiState.range?.stars,
+            forks: indexUiState.range?.forks,
+            alternatives: indexUiState.refinementList?.alternatives,
+            categories: indexUiState.refinementList?.categories,
+            languages: indexUiState.refinementList?.languages,
+            topics: indexUiState.refinementList?.topics,
           } as UiState
         },
+
         routeToState(routeState) {
+          const state = routeState as UiState
+
           return {
             [indexName]: {
-              query: routeState.q,
+              query: state.query,
+              sortBy: state.sortBy,
+              page: state.page,
+              hitsPerPage: state.hitsPerPage,
+              range: {
+                stars: state.stars,
+                forks: state.forks,
+              },
               refinementList: {
-                genres: routeState.genres,
+                alternatives: state.alternatives,
+                categories: state.categories,
+                languages: state.languages,
+                topics: state.topics,
               },
             } as UiState,
           }
         },
       },
     },
-    insights: true,
+    insights: { insightsInitParams: { useCookie: true } },
+    future: { preserveSharedStateOnUnmount: true },
   }
 
   return (
     <InstantSearch {...instantSearchOptions}>
-      <Configure hitsPerPage={30} ruleContexts={[]} />
       <div ref={listingRef} className="flex flex-col gap-6 scroll-mt-14">
-        <div className="flex flex-wrap gap-x-2 gap-y-3 w-full">
-          <SortBy
-            items={[
-              { value: "openalternative", label: "Default" },
-              { value: "openalternative_name_asc", label: "Name" },
-              { value: "openalternative_stars_desc", label: "Stars" },
-              { value: "openalternative_forks_desc", label: "Forks" },
-              { value: "openalternative_lastcommit_desc", label: "Last Commit" },
-            ]}
-          />
-
-          <SearchBox className="flex-1" />
-        </div>
-
-        <Refinements />
+        <ClientOnly fallback={null}>{() => <Filters />}</ClientOnly>
         <Listing />
       </div>
 

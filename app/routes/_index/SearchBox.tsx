@@ -1,10 +1,6 @@
 import { LoaderIcon, SearchIcon, XIcon } from "lucide-react"
 import { HTMLAttributes, useState } from "react"
-import {
-  useInstantSearch,
-  useSearchBox,
-  type UseSearchBoxProps,
-} from "react-instantsearch-hooks-web"
+import { useInstantSearch, useSearchBox, type UseSearchBoxProps } from "react-instantsearch"
 import { Input } from "~/components/forms/Input"
 import { cx } from "~/utils/cva"
 
@@ -26,15 +22,15 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
       role="search"
       noValidate
       className={cx("relative", className)}
-      onSubmit={(event) => {
-        event.preventDefault()
-        event.stopPropagation()
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
 
         setQuery(inputValue)
       }}
-      onReset={(event) => {
-        event.preventDefault()
-        event.stopPropagation()
+      onReset={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
 
         setQuery("")
       }}
@@ -48,8 +44,8 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
         spellCheck={false}
         maxLength={512}
         value={inputValue}
-        onChange={(event) => {
-          setQuery(event.currentTarget.value)
+        onChange={(e) => {
+          setQuery(e.currentTarget.value)
         }}
       />
 

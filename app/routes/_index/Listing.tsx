@@ -1,4 +1,4 @@
-import { useHits, type UseHitsProps } from "react-instantsearch-hooks-web"
+import { useHits, type UseHitsProps } from "react-instantsearch"
 import { Grid } from "~/components/Grid"
 import { ToolOne } from "~/services.server/api"
 import { ToolRecord } from "~/components/records/ToolRecord"
