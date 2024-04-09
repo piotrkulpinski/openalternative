@@ -15,7 +15,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
   const { results } = useInstantSearch()
 
   const sortByItems = [
-    { value: "openalternative", label: "Default" },
+    { value: "openalternative", label: "Relevance" },
     { value: "openalternative_name_asc", label: "Name" },
     { value: "openalternative_stars_desc", label: "Stars" },
     { value: "openalternative_forks_desc", label: "Forks" },
