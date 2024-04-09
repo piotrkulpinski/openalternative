@@ -12,6 +12,7 @@ import { SITE_NAME, SITE_URL } from "./utils/constants"
 import { posthog } from "posthog-js"
 
 import stylesheet from "~/styles.css?url"
+import { publishEscape } from "@curiousleaf/utils"
 
 export const handle = {
   breadcrumb: () => (
@@ -44,11 +45,15 @@ export const meta: MetaFunction = ({ location }) => {
 }
 
 export function Layout({ children }: PropsWithChildren) {
-  const location = useLocation()
+  const { key } = useLocation()
 
   useEffect(() => {
+    // Trigger escape hatch when the route changes
+    publishEscape()
+
+    // Track pageview
     posthog.capture("$pageview")
-  }, [location])
+  }, [key])
 
   return (
     <html lang="en">

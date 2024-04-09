@@ -9,9 +9,10 @@ const SliderThumb = forwardRef<
   <SliderPrimitive.Thumb
     ref={ref}
     className={cx(
-      "block size-3.5 rounded-full border-2 border-pink-600 bg-white ring-4 ring-white transition-colors cursor-pointer",
+      "block size-3.5 rounded-full border-2 border-pink-600 bg-white ring-2 ring-white transition-colors cursor-pointer",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inherit focus-visible:ring-offset-2",
       "disabled:pointer-events-none disabled:opacity-50 disabled:cursor-default",
+      "dark:bg-neutral-900 dark:ring-neutral-900",
       className
     )}
     {...props}
@@ -28,7 +29,7 @@ export const Slider = forwardRef<
     className={cx("relative flex w-full touch-none select-none items-center", className)}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-0.5 w-full grow overflow-hidden rounded-full bg-secondary">
+    <SliderPrimitive.Track className="relative h-0.5 w-full grow overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-700">
       <SliderPrimitive.Range className="absolute h-full bg-pink-600" />
     </SliderPrimitive.Track>
     <SliderThumb />

@@ -34,9 +34,15 @@ export const ThemeSwitcher = ({ ...props }: HTMLAttributes<HTMLElement>) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("light")} asChild>
+          <button>Light</button>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")} asChild>
+          <button>Dark</button>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")} asChild>
+          <button>System</button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

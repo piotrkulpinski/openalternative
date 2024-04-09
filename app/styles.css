@@ -60,3 +60,16 @@ select:not([size]) {
   @apply bg-[length:1.25em_1.25em];
   @apply pr-8;
 }
+
+.ais-PoweredBy {
+  @apply self-end;
+  @apply p-2;
+}
+
+.ais-PoweredBy-link {
+  @apply block;
+  @apply max-w-28;
+  @apply ml-auto;
+  @apply opacity-60;
+  @apply hover:opacity-100;
+}
