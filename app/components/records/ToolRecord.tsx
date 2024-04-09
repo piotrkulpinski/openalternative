@@ -6,7 +6,7 @@ import { HTMLAttributes } from "react"
 import { format } from "timeago.js"
 import { Card } from "../Card"
 import { Insights } from "../Insights"
-import { ToolMany, ToolOne } from "~/services.server/api"
+import { ToolMany } from "~/services.server/api"
 import { NavLink } from "@remix-run/react"
 import { H3 } from "../Heading"
 import { Favicon } from "../Favicon"
@@ -61,16 +61,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
               className="-tracking-0.5 line-clamp-2 text-sm/normal text-neutral-600 dark:text-neutral-400"
               style={isTransitioning ? { viewTransitionName: `tool-description` } : undefined}
             >
-              <ToolHighlight tool={tool} attribute="name" />
-              {(tool as AlgoliaHit<ToolOne>)._highlightResult ? (
-                <Highlight
-                  hit={tool as AlgoliaHit<ToolOne>}
-                  attribute="description"
-                  classNames={{ highlighted: "bg-pink-600 text-white" }}
-                />
-              ) : (
-                tool.description
-              )}
+              <ToolHighlight tool={tool} attribute="description" />
             </p>
           )}
 
