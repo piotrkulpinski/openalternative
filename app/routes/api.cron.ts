@@ -30,5 +30,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     })
   )
 
+  // Once it's finished, clear out empty languages and topics
+  await Promise.all([
+    prisma.language.deleteMany({ where: { tools: { none: {} } } }),
+    prisma.topic.deleteMany({ where: { tools: { none: {} } } }),
+  ])
+
   return new Response("OK", { status: 200 })
 }
