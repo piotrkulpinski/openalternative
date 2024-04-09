@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { NavLink, useLoaderData } from "@remix-run/react"
+import { NavLink, useLoaderData, useLocation } from "@remix-run/react"
+import { renderToString } from "react-dom/server"
 import { BlocksIcon, BracesIcon, TagIcon } from "lucide-react"
 import { InstantSearchSSRProvider } from "react-instantsearch-hooks-web"
 import { getServerState } from "react-instantsearch-hooks-server"
@@ -9,7 +10,7 @@ import { Newsletter } from "~/components/Newsletter"
 import { Series } from "~/components/Series"
 import { SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import { Listing } from "./Listing"
+import { Search } from "./Search"
 
 export const meta: MetaFunction = ({ matches }) => {
   return getMetaTags({
@@ -21,12 +22,13 @@ export const meta: MetaFunction = ({ matches }) => {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
-  const serverState = await getServerState(<Listing url={url} />)
+  const serverState = await getServerState(<Search url={url} />, { renderToString })
 
   return { serverState, url }
 }
 
 export default function Index() {
+  const { key } = useLocation()
   const { serverState, url } = useLoaderData<typeof loader>()
 
   return (
@@ -41,8 +43,8 @@ export default function Index() {
         <Newsletter placeholder="Get weekly newsletter" buttonVariant="fancy" />
       </section>
 
-      <InstantSearchSSRProvider {...serverState}>
-        <Listing url={url} />
+      <InstantSearchSSRProvider key={key} {...serverState}>
+        <Search url={url} />
       </InstantSearchSSRProvider>
 
       <Series size="sm" className="flex-nowrap max-sm:gap-1.5">
