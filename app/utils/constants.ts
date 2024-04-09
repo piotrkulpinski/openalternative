@@ -10,7 +10,6 @@ export const SITE_DESCRIPTION =
 export const TWITTER_URL = "https://twitter.com/ossalternative"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
 
-export const TOOLS_PER_PAGE = 45
 export const TOPICS_PER_PAGE = 150
 
 export const SWR_CONFIG: SWRConfiguration = {

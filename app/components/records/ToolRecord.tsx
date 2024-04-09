@@ -1,5 +1,5 @@
 import { Hit as AlgoliaHit } from "instantsearch.js"
-import { Highlight } from "react-instantsearch-hooks-web"
+import { Highlight } from "react-instantsearch"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import { HTMLAttributes } from "react"
 import { format } from "timeago.js"

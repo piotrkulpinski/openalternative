@@ -1,97 +1,50 @@
-import { Form } from "@remix-run/react"
-import { HTMLAttributes, SyntheticEvent, useRef } from "react"
-import queryString from "query-string"
-import { useLocalStorage } from "@uidotdev/usehooks"
+import { HTMLAttributes } from "react"
+import { useLocalStorage, useMediaQuery } from "@uidotdev/usehooks"
 import { cx } from "~/utils/cva"
-import { Select } from "~/components/forms/Select"
-import { Input } from "~/components/forms/Input"
-import { PanelLeftCloseIcon, PanelLeftOpenIcon, SearchIcon } from "lucide-react"
+import { PanelBottomCloseIcon, PanelBottomOpenIcon } from "lucide-react"
 import { Button } from "~/components/Button"
-import { useToolsContext, toolsSearchParamsSchema } from "~/store/tools"
-import { AdvancedFilters } from "./AdvancedFilters"
+import { Refinements } from "./Refinements"
+import { SearchBox } from "./SearchBox"
+import { SortBy } from "./SortBy"
+import { HitsPerPage } from "./HitsPerPage"
 
-export const Filters = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
-  const submitRef = useRef<HTMLButtonElement>(null)
-  const searchParams = useToolsContext((s) => s.searchParams)
-  const setSearchParams = useToolsContext((s) => s.setSearchParams)
+export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+  const isMobile = useMediaQuery("only screen and (max-width : 768px)")
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage("filtersOpen", false)
-  const { query, order } = searchParams
 
-  const orderOptions = [
-    { value: "score", label: "Score" },
-    { value: "name", label: "Name" },
-    { value: "stars", label: "Stars" },
-    { value: "forks", label: "Forks" },
-    { value: "commit", label: "Last Commit" },
+  const sortByItems = [
+    { value: "openalternative", label: "Default" },
+    { value: "openalternative_name_asc", label: "Name" },
+    { value: "openalternative_stars_desc", label: "Stars" },
+    { value: "openalternative_forks_desc", label: "Forks" },
+    { value: "openalternative_lastcommit_desc", label: "Last Commit" },
   ]
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const form = e.currentTarget
-    const formData = new FormData(form)
-    const searchParams = toolsSearchParamsSchema.parse({
-      page: formData.get("page"),
-      query: formData.get("query"),
-      order: formData.get("order"),
-      language: formData.getAll("language"),
-    })
-    setSearchParams(searchParams)
-
-    // Store the search params in the URL
-    window.history.pushState(null, "", `?${queryString.stringify(searchParams)}`)
-  }
+  const hitsPerPageItems = [
+    { value: 18, label: "18 per page", default: isMobile },
+    { value: 36, label: "36 per page", default: !isMobile },
+    { value: 72, label: "72 per page" },
+  ]
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      className={cx("flex flex-wrap gap-x-2 gap-y-3 w-full", className)}
-      {...props}
-    >
-      <Button
-        type="button"
-        size="md"
-        variant="secondary"
-        prefix={isFiltersOpen ? <PanelLeftCloseIcon /> : <PanelLeftOpenIcon />}
-        onClick={() => setIsFiltersOpen((prev) => !prev)}
-      >
-        Filters
-      </Button>
+    <>
+      <div className={cx("flex flex-wrap gap-x-2 gap-y-3 w-full", className)} {...props}>
+        <Button
+          type="button"
+          size="md"
+          variant="secondary"
+          prefix={isFiltersOpen ? <PanelBottomOpenIcon /> : <PanelBottomCloseIcon />}
+          onClick={() => setIsFiltersOpen((prev) => !prev)}
+        >
+          {isFiltersOpen ? "Hide" : "Show"} Filters
+        </Button>
 
-      <Select
-        name="order"
-        defaultValue={order ?? ""}
-        disabled={!!query}
-        onChange={() => submitRef.current?.click()}
-      >
-        <option value="" disabled>
-          Order by
-        </option>
-
-        {orderOptions.map(({ value, label }) => (
-          <option key={value} value={value}>
-            {label}
-          </option>
-        ))}
-      </Select>
-
-      <div className="relative flex-1 max-sm:w-40">
-        <Input
-          name="query"
-          defaultValue={query ?? undefined}
-          placeholder="Search tools"
-          className="!pr-6 w-full"
-        />
-
-        <SearchIcon className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex size-[1em] opacity-60 pointer-events-none" />
+        <SortBy items={sortByItems} />
+        <HitsPerPage items={hitsPerPageItems} />
+        <SearchBox className="flex-1" />
       </div>
 
-      {query && order && <input type="hidden" name="order" value={order} />}
-      <button type="submit" ref={submitRef} className="hidden" />
-
-      {children}
-
-      {isFiltersOpen && <AdvancedFilters submitRef={submitRef} />}
-    </Form>
+      {isFiltersOpen && <Refinements />}
+    </>
   )
 }
