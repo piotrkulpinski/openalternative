@@ -19,7 +19,6 @@ import { Breadcrumbs } from "./Breadcrumbs"
 import { ThemeSwitcher } from "./ThemeSwitcher"
 import { Series } from "./Series"
 import { Badge } from "./Badge"
-import { Ping } from "./Ping"
 import { GITHUB_URL, SWR_CONFIG } from "~/utils/constants"
 import { getRepoOwnerAndName } from "~/utils/github"
 import { NavigationLink, navigationLinkVariants } from "./NavigationLink"
@@ -120,7 +119,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         >
           <a href={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
             Star
-            <Ping className="absolute -right-1 -top-1 pointer-events-none" />
+            {/* <Ping className="absolute -right-1 -top-1 pointer-events-none" /> */}
           </a>
         </Button>
 
