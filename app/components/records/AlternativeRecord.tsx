@@ -25,11 +25,7 @@ export const AlternativeRecord = ({ alternative, showCount, ...props }: Alternat
           <H3 className="truncate">{alternative.name}</H3>
         </Card.Header>
 
-        {alternative.description && (
-          <p className="-tracking-0.5 line-clamp-2 text-sm/normal text-neutral-600 dark:text-neutral-400">
-            {alternative.description}
-          </p>
-        )}
+        {alternative.description && <Card.Description>{alternative.description}</Card.Description>}
 
         {showCount && (
           <span className="text-xs text-neutral-500">

@@ -1,4 +1,5 @@
 import { type SerializeFrom } from "@remix-run/node"
+import { NavLink } from "@remix-run/react"
 import { Hit as AlgoliaHit } from "instantsearch.js"
 import { Highlight } from "react-instantsearch"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
@@ -7,10 +8,10 @@ import { format } from "timeago.js"
 import { Card } from "../Card"
 import { Insights } from "../Insights"
 import { ToolMany } from "~/services.server/api"
-import { NavLink } from "@remix-run/react"
 import { H3 } from "../Heading"
 import { Favicon } from "../Favicon"
 import { Badge } from "../Badge"
+import { cx } from "~/utils/cva"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
 
@@ -18,7 +19,7 @@ type ToolRecordProps = HTMLAttributes<HTMLElement> & {
   tool: Tool
 }
 
-export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
+export const ToolRecord = ({ className, tool, ...props }: ToolRecordProps) => {
   const insights = [
     { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
     { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
@@ -32,7 +33,7 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
   return (
     <NavLink
       to={`/${tool.slug}`}
-      className="contents"
+      className={cx("group", className)}
       prefetch="intent"
       unstable_viewTransition
       {...props}
@@ -57,12 +58,11 @@ export const ToolRecord = ({ tool, ...props }: ToolRecordProps) => {
           </Card.Header>
 
           {tool.description && (
-            <p
-              className="-tracking-0.5 line-clamp-2 text-sm/normal text-neutral-600 dark:text-neutral-400"
+            <Card.Description
               style={isTransitioning ? { viewTransitionName: `tool-description` } : undefined}
             >
               <ToolHighlight tool={tool} attribute="description" />
-            </p>
+            </Card.Description>
           )}
 
           <Insights insights={insights} className="mt-auto" />
