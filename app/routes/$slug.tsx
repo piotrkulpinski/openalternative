@@ -13,7 +13,7 @@ import {
 import { prisma } from "~/services.server/prisma"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { H1, H3 } from "~/components/Heading"
+import { H1, H3, H4 } from "~/components/Heading"
 import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
 import { useLoaderData } from "@remix-run/react"
 import { getMetaTags } from "~/utils/meta"
@@ -208,7 +208,7 @@ export default function ToolsPage() {
           {/* Categories */}
           {!!categories.length && (
             <Series direction="column" className="w-full">
-              <H3>Categories:</H3>
+              <H4 as="h3">Categories:</H4>
 
               <Series>
                 {categories?.map(({ category }) => (
@@ -224,7 +224,7 @@ export default function ToolsPage() {
           {/* Topics */}
           {!!topics.length && (
             <Series size="lg" direction="column" className="w-full">
-              <H3>Related topics:</H3>
+              <H4 as="h3">Related topics:</H4>
 
               <Series className="w-full">
                 {topics?.map(({ topic }) => (
@@ -254,7 +254,7 @@ export default function ToolsPage() {
       {/* Alternatives */}
       {!!alternatives.length && (
         <Series size="lg" direction="column">
-          <H3>{tool.name} is an Open Source alternative to:</H3>
+          <H4 as="h3">{tool.name} is an Open Source alternative to:</H4>
 
           <Grid className="w-full">
             {alternatives?.map(({ alternative }) => (

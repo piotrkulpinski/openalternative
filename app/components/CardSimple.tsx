@@ -17,9 +17,10 @@ export const CardSimple = ({ ...props }: CardSimpleProps) => {
       unstable_viewTransition
       {...rest}
     >
-      <H5 className="truncate group-hover:underline" asChild>
-        <h3>{label}</h3>
+      <H5 as="h3" className="truncate group-hover:underline">
+        {label}
       </H5>
+
       <span className="h-px flex-1 bg-current opacity-15"></span>
       {caption && <span className="shrink-0 text-xs text-secondary">{caption}</span>}
     </NavLink>

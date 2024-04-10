@@ -25,7 +25,7 @@ export const handle = {
 export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: stylesheet },
-    { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+    { rel: "icon", href: "/favicon.png", type: "image/png" },
     { rel: "preconnect", href: "https://rsms.me/" },
     { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   ]

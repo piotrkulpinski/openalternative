@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot"
-import { HTMLAttributes, forwardRef, isValidElement } from "react"
+import { ElementType, HTMLAttributes, forwardRef, isValidElement } from "react"
 import { cva, VariantProps, cx } from "~/utils/cva"
 
 export const headingVariants = cva({
@@ -8,9 +8,9 @@ export const headingVariants = cva({
   variants: {
     size: {
       h1: "text-3xl md:text-4xl",
-      h2: "text-2xl",
-      h3: "text-xl",
-      h4: "text-lg",
+      h2: "text-2xl md:text-3xl",
+      h3: "text-2xl",
+      h4: "text-xl",
       h5: "text-base font-medium tracking-micro",
       h6: "text-sm font-medium tracking-micro",
     },
@@ -27,14 +27,20 @@ export type HeadingProps = Omit<HTMLAttributes<HTMLHeadingElement>, "size"> &
      * If set to `true`, the button will be rendered as a child within the component.
      * This child component must be a valid React component.
      */
+    as?: ElementType
+
+    /**
+     * If set to `true`, the button will be rendered as a child within the component.
+     * This child component must be a valid React component.
+     */
     asChild?: boolean
   }
 
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
-  const { className, asChild, size, ...rest } = props
+  const { className, as, asChild, size, ...rest } = props
 
   const useAsChild = asChild && isValidElement(rest.children)
-  const Comp = useAsChild ? Slot : size ?? "h2"
+  const Comp = useAsChild ? Slot : as ?? size ?? "h2"
 
   return <Comp ref={ref} className={cx(headingVariants({ size, className }))} {...rest} />
 })

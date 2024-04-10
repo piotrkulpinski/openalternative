@@ -6,7 +6,7 @@ import { type HTMLAttributes, ReactNode, forwardRef, isValidElement } from "reac
 import { formatIntervalAmount } from "@curiousleaf/utils"
 import { VariantProps, cva, cx } from "~/utils/cva"
 import { Card } from "./Card"
-import { H3 } from "./Heading"
+import { H4 } from "./Heading"
 import { Series } from "./Series"
 import { CheckIcon, XIcon } from "lucide-react"
 
@@ -15,7 +15,7 @@ export const planVariants = cva({
 
   variants: {
     isFeatured: {
-      true: "border-neutral-400 dark:border-neutral-600",
+      true: "border-neutral-300 bg-neutral-100 dark:border-pink-900 dark:bg-pink-950/35",
     },
   },
 
@@ -34,6 +34,7 @@ export const planFeatureCheckVariants = cva({
   variants: {
     type: {
       positive: "bg-green-500",
+      neutral: "bg-neutral-400",
       negative: "bg-neutral-400",
     },
   },
@@ -91,7 +92,7 @@ export type PlanProps = Omit<HTMLAttributes<PlanElement>, "size"> &
       /**
        * The type of the feature.
        */
-      type?: "positive" | "negative"
+      type?: "positive" | "neutral" | "negative"
     }[]
   }
 
@@ -106,7 +107,7 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
     <Card asChild>
       <Component ref={ref} className={cx(planVariants({ isFeatured, className }))} {...rest}>
         <div className="space-y-3">
-          <H3>{name}</H3>
+          <H4 as="h3">{name}</H4>
 
           {description && (
             <Card.Description className="text-neutral-600">{description}</Card.Description>
