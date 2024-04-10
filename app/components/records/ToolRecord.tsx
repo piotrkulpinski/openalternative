@@ -8,7 +8,7 @@ import { format } from "timeago.js"
 import { Card } from "../Card"
 import { Insights } from "../Insights"
 import { ToolMany } from "~/services.server/api"
-import { H3 } from "../Heading"
+import { H4 } from "../Heading"
 import { Favicon } from "../Favicon"
 import { Badge } from "../Badge"
 import { cx } from "~/utils/cva"
@@ -47,12 +47,13 @@ export const ToolRecord = ({ className, tool, ...props }: ToolRecordProps) => {
               style={isTransitioning ? { viewTransitionName: `tool-favicon` } : undefined}
             />
 
-            <H3
+            <H4
+              as="h3"
               className="truncate"
               style={isTransitioning ? { viewTransitionName: `tool-title` } : undefined}
             >
               <ToolHighlight tool={tool} attribute="name" />
-            </H3>
+            </H4>
 
             {tool.isFeatured && <Badge className="ml-auto">Promoted</Badge>}
           </Card.Header>
