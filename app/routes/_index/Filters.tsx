@@ -24,9 +24,9 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
   ]
 
   const hitsPerPageItems = [
-    { value: 18, label: "18 per page", default: isMobile },
-    { value: 36, label: "36 per page", default: !isMobile },
-    { value: 72, label: "72 per page" },
+    { value: 17, label: "18 per page", default: isMobile },
+    { value: 35, label: "36 per page", default: !isMobile },
+    { value: 71, label: "72 per page" },
   ]
 
   return (

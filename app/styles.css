@@ -57,6 +57,10 @@ svg:not([class*="stroke"]) {
   @apply !stroke-[1.75];
 }
 
+svg:not([class*="size"]) {
+  @apply size-[1em];
+}
+
 .fade-in {
   animation: fade-in linear forwards;
   animation-timeline: view();
