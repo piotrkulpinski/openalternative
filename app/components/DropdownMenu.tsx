@@ -36,7 +36,7 @@ const DropdownMenuItem = forwardRef<
     ref={ref}
     className={cx(
       "rounded !px-2 !py-1.5 !m-0",
-      "focus:bg-neutral-100 focus:text-neutral-800 dark:focus:bg-neutral-800/40 dark:focus:text-neutral-200",
+      "focus:outline-none focus:bg-neutral-100 focus:text-neutral-800 dark:focus:bg-neutral-800/40 dark:focus:text-neutral-200",
       navigationLinkVariants({ className })
     )}
     {...props}

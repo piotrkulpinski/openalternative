@@ -7,6 +7,7 @@ import { Button } from "./Button"
 import {
   BlocksIcon,
   BracesIcon,
+  GemIcon,
   GithubIcon,
   LoaderIcon,
   MenuIcon,
@@ -73,6 +74,11 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
           <DropdownMenuContent align="end">
             <DropdownMenuItem asChild>
+              <NavigationLink to="/latest">
+                <GemIcon className="size-4 opacity-75" /> Latest
+              </NavigationLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <NavigationLink to="/categories">
                 <BlocksIcon className="size-4 opacity-75" /> Categories
               </NavigationLink>
@@ -119,7 +125,6 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         >
           <a href={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
             Star
-            {/* <Ping className="absolute -right-1 -top-1 pointer-events-none" /> */}
           </a>
         </Button>
 
@@ -138,6 +143,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
       {isNavOpen && (
         <nav className="mt-2 flex flex-col gap-y-2 w-full lg:hidden">
+          <NavigationLink to="/latest">Latest</NavigationLink>
           <NavigationLink to="/categories">Categories</NavigationLink>
           <NavigationLink to="/alternatives">Alternatives</NavigationLink>
           <NavigationLink to="/languages">Languages</NavigationLink>

@@ -4,7 +4,7 @@ import { ComponentProps } from "react"
 
 export const BackButton = ({ ...props }: ComponentProps<typeof PaginationLink>) => {
   return (
-    <PaginationLink prefix={<MoveLeftIcon />} {...props}>
+    <PaginationLink className="self-start" prefix={<MoveLeftIcon />} {...props}>
       back
     </PaginationLink>
   )
