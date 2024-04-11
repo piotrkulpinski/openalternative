@@ -4,7 +4,7 @@ import { prisma } from "~/services.server/prisma"
 export const loader: LoaderFunction = async () => {
   const tools = await prisma.tool
     .findMany({
-      where: { publishedAt: { not: null } },
+      where: { publishedAt: { lte: new Date() } },
       include: {
         alternatives: {
           orderBy: { alternative: { name: "asc" } },

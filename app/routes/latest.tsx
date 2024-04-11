@@ -26,7 +26,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
 
 export const loader = async () => {
   const tools = await prisma.tool.findMany({
-    where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD } },
+    where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
     orderBy: { publishedAt: "desc" },
     include: toolManyPayload,
   })
