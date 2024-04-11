@@ -3,8 +3,8 @@ import { cx } from "~/utils/cva"
 import { Series } from "./Series"
 import { H6 } from "./Heading"
 import { NavigationLink } from "./NavigationLink"
-import { GITHUB_URL, SITE_EMAIL, TWITTER_URL } from "~/utils/constants"
-import { GithubIcon, TwitterIcon } from "lucide-react"
+import { GITHUB_URL, RSS_URL, SITE_EMAIL, TWITTER_URL } from "~/utils/constants"
+import { GithubIcon, RssIcon, TwitterIcon } from "lucide-react"
 
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
@@ -24,6 +24,10 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           className="sm:ml-auto"
         >
           Contact
+        </NavigationLink>
+
+        <NavigationLink to={RSS_URL} target="_blank" title="Twitter" rel="nofollow noreferrer">
+          <RssIcon className="size-[1.44em]" />
         </NavigationLink>
 
         <NavigationLink to={TWITTER_URL} target="_blank" title="Twitter" rel="nofollow noreferrer">
