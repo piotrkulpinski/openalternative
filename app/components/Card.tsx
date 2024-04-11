@@ -20,7 +20,7 @@ export const CardBase = forwardRef<HTMLDivElement, CardProps>(({ ...props }, ref
     <Component
       ref={ref}
       className={cx(
-        "fade-in relative flex flex-col items-start gap-4 overflow-clip rounded-md border bg-neutral-50 p-5 dark:border-neutral-700/50 dark:bg-neutral-800/40",
+        "fade-in relative flex flex-col items-start gap-4 w-full overflow-clip rounded-md border bg-neutral-50 p-5 dark:border-neutral-700/50 dark:bg-neutral-800/40",
         "hover:[&[href]]:border-neutral-300 group-hover-[&[href]]:border-neutral-300 dark:hover:[&[href]]:border-neutral-700 dark:group-hover-[&[href]]:border-neutral-700",
         className
       )}
