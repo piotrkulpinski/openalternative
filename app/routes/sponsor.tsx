@@ -7,7 +7,6 @@ import { getMetaTags } from "~/utils/meta"
 import { Plan, PlanProps } from "~/components/Plan"
 import { Card } from "~/components/Card"
 import { H1 } from "~/components/Heading"
-import { Grid } from "~/components/Grid"
 import { BarChart3Icon } from "lucide-react"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
@@ -91,7 +90,7 @@ export default function SubmitPage() {
         </Button>
       </Intro>
 
-      <Grid>
+      <div className="grid-auto-fill-xs grid gap-4">
         <Card>
           <H1 as="h3">500+</H1>
           <Card.Description>Visitors Per/Day</Card.Description>
@@ -104,7 +103,7 @@ export default function SubmitPage() {
           <H1 as="h3">150+</H1>
           <Card.Description>Open Source Listings</Card.Description>
         </Card>
-      </Grid>
+      </div>
     </>
   )
 }
