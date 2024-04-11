@@ -33,7 +33,7 @@ export const ToolRecord = ({ className, tool, ...props }: ToolRecordProps) => {
   return (
     <NavLink
       to={`/${tool.slug}`}
-      className={cx("group", className)}
+      className={cx("group flex", className)}
       prefetch="intent"
       unstable_viewTransition
       {...props}

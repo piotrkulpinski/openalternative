@@ -1,10 +1,10 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { defer, useLoaderData, useLocation } from "@remix-run/react"
+import { Link, defer, useLoaderData, useLocation } from "@remix-run/react"
 import { renderToString } from "react-dom/server"
 import { InstantSearchSSRProvider, getServerState } from "react-instantsearch"
 import { Intro } from "~/components/Intro"
 import { Newsletter } from "~/components/Newsletter"
-import { SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
+import { LATEST_TOOLS_TRESHOLD, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { Search } from "./Search"
 import { prisma } from "~/services.server/prisma"
@@ -24,9 +24,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const serverState = await getServerState(<Search url={url} />, { renderToString })
 
   const newToolCount = await prisma.tool.count({
-    where: {
-      publishedAt: { gte: new Date(new Date().setDate(new Date().getDate() - 7)) },
-    },
+    where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD } },
   })
 
   return defer({ serverState, url, newToolCount })
@@ -44,9 +42,13 @@ export default function Index() {
           description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
           className="max-w-[40rem] text-pretty"
         >
-          <Badge className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md">
-            <Ping /> {newToolCount} tools added this week
-          </Badge>
+          {newToolCount && (
+            <Link to="/latest" className="contents">
+              <Badge className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md">
+                <Ping /> {newToolCount} tools added this week
+              </Badge>
+            </Link>
+          )}
         </Intro>
 
         <Newsletter placeholder="Get weekly newsletter" buttonVariant="fancy" />

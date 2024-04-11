@@ -11,6 +11,7 @@ export const RSS_URL = `${SITE_URL}/rss.xml`
 export const TWITTER_URL = "https://twitter.com/intent/user?screen_name=ossalternative"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
 
+export const LATEST_TOOLS_TRESHOLD = new Date(new Date().setDate(new Date().getDate() - 7))
 export const TOPICS_PER_PAGE = 150
 
 export const SWR_CONFIG: SWRConfiguration = {

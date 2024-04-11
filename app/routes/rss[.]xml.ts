@@ -6,8 +6,8 @@ export const loader = async () => {
 
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { not: null } },
-    orderBy: { createdAt: "desc" },
-    select: { id: true, name: true, slug: true, description: true, createdAt: true },
+    orderBy: { publishedAt: "desc" },
+    select: { id: true, name: true, slug: true, description: true, publishedAt: true },
   })
 
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
@@ -25,7 +25,7 @@ export const loader = async () => {
       <item>
         <title><![CDATA[${tool.name}]]></title>
         <description><![CDATA[${tool.description}]]></description>
-        <pubDate>${tool.createdAt.toUTCString()}</pubDate>
+        <pubDate>${tool.publishedAt?.toUTCString()}</pubDate>
         <link>${url}/${tool.slug}</link>
         <guid isPermaLink="false">${tool.id}</guid>
       </item>`
