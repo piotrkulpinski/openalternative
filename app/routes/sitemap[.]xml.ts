@@ -4,7 +4,7 @@ export const loader = async () => {
   const url = import.meta.env.VITE_SITE_URL ?? ""
 
   const tools = await prisma.tool.findMany({
-    where: { isDraft: false },
+    where: { publishedAt: { not: null } },
     orderBy: { createdAt: "asc" },
     select: { slug: true, updatedAt: true },
   })

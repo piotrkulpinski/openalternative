@@ -3,14 +3,14 @@ import { Prisma } from "@prisma/client"
 // Alternatives
 export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeInclude>()({
   tools: {
-    where: { tool: { isDraft: false } },
+    where: { tool: { publishedAt: { not: null } } },
     include: { tool: true },
     orderBy: [{ tool: { isFeatured: "desc" } }, { tool: { score: "desc" } }],
   },
 })
 
 export const alternativeManyPayload = Prisma.validator<Prisma.AlternativeInclude>()({
-  _count: { select: { tools: { where: { tool: { isDraft: false } } } } },
+  _count: { select: { tools: { where: { tool: { publishedAt: { not: null } } } } } },
 })
 
 export type AlternativeOne = Prisma.AlternativeGetPayload<{ include: typeof alternativeOnePayload }>
@@ -21,14 +21,14 @@ export type AlternativeMany = Prisma.AlternativeGetPayload<{
 // Categories
 export const categoryOnePayload = Prisma.validator<Prisma.CategoryInclude>()({
   tools: {
-    where: { tool: { isDraft: false } },
+    where: { tool: { publishedAt: { not: null } } },
     include: { tool: true },
     orderBy: [{ tool: { isFeatured: "desc" } }, { tool: { score: "desc" } }],
   },
 })
 
 export const categoryManyPayload = Prisma.validator<Prisma.CategoryInclude>()({
-  _count: { select: { tools: { where: { tool: { isDraft: false } } } } },
+  _count: { select: { tools: { where: { tool: { publishedAt: { not: null } } } } } },
 })
 
 export type CategoryOne = Prisma.CategoryGetPayload<{ include: typeof categoryOnePayload }>
@@ -37,14 +37,14 @@ export type CategoryMany = Prisma.CategoryGetPayload<{ include: typeof categoryM
 // Topics
 export const topicOnePayload = Prisma.validator<Prisma.TopicInclude>()({
   tools: {
-    where: { tool: { isDraft: false } },
+    where: { tool: { publishedAt: { not: null } } },
     include: { tool: true },
     orderBy: [{ tool: { isFeatured: "desc" } }, { tool: { score: "desc" } }],
   },
 })
 
 export const topicManyPayload = Prisma.validator<Prisma.TopicInclude>()({
-  _count: { select: { tools: { where: { tool: { isDraft: false } } } } },
+  _count: { select: { tools: { where: { tool: { publishedAt: { not: null } } } } } },
 })
 
 export type TopicOne = Prisma.TopicGetPayload<{ include: typeof topicOnePayload }>
@@ -53,14 +53,14 @@ export type TopicMany = Prisma.TopicGetPayload<{ include: typeof topicManyPayloa
 // Languages
 export const languageOnePayload = Prisma.validator<Prisma.LanguageInclude>()({
   tools: {
-    where: { tool: { isDraft: false } },
+    where: { tool: { publishedAt: { not: null } } },
     include: { tool: true },
     orderBy: [{ tool: { isFeatured: "desc" } }, { tool: { score: "desc" } }],
   },
 })
 
 export const languageManyPayload = Prisma.validator<Prisma.LanguageInclude>()({
-  _count: { select: { tools: { where: { tool: { isDraft: false } } } } },
+  _count: { select: { tools: { where: { tool: { publishedAt: { not: null } } } } } },
 })
 
 export type LanguageOne = Prisma.LanguageGetPayload<{ include: typeof languageOnePayload }>

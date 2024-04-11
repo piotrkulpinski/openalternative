@@ -30,7 +30,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       // if the repository check fails, set the tool as draft
       await prisma.tool.update({
         where: { id },
-        data: { isDraft: true },
+        data: { publishedAt: null },
       })
 
       console.error(`Failed to fetch repository ${owner}/${name}`, error)
