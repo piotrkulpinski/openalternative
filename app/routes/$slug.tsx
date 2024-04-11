@@ -43,7 +43,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {
     const tool = await prisma.tool.findUniqueOrThrow({
-      where: { slug, isDraft: false },
+      where: { slug, publishedAt: { not: null } },
       include: toolOnePayload,
     })
 

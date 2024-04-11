@@ -42,7 +42,6 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
         repository,
         description,
         slug: slugify(name, { decamelize: false }),
-        isDraft: true,
       },
     })
 

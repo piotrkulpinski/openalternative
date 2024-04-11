@@ -25,8 +25,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const newToolCount = await prisma.tool.count({
     where: {
-      isDraft: false,
-      createdAt: { gte: new Date(new Date().setDate(new Date().getDate() - 7)) },
+      publishedAt: { gte: new Date(new Date().setDate(new Date().getDate() - 7)) },
     },
   })
 
