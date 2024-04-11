@@ -24,7 +24,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const serverState = await getServerState(<Search url={url} />, { renderToString })
 
   const newToolCount = await prisma.tool.count({
-    where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD } },
+    where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
   })
 
   return defer({ serverState, url, newToolCount })
