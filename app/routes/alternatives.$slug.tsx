@@ -79,7 +79,7 @@ export default function AlternativesPage() {
             )}
 
             <Button
-              variant="fancy"
+              variant={alternative.website.includes("go.") ? "fancy" : "primary"}
               size="md"
               className="mt-auto pointer-events-none"
               suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
