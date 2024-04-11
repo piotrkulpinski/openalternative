@@ -23,8 +23,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
   const serverState = await getServerState(<Search url={url} />, { renderToString })
 
-  const newToolTreshold = new Date(new Date().setDate(new Date().getDate() - 7))
-  const newToolCount = await prisma.tool.count({ where: { createdAt: { gte: newToolTreshold } } })
+  const newToolCount = await prisma.tool.count({
+    where: {
+      isDraft: false,
+      createdAt: { gte: new Date(new Date().setDate(new Date().getDate() - 7)) },
+    },
+  })
 
   return defer({ serverState, url, newToolCount })
 }
