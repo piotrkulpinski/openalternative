@@ -23,7 +23,6 @@ model Tool {
   bump           Int?
   faviconUrl     String?
   screenshotUrl  String?
-  isDraft        Boolean             @default(false)
   isFeatured     Boolean             @default(false)
   lastCommitDate DateTime?
   publishedAt    DateTime?
