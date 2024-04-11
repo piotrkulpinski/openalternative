@@ -40,6 +40,7 @@ model Alternative {
   name        String
   slug        String              @unique
   website     String              @unique
+  faviconUrl  String?
   updatedAt   DateTime            @updatedAt
   createdAt   DateTime            @default(now())
   tools       AlternativeToTool[]
