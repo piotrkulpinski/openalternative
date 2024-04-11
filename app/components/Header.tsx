@@ -30,6 +30,7 @@ import {
   DropdownMenuTrigger,
 } from "./DropdownMenu"
 import { fetcher } from "~/utils/fetchers"
+import { Ping } from "./Ping"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)
@@ -125,6 +126,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         >
           <a href={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
             Star
+            <Ping className="absolute -top-1 -right-1" />
           </a>
         </Button>
 

@@ -22,10 +22,12 @@ export const Intro = ({
 }: IntroProps) => {
   return (
     <div className={cx("flex w-full flex-col items-start gap-y-2", className)} {...props}>
-      <Series size="lg" className="w-full">
+      <Series size="lg" className="relative w-full">
         {prefix}
         <H1>{title}</H1>
         {suffix}
+
+        <div className="absolute -bottom-2 inset-x-0 h-8 bg-gradient-to-t from-white/40 to-transparent pointer-events-none select-none dark:from-neutral-900/40" />
       </Series>
 
       {description && (
