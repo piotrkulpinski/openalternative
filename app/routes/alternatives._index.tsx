@@ -28,7 +28,7 @@ export const loader = async () => {
     description: "Browse top alternatives to find your best Open Source software tools.",
   }
 
-  return json({ meta, alternatives }, JSON_HEADERS)
+  return json({ meta, alternatives }, { headers: JSON_HEADERS })
 }
 
 export default function AlternativesIndex() {

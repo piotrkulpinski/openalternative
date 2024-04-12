@@ -42,7 +42,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       description: `A collection of the best open source ${category.name} tools. Find the best tools for ${category.name} that are open source and free to use/self-hostable.`,
     }
 
-    return json({ meta, category }, JSON_HEADERS)
+    return json({ meta, category }, { headers: JSON_HEADERS })
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }

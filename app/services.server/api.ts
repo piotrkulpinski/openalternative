@@ -67,26 +67,16 @@ export type LanguageOne = Prisma.LanguageGetPayload<{ include: typeof languageOn
 export type LanguageMany = Prisma.LanguageGetPayload<{ include: typeof languageManyPayload }>
 
 // Tools
-export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({
-  alternatives: {
-    orderBy: { alternative: { name: "asc" } },
-    include: { alternative: { include: alternativeManyPayload } },
-  },
-  categories: {
-    orderBy: { category: { name: "asc" } },
-    include: { category: { include: categoryManyPayload } },
-  },
-  topics: {
-    orderBy: { topic: { slug: "asc" } },
-    include: { topic: { include: topicManyPayload } },
-  },
-  languages: {
-    orderBy: { percentage: "desc" },
-    include: { language: { include: languageManyPayload } },
-  },
-})
-
+export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({})
 export const toolManyPayload = Prisma.validator<Prisma.ToolInclude>()({})
 
 export type ToolOne = Prisma.ToolGetPayload<{ include: typeof toolOnePayload }>
 export type ToolMany = Prisma.ToolGetPayload<{ include: typeof toolManyPayload }>
+
+export const languageToToolManyPayload = Prisma.validator<Prisma.LanguageToToolInclude>()({
+  language: true,
+})
+
+export type LanguageToToolMany = Prisma.LanguageToToolGetPayload<{
+  include: typeof languageToToolManyPayload
+}>

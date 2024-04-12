@@ -36,7 +36,7 @@ export const loader = async () => {
     description: `A collection of the latest open source tools added to the directory. Browse and discover new tools to use in your projects.`,
   }
 
-  return json({ meta, tools }, JSON_HEADERS)
+  return json({ meta, tools }, { headers: JSON_HEADERS })
 }
 
 export default function CategoriesPage() {

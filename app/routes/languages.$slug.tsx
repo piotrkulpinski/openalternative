@@ -42,7 +42,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       description: ` A collection of the best open source software tools written in ${language.name}. Find the most popular and trending open source projects to learn from, contribute to, or use in your own projects.`,
     }
 
-    return json({ meta, language }, JSON_HEADERS)
+    return json({ meta, language }, { headers: JSON_HEADERS })
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }

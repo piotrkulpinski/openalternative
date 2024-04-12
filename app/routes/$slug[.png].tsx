@@ -1,10 +1,10 @@
 import satori from "satori"
 import { Resvg } from "@resvg/resvg-js"
-import { toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { ToolOpenGraph } from "~/components/opengraph/tool"
 import { LoaderFunctionArgs, json } from "@remix-run/node"
 import { SITE_URL } from "~/utils/constants"
+import { toolOnePayload } from "~/services.server/api"
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {

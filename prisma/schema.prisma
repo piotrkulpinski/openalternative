@@ -32,6 +32,8 @@ model Tool {
   categories     CategoryToTools[]
   languages      LanguageToTool[]
   topics         TopicToTool[]
+
+  @@index([id, slug])
 }
 
 model Alternative {

@@ -47,7 +47,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       description: `A collection of the best open source ${alternative.name} alternatives. Find the best alternatives for ${alternative.name} that are open source and free to use/self-hostable.`,
     }
 
-    return json({ meta, alternative }, JSON_HEADERS)
+    return json({ meta, alternative }, { headers: JSON_HEADERS })
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
