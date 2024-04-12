@@ -23,6 +23,7 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
       role="search"
       noValidate
       className={cx("relative", className)}
+      onSubmit={(e) => e.preventDefault()}
       onReset={() => setSearchQuery("")}
     >
       <Input

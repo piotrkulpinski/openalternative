@@ -29,7 +29,7 @@ export const loader = async () => {
     description: "Browse top categories to find your best Open Source software options.",
   }
 
-  return json({ meta, categories }, JSON_HEADERS)
+  return json({ meta, categories }, { headers: JSON_HEADERS })
 }
 
 export default function CategoriesIndex() {

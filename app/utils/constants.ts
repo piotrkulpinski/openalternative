@@ -23,9 +23,7 @@ export const SWR_CONFIG: SWRConfiguration = {
 export const JSON_HEADERS =
   import.meta.env.NODE_ENV === "development"
     ? {
-        headers: {
-          "Cache-Control": "public, max-age=3600, s-maxage=7200 stale-while-revalidate=3.154e7",
-        },
+        "Cache-Control": "public, max-age=3600, s-maxage=7200 stale-while-revalidate=3.154e7",
       }
     : undefined
 

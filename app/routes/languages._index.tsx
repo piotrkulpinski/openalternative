@@ -29,7 +29,7 @@ export const loader = async () => {
     description: "Browse top languages to find your best Open Source software options.",
   }
 
-  return json({ meta, languages }, JSON_HEADERS)
+  return json({ meta, languages }, { headers: JSON_HEADERS })
 }
 
 export default function LanguagesIndex() {

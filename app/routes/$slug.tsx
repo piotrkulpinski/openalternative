@@ -1,23 +1,32 @@
-import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
+import { HeadersFunction, json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
 import { HashIcon, MoveRightIcon, TagIcon } from "lucide-react"
 import { FaviconImage } from "~/components/Favicon"
 import { Series } from "~/components/Series"
-import { ToolOne, toolOnePayload } from "~/services.server/api"
+import {
+  ToolOne,
+  alternativeManyPayload,
+  categoryManyPayload,
+  languageManyPayload,
+  toolOnePayload,
+  topicManyPayload,
+} from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { H1, H3 } from "~/components/Heading"
-import { Grid } from "~/components/Grid"
-import { AlternativeRecord } from "~/components/records/AlternativeRecord"
-import { Tag } from "~/components/Tag"
 import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
 import { useLoaderData } from "@remix-run/react"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 import { Button } from "~/components/Button"
 import { Prose } from "~/components/Prose"
-import { RepositoryDetails } from "~/components/RepositoryDetails"
 import { posthog } from "posthog-js"
+import { ToolRecord } from "~/components/records/ToolRecord"
+import { Grid } from "~/components/Grid"
+import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
+import { AlternativeRecord } from "~/components/records/AlternativeRecord"
+import { Tag } from "~/components/Tag"
+import { RepositoryDetails } from "~/components/RepositoryDetails"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -40,26 +49,99 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   })
 }
 
+export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
+  return {
+    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
+  }
+}
+
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {
-    const tool = await prisma.tool.findUniqueOrThrow({
-      where: { slug, publishedAt: { lte: new Date() } },
-      include: toolOnePayload,
-    })
+    const timings = makeTimings("tool loader")
+
+    const [tool, alternatives, categories, languages, topics, relatedTools] = await Promise.all([
+      time(
+        () =>
+          prisma.tool.findUniqueOrThrow({
+            where: { slug, publishedAt: { lte: new Date() } },
+            include: toolOnePayload,
+          }),
+        { type: "find tool", timings }
+      ),
+
+      time(
+        () =>
+          prisma.alternativeToTool.findMany({
+            where: { tool: { slug } },
+            orderBy: { alternative: { name: "asc" } },
+            include: { alternative: { include: alternativeManyPayload } },
+          }),
+        { type: "find alternatives", timings }
+      ),
+
+      time(
+        () =>
+          prisma.categoryToTools.findMany({
+            where: { tool: { slug } },
+            orderBy: { category: { name: "asc" } },
+            include: { category: { include: categoryManyPayload } },
+          }),
+        { type: "find categories", timings }
+      ),
+
+      time(
+        () =>
+          prisma.languageToTool.findMany({
+            where: { tool: { slug } },
+            orderBy: { language: { name: "asc" } },
+            include: { language: { include: languageManyPayload } },
+          }),
+        { type: "find languages", timings }
+      ),
+
+      time(
+        () =>
+          prisma.topicToTool.findMany({
+            where: { tool: { slug } },
+            orderBy: { topic: { slug: "asc" } },
+            include: { topic: { include: topicManyPayload } },
+          }),
+        { type: "find topics", timings }
+      ),
+
+      time(
+        () =>
+          prisma.categoryToTools.findMany({
+            where: {
+              category: { tools: { some: { tool: { slug } } } },
+              NOT: { tool: { slug } },
+            },
+            include: { tool: true },
+            distinct: ["toolId"],
+            orderBy: { tool: { score: "desc" } },
+            take: 3,
+          }),
+        { type: "find related tools", timings }
+      ),
+    ])
 
     const meta = {
-      title: `${tool.name}: Open Source Alternative ${tool.alternatives.length ? `to ${tool.alternatives.map(({ alternative }) => alternative?.name).join(", ")}` : ""}`,
+      title: `${tool.name}: Open Source Alternative ${alternatives.length ? `to ${alternatives.map(({ alternative }) => alternative?.name).join(", ")}` : ""}`,
     }
 
-    return json({ meta, tool }, JSON_HEADERS)
-  } catch {
+    return json(
+      { meta, tool, alternatives, categories, languages, topics, relatedTools },
+      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } }
+    )
+  } catch (error) {
+    console.error(error)
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
 export default function ToolsPage() {
-  const { tool } = useLoaderData<typeof loader>()
-  // const repo = getRepoOwnerAndName(tool.repository)
+  const { tool, alternatives, categories, languages, topics, relatedTools } =
+    useLoaderData<typeof loader>()
 
   return (
     <div className="flex flex-col gap-12" style={{ viewTransitionName: "tool" }}>
@@ -106,7 +188,11 @@ export default function ToolsPage() {
             )}
           </div>
 
-          <RepositoryDetails tool={tool} className="max-sm:w-full md:hidden" />
+          <RepositoryDetails
+            tool={tool}
+            languages={languages}
+            className="max-sm:w-full md:hidden"
+          />
 
           {tool.screenshotUrl && (
             <img
@@ -120,12 +206,12 @@ export default function ToolsPage() {
           )}
 
           {/* Categories */}
-          {!!tool.categories.length && (
+          {!!categories.length && (
             <Series direction="column" className="w-full">
               <H3>Categories:</H3>
 
               <Series>
-                {tool.categories?.map(({ category }) => (
+                {categories?.map(({ category }) => (
                   <Tag key={category.id} to={`/categories/${category.slug}`}>
                     <TagIcon className="mr-0.5 size-[0.9em] opacity-50" />
                     {category.name}
@@ -136,12 +222,12 @@ export default function ToolsPage() {
           )}
 
           {/* Topics */}
-          {!!tool.topics.length && (
+          {!!topics.length && (
             <Series size="lg" direction="column" className="w-full">
               <H3>Related topics:</H3>
 
               <Series className="w-full">
-                {tool.topics?.map(({ topic }) => (
+                {topics?.map(({ topic }) => (
                   <Tag key={topic.slug} to={`/topics/${topic.slug}`}>
                     <HashIcon className="size-[0.9em] opacity-50" />
                     {topic.slug}
@@ -153,7 +239,7 @@ export default function ToolsPage() {
         </div>
 
         <div className="sticky top-14 max-md:hidden">
-          <RepositoryDetails tool={tool} />
+          <RepositoryDetails tool={tool} languages={languages} />
 
           {/* {repo && (
             <img
@@ -166,13 +252,26 @@ export default function ToolsPage() {
       </div>
 
       {/* Alternatives */}
-      {!!tool.alternatives.length && (
+      {!!alternatives.length && (
         <Series size="lg" direction="column">
           <H3>{tool.name} is an Open Source alternative to:</H3>
 
           <Grid className="w-full">
-            {tool.alternatives?.map(({ alternative }) => (
+            {alternatives?.map(({ alternative }) => (
               <AlternativeRecord key={alternative.id} alternative={alternative} />
+            ))}
+          </Grid>
+        </Series>
+      )}
+
+      {/* Related */}
+      {!!relatedTools.length && (
+        <Series size="lg" direction="column">
+          <H3>Other Open Source Alternatives similar to {tool.name}:</H3>
+
+          <Grid className="w-full">
+            {relatedTools.map(({ tool }) => (
+              <ToolRecord key={tool.id} tool={tool} />
             ))}
           </Grid>
         </Series>

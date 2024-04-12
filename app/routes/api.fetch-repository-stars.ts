@@ -23,7 +23,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
     })
 
-    return json(repository.stargazerCount, JSON_HEADERS)
+    return json(repository.stargazerCount, { headers: JSON_HEADERS })
   } catch (error) {
     console.error(`Failed to fetch repository stars ${owner}/${name}`, error)
     throw new Error(`Failed to fetch repository stars ${owner}/${name}`)

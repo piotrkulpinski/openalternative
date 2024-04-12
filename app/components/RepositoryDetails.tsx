@@ -1,6 +1,6 @@
 import { SerializeFrom } from "@remix-run/node"
 import { HTMLAttributes } from "react"
-import { ToolOne } from "~/services.server/api"
+import { LanguageToToolMany, ToolOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 import { Series } from "./Series"
 import { H5 } from "./Heading"
@@ -8,14 +8,20 @@ import { format } from "timeago.js"
 import { CopyrightIcon, GitForkIcon, MoveRightIcon, StarIcon, TimerIcon } from "lucide-react"
 import { Insights } from "./Insights"
 import { Button } from "./Button"
-import { NavigationLink } from "./NavigationLink"
 import { posthog } from "posthog-js"
+import { NavigationLink } from "./NavigationLink"
 
 type RepositoryDetailsProps = HTMLAttributes<HTMLElement> & {
   tool: SerializeFrom<ToolOne>
+  languages: SerializeFrom<LanguageToToolMany[]>
 }
 
-export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetailsProps) => {
+export const RepositoryDetails = ({
+  className,
+  tool,
+  languages,
+  ...props
+}: RepositoryDetailsProps) => {
   const insights = [
     { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
     { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
@@ -41,11 +47,11 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
         <Insights insights={insights} className="text-sm" />
       </Series>
 
-      {!!tool.languages.length && (
+      {!!languages.length && (
         <Series direction="column">
           <H5>Written in:</H5>
 
-          {tool.languages?.map(({ percentage, language }) => (
+          {languages?.map(({ percentage, language }) => (
             <h6 key={language.slug}>
               <NavigationLink to={`/languages/${language.slug}`}>
                 <span

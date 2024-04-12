@@ -1,5 +1,5 @@
 import { getPageParams } from "@curiousleaf/utils"
-import { LoaderFunctionArgs, json, type MetaFunction } from "@remix-run/node"
+import { HeadersFunction, LoaderFunctionArgs, json, type MetaFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
@@ -9,6 +9,7 @@ import { topicManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS, TOPICS_PER_PAGE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
+import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   const { title, description } = data?.meta || {}
@@ -20,12 +21,28 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   })
 }
 
+export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
+  return {
+    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
+  }
+}
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const timings = makeTimings("tool loader")
   const { take, skip } = getPageParams(request, TOPICS_PER_PAGE)
 
   const [topics, topicCount] = await Promise.all([
-    prisma.topic.findMany({ orderBy: { slug: "asc" }, include: topicManyPayload, take, skip }),
-    prisma.topic.count(),
+    time(
+      () =>
+        prisma.topic.findMany({
+          orderBy: { slug: "asc" },
+          include: topicManyPayload,
+          take,
+          skip,
+        }),
+      { type: "find topics", timings }
+    ),
+    time(() => prisma.topic.count(), { type: "count topics", timings }),
   ])
 
   const meta = {
@@ -33,7 +50,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     description: "Browse top topics to find your best Open Source software options.",
   }
 
-  return json({ meta, topics, topicCount }, JSON_HEADERS)
+  return json(
+    { meta, topics, topicCount },
+    { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } }
+  )
 }
 
 export default function TopicsIndex() {
