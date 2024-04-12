@@ -8,7 +8,7 @@ import { cx } from "~/utils/cva"
 export const ProductHuntCard = ({ className, ...props }: CardProps) => {
   const launches = PH_LAUNCHES.filter(({ date }) => {
     const currentTime = Date.now()
-    const startTime = Date.parse(`${date} 09:00:00 GMT`)
+    const startTime = Date.parse(`${date} 07:00:00 GMT`)
     const endTime = startTime + 1000 * 60 * 60 * 24
 
     return currentTime >= startTime && currentTime <= endTime
