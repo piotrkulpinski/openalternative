@@ -13,7 +13,7 @@ import {
 import { prisma } from "~/services.server/prisma"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { H1, H3, H4 } from "~/components/Heading"
+import { H1, H4 } from "~/components/Heading"
 import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
 import { useLoaderData } from "@remix-run/react"
 import { getMetaTags } from "~/utils/meta"
@@ -267,7 +267,7 @@ export default function ToolsPage() {
       {/* Related */}
       {!!relatedTools.length && (
         <Series size="lg" direction="column">
-          <H3>Other Open Source Alternatives similar to {tool.name}:</H3>
+          <H4 as="h3">Other Open Source Alternatives similar to {tool.name}:</H4>
 
           <Grid className="w-full">
             {relatedTools.map(({ tool }) => (

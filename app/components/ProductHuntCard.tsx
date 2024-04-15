@@ -2,7 +2,7 @@ import { posthog } from "posthog-js"
 import { Link } from "@remix-run/react"
 import { Card, CardProps } from "./Card"
 import { Button } from "./Button"
-import { H3 } from "./Heading"
+import { H4 } from "./Heading"
 import { cx } from "~/utils/cva"
 import { PH_LAUNCHES } from "~/utils/constants"
 
@@ -15,7 +15,7 @@ export const ProductHuntCard = ({ className, launch, ...props }: ProductHuntCard
 
   return (
     <Card className={cx("max-lg:self-start items-center text-center", className)} {...props}>
-      <H3 className="leading-tight">{launch.name} is live on Product Hunt 🥳</H3>
+      <H4 className="leading-tight">{launch.name} is live on Product Hunt 🥳</H4>
 
       <Card.Description className="my-auto line-clamp-4">
         Support{" "}
