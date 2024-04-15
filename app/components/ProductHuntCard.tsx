@@ -1,24 +1,16 @@
 import { Card, CardProps } from "./Card"
-import { PH_LAUNCHES } from "~/utils/constants"
 import { Button } from "./Button"
 import { H3 } from "./Heading"
 import { Link } from "@remix-run/react"
 import { cx } from "~/utils/cva"
+import { PH_LAUNCHES } from "~/utils/constants"
 
-export const ProductHuntCard = ({ className, ...props }: CardProps) => {
-  const launches = PH_LAUNCHES.filter(({ date }) => {
-    const currentTime = Date.now()
-    const startTime = Date.parse(`${date} 07:00:00 GMT`)
-    const endTime = startTime + 1000 * 60 * 60 * 24
+type ProductHuntCardProps = CardProps & {
+  launch?: (typeof PH_LAUNCHES)[0]
+}
 
-    return currentTime >= startTime && currentTime <= endTime
-  })
-
-  if (!launches.length) {
-    return null
-  }
-
-  const launch = launches[Math.floor(Math.random() * launches.length)]
+export const ProductHuntCard = ({ className, launch, ...props }: ProductHuntCardProps) => {
+  if (!launch) return null
 
   return (
     <Card className={cx("max-lg:self-start items-center text-center", className)} {...props}>
