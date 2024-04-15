@@ -11,6 +11,7 @@ import { prisma } from "~/services.server/prisma"
 import { Badge } from "~/components/Badge"
 import { Ping } from "~/components/Ping"
 import { ProductHuntCard } from "~/components/ProductHuntCard"
+import { getCurrentPHLaunch } from "~/utils/helpers"
 
 export const meta: MetaFunction = ({ matches }) => {
   return getMetaTags({
@@ -28,12 +29,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
   })
 
-  return defer({ serverState, url, newToolCount })
+  const launch = getCurrentPHLaunch()
+
+  return defer({ serverState, url, newToolCount, launch })
 }
 
 export default function Index() {
   const { key } = useLocation()
-  const { serverState, url, newToolCount } = useLoaderData<typeof loader>()
+  const { serverState, url, newToolCount, launch } = useLoaderData<typeof loader>()
 
   return (
     <>
@@ -56,7 +59,7 @@ export default function Index() {
           <Newsletter placeholder="Get weekly newsletter" buttonVariant="fancy" />
         </section>
 
-        <ProductHuntCard className="max-md:hidden md:w-60" />
+        <ProductHuntCard launch={launch} className="max-md:hidden md:w-60" />
       </div>
 
       <InstantSearchSSRProvider key={key} {...serverState}>
