@@ -34,10 +34,4 @@ export const PH_LAUNCHES = [
     date: "12 Apr 2024",
     url: "https://www.producthunt.com/posts/uninbox",
   },
-  {
-    name: "Cal.com",
-    slug: "cal-com",
-    date: "15 Apr 2024",
-    url: "https://www.producthunt.com/posts/cal-com",
-  },
 ]
