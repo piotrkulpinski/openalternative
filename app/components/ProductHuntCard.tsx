@@ -1,7 +1,8 @@
+import { posthog } from "posthog-js"
+import { Link } from "@remix-run/react"
 import { Card, CardProps } from "./Card"
 import { Button } from "./Button"
 import { H3 } from "./Heading"
-import { Link } from "@remix-run/react"
 import { cx } from "~/utils/cva"
 import { PH_LAUNCHES } from "~/utils/constants"
 
@@ -28,6 +29,7 @@ export const ProductHuntCard = ({ className, launch, ...props }: ProductHuntCard
         variant="secondary"
         className="w-full "
         prefix={<img src="/producthunt.svg" alt="" />}
+        onClick={() => posthog.capture("ph_launch_clicked", { slug: launch.slug })}
         asChild
       >
         <a href={launch.url} target="_blank" rel="nofollow noreferrer">

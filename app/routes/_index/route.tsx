@@ -4,7 +4,12 @@ import { renderToString } from "react-dom/server"
 import { InstantSearchSSRProvider, getServerState } from "react-instantsearch"
 import { Intro } from "~/components/Intro"
 import { Newsletter } from "~/components/Newsletter"
-import { LATEST_TOOLS_TRESHOLD, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
+import {
+  JSON_HEADERS,
+  LATEST_TOOLS_TRESHOLD,
+  SITE_DESCRIPTION,
+  SITE_TAGLINE,
+} from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { Search } from "./Search"
 import { prisma } from "~/services.server/prisma"
@@ -31,7 +36,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const launch = getCurrentPHLaunch()
 
-  return defer({ serverState, url, newToolCount, launch })
+  return defer({ serverState, url, newToolCount, launch }, { headers: JSON_HEADERS })
 }
 
 export default function Index() {
