@@ -16,6 +16,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
 
   const sortByItems = [
     { value: "openalternative", label: "Relevance" },
+    { value: "openalternative_created_desc", label: "Latest" },
     { value: "openalternative_name_asc", label: "Name" },
     { value: "openalternative_stars_desc", label: "Stars" },
     { value: "openalternative_forks_desc", label: "Forks" },

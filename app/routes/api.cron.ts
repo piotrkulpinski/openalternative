@@ -36,5 +36,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     prisma.topic.deleteMany({ where: { tools: { none: {} } } }),
   ])
 
+  // Run Algolia indexing
+  await got.post(`https://data.us.algolia.com/1/tasks/${process.env.ALGOLIA_INDEX_TASK_ID}/run`, {
+    headers: {
+      "X-Algolia-API-Key": process.env.ALGOLIA_ADMIN_API_KEY,
+      "X-Algolia-Application-Id": process.env.VITE_ALGOLIA_APP_ID,
+    },
+  })
+
   return new Response("OK", { status: 200 })
 }
