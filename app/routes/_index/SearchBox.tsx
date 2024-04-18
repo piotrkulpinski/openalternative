@@ -32,8 +32,8 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
-        placeholder="Type to search"
-        className="w-full pl-9 pr-24 sm:pr-48"
+        placeholder="Type to search…"
+        className="w-full pl-9 pr-24 sm:pr-44"
         spellCheck={false}
         maxLength={512}
         value={searchQuery}
@@ -50,7 +50,7 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
         {isSearchStalled && <LoaderIcon className="size-4 animate-spin" />}
 
         <p className="flex items-center text-xs gap-1.5 whitespace-nowrap">
-          <span className="opacity-50 max-sm:hidden">Powered by</span>
+          <span className="opacity-50 max-sm:hidden">Search by</span>
 
           <a
             href="https://www.algolia.com/developers/?utm_source=openalternative&utm_medium=referral"
