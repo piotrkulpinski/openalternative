@@ -3,12 +3,15 @@ import { Grid } from "~/components/Grid"
 import { ToolOne } from "~/services.server/api"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { H5 } from "~/components/Heading"
+import { HTMLAttributes } from "react"
 
-export const Listing = ({ ...props }: UseHitsProps<ToolOne>) => {
+type ListingProps = HTMLAttributes<HTMLElement> & UseHitsProps<ToolOne>
+
+export const Listing = ({ className, ...props }: ListingProps) => {
   const { hits, sendEvent } = useHits(props)
 
   return (
-    <Grid>
+    <Grid className={className}>
       {hits.map((hit) => (
         <ToolRecord
           key={hit.id}

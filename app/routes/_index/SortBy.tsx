@@ -1,11 +1,18 @@
+import { HTMLAttributes } from "react"
 import { useSortBy, type UseSortByProps } from "react-instantsearch"
 import { Select } from "~/components/forms/Select"
 
-export const SortBy = ({ ...props }: UseSortByProps) => {
+type SortByProps = HTMLAttributes<HTMLElement> & UseSortByProps
+
+export const SortBy = ({ className, ...props }: SortByProps) => {
   const { currentRefinement, options, refine } = useSortBy(props)
 
   return (
-    <Select onChange={(e) => refine(e.target.value)} value={currentRefinement}>
+    <Select
+      onChange={(e) => refine(e.target.value)}
+      value={currentRefinement}
+      className={className}
+    >
       <option value="" disabled>
         Order by
       </option>
