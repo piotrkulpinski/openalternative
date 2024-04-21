@@ -6,6 +6,6 @@ type FetcherProps = {
 }
 
 export const fetcher = async ({ url, ...params }: FetcherProps) => {
-  const r = await fetch(`${url}?${queryString.stringify(params)}`)
+  const r = await fetch(`${url}?${queryString.stringify(params)}`, { method: "GET" })
   return r.json()
 }
