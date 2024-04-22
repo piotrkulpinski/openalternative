@@ -63,7 +63,7 @@ export default function TopicsPage() {
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!topic.tools?.length && <p>No Open Source software found.</p>}
+        {!topic.tools?.length && <p className="col-span-full">No Open Source software found.</p>}
       </Grid>
 
       <BackButton to="/topics" />

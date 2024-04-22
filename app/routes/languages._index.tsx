@@ -44,7 +44,7 @@ export default function LanguagesIndex() {
           <LanguageRecord key={language.slug} language={language} />
         ))}
 
-        {!languages.length && <p>No languages found.</p>}
+        {!languages.length && <p className="col-span-full">No languages found.</p>}
       </Grid>
     </>
   )

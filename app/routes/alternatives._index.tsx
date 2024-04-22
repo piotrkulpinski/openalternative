@@ -43,7 +43,7 @@ export default function AlternativesIndex() {
           <AlternativeRecord key={alternative.id} alternative={alternative} showCount />
         ))}
 
-        {!alternatives.length && <p>No alternatives found.</p>}
+        {!alternatives.length && <p className="col-span-full">No alternatives found.</p>}
       </Grid>
     </>
   )

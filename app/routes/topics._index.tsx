@@ -68,7 +68,7 @@ export default function TopicsIndex() {
           <TopicRecord key={topic.slug} topic={topic} />
         ))}
 
-        {!topics.length && <p>No topics found.</p>}
+        {!topics.length && <p className="col-span-full">No topics found.</p>}
       </Grid>
 
       <Pagination totalCount={topicCount} pageSize={TOPICS_PER_PAGE} />

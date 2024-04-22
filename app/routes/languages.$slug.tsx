@@ -60,7 +60,7 @@ export default function LanguagesPage() {
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!language.tools?.length && <p>No Open Source software found.</p>}
+        {!language.tools?.length && <p className="col-span-full">No Open Source software found.</p>}
       </Grid>
 
       <BackButton to="/languages" />
