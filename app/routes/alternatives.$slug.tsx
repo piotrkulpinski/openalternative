@@ -94,7 +94,9 @@ export default function AlternativesPage() {
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!alternative.tools?.length && <p>No Open Source alternatives found.</p>}
+        {!alternative.tools?.length && (
+          <p className="col-span-full">No Open Source alternatives found.</p>
+        )}
       </Grid>
 
       <BackButton to="/alternatives" />

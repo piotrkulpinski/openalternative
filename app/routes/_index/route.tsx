@@ -47,7 +47,7 @@ export default function Index() {
             description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
             className="max-w-[40rem] text-pretty"
           >
-            {newToolCount && (
+            {!!newToolCount && (
               <Link to="/latest" className="contents">
                 <Badge className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md">
                   <Ping /> {newToolCount} tools added this week

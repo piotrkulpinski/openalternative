@@ -51,7 +51,7 @@ export default function CategoriesPage() {
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!tools?.length && <p>No recent Open Source software found.</p>}
+        {!tools?.length && <p className="col-span-full">No recent Open Source software found.</p>}
       </Grid>
 
       <BackButton to="/categories" />

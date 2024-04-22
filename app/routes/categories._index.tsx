@@ -44,7 +44,7 @@ export default function CategoriesIndex() {
           <CategoryRecord key={category.id} category={category} />
         ))}
 
-        {!categories.length && <p>No categories found.</p>}
+        {!categories.length && <p className="col-span-full">No categories found.</p>}
       </Grid>
     </>
   )
