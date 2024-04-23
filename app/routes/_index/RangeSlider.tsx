@@ -26,7 +26,7 @@ export const RangeSlider = ({ ...props }: UseRangeProps) => {
       <div className="flex items-center justify-between gap-2">
         <H6 className="truncate capitalize">{props.attribute}</H6>
 
-        <span className="text-xs text-neutral-500">
+        <span className="text-xs text-secondary">
           {value[0]?.toLocaleString()} - {value[1]?.toLocaleString()}
         </span>
       </div>

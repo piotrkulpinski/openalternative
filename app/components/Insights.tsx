@@ -17,7 +17,7 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
         <Fragment key={label}>
           {value !== null && (
             <li className="flex min-w-0 items-center gap-3 py-1">
-              <p className="flex items-center gap-1.5 truncate text-neutral-600 dark:text-neutral-400">
+              <p className="flex items-center gap-1.5 truncate text-secondary">
                 <Icon className="size-[1.1em] shrink-0 opacity-75" /> {label}
               </p>
 

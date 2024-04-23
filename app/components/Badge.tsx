@@ -1,8 +1,9 @@
-import { HTMLAttributes } from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { HTMLAttributes, isValidElement } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
 
 export const badgeVariants = cva({
-  base: "rounded bg-neutral-200/60 text-neutral-600 dark:bg-neutral-700/60 dark:text-neutral-200",
+  base: "rounded bg-border/50 text-secondary hover:[&[href]]:bg-border/75",
 
   variants: {
     size: {
@@ -16,8 +17,18 @@ export const badgeVariants = cva({
   },
 })
 
-type BadgeProps = HTMLAttributes<HTMLElement> & VariantProps<typeof badgeVariants>
+type BadgeProps = HTMLAttributes<HTMLElement> &
+  VariantProps<typeof badgeVariants> & {
+    /**
+     * If set to `true`, the button will be rendered as a child within the component.
+     * This child component must be a valid React component.
+     */
+    asChild?: boolean
+  }
 
-export const Badge = ({ className, size, ...props }: BadgeProps) => {
-  return <span className={cx(badgeVariants({ size, className }))} {...props} />
+export const Badge = ({ className, asChild, size, ...props }: BadgeProps) => {
+  const useAsChild = asChild && isValidElement(props.children)
+  const Component = useAsChild ? Slot : "span"
+
+  return <Component className={cx(badgeVariants({ size, className }))} {...props} />
 }

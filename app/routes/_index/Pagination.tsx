@@ -46,18 +46,19 @@ export const Pagination = ({ className, listingRef, ...props }: PaginationProps)
         prev
       </PaginationLink>
 
-      <p className="text-sm text-neutral-500 md:hidden">
+      <p className="text-sm text-muted md:hidden">
         Page {currentRefinement + 1} of {nbPages}
       </p>
 
       <div className="flex items-center flex-wrap gap-3 max-md:hidden">
-        <span className="text-sm text-neutral-500">Page:</span>
+        <span className="text-sm text-muted">Page:</span>
 
         {pages.map((page) => (
           <PaginationLink
             key={`page-${page}`}
             to={createURL(page)}
             isActive={currentRefinement === page}
+            className="min-w-5 justify-center"
             onClick={(e) => refinePage(e, page)}
           >
             {page + 1}

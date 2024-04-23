@@ -46,12 +46,12 @@ export const Pagination = ({
         prev
       </PaginationLink>
 
-      <p className="text-sm text-neutral-500 md:hidden">
+      <p className="text-sm text-muted md:hidden">
         Page {currentPage} of {pageCount}
       </p>
 
       <div className="flex items-center flex-wrap gap-3 max-md:hidden">
-        <span className="text-sm text-neutral-500">Page:</span>
+        <span className="text-sm text-muted">Page:</span>
 
         {paginationRange.map((page, index) => (
           <div key={`page-${index}`}>
@@ -61,6 +61,7 @@ export const Pagination = ({
               <PaginationLink
                 to={getPageLink(params, pathname, page)}
                 isActive={currentPage === page}
+                className="min-w-5 justify-center"
               >
                 {page}
               </PaginationLink>

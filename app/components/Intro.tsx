@@ -27,14 +27,12 @@ export const Intro = ({
         <H1>{title}</H1>
         {suffix}
 
-        <div className="absolute -bottom-2 inset-x-0 h-8 bg-gradient-to-t from-white/40 to-transparent pointer-events-none select-none dark:from-neutral-900/40" />
+        <div className="absolute -bottom-2 inset-x-0 h-8 bg-gradient-to-t from-background/40 to-transparent pointer-events-none select-none" />
       </Series>
 
       {description && (
         <Prose className="max-w-3xl">
-          <h2 className="lead !font-normal !tracking-normal !text-neutral-600 dark:!text-neutral-400">
-            {description}
-          </h2>
+          <h2 className="lead !font-normal !tracking-normal !text-secondary">{description}</h2>
         </Prose>
       )}
 

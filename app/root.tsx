@@ -64,7 +64,7 @@ export function Layout({ children }: PropsWithChildren) {
         <Links />
       </head>
 
-      <body className="bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200">
+      <body className="bg-background text-foreground">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -76,7 +76,7 @@ export function Layout({ children }: PropsWithChildren) {
 
             {children}
 
-            <hr className="mt-auto peer-[[href]]:mt-0 dark:border-neutral-800" />
+            <hr className="mt-auto peer-[[href]]:mt-0" />
 
             <Newsletter
               title="Newsletter"

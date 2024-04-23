@@ -64,7 +64,7 @@ export default function AlternativesPage() {
       />
 
       <Grid>
-        <Card className="group bg-white" asChild>
+        <Card className="group bg-background" asChild>
           <Link to={alternative.website} target="_blank" rel="noopener noreferrer nofollow">
             <Card.Header>
               <Favicon src={alternative.faviconUrl} title={alternative.name} />
@@ -73,7 +73,7 @@ export default function AlternativesPage() {
             </Card.Header>
 
             {alternative.description && (
-              <p className="relative -tracking-0.5 line-clamp-4 text-sm/normal text-neutral-600 dark:text-neutral-400">
+              <p className="relative -tracking-0.5 line-clamp-4 text-sm/normal text-secondary">
                 {alternative.description}
               </p>
             )}

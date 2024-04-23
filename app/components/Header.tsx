@@ -56,7 +56,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   return (
     <div
       className={cx(
-        "sticky top-0 z-10 flex flex-wrap items-center py-3 -my-3 gap-3 backdrop-blur-sm bg-white/95 md:gap-4 dark:bg-neutral-900/80",
+        "sticky top-0 z-10 flex flex-wrap items-center py-3 -my-3 gap-3 backdrop-blur-sm bg-background/95 md:gap-4",
         className
       )}
       {...props}

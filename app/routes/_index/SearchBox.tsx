@@ -56,7 +56,7 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
             href="https://www.algolia.com/developers/?utm_source=openalternative&utm_medium=referral"
             target="_blank"
             rel="noreferrer"
-            className="text-neutral-500 pointer-events-auto hover:text-[#023AF2]"
+            className="text-foreground/50 pointer-events-auto hover:text-pink-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -5,11 +5,11 @@ import { ElementRef, forwardRef } from "react"
 export const navigationLinkVariants = cva({
   base: [
     "group flex items-center gap-2 p-0.5 -m-0.5 text-sm -tracking-micro cursor-pointer",
-    "text-neutral-500 disabled:opacity-50 hover:text-neutral-800 dark:hover:text-neutral-200",
+    "text-muted disabled:opacity-50 hover:text-foreground",
   ],
   variants: {
     isActive: {
-      true: "font-medium text-neutral-800 dark:text-neutral-200",
+      true: "font-medium text-foreground",
     },
   },
 })

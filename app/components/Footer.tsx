@@ -9,7 +9,7 @@ import { GithubIcon, RssIcon, TwitterIcon } from "lucide-react"
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <footer className={cx("flex flex-col justify-between gap-4", className)} {...props}>
-      <Series className="text-sm/normal text-neutral-500 md:gap-x-4">
+      <Series className="text-sm/normal md:gap-x-4">
         <H6>Explore:</H6>
 
         <NavigationLink to="/alternatives">Alternatives</NavigationLink>
@@ -27,15 +27,15 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         </NavigationLink>
 
         <NavigationLink to={RSS_URL} target="_blank" title="Twitter" rel="nofollow noreferrer">
-          <RssIcon className="size-[1.44em]" />
+          <RssIcon className="size-[1.44em] stroke-[1.25]" />
         </NavigationLink>
 
         <NavigationLink to={TWITTER_URL} target="_blank" title="Twitter" rel="nofollow noreferrer">
-          <TwitterIcon className="size-[1.44em]" />
+          <TwitterIcon className="size-[1.44em] stroke-[1.25]" />
         </NavigationLink>
 
         <NavigationLink to={GITHUB_URL} target="_blank" title="Source" rel="nofollow noreferrer">
-          <GithubIcon className="size-[1.44em]" />
+          <GithubIcon className="size-[1.44em] stroke-[1.25]" />
         </NavigationLink>
       </Series>
 

@@ -25,7 +25,7 @@ export const AlternativeRecord = ({ alternative, showCount, ...props }: Alternat
         {alternative.description && <Card.Description>{alternative.description}</Card.Description>}
 
         {showCount && (
-          <span className="text-xs text-neutral-500">
+          <span className="text-xs text-secondary">
             {alternative._count.tools} {plur("alternative", alternative._count.tools)}
           </span>
         )}

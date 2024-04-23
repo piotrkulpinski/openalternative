@@ -55,12 +55,9 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
         <>
           <Refinements />
 
-          <div className="flex items-center justify-between gap-4 text-xs text-neutral-500">
+          <div className="flex items-center justify-between gap-4 text-xs text-secondary">
             <p>
-              Found{" "}
-              <strong className="font-medium text-black dark:text-neutral-200">
-                {results?.nbHits}
-              </strong>{" "}
+              Found <strong className="font-medium text-foreground">{results?.nbHits}</strong>{" "}
               results in {results?.processingTimeMS}ms
             </p>
           </div>

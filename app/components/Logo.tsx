@@ -8,7 +8,7 @@ export const Logo = ({ className, ...props }: HTMLAttributes<SVGSVGElement>) => 
       viewBox="0 0 327 309"
       height="24"
       width="24"
-      className={cx("text-neutral-800 dark:text-neutral-200", className)}
+      className={cx("text-foreground", className)}
       {...props}
     >
       <path
