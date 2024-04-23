@@ -1,4 +1,4 @@
-import { PH_LAUNCHES } from "./constants"
+import { DAY_IN_MS, PH_LAUNCHES } from "./constants"
 
 /**
  * Determines if the given user agent string indicates a mobile device.
@@ -29,7 +29,7 @@ export const getCurrentPHLaunch = () => {
   const launches = PH_LAUNCHES.filter(({ date }) => {
     const currentTime = Date.now()
     const startTime = Date.parse(`${date} 07:00:00 GMT`)
-    const endTime = startTime + 1000 * 60 * 60 * 24
+    const endTime = startTime + DAY_IN_MS
 
     return currentTime >= startTime && currentTime <= endTime
   })

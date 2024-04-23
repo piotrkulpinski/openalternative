@@ -1,5 +1,5 @@
 import { DateRange } from "react-day-picker"
-import { BASE_SPONSORING_PRICE } from "./constants"
+import { BASE_SPONSORING_PRICE, DAY_IN_MS } from "./constants"
 
 export const calculateSponsoringPrice = (days: number) => {
   const discountPercentage = Math.min(days * 1, 30)
@@ -23,9 +23,8 @@ export const adjustSponsoringDuration = (
 
     const start = from.getTime()
     const end = to.getTime()
-    const day = 1000 * 60 * 60 * 24
 
-    for (let d = start; d <= end; d += day) {
+    for (let d = start; d <= end; d += DAY_IN_MS) {
       const currentDate = new Date(d)
 
       if (currentDate >= startDate && currentDate <= endDate) {
