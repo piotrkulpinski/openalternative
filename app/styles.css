@@ -20,8 +20,8 @@
 
   --color-card: 0 0% 11%;
   --color-card-dark: 0 0% 13%;
-  --color-border: 0 0% 24%;
-  --color-border-dark: 0 0% 29%;
+  --color-border: 0 0% 20%;
+  --color-border-dark: 0 0% 25%;
 
   --color-muted: 0 0% 50%;
   --color-secondary: 0 0% 66.6%;
@@ -57,7 +57,7 @@ svg:not([class*="stroke"]) {
   @apply !stroke-[1.75];
 }
 
-svg:not([class*="size"]) {
+svg:not([class*="size-"]):not([class*="h-"]) {
   @apply size-[1em];
 }
 
@@ -89,17 +89,4 @@ select:not([size]) {
   @apply bg-[right_0.75rem_center];
   @apply bg-[length:1.25em_1.25em];
   @apply pr-8;
-}
-
-.ais-PoweredBy {
-  @apply self-end;
-  @apply p-2;
-}
-
-.ais-PoweredBy-link {
-  @apply block;
-  @apply max-w-28;
-  @apply ml-auto;
-  @apply opacity-60;
-  @apply hover:opacity-100;
 }

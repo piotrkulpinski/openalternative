@@ -4,10 +4,12 @@ import { useLoaderData } from "@remix-run/react"
 import { Button } from "~/components/Button"
 import { SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import { Plan, PlanProps } from "~/components/Plan"
 import { Card } from "~/components/Card"
 import { H1 } from "~/components/Heading"
 import { BarChart3Icon } from "lucide-react"
+import { useState } from "react"
+import { Calendar } from "~/components/Calendar"
+import { DateRange } from "react-day-picker"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   const { title, description } = data?.meta || {}
@@ -30,40 +32,29 @@ export const loader = () => {
 
 export default function SubmitPage() {
   const { meta } = useLoaderData<typeof loader>()
+  const [sponsorDuration, setSponsorDuration] = useState<number>()
 
-  const plans = [
-    {
-      name: "Category Package",
-      price: {
-        amount: 47,
-        interval: "month",
-      },
-      features: [
-        { text: "1x category sponsor slot", type: "positive" },
-        { text: "1x listing boost in the same category", type: "positive" },
-        { text: "Special mention in our newsletter", type: "negative" },
-      ],
-    },
-    {
-      name: "Full Package",
-      price: {
-        amount: 247,
-        interval: "month",
-      },
-      features: [
-        { text: "1x homepage sponsor slot", type: "positive" },
-        { text: "1x listing boost on homepage", type: "positive" },
-        { text: "Special mention in our newsletter", type: "positive" },
-      ],
-      isFeatured: true,
-    },
-  ] satisfies PlanProps[]
+  // const [from, to] = useMemo(() => {
+  //   let fromDay: Date | undefined;
+  //   let toDay: Date | undefined;
+
+  //   if (dateRange) {
+  //     fromDay = dateRange.from;
+  //     toDay = dateRange.to;
+  //   } else if (dayCount) {
+  //     toDay = new Date();
+  //     fromDay = addDays(toDay, -dayCount);
+  //   }
+
+  //   return [fromDay, toDay];
+  // }, [dateRange, dayCount]);
+
+  const [date, setDate] = useState<DateRange>()
 
   return (
     <>
       <Intro {...meta} />
-
-      <div className="flex flex-wrap gap-4 max-w-2xl">
+      {/* <div className="flex flex-wrap gap-4 max-w-2xl">
         {plans.map((plan) => (
           <Plan key={plan.name} className="flex-1" {...plan}>
             <Button variant={plan.isFeatured ? "fancy" : "secondary"} className="w-full">
@@ -71,6 +62,20 @@ export default function SubmitPage() {
             </Button>
           </Plan>
         ))}
+      </div> */}
+
+      <div>
+        <Intro title="Pick a date range:" headingProps={{ size: "h3" }} className="mb-4" />
+
+        <Calendar
+          mode="range"
+          selected={date}
+          onSelect={setDate}
+          numberOfMonths={2}
+          disabled={(date) => date < new Date()}
+          showOutsideDays
+          className="max-w-2xl"
+        />
       </div>
 
       <Intro
@@ -89,7 +94,6 @@ export default function SubmitPage() {
           </a>
         </Button>
       </Intro>
-
       <div className="grid-auto-fill-xs grid gap-4">
         <Card>
           <H1 as="h3">500+</H1>
@@ -100,7 +104,7 @@ export default function SubmitPage() {
           <Card.Description>Affiliate Sales Per/Month</Card.Description>
         </Card>
         <Card>
-          <H1 as="h3">150+</H1>
+          <H1 as="h3">175+</H1>
           <Card.Description>Open Source Listings</Card.Description>
         </Card>
       </div>
