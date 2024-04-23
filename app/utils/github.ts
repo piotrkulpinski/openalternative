@@ -1,3 +1,5 @@
+import { DAY_IN_MS } from "./constants"
+
 export type RepositoryQueryResult = {
   repository: {
     stargazerCount: number
@@ -149,7 +151,7 @@ export const calculateHealthScore = ({
   bump,
 }: GetToolScoreProps) => {
   const timeSinceLastCommit = Date.now() - (lastCommitDate?.getTime() || 0)
-  const daysSinceLastCommit = timeSinceLastCommit / (1000 * 60 * 60 * 24)
+  const daysSinceLastCommit = timeSinceLastCommit / DAY_IN_MS
   // Negative score for evey day without commit up to 90 days
   const lastCommitPenalty = Math.min(daysSinceLastCommit, 90) * 0.5
 
