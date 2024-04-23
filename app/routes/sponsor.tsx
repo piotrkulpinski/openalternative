@@ -4,12 +4,13 @@ import { useLoaderData } from "@remix-run/react"
 import { Button } from "~/components/Button"
 import { SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import { Card } from "~/components/Card"
-import { H1 } from "~/components/Heading"
 import { BarChart3Icon } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Calendar } from "~/components/Calendar"
 import { DateRange } from "react-day-picker"
+import plur from "plur"
+import { adjustSponsoringDuration, calculateSponsoringPrice } from "~/utils/sponsoring"
+import { Badge } from "~/components/Badge"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   const { title, description } = data?.meta || {}
@@ -32,58 +33,28 @@ export const loader = () => {
 
 export default function SubmitPage() {
   const { meta } = useLoaderData<typeof loader>()
-  const [sponsorDuration, setSponsorDuration] = useState<number>()
-
-  // const [from, to] = useMemo(() => {
-  //   let fromDay: Date | undefined;
-  //   let toDay: Date | undefined;
-
-  //   if (dateRange) {
-  //     fromDay = dateRange.from;
-  //     toDay = dateRange.to;
-  //   } else if (dayCount) {
-  //     toDay = new Date();
-  //     fromDay = addDays(toDay, -dayCount);
-  //   }
-
-  //   return [fromDay, toDay];
-  // }, [dateRange, dayCount]);
-
   const [date, setDate] = useState<DateRange>()
+  const [price, setPrice] = useState<ReturnType<typeof calculateSponsoringPrice>>()
+  const disabledDates: DateRange[] = useMemo(
+    () => [{ from: new Date(2024, 4, 18), to: new Date(2024, 4, 29) }],
+    []
+  )
+
+  // Calculate the duration in days
+  useEffect(() => {
+    if (!date?.from || !date?.to) {
+      setPrice(undefined)
+      return
+    }
+
+    const duration = Math.ceil((date.to.getTime() - date.from.getTime()) / (1000 * 60 * 60 * 24))
+    const adjustedDuration = adjustSponsoringDuration(duration, date.from, date.to, disabledDates)
+    setPrice(calculateSponsoringPrice(adjustedDuration + 1))
+  }, [date, disabledDates])
 
   return (
     <>
-      <Intro {...meta} />
-      {/* <div className="flex flex-wrap gap-4 max-w-2xl">
-        {plans.map((plan) => (
-          <Plan key={plan.name} className="flex-1" {...plan}>
-            <Button variant={plan.isFeatured ? "fancy" : "secondary"} className="w-full">
-              Purchase
-            </Button>
-          </Plan>
-        ))}
-      </div> */}
-
-      <div>
-        <Intro title="Pick a date range:" headingProps={{ size: "h3" }} className="mb-4" />
-
-        <Calendar
-          mode="range"
-          selected={date}
-          onSelect={setDate}
-          numberOfMonths={2}
-          disabled={(date) => date < new Date()}
-          showOutsideDays
-          className="max-w-2xl"
-        />
-      </div>
-
-      <Intro
-        title="Trusted by creators worldwide"
-        description={`${SITE_NAME} is building the worlds best marketplace for the next generation of web frameworks and developer tools. of web development`}
-        headingProps={{ size: "h2" }}
-        className="mt-8"
-      >
+      <Intro {...meta}>
         <Button variant="secondary" prefix={<BarChart3Icon />} className="mt-3" asChild>
           <a
             href="https://go.openalternative.co/analytics"
@@ -94,7 +65,37 @@ export default function SubmitPage() {
           </a>
         </Button>
       </Intro>
-      <div className="grid-auto-fill-xs grid gap-4">
+
+      <div className="flex flex-col gap-4 max-w-2xl">
+        <div className="flex flex-col border rounded-md">
+          <Calendar
+            mode="range"
+            selected={date}
+            onSelect={setDate}
+            numberOfMonths={2}
+            disabled={[(date) => date < new Date(), ...disabledDates]}
+            className="p-4"
+          />
+
+          <div className="flex flex-col justify-between gap-4 text-sm text-muted text-center border-t p-4 sm:flex-row sm:items-center sm:text-start">
+            {price ? (
+              <p>
+                {price.days} {plur("day", price.days)} × ${price.price} ={" "}
+                <strong className="font-medium text-foreground">${price.fullPrice}</strong>
+                <Badge className="ml-3">{price.discountPercentage}% off</Badge>
+              </p>
+            ) : (
+              <p>Please select a date range.</p>
+            )}
+
+            <Button variant="fancy" size="lg" disabled={!price}>
+              Purchase Now
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* <div className="grid-auto-fill-xs grid gap-4">
         <Card>
           <H1 as="h3">500+</H1>
           <Card.Description>Visitors Per/Day</Card.Description>
@@ -107,7 +108,7 @@ export default function SubmitPage() {
           <H1 as="h3">175+</H1>
           <Card.Description>Open Source Listings</Card.Description>
         </Card>
-      </div>
+      </div> */}
     </>
   )
 }
