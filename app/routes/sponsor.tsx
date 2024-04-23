@@ -2,7 +2,7 @@ import { Intro } from "~/components/Intro"
 import { MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { Button } from "~/components/Button"
-import { SITE_NAME } from "~/utils/constants"
+import { DAY_IN_MS, SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { BarChart3Icon } from "lucide-react"
 import { useEffect, useMemo, useState } from "react"
@@ -47,9 +47,11 @@ export default function SubmitPage() {
       return
     }
 
-    const duration = Math.ceil((date.to.getTime() - date.from.getTime()) / (1000 * 60 * 60 * 24))
+    const duration = Math.ceil((date.to.getTime() - date.from.getTime()) / DAY_IN_MS)
     const adjustedDuration = adjustSponsoringDuration(duration, date.from, date.to, disabledDates)
-    setPrice(calculateSponsoringPrice(adjustedDuration + 1))
+    const price = calculateSponsoringPrice(adjustedDuration + 1)
+
+    setPrice(price)
   }, [date, disabledDates])
 
   return (
