@@ -7,14 +7,7 @@ import { Logo } from "./Logo"
 
 export const SponsoredCard = ({ className, ...props }: CardProps) => {
   return (
-    <Card
-      className={cx(
-        "!border-neutral-300 order-2 hover:bg-neutral-100 dark:!border-neutral-600 dark:hover:!bg-neutral-800",
-        className
-      )}
-      asChild
-      {...props}
-    >
+    <Card className={cx("order-2", className)} asChild {...props}>
       <Link to="/sponsor">
         <Card.Header>
           <H4 as="h2" className="truncate">
@@ -22,7 +15,7 @@ export const SponsoredCard = ({ className, ...props }: CardProps) => {
           </H4>
         </Card.Header>
 
-        <Card.Description className="mb-auto line-clamp-4 ">
+        <Card.Description className="mb-auto line-clamp-4">
           Reach out to our audience of professional developers and designers.
         </Card.Description>
 
