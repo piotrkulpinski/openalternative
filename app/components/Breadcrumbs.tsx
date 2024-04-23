@@ -14,8 +14,8 @@ export const BreadcrumbsLink = ({ children, label, ...props }: BreadcrumbsItemPr
       itemProp="item"
       className={cx([
         "group-last:group-[&:not(:only-child)]:line-clamp-1",
-        "group-only:font-medium group-only:text-neutral-800 group-only:dark:text-neutral-200",
-        "max-md:font-medium max-md:text-neutral-800 max-md:dark:text-neutral-200",
+        "group-only:font-medium group-only:text-foreground",
+        "max-md:font-medium max-md:text-foreground",
       ])}
       end
       {...props}
@@ -29,7 +29,7 @@ export const BreadcrumbsLink = ({ children, label, ...props }: BreadcrumbsItemPr
 
 const BreadcrumbsSeparator = ({ ...props }: HTMLAttributes<HTMLElement>) => {
   return (
-    <span className="pointer-events-none text-sm text-neutral-300 dark:text-neutral-600" {...props}>
+    <span className="text-sm text-secondary invert pointer-events-none select-none" {...props}>
       /
     </span>
   )

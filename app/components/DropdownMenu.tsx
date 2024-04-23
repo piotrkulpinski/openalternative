@@ -19,7 +19,7 @@ const DropdownMenuContent = forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cx(
-        "z-50 min-w-[8rem] flex flex-col overflow-hidden rounded-md border bg-white p-1 text-neutral-600 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-neutral-900 dark:text-neutral-400 dark:border-neutral-700/50",
+        "z-50 min-w-[8rem] flex flex-col overflow-hidden rounded-md border bg-background p-1 text-border-dark-fore data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         className
       )}
       {...props}
@@ -36,7 +36,7 @@ const DropdownMenuItem = forwardRef<
     ref={ref}
     className={cx(
       "rounded !px-2 !py-1.5 !m-0",
-      "focus:outline-none focus:bg-neutral-100 focus:text-neutral-800 dark:focus:bg-neutral-800/40 dark:focus:text-neutral-200",
+      "focus:outline-none focus:bg-card-dark focus:text-foreground",
       navigationLinkVariants({ className })
     )}
     {...props}
@@ -51,15 +51,15 @@ const DropdownMenuCheckboxItem = forwardRef<
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
     className={cx(
-      "relative flex select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-neutral-100 focus:text-neutral-800 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-neutral-800/40 dark:focus:text-neutral-200",
+      "relative flex select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-card-dark focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     checked={checked}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="size-4" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -74,14 +74,14 @@ const DropdownMenuRadioItem = forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cx(
-      "relative flex select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-neutral-100 focus:text-neutral-800 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-neutral-800/40 dark:focus:text-neutral-200",
+      "relative flex select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-card-dark focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
-        <Circle className="h-2 w-2 fill-current" />
+        <Circle className="size-2 fill-current" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -107,7 +107,7 @@ const DropdownMenuSeparator = forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={cx("-mx-1 my-1 h-px bg-muted", className)}
+    className={cx("-mx-1 my-1 h-px bg-border", className)}
     {...props}
   />
 ))

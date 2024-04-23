@@ -24,6 +24,7 @@ export const PaginationLink = ({
     <NavLink
       className={cx(
         isDisabled && "pointer-events-none opacity-40",
+        isActive && "bg-card-dark rounded-sm",
         navigationLinkVariants({
           isActive,
           className,
@@ -32,15 +33,11 @@ export const PaginationLink = ({
       unstable_viewTransition
       {...props}
     >
-      <Slot className="size-5 duration-150 group-hover:-translate-x-0.5 group-hover:scale-105">
-        {prefix}
-      </Slot>
+      <Slot className="size-5 duration-150 group-hover:-translate-x-0.5">{prefix}</Slot>
 
       {children}
 
-      <Slot className="size-5 duration-150 group-hover:translate-x-0.5 group-hover:scale-105">
-        {suffix}
-      </Slot>
+      <Slot className="size-5 duration-150 group-hover:translate-x-0.5">{suffix}</Slot>
     </NavLink>
   )
 }

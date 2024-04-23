@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-background: 0 0% 100%;
+
+  --color-card: 0 0% 98%;
+  --color-card-dark: 0 0% 96%;
+  --color-border: 0 0% 88%;
+  --color-border-dark: 0 0% 83%;
+
+  --color-muted: 0 0% 50%;
+  --color-secondary: 0 0% 33.3%;
+  --color-foreground: 0 0% 15%;
+}
+
+.dark {
+  --color-background: 0 0% 9%;
+
+  --color-card: 0 0% 11%;
+  --color-card-dark: 0 0% 13%;
+  --color-border: 0 0% 24%;
+  --color-border-dark: 0 0% 29%;
+
+  --color-muted: 0 0% 50%;
+  --color-secondary: 0 0% 66.6%;
+  --color-foreground: 0 0% 90%;
+}
+
 /* CSS */
 :root {
   font-family: Inter, sans-serif;

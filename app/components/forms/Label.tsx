@@ -2,7 +2,7 @@ import { LabelHTMLAttributes, forwardRef } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
 
 export const labelVariants = cva({
-  base: "block text-sm font-semibold text-neutral-800 [&[for]]:cursor-pointer dark:text-neutral-200",
+  base: "block text-sm font-semibold text-foreground [&[for]]:cursor-pointer",
 
   variants: {
     isRequired: {

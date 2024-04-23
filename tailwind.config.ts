@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss"
 import plugin from "tailwindcss/plugin"
-import colors from "tailwindcss/colors"
 import defaultTheme from "tailwindcss/defaultTheme"
 
 export default {
@@ -9,11 +8,25 @@ export default {
 
   theme: {
     extend: {
+      colors: {
+        background: "hsl(var(--color-background))",
+        muted: "hsl(var(--color-muted))",
+        secondary: "hsl(var(--color-secondary))",
+        foreground: "hsl(var(--color-foreground))",
+        border: {
+          DEFAULT: "hsl(var(--color-border))",
+          dark: "hsl(var(--color-border-dark))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--color-card))",
+          dark: "hsl(var(--color-card-dark))",
+        },
+      },
       letterSpacing: {
         micro: "0.0125em",
       },
       borderColor: {
-        DEFAULT: colors.neutral["200"],
+        DEFAULT: "hsl(var(--color-border))",
       },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],

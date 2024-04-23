@@ -25,7 +25,7 @@ export const RefinementList = ({ className, ...props }: RefinementListProps) => 
         maxLength={512}
         placeholder={`Search ${props.attribute}`}
         onChange={(e) => searchForItems(e.currentTarget.value)}
-        className="!text-xs !min-w-[0] px-2 py-1"
+        className="!text-xs !min-w-[0] px-2 py-1 font-normal outline-offset-0"
       />
 
       <div
@@ -37,20 +37,15 @@ export const RefinementList = ({ className, ...props }: RefinementListProps) => 
         {items?.map((item) => (
           <label
             key={item.label}
-            className="flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-neutral-600 hover:!text-pink-500 dark:text-neutral-400"
+            className="flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-secondary hover:!text-pink-500"
           >
-            <input
-              type="checkbox"
-              checked={item.isRefined}
-              onChange={() => refine(item.value)}
-              className="border-neutral-200"
-            />
+            <input type="checkbox" checked={item.isRefined} onChange={() => refine(item.value)} />
             <span className="flex-1 truncate">{item.label}</span>
             <Badge size="sm">{item.count}</Badge>
           </label>
         ))}
 
-        {!items.length && <p className="text-xs text-neutral-500">No results found</p>}
+        {!items.length && <p className="text-xs text-secondary">No results found</p>}
       </div>
 
       <button

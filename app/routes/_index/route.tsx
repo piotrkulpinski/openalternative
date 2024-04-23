@@ -48,11 +48,14 @@ export default function Index() {
             className="max-w-[40rem] text-pretty"
           >
             {!!newToolCount && (
-              <Link to="/latest" className="contents">
-                <Badge className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md">
+              <Badge
+                className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
+                asChild
+              >
+                <Link to="/latest">
                   <Ping /> {newToolCount} tools added this week
-                </Badge>
-              </Link>
+                </Link>
+              </Badge>
             )}
           </Intro>
 

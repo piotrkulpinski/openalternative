@@ -162,7 +162,7 @@ export default function ToolsPage() {
               {tool.description && (
                 <Prose>
                   <h2
-                    className="lead !font-normal !tracking-normal !text-neutral-600 dark:!text-neutral-400"
+                    className="lead !font-normal !tracking-normal !text-secondary"
                     style={{ viewTransitionName: "tool-description" }}
                   >
                     {tool.description}
@@ -201,7 +201,7 @@ export default function ToolsPage() {
               width={1280}
               height={1024}
               loading="eager"
-              className="aspect-video h-auto w-full rounded-md border object-cover object-top dark:border-neutral-700/50"
+              className="aspect-video h-auto w-full rounded-md border object-cover object-top"
             />
           )}
 

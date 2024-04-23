@@ -13,13 +13,9 @@ export const buttonVariants = cva({
 
   variants: {
     variant: {
-      fancy: "!border-transparent bg-pink-600 text-neutral-50 hover:bg-pink-700",
-      primary:
-        "!border-transparent text-neutral-950 bg-current [&>*]:invert hover:opacity-90 dark:text-neutral-50",
-      secondary: [
-        "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100",
-        "dark:text-neutral-400 dark:bg-transparent dark:border-neutral-700 dark:bg-neutral-800/40 dark:hover:border-neutral-600 dark:hover:bg-neutral-800",
-      ],
+      fancy: "border-transparent bg-pink-600 text-white hover:bg-pink-700",
+      primary: "border-transparent text-background bg-foreground hover:opacity-90",
+      secondary: "bg-card text-secondary hover:bg-card-dark hover:border-border-dark",
     },
     size: {
       sm: "text-[13px]/none gap-[0.5ch] py-1 px-2",

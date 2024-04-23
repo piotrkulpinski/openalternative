@@ -28,7 +28,7 @@ export const Newsletter = ({
     <Series size="lg" direction="column" asChild>
       <section {...props}>
         {title && <H5 className="font-medium">{title}</H5>}
-        {description && <p className="-mt-2 text-sm text-neutral-500">{description}</p>}
+        {description && <p className="-mt-2 text-sm text-muted">{description}</p>}
 
         <div className="space-y-2">
           {data?.type !== "success" && (
