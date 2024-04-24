@@ -1,5 +1,5 @@
-import { ActionFunctionArgs, TypedResponse, json } from "@remix-run/node"
-import { createStripeCheckoutSession, stripeCheckoutSchema } from "~/services.server/stripe"
+import { ActionFunctionArgs, TypedResponse, json } from "@remix-run/node";
+import { createStripeCheckoutSession, stripeCheckoutSchema } from "~/services.server/stripe";
 
 export type ActionState = { type: "error"; error: string } | { type: "success"; url: string | null }
 

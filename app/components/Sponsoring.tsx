@@ -1,7 +1,8 @@
+import { SerializeFrom } from "@remix-run/node"
 import { useFetcher } from "@remix-run/react"
 import { Button } from "~/components/Button"
-import { DAY_IN_MS, SITE_NAME } from "~/utils/constants"
-import { useEffect, useMemo, useState, HTMLAttributes } from "react"
+import { DAY_IN_MS, SITE_NAME, SWR_CONFIG } from "~/utils/constants"
+import { useEffect, useState, HTMLAttributes } from "react"
 import { Calendar } from "~/components/Calendar"
 import { DateRange } from "react-day-picker"
 import plur from "plur"
@@ -9,17 +10,32 @@ import { adjustSponsoringDuration, calculateSponsoringPrice } from "~/utils/spon
 import { Badge } from "~/components/Badge"
 import { cx } from "~/utils/cva"
 import { action } from "~/routes/api.stripe.create-checkout"
-import { z } from "zod"
-import { stripeCheckoutSchema } from "~/services.server/stripe"
+import { StripeCheckoutSchema } from "~/services.server/stripe"
+import { fetcher } from "~/utils/fetchers"
+import useSWR from "swr"
+import { loader } from "~/routes/api.fetch-sponsoring-dates"
+
+type SponsoringDatesPayload = SerializeFrom<Awaited<ReturnType<typeof loader>>>
 
 export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
-  const fetcher = useFetcher<typeof action>()
+  const { data, state, submit } = useFetcher<typeof action>()
   const [date, setDate] = useState<DateRange>()
   const [price, setPrice] = useState<ReturnType<typeof calculateSponsoringPrice>>()
-  const disabledDates: DateRange[] = useMemo(
-    () => [{ from: new Date(2024, 4, 18), to: new Date(2024, 4, 29) }],
-    []
-  )
+  const [disabledDates, setDisabledDates] = useState<DateRange[]>([])
+
+  // Fetch the sponsored dates
+  useSWR<SponsoringDatesPayload>({ url: "/api/fetch-sponsoring-dates" }, fetcher, {
+    ...SWR_CONFIG,
+
+    onSuccess: (dates) => {
+      setDisabledDates(
+        dates.map(({ startsAt, endsAt }) => ({
+          from: new Date(Date.parse(startsAt)),
+          to: new Date(Date.parse(endsAt) - DAY_IN_MS),
+        }))
+      )
+    },
+  })
 
   // Calculate the duration in days
   useEffect(() => {
@@ -36,15 +52,15 @@ export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>)
   }, [date, disabledDates])
 
   useEffect(() => {
-    if (fetcher.data?.type === "success" && fetcher.data.url) {
-      window.location.href = fetcher.data.url
+    if (data?.type === "success" && data.url) {
+      window.location.href = data.url
     }
-  }, [fetcher.data])
+  }, [data])
 
   const onCreateCheckout = () => {
     if (!price || !date?.from || !date.to) return
 
-    const payload: z.infer<typeof stripeCheckoutSchema> = {
+    const payload: StripeCheckoutSchema = {
       price: price.price,
       quantity: price.days,
       name: `${SITE_NAME} Sponsoring`,
@@ -54,7 +70,7 @@ export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>)
       },
     }
 
-    fetcher.submit(payload, {
+    submit(payload, {
       method: "POST",
       encType: "application/json",
       action: "/api/stripe/create-checkout",
@@ -88,7 +104,7 @@ export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>)
             variant="fancy"
             size="lg"
             disabled={!price}
-            isPending={fetcher.state === "submitting"}
+            isPending={state === "submitting"}
             className="-my-2"
             onClick={onCreateCheckout}
           >
@@ -96,10 +112,8 @@ export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>)
           </Button>
         </div>
 
-        {fetcher.data?.type === "error" && fetcher.data.error && (
-          <div className="p-4 text-sm text-center text-red-500 sm:text-start">
-            {fetcher.data.error}
-          </div>
+        {data?.type === "error" && data.error && (
+          <div className="p-4 text-sm text-center text-red-500 sm:text-start">{data.error}</div>
         )}
       </div>
     </div>
