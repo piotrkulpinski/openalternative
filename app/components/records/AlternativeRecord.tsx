@@ -1,6 +1,6 @@
-import { HTMLAttributes } from "react"
-import { Card, Card } from "~/components/Card"
 import plur from "plur"
+import { HTMLAttributes } from "react"
+import { Card } from "~/components/Card"
 import { AlternativeMany } from "~/services.server/api"
 import { SerializeFrom } from "@remix-run/node"
 import { NavLink } from "@remix-run/react"
