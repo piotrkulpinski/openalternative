@@ -103,6 +103,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         </DropdownMenu>
 
         <NavigationLink to="/about">About</NavigationLink>
+        <NavigationLink to="/sponsor">Sponsor</NavigationLink>
       </nav>
 
       <Series size="sm">
@@ -151,6 +152,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <NavigationLink to="/languages">Languages</NavigationLink>
           <NavigationLink to="/topics">Topics</NavigationLink>
           <NavigationLink to="/submit">Submit</NavigationLink>
+          <NavigationLink to="/sponsor">Sponsor</NavigationLink>
           <NavigationLink to="/about">About</NavigationLink>
         </nav>
       )}

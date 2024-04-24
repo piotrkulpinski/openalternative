@@ -1,6 +1,7 @@
 import { NavLink, NavLinkProps } from "@remix-run/react"
 import { cva } from "cva"
 import { ElementRef, forwardRef } from "react"
+import { cx } from "~/utils/cva"
 
 export const navigationLinkVariants = cva({
   base: [
@@ -19,7 +20,7 @@ export const NavigationLink = forwardRef<ElementRef<typeof NavLink>, NavLinkProp
     return (
       <NavLink
         ref={ref}
-        className={({ isActive }) => navigationLinkVariants({ isActive, className })}
+        className={({ isActive }) => cx(navigationLinkVariants({ isActive, className }))}
         unstable_viewTransition
         {...props}
       />

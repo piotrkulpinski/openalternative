@@ -16,13 +16,15 @@ export const stripeCheckoutSchema = z.object({
   }),
 })
 
+export type StripeCheckoutSchema = z.infer<typeof stripeCheckoutSchema>
+
 export const createStripeCheckoutSession = async ({
   price,
   quantity,
   name,
   description,
   metadata,
-}: z.infer<typeof stripeCheckoutSchema>) => {
+}: StripeCheckoutSchema) => {
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
     line_items: [
@@ -33,6 +35,24 @@ export const createStripeCheckoutSession = async ({
           product_data: { name, description },
         },
         quantity,
+      },
+    ],
+    custom_fields: [
+      {
+        key: "name",
+        label: { type: "custom", custom: "Company Name" },
+        type: "text",
+      },
+      {
+        key: "description",
+        label: { type: "custom", custom: "Description" },
+        type: "text",
+        optional: true,
+      },
+      {
+        key: "website",
+        label: { type: "custom", custom: "Website URL" },
+        type: "text",
       },
     ],
     metadata,
