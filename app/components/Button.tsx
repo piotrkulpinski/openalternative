@@ -15,7 +15,7 @@ export const buttonVariants = cva({
     variant: {
       fancy: "border-transparent bg-pink-600 text-white hover:bg-pink-700",
       primary: "border-transparent text-background bg-foreground hover:opacity-90",
-      secondary: "bg-card text-secondary hover:bg-card-dark hover:border-border-dark",
+      secondary: "bg-background text-secondary hover:bg-card hover:border-border-dark",
     },
     size: {
       sm: "text-[13px]/none gap-[0.5ch] py-1 px-2",
