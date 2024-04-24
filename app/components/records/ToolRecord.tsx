@@ -10,7 +10,6 @@ import { Insights } from "../Insights"
 import { ToolMany } from "~/services.server/api"
 import { H4 } from "../Heading"
 import { Favicon } from "../Favicon"
-import { Badge } from "../Badge"
 import { cx } from "~/utils/cva"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
@@ -54,8 +53,6 @@ export const ToolRecord = ({ className, tool, ...props }: ToolRecordProps) => {
             >
               <ToolHighlight tool={tool} attribute="name" />
             </H4>
-
-            {tool.isFeatured && <Badge className="ml-auto">Promoted</Badge>}
           </Card.Header>
 
           {tool.description && (

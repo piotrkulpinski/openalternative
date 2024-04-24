@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react"
-import { Card } from "~/components/Card"
+import { Card, Card } from "~/components/Card"
 import plur from "plur"
 import { AlternativeMany } from "~/services.server/api"
 import { SerializeFrom } from "@remix-run/node"
@@ -27,9 +27,9 @@ export const AlternativeRecord = ({ alternative, showCount, ...props }: Alternat
         {alternative.description && <Card.Description>{alternative.description}</Card.Description>}
 
         {showCount && (
-          <span className="text-xs text-secondary">
+          <Card.Footer>
             {alternative._count.tools} {plur("alternative", alternative._count.tools)}
-          </span>
+          </Card.Footer>
         )}
       </NavLink>
     </Card>
