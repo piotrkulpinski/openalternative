@@ -6,6 +6,7 @@ import { useEffect, useState, HTMLAttributes } from "react"
 import { Calendar } from "~/components/Calendar"
 import { DateRange } from "react-day-picker"
 import plur from "plur"
+import { posthog } from "posthog-js"
 import { adjustSponsoringDuration, calculateSponsoringPrice } from "~/utils/sponsoring"
 import { Badge } from "~/components/Badge"
 import { cx } from "~/utils/cva"
@@ -48,7 +49,11 @@ export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>)
     const adjustedDuration = adjustSponsoringDuration(duration, date.from, date.to, disabledDates)
     const price = calculateSponsoringPrice(adjustedDuration + 1)
 
+    // Set the price
     setPrice(price)
+
+    // Send the event to PostHog
+    posthog.capture("sponsoring_select", price)
   }, [date, disabledDates])
 
   useEffect(() => {
@@ -75,6 +80,9 @@ export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>)
       encType: "application/json",
       action: "/api/stripe/create-checkout",
     })
+
+    // Send the event to PostHog
+    posthog.capture("sponsoring_checkout", price)
   }
 
   return (
