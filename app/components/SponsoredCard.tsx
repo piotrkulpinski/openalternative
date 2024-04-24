@@ -16,7 +16,8 @@ export const SponsoredCard = ({ className, ...props }: CardProps) => {
         </Card.Header>
 
         <Card.Description className="mb-auto line-clamp-4">
-          Reach out to our audience of professional developers and designers.
+          Reach out to our audience of professional open source/tech enthusiasts to boost your
+          sales.
         </Card.Description>
 
         <Button className="w-full pointer-events-none" asChild>
