@@ -19,7 +19,7 @@ export const Intro = ({
   description,
   prefix,
   suffix,
-  headingProps= {size: "h1"},
+  headingProps = { size: "h1" },
   ...props
 }: IntroProps) => {
   return (
@@ -34,7 +34,9 @@ export const Intro = ({
 
       {description && (
         <Prose className="max-w-3xl">
-          <h2 className="lead !font-normal !tracking-normal !text-secondary">{description}</h2>
+          <h2 className="text-base !font-normal !tracking-normal !text-secondary md:text-lg">
+            {description}
+          </h2>
         </Prose>
       )}
 

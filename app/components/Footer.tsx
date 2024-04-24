@@ -17,12 +17,11 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         <NavigationLink to="/languages">Languages</NavigationLink>
         <NavigationLink to="/topics">Topics</NavigationLink>
 
-        <NavigationLink
-          to={`mailto:${SITE_EMAIL}`}
-          target="_blank"
-          rel="nofollow noreferrer"
-          className="sm:ml-auto"
-        >
+        <NavigationLink to="/sponsor" className="sm:ml-auto">
+          Sponsor
+        </NavigationLink>
+
+        <NavigationLink to={`mailto:${SITE_EMAIL}`} target="_blank" rel="nofollow noreferrer">
           Contact
         </NavigationLink>
 

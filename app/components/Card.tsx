@@ -37,6 +37,10 @@ export const CardHeader = ({ className, ...props }: HTMLAttributes<HTMLElement>)
   return <div className={cx("flex w-full items-center gap-x-3 gap-y-2", className)} {...props} />
 }
 
+export const CardFooter = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+  return <div className={cx("text-xs text-secondary", className)} {...props} />
+}
+
 export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <p
@@ -48,5 +52,6 @@ export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElem
 
 export const Card = Object.assign(CardBase, {
   Header: CardHeader,
+  Footer: CardFooter,
   Description: CardDescription,
 })

@@ -6,7 +6,7 @@ export const inputVariants = cva({
 
   variants: {
     hoverable: {
-      true: "bg-card enabled:cursor-pointer enabled:hover:bg-card-dark enabled:hover:border-border-dark",
+      true: "bg-background enabled:cursor-pointer enabled:hover:bg-card enabled:hover:border-border-dark",
     },
   },
 })

@@ -59,7 +59,7 @@ export default function Index() {
             )}
           </Intro>
 
-          <Newsletter placeholder="Get weekly newsletter" buttonVariant="fancy" />
+          <Newsletter placeholder="Join the newsletter" buttonVariant="fancy" />
         </section>
 
         <ProductHuntCard launch={launch} className="max-md:hidden md:w-60" />
