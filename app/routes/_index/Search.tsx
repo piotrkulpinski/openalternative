@@ -4,11 +4,17 @@ import { Configure, InstantSearch } from "react-instantsearch"
 import { ClientOnly } from "remix-utils/client-only"
 import { Input } from "~/components/forms/Input"
 import { searchClient } from "~/services.server/algolia"
+import type { SponsoringOne } from "~/services.server/api"
 import { Filters } from "./Filters"
 import { Listing } from "./Listing"
 import { Pagination } from "./Pagination"
 
-export const Search = ({ url }: { url: URL | string }) => {
+type SearchProps = {
+  url: URL | string
+  sponsoring: SponsoringOne | null
+}
+
+export const Search = ({ url, sponsoring }: SearchProps) => {
   const listingRef = useRef<HTMLDivElement>(null)
   const indexName = import.meta.env.VITE_ALGOLIA_INDEX_NAME ?? ""
 
@@ -32,7 +38,7 @@ export const Search = ({ url }: { url: URL | string }) => {
 
       <div ref={listingRef} className="flex flex-col gap-6 scroll-mt-14">
         <ClientOnly fallback={<Input disabled />}>{() => <Filters />}</ClientOnly>
-        <Listing />
+        <Listing sponsoring={sponsoring} />
       </div>
 
       <Pagination listingRef={listingRef} padding={2} />

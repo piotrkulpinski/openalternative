@@ -47,14 +47,14 @@ export default function SubmitPage() {
       icon: <SendIcon className="size-full" />,
       title: "Newsletter Mention",
       description: "Get featured in our monthly newsletter read by OpenSource/tech enthusiasts.",
-      footer: "550+ Subscribers",
+      footer: "600+ Subscribers",
       exclusive: true,
     },
     {
       icon: <GithubIcon className="size-full" />,
       title: "GitHub Link",
       description: 'Display your link in a special "Sponsors" section in our GitHub repository.',
-      footer: "300+ Stars",
+      footer: "350+ Stars",
       exclusive: true,
     },
   ]
@@ -103,7 +103,7 @@ export default function SubmitPage() {
         </div>
 
         <p className="text-sm text-muted">
-          * Available only for sponsors who purchased 30 days or more.
+          *Available only for sponsors who purchased 30 days or more.
         </p>
       </div>
     </>
