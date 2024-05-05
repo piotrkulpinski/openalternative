@@ -1,9 +1,9 @@
-import { ActionFunctionArgs } from "@remix-run/node"
-import { prisma } from "~/services.server/prisma"
-import { RepositoryQueryResult, calculateHealthScore, repositoryQuery } from "~/utils/github"
-import { z } from "zod"
-import { graphql } from "@octokit/graphql"
 import { slugify } from "@curiousleaf/utils"
+import { graphql } from "@octokit/graphql"
+import type { ActionFunctionArgs } from "@remix-run/node"
+import { z } from "zod"
+import { prisma } from "~/services.server/prisma"
+import { type RepositoryQueryResult, calculateHealthScore, repositoryQuery } from "~/utils/github"
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   if (request.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -26,7 +26,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       owner,
       name,
       headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
-    }).catch(async (error) => {
+    }).catch(async error => {
       // if the repository check fails, set the tool as draft
       await prisma.tool.update({
         where: { id },
@@ -43,7 +43,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       contributors: repository.mentionableUsers.totalCount,
       watchers: repository.watchers.totalCount,
       lastCommitDate: new Date(
-        repository.defaultBranchRef.target.history.edges[0].node.committedDate
+        repository.defaultBranchRef.target.history.edges[0].node.committedDate,
       ),
       bump,
     }

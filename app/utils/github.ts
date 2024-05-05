@@ -161,6 +161,6 @@ export const calculateHealthScore = ({
   const watchersScore = watchers * 0.25
 
   return Math.round(
-    starsScore + forksScore + contributorsScore + watchersScore - lastCommitPenalty + (bump || 0)
+    starsScore + forksScore + contributorsScore + watchersScore - lastCommitPenalty + (bump || 0),
   )
 }

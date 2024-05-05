@@ -1,6 +1,6 @@
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
-import { HTMLAttributes, RefObject } from "react"
-import { usePagination, type UsePaginationProps } from "react-instantsearch"
+import type { HTMLAttributes, RefObject } from "react"
+import { type UsePaginationProps, usePagination } from "react-instantsearch"
 import { PaginationLink } from "~/components/PaginationLink"
 import { cx } from "~/utils/cva"
 
@@ -40,7 +40,7 @@ export const Pagination = ({ className, listingRef, ...props }: PaginationProps)
         to={createURL(currentRefinement - 1)}
         isDisabled={isFirstPage}
         prefix={<MoveLeftIcon />}
-        onClick={(e) => refinePage(e, currentRefinement - 1)}
+        onClick={e => refinePage(e, currentRefinement - 1)}
         rel="prev"
       >
         prev
@@ -53,13 +53,13 @@ export const Pagination = ({ className, listingRef, ...props }: PaginationProps)
       <div className="flex items-center flex-wrap gap-3 max-md:hidden">
         <span className="text-sm text-muted">Page:</span>
 
-        {pages.map((page) => (
+        {pages.map(page => (
           <PaginationLink
             key={`page-${page}`}
             to={createURL(page)}
             isActive={currentRefinement === page}
             className="min-w-5 justify-center"
-            onClick={(e) => refinePage(e, page)}
+            onClick={e => refinePage(e, page)}
           >
             {page + 1}
           </PaginationLink>
@@ -70,7 +70,7 @@ export const Pagination = ({ className, listingRef, ...props }: PaginationProps)
         to={createURL(currentRefinement + 1)}
         isDisabled={isLastPage}
         suffix={<MoveRightIcon />}
-        onClick={(e) => refinePage(e, currentRefinement + 1)}
+        onClick={e => refinePage(e, currentRefinement + 1)}
         rel="prev"
       >
         next

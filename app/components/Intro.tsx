@@ -1,8 +1,8 @@
-import { HTMLAttributes, ReactNode } from "react"
+import type { HTMLAttributes, ReactNode } from "react"
 import { cx } from "~/utils/cva"
+import { Heading, type HeadingProps } from "./Heading"
 import { Prose } from "./Prose"
 import { Series } from "./Series"
-import { Heading, HeadingProps } from "./Heading"
 
 type IntroProps = Omit<HTMLAttributes<HTMLElement>, "title" | "prefix"> & {
   title: ReactNode

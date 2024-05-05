@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
-import { buttonVariants } from "./Button"
 import { cx } from "~/utils/cva"
+import { buttonVariants } from "./Button"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
@@ -25,7 +25,7 @@ export const Calendar = ({ classNames, ...props }: CalendarProps) => {
           "relative flex-1 p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected]:enabled)]:bg-card-dark [&:has([aria-selected]:enabled.day-outside)]:bg-card-dark/50 [&:has([aria-selected]:enabled.day-range-end)]:rounded-r-md",
           props.mode === "range"
             ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
-            : "[&:has([aria-selected])]:rounded-md"
+            : "[&:has([aria-selected])]:rounded-md",
         ),
         day: "h-8 w-full rounded-md p-0 font-normal hover:bg-card-dark",
         day_range_start: "day-range-start",

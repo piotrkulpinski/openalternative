@@ -14,7 +14,7 @@ export const loader = async () => {
   const languages = await prisma.language.findMany({ select: { slug: true } })
   const topics = await prisma.topic.findMany({ select: { slug: true } })
 
-  const toolItems = tools.map((tool) => {
+  const toolItems = tools.map(tool => {
     return `
       <url>
         <loc>${url}/${tool.slug}</loc>
@@ -25,7 +25,7 @@ export const loader = async () => {
     `
   })
 
-  const categoryItems = categories.map((category) => {
+  const categoryItems = categories.map(category => {
     return `
       <url>
         <loc>${url}/categories/${category.slug}</loc>
@@ -35,7 +35,7 @@ export const loader = async () => {
     `
   })
 
-  const alternativeItems = alternatives.map((alternative) => {
+  const alternativeItems = alternatives.map(alternative => {
     return `
       <url>
         <loc>${url}/alternatives/${alternative.slug}</loc>
@@ -45,7 +45,7 @@ export const loader = async () => {
     `
   })
 
-  const languageItems = languages.map((language) => {
+  const languageItems = languages.map(language => {
     return `
       <url>
         <loc>${url}/languages/${language.slug}</loc>
@@ -55,7 +55,7 @@ export const loader = async () => {
     `
   })
 
-  const topicItems = topics.map((topic) => {
+  const topicItems = topics.map(topic => {
     return `
       <url>
         <loc>${url}/topics/${topic.slug}</loc>

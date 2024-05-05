@@ -1,4 +1,4 @@
-import { json, type MetaFunction } from "@remix-run/node"
+import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
@@ -40,7 +40,7 @@ export default function CategoriesIndex() {
       <Intro {...meta} />
 
       <Grid className="md:gap-8">
-        {categories.map((category) => (
+        {categories.map(category => (
           <CategoryRecord key={category.id} category={category} />
         ))}
 

@@ -1,13 +1,13 @@
-import { HTMLAttributes } from "react"
 import { useLocalStorage, useMediaQuery } from "@uidotdev/usehooks"
-import { cx } from "~/utils/cva"
 import { PanelBottomCloseIcon, PanelBottomOpenIcon } from "lucide-react"
+import type { HTMLAttributes } from "react"
 import { useInstantSearch } from "react-instantsearch"
 import { Button } from "~/components/Button"
+import { cx } from "~/utils/cva"
+import { HitsPerPage } from "./HitsPerPage"
 import { Refinements } from "./Refinements"
 import { SearchBox } from "./SearchBox"
 import { SortBy } from "./SortBy"
-import { HitsPerPage } from "./HitsPerPage"
 
 export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const isMobile = useMediaQuery("only screen and (max-width : 768px)")
@@ -40,7 +40,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
           size="md"
           variant="secondary"
           prefix={isFiltersOpen ? <PanelBottomOpenIcon /> : <PanelBottomCloseIcon />}
-          onClick={() => setIsFiltersOpen((prev) => !prev)}
+          onClick={() => setIsFiltersOpen(prev => !prev)}
           className="flex-1 text-start justify-start"
         >
           {isFiltersOpen ? "Hide" : "Show"} Filters

@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
-import { HTMLAttributes, isValidElement } from "react"
-import { VariantProps, cva, cx } from "~/utils/cva"
+import { type HTMLAttributes, isValidElement } from "react"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const badgeVariants = cva({
   base: "rounded bg-border/50 text-secondary hover:[&[href]]:bg-border/75",

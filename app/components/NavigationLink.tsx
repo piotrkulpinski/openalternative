@@ -1,6 +1,6 @@
-import { NavLink, NavLinkProps } from "@remix-run/react"
+import { NavLink, type NavLinkProps } from "@remix-run/react"
 import { cva } from "cva"
-import { ElementRef, forwardRef } from "react"
+import { type ElementRef, forwardRef } from "react"
 import { cx } from "~/utils/cva"
 
 export const navigationLinkVariants = cva({
@@ -25,7 +25,7 @@ export const NavigationLink = forwardRef<ElementRef<typeof NavLink>, NavLinkProp
         {...props}
       />
     )
-  }
+  },
 )
 
 NavigationLink.displayName = "NavigationLink"

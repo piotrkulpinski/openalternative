@@ -1,4 +1,4 @@
-import { json, type MetaFunction } from "@remix-run/node"
+import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
@@ -32,8 +32,9 @@ export const loader = async () => {
   })
 
   const meta = {
-    title: `Recently added Open Source Software`,
-    description: `A collection of the latest open source tools added to the directory. Browse and discover new tools to use in your projects.`,
+    title: "Recently added Open Source Software",
+    description:
+      "A collection of the latest open source tools added to the directory. Browse and discover new tools to use in your projects.",
   }
 
   return json({ meta, tools }, { headers: JSON_HEADERS })
@@ -47,7 +48,7 @@ export default function CategoriesPage() {
       <Intro {...meta} />
 
       <Grid>
-        {tools.map((tool) => (
+        {tools.map(tool => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 

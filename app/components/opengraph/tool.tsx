@@ -1,7 +1,7 @@
 import { getExcerpt } from "@curiousleaf/utils"
+import type { ToolOne } from "~/services.server/api"
 import { SITE_NAME } from "~/utils/constants"
 import { Logo } from "../Logo"
-import { ToolOne } from "~/services.server/api"
 
 type ToolOpenGraphProps = {
   tool: ToolOne

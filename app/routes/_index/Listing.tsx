@@ -1,10 +1,10 @@
-import { useHits, type UseHitsProps } from "react-instantsearch"
+import { Fragment, type HTMLAttributes } from "react"
+import { type UseHitsProps, useHits } from "react-instantsearch"
 import { Grid } from "~/components/Grid"
-import { ToolOne } from "~/services.server/api"
-import { ToolRecord } from "~/components/records/ToolRecord"
 import { H5 } from "~/components/Heading"
-import { Fragment, HTMLAttributes } from "react"
 import { SponsoredCard } from "~/components/SponsoredCard"
+import { ToolRecord } from "~/components/records/ToolRecord"
+import type { ToolOne } from "~/services.server/api"
 
 type ListingProps = HTMLAttributes<HTMLElement> & UseHitsProps<ToolOne>
 

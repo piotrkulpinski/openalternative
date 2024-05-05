@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react"
+import type { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 
 export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {

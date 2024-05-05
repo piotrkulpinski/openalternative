@@ -1,5 +1,5 @@
-import { InputHTMLAttributes, forwardRef } from "react"
-import { VariantProps, cva, cx } from "~/utils/cva"
+import { type InputHTMLAttributes, forwardRef } from "react"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const inputVariants = cva({
   base: "rounded-md border appearance-none px-3 py-2 text-[13px]/tight bg-background text-secondary font-medium placeholder:text-inherit placeholder:opacity-50 disabled:opacity-50",

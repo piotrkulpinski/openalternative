@@ -1,9 +1,9 @@
-import { SITE_NAME, SITE_TAGLINE } from "~/utils/constants"
+import { type MetaFunction, json } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
+import { Featured } from "~/components/Featured"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
-import { Featured } from "~/components/Featured"
-import { MetaFunction, json } from "@remix-run/node"
-import { useLoaderData } from "@remix-run/react"
+import { SITE_NAME, SITE_TAGLINE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {

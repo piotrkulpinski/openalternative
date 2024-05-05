@@ -40,7 +40,7 @@ export default function LanguagesIndex() {
       <Intro {...meta} />
 
       <Grid className="md:gap-8">
-        {languages.map((language) => (
+        {languages.map(language => (
           <LanguageRecord key={language.slug} language={language} />
         ))}
 

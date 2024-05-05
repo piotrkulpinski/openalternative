@@ -1,7 +1,7 @@
-import { inngest } from "~/services.server/inngest"
 import { got } from "got"
-import { uploadToS3Storage } from "~/services.server/s3"
+import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
+import { uploadToS3Storage } from "~/services.server/s3"
 
 export const onToolCreated = inngest.createFunction(
   { id: "tool.created" },
@@ -40,8 +40,8 @@ export const onToolCreated = inngest.createFunction(
       }
 
       const screenshotParams = new URLSearchParams({
-        access_key: process.env.SCREENSHOTONE_ACCESS_KEY!,
-        url: tool.website!,
+        access_key: process.env.SCREENSHOTONE_ACCESS_KEY ?? "",
+        url: tool.website ?? "",
         response_type: "json",
 
         // Cache
@@ -63,9 +63,9 @@ export const onToolCreated = inngest.createFunction(
         // Storage options
         store: "true",
         storage_path: `${tool.slug}/screenshot`,
-        storage_bucket: process.env.S3_BUCKET!,
-        storage_access_key_id: process.env.S3_ACCESS_KEY!,
-        storage_secret_access_key: process.env.S3_SECRET_ACCESS_KEY!,
+        storage_bucket: process.env.S3_BUCKET ?? "",
+        storage_access_key_id: process.env.S3_ACCESS_KEY ?? "",
+        storage_secret_access_key: process.env.S3_SECRET_ACCESS_KEY ?? "",
         storage_return_location: "true",
       })
 
@@ -89,5 +89,5 @@ export const onToolCreated = inngest.createFunction(
         data: { faviconUrl, screenshotUrl },
       })
     })
-  }
+  },
 )

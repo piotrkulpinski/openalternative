@@ -1,4 +1,4 @@
-import { Link, LinkProps } from "@remix-run/react"
+import { Link, type LinkProps } from "@remix-run/react"
 import { cx } from "~/utils/cva"
 
 export const Tag = ({ className, ...props }: LinkProps) => {

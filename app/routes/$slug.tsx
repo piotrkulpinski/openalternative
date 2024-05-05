@@ -1,9 +1,26 @@
-import { HeadersFunction, json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node"
-import { HashIcon, MoveRightIcon, TagIcon } from "lucide-react"
-import { FaviconImage } from "~/components/Favicon"
-import { Series } from "~/components/Series"
 import {
-  ToolOne,
+  type HeadersFunction,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+  json,
+} from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
+import { HashIcon, MoveRightIcon, TagIcon } from "lucide-react"
+import { posthog } from "posthog-js"
+import { BackButton } from "~/components/BackButton"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { Button } from "~/components/Button"
+import { FaviconImage } from "~/components/Favicon"
+import { Grid } from "~/components/Grid"
+import { H1, H4 } from "~/components/Heading"
+import { Prose } from "~/components/Prose"
+import { RepositoryDetails } from "~/components/RepositoryDetails"
+import { Series } from "~/components/Series"
+import { Tag } from "~/components/Tag"
+import { AlternativeRecord } from "~/components/records/AlternativeRecord"
+import { ToolRecord } from "~/components/records/ToolRecord"
+import {
+  type ToolOne,
   alternativeManyPayload,
   categoryManyPayload,
   languageManyPayload,
@@ -11,22 +28,10 @@ import {
   topicManyPayload,
 } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { BackButton } from "~/components/BackButton"
-import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { H1, H4 } from "~/components/Heading"
 import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
-import { useLoaderData } from "@remix-run/react"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
-import { Button } from "~/components/Button"
-import { Prose } from "~/components/Prose"
-import { posthog } from "posthog-js"
-import { ToolRecord } from "~/components/records/ToolRecord"
-import { Grid } from "~/components/Grid"
 import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
-import { AlternativeRecord } from "~/components/records/AlternativeRecord"
-import { Tag } from "~/components/Tag"
-import { RepositoryDetails } from "~/components/RepositoryDetails"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -66,7 +71,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
             where: { slug, publishedAt: { lte: new Date() } },
             include: toolOnePayload,
           }),
-        { type: "find tool", timings }
+        { type: "find tool", timings },
       ),
 
       time(
@@ -76,7 +81,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
             orderBy: { alternative: { name: "asc" } },
             include: { alternative: { include: alternativeManyPayload } },
           }),
-        { type: "find alternatives", timings }
+        { type: "find alternatives", timings },
       ),
 
       time(
@@ -86,7 +91,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
             orderBy: { category: { name: "asc" } },
             include: { category: { include: categoryManyPayload } },
           }),
-        { type: "find categories", timings }
+        { type: "find categories", timings },
       ),
 
       time(
@@ -96,7 +101,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
             orderBy: { language: { name: "asc" } },
             include: { language: { include: languageManyPayload } },
           }),
-        { type: "find languages", timings }
+        { type: "find languages", timings },
       ),
 
       time(
@@ -106,7 +111,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
             orderBy: { topic: { slug: "asc" } },
             include: { topic: { include: topicManyPayload } },
           }),
-        { type: "find topics", timings }
+        { type: "find topics", timings },
       ),
 
       time(
@@ -121,17 +126,21 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
             orderBy: { tool: { score: "desc" } },
             take: 3,
           }),
-        { type: "find related tools", timings }
+        { type: "find related tools", timings },
       ),
     ])
 
     const meta = {
-      title: `${tool.name}: Open Source Alternative ${alternatives.length ? `to ${alternatives.map(({ alternative }) => alternative?.name).join(", ")}` : ""}`,
+      title: `${tool.name}: Open Source Alternative ${
+        alternatives.length
+          ? `to ${alternatives.map(({ alternative }) => alternative?.name).join(", ")}`
+          : ""
+      }`,
     }
 
     return json(
       { meta, tool, alternatives, categories, languages, topics, relatedTools },
-      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } }
+      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
     )
   } catch (error) {
     console.error(error)

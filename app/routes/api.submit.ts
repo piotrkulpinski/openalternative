@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client"
-import { ActionFunctionArgs, TypedResponse, json } from "@remix-run/node"
+import { type ActionFunctionArgs, type TypedResponse, json } from "@remix-run/node"
 import slugify from "@sindresorhus/slugify"
-import { ZodFormattedError, z } from "zod"
+import { type ZodFormattedError, z } from "zod"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 
@@ -12,8 +12,8 @@ const schema = z.object({
     .string()
     .url()
     .refine(
-      (url) => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
-      "The repository must be a valid GitHub URL with owner and repo name."
+      url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
+      "The repository must be a valid GitHub URL with owner and repo name.",
     ),
   description: z.string().min(1).max(200),
 })
@@ -56,7 +56,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.meta?.target) {
       const schemaKeys = Object.keys(schema.shape)
-      const name = (e.meta?.target as string[]).find((t) => schemaKeys.includes(t)) || "name"
+      const name = (e.meta?.target as string[]).find(t => schemaKeys.includes(t)) || "name"
 
       if (name && e.code === "P2002") {
         return json({

@@ -1,4 +1,4 @@
-import { DateRange } from "react-day-picker"
+import type { DateRange } from "react-day-picker"
 import { BASE_SPONSORING_PRICE, DAY_IN_MS } from "./constants"
 
 export const calculateSponsoringPrice = (days: number) => {
@@ -14,12 +14,12 @@ export const adjustSponsoringDuration = (
   duration: number,
   startDate: Date,
   endDate: Date,
-  excludeRange: DateRange[]
+  excludeRange: DateRange[],
 ) => {
   let adjustedDuration = duration
 
-  excludeRange.forEach(({ from, to }) => {
-    if (!from || !to) return
+  for (const { from, to } of excludeRange) {
+    if (!from || !to) continue
 
     const start = from.getTime()
     const end = to.getTime()
@@ -31,7 +31,7 @@ export const adjustSponsoringDuration = (
         adjustedDuration--
       }
     }
-  })
+  }
 
   return adjustedDuration
 }

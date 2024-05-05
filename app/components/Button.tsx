@@ -2,7 +2,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { LoaderIcon } from "lucide-react"
 import type { ButtonHTMLAttributes, ReactNode } from "react"
 import { Children, forwardRef, isValidElement } from "react"
-import { cva, cx, type VariantProps } from "~/utils/cva"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 import { Slottable } from "./Slottable"
 
 export const buttonVariants = cva({
@@ -103,7 +103,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
       {...rest}
     >
       <Slottable child={children} asChild={asChild}>
-        {(child) => (
+        {child => (
           <>
             <Slot className={buttonAffixVariants()}>{prefix}</Slot>
             {!isChildrenEmpty(child) && <span className="truncate">{child}</span>}

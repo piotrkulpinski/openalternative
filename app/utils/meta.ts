@@ -1,5 +1,5 @@
+import type { MetaDescriptor } from "@remix-run/node"
 import { SITE_NAME, SITE_URL } from "./constants"
-import { MetaDescriptor } from "@remix-run/node"
 
 type GetMetaTagsProps = {
   title?: string | null

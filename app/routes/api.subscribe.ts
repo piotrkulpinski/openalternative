@@ -1,6 +1,6 @@
-import { ActionFunctionArgs, TypedResponse, json } from "@remix-run/node"
+import { type ActionFunctionArgs, type TypedResponse, json } from "@remix-run/node"
 import { got } from "got"
-import { ZodFormattedError, z } from "zod"
+import { type ZodFormattedError, z } from "zod"
 
 const subscriberSchema = z.object({
   email: z.string().email().min(1),

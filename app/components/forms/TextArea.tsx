@@ -1,5 +1,5 @@
-import { TextareaHTMLAttributes, forwardRef } from "react"
-import { VariantProps, cx } from "~/utils/cva"
+import { type TextareaHTMLAttributes, forwardRef } from "react"
+import { type VariantProps, cx } from "~/utils/cva"
 import { inputVariants } from "./Input"
 
 export type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> &

@@ -2,16 +2,16 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { Link, defer, useLoaderData, useLocation } from "@remix-run/react"
 import { renderToString } from "react-dom/server"
 import { InstantSearchSSRProvider, getServerState } from "react-instantsearch"
+import { Badge } from "~/components/Badge"
 import { Intro } from "~/components/Intro"
 import { Newsletter } from "~/components/Newsletter"
-import { LATEST_TOOLS_TRESHOLD, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
-import { getMetaTags } from "~/utils/meta"
-import { Search } from "./Search"
-import { prisma } from "~/services.server/prisma"
-import { Badge } from "~/components/Badge"
 import { Ping } from "~/components/Ping"
 import { ProductHuntCard } from "~/components/ProductHuntCard"
+import { prisma } from "~/services.server/prisma"
+import { LATEST_TOOLS_TRESHOLD, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 import { getCurrentPHLaunch } from "~/utils/helpers"
+import { getMetaTags } from "~/utils/meta"
+import { Search } from "./Search"
 
 export const meta: MetaFunction = ({ matches }) => {
   return getMetaTags({
@@ -25,13 +25,18 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
   const serverState = await getServerState(<Search url={url} />, { renderToString })
 
-  const newToolCount = await prisma.tool.count({
-    where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
-  })
+  const [sponsoring, newToolCount] = await Promise.all([
+    prisma.sponsoring.findFirst({
+      where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
+    }),
+    prisma.tool.count({
+      where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
+    }),
+  ])
 
   const launch = getCurrentPHLaunch()
 
-  return defer({ serverState, url, newToolCount, launch })
+  return defer({ serverState, url, sponsoring, newToolCount, launch })
 }
 
 export default function Index() {

@@ -1,8 +1,8 @@
 import { Link } from "@remix-run/react"
-import { Button } from "./Button"
-import { CardProps, Card } from "./Card"
-import { H4 } from "./Heading"
 import { cx } from "~/utils/cva"
+import { Button } from "./Button"
+import { Card, type CardProps } from "./Card"
+import { H4 } from "./Heading"
 import { Logo } from "./Logo"
 
 export const SponsoredCard = ({ className, ...props }: CardProps) => {

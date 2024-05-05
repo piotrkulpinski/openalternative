@@ -1,7 +1,7 @@
-import { inngest } from "~/services.server/inngest"
 import { got } from "got"
-import { uploadToS3Storage } from "~/services.server/s3"
+import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
+import { uploadToS3Storage } from "~/services.server/s3"
 
 export const onAlternativeCreated = inngest.createFunction(
   { id: "alternative.created" },
@@ -43,5 +43,5 @@ export const onAlternativeCreated = inngest.createFunction(
         data: { faviconUrl },
       })
     })
-  }
+  },
 )

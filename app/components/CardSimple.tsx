@@ -1,7 +1,7 @@
-import { NavLink, NavLinkProps } from "@remix-run/react"
+import { NavLink, type NavLinkProps } from "@remix-run/react"
+import type { ReactNode } from "react"
 import { cx } from "~/utils/cva"
 import { H5 } from "./Heading"
-import { ReactNode } from "react"
 
 type CardSimpleProps = NavLinkProps & {
   label: ReactNode
@@ -21,7 +21,7 @@ export const CardSimple = ({ ...props }: CardSimpleProps) => {
         {label}
       </H5>
 
-      <span className="h-px flex-1 bg-current opacity-15"></span>
+      <span className="h-px flex-1 bg-current opacity-15" />
       {caption && <span className="shrink-0 text-xs text-secondary">{caption}</span>}
     </NavLink>
   )

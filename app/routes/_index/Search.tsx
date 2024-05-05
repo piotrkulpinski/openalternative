@@ -1,16 +1,16 @@
-import { ComponentProps, useRef } from "react"
-import { ClientOnly } from "remix-utils/client-only"
-import { InstantSearch, Configure } from "react-instantsearch"
 import { history } from "instantsearch.js/es/lib/routers"
-import { Pagination } from "./Pagination"
-import { Listing } from "./Listing"
+import { type ComponentProps, useRef } from "react"
+import { Configure, InstantSearch } from "react-instantsearch"
+import { ClientOnly } from "remix-utils/client-only"
+import { Input } from "~/components/forms/Input"
 import { searchClient } from "~/services.server/algolia"
 import { Filters } from "./Filters"
-import { Input } from "~/components/forms/Input"
+import { Listing } from "./Listing"
+import { Pagination } from "./Pagination"
 
 export const Search = ({ url }: { url: URL | string }) => {
   const listingRef = useRef<HTMLDivElement>(null)
-  const indexName = import.meta.env.VITE_ALGOLIA_INDEX_NAME!
+  const indexName = import.meta.env.VITE_ALGOLIA_INDEX_NAME ?? ""
 
   const instantSearchOptions: ComponentProps<typeof InstantSearch> = {
     searchClient,
