@@ -23,16 +23,21 @@ export const meta: MetaFunction = ({ matches }) => {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
-  const serverState = await getServerState(<Search url={url} />, { renderToString })
 
   const [sponsoring, newToolCount] = await Promise.all([
     prisma.sponsoring.findFirst({
       where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
+      select: { name: true, description: true, website: true, faviconUrl: true },
     }),
+
     prisma.tool.count({
       where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
     }),
   ])
+
+  const serverState = await getServerState(<Search url={url} sponsoring={sponsoring} />, {
+    renderToString,
+  })
 
   const launch = getCurrentPHLaunch()
 
@@ -41,7 +46,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function Index() {
   const { key } = useLocation()
-  const { serverState, url, newToolCount, launch } = useLoaderData<typeof loader>()
+  const { serverState, url, sponsoring, newToolCount, launch } = useLoaderData<typeof loader>()
 
   return (
     <>
@@ -71,7 +76,7 @@ export default function Index() {
       </div>
 
       <InstantSearchSSRProvider key={key} {...serverState}>
-        <Search url={url} />
+        <Search url={url} sponsoring={sponsoring} />
       </InstantSearchSSRProvider>
     </>
   )

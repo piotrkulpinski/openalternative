@@ -80,3 +80,13 @@ export const languageToToolManyPayload = Prisma.validator<Prisma.LanguageToToolI
 export type LanguageToToolMany = Prisma.LanguageToToolGetPayload<{
   include: typeof languageToToolManyPayload
 }>
+
+// Sponsoring
+export const sponsoringOnePayload = Prisma.validator<Prisma.SponsoringSelect>()({
+  name: true,
+  description: true,
+  website: true,
+  faviconUrl: true,
+})
+
+export type SponsoringOne = Prisma.SponsoringGetPayload<{ select: typeof sponsoringOnePayload }>
