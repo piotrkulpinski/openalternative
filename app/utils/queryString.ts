@@ -7,7 +7,7 @@
  */
 export const updateUrlWithSearchParams = (
   url: string,
-  params: { [key: string]: string }
+  params: { [key: string]: string },
 ): string => {
   // Create a URL object
   const urlObj = new URL(url)
@@ -31,7 +31,7 @@ export const updateUrlWithSearchParams = (
  */
 export const updateQueryString = (
   queryString: string,
-  params: { [key: string]: string }
+  params: { [key: string]: string },
 ): string => {
   // Create a URLSearchParams object from the query string
   const searchParams = new URLSearchParams(queryString)

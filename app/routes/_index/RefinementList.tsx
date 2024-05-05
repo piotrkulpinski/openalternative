@@ -1,10 +1,10 @@
-import { HTMLAttributes } from "react"
-import { cx } from "~/utils/cva"
-import { H6 } from "~/components/Heading"
+import type { HTMLAttributes } from "react"
+import { type UseRefinementListProps, useRefinementList } from "react-instantsearch"
 import { Badge } from "~/components/Badge"
-import { useRefinementList, type UseRefinementListProps } from "react-instantsearch"
-import { Input } from "~/components/forms/Input"
+import { H6 } from "~/components/Heading"
 import { navigationLinkVariants } from "~/components/NavigationLink"
+import { Input } from "~/components/forms/Input"
+import { cx } from "~/utils/cva"
 
 type RefinementListProps = HTMLAttributes<HTMLDivElement> & UseRefinementListProps
 
@@ -24,17 +24,17 @@ export const RefinementList = ({ className, ...props }: RefinementListProps) => 
         spellCheck={false}
         maxLength={512}
         placeholder={`Search ${props.attribute}`}
-        onChange={(e) => searchForItems(e.currentTarget.value)}
+        onChange={e => searchForItems(e.currentTarget.value)}
         className="!text-xs !min-w-[0] px-2 py-1 font-normal outline-offset-0"
       />
 
       <div
         className={cx(
           "flex flex-col px-2",
-          isShowingMore && "max-h-60 overflow-auto overscroll-contain"
+          isShowingMore && "max-h-60 overflow-auto overscroll-contain",
         )}
       >
-        {items?.map((item) => (
+        {items?.map(item => (
           <label
             key={item.label}
             className="flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-secondary hover:!text-pink-500"
@@ -49,6 +49,7 @@ export const RefinementList = ({ className, ...props }: RefinementListProps) => 
       </div>
 
       <button
+        type="button"
         onClick={toggleShowMore}
         disabled={!canToggleShowMore}
         className={cx("!text-xs", navigationLinkVariants({ className }))}

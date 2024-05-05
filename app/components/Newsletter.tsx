@@ -1,10 +1,10 @@
 import { useFetcher, useLocation } from "@remix-run/react"
-import { ComponentProps, HTMLAttributes, useId } from "react"
+import { type ComponentProps, type HTMLAttributes, useId } from "react"
+import type { action } from "~/routes/api.subscribe"
 import { Button } from "./Button"
 import { H5 } from "./Heading"
-import { Input } from "./forms/Input"
-import { action } from "~/routes/api.subscribe"
 import { Series } from "./Series"
+import { Input } from "./forms/Input"
 
 type NewsletterProps = HTMLAttributes<HTMLElement> & {
   title?: string

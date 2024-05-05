@@ -1,11 +1,11 @@
-import { Intro } from "~/components/Intro"
-import { MetaFunction, json } from "@remix-run/node"
+import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import { getMetaTags } from "~/utils/meta"
-import { Sponsoring } from "~/components/Sponsoring"
 import { GithubIcon, HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
 import { Card } from "~/components/Card"
 import { H3 } from "~/components/Heading"
+import { Intro } from "~/components/Intro"
+import { Sponsoring } from "~/components/Sponsoring"
+import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   const { title, description } = data?.meta || {}
@@ -20,7 +20,8 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
 export const loader = () => {
   const meta = {
     title: "Supercharge your sales with sponsored listing",
-    description: `Ensure the long-term success and growth of your business by sponsoring our comprehensive open source directory. Your support helps promote open source alternatives, fosters innovation, and makes a lasting positive impact.`,
+    description:
+      "Ensure the long-term success and growth of your business by sponsoring our comprehensive open source directory. Your support helps promote open source alternatives, fosters innovation, and makes a lasting positive impact.",
   }
 
   return json({ meta })
@@ -82,7 +83,7 @@ export default function SubmitPage() {
         />
 
         <div className="grid grid-auto-fill-xl gap-4 w-full">
-          {benefits.map((benefit) => (
+          {benefits.map(benefit => (
             <Card key={benefit.title}>
               <Card.Header>
                 <div className="flex size-9 items-center justify-center shrink-0 rounded-md border bg-background p-1.5">

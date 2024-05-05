@@ -1,8 +1,13 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { Check, Circle } from "lucide-react"
-import { navigationLinkVariants } from "./NavigationLink"
-import { forwardRef, ElementRef, ComponentPropsWithoutRef, HTMLAttributes } from "react"
+import {
+  type ComponentPropsWithoutRef,
+  type ElementRef,
+  type HTMLAttributes,
+  forwardRef,
+} from "react"
 import { cx } from "~/utils/cva"
+import { navigationLinkVariants } from "./NavigationLink"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
@@ -20,7 +25,7 @@ const DropdownMenuContent = forwardRef<
       sideOffset={sideOffset}
       className={cx(
         "z-50 min-w-[8rem] flex flex-col overflow-hidden rounded-md border bg-background p-1 text-border-dark-fore data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        className
+        className,
       )}
       {...props}
     />
@@ -37,7 +42,7 @@ const DropdownMenuItem = forwardRef<
     className={cx(
       "rounded !px-2 !py-1.5 !m-0",
       "focus:outline-none focus:bg-card-dark focus:text-foreground",
-      navigationLinkVariants({ className })
+      navigationLinkVariants({ className }),
     )}
     {...props}
   />
@@ -52,7 +57,7 @@ const DropdownMenuCheckboxItem = forwardRef<
     ref={ref}
     className={cx(
       "relative flex select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-card-dark focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className
+      className,
     )}
     checked={checked}
     {...props}
@@ -75,7 +80,7 @@ const DropdownMenuRadioItem = forwardRef<
     ref={ref}
     className={cx(
       "relative flex select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-card-dark focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className
+      className,
     )}
     {...props}
   >

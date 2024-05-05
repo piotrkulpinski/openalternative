@@ -1,5 +1,5 @@
 import { getErrorMessage } from "@curiousleaf/utils"
-import { ActionFunctionArgs, json } from "@remix-run/node"
+import { type ActionFunctionArgs, json } from "@remix-run/node"
 import type Stripe from "stripe"
 import { z } from "zod"
 import { prisma } from "~/services.server/prisma"
@@ -8,7 +8,7 @@ import { stripe } from "~/services.server/stripe"
 export const action = async ({ request }: ActionFunctionArgs) => {
   const payload = await request.text()
   const signature = request.headers.get("stripe-signature")
-  const secret = process.env.STRIPE_WEBHOOK_SECRET!
+  const secret = process.env.STRIPE_WEBHOOK_SECRET ?? ""
 
   let event: Stripe.Event
 
@@ -35,8 +35,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         name: z.string(),
         description: z.string().optional(),
         website: z.string(),
-        startsAt: z.coerce.number().transform((date) => new Date(date)),
-        endsAt: z.coerce.number().transform((date) => new Date(date)),
+        startsAt: z.coerce.number().transform(date => new Date(date)),
+        endsAt: z.coerce.number().transform(date => new Date(date)),
       })
 
       const data = schema.parse({

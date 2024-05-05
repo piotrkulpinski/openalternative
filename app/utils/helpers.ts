@@ -17,7 +17,7 @@ export const isMobileAgent = (userAgent: string | null) => {
     /Windows Phone/i,
   ]
 
-  return toMatch.some((toMatchItem) => userAgent?.match(toMatchItem))
+  return toMatch.some(toMatchItem => userAgent?.match(toMatchItem))
 }
 
 /**

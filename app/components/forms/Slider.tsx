@@ -1,6 +1,6 @@
 import * as SliderPrimitive from "@radix-ui/react-slider"
 import { cx } from "cva"
-import { forwardRef, ElementRef, ComponentPropsWithoutRef } from "react"
+import { type ComponentPropsWithoutRef, type ElementRef, forwardRef } from "react"
 
 const SliderThumb = forwardRef<
   ElementRef<typeof SliderPrimitive.Thumb>,
@@ -12,7 +12,7 @@ const SliderThumb = forwardRef<
       "block size-3.5 rounded-full border-2 border-pink-600 bg-background ring-2 ring-background transition-colors cursor-pointer",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inherit focus-visible:ring-offset-2",
       "disabled:pointer-events-none disabled:opacity-50 disabled:cursor-default",
-      className
+      className,
     )}
     {...props}
   />

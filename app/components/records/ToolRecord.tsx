@@ -1,16 +1,16 @@
-import { type SerializeFrom } from "@remix-run/node"
+import type { SerializeFrom } from "@remix-run/node"
 import { NavLink } from "@remix-run/react"
-import { Hit as AlgoliaHit } from "instantsearch.js"
-import { Highlight } from "react-instantsearch"
+import type { Hit as AlgoliaHit } from "instantsearch.js"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
-import { HTMLAttributes } from "react"
+import type { HTMLAttributes } from "react"
+import { Highlight } from "react-instantsearch"
 import { format } from "timeago.js"
-import { Card } from "../Card"
-import { Insights } from "../Insights"
-import { ToolMany } from "~/services.server/api"
-import { H4 } from "../Heading"
-import { Favicon } from "../Favicon"
+import type { ToolMany } from "~/services.server/api"
 import { cx } from "~/utils/cva"
+import { Card } from "../Card"
+import { Favicon } from "../Favicon"
+import { H4 } from "../Heading"
+import { Insights } from "../Insights"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
 
@@ -43,13 +43,13 @@ export const ToolRecord = ({ className, tool, ...props }: ToolRecordProps) => {
             <Favicon
               src={tool.faviconUrl}
               title={tool.name}
-              style={isTransitioning ? { viewTransitionName: `tool-favicon` } : undefined}
+              style={isTransitioning ? { viewTransitionName: "tool-favicon" } : undefined}
             />
 
             <H4
               as="h3"
               className="truncate"
-              style={isTransitioning ? { viewTransitionName: `tool-title` } : undefined}
+              style={isTransitioning ? { viewTransitionName: "tool-title" } : undefined}
             >
               <ToolHighlight tool={tool} attribute="name" />
             </H4>
@@ -57,7 +57,7 @@ export const ToolRecord = ({ className, tool, ...props }: ToolRecordProps) => {
 
           {tool.description && (
             <Card.Description
-              style={isTransitioning ? { viewTransitionName: `tool-description` } : undefined}
+              style={isTransitioning ? { viewTransitionName: "tool-description" } : undefined}
             >
               <ToolHighlight tool={tool} attribute="description" />
             </Card.Description>

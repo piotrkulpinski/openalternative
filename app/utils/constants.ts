@@ -1,4 +1,4 @@
-import { SWRConfiguration } from "swr"
+import type { SWRConfiguration } from "swr"
 
 export const SITE_URL = import.meta.env.VITE_SITE_URL
 export const SITE_EMAIL = import.meta.env.VITE_SITE_EMAIL

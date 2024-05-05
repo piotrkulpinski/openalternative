@@ -1,4 +1,4 @@
-import { type CreateReporter } from "@epic-web/cachified"
+import type { CreateReporter } from "@epic-web/cachified"
 
 export type Timings = Record<
   string,
@@ -10,9 +10,7 @@ export function makeTimings(type: string, desc?: string) {
     [type]: [{ desc, start: performance.now() }],
   }
   Object.defineProperty(timings, "toString", {
-    value: function () {
-      return getServerTimeHeader(timings)
-    },
+    value: () => getServerTimeHeader(timings),
     enumerable: false,
   })
   return timings
@@ -42,7 +40,7 @@ export async function time<ReturnType>(
     type: string
     desc?: string
     timings?: Timings
-  }
+  },
 ): Promise<ReturnType> {
   const timer = createTimer(type, desc)
   const promise = typeof fn === "function" ? fn() : fn
@@ -65,7 +63,7 @@ export function getServerTimeHeader(timings?: Timings) {
         }, 0)
         .toFixed(1)
       const desc = timingInfos
-        .map((t) => t.desc)
+        .map(t => t.desc)
         .filter(Boolean)
         .join(" & ")
       return [
@@ -86,19 +84,19 @@ export function combineServerTimings(headers1: Headers, headers2: Headers) {
 }
 
 export function cachifiedTimingReporter<Value>(
-  timings?: Timings
+  timings?: Timings,
 ): undefined | CreateReporter<Value> {
   if (!timings) return
 
   return ({ key }) => {
     const cacheRetrievalTimer = createTimer(`cache:${key}`, `${key} cache retrieval`)
     let getFreshValueTimer: ReturnType<typeof createTimer> | undefined
-    return (event) => {
+    return event => {
       switch (event.name) {
         case "getFreshValueStart":
           getFreshValueTimer = createTimer(
             `getFreshValue:${key}`,
-            `request forced to wait for a fresh ${key} value`
+            `request forced to wait for a fresh ${key} value`,
           )
           break
         case "getFreshValueSuccess":

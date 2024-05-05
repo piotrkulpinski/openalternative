@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
-import { ElementType, HTMLAttributes, forwardRef, isValidElement } from "react"
-import { cva, VariantProps, cx } from "~/utils/cva"
+import { type ElementType, type HTMLAttributes, forwardRef, isValidElement } from "react"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const headingVariants = cva({
   base: "text-foreground font-semibold tracking-tight",

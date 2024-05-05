@@ -1,18 +1,18 @@
-import { LinksFunction, MetaFunction } from "@remix-run/node"
-import { SpeedInsights } from "@vercel/speed-insights/remix"
+import type { LinksFunction, MetaFunction } from "@remix-run/node"
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
-import { PropsWithChildren, useEffect } from "react"
+import { SpeedInsights } from "@vercel/speed-insights/remix"
 import { ThemeProvider } from "next-themes"
+import { posthog } from "posthog-js"
+import { type PropsWithChildren, useEffect } from "react"
 import { Footer } from "~/components/Footer"
 import { Header } from "~/components/Header"
 import { Newsletter } from "~/components/Newsletter"
-import { Logo } from "./components/Logo"
 import { BreadcrumbsLink } from "./components/Breadcrumbs"
+import { Logo } from "./components/Logo"
 import { SITE_NAME, SITE_URL } from "./utils/constants"
-import { posthog } from "posthog-js"
 
-import stylesheet from "~/styles.css?url"
 import { publishEscape } from "@curiousleaf/utils"
+import stylesheet from "~/styles.css?url"
 
 export const handle = {
   breadcrumb: () => (

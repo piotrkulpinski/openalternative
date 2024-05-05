@@ -1,7 +1,7 @@
 import { serve } from "inngest/remix"
-import { inngest } from "~/services.server/inngest"
-import { onToolCreated } from "~/functions.server/onToolCreated"
 import { onAlternativeCreated } from "~/functions.server/onAlternativeCreated"
+import { onToolCreated } from "~/functions.server/onToolCreated"
+import { inngest } from "~/services.server/inngest"
 
 const handler = serve({
   client: inngest,

@@ -1,13 +1,17 @@
-import { CompleteMultipartUploadCommandOutput, S3Client, S3ClientConfig } from "@aws-sdk/client-s3"
+import {
+  type CompleteMultipartUploadCommandOutput,
+  S3Client,
+  type S3ClientConfig,
+} from "@aws-sdk/client-s3"
 import { Upload } from "@aws-sdk/lib-storage"
 
 const cfg: S3ClientConfig = {
-  region: process.env.S3_REGION!,
+  region: process.env.S3_REGION ?? "",
   maxAttempts: 5,
   retryMode: "standard",
   credentials: {
-    accessKeyId: process.env.S3_ACCESS_KEY!,
-    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.S3_ACCESS_KEY ?? "",
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY ?? "",
   },
   // endpoint: process.env.S3_ENDPOINT ?? "http://localhost:4566",
   forcePathStyle: true,
@@ -19,7 +23,7 @@ export async function uploadToS3Storage(screenshot: Buffer, key: string) {
   const upload = new Upload({
     client: s3Client,
     params: {
-      Bucket: process.env.S3_BUCKET!,
+      Bucket: process.env.S3_BUCKET ?? "",
       Key: key,
       Body: screenshot,
       StorageClass: "STANDARD",

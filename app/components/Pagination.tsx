@@ -1,11 +1,11 @@
 import { getCurrentPage, getPageLink } from "@curiousleaf/utils"
 import { useLocation, useSearchParams } from "@remix-run/react"
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
-import { HTMLAttributes, useMemo } from "react"
+import { type HTMLAttributes, useMemo } from "react"
+import { type UsePaginationProps, usePagination } from "~/hooks/usePagination"
 import { cx } from "~/utils/cva"
-import { PaginationLink } from "./PaginationLink"
-import { UsePaginationProps, usePagination } from "~/hooks/usePagination"
 import { navigationLinkVariants } from "./NavigationLink"
+import { PaginationLink } from "./PaginationLink"
 
 export type PaginationProps = HTMLAttributes<HTMLElement> & Omit<UsePaginationProps, "currentPage">
 

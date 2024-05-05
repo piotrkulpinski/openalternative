@@ -1,8 +1,8 @@
-import { LoaderFunctionArgs } from "@remix-run/node"
-import { prisma } from "~/services.server/prisma"
-import { getRepoOwnerAndName } from "~/utils/github"
+import type { LoaderFunctionArgs } from "@remix-run/node"
 import { got } from "got"
+import { prisma } from "~/services.server/prisma"
 import { SITE_URL } from "~/utils/constants"
+import { getRepoOwnerAndName } from "~/utils/github"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   if (request.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -27,7 +27,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
           })
           .json()
       }
-    })
+    }),
   )
 
   // Once it's finished, clear out empty languages and topics

@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react"
+import type { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 import { RangeSlider } from "./RangeSlider"
 import { RefinementList } from "./RefinementList"
@@ -8,7 +8,7 @@ export const Refinements = ({ className, ...props }: HTMLAttributes<HTMLElement>
     <div
       className={cx(
         "grid grid-auto-fill-xs justify-between gap-6 w-full py-4 px-6 border rounded-md",
-        className
+        className,
       )}
       {...props}
     >

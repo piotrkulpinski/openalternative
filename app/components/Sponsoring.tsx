@@ -1,20 +1,20 @@
-import { SerializeFrom } from "@remix-run/node"
+import type { SerializeFrom } from "@remix-run/node"
 import { useFetcher } from "@remix-run/react"
-import { Button } from "~/components/Button"
-import { DAY_IN_MS, SITE_NAME, SWR_CONFIG } from "~/utils/constants"
-import { useEffect, useState, HTMLAttributes } from "react"
-import { Calendar } from "~/components/Calendar"
-import { DateRange } from "react-day-picker"
 import plur from "plur"
 import { posthog } from "posthog-js"
-import { adjustSponsoringDuration, calculateSponsoringPrice } from "~/utils/sponsoring"
-import { Badge } from "~/components/Badge"
-import { cx } from "~/utils/cva"
-import { action } from "~/routes/api.stripe.create-checkout"
-import { StripeCheckoutSchema } from "~/services.server/stripe"
-import { fetcher } from "~/utils/fetchers"
+import { type HTMLAttributes, useEffect, useState } from "react"
+import type { DateRange } from "react-day-picker"
 import useSWR from "swr"
-import { loader } from "~/routes/api.fetch-sponsoring-dates"
+import { Badge } from "~/components/Badge"
+import { Button } from "~/components/Button"
+import { Calendar } from "~/components/Calendar"
+import type { loader } from "~/routes/api.fetch-sponsoring-dates"
+import type { action } from "~/routes/api.stripe.create-checkout"
+import type { StripeCheckoutSchema } from "~/services.server/stripe"
+import { DAY_IN_MS, SITE_NAME, SWR_CONFIG } from "~/utils/constants"
+import { cx } from "~/utils/cva"
+import { fetcher } from "~/utils/fetchers"
+import { adjustSponsoringDuration, calculateSponsoringPrice } from "~/utils/sponsoring"
 
 type SponsoringDatesPayload = SerializeFrom<Awaited<ReturnType<typeof loader>>>
 
@@ -28,12 +28,12 @@ export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>)
   useSWR<SponsoringDatesPayload>({ url: "/api/fetch-sponsoring-dates" }, fetcher, {
     ...SWR_CONFIG,
 
-    onSuccess: (dates) => {
+    onSuccess: dates => {
       setDisabledDates(
         dates.map(({ startsAt, endsAt }) => ({
           from: new Date(Date.parse(startsAt)),
           to: new Date(Date.parse(endsAt) - DAY_IN_MS),
-        }))
+        })),
       )
     },
   })
@@ -93,7 +93,7 @@ export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>)
           selected={date}
           onSelect={setDate}
           numberOfMonths={2}
-          disabled={[(date) => date < new Date(), ...disabledDates]}
+          disabled={[date => date < new Date(), ...disabledDates]}
           className="p-4"
         />
 

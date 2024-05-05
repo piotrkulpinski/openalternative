@@ -21,14 +21,14 @@ export const loader = async () => {
       <atom:link href="${url}/rss.xml" rel="self" type="application/rss+xml" />
       ${tools
         .map(
-          (tool) => `
+          tool => `
       <item>
         <title><![CDATA[${tool.name}]]></title>
         <description><![CDATA[${tool.description}]]></description>
         <pubDate>${tool.publishedAt?.toUTCString()}</pubDate>
         <link>${url}/${tool.slug}</link>
         <guid isPermaLink="false">${tool.id}</guid>
-      </item>`
+      </item>`,
         )
         .join("\n")}
     </channel>

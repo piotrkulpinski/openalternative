@@ -1,10 +1,10 @@
-import { HTMLAttributes } from "react"
+import { GithubIcon, RssIcon, TwitterIcon } from "lucide-react"
+import type { HTMLAttributes } from "react"
+import { GITHUB_URL, RSS_URL, SITE_EMAIL, TWITTER_URL } from "~/utils/constants"
 import { cx } from "~/utils/cva"
-import { Series } from "./Series"
 import { H6 } from "./Heading"
 import { NavigationLink } from "./NavigationLink"
-import { GITHUB_URL, RSS_URL, SITE_EMAIL, TWITTER_URL } from "~/utils/constants"
-import { GithubIcon, RssIcon, TwitterIcon } from "lucide-react"
+import { Series } from "./Series"
 
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (

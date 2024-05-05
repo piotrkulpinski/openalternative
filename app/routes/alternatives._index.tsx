@@ -1,4 +1,4 @@
-import { MetaFunction, json, useLoaderData } from "@remix-run/react"
+import { type MetaFunction, json, useLoaderData } from "@remix-run/react"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
@@ -39,7 +39,7 @@ export default function AlternativesIndex() {
       <Intro {...meta} />
 
       <Grid>
-        {alternatives.map((alternative) => (
+        {alternatives.map(alternative => (
           <AlternativeRecord key={alternative.id} alternative={alternative} showCount />
         ))}
 

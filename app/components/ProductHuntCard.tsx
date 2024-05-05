@@ -1,10 +1,10 @@
-import { posthog } from "posthog-js"
 import { Link } from "@remix-run/react"
-import { Card, CardProps } from "./Card"
-import { Button } from "./Button"
-import { H4 } from "./Heading"
+import { posthog } from "posthog-js"
+import type { PH_LAUNCHES } from "~/utils/constants"
 import { cx } from "~/utils/cva"
-import { PH_LAUNCHES } from "~/utils/constants"
+import { Button } from "./Button"
+import { Card, type CardProps } from "./Card"
+import { H4 } from "./Heading"
 
 type ProductHuntCardProps = CardProps & {
   launch?: (typeof PH_LAUNCHES)[0]

@@ -1,15 +1,15 @@
+import { type MetaFunction, json } from "@remix-run/node"
+import { useFetcher, useLoaderData, useLocation } from "@remix-run/react"
+import { useId } from "react"
+import { Button } from "~/components/Button"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
-import { MetaFunction, json } from "@remix-run/node"
-import { useFetcher, useLoaderData, useLocation } from "@remix-run/react"
 import { Input } from "~/components/forms/Input"
 import { Label } from "~/components/forms/Label"
-import { Button } from "~/components/Button"
-import { SITE_NAME } from "~/utils/constants"
-import { action } from "./api.submit"
 import { TextArea } from "~/components/forms/TextArea"
-import { useId } from "react"
+import { SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
+import type { action } from "./api.submit"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
   const { title, description } = data?.meta || {}

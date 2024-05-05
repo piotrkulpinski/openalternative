@@ -1,5 +1,5 @@
-import { NavLinkProps, UIMatch, useMatches } from "@remix-run/react"
-import { Fragment, HTMLAttributes, ReactNode } from "react"
+import { type NavLinkProps, type UIMatch, useMatches } from "@remix-run/react"
+import { Fragment, type HTMLAttributes, type ReactNode } from "react"
 import { cx } from "~/utils/cva"
 import { NavigationLink } from "./NavigationLink"
 
@@ -42,7 +42,7 @@ type BreadcrumbMatch = UIMatch<
 
 export const Breadcrumbs = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const matches = (useMatches() as unknown as BreadcrumbMatch[]).filter(
-    ({ handle }) => handle?.breadcrumb
+    ({ handle }) => handle?.breadcrumb,
   )
 
   return (

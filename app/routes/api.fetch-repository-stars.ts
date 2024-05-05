@@ -1,8 +1,8 @@
 import { graphql } from "@octokit/graphql"
-import { LoaderFunctionArgs, json } from "@remix-run/node"
+import { type LoaderFunctionArgs, json } from "@remix-run/node"
 import { z } from "zod"
 import { JSON_HEADERS } from "~/utils/constants"
-import { RepositoryStarsQueryResult, repositoryStarsQuery } from "~/utils/github"
+import { type RepositoryStarsQueryResult, repositoryStarsQuery } from "~/utils/github"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)

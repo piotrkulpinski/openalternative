@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react"
+import type { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 
 type FaviconProps = HTMLAttributes<HTMLDivElement> & {
@@ -11,7 +11,7 @@ export const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
     <div
       className={cx(
         "flex size-9 items-center justify-center shrink-0 rounded-md border bg-background p-1",
-        className
+        className,
       )}
       {...props}
     >

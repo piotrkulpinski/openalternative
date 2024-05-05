@@ -1,4 +1,4 @@
-import { Fragment, HTMLAttributes, ReactNode } from "react"
+import { Fragment, type HTMLAttributes, type ReactNode } from "react"
 import { cx } from "~/utils/cva"
 
 type InsightsProps = HTMLAttributes<HTMLElement> & {

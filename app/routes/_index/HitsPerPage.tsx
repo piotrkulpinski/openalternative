@@ -1,5 +1,5 @@
-import { HTMLAttributes } from "react"
-import { useHitsPerPage, type UseHitsPerPageProps } from "react-instantsearch"
+import type { HTMLAttributes } from "react"
+import { type UseHitsPerPageProps, useHitsPerPage } from "react-instantsearch"
 import { Select } from "~/components/forms/Select"
 
 type HitsPerPageProps = HTMLAttributes<HTMLElement> & UseHitsPerPageProps
@@ -10,7 +10,7 @@ export const HitsPerPage = ({ className, ...props }: HitsPerPageProps) => {
 
   return (
     <Select
-      onChange={(e) => refine(Number(e.target.value))}
+      onChange={e => refine(Number(e.target.value))}
       value={String(currentValue)}
       className={className}
     >
@@ -18,7 +18,7 @@ export const HitsPerPage = ({ className, ...props }: HitsPerPageProps) => {
         Hits per page
       </option>
 
-      {items.map((item) => (
+      {items.map(item => (
         <option key={item.value} value={item.value}>
           {item.label}
         </option>

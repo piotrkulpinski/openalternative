@@ -1,4 +1,4 @@
-import { Alternative, Tool } from "@prisma/client"
+import type { Alternative, Tool } from "@prisma/client"
 import { fetch as webFetch } from "@remix-run/web-fetch"
 import { EventSchemas, Inngest } from "inngest"
 

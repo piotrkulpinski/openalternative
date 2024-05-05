@@ -1,9 +1,4 @@
 import { NavLink } from "@remix-run/react"
-import { ClientOnly } from "remix-utils/client-only"
-import useSWR from "swr"
-import { HTMLAttributes, useEffect, useState } from "react"
-import { cx } from "~/utils/cva"
-import { Button } from "./Button"
 import {
   BlocksIcon,
   BracesIcon,
@@ -16,21 +11,26 @@ import {
   TagIcon,
   XIcon,
 } from "lucide-react"
-import { Breadcrumbs } from "./Breadcrumbs"
-import { ThemeSwitcher } from "./ThemeSwitcher"
-import { Series } from "./Series"
-import { Badge } from "./Badge"
+import { type HTMLAttributes, useEffect, useState } from "react"
+import { ClientOnly } from "remix-utils/client-only"
+import useSWR from "swr"
 import { GITHUB_URL, SWR_CONFIG } from "~/utils/constants"
+import { cx } from "~/utils/cva"
+import { fetcher } from "~/utils/fetchers"
 import { getRepoOwnerAndName } from "~/utils/github"
-import { NavigationLink, navigationLinkVariants } from "./NavigationLink"
+import { Badge } from "./Badge"
+import { Breadcrumbs } from "./Breadcrumbs"
+import { Button } from "./Button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./DropdownMenu"
-import { fetcher } from "~/utils/fetchers"
+import { NavigationLink, navigationLinkVariants } from "./NavigationLink"
 import { Ping } from "./Ping"
+import { Series } from "./Series"
+import { ThemeSwitcher } from "./ThemeSwitcher"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)
@@ -50,14 +50,14 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   const { data, error, isLoading } = useSWR<number>(
     { url: "/api/fetch-repository-stars", ...repo },
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   )
 
   return (
     <div
       className={cx(
         "sticky top-0 z-10 flex flex-wrap items-center py-3 -my-3 gap-3 backdrop-blur-sm bg-background/95 md:gap-4",
-        className
+        className,
       )}
       {...props}
     >
