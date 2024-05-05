@@ -21,6 +21,8 @@ export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCard
             ? updateUrlWithSearchParams(sponsoring.website, { ref: "openalternative" })
             : "/sponsor"
         }
+        target={sponsoring?.website ? "_blank" : "_self"}
+        rel={sponsoring?.website ? "noopener noreferrer" : ""}
       >
         <Card.Header>
           <Favicon
