@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react"
+import { posthog } from "posthog-js"
 import { Favicon } from "~/components/Favicon"
 import type { SponsoringOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
@@ -23,6 +24,7 @@ export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCard
         }
         target={sponsoring?.website ? "_blank" : "_self"}
         rel={sponsoring?.website ? "noopener noreferrer" : ""}
+        onClick={() => posthog.capture("sponsoring_clicked", { url: sponsoring?.website })}
       >
         <Card.Header>
           <Favicon
