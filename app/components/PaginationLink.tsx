@@ -23,7 +23,6 @@ export const PaginationLink = ({
   return (
     <NavLink
       className={cx(
-        "!gap-2",
         isDisabled && "pointer-events-none opacity-40",
         isActive && "bg-card-dark rounded-sm",
         navigationLinkVariants({
