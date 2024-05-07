@@ -2,6 +2,7 @@ import { NavLink } from "@remix-run/react"
 import {
   BlocksIcon,
   BracesIcon,
+  ChevronDownIcon,
   GemIcon,
   GithubIcon,
   LoaderIcon,
@@ -71,7 +72,9 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
       <nav className="contents max-lg:hidden">
         <DropdownMenu>
-          <DropdownMenuTrigger className={navigationLinkVariants()}>Browse</DropdownMenuTrigger>
+          <DropdownMenuTrigger className={navigationLinkVariants()}>
+            Browse <ChevronDownIcon />
+          </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
             <DropdownMenuItem asChild>
