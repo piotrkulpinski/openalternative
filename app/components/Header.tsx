@@ -72,7 +72,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
       <nav className="contents max-lg:hidden">
         <DropdownMenu>
-          <DropdownMenuTrigger className={navigationLinkVariants()}>
+          <DropdownMenuTrigger className={cx(navigationLinkVariants({ className: "gap-1" }))}>
             Browse <ChevronDownIcon />
           </DropdownMenuTrigger>
 
