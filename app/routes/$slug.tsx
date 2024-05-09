@@ -119,6 +119,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
           prisma.categoryToTools.findMany({
             where: {
               category: { tools: { some: { tool: { slug } } } },
+              tool: { publishedAt: { lte: new Date() } },
               NOT: { tool: { slug } },
             },
             include: { tool: true },
