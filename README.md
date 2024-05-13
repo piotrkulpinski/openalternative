@@ -39,11 +39,9 @@ Join us in creating the biggest directory of open source software.
 
 OpenAlternative is an GPL-3.0-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider [sponsoring OpenAlternative's development](https://openalternative.co/sponsor).
 
-<p align="center">
-  <a target="_blank" href="https://preline.co">
-    <img alt="sponsor preline" src="https://openalternative.co/sponsors/preline.svg" width="160">
-  </a>
-</p>
+<a target="_blank" href="https://preline.co">
+  <img alt="sponsor preline" src="https://openalternative.co/sponsors/preline.svg" width="120">
+</a>
 
 ## Development
 
