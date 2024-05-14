@@ -7,6 +7,8 @@ const subscriberSchema = z.object({
   groups: z.array(z.string()).optional(),
 })
 
+const blacklist = ["rightbliss.beauty"]
+
 export type ActionState =
   | { type: "error"; error: ZodFormattedError<z.infer<typeof subscriberSchema>> }
   | { type: "success"; message: string }
@@ -19,12 +21,15 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
     return json({ type: "error", error: parsed.error.format() })
   }
 
-  await got
-    .post("https://connect.mailerlite.com/api/subscribers", {
-      json: parsed.data,
-      headers: { authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}` },
-    })
-    .json()
+  // Check if the email is not in the blacklist
+  if (!blacklist.includes(parsed.data.email)) {
+    await got
+      .post("https://connect.mailerlite.com/api/subscribers", {
+        json: parsed.data,
+        headers: { authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}` },
+      })
+      .json()
+  }
 
   // Return a success response
   return json({ type: "success", message: "Thank you for subscribing!" })
