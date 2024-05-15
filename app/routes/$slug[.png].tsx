@@ -47,7 +47,8 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
         "Cache-Control": "public, max-age=604800, immutable",
       },
     })
-  } catch {
+  } catch (error) {
+    console.log(error)
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
