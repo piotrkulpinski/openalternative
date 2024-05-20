@@ -83,11 +83,11 @@ export const loader = async () => {
         <loc>${url}/submit</loc>
         <changefreq>weekly</changefreq>
       </url>
-      ${toolItems.join("/n")}
-      ${categoryItems.join("/n")}
-      ${alternativeItems.join("/n")}
-      ${languageItems.join("/n")}
-      ${topicItems.join("/n")}
+      ${toolItems.join("\n")}
+      ${categoryItems.join("\n")}
+      ${alternativeItems.join("\n")}
+      ${languageItems.join("\n")}
+      ${topicItems.join("\n")}
     </urlset>`
 
   return new Response(feed, {

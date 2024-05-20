@@ -1,3 +1,4 @@
+import { publishEscape } from "@curiousleaf/utils"
 import type { LinksFunction, MetaFunction } from "@remix-run/node"
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
 import { SpeedInsights } from "@vercel/speed-insights/remix"
@@ -11,7 +12,6 @@ import { BreadcrumbsLink } from "./components/Breadcrumbs"
 import { Logo } from "./components/Logo"
 import { SITE_NAME, SITE_URL } from "./utils/constants"
 
-import { publishEscape } from "@curiousleaf/utils"
 import stylesheet from "~/styles.css?url"
 
 export const handle = {
@@ -94,8 +94,8 @@ export function Layout({ children }: PropsWithChildren) {
         {/* Plausible */}
         <script
           defer
-          data-domain="openalternative.co"
-          src="https://plausible.kulpinski.dev/js/script.js"
+          data-domain={import.meta.env.VITE_PLAUSIBLE_DOMAIN}
+          src={`${import.meta.env.VITE_PLAUSIBLE_HOST}/js/script.js`}
         />
       </body>
     </html>
