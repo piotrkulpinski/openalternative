@@ -9,17 +9,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--color-background))",
-        muted: "hsl(var(--color-muted))",
-        secondary: "hsl(var(--color-secondary))",
-        foreground: "hsl(var(--color-foreground))",
+        background: "hsl(var(--color-background) / <alpha-value>)",
+        muted: "hsl(var(--color-muted) / <alpha-value>)",
+        secondary: "hsl(var(--color-secondary) / <alpha-value>)",
+        foreground: "hsl(var(--color-foreground) / <alpha-value>)",
         border: {
-          DEFAULT: "hsl(var(--color-border))",
-          dark: "hsl(var(--color-border-dark))",
+          DEFAULT: "hsl(var(--color-border) / <alpha-value>)",
+          dark: "hsl(var(--color-border-dark) / <alpha-value>)",
         },
         card: {
-          DEFAULT: "hsl(var(--color-card))",
-          dark: "hsl(var(--color-card-dark))",
+          DEFAULT: "hsl(var(--color-card) / <alpha-value>)",
+          dark: "hsl(var(--color-card-dark) / <alpha-value>)",
         },
       },
       letterSpacing: {
