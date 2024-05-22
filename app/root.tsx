@@ -110,17 +110,19 @@ export function Layout({ children }: PropsWithChildren) {
 
         {/* OpenPanel */}
         <script defer async src="https://openpanel.dev/op.js" />
-        <script>
-          {`
-            window.op = window.op || function (...args) { (window.op.q = window.op.q || []).push(args); };
-            window.op('ctor', {
-              clientId: '${import.meta.env.VITE_OPENPANEL_CLIENT_ID}',
-              trackScreenViews: true,
-              trackOutgoingLinks: true,
-              trackAttributes: true,
-            });
-          `}
-        </script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.op = window.op || function (...args) { (window.op.q = window.op.q || []).push(args); };
+              window.op('ctor', {
+                clientId: '${import.meta.env.VITE_OPENPANEL_CLIENT_ID}',
+                trackScreenViews: true,
+                trackOutgoingLinks: true,
+                trackAttributes: true,
+              });
+            `,
+          }}
+        />
       </body>
     </html>
   );
