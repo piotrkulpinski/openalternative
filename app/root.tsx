@@ -109,7 +109,7 @@ export function Layout({ children }: PropsWithChildren) {
         />
 
         {/* OpenPanel */}
-        <script src="https://openpanel.dev/op.js" defer async></script>
+        <script defer async src="https://openpanel.dev/op.js" />
         <script>
           {`
             window.op = window.op || function (...args) { (window.op.q = window.op.q || []).push(args); };
