@@ -1,18 +1,25 @@
-import { publishEscape } from "@curiousleaf/utils"
-import type { LinksFunction, MetaFunction } from "@remix-run/node"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
-import { SpeedInsights } from "@vercel/speed-insights/remix"
-import { ThemeProvider } from "next-themes"
-import { posthog } from "posthog-js"
-import { type PropsWithChildren, useEffect } from "react"
-import { Footer } from "~/components/Footer"
-import { Header } from "~/components/Header"
-import { Newsletter } from "~/components/Newsletter"
-import { BreadcrumbsLink } from "./components/Breadcrumbs"
-import { Logo } from "./components/Logo"
-import { SITE_NAME, SITE_URL } from "./utils/constants"
+import { publishEscape } from "@curiousleaf/utils";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLocation,
+} from "@remix-run/react";
+import { SpeedInsights } from "@vercel/speed-insights/remix";
+import { ThemeProvider } from "next-themes";
+import { posthog } from "posthog-js";
+import { type PropsWithChildren, useEffect } from "react";
+import { Footer } from "~/components/Footer";
+import { Header } from "~/components/Header";
+import { Newsletter } from "~/components/Newsletter";
+import { BreadcrumbsLink } from "./components/Breadcrumbs";
+import { Logo } from "./components/Logo";
+import { SITE_NAME, SITE_URL } from "./utils/constants";
 
-import stylesheet from "~/styles.css?url"
+import stylesheet from "~/styles.css?url";
 
 export const handle = {
   breadcrumb: () => (
@@ -20,7 +27,7 @@ export const handle = {
       <Logo className="size-5 shrink-0" />
     </BreadcrumbsLink>
   ),
-}
+};
 
 export const links: LinksFunction = () => {
   return [
@@ -28,12 +35,12 @@ export const links: LinksFunction = () => {
     { rel: "icon", href: "/favicon.png", type: "image/png" },
     { rel: "preconnect", href: "https://rsms.me/" },
     { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
-  ]
-}
+  ];
+};
 
 export const meta: MetaFunction = ({ location }) => {
-  const currentUrl = `${SITE_URL}${location.pathname}${location.search}`
-  const canonicalUrl = `${SITE_URL}${location.pathname}`
+  const currentUrl = `${SITE_URL}${location.pathname}${location.search}`;
+  const canonicalUrl = `${SITE_URL}${location.pathname}`;
 
   return [
     { tagName: "link", rel: "canonical", href: canonicalUrl },
@@ -41,25 +48,28 @@ export const meta: MetaFunction = ({ location }) => {
     { property: "og:type", content: "website" },
     { property: "og:url", content: currentUrl },
     { property: "og:site_name", content: SITE_NAME },
-  ]
-}
+  ];
+};
 
 export function Layout({ children }: PropsWithChildren) {
-  const { key } = useLocation()
+  const { key } = useLocation();
 
   useEffect(() => {
     // Trigger escape hatch when the route changes
-    publishEscape()
+    publishEscape();
 
     // Track pageview
-    posthog.capture("$pageview")
-  }, [key])
+    posthog.capture("$pageview");
+  }, [key]);
 
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no"
+        />
         <Meta />
         <Links />
       </head>
@@ -97,11 +107,25 @@ export function Layout({ children }: PropsWithChildren) {
           data-domain={import.meta.env.VITE_PLAUSIBLE_DOMAIN}
           src={`${import.meta.env.VITE_PLAUSIBLE_HOST}/js/script.js`}
         />
+
+        {/* OpenPanel */}
+        <script src="https://openpanel.dev/op.js" defer async></script>
+        <script>
+          {`
+            window.op = window.op || function (...args) { (window.op.q = window.op.q || []).push(args); };
+            window.op('ctor', {
+              clientId: '${import.meta.env.VITE_OPENPANEL_CLIENT_ID}',
+              trackScreenViews: true,
+              trackOutgoingLinks: true,
+              trackAttributes: true,
+            });
+          `}
+        </script>
       </body>
     </html>
-  )
+  );
 }
 
 export default function App() {
-  return <Outlet />
+  return <Outlet />;
 }
