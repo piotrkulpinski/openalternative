@@ -1,20 +1,38 @@
-import type { HTMLAttributes, ReactNode } from "react"
-import { cx } from "~/utils/cva"
-import { Heading, type HeadingProps } from "./Heading"
-import { Prose } from "./Prose"
-import { Series } from "./Series"
+import type { HTMLAttributes, ReactNode } from "react";
+import { VariantProps, cva, cx } from "~/utils/cva";
+import { Heading, type HeadingProps } from "./Heading";
+import { Prose } from "./Prose";
+import { Series } from "./Series";
 
-type IntroProps = Omit<HTMLAttributes<HTMLElement>, "title" | "prefix"> & {
-  title: ReactNode
-  description?: ReactNode
-  prefix?: ReactNode
-  suffix?: ReactNode
-  headingProps?: HeadingProps
-}
+const introVariants = cva({
+  base: "flex w-full flex-col gap-y-2",
+
+  variants: {
+    alignment: {
+      start: "items-start text-start",
+      center: "items-center text-center",
+      end: "items-end text-end",
+    },
+  },
+
+  defaultVariants: {
+    alignment: "start",
+  },
+})
+
+type IntroProps = Omit<HTMLAttributes<HTMLElement>, "title" | "prefix"> &
+  VariantProps<typeof introVariants> & {
+    title: ReactNode;
+    description?: ReactNode;
+    prefix?: ReactNode;
+    suffix?: ReactNode;
+    headingProps?: HeadingProps;
+  }
 
 export const Intro = ({
   children,
   className,
+  alignment,
   title,
   description,
   prefix,
@@ -23,7 +41,7 @@ export const Intro = ({
   ...props
 }: IntroProps) => {
   return (
-    <div className={cx("flex w-full flex-col items-start gap-y-2", className)} {...props}>
+    <div className={cx(introVariants({ alignment, className }))} {...props}>
       <Series size="lg" className="relative w-full">
         {prefix}
         {title && <Heading {...headingProps}>{title}</Heading>}
