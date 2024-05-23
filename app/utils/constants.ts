@@ -16,7 +16,7 @@ export const TOPICS_PER_PAGE = 150
 
 export const DAY_IN_MS = 1000 * 60 * 60 * 24
 
-export const BASE_SPONSORING_PRICE = 10
+export const BASE_SPONSORING_PRICE = 12
 
 export const SWR_CONFIG: SWRConfiguration = {
   refreshInterval: 1000 * 60,
