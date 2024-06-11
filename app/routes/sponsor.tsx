@@ -41,20 +41,20 @@ export default function SubmitPage() {
       icon: <HandHeartIcon className="size-full" />,
       title: "Support OSS",
       description: "Support the open-source community and help us maintain the directory.",
-      footer: "175+ Supported Projects",
+      footer: "200+ Supported Projects",
     },
     {
       icon: <SendIcon className="size-full" />,
       title: "Newsletter Mention",
       description: "Get featured in our monthly newsletter read by OpenSource/tech enthusiasts.",
-      footer: "600+ Subscribers",
+      footer: "650+ Subscribers",
       exclusive: true,
     },
     {
       icon: <GithubIcon className="size-full" />,
       title: "GitHub Link",
       description: 'Display your link in a special "Sponsors" section in our GitHub repository.',
-      footer: "350+ Stars",
+      footer: "450+ Stars",
       exclusive: true,
     },
   ]
