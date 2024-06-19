@@ -47,14 +47,14 @@ export default function SubmitPage() {
       icon: <SendIcon className="size-full" />,
       title: "Newsletter Mention",
       description: "Get featured in our monthly newsletter read by OpenSource/tech enthusiasts.",
-      footer: "650+ Subscribers",
+      footer: "~700 Subscribers",
       exclusive: true,
     },
     {
       icon: <GithubIcon className="size-full" />,
       title: "GitHub Link",
       description: 'Display your link in a special "Sponsors" section in our GitHub repository.',
-      footer: "450+ Stars",
+      footer: "~500 Stars",
       exclusive: true,
     },
   ]
