@@ -27,9 +27,9 @@ export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCard
         onClick={() => posthog.capture("sponsoring_clicked", { url: sponsoring?.website })}
       >
         <Card.Header>
-          <Favicon
-            src={`https://www.google.com/s2/favicons?sz=128&domain_url=${sponsoring?.website}`}
-          />
+          {sponsoring?.website && (
+            <Favicon src={`https://www.google.com/s2/favicons?sz=128&domain_url=${sponsoring.website}`} />
+          )}
 
           <H4 as="h3" className="truncate">
             {sponsoring?.name || "Sponsor OpenAlternative"}
