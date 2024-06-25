@@ -227,6 +227,7 @@ export default function ToolsPage() {
 
           {tool.screenshotUrl && (
             <img
+              key={tool.screenshotUrl}
               src={tool.screenshotUrl}
               alt={`Screenshot of ${tool.name} website`}
               width={1280}
