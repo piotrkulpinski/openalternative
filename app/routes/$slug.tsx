@@ -43,14 +43,35 @@ export const handle = {
   },
 }
 
-export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
+export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
   const { meta, tool } = data || {}
 
   return getMetaTags({
+    location,
     title: meta?.title,
     description: tool?.description,
     ogImage: `${SITE_URL}/${tool?.slug}.png`,
     parentMeta: matches.find(({ id }) => id === "root")?.meta,
+    jsonLd: tool
+      ? [
+          {
+            "@type": "ImageObject",
+            url: tool?.screenshotUrl,
+            contentUrl: tool?.screenshotUrl,
+            width: 1280,
+            height: 720,
+            caption: `A screenshot of ${tool?.name}`,
+          },
+          {
+            "@type": "ImageObject",
+            url: tool?.faviconUrl,
+            contentUrl: tool?.faviconUrl,
+            width: 144,
+            height: 144,
+            caption: `A favicon of ${tool?.name}`,
+          },
+        ]
+      : undefined,
   })
 }
 

@@ -41,22 +41,6 @@ export const meta: MetaFunction = ({ location }) => {
     { property: "og:type", content: "website" },
     { property: "og:url", content: currentUrl },
     { property: "og:site_name", content: SITE_NAME },
-    {
-      "script:ld+json": {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: SITE_NAME,
-        url: SITE_URL,
-        potentialAction: {
-          "@type": "SearchAction",
-          target: {
-            "@type": "EntryPoint",
-            urlTemplate: `${SITE_URL}/?openalternative[query]={search_term_string}`,
-          },
-          "query-input": "required name=search_term_string",
-        },
-      },
-    },
   ]
 }
 

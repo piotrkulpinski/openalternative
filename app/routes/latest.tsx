@@ -14,10 +14,11 @@ export const handle = {
   breadcrumb: () => <BreadcrumbsLink to="/latest" label="Latest" />,
 }
 
-export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
+export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
   const { title, description } = data?.meta || {}
 
   return getMetaTags({
+    location,
     title,
     description,
     parentMeta: matches.find(({ id }) => id === "root")?.meta,

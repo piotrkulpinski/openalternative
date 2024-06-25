@@ -8,10 +8,11 @@ import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 
-export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
+export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
   const { title, description } = data?.meta || {}
 
   return getMetaTags({
+    location,
     title,
     description,
     parentMeta: matches.find(({ id }) => id === "root")?.meta,

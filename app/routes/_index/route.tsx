@@ -13,8 +13,9 @@ import { getCurrentPHLaunch } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 import { Search } from "./Search"
 
-export const meta: MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches, location }) => {
   return getMetaTags({
+    location,
     title: SITE_TAGLINE,
     description: SITE_DESCRIPTION,
     parentMeta: matches.find(({ id }) => id === "root")?.meta,
