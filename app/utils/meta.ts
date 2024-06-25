@@ -1,21 +1,102 @@
 import type { MetaDescriptor } from "@remix-run/node"
-import { SITE_NAME, SITE_URL } from "./constants"
+import type { Location } from "@remix-run/router"
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "./constants"
 
 type GetMetaTagsProps = {
+  location: Location
   title?: string | null
   description?: string | null
   ogImage?: string | null
+  jsonLd?: object[]
   parentMeta?: MetaDescriptor[]
 }
 
-export const getMetaTags = ({ title, description, ogImage, parentMeta = [] }: GetMetaTagsProps) => {
+export const getMetaTags = ({
+  title,
+  description,
+  ogImage,
+  location,
+  jsonLd = [],
+  parentMeta = [],
+}: GetMetaTagsProps) => {
+  const metaTitle = title ? `${title} – ${SITE_NAME}` : SITE_NAME
+  const metaDescription = description ?? SITE_TAGLINE
+  const metaImage = ogImage ?? `${SITE_URL}/opengraph.png`
+  const metaUrl = `${SITE_URL}${location.pathname}`
+
   return [
     ...parentMeta,
-    { title: `${title} – ${SITE_NAME}` },
-    { name: "description", content: description },
-    { property: "og:title", content: `${title} – ${SITE_NAME}` },
-    { property: "og:description", content: description },
-    { property: "og:image", content: ogImage ?? `${SITE_URL}/opengraph.png` },
+    { title: metaTitle },
+    { name: "description", content: metaDescription },
+    { property: "og:title", content: metaTitle },
+    { property: "og:description", content: metaDescription },
+    { property: "og:image", content: metaImage },
+    {
+      "script:ld+json": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": `${SITE_URL}/#/schema/organization/1`,
+            name: SITE_NAME,
+            url: `${SITE_URL}/`,
+            sameAs: ["https://x.com/ossalternative"],
+            logo: {
+              "@type": "ImageObject",
+              "@id": `${SITE_URL}/#/schema/image/1`,
+              url: `${SITE_URL}/favicon.png`,
+              width: "480",
+              height: "480",
+              caption: `${SITE_NAME} Logo`,
+            },
+            image: {
+              "@id": `${SITE_URL}/#/schema/image/2`,
+            },
+          },
+          {
+            "@type": "Person",
+            "@id": `${SITE_URL}#/schema/person/2`,
+            name: "Piotr Kulpinski",
+            sameAs: [
+              "https://x.com/piotrkulpinski",
+              "https://inkedin.com/in/piotrkulpinski",
+              "https://github.com/piotrkulpinski",
+            ],
+          },
+          {
+            "@type": "ImageObject",
+            "@id": `${SITE_URL}/#/schema/image/2`,
+            url: metaImage,
+            contentUrl: metaImage,
+            caption: metaDescription,
+          },
+          {
+            "@type": "WebSite",
+            url: metaUrl,
+            name: metaTitle,
+            description: metaDescription,
+            inLanguage: "en-US",
+            potentialAction: [
+              {
+                "@type": "ReadAction",
+                target: metaUrl,
+              },
+              {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: `${SITE_URL}/?openalternative[query]={search_term_string}`,
+                },
+                "query-input": "required name=search_term_string",
+              },
+            ],
+            about: { "@id": `${SITE_URL}#/schema/organization/1` },
+            primaryImageOfPage: { "@id": `${SITE_URL}#/schema/image/2` },
+          },
+          ...jsonLd,
+        ],
+      },
+    },
   ].sort(sortMeta)
 }
 
