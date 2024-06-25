@@ -1,4 +1,4 @@
-import { NavLink } from "@remix-run/react"
+import { NavLink } from "@remix-run/react";
 import {
   BlocksIcon,
   BracesIcon,
@@ -11,59 +11,68 @@ import {
   SmilePlusIcon,
   TagIcon,
   XIcon,
-} from "lucide-react"
-import { type HTMLAttributes, useEffect, useState } from "react"
-import { ClientOnly } from "remix-utils/client-only"
-import useSWR from "swr"
-import { GITHUB_URL, SWR_CONFIG } from "~/utils/constants"
-import { cx } from "~/utils/cva"
-import { fetcher } from "~/utils/fetchers"
-import { getRepoOwnerAndName } from "~/utils/github"
-import { Badge } from "./Badge"
-import { Breadcrumbs } from "./Breadcrumbs"
-import { Button } from "./Button"
+} from "lucide-react";
+import { type HTMLAttributes, useEffect, useState } from "react";
+import { ClientOnly } from "remix-utils/client-only";
+import useSWR from "swr";
+import { GITHUB_URL, SWR_CONFIG } from "~/utils/constants";
+import { cx } from "~/utils/cva";
+import { fetcher } from "~/utils/fetchers";
+import { getRepoOwnerAndName } from "~/utils/github";
+import { Badge } from "./Badge";
+import { Breadcrumbs } from "./Breadcrumbs";
+import { Button } from "./Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./DropdownMenu"
-import { NavigationLink, navigationLinkVariants } from "./NavigationLink"
-import { Ping } from "./Ping"
-import { Series } from "./Series"
-import { ThemeSwitcher } from "./ThemeSwitcher"
+} from "./DropdownMenu";
+import { NavigationLink, navigationLinkVariants } from "./NavigationLink";
+import { Ping } from "./Ping";
+import { Series } from "./Series";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
-export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
-  const [isNavOpen, setNavOpen] = useState(false)
-  const repo = getRepoOwnerAndName(GITHUB_URL)
-  const formatter = new Intl.NumberFormat("en-US", { notation: "compact" })
+export const Header = ({
+  className,
+  ...props
+}: HTMLAttributes<HTMLElement>) => {
+  const [isNavOpen, setNavOpen] = useState(false);
+  const repo = getRepoOwnerAndName(GITHUB_URL);
+  const formatter = new Intl.NumberFormat("en-US", { notation: "compact" });
 
   // Close the mobile navigation when the user presses the "Escape" key
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setNavOpen(false)
-    }
+      if (e.key === "Escape") setNavOpen(false);
+    };
 
-    document.addEventListener("keydown", onKeyDown)
-    return () => document.removeEventListener("keydown", onKeyDown)
-  }, [])
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   const { data, error, isLoading } = useSWR<number>(
     { url: "/api/fetch-repository-stars", ...repo },
     fetcher,
-    SWR_CONFIG,
-  )
+    SWR_CONFIG
+  );
 
   return (
     <div
       className={cx(
         "sticky top-0 z-10 flex flex-wrap items-center py-3 -my-3 gap-3 backdrop-blur-sm bg-background/95 md:gap-4",
-        className,
+        className
       )}
       {...props}
     >
-      <button type="button" onClick={() => setNavOpen(!isNavOpen)} className="lg:hidden">
-        <MenuIcon className={cx("size-6 stroke-[1.5]", isNavOpen && "hidden")} />
+      <button
+        type="button"
+        onClick={() => setNavOpen(!isNavOpen)}
+        className="lg:hidden"
+      >
+        <MenuIcon
+          className={cx("size-6 stroke-[1.5]", isNavOpen && "hidden")}
+        />
         <XIcon className={cx("size-6 stroke-[1.5]", !isNavOpen && "hidden")} />
         <span className="sr-only">Toggle navigation</span>
       </button>
@@ -72,7 +81,9 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
       <nav className="contents max-lg:hidden">
         <DropdownMenu>
-          <DropdownMenuTrigger className={cx(navigationLinkVariants({ className: "gap-1" }))}>
+          <DropdownMenuTrigger
+            className={cx(navigationLinkVariants({ className: "gap-1" }))}
+          >
             Browse <ChevronDownIcon />
           </DropdownMenuTrigger>
 
@@ -160,5 +171,5 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         </nav>
       )}
     </div>
-  )
-}
+  );
+};
