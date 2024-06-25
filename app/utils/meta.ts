@@ -79,7 +79,7 @@ export const getMetaTags = ({
             potentialAction: [
               {
                 "@type": "ReadAction",
-                target: metaUrl,
+                target: [metaUrl],
               },
               {
                 "@type": "SearchAction",
