@@ -122,3 +122,14 @@ model TopicToTool {
 
   @@id([toolId, topicSlug])
 }
+
+model RepositoryStars {
+  id        String  @id @default(uuid())
+  month     Int
+  year      Int
+  day       Int
+  name      String
+  stars     Int
+
+  @@unique([name, day, month, year])
+}
