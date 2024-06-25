@@ -76,20 +76,22 @@ export const getMetaTags = ({
             name: metaTitle,
             description: metaDescription,
             inLanguage: "en-US",
-            potentialAction: [
-              {
-                "@type": "ReadAction",
-                target: [metaUrl],
-              },
-              {
-                "@type": "SearchAction",
-                target: {
-                  "@type": "EntryPoint",
-                  urlTemplate: `${SITE_URL}/?openalternative[query]={search_term_string}`,
-                },
-                "query-input": "required name=search_term_string",
-              },
-            ],
+            potentialAction:
+              location.pathname === "/"
+                ? // If we're on the homepage, we want to add a search action
+                  {
+                    "@type": "SearchAction",
+                    target: {
+                      "@type": "EntryPoint",
+                      urlTemplate: `${SITE_URL}/?openalternative[query]={search_term_string}`,
+                    },
+                    "query-input": "required name=search_term_string",
+                  }
+                : // Otherwise, we want to add a read action
+                  {
+                    "@type": "ReadAction",
+                    target: metaUrl,
+                  },
             about: { "@id": `${SITE_URL}#/schema/organization/1` },
             primaryImageOfPage: { "@id": `${SITE_URL}#/schema/image/2` },
           },
