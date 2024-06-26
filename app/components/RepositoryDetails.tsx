@@ -1,5 +1,5 @@
 import type { SerializeFrom } from "@remix-run/node"
-import { CopyrightIcon, GitForkIcon, MoveRightIcon, StarIcon, TimerIcon } from "lucide-react"
+import { ArrowUpRightIcon, CopyrightIcon, GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { format } from "timeago.js"
@@ -63,7 +63,7 @@ export const RepositoryDetails = ({
         <Button
           size="md"
           variant="secondary"
-          suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
+          suffix={<ArrowUpRightIcon className="duration-150 group-hover:translate-x-0.5" />}
           onClick={() => posthog.capture("repository_clicked", { url: tool.repository })}
           className="mt-1"
           asChild

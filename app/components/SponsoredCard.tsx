@@ -8,6 +8,8 @@ import { Button } from "./Button"
 import { Card, type CardProps } from "./Card"
 import { H4 } from "./Heading"
 import { Logo } from "./Logo"
+import { Badge } from "./Badge"
+import { ArrowUpRightIcon } from "lucide-react"
 
 type SponsoredCardProps = CardProps & {
   sponsoring: SponsoringOne | null
@@ -15,7 +17,7 @@ type SponsoredCardProps = CardProps & {
 
 export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCardProps) => {
   return (
-    <Card className={cx("order-2", className)} asChild {...props}>
+    <Card className={cx("group/button order-2", className)} asChild {...props}>
       <Link
         to={
           sponsoring?.website
@@ -28,12 +30,16 @@ export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCard
       >
         <Card.Header>
           {sponsoring?.website && (
-            <Favicon src={`https://www.google.com/s2/favicons?sz=128&domain_url=${sponsoring.website}`} />
+            <Favicon
+              src={`https://www.google.com/s2/favicons?sz=128&domain_url=${sponsoring.website}`}
+            />
           )}
 
           <H4 as="h3" className="truncate">
             {sponsoring?.name || "Sponsor OpenAlternative"}
           </H4>
+
+          {sponsoring && <Badge className="ml-auto bg-transparent border">Ad</Badge>}
         </Card.Header>
 
         <Card.Description className="mb-auto line-clamp-4">
@@ -41,7 +47,11 @@ export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCard
             "Reach out to our audience of professional open source/tech enthusiasts to boost your sales."}
         </Card.Description>
 
-        <Button className="w-full pointer-events-none" asChild>
+        <Button
+          className="w-full pointer-events-none"
+          suffix={sponsoring && <ArrowUpRightIcon />}
+          asChild
+        >
           <span>{sponsoring ? `Visit ${sponsoring.name}` : "Become a sponsor"}</span>
         </Button>
 

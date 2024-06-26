@@ -11,7 +11,7 @@ import {
   unstable_useViewTransitionState,
   useLoaderData,
 } from "@remix-run/react"
-import { HashIcon, MoveRightIcon, TagIcon } from "lucide-react"
+import { ArrowUpRightIcon, HashIcon, TagIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
@@ -245,7 +245,7 @@ export default function ToolsPage() {
 
             {tool.website && (
               <Button
-                suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
+                suffix={<ArrowUpRightIcon className="duration-150 group-hover:translate-x-0.5" />}
                 onClick={() => posthog.capture("website_clicked", { url: tool.website })}
                 asChild
               >
@@ -322,7 +322,7 @@ export default function ToolsPage() {
             />
           )} */}
 
-          {/* <SponsoredCard sponsoring={null} /> */}
+          {/* <SponsoredCard sponsoring={sponsoring} /> */}
         </div>
       </div>
 

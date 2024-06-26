@@ -7,7 +7,7 @@ import { Slottable } from "./Slottable"
 
 export const buttonVariants = cva({
   base: [
-    "group relative inline-flex items-center justify-center border font-medium -tracking-micro rounded-md hover:z-10",
+    "group/button relative inline-flex items-center justify-center border font-medium -tracking-micro rounded-md hover:z-10",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
@@ -44,7 +44,7 @@ export const buttonVariants = cva({
 })
 
 export const buttonAffixVariants = cva({
-  base: "shrink-0 size-[1.1em]",
+  base: "shrink-0 size-[1.1em] duration-150 group-hover/button:last:rotate-12",
 })
 
 export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size" | "prefix"> &
