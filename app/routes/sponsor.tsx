@@ -1,10 +1,12 @@
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { GithubIcon, HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
+import { useContext } from "react"
 import { Card } from "~/components/Card"
-import { H3 } from "~/components/Heading"
+import { H4 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
+import { StatsContext } from "~/providers/StatsProvider"
 import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
@@ -30,32 +32,45 @@ export const loader = () => {
 
 export default function SubmitPage() {
   const { meta } = useLoaderData<typeof loader>()
+  const stats = useContext(StatsContext)
 
   const benefits = [
     {
       icon: <SquareAsteriskIcon className="size-full" />,
       title: "Homepage Ad",
       description: "Get featured on our homepage with a banner ad linking to your website.",
-      footer: "~500 Visitors per day",
+      stats: {
+        value: 500,
+        label: "Visitors/day",
+      },
     },
     {
       icon: <HandHeartIcon className="size-full" />,
       title: "Support OSS",
       description: "Support the open-source community and help us maintain the directory.",
-      footer: "200+ Supported Projects",
+      stats: {
+        value: stats?.tools ?? 0,
+        label: "Listed Projects",
+      },
     },
     {
       icon: <SendIcon className="size-full" />,
       title: "Newsletter Mention",
       description: "Get featured in our monthly newsletter read by OpenSource/tech enthusiasts.",
-      footer: "~700 Subscribers",
+      stats: {
+        value: stats?.subscribers ?? 0,
+        label: "Subscribers",
+      },
       exclusive: true,
     },
     {
       icon: <GithubIcon className="size-full" />,
       title: "GitHub Link",
       description: 'Display your link in a special "Sponsors" section in our GitHub repository.',
-      footer: "~500 Stars",
+      stats: {
+        value: stats?.stars ?? 0,
+        label: "Stars",
+      },
       exclusive: true,
     },
   ]
@@ -91,14 +106,17 @@ export default function SubmitPage() {
                   {benefit.icon}
                 </div>
 
-                <H3>
+                <H4 as="strong">
                   {benefit.title}
                   {benefit.exclusive && <span className="text-muted">*</span>}
-                </H3>
+                </H4>
               </Card.Header>
 
               <Card.Description>{benefit.description}</Card.Description>
-              <Card.Footer>{benefit.footer}</Card.Footer>
+              <Card.Footer>
+                <strong>{benefit.stats.value}</strong>{" "}
+                <span className="text-muted">{benefit.stats.label}</span>
+              </Card.Footer>
             </Card>
           ))}
         </div>

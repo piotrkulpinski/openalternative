@@ -1,6 +1,15 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+  useLocation,
+} from "@remix-run/react"
 import { SpeedInsights } from "@vercel/speed-insights/remix"
+import { kv } from "@vercel/kv"
 import { ThemeProvider } from "next-themes"
 import { useEffect, type PropsWithChildren } from "react"
 import { Footer } from "~/components/Footer"
@@ -14,6 +23,11 @@ import { Header } from "./components/Header"
 import { ErrorPage } from "./components/ErrorPage"
 import { publishEscape } from "@curiousleaf/utils"
 import posthog from "posthog-js"
+import { StatsContext, StatsProvider } from "./providers/StatsProvider"
+
+export const shouldRevalidate = () => {
+  return false
+}
 
 export const handle = {
   breadcrumb: () => (
@@ -45,8 +59,15 @@ export const meta: MetaFunction = ({ location }) => {
   ]
 }
 
+export const loader = async () => {
+  const stats = await kv.get<StatsContext>("stats")
+
+  return { stats }
+}
+
 export function Layout({ children }: PropsWithChildren) {
   const { key } = useLocation()
+  const { stats } = useLoaderData<typeof loader>()
 
   useEffect(() => {
     // Trigger escape hatch when the route changes
@@ -66,27 +87,29 @@ export function Layout({ children }: PropsWithChildren) {
       </head>
 
       <body className="bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="@container/main mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 p-8">
-            <Header />
+        <StatsProvider stats={stats}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="@container/main mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 p-8">
+              <Header />
 
-            {children}
+              {children}
 
-            <hr className="mt-auto peer-[[href]]:mt-0" />
+              <hr className="mt-auto peer-[[href]]:mt-0" />
 
-            <Newsletter
-              title="Newsletter"
-              description="Get updates on new tools, alternatives, and other cool stuff."
-            />
+              <Newsletter
+                title="Newsletter"
+                description="Get updates on new tools, alternatives, and other cool stuff."
+              />
 
-            <Footer />
-          </div>
-        </ThemeProvider>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </StatsProvider>
 
         <ScrollRestoration />
         <Scripts />
