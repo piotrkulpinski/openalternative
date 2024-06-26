@@ -1,5 +1,3 @@
-import type { SWRConfiguration } from "swr"
-
 export const SITE_URL = import.meta.env.VITE_SITE_URL
 export const SITE_EMAIL = import.meta.env.VITE_SITE_EMAIL
 export const SITE_NAME = "OpenAlternative"
@@ -17,12 +15,6 @@ export const TOPICS_PER_PAGE = 150
 export const DAY_IN_MS = 1000 * 60 * 60 * 24
 
 export const BASE_SPONSORING_PRICE = 12
-
-export const SWR_CONFIG: SWRConfiguration = {
-  refreshInterval: 1000 * 60,
-  revalidateOnFocus: false,
-  revalidateOnReconnect: false,
-}
 
 export const JSON_HEADERS =
   import.meta.env.NODE_ENV === "development"

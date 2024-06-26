@@ -8,6 +8,7 @@ export const loader = async () => {
     where: { publishedAt: { lte: new Date() } },
     orderBy: { publishedAt: "desc" },
     select: { id: true, name: true, slug: true, description: true, publishedAt: true },
+    take: 50,
   })
 
   const feed = `<?xml version="1.0" encoding="UTF-8"?>

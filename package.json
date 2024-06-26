@@ -57,7 +57,6 @@
     "remix-utils": "^7.5.0",
     "satori": "^0.10.13",
     "stripe": "^15.3.0",
-    "swr": "^2.2.5",
     "tailwind-merge": "^2.2.2",
     "timeago.js": "^4.0.2",
     "zod": "^3.22.4"
