@@ -1,8 +1,10 @@
 import type { LoaderFunctionArgs } from "@remix-run/node"
+import { kv } from "@vercel/kv"
 import { got } from "got"
 import { prisma } from "~/services.server/prisma"
 import { SITE_URL } from "~/utils/constants"
 import { getRepoOwnerAndName } from "~/utils/github"
+import { getStarCount, getSubscriberCount, getToolCount } from "~/utils/stats"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   if (request.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -12,6 +14,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { not: null } },
     select: { id: true, repository: true, website: true, bump: true },
+  })
+
+  // Store the stats in KV
+  await kv.set("stats", {
+    tools: await getToolCount(),
+    stars: await getStarCount(),
+    subscribers: await getSubscriberCount(),
   })
 
   // Trigger a new event for each repository

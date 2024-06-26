@@ -7,6 +7,7 @@ import { H4 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
 import { StatsContext } from "~/providers/StatsProvider"
+import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
@@ -20,18 +21,23 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const loader = () => {
+export const loader = async () => {
+  const sponsoringDates = await prisma.sponsoring.findMany({
+    where: { endsAt: { gte: new Date() } },
+    select: { startsAt: true, endsAt: true },
+  })
+
   const meta = {
     title: "Supercharge your sales with sponsored listing",
     description:
       "Ensure the long-term success and growth of your business by sponsoring our comprehensive open source directory. Your support helps promote open source alternatives, fosters innovation, and makes a lasting positive impact.",
   }
 
-  return json({ meta })
+  return json({ sponsoringDates, meta })
 }
 
-export default function SubmitPage() {
-  const { meta } = useLoaderData<typeof loader>()
+export default function SponsorPage() {
+  const { sponsoringDates, meta } = useLoaderData<typeof loader>()
   const stats = useContext(StatsContext)
 
   const benefits = [
@@ -79,7 +85,7 @@ export default function SubmitPage() {
     <>
       <Intro {...meta} />
 
-      <Sponsoring className="max-w-2xl" />
+      <Sponsoring dates={sponsoringDates} className="max-w-2xl" />
 
       <div className="flex flex-col items-start gap-8 max-w-2xl mt-4">
         <Intro

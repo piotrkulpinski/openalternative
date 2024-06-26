@@ -4,39 +4,31 @@ import plur from "plur"
 import { posthog } from "posthog-js"
 import { type HTMLAttributes, useEffect, useState } from "react"
 import type { DateRange } from "react-day-picker"
-import useSWR from "swr"
 import { Badge } from "~/components/Badge"
 import { Button } from "~/components/Button"
 import { Calendar } from "~/components/Calendar"
-import type { loader } from "~/routes/api.fetch-sponsoring-dates"
 import type { action } from "~/routes/api.stripe.create-checkout"
 import type { StripeCheckoutSchema } from "~/services.server/stripe"
-import { DAY_IN_MS, SITE_NAME, SWR_CONFIG } from "~/utils/constants"
+import { DAY_IN_MS, SITE_NAME } from "~/utils/constants"
 import { cx } from "~/utils/cva"
-import { fetcher } from "~/utils/fetchers"
 import { adjustSponsoringDuration, calculateSponsoringPrice } from "~/utils/sponsoring"
 
-type SponsoringDatesPayload = SerializeFrom<Awaited<ReturnType<typeof loader>>>
+type SponsoringProps = HTMLAttributes<HTMLDivElement> & {
+  dates: SerializeFrom<{
+    startsAt: Date,
+    endsAt: Date,
+  }>[]
+}
 
-export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const Sponsoring = ({ className, dates, ...props }: SponsoringProps) => {
   const { data, state, submit } = useFetcher<typeof action>()
   const [date, setDate] = useState<DateRange>()
   const [price, setPrice] = useState<ReturnType<typeof calculateSponsoringPrice>>()
-  const [disabledDates, setDisabledDates] = useState<DateRange[]>([])
 
-  // Fetch the sponsored dates
-  useSWR<SponsoringDatesPayload>({ url: "/api/fetch-sponsoring-dates" }, fetcher, {
-    ...SWR_CONFIG,
-
-    onSuccess: dates => {
-      setDisabledDates(
-        dates.map(({ startsAt, endsAt }) => ({
-          from: new Date(Date.parse(startsAt)),
-          to: new Date(Date.parse(endsAt) - DAY_IN_MS),
-        })),
-      )
-    },
-  })
+  const disabledDates= dates.map(({ startsAt, endsAt }) => ({
+    from: new Date(Date.parse(startsAt)),
+    to: new Date(Date.parse(endsAt) - DAY_IN_MS),
+  }))
 
   // Calculate the duration in days
   useEffect(() => {
