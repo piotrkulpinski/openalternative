@@ -1,4 +1,6 @@
 import { Prisma } from "@prisma/client"
+import { prisma } from "./prisma"
+import { getRandomElement } from "@curiousleaf/utils"
 
 // Alternatives
 export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeInclude>()({
@@ -90,3 +92,32 @@ export const sponsoringOnePayload = Prisma.validator<Prisma.SponsoringSelect>()(
 })
 
 export type SponsoringOne = Prisma.SponsoringGetPayload<{ select: typeof sponsoringOnePayload }>
+
+/**
+ * Get a random tool from the database
+ * @param tool - The tool to exclude from the results
+ * @param take - The number of tools to return
+ * @returns A random tools from the database
+ */
+export const getRelatedTools = async (slug: string | undefined, take = 3) => {
+  const relatedWhereClause = {
+    category: { tools: { some: { tool: { slug } } } },
+    tool: { publishedAt: { lte: new Date() } },
+    NOT: { tool: { slug } },
+  } satisfies Prisma.CategoryToToolsWhereInput
+
+  const itemCount = await prisma.categoryToTools.count({ where: relatedWhereClause })
+  const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
+  const properties = ["id", "name", "score"] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
+  const orderBy = getRandomElement(properties)
+  const orderDir = getRandomElement(["asc", "desc"] as const)
+
+  return prisma.categoryToTools.findMany({
+    where: relatedWhereClause,
+    include: { tool: toolManyPayload },
+    distinct: ["toolId"],
+    orderBy: { tool: { [orderBy]: orderDir } },
+    take,
+    skip,
+  })
+}

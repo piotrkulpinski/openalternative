@@ -14,7 +14,7 @@ export const ThemeSwitcher = ({ ...props }: HTMLAttributes<HTMLElement>) => {
   const { resolvedTheme, setTheme } = useTheme()
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
           size="sm"

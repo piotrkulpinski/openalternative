@@ -4,7 +4,7 @@ import {
   type MetaFunction,
   json,
 } from "@remix-run/node"
-import { useLoaderData } from "@remix-run/react"
+import { ShouldRevalidateFunction, useLoaderData } from "@remix-run/react"
 import { HashIcon, MoveRightIcon, TagIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import { BackButton } from "~/components/BackButton"
@@ -23,6 +23,7 @@ import {
   type ToolOne,
   alternativeManyPayload,
   categoryManyPayload,
+  getRelatedTools,
   languageManyPayload,
   toolOnePayload,
   topicManyPayload,
@@ -32,6 +33,15 @@ import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
+
+export const shouldRevalidate: ShouldRevalidateFunction = ({
+  currentParams,
+  currentUrl,
+  nextParams,
+  nextUrl,
+}) => {
+  return currentUrl.pathname !== nextUrl.pathname || currentParams.slug !== nextParams.slug
+}
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -135,21 +145,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
         { type: "find topics", timings },
       ),
 
-      time(
-        () =>
-          prisma.categoryToTools.findMany({
-            where: {
-              category: { tools: { some: { tool: { slug } } } },
-              tool: { publishedAt: { lte: new Date() } },
-              NOT: { tool: { slug } },
-            },
-            include: { tool: true },
-            distinct: ["toolId"],
-            orderBy: { tool: { score: "desc" } },
-            take: 3,
-          }),
-        { type: "find related tools", timings },
-      ),
+      time(getRelatedTools(slug, 3), { type: "find related tools", timings }),
     ])
 
     const meta = {
@@ -270,7 +266,7 @@ export default function ToolsPage() {
           )}
         </div>
 
-        <div className="sticky top-14 max-md:hidden">
+        <div className="sticky top-14 flex flex-col gap-4 max-md:hidden">
           <RepositoryDetails tool={tool} languages={languages} />
 
           {/* {repo && (
@@ -280,6 +276,8 @@ export default function ToolsPage() {
               loading="lazy"
             />
           )} */}
+
+          {/* <SponsoredCard sponsoring={null} /> */}
         </div>
       </div>
 
