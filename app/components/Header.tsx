@@ -71,7 +71,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
       <Breadcrumbs className="mr-auto" />
 
       <nav className="contents max-lg:hidden">
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger className={cx(navigationLinkVariants({ className: "gap-1" }))}>
             Browse <ChevronDownIcon />
           </DropdownMenuTrigger>

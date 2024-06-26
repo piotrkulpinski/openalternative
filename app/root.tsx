@@ -6,13 +6,13 @@ import { ThemeProvider } from "next-themes"
 import { posthog } from "posthog-js"
 import { type PropsWithChildren, useEffect } from "react"
 import { Footer } from "~/components/Footer"
-import { Header } from "~/components/Header"
 import { Newsletter } from "~/components/Newsletter"
 import { BreadcrumbsLink } from "./components/Breadcrumbs"
 import { Logo } from "./components/Logo"
 import { SITE_NAME, SITE_URL } from "./utils/constants"
 
 import stylesheet from "~/styles.css?url"
+import { Header } from "./components/Header"
 
 export const handle = {
   breadcrumb: () => (
@@ -56,7 +56,7 @@ export function Layout({ children }: PropsWithChildren) {
   }, [key])
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />

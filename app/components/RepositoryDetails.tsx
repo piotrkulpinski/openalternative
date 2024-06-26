@@ -35,7 +35,7 @@ export const RepositoryDetails = ({
   ]
 
   return (
-    <div className={cx("flex flex-col gap-5 rounded-lg border px-6 py-5", className)} {...props}>
+    <div className={cx("flex flex-col gap-5 rounded-lg border p-5", className)} {...props}>
       <Series direction="column">
         <H5>Repository details:</H5>
         <Insights insights={insights} className="text-sm" />

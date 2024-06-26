@@ -102,7 +102,9 @@ export const Sponsoring = ({ className, ...props }: HTMLAttributes<HTMLElement>)
             <p>
               {price.days} {plur("day", price.days)} × ${price.price} ={" "}
               <strong className="font-medium text-foreground">${price.fullPrice}</strong>
-              <Badge className="ml-3">{price.discountPercentage}% off</Badge>
+              {!!price.discountPercentage && (
+                <Badge className="ml-3">{price.discountPercentage}% off</Badge>
+              )}
             </p>
           ) : (
             <p>Please select a date range.</p>
