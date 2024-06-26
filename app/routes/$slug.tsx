@@ -101,87 +101,97 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {
     const timings = makeTimings("tool loader")
 
-    const [tool, alternatives, categories, languages, topics, relatedTools] = await Promise.all([
-      time(
-        () =>
-          prisma.tool.findUniqueOrThrow({
-            where: { slug, publishedAt: { lte: new Date() } },
-            include: toolOnePayload,
-          }),
-        { type: "find tool", timings },
-      ),
+    const [tool, alternatives, categories, languages, topics, relatedTools, sponsoring] =
+      await Promise.all([
+        time(
+          () =>
+            prisma.tool.findUniqueOrThrow({
+              where: { slug, publishedAt: { lte: new Date() } },
+              include: toolOnePayload,
+            }),
+          { type: "find tool", timings },
+        ),
 
-      time(
-        () =>
-          prisma.alternativeToTool.findMany({
-            where: { tool: { slug } },
-            orderBy: { alternative: { name: "asc" } },
-            include: { alternative: { include: alternativeManyPayload } },
-          }),
-        { type: "find alternatives", timings },
-      ),
+        time(
+          () =>
+            prisma.alternativeToTool.findMany({
+              where: { tool: { slug } },
+              orderBy: { alternative: { name: "asc" } },
+              include: { alternative: { include: alternativeManyPayload } },
+            }),
+          { type: "find alternatives", timings },
+        ),
 
-      time(
-        () =>
-          prisma.categoryToTools.findMany({
-            where: { tool: { slug } },
-            orderBy: { category: { name: "asc" } },
-            include: { category: { include: categoryManyPayload } },
-          }),
-        { type: "find categories", timings },
-      ),
+        time(
+          () =>
+            prisma.categoryToTools.findMany({
+              where: { tool: { slug } },
+              orderBy: { category: { name: "asc" } },
+              include: { category: { include: categoryManyPayload } },
+            }),
+          { type: "find categories", timings },
+        ),
 
-      time(
-        () =>
-          prisma.languageToTool.findMany({
-            where: { tool: { slug } },
-            orderBy: { language: { name: "asc" } },
-            include: { language: { include: languageManyPayload } },
-          }),
-        { type: "find languages", timings },
-      ),
+        time(
+          () =>
+            prisma.languageToTool.findMany({
+              where: { tool: { slug } },
+              orderBy: { language: { name: "asc" } },
+              include: { language: { include: languageManyPayload } },
+            }),
+          { type: "find languages", timings },
+        ),
 
-      time(
-        () =>
-          prisma.topicToTool.findMany({
-            where: { tool: { slug } },
-            orderBy: { topic: { slug: "asc" } },
-            include: { topic: { include: topicManyPayload } },
-          }),
-        { type: "find topics", timings },
-      ),
+        time(
+          () =>
+            prisma.topicToTool.findMany({
+              where: { tool: { slug } },
+              orderBy: { topic: { slug: "asc" } },
+              include: { topic: { include: topicManyPayload } },
+            }),
+          { type: "find topics", timings },
+        ),
 
-      time(
-        async () => {
-          const relatedWhereClause = {
-            category: { tools: { some: { tool: { slug } } } },
-            tool: { publishedAt: { lte: new Date() } },
-            NOT: { tool: { slug } },
-          } satisfies Prisma.CategoryToToolsWhereInput
+        time(
+          async () => {
+            const relatedWhereClause = {
+              category: { tools: { some: { tool: { slug } } } },
+              tool: { publishedAt: { lte: new Date() } },
+              NOT: { tool: { slug } },
+            } satisfies Prisma.CategoryToToolsWhereInput
 
-          const take = 3
-          const itemCount = await prisma.categoryToTools.count({ where: relatedWhereClause })
-          const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
-          const properties = [
-            "id",
-            "name",
-            "score",
-          ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
-          const orderBy = getRandomElement(properties)
-          const orderDir = getRandomElement(["asc", "desc"] as const)
+            const take = 3
+            const itemCount = await prisma.categoryToTools.count({ where: relatedWhereClause })
+            const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
+            const properties = [
+              "id",
+              "name",
+              "score",
+            ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
+            const orderBy = getRandomElement(properties)
+            const orderDir = getRandomElement(["asc", "desc"] as const)
 
-          return prisma.categoryToTools.findMany({
-            where: relatedWhereClause,
-            include: { tool: toolManyPayload },
-            distinct: ["toolId"],
-            orderBy: { tool: { [orderBy]: orderDir } },
-            take,
-            skip,
-          })
-        },
-        { type: "find related tools", timings },
-      ),
-    ])
+            return prisma.categoryToTools.findMany({
+              where: relatedWhereClause,
+              include: { tool: toolManyPayload },
+              distinct: ["toolId"],
+              orderBy: { tool: { [orderBy]: orderDir } },
+              take,
+              skip,
+            })
+          },
+          { type: "find related tools", timings },
+        ),
+
+        time(
+          () => null,
+          // prisma.sponsoring.findFirst({
+          //   where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
+          //   select: { name: true, description: true, website: true, faviconUrl: true },
+          // }),
+          { type: "find sponsor", timings },
+        ),
+      ])
 
     const meta = {
       title: `${tool.name}: Open Source Alternative ${
@@ -192,7 +202,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     }
 
     return json(
-      { meta, tool, alternatives, categories, languages, topics, relatedTools },
+      { meta, tool, alternatives, categories, languages, topics, relatedTools, sponsoring },
       { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
     )
   } catch (error) {
@@ -202,7 +212,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 }
 
 export default function ToolsPage() {
-  const { tool, alternatives, categories, languages, topics, relatedTools } =
+  const { tool, alternatives, categories, languages, topics, relatedTools, sponsoring } =
     useLoaderData<typeof loader>()
 
   const vt = unstable_useViewTransitionState(`/${tool.slug}`)
@@ -245,7 +255,7 @@ export default function ToolsPage() {
 
             {tool.website && (
               <Button
-                suffix={<ArrowUpRightIcon className="duration-150 group-hover:translate-x-0.5" />}
+                suffix={<ArrowUpRightIcon />}
                 onClick={() => posthog.capture("website_clicked", { url: tool.website })}
                 asChild
               >

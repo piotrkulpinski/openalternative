@@ -1,6 +1,6 @@
 import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
-import { MoveRightIcon } from "lucide-react"
+import { ArrowUpRightIcon } from "lucide-react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
@@ -65,7 +65,7 @@ export default function AlternativesPage() {
       />
 
       <Grid>
-        <Card className="group bg-background" asChild>
+        <Card className="group/button bg-background" asChild>
           <Link to={alternative.website} target="_blank" rel="noopener noreferrer nofollow">
             <Card.Header>
               <Favicon src={alternative.faviconUrl} title={alternative.name} />
@@ -83,7 +83,7 @@ export default function AlternativesPage() {
               variant={alternative.website.includes("go.") ? "fancy" : "primary"}
               size="md"
               className="mt-auto pointer-events-none"
-              suffix={<MoveRightIcon className="duration-150 group-hover:translate-x-0.5" />}
+              suffix={<ArrowUpRightIcon />}
               asChild
             >
               <span>Visit Website</span>
