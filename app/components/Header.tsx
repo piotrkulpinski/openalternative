@@ -5,17 +5,15 @@ import {
   ChevronDownIcon,
   GemIcon,
   GithubIcon,
-  LoaderIcon,
   MenuIcon,
   PlusIcon,
   SmilePlusIcon,
   TagIcon,
   XIcon,
 } from "lucide-react"
-import { type HTMLAttributes, useEffect, useState } from "react"
-import { GITHUB_URL, SWR_CONFIG } from "~/utils/constants"
+import { type HTMLAttributes, useContext, useEffect, useState } from "react"
+import { GITHUB_URL } from "~/utils/constants"
 import { cx } from "~/utils/cva"
-import { getRepoOwnerAndName } from "~/utils/github"
 import { Breadcrumbs } from "./Breadcrumbs"
 import { Button } from "./Button"
 import {
@@ -26,16 +24,14 @@ import {
 } from "./DropdownMenu"
 import { NavigationLink, navigationLinkVariants } from "./NavigationLink"
 import { Series } from "./Series"
-import useSWR from "swr"
-import { fetcher } from "~/utils/fetchers"
 import { ClientOnly } from "remix-utils/client-only"
 import { ThemeSwitcher } from "./ThemeSwitcher"
 import { Badge } from "./Badge"
-import { Ping } from "./Ping"
+import { StatsContext } from "~/providers/StatsProvider"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)
-  const repo = getRepoOwnerAndName(GITHUB_URL)
+  const stats = useContext(StatsContext)
   const formatter = new Intl.NumberFormat("en-US", { notation: "compact" })
 
   // Close the mobile navigation when the user presses the "Escape" key
@@ -47,12 +43,6 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
     document.addEventListener("keydown", onKeyDown)
     return () => document.removeEventListener("keydown", onKeyDown)
   }, [])
-
-  const { data, error, isLoading } = useSWR<number>(
-    { url: "/api/fetch-repository-stars", ...repo },
-    fetcher,
-    SWR_CONFIG,
-  )
 
   return (
     <div
@@ -117,20 +107,16 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           variant="secondary"
           prefix={<GithubIcon />}
           suffix={
-            <>
-              {!error && (
-                <Badge size="sm" className="-my-0.5 size-auto">
-                  {isLoading && <LoaderIcon className="size-3 animate-spin" />}
-                  {data && formatter.format(data)}
-                </Badge>
-              )}
-            </>
+            stats?.stars ? (
+              <Badge size="sm" className="-my-0.5 size-auto">
+                {formatter.format(stats.stars)}
+              </Badge>
+            ) : undefined
           }
           asChild
         >
           <a href={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
             Star
-            <Ping className="absolute -top-1 -right-1" />
           </a>
         </Button>
 
