@@ -59,14 +59,12 @@ export const meta: MetaFunction = ({ location }) => {
 }
 
 export const loader = async () => {
-  const stats = await kv.get<StatsContext>("stats")
-
-  return { stats }
+  return await kv.get<StatsContext>("stats")
 }
 
 export function Layout({ children }: PropsWithChildren) {
   const { key } = useLocation()
-  const { stats } = useLoaderData<typeof loader>()
+  const stats = useLoaderData<typeof loader>()
 
   useEffect(() => {
     // Trigger escape hatch when the route changes
