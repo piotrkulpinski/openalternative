@@ -1,3 +1,5 @@
+import { getRandomElement } from "@curiousleaf/utils"
+import { Prisma } from "@prisma/client"
 import {
   type HeadersFunction,
   type LoaderFunctionArgs,
@@ -27,8 +29,8 @@ import {
   type ToolOne,
   alternativeManyPayload,
   categoryManyPayload,
-  getRelatedTools,
   languageManyPayload,
+  toolManyPayload,
   toolOnePayload,
   topicManyPayload,
 } from "~/services.server/api"
@@ -149,7 +151,36 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
         { type: "find topics", timings },
       ),
 
-      time(getRelatedTools(slug, 3), { type: "find related tools", timings }),
+      time(
+        async () => {
+          const relatedWhereClause = {
+            category: { tools: { some: { tool: { slug } } } },
+            tool: { publishedAt: { lte: new Date() } },
+            NOT: { tool: { slug } },
+          } satisfies Prisma.CategoryToToolsWhereInput
+
+          const take = 3
+          const itemCount = await prisma.categoryToTools.count({ where: relatedWhereClause })
+          const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
+          const properties = [
+            "id",
+            "name",
+            "score",
+          ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
+          const orderBy = getRandomElement(properties)
+          const orderDir = getRandomElement(["asc", "desc"] as const)
+
+          return prisma.categoryToTools.findMany({
+            where: relatedWhereClause,
+            include: { tool: toolManyPayload },
+            distinct: ["toolId"],
+            orderBy: { tool: { [orderBy]: orderDir } },
+            take,
+            skip,
+          })
+        },
+        { type: "find related tools", timings },
+      ),
     ])
 
     const meta = {
