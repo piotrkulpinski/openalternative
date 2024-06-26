@@ -4,14 +4,16 @@ import {
   BracesIcon,
   ChevronDownIcon,
   GemIcon,
+  GithubIcon,
+  LoaderIcon,
   MenuIcon,
   PlusIcon,
   SmilePlusIcon,
   TagIcon,
   XIcon,
 } from "lucide-react"
-import { type HTMLAttributes, useState } from "react"
-import { GITHUB_URL } from "~/utils/constants"
+import { type HTMLAttributes, useEffect, useState } from "react"
+import { GITHUB_URL, SWR_CONFIG } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 import { getRepoOwnerAndName } from "~/utils/github"
 import { Breadcrumbs } from "./Breadcrumbs"
@@ -24,27 +26,33 @@ import {
 } from "./DropdownMenu"
 import { NavigationLink, navigationLinkVariants } from "./NavigationLink"
 import { Series } from "./Series"
+import useSWR from "swr"
+import { fetcher } from "~/utils/fetchers"
+import { ClientOnly } from "remix-utils/client-only"
+import { ThemeSwitcher } from "./ThemeSwitcher"
+import { Badge } from "./Badge"
+import { Ping } from "./Ping"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)
   const repo = getRepoOwnerAndName(GITHUB_URL)
-  // const formatter = new Intl.NumberFormat("en-US", { notation: "compact" })
+  const formatter = new Intl.NumberFormat("en-US", { notation: "compact" })
 
   // Close the mobile navigation when the user presses the "Escape" key
-  // useEffect(() => {
-  //   const onKeyDown = (e: KeyboardEvent) => {
-  //     if (e.key === "Escape") setNavOpen(false)
-  //   }
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setNavOpen(false)
+    }
 
-  //   document.addEventListener("keydown", onKeyDown)
-  //   return () => document.removeEventListener("keydown", onKeyDown)
-  // }, [])
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [])
 
-  // const { data, error, isLoading } = useSWR<number>(
-  //   { url: "/api/fetch-repository-stars", ...repo },
-  //   fetcher,
-  //   SWR_CONFIG,
-  // )
+  const { data, error, isLoading } = useSWR<number>(
+    { url: "/api/fetch-repository-stars", ...repo },
+    fetcher,
+    SWR_CONFIG,
+  )
 
   return (
     <div
@@ -102,9 +110,9 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
       </nav>
 
       <Series size="sm">
-        {/* <ClientOnly>{() => <ThemeSwitcher />}</ClientOnly> */}
+        <ClientOnly>{() => <ThemeSwitcher />}</ClientOnly>
 
-        {/* <Button
+        <Button
           size="sm"
           variant="secondary"
           prefix={<GithubIcon />}
@@ -124,7 +132,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             Star
             <Ping className="absolute -top-1 -right-1" />
           </a>
-        </Button> */}
+        </Button>
 
         <Button
           size="sm"
