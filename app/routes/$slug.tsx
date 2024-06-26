@@ -4,7 +4,11 @@ import {
   type MetaFunction,
   json,
 } from "@remix-run/node"
-import { ShouldRevalidateFunction, useLoaderData } from "@remix-run/react"
+import {
+  ShouldRevalidateFunction,
+  unstable_useViewTransitionState,
+  useLoaderData,
+} from "@remix-run/react"
 import { HashIcon, MoveRightIcon, TagIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import { BackButton } from "~/components/BackButton"
@@ -170,8 +174,13 @@ export default function ToolsPage() {
   const { tool, alternatives, categories, languages, topics, relatedTools } =
     useLoaderData<typeof loader>()
 
+  const vt = unstable_useViewTransitionState(`/${tool.slug}`)
+
   return (
-    <div className="flex flex-col gap-12" style={{ viewTransitionName: "tool" }}>
+    <div
+      className="flex flex-col gap-12"
+      style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }}
+    >
       <div className="grid items-start gap-6 md:grid-cols-3">
         <div className="flex flex-1 flex-wrap items-start gap-10 md:col-span-2 md:gap-12">
           <div className="flex flex-1 flex-col items-start gap-4 md:gap-6">
@@ -180,17 +189,22 @@ export default function ToolsPage() {
                 <FaviconImage
                   src={tool.faviconUrl}
                   title={tool.name}
-                  style={{ viewTransitionName: "tool-favicon" }}
+                  style={{ viewTransitionName: vt ? `tool-${tool.id}-favicon` : undefined }}
                 />
 
-                <H1 style={{ viewTransitionName: "tool-title" }}>{tool.name}</H1>
+                <H1
+                  className="!leading-snug"
+                  style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
+                >
+                  {tool.name}
+                </H1>
               </Series>
 
               {tool.description && (
                 <Prose>
                   <h2
                     className="lead !font-normal !tracking-normal !text-secondary"
-                    style={{ viewTransitionName: "tool-description" }}
+                    style={{ viewTransitionName: vt ? `tool-${tool.id}-description` : undefined }}
                   >
                     {tool.description}
                   </h2>
@@ -301,7 +315,7 @@ export default function ToolsPage() {
 
           <Grid className="w-full">
             {relatedTools.map(({ tool }) => (
-              <ToolRecord key={tool.id} tool={tool} />
+              <ToolRecord key={tool.id} tool={tool} isRelated />
             ))}
           </Grid>
         </Series>

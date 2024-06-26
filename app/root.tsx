@@ -1,10 +1,8 @@
-import { publishEscape } from "@curiousleaf/utils"
 import type { LinksFunction, MetaFunction } from "@remix-run/node"
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
 import { SpeedInsights } from "@vercel/speed-insights/remix"
 import { ThemeProvider } from "next-themes"
-import { posthog } from "posthog-js"
-import { type PropsWithChildren, useEffect } from "react"
+import { useEffect, type PropsWithChildren } from "react"
 import { Footer } from "~/components/Footer"
 import { Newsletter } from "~/components/Newsletter"
 import { BreadcrumbsLink } from "./components/Breadcrumbs"
@@ -14,6 +12,8 @@ import { SITE_NAME, SITE_URL } from "./utils/constants"
 import stylesheet from "~/styles.css?url"
 import { Header } from "./components/Header"
 import { ErrorPage } from "./components/ErrorPage"
+import { publishEscape } from "@curiousleaf/utils"
+import posthog from "posthog-js"
 
 export const handle = {
   breadcrumb: () => (
@@ -92,28 +92,32 @@ export function Layout({ children }: PropsWithChildren) {
         <Scripts />
         <SpeedInsights />
 
-        {/* Plausible */}
-        <script
-          defer
-          data-domain={import.meta.env.VITE_PLAUSIBLE_DOMAIN}
-          src={`${import.meta.env.VITE_PLAUSIBLE_HOST}/js/script.js`}
-        />
+        {process.env.NODE_ENV === "production" && (
+          <>
+            {/* Plausible */}
+            <script
+              defer
+              data-domain={import.meta.env.VITE_PLAUSIBLE_DOMAIN}
+              src={`${import.meta.env.VITE_PLAUSIBLE_HOST}/js/script.js`}
+            />
 
-        {/* OpenPanel */}
-        <script defer async src="https://openpanel.dev/op.js" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.op = window.op || function (...args) { (window.op.q = window.op.q || []).push(args); };
-              window.op('ctor', {
-                clientId: '${import.meta.env.VITE_OPENPANEL_CLIENT_ID}',
-                trackScreenViews: true,
-                trackOutgoingLinks: true,
-                trackAttributes: true,
-              });
-            `,
-          }}
-        />
+            {/* OpenPanel */}
+            <script defer async src="https://openpanel.dev/op.js" />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                window.op = window.op || function (...args) { (window.op.q = window.op.q || []).push(args); };
+                window.op('ctor', {
+                  clientId: '${import.meta.env.VITE_OPENPANEL_CLIENT_ID}',
+                  trackScreenViews: true,
+                  trackOutgoingLinks: true,
+                  trackAttributes: true,
+                });
+              `,
+              }}
+            />
+          </>
+        )}
       </body>
     </html>
   )
