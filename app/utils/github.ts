@@ -1,4 +1,7 @@
+import { graphql } from "@octokit/graphql"
 import { DAY_IN_MS } from "./constants"
+import { prisma } from "~/services.server/prisma"
+import { slugify } from "inngest"
 
 export type RepositoryQueryResult = {
   repository: {
@@ -12,7 +15,7 @@ export type RepositoryQueryResult = {
     }
     licenseInfo: {
       spdxId: string
-    }
+    } | null
     defaultBranchRef: {
       target: {
         history: {
@@ -163,4 +166,79 @@ export const calculateHealthScore = ({
   return Math.round(
     starsScore + forksScore + contributorsScore + watchersScore - lastCommitPenalty + (bump || 0),
   )
+}
+
+export const fetchRepository = async (id: string, bump: number | null, repository: string) => {
+  const repo = getRepoOwnerAndName(repository)
+  let queryResult: RepositoryQueryResult | null = null
+
+  if (!repo) {
+    return null
+  }
+
+  try {
+    queryResult = await graphql({
+      query: repositoryQuery,
+      owner: repo.owner,
+      name: repo.name,
+      headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
+    })
+  } catch (error) {
+    console.error(`Failed to fetch repository ${repository}: ${error}`)
+  }
+
+  // if the repository check fails, set the tool as draft
+  if (!queryResult?.repository) {
+    await prisma.tool.update({
+      where: { id },
+      data: { publishedAt: null },
+    })
+
+    return null
+  }
+
+  const {
+    stargazerCount,
+    forkCount,
+    mentionableUsers,
+    watchers,
+    defaultBranchRef,
+    licenseInfo,
+    repositoryTopics,
+    languages: repositoryLanguages,
+  } = queryResult.repository
+
+  // Extract and transform the necessary metrics
+  const metrics = {
+    stars: stargazerCount,
+    forks: forkCount,
+    contributors: mentionableUsers.totalCount,
+    watchers: watchers.totalCount,
+    lastCommitDate: new Date(defaultBranchRef.target.history.edges[0].node.committedDate),
+    bump,
+  }
+
+  const score = calculateHealthScore(metrics)
+  const stars = metrics.stars
+  const forks = metrics.forks
+  const license = !licenseInfo || licenseInfo.spdxId === "NOASSERTION" ? null : licenseInfo.spdxId
+  const lastCommitDate = metrics.lastCommitDate
+
+  // Prepare topics data
+  const topics = repositoryTopics.nodes.map(({ topic }) => ({
+    slug: slugify(topic.name),
+  }))
+
+  // Prepare languages data
+  const languages = repositoryLanguages.edges
+    .map(({ size, node }) => ({
+      percentage: Math.round((size / repositoryLanguages.totalSize) * 100),
+      name: node.name,
+      slug: slugify(node.name),
+      color: node.color,
+    }))
+    .filter(({ percentage }) => percentage > 17.5)
+
+  // Return the extracted data
+  return { stars, forks, license, lastCommitDate, score, topics, languages }
 }

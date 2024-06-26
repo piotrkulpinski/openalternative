@@ -2,19 +2,13 @@ import type { LoaderFunctionArgs } from "@remix-run/node"
 import { kv } from "@vercel/kv"
 import { got } from "got"
 import { prisma } from "~/services.server/prisma"
-import { SITE_URL } from "~/utils/constants"
-import { getRepoOwnerAndName } from "~/utils/github"
+import { fetchRepository } from "~/utils/github"
 import { getStarCount, getSubscriberCount, getToolCount } from "~/utils/stats"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   if (request.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", { status: 401 })
   }
-
-  const tools = await prisma.tool.findMany({
-    where: { publishedAt: { not: null } },
-    select: { id: true, repository: true, website: true, bump: true },
-  })
 
   // Store the stats in KV
   await kv.set("stats", {
@@ -23,18 +17,72 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     subscribers: await getSubscriberCount(),
   })
 
-  // Trigger a new event for each repository
+  // Fetch all published tools
+  const tools = await prisma.tool.findMany({
+    where: { publishedAt: { not: null } },
+    select: { id: true, repository: true, website: true, bump: true },
+  })
+
+  // Fetch repository data for each tool
   await Promise.all(
     tools.map(async ({ id, bump, repository }) => {
-      const repo = getRepoOwnerAndName(repository)
+      const repo = await fetchRepository(id, bump, repository)
 
+      // Update the tool
       if (repo) {
-        return got
-          .post(`${SITE_URL}/api/fetch-repository`, {
-            json: { id, bump, owner: repo.owner, name: repo.name },
-            headers: { Authorization: `Bearer ${process.env.CRON_SECRET}` },
-          })
-          .json()
+        const { stars, forks, license, lastCommitDate, score, topics, languages } = repo
+
+        return prisma.tool.update({
+          where: { id },
+          data: {
+            stars,
+            forks,
+            license,
+            lastCommitDate,
+            score,
+
+            // Topics
+            topics: {
+              connectOrCreate: topics.map(({ slug }) => ({
+                where: {
+                  toolId_topicSlug: {
+                    toolId: id,
+                    topicSlug: slug,
+                  },
+                },
+                create: {
+                  topic: {
+                    connectOrCreate: {
+                      where: { slug },
+                      create: { slug },
+                    },
+                  },
+                },
+              })),
+            },
+
+            // Languages
+            languages: {
+              connectOrCreate: languages.map(({ percentage, name, slug, color }) => ({
+                where: {
+                  toolId_languageSlug: {
+                    toolId: id,
+                    languageSlug: slug,
+                  },
+                },
+                create: {
+                  percentage,
+                  language: {
+                    connectOrCreate: {
+                      where: { slug },
+                      create: { name, slug, color },
+                    },
+                  },
+                },
+              })),
+            },
+          },
+        })
       }
     }),
   )
