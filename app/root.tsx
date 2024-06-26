@@ -13,6 +13,7 @@ import { SITE_NAME, SITE_URL } from "./utils/constants"
 
 import stylesheet from "~/styles.css?url"
 import { Header } from "./components/Header"
+import { ErrorPage } from "./components/ErrorPage"
 
 export const handle = {
   breadcrumb: () => (
@@ -120,4 +121,8 @@ export function Layout({ children }: PropsWithChildren) {
 
 export default function App() {
   return <Outlet />
+}
+
+export function ErrorBoundary() {
+  return <ErrorPage />
 }

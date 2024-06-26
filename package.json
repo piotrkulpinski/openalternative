@@ -69,7 +69,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vercel/remix": "^2.8.1-patch.2",
+    "@vercel/remix": "^2.9.2",
     "autoprefixer": "^10.4.18",
     "postcss": "^8.4.37",
     "prisma": "^5.13.0",
