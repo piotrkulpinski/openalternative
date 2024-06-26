@@ -137,7 +137,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         <Button
           size="sm"
           variant="secondary"
-          prefix={<PlusIcon />}
+          suffix={<PlusIcon />}
           className="-my-1.5 max-sm:hidden"
           asChild
         >

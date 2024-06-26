@@ -53,6 +53,16 @@
   }
 }
 
+a,
+button,
+label[for],
+[href] [class*="group-hover"] {
+  @apply transition;
+  @apply ease-out;
+  @apply duration-200;
+  @apply cursor-pointer;
+}
+
 svg:not([class*="stroke"]) {
   @apply !stroke-[1.75];
 }
