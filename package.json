@@ -37,7 +37,6 @@
     "@resvg/resvg-js": "^2.6.2",
     "@uidotdev/usehooks": "^2.4.1",
     "@vercel/kv": "^2.0.0",
-    "@vercel/speed-insights": "^1.0.10",
     "algoliasearch": "^4.23.2",
     "cva": "beta",
     "date-fns": "^3.6.0",

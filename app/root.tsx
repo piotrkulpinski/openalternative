@@ -8,7 +8,6 @@ import {
   useLoaderData,
   useLocation,
 } from "@remix-run/react"
-import { SpeedInsights } from "@vercel/speed-insights/remix"
 import { kv } from "@vercel/kv"
 import { ThemeProvider } from "next-themes"
 import { useEffect, type PropsWithChildren } from "react"
@@ -113,7 +112,6 @@ export function Layout({ children }: PropsWithChildren) {
 
         <ScrollRestoration />
         <Scripts />
-        <SpeedInsights />
 
         {process.env.NODE_ENV === "production" && (
           <>
