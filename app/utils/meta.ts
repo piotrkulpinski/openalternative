@@ -45,12 +45,23 @@ export const getMetaTags = ({
               "@type": "ImageObject",
               "@id": `${SITE_URL}/#/schema/image/1`,
               url: `${SITE_URL}/favicon.png`,
-              width: "480",
-              height: "480",
+              width: 480,
+              height: 480,
               caption: `${SITE_NAME} Logo`,
             },
             image: {
               "@id": `${SITE_URL}/#/schema/image/2`,
+            },
+          },
+          {
+            "@type": "Collection",
+            "@id": `${SITE_URL}/#/schema/website/1`,
+            url: `${SITE_URL}/`,
+            name: SITE_NAME,
+            description: SITE_TAGLINE,
+            collectionSize: 218,
+            publisher: {
+              "@id": `${SITE_URL}/#/schema/organization/1`,
             },
           },
           {
@@ -59,7 +70,7 @@ export const getMetaTags = ({
             name: "Piotr Kulpinski",
             sameAs: [
               "https://x.com/piotrkulpinski",
-              "https://inkedin.com/in/piotrkulpinski",
+              "https://linkedin.com/in/piotrkulpinski",
               "https://github.com/piotrkulpinski",
             ],
           },
@@ -76,24 +87,16 @@ export const getMetaTags = ({
             name: metaTitle,
             description: metaDescription,
             inLanguage: "en-US",
-            potentialAction:
-              location.pathname === "/"
-                ? // If we're on the homepage, we want to add a search action
-                  {
-                    "@type": "SearchAction",
-                    target: {
-                      "@type": "EntryPoint",
-                      urlTemplate: `${SITE_URL}/?openalternative[query]={search_term_string}`,
-                    },
-                    "query-input": "required name=search_term_string",
-                  }
-                : // Otherwise, we want to add a read action
-                  {
-                    "@type": "ReadAction",
-                    target: metaUrl,
-                  },
+            potentialAction: {
+              "@type": "SearchAction",
+              target: {
+                "@type": "EntryPoint",
+                urlTemplate: `${SITE_URL}/?openalternative[query]={search_term_string}`,
+              },
+              "query-input": "required name=search_term_string",
+            },
+            isPartOf: { "@id": `${SITE_URL}#/schema/website/1` },
             about: { "@id": `${SITE_URL}#/schema/organization/1` },
-            primaryImageOfPage: { "@id": `${SITE_URL}#/schema/image/2` },
           },
           ...jsonLd,
         ],
