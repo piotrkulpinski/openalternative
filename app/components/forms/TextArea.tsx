@@ -8,7 +8,9 @@ export type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> &
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>((props, ref) => {
   const { className, ...rest } = props
 
-  return <textarea ref={ref} className={cx(inputVariants({ className }))} {...rest} />
+  return (
+    <textarea ref={ref} className={cx("!leading-normal", inputVariants({ className }))} {...rest} />
+  )
 })
 
 TextArea.displayName = "TextArea"

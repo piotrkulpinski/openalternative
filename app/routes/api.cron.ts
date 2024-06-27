@@ -1,3 +1,4 @@
+import { slugify } from "@curiousleaf/utils"
 import type { LoaderFunctionArgs } from "@remix-run/node"
 import { kv } from "@vercel/kv"
 import { got } from "got"
@@ -37,9 +38,21 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
           data: {
             stars,
             forks,
-            license,
             lastCommitDate,
             score,
+
+            // License
+            license: license
+              ? {
+                  connectOrCreate: {
+                    where: { name: license },
+                    create: {
+                      name: license,
+                      slug: slugify(license).replace(/-0$/, ""),
+                    },
+                  },
+                }
+              : undefined,
 
             // Topics
             topics: {

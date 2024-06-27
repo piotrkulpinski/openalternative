@@ -66,8 +66,20 @@ export const languageManyPayload = Prisma.validator<Prisma.LanguageInclude>()({
 export type LanguageOne = Prisma.LanguageGetPayload<{ include: typeof languageOnePayload }>
 export type LanguageMany = Prisma.LanguageGetPayload<{ include: typeof languageManyPayload }>
 
+// Licenses
+export const licenseOnePayload = Prisma.validator<Prisma.LicenseInclude>()({})
+
+export const licenseManyPayload = Prisma.validator<Prisma.LicenseInclude>()({
+  _count: { select: { tools: { where: { publishedAt: { lte: new Date() } } } } },
+})
+
+export type LicenseOne = Prisma.LicenseGetPayload<{ include: typeof licenseOnePayload }>
+export type LicenseMany = Prisma.LicenseGetPayload<{ include: typeof licenseManyPayload }>
+
 // Tools
-export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({})
+export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({
+  license: true,
+})
 export const toolManyPayload = Prisma.validator<Prisma.ToolInclude>()({})
 
 export type ToolOne = Prisma.ToolGetPayload<{ include: typeof toolOnePayload }>

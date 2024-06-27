@@ -54,6 +54,7 @@
     "react-dom": "^18.3.0",
     "react-instantsearch": "^7.7.1",
     "react-instantsearch-core": "^7.7.1",
+    "react-markdown": "^9.0.1",
     "remix-utils": "^7.5.0",
     "satori": "^0.10.13",
     "stripe": "^15.3.0",

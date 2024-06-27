@@ -3,6 +3,10 @@ import { DAY_IN_MS } from "./constants"
 import { prisma } from "~/services.server/prisma"
 import { slugify } from "inngest"
 
+export const githubGraphqlClient = graphql.defaults({
+  headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
+})
+
 export type RepositoryQueryResult = {
   repository: {
     stargazerCount: number
@@ -177,11 +181,9 @@ export const fetchRepository = async (id: string, bump: number | null, repositor
   }
 
   try {
-    queryResult = await graphql({
-      query: repositoryQuery,
+    queryResult = await githubGraphqlClient(repositoryQuery, {
       owner: repo.owner,
       name: repo.name,
-      headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
     })
   } catch (error) {
     console.error(`Failed to fetch repository ${repository}: ${error}`)
@@ -240,5 +242,5 @@ export const fetchRepository = async (id: string, bump: number | null, repositor
     .filter(({ percentage }) => percentage > 17.5)
 
   // Return the extracted data
-  return { stars, forks, license, lastCommitDate, score, topics, languages }
+  return { stars, forks, lastCommitDate, score, license, topics, languages }
 }

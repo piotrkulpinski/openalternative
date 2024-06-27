@@ -31,7 +31,16 @@ export const RepositoryDetails = ({
       title: tool.lastCommitDate ?? undefined,
       icon: TimerIcon,
     },
-    { label: "License", value: tool.license, icon: CopyrightIcon },
+    ...(tool.license
+      ? [
+          {
+            label: "License",
+            value: tool.license.name,
+            link: `/licenses/${tool.license.slug}`,
+            icon: CopyrightIcon,
+          },
+        ]
+      : []),
   ]
 
   return (
