@@ -39,7 +39,11 @@ export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCard
             {sponsoring?.name || "Sponsor OpenAlternative"}
           </H4>
 
-          {sponsoring && <Badge className="ml-auto bg-transparent border">Ad</Badge>}
+          {sponsoring && (
+            <Badge variant="outline" className="ml-auto">
+              Ad
+            </Badge>
+          )}
         </Card.Header>
 
         <Card.Description className="mb-auto line-clamp-4">
