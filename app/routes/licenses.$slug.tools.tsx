@@ -55,6 +55,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
           prisma.tool.findMany({
             include: toolOnePayload,
             where: { license: { slug }, publishedAt: { lte: new Date() } },
+            orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
           }),
         { type: "find tools", timings },
       ),
