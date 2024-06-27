@@ -1,6 +1,6 @@
-import { type MetaFunction, json } from "@remix-run/node"
-import { useFetcher, useLoaderData, useLocation } from "@remix-run/react"
-import { useId } from "react"
+import { ActionFunctionArgs, type MetaFunction, TypedResponse, json } from "@remix-run/node"
+import slugify from "@sindresorhus/slugify"
+import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
 import { Button } from "~/components/Button"
 import { Intro } from "~/components/Intro"
 import { Input } from "~/components/forms/Input"
@@ -8,7 +8,10 @@ import { Label } from "~/components/forms/Label"
 import { TextArea } from "~/components/forms/TextArea"
 import { SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import type { action } from "./api.submit"
+import { Prisma } from "@prisma/client"
+import { inngest } from "~/services.server/inngest"
+import { prisma } from "~/services.server/prisma"
+import { z, ZodFormattedError } from "zod"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
   const { title, description } = data?.meta || {}
@@ -30,11 +33,67 @@ export const loader = () => {
   return json({ meta })
 }
 
+const schema = z.object({
+  name: z.string().min(1),
+  website: z.string().url().min(1),
+  description: z.string().min(1).max(200),
+})
+
+export type ActionState =
+  | { type: "error"; error: ZodFormattedError<z.infer<typeof schema>> }
+  | { type: "success"; message: string }
+
+export async function action({ request }: ActionFunctionArgs): Promise<TypedResponse<ActionState>> {
+  const data = await request.formData()
+  const parsed = schema.safeParse(Object.fromEntries(data.entries()))
+
+  if (!parsed.success) {
+    return json({ type: "error", error: parsed.error.format() })
+  }
+
+  // Destructure the parsed data
+  const { name, website, description } = parsed.data
+
+  // Save the tool to the database
+  try {
+    const tool = await prisma.alternative.create({
+      data: {
+        name,
+        website,
+        description,
+        slug: slugify(name, { decamelize: false }),
+      },
+    })
+
+    // Send an event to the Inngest pipeline
+    await inngest.send({ name: "alternative.created", data: { id: tool.id } })
+
+    // Return a success response
+    return json({
+      type: "success",
+      message: "Thank you for submitting!",
+    })
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError && e.meta?.target) {
+      const schemaKeys = Object.keys(schema.shape)
+      const name = (e.meta?.target as string[]).find(t => schemaKeys.includes(t)) || "name"
+
+      if (name && e.code === "P2002") {
+        return json({
+          type: "error",
+          error: { [name]: { _errors: [`That ${name} has already been submitted.`] } },
+        } as unknown as ActionState)
+      }
+    }
+
+    throw e
+  }
+}
+
 export default function SubmitPage() {
+  const { formMethod, state } = useNavigation()
   const { meta } = useLoaderData<typeof loader>()
-  const id = useId()
-  const { key } = useLocation()
-  const { data, state, Form } = useFetcher<typeof action>({ key: `${id}-${key}` })
+  const data = useActionData<typeof action>()
 
   return (
     <>
@@ -42,12 +101,7 @@ export default function SubmitPage() {
 
       {data?.type !== "success" && (
         <div className="flex flex-col-reverse items-start gap-12 lg:flex-row">
-          <Form
-            method="POST"
-            action="/api/submit-alternative"
-            className="grid-auto-fill-xs grid w-full max-w-xl gap-6"
-            noValidate
-          >
+          <Form method="POST" className="grid-auto-fill-xs grid w-full max-w-xl gap-6" noValidate>
             <div className="flex flex-col gap-1">
               <Label htmlFor="name" isRequired>
                 Name:
@@ -104,7 +158,7 @@ export default function SubmitPage() {
             </div>
 
             <div>
-              <Button isPending={state !== "idle"} className="min-w-32">
+              <Button isPending={state !== "idle" && formMethod === "POST"} className="min-w-32">
                 Submit
               </Button>
             </div>
