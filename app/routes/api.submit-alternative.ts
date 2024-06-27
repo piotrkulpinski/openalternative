@@ -38,7 +38,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
     })
 
     // Send an event to the Inngest pipeline
-    await inngest.send({ name: "tool.created", data: { id: tool.id } })
+    await inngest.send({ name: "alternative.created", data: { id: tool.id } })
 
     // Return a success response
     return json({
