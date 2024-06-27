@@ -7,6 +7,7 @@ import {
   json,
 } from "@remix-run/node"
 import {
+  Link,
   ShouldRevalidateFunction,
   unstable_useViewTransitionState,
   useLoaderData,
@@ -295,10 +296,17 @@ export default function ToolsPage() {
 
               <Series>
                 {categories?.map(({ category }) => (
-                  <Tag key={category.id} to={`/categories/${category.slug}`}>
-                    <TagIcon className="mr-0.5 size-[0.9em] opacity-50" />
-                    {category.name}
-                  </Tag>
+                  <Button
+                    key={category.id}
+                    variant="secondary"
+                    size="md"
+                    prefix={<TagIcon />}
+                    asChild
+                  >
+                    <Link to={`/categories/${category.slug}`} unstable_viewTransition>
+                      {category.name}
+                    </Link>
+                  </Button>
                 ))}
               </Series>
             </Series>
@@ -309,10 +317,9 @@ export default function ToolsPage() {
             <Series size="lg" direction="column" className="w-full">
               <H4 as="h3">Related topics:</H4>
 
-              <Series className="w-full">
-                {topics?.map(({ topic }) => (
-                  <Tag key={topic.slug} to={`/topics/${topic.slug}`}>
-                    <HashIcon className="size-[0.9em] opacity-50" />
+              <Series>
+                {topics.map(({ topic }) => (
+                  <Tag key={topic.slug} to={`/topics/${topic.slug}`} prefix={<HashIcon />}>
                     {topic.slug}
                   </Tag>
                 ))}
