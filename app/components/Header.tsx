@@ -3,6 +3,7 @@ import {
   BlocksIcon,
   BracesIcon,
   ChevronDownIcon,
+  CopyrightIcon,
   GemIcon,
   GithubIcon,
   MenuIcon,
@@ -90,6 +91,11 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <DropdownMenuItem asChild>
               <NavigationLink to="/topics">
                 <TagIcon className="size-4 opacity-75" /> Topics
+              </NavigationLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <NavigationLink to="/licenses">
+                <CopyrightIcon className="size-4 opacity-75" /> Licenses
               </NavigationLink>
             </DropdownMenuItem>
           </DropdownMenuContent>

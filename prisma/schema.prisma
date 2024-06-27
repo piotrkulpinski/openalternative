@@ -23,28 +23,31 @@ model Sponsoring {
 }
 
 model Tool {
-  id             String              @id @default(cuid())
+  id             String    @id @default(cuid())
   name           String
-  slug           String              @unique
-  website        String              @unique
-  repository     String              @unique
+  slug           String    @unique
+  website        String    @unique
+  repository     String    @unique
   description    String?
-  stars          Int                 @default(0)
-  forks          Int                 @default(0)
-  license        String?
-  score          Int                 @default(0)
+  stars          Int       @default(0)
+  forks          Int       @default(0)
+  score          Int       @default(0)
   bump           Int?
   faviconUrl     String?
   screenshotUrl  String?
-  isFeatured     Boolean             @default(false)
+  isFeatured     Boolean   @default(false)
   lastCommitDate DateTime?
   publishedAt    DateTime?
-  updatedAt      DateTime            @updatedAt
-  createdAt      DateTime            @default(now())
-  alternatives   AlternativeToTool[]
-  categories     CategoryToTools[]
-  languages      LanguageToTool[]
-  topics         TopicToTool[]
+  updatedAt      DateTime  @updatedAt
+  createdAt      DateTime  @default(now())
+
+  // Relations
+  licenseId    String?
+  license      License?            @relation(fields: [licenseId], references: [id])
+  alternatives AlternativeToTool[]
+  categories   CategoryToTools[]
+  languages    LanguageToTool[]
+  topics       TopicToTool[]
 
   @@index([id, slug])
 }
@@ -84,6 +87,17 @@ model Topic {
   updatedAt DateTime      @updatedAt
   createdAt DateTime      @default(now())
   tools     TopicToTool[]
+}
+
+model License {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  content     String?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  tools       Tool[]
 }
 
 model AlternativeToTool {

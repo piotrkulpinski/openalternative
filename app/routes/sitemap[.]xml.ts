@@ -13,6 +13,7 @@ export const loader = async () => {
   const alternatives = await prisma.alternative.findMany({ select: { slug: true } })
   const languages = await prisma.language.findMany({ select: { slug: true } })
   const topics = await prisma.topic.findMany({ select: { slug: true } })
+  const licenses = await prisma.license.findMany({ select: { slug: true } })
 
   const toolItems = tools.map(tool => {
     return `
@@ -65,6 +66,16 @@ export const loader = async () => {
     `
   })
 
+  const licensItems = licenses.map(license => {
+    return `
+      <url>
+        <loc>${url}/licenses/${license.slug}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+      </url>
+    `
+  })
+
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
@@ -83,11 +94,16 @@ export const loader = async () => {
         <loc>${url}/submit</loc>
         <changefreq>weekly</changefreq>
       </url>
+      <url>
+        <loc>${url}/sponsor</loc>
+        <changefreq>weekly</changefreq>
+      </url>
       ${toolItems.join("\n")}
       ${categoryItems.join("\n")}
       ${alternativeItems.join("\n")}
       ${languageItems.join("\n")}
       ${topicItems.join("\n")}
+      ${licensItems.join("\n")}
     </urlset>`
 
   return new Response(feed, {

@@ -244,7 +244,7 @@ export default function ToolsPage() {
               {tool.description && (
                 <Prose>
                   <h2
-                    className="lead !font-normal !tracking-normal !text-secondary"
+                    className="!text-base !font-normal !tracking-normal !text-secondary md:!text-lg"
                     style={{ viewTransitionName: vt ? `tool-${tool.id}-description` : undefined }}
                   >
                     {tool.description}

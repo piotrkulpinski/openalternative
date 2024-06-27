@@ -1,8 +1,8 @@
-import type { HTMLAttributes, ReactNode } from "react";
-import { VariantProps, cva, cx } from "~/utils/cva";
-import { Heading, type HeadingProps } from "./Heading";
-import { Prose } from "./Prose";
-import { Series } from "./Series";
+import type { HTMLAttributes, ReactNode } from "react"
+import { VariantProps, cva, cx } from "~/utils/cva"
+import { Heading, type HeadingProps } from "./Heading"
+import { Prose } from "./Prose"
+import { Series } from "./Series"
 
 const introVariants = cva({
   base: "flex w-full flex-col gap-y-2",
@@ -22,11 +22,11 @@ const introVariants = cva({
 
 type IntroProps = Omit<HTMLAttributes<HTMLElement>, "title" | "prefix"> &
   VariantProps<typeof introVariants> & {
-    title: ReactNode;
-    description?: ReactNode;
-    prefix?: ReactNode;
-    suffix?: ReactNode;
-    headingProps?: HeadingProps;
+    title: ReactNode
+    description?: ReactNode
+    prefix?: ReactNode
+    suffix?: ReactNode
+    headingProps?: HeadingProps
   }
 
 export const Intro = ({
@@ -52,7 +52,7 @@ export const Intro = ({
 
       {description && (
         <Prose className="max-w-3xl">
-          <h2 className="text-base !font-normal !tracking-normal !text-secondary md:text-lg">
+          <h2 className="!text-base !font-normal !tracking-normal !text-secondary md:!text-lg">
             {description}
           </h2>
         </Prose>
