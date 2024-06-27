@@ -3,14 +3,13 @@ import { Prisma } from "@prisma/client"
 import { HeadersFunction, type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { Link, ShouldRevalidateFunction, useLoaderData } from "@remix-run/react"
 import { MoveRightIcon } from "lucide-react"
-import Markdown from "react-markdown"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
 import { Grid } from "~/components/Grid"
 import { H2 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
-import { Prose } from "~/components/Prose"
+import { Markdown } from "~/components/Markdown"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import { toolManyPayload, type LicenseOne } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
@@ -136,10 +135,10 @@ export default function LicensesPage() {
       )}
 
       {license.content && (
-        <Prose>
-          <h2>What is {license.name} License?</h2>
-          <Markdown>{license.content}</Markdown>
-        </Prose>
+        <>
+          <H2>What is {license.name} License?</H2>
+          <Markdown className="-mt-5">{license.content}</Markdown>
+        </>
       )}
 
       <BackButton to="/licenses" />
