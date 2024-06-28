@@ -1,12 +1,10 @@
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { GithubIcon, HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
-import { useContext } from "react"
 import { Card } from "~/components/Card"
 import { H4 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
-import { StatsContext } from "~/providers/StatsProvider"
 import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
 
@@ -38,7 +36,6 @@ export const loader = async () => {
 
 export default function SponsorPage() {
   const { sponsoringDates, meta } = useLoaderData<typeof loader>()
-  const stats = useContext(StatsContext)
 
   const benefits = [
     {
@@ -55,7 +52,7 @@ export default function SponsorPage() {
       title: "Support OSS",
       description: "Support the open-source community and help us maintain the directory.",
       stats: {
-        value: stats?.tools ?? 0,
+        value: 220,
         label: "Listed Projects",
       },
     },
@@ -64,7 +61,7 @@ export default function SponsorPage() {
       title: "Newsletter Mention",
       description: "Get featured in our monthly newsletter read by OpenSource/tech enthusiasts.",
       stats: {
-        value: stats?.subscribers ?? 0,
+        value: 700,
         label: "Subscribers",
       },
       exclusive: true,
@@ -74,7 +71,7 @@ export default function SponsorPage() {
       title: "GitHub Link",
       description: 'Display your link in a special "Sponsors" section in our GitHub repository.',
       stats: {
-        value: stats?.stars ?? 0,
+        value: 500,
         label: "Stars",
       },
       exclusive: true,

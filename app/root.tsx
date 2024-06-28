@@ -1,13 +1,5 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node"
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-  useLocation,
-} from "@remix-run/react"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
 import { ThemeProvider } from "next-themes"
 import { useEffect, type PropsWithChildren } from "react"
 import { Footer } from "~/components/Footer"
@@ -19,8 +11,6 @@ import { Header } from "./components/Header"
 import { ErrorPage } from "./components/ErrorPage"
 import { publishEscape } from "@curiousleaf/utils"
 import posthog from "posthog-js"
-import { readStats } from "./utils/stats"
-import { StatsContext, StatsProvider } from "./providers/StatsProvider"
 
 import stylesheet from "~/styles.css?url"
 
@@ -58,13 +48,8 @@ export const meta: MetaFunction = ({ location }) => {
   ]
 }
 
-export const loader = async () => {
-  return (await readStats()) as StatsContext
-}
-
 export function Layout({ children }: PropsWithChildren) {
   const { key } = useLocation()
-  const stats = useLoaderData<typeof loader>()
 
   useEffect(() => {
     // Trigger escape hatch when the route changes
@@ -84,29 +69,27 @@ export function Layout({ children }: PropsWithChildren) {
       </head>
 
       <body className="bg-background text-foreground">
-        <StatsProvider stats={stats}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="@container/main mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 p-8">
-              <Header />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="@container/main mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 p-8">
+            <Header />
 
-              {children}
+            {children}
 
-              <hr className="mt-auto peer-[[href]]:mt-0" />
+            <hr className="mt-auto peer-[[href]]:mt-0" />
 
-              <Newsletter
-                title="Newsletter"
-                description="Get updates on new tools, alternatives, and other cool stuff."
-              />
+            <Newsletter
+              title="Newsletter"
+              description="Get updates on new tools, alternatives, and other cool stuff."
+            />
 
-              <Footer />
-            </div>
-          </ThemeProvider>
-        </StatsProvider>
+            <Footer />
+          </div>
+        </ThemeProvider>
 
         <ScrollRestoration />
         <Scripts />

@@ -1,7 +1,6 @@
 import { got } from "got"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
-import { getStarCount, getSubscriberCount, getToolCount, writeStats } from "~/utils/stats"
 
 export const reindexTools = inngest.createFunction(
   { id: "reindex-tools" },
@@ -13,15 +12,6 @@ export const reindexTools = inngest.createFunction(
         prisma.language.deleteMany({ where: { tools: { none: {} } } }),
         prisma.topic.deleteMany({ where: { tools: { none: {} } } }),
       ])
-    })
-
-    // Store the stats in KV
-    await step.run("update-stats", async () => {
-      return await writeStats({
-        tools: await getToolCount(),
-        stars: await getStarCount(),
-        subscribers: await getSubscriberCount(),
-      })
     })
 
     // Run Algolia indexing
