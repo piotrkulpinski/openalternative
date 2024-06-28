@@ -5,6 +5,10 @@ import { onToolCreated } from "~/functions.server/onToolCreated"
 import { reindexTools } from "~/functions.server/reindexTools"
 import { inngest } from "~/services.server/inngest"
 
+export const config = {
+  runtime: "edge",
+}
+
 const handler = serve({
   client: inngest,
   functions: [onToolCreated, onAlternativeCreated, fetchToolData, reindexTools],
