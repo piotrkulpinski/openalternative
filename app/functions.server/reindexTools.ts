@@ -1,8 +1,7 @@
-import { kv } from "@vercel/kv"
 import { got } from "got"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
-import { getStarCount, getSubscriberCount, getToolCount } from "~/utils/stats"
+import { getStarCount, getSubscriberCount, getToolCount, writeStats } from "~/utils/stats"
 
 export const reindexTools = inngest.createFunction(
   { id: "reindex-tools" },
@@ -18,7 +17,7 @@ export const reindexTools = inngest.createFunction(
 
     // Store the stats in KV
     await step.run("update-stats", async () => {
-      await kv.set("stats", {
+      writeStats({
         tools: await getToolCount(),
         stars: await getStarCount(),
         subscribers: await getSubscriberCount(),

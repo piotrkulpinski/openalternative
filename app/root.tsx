@@ -1,5 +1,3 @@
-import fs from "fs"
-import path from "path"
 import type { LinksFunction, MetaFunction } from "@remix-run/node"
 import {
   Links,
@@ -21,6 +19,7 @@ import { Header } from "./components/Header"
 import { ErrorPage } from "./components/ErrorPage"
 import { publishEscape } from "@curiousleaf/utils"
 import posthog from "posthog-js"
+import { readStats } from "./utils/stats"
 import { StatsContext, StatsProvider } from "./providers/StatsProvider"
 
 import stylesheet from "~/styles.css?url"
@@ -59,11 +58,8 @@ export const meta: MetaFunction = ({ location }) => {
   ]
 }
 
-export const loader = async () => {
-  const dataFilePath = path.join(process.cwd(), "public", "stats.json")
-  const fileContents = fs.readFileSync(dataFilePath, "utf8")
-
-  return JSON.parse(fileContents) as StatsContext
+export const loader = () => {
+  return readStats() as StatsContext
 }
 
 export function Layout({ children }: PropsWithChildren) {
