@@ -1,4 +1,4 @@
-import fs from "fs"
+import { promises as fs } from "fs"
 import path from "path"
 import { graphql } from "@octokit/graphql"
 import { got } from "got"
@@ -50,25 +50,27 @@ export const getSubscriberCount = async () => {
 }
 
 // Write the stats to the JSON file
-export const writeStats = (stats: object) => {
+export const writeStats = async (stats: object) => {
   const object = { ...stats, lastUpdated: new Date().toISOString() }
 
   // Write data to the JSON file
-  fs.writeFile(dataFilePath, JSON.stringify(object, null, 2), err => {
-    if (err) {
-      console.error("Error writing to stats file:", err)
-    } else {
-      console.log("Stats file updated successfully")
-    }
-  })
+  await fs.writeFile(dataFilePath, JSON.stringify(object, null, 2))
 }
 
 // Read the stats from the JSON file
-export const readStats = () => {
-  if (!fs.existsSync(dataFilePath)) {
+export const readStats = async () => {
+  if (!checkFileExists(dataFilePath)) {
     return null
   }
 
-  const fileContents = fs.readFileSync(dataFilePath, "utf8")
+  const fileContents = await fs.readFile(dataFilePath, "utf8")
   return JSON.parse(fileContents)
+}
+
+// Check if a file exists
+export const checkFileExists = async (file: string) => {
+  return await fs
+    .access(file, fs.constants.F_OK)
+    .then(() => true)
+    .catch(() => false)
 }

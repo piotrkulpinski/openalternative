@@ -58,8 +58,8 @@ export const meta: MetaFunction = ({ location }) => {
   ]
 }
 
-export const loader = () => {
-  return readStats() as StatsContext
+export const loader = async () => {
+  return (await readStats()) as StatsContext
 }
 
 export function Layout({ children }: PropsWithChildren) {
