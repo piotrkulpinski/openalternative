@@ -1,3 +1,5 @@
+import fs from "fs"
+import path from "path"
 import type { LinksFunction, MetaFunction } from "@remix-run/node"
 import {
   Links,
@@ -8,7 +10,6 @@ import {
   useLoaderData,
   useLocation,
 } from "@remix-run/react"
-import { kv } from "@vercel/kv"
 import { ThemeProvider } from "next-themes"
 import { useEffect, type PropsWithChildren } from "react"
 import { Footer } from "~/components/Footer"
@@ -16,13 +17,13 @@ import { Newsletter } from "~/components/Newsletter"
 import { BreadcrumbsLink } from "./components/Breadcrumbs"
 import { Logo } from "./components/Logo"
 import { SITE_NAME, SITE_URL } from "./utils/constants"
-
-import stylesheet from "~/styles.css?url"
 import { Header } from "./components/Header"
 import { ErrorPage } from "./components/ErrorPage"
 import { publishEscape } from "@curiousleaf/utils"
 import posthog from "posthog-js"
 import { StatsContext, StatsProvider } from "./providers/StatsProvider"
+
+import stylesheet from "~/styles.css?url"
 
 export const shouldRevalidate = () => {
   return false
@@ -59,7 +60,10 @@ export const meta: MetaFunction = ({ location }) => {
 }
 
 export const loader = async () => {
-  return await kv.get<StatsContext>("stats")
+  const dataFilePath = path.join(process.cwd(), "public", "stats.json")
+  const fileContents = fs.readFileSync(dataFilePath, "utf8")
+
+  return JSON.parse(fileContents) as StatsContext
 }
 
 export function Layout({ children }: PropsWithChildren) {
