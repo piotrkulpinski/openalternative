@@ -35,7 +35,6 @@
     "@remix-run/serve": "^2.10.0",
     "@resvg/resvg-js": "^2.6.2",
     "@uidotdev/usehooks": "^2.4.1",
-    "ai": "^3.2.14",
     "algoliasearch": "^4.23.2",
     "cva": "beta",
     "date-fns": "^3.6.0",
