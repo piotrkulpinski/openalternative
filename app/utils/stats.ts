@@ -53,13 +53,15 @@ export const getSubscriberCount = async () => {
 export const writeStats = async (stats: object) => {
   const object = { ...stats, lastUpdated: new Date().toISOString() }
 
+  console.log(dataFilePath)
+
   // Write data to the JSON file
   await fs.writeFile(dataFilePath, JSON.stringify(object, null, 2))
 }
 
 // Read the stats from the JSON file
 export const readStats = async () => {
-  if (!checkFileExists(dataFilePath)) {
+  if (!(await checkFileExists(dataFilePath))) {
     return null
   }
 
