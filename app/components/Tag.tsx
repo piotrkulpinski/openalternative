@@ -8,9 +8,14 @@ type TagProps = Omit<LinkProps, "prefix"> & {
    * The slot to be rendered before the label.
    */
   prefix?: ReactNode
+
+  /**
+   * The slot to be rendered after the label.
+   */
+  suffix?: ReactNode
 }
 
-export const Tag = ({ children, className, prefix, ...props }: TagProps) => {
+export const Tag = ({ children, className, prefix, suffix, ...props }: TagProps) => {
   return (
     <Link
       className={cx(
@@ -20,8 +25,9 @@ export const Tag = ({ children, className, prefix, ...props }: TagProps) => {
       unstable_viewTransition
       {...props}
     >
-      {prefix && <Slot className="opacity-30">{prefix}</Slot>}
+      {prefix && <Slot className="opacity-30 mr-0.5">{prefix}</Slot>}
       {children}
+      {suffix && <Slot className="opacity-30 ml-0.5">{suffix}</Slot>}
     </Link>
   )
 }

@@ -7,19 +7,20 @@ import {
   json,
 } from "@remix-run/node"
 import {
-  Link,
   ShouldRevalidateFunction,
   unstable_useViewTransitionState,
   useLoaderData,
 } from "@remix-run/react"
-import { ArrowUpRightIcon, HashIcon, TagIcon } from "lucide-react"
+import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
 import { posthog } from "posthog-js"
+import { z } from "zod"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
 import { FaviconImage } from "~/components/Favicon"
 import { Grid } from "~/components/Grid"
 import { H1, H4 } from "~/components/Heading"
+import { Markdown } from "~/components/Markdown"
 import { Prose } from "~/components/Prose"
 import { RepositoryDetails } from "~/components/RepositoryDetails"
 import { Series } from "~/components/Series"
@@ -218,6 +219,11 @@ export default function ToolsPage() {
 
   const vt = unstable_useViewTransitionState(`/${tool.slug}`)
 
+  const links = z
+    .array(z.object({ name: z.string(), url: z.string().url() }))
+    .nullable()
+    .parse(tool.links)
+
   return (
     <div
       className="flex flex-col gap-12"
@@ -289,27 +295,49 @@ export default function ToolsPage() {
             />
           )}
 
-          {/* Categories */}
-          {!!categories.length && (
-            <Series direction="column" className="w-full">
-              <H4 as="h3">Categories:</H4>
+          {tool.content && <Markdown>{tool.content}</Markdown>}
 
-              <Series>
-                {categories?.map(({ category }) => (
-                  <Button
-                    key={category.id}
-                    variant="secondary"
-                    size="md"
-                    prefix={<TagIcon />}
-                    asChild
-                  >
-                    <Link to={`/categories/${category.slug}`} unstable_viewTransition>
-                      {category.name}
-                    </Link>
-                  </Button>
-                ))}
-              </Series>
-            </Series>
+          {(!!links?.length || !!categories.length) && (
+            <div className="grid grid-auto-fit-sm gap-x-6 gap-y-10 w-full">
+              {links && (
+                <Series size="lg" direction="column">
+                  <H4 as="h3">Links:</H4>
+
+                  <Series direction="column">
+                    {links.map(({ name, url }) => (
+                      <Tag
+                        key={url}
+                        to={url}
+                        target="_blank"
+                        rel="nofollow noreferrer"
+                        prefix={<Link2Icon />}
+                        suffix={<ArrowUpRightIcon />}
+                      >
+                        {name}
+                      </Tag>
+                    ))}
+                  </Series>
+                </Series>
+              )}
+
+              {!!categories.length && (
+                <Series direction="column" className="w-full">
+                  <H4 as="h3">Categories:</H4>
+
+                  <Series direction="column">
+                    {categories?.map(({ category }) => (
+                      <Tag
+                        key={category.id}
+                        to={`/categories/${category.slug}`}
+                        prefix={<ShapesIcon />}
+                      >
+                        {category.name}
+                      </Tag>
+                    ))}
+                  </Series>
+                </Series>
+              )}
+            </div>
           )}
 
           {/* Topics */}

@@ -1,6 +1,6 @@
 import { NavLink } from "@remix-run/react"
 import {
-  BlocksIcon,
+  ShapesIcon,
   BracesIcon,
   ChevronDownIcon,
   CopyrightIcon,
@@ -71,7 +71,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <NavigationLink to="/categories">
-                <BlocksIcon className="size-4 opacity-75" /> Categories
+                <ShapesIcon className="size-4 opacity-75" /> Categories
               </NavigationLink>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>

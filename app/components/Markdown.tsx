@@ -24,7 +24,9 @@ export const Markdown = ({ children, ...props }: HTMLAttributes<HTMLElement>) =>
 
   return (
     <Prose {...props}>
-      <ReactMarkdown components={components}>{children as string}</ReactMarkdown>
+      <ReactMarkdown components={components}>
+        {(children as string)?.replace(/\\n/gi, "  \n")}
+      </ReactMarkdown>
     </Prose>
   )
 }

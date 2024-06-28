@@ -28,7 +28,10 @@ model Tool {
   slug           String    @unique
   website        String    @unique
   repository     String    @unique
+  tagline        String?
   description    String?
+  content        String?
+  links          Json?
   stars          Int       @default(0)
   forks          Int       @default(0)
   score          Int       @default(0)
