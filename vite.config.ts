@@ -7,5 +7,16 @@ import tsconfigPaths from "vite-tsconfig-paths"
 installGlobals()
 
 export default defineConfig({
+  ssr: {
+    noExternal: ["tailwind-merge"],
+  },
+  // optimizeDeps: {
+  //   include: ["tailwind-merge"],
+  // },
+  // build: {
+  //   rollupOptions: {
+  //     external
+  //   }
+  // },
   plugins: [tsconfigPaths(), remix({ presets: [vercelPreset()] })],
 })
