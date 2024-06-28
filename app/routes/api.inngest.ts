@@ -8,6 +8,7 @@ import { inngest } from "~/services.server/inngest"
 const handler = serve({
   client: inngest,
   functions: [onToolCreated, onAlternativeCreated, fetchToolData, reindexTools],
+  streaming: "allow",
 })
 
 export { handler as action, handler as loader }
