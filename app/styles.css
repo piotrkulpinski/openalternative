@@ -71,6 +71,15 @@ svg:not([class*="size-"]):not([class*="h-"]) {
   @apply size-[1em];
 }
 
+[href] svg[class*="arrow-up-right"] {
+  @apply will-change-transform;
+  @apply duration-150;
+}
+
+[href]:hover svg[class*="arrow-up-right"] {
+  @apply rotate-45;
+}
+
 .fade-in {
   animation: fade-in linear forwards;
   animation-timeline: view();
