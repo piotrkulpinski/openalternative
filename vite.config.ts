@@ -8,7 +8,7 @@ installGlobals()
 
 export default defineConfig({
   ssr: {
-    noExternal: ["tailwind-merge"],
+    noExternal: ["tailwind-merge", "remix-utils/client-only"],
   },
   // optimizeDeps: {
   //   include: ["tailwind-merge"],
