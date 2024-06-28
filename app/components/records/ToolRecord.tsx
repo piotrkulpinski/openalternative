@@ -59,7 +59,7 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
           <Card.Description
             style={{ viewTransitionName: vt ? `tool-${tool.id}-description` : undefined }}
           >
-            <ToolHighlight tool={tool} attribute="description" />
+            <ToolHighlight tool={tool} attribute="tagline" />
           </Card.Description>
         )}
 
