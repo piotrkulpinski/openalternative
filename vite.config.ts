@@ -8,15 +8,7 @@ installGlobals()
 
 export default defineConfig({
   ssr: {
-    noExternal: ["tailwind-merge", "remix-utils/client-only"],
+    noExternal: ["tailwind-merge", "remix-utils"],
   },
-  // optimizeDeps: {
-  //   include: ["tailwind-merge"],
-  // },
-  // build: {
-  //   rollupOptions: {
-  //     external
-  //   }
-  // },
   plugins: [tsconfigPaths(), remix({ presets: [vercelPreset()] })],
 })
