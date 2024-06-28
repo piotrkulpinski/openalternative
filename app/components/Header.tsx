@@ -12,7 +12,7 @@ import {
   TagIcon,
   XIcon,
 } from "lucide-react"
-import { type HTMLAttributes, useContext, useEffect, useState } from "react"
+import { type HTMLAttributes, useEffect, useState } from "react"
 import { GITHUB_URL } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 import { Breadcrumbs } from "./Breadcrumbs"
@@ -27,13 +27,9 @@ import { NavigationLink, navigationLinkVariants } from "./NavigationLink"
 import { Series } from "./Series"
 import { ClientOnly } from "remix-utils/client-only"
 import { ThemeSwitcher } from "./ThemeSwitcher"
-import { Badge } from "./Badge"
-import { StatsContext } from "~/providers/StatsProvider"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)
-  const stats = useContext(StatsContext)
-  const formatter = new Intl.NumberFormat("en-US", { notation: "compact" })
 
   // Close the mobile navigation when the user presses the "Escape" key
   useEffect(() => {
@@ -111,14 +107,8 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         <Button
           size="sm"
           variant="secondary"
-          prefix={<GithubIcon />}
-          suffix={
-            stats?.stars ? (
-              <Badge size="sm" className="-my-0.5 size-auto">
-                {formatter.format(stats.stars)}
-              </Badge>
-            ) : undefined
-          }
+          prefix={<GithubIcon className="mr-0.5" />}
+          className="max-sm:hidden"
           asChild
         >
           <a href={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
@@ -126,13 +116,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           </a>
         </Button>
 
-        <Button
-          size="sm"
-          variant="secondary"
-          suffix={<PlusIcon />}
-          className="-my-1.5 max-sm:hidden"
-          asChild
-        >
+        <Button size="sm" variant="secondary" prefix={<PlusIcon />} asChild>
           <NavLink to="/submit" unstable_viewTransition>
             Submit
           </NavLink>

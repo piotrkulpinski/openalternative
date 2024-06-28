@@ -1,5 +1,3 @@
-import { promises as fs } from "fs"
-import path from "path"
 import { graphql } from "@octokit/graphql"
 import { got } from "got"
 import { prisma } from "~/services.server/prisma"
@@ -9,8 +7,6 @@ import {
   getRepoOwnerAndName,
   repositoryStarsQuery,
 } from "~/utils/github"
-
-const dataFilePath = path.join(process.cwd(), "public", "stats.json")
 
 // Get the number of tools
 export const getToolCount = async () => {
@@ -47,32 +43,4 @@ export const getSubscriberCount = async () => {
     .json<{ data: unknown[] }>()
 
   return subscribers.data.length
-}
-
-// Write the stats to the JSON file
-export const writeStats = async (stats: object) => {
-  const object = { ...stats, lastUpdated: new Date().toISOString() }
-
-  console.log(dataFilePath)
-
-  // Write data to the JSON file
-  await fs.writeFile(dataFilePath, JSON.stringify(object, null, 2))
-}
-
-// Read the stats from the JSON file
-export const readStats = async () => {
-  if (!(await checkFileExists(dataFilePath))) {
-    return null
-  }
-
-  const fileContents = await fs.readFile(dataFilePath, "utf8")
-  return JSON.parse(fileContents)
-}
-
-// Check if a file exists
-export const checkFileExists = async (file: string) => {
-  return await fs
-    .access(file, fs.constants.F_OK)
-    .then(() => true)
-    .catch(() => false)
 }
