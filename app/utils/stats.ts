@@ -65,7 +65,10 @@ export const writeStats = (stats: object) => {
 
 // Read the stats from the JSON file
 export const readStats = () => {
-  const fileContents = fs.readFileSync(dataFilePath, "utf8")
+  if (!fs.existsSync(dataFilePath)) {
+    return null
+  }
 
+  const fileContents = fs.readFileSync(dataFilePath, "utf8")
   return JSON.parse(fileContents)
 }
