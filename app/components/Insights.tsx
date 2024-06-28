@@ -25,7 +25,12 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
             <span className="h-px grow bg-current opacity-15" />
 
             {link ? (
-              <Link to={link} className="shrink-0 font-medium hover:underline" title={title}>
+              <Link
+                to={link}
+                className="shrink-0 font-medium hover:underline"
+                title={title}
+                unstable_viewTransition
+              >
                 {value}
               </Link>
             ) : (
