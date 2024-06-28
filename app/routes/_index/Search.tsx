@@ -36,7 +36,7 @@ export const Search = ({ url, sponsoring }: SearchProps) => {
     <InstantSearch {...instantSearchOptions}>
       <Configure />
 
-      <div ref={listingRef} className="flex flex-col gap-6 scroll-mt-14">
+      <div ref={listingRef} className="flex flex-col gap-4 scroll-mt-14">
         <ClientOnly fallback={<Input disabled />}>{() => <Filters />}</ClientOnly>
         <Listing sponsoring={sponsoring} />
       </div>

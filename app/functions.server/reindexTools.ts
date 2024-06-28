@@ -17,7 +17,7 @@ export const reindexTools = inngest.createFunction(
 
     // Store the stats in KV
     await step.run("update-stats", async () => {
-      writeStats({
+      return await writeStats({
         tools: await getToolCount(),
         stars: await getStarCount(),
         subscribers: await getSubscriberCount(),
@@ -26,7 +26,7 @@ export const reindexTools = inngest.createFunction(
 
     // Run Algolia indexing
     await step.run("run-algolia-indexing", async () => {
-      await got.post(
+      return await got.post(
         `https://data.us.algolia.com/1/tasks/${process.env.ALGOLIA_INDEX_TASK_ID}/run`,
         {
           headers: {
