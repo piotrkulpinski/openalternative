@@ -14,85 +14,82 @@ export const fetchToolData = inngest.createFunction(
       })
     })
 
-    await step.run("update-tools", async () => {
-      return await Promise.all(
-        tools.map(async ({ id, bump, repository }) => {
-          const repo = await fetchRepository(id, bump, repository)
+    await Promise.all(
+      tools.map(
+        async tool =>
+          await step.run(`update-tool-${tool.id}`, async () => {
+            const repo = await fetchRepository(tool.id, tool.bump, tool.repository)
 
-          if (repo) {
-            const { stars, forks, license, lastCommitDate, score, topics, languages } = repo
+            if (repo) {
+              const { stars, forks, license, lastCommitDate, score, topics, languages } = repo
 
-            // License
-            const licenseData = license && {
-              connectOrCreate: {
-                where: { name: license },
-                create: {
-                  name: license,
-                  slug: slugify(license).replace(/-0$/, ""),
-                },
-              },
-            }
-
-            // Topics
-            const topicData = {
-              connectOrCreate: topics.map(({ slug }) => ({
-                where: {
-                  toolId_topicSlug: {
-                    toolId: id,
-                    topicSlug: slug,
+              // License
+              const licenseData = license && {
+                connectOrCreate: {
+                  where: { name: license },
+                  create: {
+                    name: license,
+                    slug: slugify(license).replace(/-0$/, ""),
                   },
                 },
-                create: {
-                  topic: {
-                    connectOrCreate: {
-                      where: { slug },
-                      create: { slug },
+              }
+
+              // Topics
+              const topicData = {
+                connectOrCreate: topics.map(({ slug }) => ({
+                  where: {
+                    toolId_topicSlug: {
+                      toolId: tool.id,
+                      topicSlug: slug,
                     },
                   },
-                },
-              })),
-            }
-
-            // Languages
-            const languageData = {
-              connectOrCreate: languages.map(({ percentage, name, slug, color }) => ({
-                where: {
-                  toolId_languageSlug: {
-                    toolId: id,
-                    languageSlug: slug,
-                  },
-                },
-                create: {
-                  percentage,
-                  language: {
-                    connectOrCreate: {
-                      where: { slug },
-                      create: { name, slug, color },
+                  create: {
+                    topic: {
+                      connectOrCreate: {
+                        where: { slug },
+                        create: { slug },
+                      },
                     },
                   },
+                })),
+              }
+
+              // Languages
+              const languageData = {
+                connectOrCreate: languages.map(({ percentage, name, slug, color }) => ({
+                  where: {
+                    toolId_languageSlug: {
+                      toolId: tool.id,
+                      languageSlug: slug,
+                    },
+                  },
+                  create: {
+                    percentage,
+                    language: {
+                      connectOrCreate: {
+                        where: { slug },
+                        create: { name, slug, color },
+                      },
+                    },
+                  },
+                })),
+              }
+
+              return prisma.tool.update({
+                where: { id: tool.id },
+                data: {
+                  stars,
+                  forks,
+                  lastCommitDate,
+                  score,
+                  license: licenseData || undefined,
+                  topics: topicData,
+                  languages: languageData,
                 },
-              })),
+              })
             }
-
-            return prisma.tool.update({
-              where: { id },
-              data: {
-                stars,
-                forks,
-                lastCommitDate,
-                score,
-                license: licenseData || undefined,
-                topics: topicData,
-                languages: languageData,
-              },
-            })
-          }
-        }),
-      )
-    })
-
-    await step.run("disconnect", async () => {
-      return await prisma.$disconnect()
-    })
+          }),
+      ),
+    )
   },
 )

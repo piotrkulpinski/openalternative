@@ -84,7 +84,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 }
 
 export default function TopicsPage() {
-  const { meta, topic, tools } = useLoaderData<typeof loader>()
+  const { meta, tools } = useLoaderData<typeof loader>()
 
   return (
     <>
