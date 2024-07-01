@@ -25,7 +25,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
 
   return (
     <div
-      className={cx("flex flex-col gap-4 md:gap-12 [counter-increment:alternatives]", className)}
+      className={cx("flex flex-col gap-6 md:gap-8 [counter-increment:alternatives]", className)}
       style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }}
       {...props}
     >
@@ -106,7 +106,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
             asChild
           >
             <a href={tool.repository} target="_blank" rel="noreferrer nofollow">
-              GitHub Repository
+              Repository
             </a>
           </Button>
         )}

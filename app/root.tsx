@@ -75,7 +75,7 @@ export function Layout({ children }: PropsWithChildren) {
           enableSystem
           disableTransitionOnChange
         >
-          <div className="@container/main mx-auto flex min-h-screen max-w-[60rem] flex-col gap-12 p-8">
+          <div className="@container/main mx-auto flex min-h-screen max-w-[60rem] flex-col gap-8 p-8 md:gap-10 lg:gap-12">
             <Header />
 
             {children}

@@ -91,5 +91,9 @@ export const fetchToolData = inngest.createFunction(
           }),
       ),
     )
+
+    await step.run("disconnect", async () => {
+      await prisma.$disconnect()
+    })
   },
 )
