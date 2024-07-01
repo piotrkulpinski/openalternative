@@ -1,14 +1,15 @@
-import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
+import { HeadersFunction, type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/components/records/ToolRecord"
-import { type CategoryOne, categoryOnePayload } from "~/services.server/api"
+import { type CategoryOne, categoryOnePayload, toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
+import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { category: CategoryOne }) => {
@@ -31,37 +32,69 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
+export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
+  return {
+    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
+  }
+}
+
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
+  const timings = makeTimings("category loader")
+
   try {
-    const category = await prisma.category.findUniqueOrThrow({
-      where: { slug },
-      include: categoryOnePayload,
-    })
+    const [category, tools] = await Promise.all([
+      time(
+        () =>
+          prisma.category.findUniqueOrThrow({
+            where: { slug },
+            include: categoryOnePayload,
+          }),
+        { type: "find category", timings },
+      ),
+
+      time(
+        () =>
+          prisma.tool.findMany({
+            where: {
+              categories: { some: { category: { slug } } },
+              publishedAt: { lte: new Date() },
+            },
+            include: toolManyPayload,
+            orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
+          }),
+        { type: "find tools", timings },
+      ),
+    ])
+
+    const name = category.label || `${category.name} Tools`
 
     const meta = {
-      title: `Best Open Source ${category.name} Software`,
-      description: `A collection of the best open source ${category.name} tools. Find the best tools for ${category.name} that are open source and free to use/self-hostable.`,
+      title: `Best Open Source ${name}`,
+      description: `A collection of the best open source ${name}. Find the best ${name} that are open source and free to use/self-hostable.`,
     }
 
-    return json({ meta, category }, { headers: JSON_HEADERS })
+    return json(
+      { meta, category, tools },
+      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
+    )
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
 export default function CategoriesPage() {
-  const { meta, category } = useLoaderData<typeof loader>()
+  const { meta, category, tools } = useLoaderData<typeof loader>()
 
   return (
     <>
       <Intro {...meta} />
 
       <Grid>
-        {category.tools.map(({ tool }) => (
+        {tools.map(tool => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!category.tools?.length && <p className="col-span-full">No Open Source software found.</p>}
+        {!tools?.length && <p className="col-span-full">No Open Source software found.</p>}
       </Grid>
 
       <BackButton to="/categories" />

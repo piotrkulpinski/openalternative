@@ -292,10 +292,15 @@ export default function ToolsPage() {
               height={1024}
               loading="eager"
               className="aspect-video h-auto w-full rounded-md border object-cover object-top"
+              style={{ viewTransitionName: vt ? `tool-${tool.id}-screenshot` : undefined }}
             />
           )}
 
-          {tool.content && <Markdown>{tool.content}</Markdown>}
+          {tool.content && (
+            <Markdown style={{ viewTransitionName: vt ? `tool-${tool.id}-content` : undefined }}>
+              {tool.content}
+            </Markdown>
+          )}
 
           {(!!links?.length || !!categories.length) && (
             <div className="grid grid-auto-fit-sm gap-x-6 gap-y-10 w-full">

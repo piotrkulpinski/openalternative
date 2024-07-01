@@ -71,6 +71,7 @@ model Category {
   id        String            @id @default(cuid())
   name      String
   slug      String            @unique
+  label     String?
   updatedAt DateTime          @updatedAt
   createdAt DateTime          @default(now())
   tools     CategoryToTools[]

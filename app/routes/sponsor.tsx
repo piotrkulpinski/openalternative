@@ -1,12 +1,17 @@
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { GithubIcon, HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Card } from "~/components/Card"
 import { H4 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
 import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
+
+export const handle = {
+  breadcrumb: () => <BreadcrumbsLink to="/sponsor" label="Sponsor" />,
+}
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
   const { title, description } = data?.meta || {}

@@ -63,6 +63,20 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
           </Card.Description>
         )}
 
+        {tool.screenshotUrl && (
+          <div
+            className="-mt-4 w-full"
+            style={{ viewTransitionName: vt ? `tool-${tool.id}-screenshot` : undefined }}
+          />
+        )}
+
+        {tool.content && (
+          <div
+            className="-mt-4 w-full"
+            style={{ viewTransitionName: vt ? `tool-${tool.id}-content` : undefined }}
+          />
+        )}
+
         <Insights insights={insights} className="mt-auto" />
       </Link>
     </Card>

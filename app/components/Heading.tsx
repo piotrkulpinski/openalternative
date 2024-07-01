@@ -3,7 +3,7 @@ import { type ElementType, type HTMLAttributes, forwardRef, isValidElement } fro
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const headingVariants = cva({
-  base: "text-foreground font-semibold tracking-tight",
+  base: "text-foreground font-semibold tracking-tight text-pretty",
 
   variants: {
     size: {
