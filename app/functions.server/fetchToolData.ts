@@ -1,4 +1,4 @@
-import { isTruthy, slugify } from "@curiousleaf/utils"
+import { slugify } from "@curiousleaf/utils"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { fetchRepository } from "~/utils/github"
@@ -15,7 +15,7 @@ export const fetchToolData = inngest.createFunction(
     })
 
     await step.run("update-tools", async () => {
-      const queries = await Promise.all(
+      return await Promise.all(
         tools.map(async ({ id, bump, repository }) => {
           const repo = await fetchRepository(id, bump, repository)
 
@@ -74,7 +74,7 @@ export const fetchToolData = inngest.createFunction(
               })),
             }
 
-            return {
+            return prisma.tool.update({
               where: { id },
               data: {
                 stars,
@@ -85,12 +85,14 @@ export const fetchToolData = inngest.createFunction(
                 topics: topicData,
                 languages: languageData,
               },
-            }
+            })
           }
         }),
       )
+    })
 
-      return await prisma.$transaction(queries.filter(isTruthy).map(q => prisma.tool.update(q)))
+    await step.run("disconnect", async () => {
+      return await prisma.$disconnect()
     })
   },
 )
