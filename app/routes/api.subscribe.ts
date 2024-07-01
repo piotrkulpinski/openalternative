@@ -7,7 +7,7 @@ const subscriberSchema = z.object({
   groups: z.array(z.string()).optional(),
 })
 
-const blacklist = ["rightbliss.beauty"]
+const blacklist = ["rightbliss.beauty", "silesia.life", "serviseantilogin.com"]
 
 export type ActionState =
   | { type: "error"; error: ZodFormattedError<z.infer<typeof subscriberSchema>> }
