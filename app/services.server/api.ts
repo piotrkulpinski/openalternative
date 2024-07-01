@@ -1,14 +1,7 @@
 import { Prisma } from "@prisma/client"
 
 // Alternatives
-export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeInclude>()({
-  tools: {
-    where: { tool: { publishedAt: { lte: new Date() } } },
-    include: { tool: true },
-    orderBy: [{ tool: { isFeatured: "desc" } }, { tool: { score: "desc" } }],
-  },
-})
-
+export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeInclude>()({})
 export const alternativeManyPayload = Prisma.validator<Prisma.AlternativeInclude>()({
   _count: { select: { tools: { where: { tool: { publishedAt: { lte: new Date() } } } } } },
 })
@@ -19,14 +12,7 @@ export type AlternativeMany = Prisma.AlternativeGetPayload<{
 }>
 
 // Categories
-export const categoryOnePayload = Prisma.validator<Prisma.CategoryInclude>()({
-  tools: {
-    where: { tool: { publishedAt: { lte: new Date() } } },
-    include: { tool: true },
-    orderBy: [{ tool: { isFeatured: "desc" } }, { tool: { score: "desc" } }],
-  },
-})
-
+export const categoryOnePayload = Prisma.validator<Prisma.CategoryInclude>()({})
 export const categoryManyPayload = Prisma.validator<Prisma.CategoryInclude>()({
   _count: { select: { tools: { where: { tool: { publishedAt: { lte: new Date() } } } } } },
 })
@@ -35,14 +21,7 @@ export type CategoryOne = Prisma.CategoryGetPayload<{ include: typeof categoryOn
 export type CategoryMany = Prisma.CategoryGetPayload<{ include: typeof categoryManyPayload }>
 
 // Topics
-export const topicOnePayload = Prisma.validator<Prisma.TopicInclude>()({
-  tools: {
-    where: { tool: { publishedAt: { lte: new Date() } } },
-    include: { tool: true },
-    orderBy: [{ tool: { isFeatured: "desc" } }, { tool: { score: "desc" } }],
-  },
-})
-
+export const topicOnePayload = Prisma.validator<Prisma.TopicInclude>()({})
 export const topicManyPayload = Prisma.validator<Prisma.TopicInclude>()({
   _count: { select: { tools: { where: { tool: { publishedAt: { lte: new Date() } } } } } },
 })
@@ -51,14 +30,7 @@ export type TopicOne = Prisma.TopicGetPayload<{ include: typeof topicOnePayload 
 export type TopicMany = Prisma.TopicGetPayload<{ include: typeof topicManyPayload }>
 
 // Languages
-export const languageOnePayload = Prisma.validator<Prisma.LanguageInclude>()({
-  tools: {
-    where: { tool: { publishedAt: { lte: new Date() } } },
-    include: { tool: true },
-    orderBy: [{ tool: { isFeatured: "desc" } }, { tool: { score: "desc" } }],
-  },
-})
-
+export const languageOnePayload = Prisma.validator<Prisma.LanguageInclude>()({})
 export const languageManyPayload = Prisma.validator<Prisma.LanguageInclude>()({
   _count: { select: { tools: { where: { tool: { publishedAt: { lte: new Date() } } } } } },
 })
@@ -68,7 +40,6 @@ export type LanguageMany = Prisma.LanguageGetPayload<{ include: typeof languageM
 
 // Licenses
 export const licenseOnePayload = Prisma.validator<Prisma.LicenseInclude>()({})
-
 export const licenseManyPayload = Prisma.validator<Prisma.LicenseInclude>()({
   _count: { select: { tools: { where: { publishedAt: { lte: new Date() } } } } },
 })

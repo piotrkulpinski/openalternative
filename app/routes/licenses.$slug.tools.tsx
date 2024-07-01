@@ -39,7 +39,8 @@ export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
 }
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
-  const timings = makeTimings("tool loader")
+  const timings = makeTimings("license loader")
+
   try {
     const [license, tools] = await Promise.all([
       time(
@@ -53,8 +54,8 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       time(
         () =>
           prisma.tool.findMany({
-            include: toolOnePayload,
             where: { license: { slug }, publishedAt: { lte: new Date() } },
+            include: toolOnePayload,
             orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
           }),
         { type: "find tools", timings },

@@ -96,7 +96,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     ])
 
     const meta = {
-      title: `The ${license.name} License: Key Features and Implications`,
+      title: `The ${license.name} License Explained: Pros, Cons, and Use Cases`,
       description: license.description,
     }
 

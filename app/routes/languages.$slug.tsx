@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
+import { HeadersFunction, type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
@@ -9,6 +9,7 @@ import { type LanguageOne, languageOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
+import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { language: LanguageOne }) => {
@@ -31,37 +32,66 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
+export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
+  return {
+    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
+  }
+}
+
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
+  const timings = makeTimings("language loader")
+
   try {
-    const language = await prisma.language.findUniqueOrThrow({
-      where: { slug },
-      include: languageOnePayload,
-    })
+    const [language, tools] = await Promise.all([
+      time(
+        () =>
+          prisma.language.findUniqueOrThrow({
+            where: { slug },
+            include: languageOnePayload,
+          }),
+        { type: "find language", timings },
+      ),
+
+      time(
+        () =>
+          prisma.tool.findMany({
+            where: {
+              languages: { some: { language: { slug } } },
+              publishedAt: { lte: new Date() },
+            },
+            orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
+          }),
+        { type: "find tools", timings },
+      ),
+    ])
 
     const meta = {
       title: `Best ${language.name} Open Source Projects`,
-      description: ` A collection of the best open source software tools written in ${language.name}. Find the most popular and trending open source projects to learn from, contribute to, or use in your own projects.`,
+      description: `A collection of the best open source software tools written in ${language.name}. Find the most popular and trending open source projects to learn from, contribute to, or use in your own projects.`,
     }
 
-    return json({ meta, language }, { headers: JSON_HEADERS })
+    return json(
+      { meta, language, tools },
+      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
+    )
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
 export default function LanguagesPage() {
-  const { meta, language } = useLoaderData<typeof loader>()
+  const { meta, language, tools } = useLoaderData<typeof loader>()
 
   return (
     <>
       <Intro {...meta} />
 
       <Grid>
-        {language.tools.map(({ tool }) => (
+        {tools.map(tool => (
           <ToolRecord key={tool.id} tool={tool} />
         ))}
 
-        {!language.tools?.length && <p className="col-span-full">No Open Source software found.</p>}
+        {!tools?.length && <p className="col-span-full">No Open Source software found.</p>}
       </Grid>
 
       <BackButton to="/languages" />

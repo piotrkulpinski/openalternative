@@ -1,10 +1,15 @@
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Featured } from "~/components/Featured"
 import { Intro } from "~/components/Intro"
 import { Markdown } from "~/components/Markdown"
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
+
+export const handle = {
+  breadcrumb: () => <BreadcrumbsLink to="/about" label="About Us" />,
+}
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
   const { title, description } = data?.meta || {}
@@ -57,7 +62,7 @@ export default function AboutPage() {
 
   ## About the Author
 
-  I’m a software developer and entrepreneur. I’ve been building web applications for over 10 years. I’m passionate about open source software and I love to contribute to the community in any way I can.
+  I’m a software developer and entrepreneur. I’ve been building web applications for over 15 years. I’m passionate about open source software and I love to contribute to the community in any way I can.
 
   Some of my other projects:
 

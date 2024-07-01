@@ -34,7 +34,7 @@ export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const timings = makeTimings("tool loader")
+  const timings = makeTimings("topics loader")
   const { take, skip } = getPageParams(request, TOPICS_PER_PAGE)
 
   const [topics, topicCount] = await Promise.all([
