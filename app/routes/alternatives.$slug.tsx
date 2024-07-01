@@ -131,7 +131,7 @@ export default function AlternativesPage() {
         description={`Find the best alternatives to ${alternative.name} that are open source and free to use/self-hostable.`}
       />
 
-      <div className="grid items-start gap-6 md:grid-cols-3">
+      <div className="grid items-start gap-x-6 gap-y-8 md:grid-cols-3 md:gap-y-10 lg:gap-y-12">
         {!!tools.length && (
           <Prose className="order-last md:order-first md:col-span-2">
             <p>
@@ -207,7 +207,7 @@ export default function AlternativesPage() {
         </Card>
       </div>
 
-      <div className="flex flex-col items-start gap-12 max-w-2xl [counter-reset:alternatives]">
+      <div className="flex flex-col items-start gap-12 max-w-2xl [counter-reset:alternatives] md:gap-16 lg:gap-20">
         {tools.map(tool => (
           <ToolEntry key={tool.id} tool={tool} />
         ))}
