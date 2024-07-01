@@ -1,6 +1,5 @@
 import { graphql } from "@octokit/graphql"
 import { DAY_IN_MS } from "./constants"
-import { prisma } from "~/services.server/prisma"
 import { slugify } from "inngest"
 
 export const githubGraphqlClient = graphql.defaults({
@@ -191,11 +190,6 @@ export const fetchRepository = async (id: string, bump: number | null, repositor
 
   // if the repository check fails, set the tool as draft
   if (!queryResult?.repository) {
-    await prisma.tool.update({
-      where: { id },
-      data: { publishedAt: null },
-    })
-
     return null
   }
 
