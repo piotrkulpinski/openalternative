@@ -5,18 +5,23 @@ import { Button } from "./Button"
 import { H5 } from "./Heading"
 import { Series } from "./Series"
 import { Input } from "./forms/Input"
+import { cx } from "~/utils/cva"
 
 type NewsletterProps = HTMLAttributes<HTMLElement> & {
   title?: string
   description?: string
+  note?: string
   placeholder?: string
+  size?: ComponentProps<typeof Input>["size"]
   buttonVariant?: ComponentProps<typeof Button>["variant"]
 }
 
 export const Newsletter = ({
   title,
   description,
+  note,
   placeholder = "Enter your email...",
+  size = "sm",
   buttonVariant,
   ...props
 }: NewsletterProps) => {
@@ -32,14 +37,15 @@ export const Newsletter = ({
             {title}
           </H5>
         )}
+
         {description && <p className="-mt-2 text-sm text-muted">{description}</p>}
 
-        <div className="space-y-2">
-          {data?.type !== "success" && (
+        {data?.type !== "success" && (
+          <>
             <Form
               method="POST"
               action="/api/subscribe"
-              className="relative w-full max-w-xs"
+              className={cx("relative w-full", size === "sm" ? "max-w-64" : "max-w-80")}
               noValidate
             >
               <Input
@@ -48,25 +54,29 @@ export const Newsletter = ({
                 placeholder={placeholder}
                 data-1p-ignore
                 required
-                className="pr-24"
+                size={size}
+                className={size === "sm" ? "pr-24" : "pr-28"}
               />
 
               <Button
-                size="sm"
+                size={size}
                 variant={buttonVariant}
                 isPending={state !== "idle"}
-                className="absolute inset-y-1 right-1"
+                className={cx("absolute inset-y-1 right-1", size === "md" && "text-sm/tight")}
               >
                 Subscribe
               </Button>
             </Form>
-          )}
 
-          {data?.type === "error" && (
-            <p className="text-xs text-red-600">{data.error.email?._errors[0]}</p>
-          )}
-          {data?.type === "success" && <p className="text-sm text-green-600">{data.message}</p>}
-        </div>
+            {note && <p className="-mt-1 text-xs text-muted">{note}</p>}
+          </>
+        )}
+
+        {data?.type === "error" && (
+          <p className="text-xs text-red-600">{data.error.email?._errors[0]}</p>
+        )}
+
+        {data?.type === "success" && <p className="text-sm text-green-600">{data.message}</p>}
       </section>
     </Series>
   )

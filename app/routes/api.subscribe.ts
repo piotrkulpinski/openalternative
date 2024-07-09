@@ -1,13 +1,15 @@
 import { type ActionFunctionArgs, type TypedResponse, json } from "@remix-run/node"
 import { got } from "got"
+import disposable from "disposable-email"
 import { type ZodFormattedError, z } from "zod"
 
 const subscriberSchema = z.object({
-  email: z.string().email().min(1),
+  email: z
+    .string()
+    .email("Invalid email address")
+    .refine(e => !disposable.validate(e), "Invalid email address, please use a real email address"),
   groups: z.array(z.string()).optional(),
 })
-
-const blacklist = ["rightbliss.beauty", "silesia.life", "serviseantilogin.com"]
 
 export type ActionState =
   | { type: "error"; error: ZodFormattedError<z.infer<typeof subscriberSchema>> }
@@ -21,15 +23,12 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
     return json({ type: "error", error: parsed.error.format() })
   }
 
-  // Check if the email is not in the blacklist
-  if (!blacklist.includes(parsed.data.email)) {
-    await got
-      .post("https://connect.mailerlite.com/api/subscribers", {
-        json: parsed.data,
-        headers: { authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}` },
-      })
-      .json()
-  }
+  await got
+    .post("https://connect.mailerlite.com/api/subscribers", {
+      json: parsed.data,
+      headers: { authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}` },
+    })
+    .json()
 
   // Return a success response
   return json({ type: "success", message: "Thank you for subscribing!" })

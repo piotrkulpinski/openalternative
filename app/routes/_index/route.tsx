@@ -52,11 +52,11 @@ export default function Index() {
   return (
     <>
       <div className="flex gap-6">
-        <section className="flex flex-col gap-y-6 md:flex-1">
+        <section className="flex flex-col gap-y-6 sm:items-center sm:text-center sm:max-w-[35rem] sm:mx-auto md:flex-1">
           <Intro
             title="Discover Open Source Alternatives to Popular Software"
             description="We’ve curated some great open source alternatives to software that your business requires in day-to-day operations."
-            className="max-w-[40rem] text-pretty"
+            className="sm:items-center sm:text-center"
           >
             {!!newToolCount && (
               <Badge
@@ -70,7 +70,13 @@ export default function Index() {
             )}
           </Intro>
 
-          <Newsletter placeholder="Join the newsletter" buttonVariant="fancy" />
+          <Newsletter
+            placeholder="Get our newsletter"
+            note="Join 700+ open source enthusiasts · Unsubscribe anytime"
+            size="md"
+            buttonVariant="fancy"
+            className="w-full sm:items-center"
+          />
         </section>
 
         <ProductHuntCard launch={launch} className="max-md:hidden md:w-60" />

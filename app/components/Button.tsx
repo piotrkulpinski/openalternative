@@ -19,7 +19,7 @@ export const buttonVariants = cva({
     },
     size: {
       sm: "text-[13px]/none gap-[0.5ch] py-1 px-2 rounded-md",
-      md: "text-[13px]/tight gap-[0.75ch] py-1.5 px-3 rounded-lg",
+      md: "text-[13px]/tight gap-[0.75ch] py-1.5 px-3 rounded-md",
       lg: "text-sm/tight gap-[1ch] py-2 px-4 rounded-lg",
     },
     isAffixOnly: {
