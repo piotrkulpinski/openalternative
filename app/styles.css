@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Uncut Sans";
+  font-style: normal;
+  src: url("/fonts/UncutSans-Variable.woff2") format("woff2");
+}
+
 :root {
+  --color-primary: 15 63% 60%;
   --color-background: 0 0% 100%;
 
   --color-card: 0 0% 98%;
@@ -16,6 +23,7 @@
 }
 
 .dark {
+  --color-primary: 15 63% 40%;
   --color-background: 0 0% 9%;
 
   --color-card: 0 0% 11%;
@@ -28,29 +36,16 @@
   --color-foreground: 0 0% 90%;
 }
 
-/* CSS */
 :root {
-  font-family: Inter, sans-serif;
   font-feature-settings:
-    "liga" 1,
-    /* Contextual Alternates */ "calt" 1,
-    /* Discretionary Ligatures */ "dlig" 1,
-    /* fSquare punctuation */ "ss07" 1,
-    /* Square quotes */ "ss08" 1,
-    /* Slashed zero */ "zero" 1,
-    /* Tabular numbers */ "tnum" 1,
-    /* Open six */ "cv03" 1,
-    /* Open nine */ "cv04" 1,
-    /* Alternate one */ "cv01" 1,
-    /* Flat-top three */ "cv09",
-    /* Open 4 */ "cv02" 1;
-}
-
-@supports (font-variation-settings: normal) {
-  /* Use variable font if supported */
-  :root {
-    font-family: InterVariable, sans-serif;
-  }
+    "ss01" on, /* Alternate R */
+    "ss02" on, /* Alternate Y and y */
+    "ss03" on, /* Alernative Q, Ø, and ø */
+    "ss04" off, /* Alernative a */
+    "ss05" on, /* Alernative 1, 2, and 4 */
+    "ss06" on, /* Alternate !, ?, and * */
+    "ss07" on, /* Round punctuation */
+    "ss08" off; /* Alternate arrows */
 }
 
 a,

@@ -9,6 +9,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: "hsl(var(--color-primary) / <alpha-value>)",
         background: "hsl(var(--color-background) / <alpha-value>)",
         muted: "hsl(var(--color-muted) / <alpha-value>)",
         secondary: "hsl(var(--color-secondary) / <alpha-value>)",
@@ -29,7 +30,7 @@ export default {
         DEFAULT: "hsl(var(--color-border))",
       },
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Uncut Sans", ...defaultTheme.fontFamily.sans],
       },
       gridColumns: {
         DEFAULT: "16rem",
