@@ -15,8 +15,8 @@ import { adjustSponsoringDuration, calculateSponsoringPrice } from "~/utils/spon
 
 type SponsoringProps = HTMLAttributes<HTMLDivElement> & {
   dates: SerializeFrom<{
-    startsAt: Date,
-    endsAt: Date,
+    startsAt: Date
+    endsAt: Date
   }>[]
 }
 
@@ -25,7 +25,7 @@ export const Sponsoring = ({ className, dates, ...props }: SponsoringProps) => {
   const [date, setDate] = useState<DateRange>()
   const [price, setPrice] = useState<ReturnType<typeof calculateSponsoringPrice>>()
 
-  const disabledDates= dates.map(({ startsAt, endsAt }) => ({
+  const disabledDates = dates.map(({ startsAt, endsAt }) => ({
     from: new Date(Date.parse(startsAt)),
     to: new Date(Date.parse(endsAt) - DAY_IN_MS),
   }))
@@ -46,7 +46,7 @@ export const Sponsoring = ({ className, dates, ...props }: SponsoringProps) => {
 
     // Send the event to PostHog
     posthog.capture("sponsoring_select", price)
-  }, [date, disabledDates])
+  }, [date])
 
   useEffect(() => {
     if (data?.type === "success" && data.url) {
