@@ -14,8 +14,8 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     })
 
     const [fontRegular, fontBold] = await Promise.all([
-      fetch(new URL("fonts/Inter-Regular.otf", SITE_URL)).then(res => res.arrayBuffer()),
-      fetch(new URL("fonts/Inter-SemiBold.otf", SITE_URL)).then(res => res.arrayBuffer()),
+      fetch(new URL("fonts/UncutSans-Regular.otf", SITE_URL)).then(res => res.arrayBuffer()),
+      fetch(new URL("fonts/UncutSans-Semibold.otf", SITE_URL)).then(res => res.arrayBuffer()),
     ])
 
     const svg = await satori(<ToolOpenGraph tool={tool} />, {
@@ -23,13 +23,13 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       height: 630,
       fonts: [
         {
-          name: "Inter",
+          name: "UncutSans",
           data: fontRegular,
           weight: 400,
           style: "normal",
         },
         {
-          name: "Inter",
+          name: "UncutSans",
           data: fontBold,
           weight: 600,
           style: "normal",

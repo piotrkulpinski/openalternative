@@ -92,7 +92,7 @@ const ToolHighlight = ({ tool, attribute }: { tool: Tool; attribute: keyof Tool 
     <Highlight
       hit={tool as AlgoliaHit<Tool>}
       attribute={attribute}
-      classNames={{ highlighted: "bg-pink-600 text-white" }}
+      classNames={{ highlighted: "bg-primary text-white" }}
     />
   )
 }

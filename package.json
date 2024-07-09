@@ -25,6 +25,7 @@
     "@curiousleaf/utils": "^1.0.22",
     "@epic-web/cachified": "^5.1.2",
     "@epic-web/remember": "^1.0.2",
+    "@mendable/firecrawl-js": "^0.0.28",
     "@octokit/graphql": "^8.0.1",
     "@prisma/client": "^5.13.0",
     "@radix-ui/react-dropdown-menu": "^2.0.6",

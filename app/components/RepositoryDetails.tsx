@@ -25,12 +25,16 @@ export const RepositoryDetails = ({
   const insights = [
     { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
     { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
-    {
-      label: "Last commit",
-      value: tool.lastCommitDate && format(tool.lastCommitDate),
-      title: tool.lastCommitDate ?? undefined,
-      icon: TimerIcon,
-    },
+    ...(tool.lastCommitDate
+      ? [
+          {
+            label: "Last commit",
+            value: format(tool.lastCommitDate),
+            title: tool.lastCommitDate,
+            icon: TimerIcon,
+          },
+        ]
+      : []),
     ...(tool.license
       ? [
           {

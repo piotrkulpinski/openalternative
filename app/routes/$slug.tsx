@@ -1,15 +1,15 @@
 import { getRandomElement } from "@curiousleaf/utils"
 import { Prisma } from "@prisma/client"
 import {
-    type HeadersFunction,
-    type LoaderFunctionArgs,
-    type MetaFunction,
-    json,
+  type HeadersFunction,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+  json,
 } from "@remix-run/node"
 import {
-    ShouldRevalidateFunction,
-    unstable_useViewTransitionState,
-    useLoaderData,
+  ShouldRevalidateFunction,
+  unstable_useViewTransitionState,
+  useLoaderData,
 } from "@remix-run/react"
 import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
 import { posthog } from "posthog-js"
@@ -28,13 +28,12 @@ import { Tag } from "~/components/Tag"
 import { AlternativeRecord } from "~/components/records/AlternativeRecord"
 import { ToolRecord } from "~/components/records/ToolRecord"
 import {
-    type ToolOne,
-    alternativeManyPayload,
-    categoryManyPayload,
-    languageManyPayload,
-    toolManyPayload,
-    toolOnePayload,
-    topicManyPayload,
+  type ToolOne,
+  alternativeManyPayload,
+  categoryManyPayload,
+  languageManyPayload,
+  toolOnePayload,
+  topicManyPayload,
 } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
@@ -102,15 +101,13 @@ export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   const timings = makeTimings("tool loader")
 
-  console.log(slug)
-
   try {
     const [tool, alternatives, categories, languages, topics, relatedTools, sponsoring] =
       await Promise.all([
         time(
           () =>
             prisma.tool.findUniqueOrThrow({
-              where: { slug, publishedAt: { lte: new Date() } },
+              where: { slug },
               include: toolOnePayload,
             }),
           { type: "find tool", timings },
@@ -177,7 +174,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
             return prisma.categoryToTools.findMany({
               where: relatedWhereClause,
-              include: { tool: toolManyPayload },
+              include: { tool: true },
               distinct: ["toolId"],
               orderBy: { tool: { [orderBy]: orderDir } },
               take,

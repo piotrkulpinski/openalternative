@@ -55,7 +55,7 @@ export default function Index() {
         <section className="flex flex-col gap-y-6 md:flex-1">
           <Intro
             title="Discover Open Source Alternatives to Popular Software"
-            description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
+            description="We’ve curated some great open source alternatives to software that your business requires in day-to-day operations."
             className="max-w-[40rem] text-pretty"
           >
             {!!newToolCount && (

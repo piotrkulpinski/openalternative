@@ -30,8 +30,6 @@ export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: stylesheet },
     { rel: "icon", href: "/favicon.png", type: "image/png" },
-    { rel: "preconnect", href: "https://rsms.me/" },
-    { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   ]
 }
 
@@ -68,7 +66,7 @@ export function Layout({ children }: PropsWithChildren) {
         <Links />
       </head>
 
-      <body className="bg-background text-foreground">
+      <body className="bg-background text-foreground font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
