@@ -3,7 +3,6 @@ import { BASE_SPONSORING_PRICE, DAY_IN_MS } from "./constants"
 
 export const calculateSponsoringPrice = (days: number) => {
   const discountPercentage = Math.min(days - 1, 30)
-  console.log(discountPercentage)
   const price = Math.round(BASE_SPONSORING_PRICE * (1 - discountPercentage / 100) * 100) / 100
   const fullPrice = Math.round(price * days * 100) / 100
   const discountAmount = BASE_SPONSORING_PRICE * days - fullPrice
