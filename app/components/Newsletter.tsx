@@ -1,11 +1,12 @@
 import { useFetcher, useLocation } from "@remix-run/react"
-import { type ComponentProps, type HTMLAttributes, useId } from "react"
+import { type ComponentProps, type HTMLAttributes, useEffect, useId } from "react"
 import type { action } from "~/routes/api.subscribe"
 import { Button } from "./Button"
 import { H5 } from "./Heading"
 import { Series } from "./Series"
 import { Input } from "./forms/Input"
 import { cx } from "~/utils/cva"
+import { posthog } from "posthog-js"
 
 type NewsletterProps = HTMLAttributes<HTMLElement> & {
   title?: string
@@ -28,6 +29,10 @@ export const Newsletter = ({
   const id = useId()
   const { key } = useLocation()
   const { data, state, Form } = useFetcher<typeof action>({ key: `${id}-${key}` })
+
+  useEffect(() => {
+    data?.type === "success" && posthog.capture("subscribed")
+  }, [data])
 
   return (
     <Series size="lg" direction="column" asChild>
