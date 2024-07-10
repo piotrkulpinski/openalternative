@@ -81,7 +81,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
     const meta = {
       title: `Best Open Source ${alternative.name} Alternatives`,
-      description: `A collection of the best open source ${alternative.name} alternatives. Find the best alternatives for ${alternative.name} that are open source and free to use/self-hostable.`,
+      description: `A collection of the best open source ${alternative.name} alternatives. Discover the best alternatives for ${alternative.name} that are open source and free to use or self-hostable.`,
     }
 
     return json(
@@ -128,7 +128,7 @@ export default function AlternativesPage() {
     <>
       <Intro
         title={meta.title}
-        description={`Find the best alternatives to ${alternative.name} that are open source and free to use/self-hostable.`}
+        description={`Discover the best open source alternatives to ${alternative.name}.`}
       />
 
       <div className="grid items-start gap-x-6 gap-y-8 md:grid-cols-3 md:gap-y-10 lg:gap-y-12">

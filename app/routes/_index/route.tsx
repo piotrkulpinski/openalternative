@@ -52,7 +52,7 @@ export default function Index() {
   return (
     <>
       <div className="flex gap-6">
-        <section className="flex flex-col gap-y-6 mb-[2vh] sm:items-center sm:text-center sm:max-w-[35rem] sm:mx-auto md:flex-1 lg:mt-[2vh]">
+        <section className="flex flex-col gap-y-6 mb-[2vh] sm:items-center sm:text-center sm:max-w-[35rem] sm:mx-auto md:flex-1 lg:mt-[1vh]">
           <Intro
             title="Discover Open Source Alternatives to Popular Software"
             description="A curated collection of the best open source alternatives to software that your business requires in day-to-day operations."

@@ -1,17 +1,10 @@
-import { Link } from "@remix-run/react"
-import { allPosts } from "content-collections"
+import { Outlet } from "@remix-run/react"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 
-export default function BlogPage() {
-  return (
-    <ul>
-      {allPosts.map(post => (
-        <li key={post._meta.path}>
-          <Link to={`/blog/${post._meta.path}`} unstable_viewTransition>
-            <h3>{post.title}</h3>
-            <p>{post.description}</p>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  )
+export const handle = {
+  breadcrumb: () => <BreadcrumbsLink to="/blog" label="Blog" />,
+}
+
+export default function Blog() {
+  return <Outlet />
 }
