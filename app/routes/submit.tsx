@@ -120,6 +120,7 @@ export default function SubmitPage() {
                 type="text"
                 name="name"
                 id="name"
+                size="md"
                 placeholder="PostHog"
                 data-1p-ignore
                 required
@@ -139,6 +140,7 @@ export default function SubmitPage() {
                 type="url"
                 name="website"
                 id="website"
+                size="md"
                 placeholder="https://posthog.com"
                 required
               />
@@ -157,6 +159,7 @@ export default function SubmitPage() {
                 type="url"
                 name="repository"
                 id="repository"
+                size="md"
                 placeholder="https://github.com/posthog/posthog"
                 required
               />
@@ -175,6 +178,7 @@ export default function SubmitPage() {
                 name="description"
                 id="description"
                 rows={3}
+                size="md"
                 placeholder="A platform that helps engineers build better products"
                 required
               />

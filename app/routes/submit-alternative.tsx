@@ -111,6 +111,7 @@ export default function SubmitPage() {
                 type="text"
                 name="name"
                 id="name"
+                size="md"
                 placeholder="Salesforce"
                 data-1p-ignore
                 required
@@ -130,6 +131,7 @@ export default function SubmitPage() {
                 type="url"
                 name="website"
                 id="website"
+                size="md"
                 placeholder="https://salesforce.com"
                 required
               />
@@ -148,6 +150,7 @@ export default function SubmitPage() {
                 name="description"
                 id="description"
                 rows={3}
+                size="md"
                 placeholder="Deliver the best customer experience with a single CRM tool for Sales, Customer Service, Marketing, Commerce & IT"
                 required
               />
