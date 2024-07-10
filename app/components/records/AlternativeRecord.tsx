@@ -6,6 +6,7 @@ import { Card } from "~/components/Card"
 import type { AlternativeMany } from "~/services.server/api"
 import { Favicon } from "../Favicon"
 import { H4 } from "../Heading"
+import { cx } from "~/utils/cva"
 
 type AlternativeRecordProps = HTMLAttributes<HTMLElement> & {
   alternative: SerializeFrom<AlternativeMany>
@@ -24,7 +25,11 @@ export const AlternativeRecord = ({ alternative, showCount, ...props }: Alternat
           </H4>
         </Card.Header>
 
-        {alternative.description && <Card.Description>{alternative.description}</Card.Description>}
+        {alternative.description && (
+          <Card.Description className={cx(!showCount && "line-clamp-3")}>
+            {alternative.description}
+          </Card.Description>
+        )}
 
         {showCount && (
           <Card.Footer>

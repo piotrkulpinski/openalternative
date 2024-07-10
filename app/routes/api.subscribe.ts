@@ -6,8 +6,8 @@ import { type ZodFormattedError, z } from "zod"
 const subscriberSchema = z.object({
   email: z
     .string()
-    .email("Invalid email address")
-    .refine(e => !disposable.validate(e), "Invalid email address, please use a real email address"),
+    .email("Invalid email address, please use a correct format.")
+    .refine(e => !disposable.validate(e), "Invalid email address, please use a real one."),
   groups: z.array(z.string()).optional(),
 })
 

@@ -71,7 +71,7 @@ export default function AboutPage() {
 
   I’m always looking for new projects to work on and new people to collaborate with. Feel free to reach out to me if you have any questions or suggestions.
 
-  [Piotr Kulpinski](https://x.com/piotrkulpinski)
+  – [Piotr Kulpinski](https://x.com/piotrkulpinski)
   `
 
   return (

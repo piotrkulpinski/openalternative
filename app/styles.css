@@ -5,6 +5,7 @@
 @font-face {
   font-family: "Uncut Sans";
   font-style: normal;
+  font-weight: 400 700;
   src: url("/fonts/UncutSans-Variable.woff2") format("woff2");
 }
 
