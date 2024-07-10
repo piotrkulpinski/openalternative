@@ -3,6 +3,7 @@ node_modules
 /.cache
 /build
 /public/*.json
+/.content-collections
 
 # Local env files
 .env
