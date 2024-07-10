@@ -8,7 +8,10 @@ import { Series } from "./Series"
 
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
-    <footer className={cx("flex flex-col justify-between gap-4", className)} {...props}>
+    <footer
+      className={cx("relative z-20 flex flex-col justify-between gap-4", className)}
+      {...props}
+    >
       <Series className="text-sm/normal md:gap-x-4">
         <H6 as="strong">Explore:</H6>
 

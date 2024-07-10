@@ -20,6 +20,7 @@
    <a href="https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/piotrkulpinski/openalternative">
    <img alt="open in devcontainer" src="https://img.shields.io/static/v1?label=Dev%20Containers&message=Enabled&color=blue&logo=visualstudiocode" />
    </a>
+   <a href="https://news.ycombinator.com/item?id=39639386"><img src="https://img.shields.io/badge/Hacker%20News-156-%23FF6600" alt="Hacker News"></a>
 </p>
 
 <p align="center">
