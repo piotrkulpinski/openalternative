@@ -51,7 +51,7 @@ export const Intro = ({
       </Series>
 
       {description && (
-        <Prose className="max-w-3xl">
+        <Prose className="max-w-2xl">
           <h2 className="!text-base !font-normal !tracking-normal !text-secondary md:!text-lg">
             {description}
           </h2>
