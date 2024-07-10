@@ -76,7 +76,7 @@ export function Layout({ children }: PropsWithChildren) {
         >
           <Header />
 
-          <Container className="flex min-h-[calc(100dvh-var(--header-height))] mt-[calc(var(--header-top)+var(--header-height))] flex-col py-8 gap-8 md:gap-10 lg:gap-12">
+          <Container className="flex min-h-[calc(100dvh-var(--header-height))] mt-[calc(var(--header-top)+var(--header-height))] flex-col pt-8 pb-6 gap-8 md:gap-10 lg:gap-12 lg:pt-12">
             {children}
 
             <hr className="mt-auto peer-[[href]]:mt-0" />

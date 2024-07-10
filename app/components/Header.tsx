@@ -153,7 +153,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
         <nav
           className={cx(
-            "size-full mt-6 mb-4 grid grid-auto-fill-xs place-items-start place-content-start gap-x-4 gap-y-6 px-1 transition-opacity lg:hidden",
+            "size-full mt-10 mb-4 grid grid-auto-fill-xs place-items-start place-content-start gap-x-4 gap-y-6 px-1 transition-opacity lg:hidden",
             isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none",
           )}
         >
