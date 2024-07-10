@@ -13,6 +13,7 @@ import { publishEscape } from "@curiousleaf/utils"
 import posthog from "posthog-js"
 
 import stylesheet from "~/styles.css?url"
+import { Container } from "./components/Container"
 
 export const shouldRevalidate = () => {
   return false
@@ -73,9 +74,9 @@ export function Layout({ children }: PropsWithChildren) {
           enableSystem
           disableTransitionOnChange
         >
-          <div className="@container/main mx-auto flex min-h-screen max-w-[60rem] flex-col gap-8 p-8 md:gap-10 lg:gap-12">
-            <Header />
+          <Header />
 
+          <Container className="flex min-h-[calc(100dvh-var(--header-height))] mt-[calc(var(--header-top)+var(--header-height))] flex-col py-8 gap-8 md:gap-10 lg:gap-12">
             {children}
 
             <hr className="mt-auto peer-[[href]]:mt-0" />
@@ -86,7 +87,7 @@ export function Layout({ children }: PropsWithChildren) {
             />
 
             <Footer />
-          </div>
+          </Container>
         </ThemeProvider>
 
         <ScrollRestoration />
