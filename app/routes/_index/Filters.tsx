@@ -7,6 +7,7 @@ import { cx } from "~/utils/cva"
 import { Refinements } from "./Refinements"
 import { SearchBox } from "./SearchBox"
 import { SortBy } from "./SortBy"
+import { HitsPerPage } from "./HitsPerPage"
 
 export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const isMobile = useMediaQuery("only screen and (max-width : 768px)")
@@ -36,6 +37,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
       >
         <SearchBox className="w-full md:max-w-[calc(66%+6px)]" />
         <SortBy items={sortByItems} className="flex-1" />
+        <HitsPerPage items={hitsPerPageItems} className="hidden" />
 
         <Button
           type="button"
