@@ -1,9 +1,16 @@
+import { formatDate } from "@curiousleaf/utils"
 import { LoaderFunctionArgs } from "@remix-run/node"
-import { json, MetaFunction, useLoaderData } from "@remix-run/react"
+import {
+  json,
+  MetaFunction,
+  unstable_useViewTransitionState,
+  useLoaderData,
+} from "@remix-run/react"
 import { allPosts, Post } from "content-collections"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { Intro } from "~/components/Intro"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
+import { Markdown } from "~/components/Markdown"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
@@ -45,11 +52,48 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 }
 
 export default function BlogPostPage() {
-  const { meta } = useLoaderData<typeof loader>()
+  const { post } = useLoaderData<typeof loader>()
+
+  const vt = unstable_useViewTransitionState(`/blog/${post._meta.path}`)
 
   return (
-    <>
-      <Intro {...meta} />
-    </>
+    <div
+      className="flex flex-col gap-12 max-w-prose"
+      style={{ viewTransitionName: vt ? `post-${post._meta.path}` : undefined }}
+    >
+      <Intro>
+        <IntroTitle
+          style={{ viewTransitionName: vt ? `post-${post._meta.path}-title` : undefined }}
+        >
+          {post.title}
+        </IntroTitle>
+
+        <IntroDescription
+          style={{ viewTransitionName: vt ? `post-${post._meta.path}-description` : undefined }}
+        >
+          {post.description}
+        </IntroDescription>
+
+        {post.datePublished && (
+          <p
+            style={{ viewTransitionName: vt ? `post-${post._meta.path}-date` : undefined }}
+            className="mt-2 text-muted"
+          >
+            <time dateTime={post.datePublished}>{formatDate(new Date(post.datePublished))}</time>
+          </p>
+        )}
+      </Intro>
+
+      {post.image && (
+        <img
+          src={post.image}
+          alt={post.title}
+          className="w-full h-auto object-cover rounded-lg"
+          style={{ viewTransitionName: vt ? `post-${post._meta.path}-image` : undefined }}
+        />
+      )}
+
+      <Markdown>{post.content}</Markdown>
+    </div>
   )
 }

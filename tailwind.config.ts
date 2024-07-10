@@ -32,6 +32,9 @@ export default {
       fontFamily: {
         sans: ["Uncut Sans", ...defaultTheme.fontFamily.sans],
       },
+      scale: {
+        flip: "-1",
+      },
       gridColumns: {
         DEFAULT: "16rem",
         xxs: "10rem",
