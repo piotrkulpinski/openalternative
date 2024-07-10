@@ -43,13 +43,15 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   return (
     <Container
       className={cx(
-        "group/menu fixed top-[var(--header-top)] inset-x-0 z-40 backdrop-blur-xl bg-background/95",
-        "max-lg:data-[state=open]:bg-background/75",
+        "group/menu fixed top-[var(--header-top)] inset-x-0 z-40 duration-300",
+        "max-lg:data-[state=open]:bg-background/90 max-lg:data-[state=open]:backdrop-blur-sm",
         className,
       )}
       data-state={isNavOpen ? "open" : "close"}
       {...props}
     >
+      <div className="fixed inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-gradient-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
+
       <div
         className={cx(
           "flex flex-wrap items-center py-3.5 gap-x-3 text-sm h-[var(--header-height)] isolate overflow-clip duration-300 lg:gap-4",
@@ -82,7 +84,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           </svg>
         </button>
 
-        <Breadcrumbs className="mr-auto" />
+        <Breadcrumbs className="mr-auto flex-1" />
 
         <nav className="contents max-lg:hidden">
           <DropdownMenu modal={false}>
