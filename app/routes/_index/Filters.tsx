@@ -4,7 +4,6 @@ import type { HTMLAttributes } from "react"
 import { useInstantSearch } from "react-instantsearch"
 import { Button } from "~/components/Button"
 import { cx } from "~/utils/cva"
-import { HitsPerPage } from "./HitsPerPage"
 import { Refinements } from "./Refinements"
 import { SearchBox } from "./SearchBox"
 import { SortBy } from "./SortBy"
@@ -35,20 +34,19 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
         className={cx("flex flex-wrap gap-x-2 gap-y-3 w-full md:flex-nowrap", className)}
         {...props}
       >
+        <SearchBox className="w-full md:max-w-[calc(66%+6px)]" />
+        <SortBy items={sortByItems} className="flex-1" />
+
         <Button
           type="button"
           size="md"
           variant="secondary"
-          prefix={isFiltersOpen ? <PanelBottomOpenIcon /> : <PanelBottomCloseIcon />}
+          suffix={isFiltersOpen ? <PanelBottomOpenIcon /> : <PanelBottomCloseIcon />}
           onClick={() => setIsFiltersOpen(prev => !prev)}
-          className="flex-1 text-start justify-start"
+          className="flex-1"
         >
           {isFiltersOpen ? "Hide" : "Show"} Filters
         </Button>
-
-        <SortBy items={sortByItems} className="flex-1" />
-        <HitsPerPage items={hitsPerPageItems} className="max-sm:hidden sm:flex-1" />
-        <SearchBox className="w-full" />
       </div>
 
       {isFiltersOpen && (

@@ -228,7 +228,7 @@ export default function ToolsPage() {
       className="flex flex-col gap-12"
       style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }}
     >
-      <div className="grid items-start gap-6 md:grid-cols-3">
+      <div className="grid items-start gap-5 md:grid-cols-3">
         <div className="flex flex-1 flex-wrap items-start gap-10 md:col-span-2 md:gap-12">
           <div className="flex flex-1 flex-col items-start gap-4 md:gap-6">
             <div className="flex w-full flex-col items-start gap-y-4">

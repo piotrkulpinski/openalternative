@@ -50,7 +50,7 @@ export const Newsletter = ({
             <Form
               method="POST"
               action="/api/subscribe"
-              className={cx("relative w-full", size === "sm" ? "max-w-64" : "max-w-80")}
+              className={cx("relative w-full", size === "sm" ? "max-w-64" : "max-w-96")}
               noValidate
             >
               <Input
@@ -67,18 +67,23 @@ export const Newsletter = ({
                 size={size}
                 variant={buttonVariant}
                 isPending={state !== "idle"}
-                className={cx("absolute inset-y-1 right-1", size === "md" && "text-sm/tight")}
+                className={cx(
+                  "absolute inset-y-1 right-1",
+                  size === "md" && "text-sm/tight min-w-24",
+                )}
               >
                 Subscribe
               </Button>
             </Form>
 
-            {note && <p className="-mt-1 text-xs text-muted">{note}</p>}
+            {note && data?.type !== "error" && (
+              <p className="-mt-1 px-1 text-xs text-muted">{note}</p>
+            )}
           </>
         )}
 
         {data?.type === "error" && (
-          <p className="text-xs text-red-600">{data.error.email?._errors[0]}</p>
+          <p className="-mt-1 text-xs text-red-600">{data.error.email?._errors[0]}</p>
         )}
 
         {data?.type === "success" && <p className="text-sm text-green-600">{data.message}</p>}

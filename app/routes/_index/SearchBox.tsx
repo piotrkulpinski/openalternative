@@ -49,19 +49,19 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
 
         {isSearchStalled && <LoaderIcon className="size-4 animate-spin" />}
 
-        <p className="flex items-center text-xs gap-1.5 whitespace-nowrap">
-          <span className="opacity-50 max-sm:hidden">Search by</span>
+        <p className="flex items-center text-xs gap-1 whitespace-nowrap">
+          <span className="opacity-50 max-sm:hidden">search by</span>
 
           <a
             href="https://www.algolia.com/developers/?utm_source=openalternative&utm_medium=referral"
             target="_blank"
             rel="noreferrer"
-            className="text-foreground/50 pointer-events-auto hover:text-primary"
+            className="text-foreground/40 pointer-events-auto hover:text-primary"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 601 138"
-              className="h-[1.25em]"
+              className="h-[1em]"
               fill="currentColor"
             >
               <title>Algolia</title>

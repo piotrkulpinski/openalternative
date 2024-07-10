@@ -52,10 +52,10 @@ export default function Index() {
   return (
     <>
       <div className="flex gap-6">
-        <section className="flex flex-col gap-y-6 sm:items-center sm:text-center sm:max-w-[35rem] sm:mx-auto md:flex-1">
+        <section className="flex flex-col gap-y-6 my-[1vh] sm:items-center sm:text-center sm:max-w-[35rem] sm:mx-auto md:flex-1">
           <Intro
             title="Discover Open Source Alternatives to Popular Software"
-            description="We’ve curated some great open source alternatives to software that your business requires in day-to-day operations."
+            description="A curated collection of the best open source alternatives to software that your business requires in day-to-day operations."
             className="sm:items-center sm:text-center"
           >
             {!!newToolCount && (
@@ -72,7 +72,7 @@ export default function Index() {
 
           <Newsletter
             placeholder="Get our newsletter"
-            note="Join 700+ open source enthusiasts · Unsubscribe anytime"
+            note="Join 750+ open source enthusiasts"
             size="md"
             buttonVariant="fancy"
             className="w-full sm:items-center"
