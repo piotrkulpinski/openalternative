@@ -12,6 +12,7 @@ import { LATEST_TOOLS_TRESHOLD, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/c
 import { getCurrentPHLaunch } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 import { Search } from "./Search"
+import plur from "plur"
 
 export const meta: MetaFunction = ({ matches, location }) => {
   return getMetaTags({
@@ -64,7 +65,7 @@ export default function Index() {
                 asChild
               >
                 <Link to="/latest">
-                  <Ping /> {newToolCount} tools added this week
+                  <Ping /> {newToolCount} new {plur("tool", newToolCount)} added
                 </Link>
               </Badge>
             )}

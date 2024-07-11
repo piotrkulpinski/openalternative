@@ -70,7 +70,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
     const meta = {
       title: `Best Open Source ${name}`,
-      description: `A collection of the best open source ${name}. Find the best ${name} that are open source and free to use/self-hostable.`,
+      description: `A curated collection of the ${tools.length} best open source ${name} for inspiration and reference. Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
     return json(

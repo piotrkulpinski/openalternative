@@ -64,7 +64,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
     const meta = {
       title: `Best ${license.name} Licensed Open Source Software`,
-      description: `A collection of the best open source software licensed under ${license.name}. Find the best tools, libraries, and frameworks for your next project.`,
+      description: `A curated collection of the ${tools.length} best open source software licensed under ${license.name}. Find the best tools, libraries, and frameworks for your next project.`,
     }
 
     return json(
