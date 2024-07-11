@@ -1,3 +1,4 @@
+import { allPosts } from "content-collections"
 import { prisma } from "~/services.server/prisma"
 
 export const loader = async () => {
@@ -14,6 +15,17 @@ export const loader = async () => {
   const languages = await prisma.language.findMany({ select: { slug: true } })
   const topics = await prisma.topic.findMany({ select: { slug: true } })
   const licenses = await prisma.license.findMany({ select: { slug: true } })
+
+  const postItems = allPosts.map(post => {
+    return `
+      <url>
+        <loc>${url}/blog/${post._meta.path}</loc>
+        <lastmod>${new Date(post.dateModified || post.datePublished).toISOString()}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1</priority>
+      </url>
+    `
+  })
 
   const toolItems = tools.map(tool => {
     return `
@@ -98,6 +110,7 @@ export const loader = async () => {
         <loc>${url}/sponsor</loc>
         <changefreq>weekly</changefreq>
       </url>
+      ${postItems.join("\n")}
       ${toolItems.join("\n")}
       ${categoryItems.join("\n")}
       ${alternativeItems.join("\n")}
