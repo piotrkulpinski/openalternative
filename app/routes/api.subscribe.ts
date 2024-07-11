@@ -1,13 +1,9 @@
 import { type ActionFunctionArgs, type TypedResponse, json } from "@remix-run/node"
 import { got } from "got"
-import disposable from "disposable-email"
 import { type ZodFormattedError, z } from "zod"
 
 const subscriberSchema = z.object({
-  email: z
-    .string()
-    .email("Invalid email address, please use a correct format.")
-    .refine(e => !disposable.validate(e), "Invalid email address, please use a real one."),
+  email: z.string().email("Invalid email address, please use a correct format."),
   groups: z.array(z.string()).optional(),
 })
 
