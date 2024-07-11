@@ -71,7 +71,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
     const meta = {
       title: `Best Open Source Projects tagged "${name}"`,
-      description: `A collection of the best open source projects tagged "${name}". Find the best tools for ${name} that are open source and free to use/self-hostable.`,
+      description: `A curated collection of the ${tools.length} best open source projects tagged "${name}". Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
     return json(

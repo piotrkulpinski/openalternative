@@ -62,7 +62,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.7.1",
+    "@biomejs/biome": "^1.8.3",
     "@content-collections/core": "^0.6.0",
     "@content-collections/remix-vite": "^0.1.1",
     "@remix-run/dev": "^2.10.0",
