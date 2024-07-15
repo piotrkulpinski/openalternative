@@ -1,10 +1,6 @@
-import { graphql } from "@octokit/graphql"
+import { got } from "got"
+import { add, differenceInDays, format, isAfter, parseISO } from "date-fns"
 import { DAY_IN_MS } from "./constants"
-import { slugify } from "inngest"
-
-export const githubGraphqlClient = graphql.defaults({
-  headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
-})
 
 export type RepositoryQueryResult = {
   repository: {
@@ -18,7 +14,7 @@ export type RepositoryQueryResult = {
     }
     licenseInfo: {
       spdxId: string
-    } | null
+    }
     defaultBranchRef: {
       target: {
         history: {
@@ -110,6 +106,36 @@ export const repositoryStarsQuery = `query RepositoryQuery($owner: String!, $nam
   }
 }`
 
+export const getRepoStargazers = async (owner: string, name: string, page?: number) => {
+  let url = `https://api.github.com/repos/${owner}/${name}/stargazers?per_page=${100}`
+
+  if (page !== undefined) {
+    url = `${url}&page=${page}`
+  }
+
+  return got
+    .get(url, {
+      headers: {
+        Accept: "application/vnd.github.v3.star+json",
+        Authorization: `token ${process.env.GITHUB_TOKEN}`,
+      },
+    })
+    .json<{ starred_at: string }[]>()
+}
+
+export const getRepoStargazersCount = async (owner: string, name: string) => {
+  const { stargazers_count } = await got
+    .get(`https://api.github.com/repos/${owner}/${name}`, {
+      headers: {
+        Accept: "application/vnd.github.v3.star+json",
+        Authorization: `token ${process.env.GITHUB_TOKEN}`,
+      },
+    })
+    .json<{ stargazers_count: number }>()
+
+  return stargazers_count
+}
+
 /**
  * Extracts the repository owner and name from a GitHub URL.
  *
@@ -140,12 +166,12 @@ type GetToolScoreProps = {
 /**
  * Calculates a score for a tool based on its GitHub statistics and an optional bump.
  *
- * @param props.stars - The number of stars the tool has on GitHub.
- * @param props.forks - The number of forks the tool has on GitHub.
- * @param props.contributors - The number of contributors to the tool's repository.
- * @param props.watchers - The number of watchers the tool has on GitHub.
- * @param props.lastCommitDate - The date of the last commit to the tool's repository.
- * @param props.bump - An optional bump to the final score.
+ * @param stars - The number of stars the tool has on GitHub.
+ * @param forks - The number of forks the tool has on GitHub.
+ * @param contributors - The number of contributors to the tool's repository.
+ * @param watchers - The number of watchers the tool has on GitHub.
+ * @param lastCommitDate - The date of the last commit to the tool's repository.
+ * @param bump - An optional bump to the final score.
  * @returns The calculated score for the tool.
  */
 export const calculateHealthScore = ({
@@ -171,70 +197,71 @@ export const calculateHealthScore = ({
   )
 }
 
-export const fetchRepository = async (id: string, bump: number | null, repository: string) => {
-  const repo = getRepoOwnerAndName(repository)
-  let queryResult: RepositoryQueryResult | null = null
+export const getAllGithubStars = async (owner: string, name: string, amount = 20) => {
+  // Get the total amount of stars from GitHub
+  const totalStars = await getRepoStargazersCount(owner, name)
 
-  if (!repo) {
-    return null
+  console.log(totalStars)
+
+  // get total pages
+  const totalPages = Math.ceil(totalStars / 100)
+
+  // How many pages to skip? We don't want to spam requests
+  const pageSkips = totalPages < amount ? amount : Math.ceil(totalPages / amount)
+
+  // Send all the requests at the same time
+  const starsDates = (
+    await Promise.all(
+      [...new Array(amount)].map(async (_, index) => {
+        const page = index * pageSkips || 1
+        return getRepoStargazers(owner, name, page)
+      }),
+    )
+  )
+    .flatMap(p => p)
+    .reduce((acc: any, stars) => {
+      const yearMonth = stars.starred_at.split("T")[0]
+      acc[yearMonth] = (acc[yearMonth] || 0) + 1
+      return acc
+    }, {})
+
+  console.log(starsDates)
+
+  // how many stars did we find from a total of `requestAmount` requests?
+  const foundStars = Object.keys(starsDates).reduce((all, current) => all + starsDates[current], 0)
+
+  // Find the earliest date
+  const lowestMonthYear = Object.keys(starsDates).reduce((lowest, current) => {
+    const currentDate = parseISO(current.split("T")[0])
+    if (isAfter(currentDate, lowest)) {
+      return currentDate
+    }
+    return lowest
+  }, parseISO(new Date().toISOString()))
+
+  // Count dates until today
+  const splitDate = differenceInDays(new Date(), lowestMonthYear) + 1
+
+  // Create an array with the amount of stars we didn't find
+  const array = [...new Array(totalStars - foundStars)]
+
+  // Set the amount of value to add proportionally for each day
+  const splitStars: any[][] = []
+  for (let i = splitDate; i > 0; i--) {
+    splitStars.push(array.splice(0, Math.ceil(array.length / i)))
   }
 
-  try {
-    queryResult = await githubGraphqlClient(repositoryQuery, {
-      owner: repo.owner,
-      name: repo.name,
-    })
-  } catch (error) {
-    console.error(`Failed to fetch repository ${repository}: ${error}`)
-  }
-
-  // if the repository check fails, set the tool as draft
-  if (!queryResult?.repository) {
-    return null
-  }
-
-  const {
-    stargazerCount,
-    forkCount,
-    mentionableUsers,
-    watchers,
-    defaultBranchRef,
-    licenseInfo,
-    repositoryTopics,
-    languages: repositoryLanguages,
-  } = queryResult.repository
-
-  // Extract and transform the necessary metrics
-  const metrics = {
-    stars: stargazerCount,
-    forks: forkCount,
-    contributors: mentionableUsers.totalCount,
-    watchers: watchers.totalCount,
-    lastCommitDate: new Date(defaultBranchRef.target.history.edges[0].node.committedDate),
-    bump,
-  }
-
-  const score = calculateHealthScore(metrics)
-  const stars = metrics.stars
-  const forks = metrics.forks
-  const license = !licenseInfo || licenseInfo.spdxId === "NOASSERTION" ? null : licenseInfo.spdxId
-  const lastCommitDate = metrics.lastCommitDate
-
-  // Prepare topics data
-  const topics = repositoryTopics.nodes.map(({ topic }) => ({
-    slug: slugify(topic.name),
-  }))
-
-  // Prepare languages data
-  const languages = repositoryLanguages.edges
-    .map(({ size, node }) => ({
-      percentage: Math.round((size / repositoryLanguages.totalSize) * 100),
-      name: node.name,
-      slug: slugify(node.name),
-      color: node.color,
-    }))
-    .filter(({ percentage }) => percentage > 17.5)
-
-  // Return the extracted data
-  return { stars, forks, lastCommitDate, score, license, topics, languages }
+  // Calculate the amount of stars for each day
+  return [...new Array(splitDate)].map((_, index, arr) => {
+    const yearMonthDay = format(add(lowestMonthYear, { days: index }), "yyyy-MM-dd")
+    const value = starsDates[yearMonthDay] || 0
+    return {
+      stars: value + splitStars[index].length,
+      date: {
+        month: +format(add(lowestMonthYear, { days: index }), "M"),
+        year: +format(add(lowestMonthYear, { days: index }), "yyyy"),
+        day: +format(add(lowestMonthYear, { days: index }), "d"),
+      },
+    }
+  })
 }
