@@ -7,7 +7,7 @@ import {
   forwardRef,
 } from "react"
 import { cx } from "~/utils/cva"
-import { navigationLinkVariants } from "./NavigationLink"
+import { navigationLinkVariants } from "~/components/NavigationLink"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger

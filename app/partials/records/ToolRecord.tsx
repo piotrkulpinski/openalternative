@@ -6,10 +6,10 @@ import type { HTMLAttributes } from "react"
 import { Highlight } from "react-instantsearch"
 import { format } from "timeago.js"
 import type { ToolMany } from "~/services.server/api"
-import { Card } from "../Card"
-import { Favicon } from "../Favicon"
-import { H4 } from "../Heading"
-import { Insights } from "../Insights"
+import { Card } from "~/components/Card"
+import { Favicon } from "~/components/Favicon"
+import { H4 } from "~/components/Heading"
+import { Insights } from "~/components/Insights"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
 

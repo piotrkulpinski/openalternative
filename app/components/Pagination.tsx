@@ -4,8 +4,8 @@ import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import { type HTMLAttributes, useMemo } from "react"
 import { type UsePaginationProps, usePagination } from "~/hooks/usePagination"
 import { cx } from "~/utils/cva"
-import { navigationLinkVariants } from "./NavigationLink"
-import { PaginationLink } from "./PaginationLink"
+import { navigationLinkVariants } from "~/components/NavigationLink"
+import { PaginationLink } from "~/components/PaginationLink"
 
 export type PaginationProps = HTMLAttributes<HTMLElement> & Omit<UsePaginationProps, "currentPage">
 

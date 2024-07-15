@@ -1,7 +1,7 @@
 import { type MetaFunction, json, useLoaderData } from "@remix-run/react"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
-import { AlternativeRecord } from "~/components/records/AlternativeRecord"
+import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
 import { alternativeManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"

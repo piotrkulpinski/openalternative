@@ -1,7 +1,7 @@
 import { NavLink, type NavLinkProps } from "@remix-run/react"
 import type { ReactNode } from "react"
 import { cx } from "~/utils/cva"
-import { H5 } from "./Heading"
+import { H5 } from "~/components/Heading"
 
 type CardSimpleProps = NavLinkProps & {
   label: ReactNode

@@ -25,8 +25,8 @@ import { Prose } from "~/components/Prose"
 import { RepositoryDetails } from "~/components/RepositoryDetails"
 import { Series } from "~/components/Series"
 import { Tag } from "~/components/Tag"
-import { AlternativeRecord } from "~/components/records/AlternativeRecord"
-import { ToolRecord } from "~/components/records/ToolRecord"
+import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
+import { ToolRecord } from "~/partials/records/ToolRecord"
 import {
   type ToolOne,
   alternativeManyPayload,
