@@ -3,7 +3,7 @@ import { LoaderIcon } from "lucide-react"
 import type { ButtonHTMLAttributes, ReactNode } from "react"
 import { Children, forwardRef, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
-import { Slottable } from "./Slottable"
+import { Slottable } from "~/components/Slottable"
 
 export const buttonVariants = cva({
   base: [

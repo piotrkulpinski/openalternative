@@ -3,7 +3,7 @@ import { type UseHitsProps, useHits } from "react-instantsearch"
 import { Grid } from "~/components/Grid"
 import { H5 } from "~/components/Heading"
 import { SponsoredCard } from "~/components/SponsoredCard"
-import { ToolRecord } from "~/components/records/ToolRecord"
+import { ToolRecord } from "~/partials/records/ToolRecord"
 import type { SponsoringOne, ToolOne } from "~/services.server/api"
 
 type ListingProps = HTMLAttributes<HTMLElement> &

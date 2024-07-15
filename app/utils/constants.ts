@@ -22,30 +22,3 @@ export const JSON_HEADERS =
         "Cache-Control": "public, max-age=3600, s-maxage=7200 stale-while-revalidate=3.154e7",
       }
     : undefined
-
-export const PH_LAUNCHES = [
-  {
-    name: "UnInbox",
-    slug: "uninbox",
-    date: "12 Apr 2024",
-    url: "https://www.producthunt.com/posts/uninbox",
-  },
-  {
-    name: "Cal.com",
-    slug: "cal-com",
-    date: "15 Apr 2024",
-    url: "https://www.producthunt.com/posts/cal-com-platform",
-  },
-  {
-    name: "Supabase",
-    slug: "supabase",
-    date: "15 Apr 2024",
-    url: "https://www.producthunt.com/posts/supabase-b37accde-66c0-4c60-bc5c-2634afa7cfe2",
-  },
-  {
-    name: "Cap",
-    slug: "cap",
-    date: "25 Apr 2024",
-    url: "https://www.producthunt.com/posts/cap-3",
-  },
-]

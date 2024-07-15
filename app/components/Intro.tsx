@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactNode } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
-import { Heading, type HeadingProps } from "./Heading"
-import { Prose } from "./Prose"
+import { Heading, type HeadingProps } from "~/components/Heading"
+import { Prose } from "~/components/Prose"
 
 const introVariants = cva({
   base: "flex w-full flex-col gap-y-2",

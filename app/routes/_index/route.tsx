@@ -1,15 +1,17 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { Link, defer, useLoaderData, useLocation } from "@remix-run/react"
+import { Link, json, useLoaderData, useLocation } from "@remix-run/react"
 import { renderToString } from "react-dom/server"
-import { InstantSearchSSRProvider, getServerState } from "react-instantsearch"
+import {
+  InstantSearchSSRProvider,
+  InstantSearchServerState,
+  getServerState,
+} from "react-instantsearch"
 import { Badge } from "~/components/Badge"
 import { Intro } from "~/components/Intro"
-import { Newsletter } from "~/components/Newsletter"
+import { Newsletter } from "~/partials/Newsletter"
 import { Ping } from "~/components/Ping"
-import { ProductHuntCard } from "~/components/ProductHuntCard"
 import { prisma } from "~/services.server/prisma"
 import { LATEST_TOOLS_TRESHOLD, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
-import { getCurrentPHLaunch } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 import { Search } from "./Search"
 import plur from "plur"
@@ -41,14 +43,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     renderToString,
   })
 
-  const launch = getCurrentPHLaunch()
-
-  return defer({ serverState, url, sponsoring, newToolCount, launch })
+  return json({ serverState, url, sponsoring, newToolCount })
 }
 
 export default function Index() {
   const { key } = useLocation()
-  const { serverState, url, sponsoring, newToolCount, launch } = useLoaderData<typeof loader>()
+  const { serverState, url, sponsoring, newToolCount } = useLoaderData<typeof loader>()
 
   return (
     <>
@@ -79,11 +79,9 @@ export default function Index() {
             className="w-full sm:items-center"
           />
         </section>
-
-        <ProductHuntCard launch={launch} className="max-md:hidden md:w-60" />
       </div>
 
-      <InstantSearchSSRProvider key={key} {...serverState}>
+      <InstantSearchSSRProvider key={key} {...(serverState as InstantSearchServerState)}>
         <Search url={url} sponsoring={sponsoring} />
       </InstantSearchSSRProvider>
     </>

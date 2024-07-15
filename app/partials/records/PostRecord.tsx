@@ -1,7 +1,7 @@
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import type { HTMLAttributes } from "react"
-import { Card } from "../Card"
-import { H4 } from "../Heading"
+import { Card } from "~/components/Card"
+import { H4 } from "~/components/Heading"
 import { Post } from "content-collections"
 import { formatDate } from "@curiousleaf/utils"
 

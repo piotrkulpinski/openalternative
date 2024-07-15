@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot"
 import { type HTMLAttributes, isValidElement, ReactNode } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
-import { Slottable } from "./Slottable"
+import { Slottable } from "~/components/Slottable"
 
 export const badgeVariants = cva({
   base: "inline-flex items-center justify-center rounded text-secondary",

@@ -5,11 +5,11 @@ import type { HTMLAttributes } from "react"
 import { format } from "timeago.js"
 import type { LanguageToToolMany, ToolOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
-import { Button } from "./Button"
-import { H5 } from "./Heading"
-import { Insights } from "./Insights"
-import { NavigationLink } from "./NavigationLink"
-import { Series } from "./Series"
+import { Button } from "~/components/Button"
+import { H5 } from "~/components/Heading"
+import { Insights } from "~/components/Insights"
+import { NavigationLink } from "~/components/NavigationLink"
+import { Series } from "~/components/Series"
 
 type RepositoryDetailsProps = HTMLAttributes<HTMLElement> & {
   tool: SerializeFrom<ToolOne>

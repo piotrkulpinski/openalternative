@@ -2,7 +2,7 @@ import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/nod
 import { useLoaderData } from "@remix-run/react"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
-import { LicenseRecord } from "~/components/records/LicenseRecord"
+import { LicenseRecord } from "~/partials/records/LicenseRecord"
 import { licenseManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"

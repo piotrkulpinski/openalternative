@@ -13,19 +13,19 @@ import {
 import { type HTMLAttributes, useEffect, useState } from "react"
 import { GITHUB_URL } from "~/utils/constants"
 import { cx } from "~/utils/cva"
-import { Breadcrumbs } from "./Breadcrumbs"
-import { Button } from "./Button"
+import { Breadcrumbs } from "~/components/Breadcrumbs"
+import { Button } from "~/components/Button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./DropdownMenu"
-import { NavigationLink, navigationLinkVariants } from "./NavigationLink"
-import { Series } from "./Series"
+} from "~/components/DropdownMenu"
+import { NavigationLink, navigationLinkVariants } from "~/components/NavigationLink"
+import { Series } from "~/components/Series"
 import { ClientOnly } from "remix-utils/client-only"
-import { ThemeSwitcher } from "./ThemeSwitcher"
-import { Container } from "./Container"
+import { ThemeSwitcher } from "~/components/ThemeSwitcher"
+import { Container } from "~/components/Container"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)
