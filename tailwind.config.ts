@@ -58,7 +58,6 @@ export default {
   },
   plugins: [
     require("@tailwindcss/typography"),
-    require("@tailwindcss/container-queries"),
     require("tailwindcss-animate"),
     plugin(({ matchUtilities, theme }) => {
       matchUtilities(
