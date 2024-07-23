@@ -33,7 +33,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const schema = z.object({
         email: z.string().email(),
         name: z.string(),
-        description: z.string().optional(),
+        description: z.string().nullish(),
         website: z.string(),
         startsAt: z.coerce.number().transform(date => new Date(date)),
         endsAt: z.coerce.number().transform(date => new Date(date)),

@@ -8,8 +8,6 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
 export const stripeCheckoutSchema = z.object({
   price: z.coerce.number(),
   quantity: z.coerce.number(),
-  name: z.string().min(1),
-  description: z.string().optional(),
   metadata: z.object({
     startDate: z.coerce.number(),
     endDate: z.coerce.number(),
@@ -21,18 +19,23 @@ export type StripeCheckoutSchema = z.infer<typeof stripeCheckoutSchema>
 export const createStripeCheckoutSession = async ({
   price,
   quantity,
-  name,
-  description,
   metadata,
 }: StripeCheckoutSchema) => {
+  const customer = await stripe.customers.create()
+
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
+    customer: customer.id,
+    customer_update: {
+      name: "auto",
+      address: "auto",
+    },
     line_items: [
       {
         price_data: {
           unit_amount: Math.round(price * 100),
           currency: "usd",
-          product_data: { name, description },
+          product: process.env.STRIPE_PRODUCT_ID,
         },
         quantity,
       },

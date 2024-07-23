@@ -51,8 +51,8 @@ export default function AboutPage() {
   * [GitHub](https://github.com) – Repository data
   * [Airtable](https://kulp.in/airtable) – Database
   * [Screen Studio](https://kulp.in/screenstudio) – Screen recording for marketing videos
+  * [ScreenshotOne](https://kulp.in/screenshotone) – The screenshot API for developers
   * [Typefully](https://kulp.in/typefully) – Twitter scheduling/analytics
-  * [ScreenshotOne](https://kulp.in/screenshotone) – Generating website screenshots
 
   ## Contribute
 
