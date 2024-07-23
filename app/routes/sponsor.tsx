@@ -4,7 +4,7 @@ import { GithubIcon, HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Card } from "~/components/Card"
 import { H4 } from "~/components/Heading"
-import { Intro } from "~/components/Intro"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
 import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
@@ -90,9 +90,10 @@ export default function SponsorPage() {
       <Sponsoring dates={sponsoringDates} className="max-w-2xl" />
 
       <div className="flex flex-col items-start gap-8 max-w-2xl mt-4">
-        <Intro
-          title="What do I get for sponsoring?"
-          description=<>
+        <Intro>
+          <IntroTitle size="h2">What do I get for sponsoring?</IntroTitle>
+
+          <IntroDescription>
             We offer a variety of benefits to our sponsors. Explore our{" "}
             <a
               href="https://go.openalternative.co/analytics"
@@ -102,9 +103,8 @@ export default function SponsorPage() {
               real-time analytics
             </a>{" "}
             to see what impact sponsoring could have on your business.
-          </>
-          headingProps={{ size: "h2" }}
-        />
+          </IntroDescription>
+        </Intro>
 
         <div className="grid grid-auto-fill-xl gap-4 w-full">
           {benefits.map(benefit => (

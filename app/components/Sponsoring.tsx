@@ -2,16 +2,20 @@ import type { SerializeFrom } from "@remix-run/node"
 import { useFetcher } from "@remix-run/react"
 import plur from "plur"
 import { posthog } from "posthog-js"
-import { type HTMLAttributes, useEffect, useState } from "react"
+import { type HTMLAttributes, useCallback, useEffect, useMemo, useState } from "react"
 import type { DateRange } from "react-day-picker"
 import { Badge } from "~/components/Badge"
 import { Button } from "~/components/Button"
 import { Calendar } from "~/components/Calendar"
 import type { action } from "~/routes/api.stripe.create-checkout"
 import type { StripeCheckoutSchema } from "~/services.server/stripe"
-import { DAY_IN_MS, SITE_NAME } from "~/utils/constants"
+import { DAY_IN_MS } from "~/utils/constants"
 import { cx } from "~/utils/cva"
-import { adjustSponsoringDuration, calculateSponsoringPrice } from "~/utils/sponsoring"
+import {
+  adjustSponsoringDuration,
+  calculateSponsoringPrice,
+  getFirstAvailableMonth,
+} from "~/utils/sponsoring"
 
 type SponsoringProps = HTMLAttributes<HTMLDivElement> & {
   dates: SerializeFrom<{
@@ -22,31 +26,38 @@ type SponsoringProps = HTMLAttributes<HTMLDivElement> & {
 
 export const Sponsoring = ({ className, dates, ...props }: SponsoringProps) => {
   const { data, state, submit } = useFetcher<typeof action>()
-  const [date, setDate] = useState<DateRange>()
-  const [price, setPrice] = useState<ReturnType<typeof calculateSponsoringPrice>>()
+  const [dateRange, setDateRange] = useState<DateRange | undefined>()
+  const [price, setPrice] = useState<ReturnType<typeof calculateSponsoringPrice> | undefined>()
 
-  const disabledDates = dates.map(({ startsAt, endsAt }) => ({
-    from: new Date(Date.parse(startsAt)),
-    to: new Date(Date.parse(endsAt) - DAY_IN_MS),
-  }))
+  const disabledDates = useMemo(
+    () =>
+      dates.map(({ startsAt, endsAt }) => ({
+        from: new Date(startsAt),
+        to: new Date(Date.parse(endsAt) - DAY_IN_MS),
+      })),
+    [dates],
+  )
 
-  // Calculate the duration in days
+  const firstAvailableMonth = useMemo(() => getFirstAvailableMonth(disabledDates), [disabledDates])
+
   useEffect(() => {
-    if (!date?.from || !date?.to) {
+    if (!dateRange?.from || !dateRange?.to) {
       setPrice(undefined)
       return
     }
 
-    const duration = Math.ceil((date.to.getTime() - date.from.getTime()) / DAY_IN_MS)
-    const adjustedDuration = adjustSponsoringDuration(duration, date.from, date.to, disabledDates)
-    const price = calculateSponsoringPrice(adjustedDuration + 1)
+    const duration = Math.ceil((dateRange.to.getTime() - dateRange.from.getTime()) / DAY_IN_MS)
+    const adjustedDuration = adjustSponsoringDuration(
+      duration,
+      dateRange.from,
+      dateRange.to,
+      disabledDates,
+    )
+    const newPrice = calculateSponsoringPrice(adjustedDuration + 1)
 
-    // Set the price
-    setPrice(price)
-
-    // Send the event to PostHog
-    posthog.capture("sponsoring_select", price)
-  }, [date])
+    setPrice(newPrice)
+    posthog.capture("sponsoring_select", newPrice)
+  }, [dateRange, disabledDates])
 
   useEffect(() => {
     if (data?.type === "success" && data.url) {
@@ -54,16 +65,15 @@ export const Sponsoring = ({ className, dates, ...props }: SponsoringProps) => {
     }
   }, [data])
 
-  const onCreateCheckout = () => {
-    if (!price || !date?.from || !date.to) return
+  const onCreateCheckout = useCallback(() => {
+    if (!price || !dateRange?.from || !dateRange.to) return
 
     const payload: StripeCheckoutSchema = {
       price: price.price,
       quantity: price.days,
-      name: `${SITE_NAME} Sponsoring`,
       metadata: {
-        startDate: date.from.getTime(),
-        endDate: date.to.getTime() + DAY_IN_MS,
+        startDate: dateRange.from.getTime(),
+        endDate: dateRange.to.getTime() + DAY_IN_MS,
       },
     }
 
@@ -73,18 +83,18 @@ export const Sponsoring = ({ className, dates, ...props }: SponsoringProps) => {
       action: "/api/stripe/create-checkout",
     })
 
-    // Send the event to PostHog
     posthog.capture("sponsoring_checkout", price)
-  }
+  }, [price, dateRange, submit])
 
   return (
     <div className={cx("flex flex-col gap-4", className)} {...props}>
       <div className="flex flex-col border divide-y rounded-md">
         <Calendar
           mode="range"
-          selected={date}
-          onSelect={setDate}
+          selected={dateRange}
+          onSelect={setDateRange}
           numberOfMonths={2}
+          defaultMonth={firstAvailableMonth}
           disabled={[date => date < new Date(), ...disabledDates]}
           className="p-4"
         />
