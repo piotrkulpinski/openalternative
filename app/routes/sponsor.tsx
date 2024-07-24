@@ -1,5 +1,7 @@
+import { slugify } from "@curiousleaf/utils"
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
+import { posthog } from "posthog-js"
 import { GithubIcon, HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Card } from "~/components/Card"
@@ -8,6 +10,8 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
 import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
+import { differenceInDays } from "date-fns"
+import { SPONSORING_PREMIUM_TRESHOLD } from "~/utils/constants"
 
 export const handle = {
   breadcrumb: () => <BreadcrumbsLink to="/sponsor" label="Sponsor" />,
@@ -26,8 +30,8 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = async () => {
   const sponsoringDates = await prisma.sponsoring.findMany({
-    where: { endsAt: { gte: new Date() } },
-    select: { startsAt: true, endsAt: true },
+    select: { name: true, website: true, startsAt: true, endsAt: true, createdAt: true },
+    orderBy: { createdAt: "asc" },
   })
 
   const meta = {
@@ -41,6 +45,39 @@ export const loader = async () => {
 
 export default function SponsorPage() {
   const { sponsoringDates, meta } = useLoaderData<typeof loader>()
+
+  const premiumSponsors = sponsoringDates.reduce(
+    (acc, sponsor, index, array) => {
+      let totalDays = differenceInDays(new Date(sponsor.endsAt), new Date(sponsor.startsAt))
+
+      for (let i = 0; i < index; i++) {
+        const previousSponsor = array[i]
+        const overlapStart = new Date(
+          Math.max(
+            new Date(sponsor.startsAt).getTime(),
+            new Date(previousSponsor.startsAt).getTime(),
+          ),
+        )
+
+        const overlapEnd = new Date(
+          Math.min(new Date(sponsor.endsAt).getTime(), new Date(previousSponsor.endsAt).getTime()),
+        )
+
+        if (overlapStart < overlapEnd) {
+          const overlapDays = differenceInDays(overlapEnd, overlapStart)
+          totalDays -= overlapDays
+        }
+      }
+
+      if (totalDays >= SPONSORING_PREMIUM_TRESHOLD) {
+        if (!acc.some(({ website }) => website === sponsor.website)) {
+          acc.push(sponsor)
+        }
+      }
+      return acc
+    },
+    [] as typeof sponsoringDates,
+  )
 
   const benefits = [
     {
@@ -57,7 +94,7 @@ export default function SponsorPage() {
       title: "Support OSS",
       description: "Support the open-source community and help us maintain the directory.",
       stats: {
-        value: 220,
+        value: 240,
         label: "Listed Projects",
       },
     },
@@ -66,17 +103,17 @@ export default function SponsorPage() {
       title: "Newsletter Mention",
       description: "Get featured in our monthly newsletter read by OpenSource/tech enthusiasts.",
       stats: {
-        value: 700,
+        value: 900,
         label: "Subscribers",
       },
       exclusive: true,
     },
     {
       icon: <GithubIcon className="size-full" />,
-      title: "GitHub Link",
-      description: 'Display your link in a special "Sponsors" section in our GitHub repository.',
+      title: "GitHub Logo",
+      description: 'Display your logo in a special "Sponsors" section in our GitHub repository.',
       stats: {
-        value: 500,
+        value: 800,
         label: "Stars",
       },
       exclusive: true,
@@ -130,9 +167,37 @@ export default function SponsorPage() {
         </div>
 
         <p className="text-sm text-muted">
-          *Available only for sponsors who purchased 30 days or more.
+          *Available only for premium sponsors who purchased {SPONSORING_PREMIUM_TRESHOLD} days or
+          more.
         </p>
       </div>
+
+      {!!premiumSponsors.length && (
+        <div className="flex flex-col items-start gap-8 max-w-2xl mt-4" id="sponsors">
+          <Intro>
+            <IntroTitle size="h2">Premium Sponsors</IntroTitle>
+          </Intro>
+
+          <div className="flex flex-wrap items-center gap-6">
+            {premiumSponsors.map(sponsor => (
+              <a
+                key={sponsor.name}
+                href={sponsor.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="opacity-75 hover:opacity-100"
+                onClick={() => posthog.capture("sponsoring_clicked", { url: sponsor?.website })}
+              >
+                <img
+                  src={`/sponsors/${slugify(sponsor.name)}.svg`}
+                  alt={sponsor.name}
+                  className="h-6 max-w-30 rounded-md md:h-8 md:max-w-40"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   )
 }
