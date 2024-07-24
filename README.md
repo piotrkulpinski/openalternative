@@ -42,7 +42,7 @@ OpenAlternative is an GPL-3.0-licensed open source project with its ongoing deve
 
 <p align="center">
   <a target="_blank" href="https://openalternative.co/sponsor#sponsors">
-    <img alt="Sponsor" src="https://openalternative.co/sponsors/sponsors.png" height="100">
+    <img alt="Sponsors" src="https://openalternative.co/sponsors/sponsors.png">
   </a>
 </p>
 

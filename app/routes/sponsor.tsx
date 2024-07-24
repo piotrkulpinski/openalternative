@@ -30,7 +30,6 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = async () => {
   const sponsoringDates = await prisma.sponsoring.findMany({
-    select: { name: true, website: true, startsAt: true, endsAt: true, createdAt: true },
     orderBy: { createdAt: "asc" },
   })
 
@@ -186,6 +185,7 @@ export default function SponsorPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="opacity-75 hover:opacity-100"
+                title={sponsor.description ?? undefined}
                 onClick={() => posthog.capture("sponsoring_clicked", { url: sponsor?.website })}
               >
                 <img
