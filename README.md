@@ -42,7 +42,16 @@ OpenAlternative is an GPL-3.0-licensed open source project with its ongoing deve
 
 <p align="center">
   <a target="_blank" href="https://preline.co">
-    <img alt="sponsor preline" src="https://openalternative.co/sponsors/preline.svg" width="140">
+    <img alt="Sponsor – PrelineUI" src="https://openalternative.co/sponsors/preline.svg" height="32">
+  </a>
+  <a target="_blank" href="https://efficient.link/ea/openalternative">
+    <img alt="Sponsor – Efficient App" src="https://openalternative.co/sponsors/efficient.svg" height="32">
+  </a>
+  <a target="_blank" href="https://kulp.in/screenshotone">
+    <img alt="Sponsor – ScreenshotOne" src="https://openalternative.co/sponsors/screenshotone.svg" height="32">
+  </a>
+  <a target="_blank" href="https://apitoolkit.io">
+    <img alt="Sponsor – APItoolkit" src="https://openalternative.co/sponsors/apitoolkit.svg" height="32">
   </a>
 </p>
 
