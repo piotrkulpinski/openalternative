@@ -14,7 +14,8 @@ export const TOPICS_PER_PAGE = 150
 
 export const DAY_IN_MS = 1000 * 60 * 60 * 24
 
-export const BASE_SPONSORING_PRICE = 15
+export const SPONSORING_PRICE = 15
+export const SPONSORING_PREMIUM_TRESHOLD = 30
 
 export const JSON_HEADERS =
   import.meta.env.NODE_ENV === "development"

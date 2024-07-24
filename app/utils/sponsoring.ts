@@ -1,5 +1,5 @@
 import type { DateRange } from "react-day-picker"
-import { BASE_SPONSORING_PRICE, DAY_IN_MS } from "./constants"
+import { SPONSORING_PRICE, DAY_IN_MS } from "./constants"
 
 /**
  * Calculate the sponsoring price based on the duration
@@ -8,9 +8,9 @@ import { BASE_SPONSORING_PRICE, DAY_IN_MS } from "./constants"
  */
 export const calculateSponsoringPrice = (days: number) => {
   const discountPercentage = Math.min(days - 1, 30)
-  const price = Math.round(BASE_SPONSORING_PRICE * (1 - discountPercentage / 100) * 100) / 100
+  const price = Math.round(SPONSORING_PRICE * (1 - discountPercentage / 100) * 100) / 100
   const fullPrice = Math.round(price * days * 100) / 100
-  const discountAmount = BASE_SPONSORING_PRICE * days - fullPrice
+  const discountAmount = SPONSORING_PRICE * days - fullPrice
 
   return { price, fullPrice, discountAmount, discountPercentage, days }
 }
