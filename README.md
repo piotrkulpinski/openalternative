@@ -1,7 +1,8 @@
 ![OpenAlternative](https://openalternative.co/opengraph.png)
 
-<p align="center" style="margin-top: 20px">
-  <p align="center">
+<p align="center"></p>
+
+<p align="center">
   Discover open source alternatives to popular software.
   <br>
     <a href="https://openalternative.co"><strong>Learn more »</strong></a>
@@ -11,7 +12,6 @@
     ·
     <a href="https://github.com/piotrkulpinski/openalternative/issues">Issues</a>
   </p>
-</p>
 
 <p align="center">
    <a href="https://github.com/piotrkulpinski/openalternative/stargazers"><img src="https://img.shields.io/github/stars/piotrkulpinski/openalternative" alt="Github Stars"></a>
@@ -41,16 +41,16 @@ Join us in creating the biggest directory of open source software.
 OpenAlternative is an GPL-3.0-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider [sponsoring OpenAlternative's development](https://openalternative.co/sponsor).
 
 <p align="center">
-  <a target="_blank" href="https://preline.co">
+  <a target="_blank" href="https://preline.co" style="display: inline-flex; margin: 0 0.5rem;">
     <img alt="Sponsor – PrelineUI" src="https://openalternative.co/sponsors/preline.svg" height="32">
   </a>
-  <a target="_blank" href="https://efficient.link/ea/openalternative">
+  <a target="_blank" href="https://efficient.link/ea/openalternative" style="display: inline-flex; margin: 0 0.5rem;">
     <img alt="Sponsor – Efficient App" src="https://openalternative.co/sponsors/efficient.svg" height="32">
   </a>
-  <a target="_blank" href="https://kulp.in/screenshotone">
+  <a target="_blank" href="https://kulp.in/screenshotone" style="display: inline-flex; margin: 0 0.5rem;">
     <img alt="Sponsor – ScreenshotOne" src="https://openalternative.co/sponsors/screenshotone.svg" height="32">
   </a>
-  <a target="_blank" href="https://apitoolkit.io">
+  <a target="_blank" href="https://apitoolkit.io" style="display: inline-flex; margin: 0 0.5rem;">
     <img alt="Sponsor – APItoolkit" src="https://openalternative.co/sponsors/apitoolkit.svg" height="32">
   </a>
 </p>
