@@ -10,8 +10,8 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
 import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
-import { differenceInDays } from "date-fns"
 import { SPONSORING_PREMIUM_TRESHOLD } from "~/utils/constants"
+import { getPremiumSponsors } from "~/utils/sponsoring"
 
 export const handle = {
   breadcrumb: () => <BreadcrumbsLink to="/sponsor" label="Sponsor" />,
@@ -29,7 +29,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 }
 
 export const loader = async () => {
-  const sponsoringDates = await prisma.sponsoring.findMany({
+  const sponsorings = await prisma.sponsoring.findMany({
     orderBy: { createdAt: "asc" },
   })
 
@@ -39,44 +39,12 @@ export const loader = async () => {
       "Ensure the long-term success and growth of your business by sponsoring our comprehensive open source directory. Your support helps promote open source alternatives, fosters innovation, and makes a lasting positive impact.",
   }
 
-  return json({ sponsoringDates, meta })
+  return json({ sponsorings, meta })
 }
 
 export default function SponsorPage() {
-  const { sponsoringDates, meta } = useLoaderData<typeof loader>()
-
-  const premiumSponsors = sponsoringDates.reduce(
-    (acc, sponsor, index, array) => {
-      let totalDays = differenceInDays(new Date(sponsor.endsAt), new Date(sponsor.startsAt))
-
-      for (let i = 0; i < index; i++) {
-        const previousSponsor = array[i]
-        const overlapStart = new Date(
-          Math.max(
-            new Date(sponsor.startsAt).getTime(),
-            new Date(previousSponsor.startsAt).getTime(),
-          ),
-        )
-
-        const overlapEnd = new Date(
-          Math.min(new Date(sponsor.endsAt).getTime(), new Date(previousSponsor.endsAt).getTime()),
-        )
-
-        if (overlapStart < overlapEnd) {
-          const overlapDays = differenceInDays(overlapEnd, overlapStart)
-          totalDays -= overlapDays
-        }
-      }
-
-      if (totalDays >= SPONSORING_PREMIUM_TRESHOLD) {
-        if (!acc.some(({ website }) => website === sponsor.website)) {
-          acc.push(sponsor)
-        }
-      }
-      return acc
-    },
-    [] as typeof sponsoringDates,
-  )
+  const { sponsorings, meta } = useLoaderData<typeof loader>()
+  const premiumSponsors = getPremiumSponsors(sponsorings)
 
   const benefits = [
     {
@@ -123,7 +91,7 @@ export default function SponsorPage() {
     <>
       <Intro {...meta} />
 
-      <Sponsoring dates={sponsoringDates} className="max-w-2xl" />
+      <Sponsoring dates={sponsorings} className="max-w-2xl" />
 
       <div className="flex flex-col items-start gap-8 max-w-2xl mt-4">
         <Intro>
