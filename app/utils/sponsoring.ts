@@ -1,5 +1,10 @@
 import type { DateRange } from "react-day-picker"
-import { SPONSORING_PRICE, DAY_IN_MS } from "./constants"
+import { SPONSORING_PRICE, DAY_IN_MS, SPONSORING_PREMIUM_TRESHOLD } from "./constants"
+import { Sponsoring } from "@prisma/client"
+import { SerializeFrom } from "@remix-run/node"
+import { differenceInDays } from "date-fns"
+
+type Sponsor = SerializeFrom<Sponsoring>
 
 /**
  * Calculate the sponsoring price based on the duration
@@ -13,6 +18,46 @@ export const calculateSponsoringPrice = (days: number) => {
   const discountAmount = SPONSORING_PRICE * days - fullPrice
 
   return { price, fullPrice, discountAmount, discountPercentage, days }
+}
+
+/**
+ * Get the premium sponsors from the list of sponsors
+ * @param sponsors - The list of sponsors
+ * @returns The premium sponsors
+ */
+export const getPremiumSponsors = (sponsors: Sponsor[]) => {
+  const reducer = (acc: Sponsor[], sponsor: Sponsor, index: number, array: Sponsor[]) => {
+    let totalDays = differenceInDays(new Date(sponsor.endsAt), new Date(sponsor.startsAt))
+
+    for (let i = 0; i < index; i++) {
+      const previousSponsor = array[i]
+      const overlapStart = new Date(
+        Math.max(
+          new Date(sponsor.startsAt).getTime(),
+          new Date(previousSponsor.startsAt).getTime(),
+        ),
+      )
+
+      const overlapEnd = new Date(
+        Math.min(new Date(sponsor.endsAt).getTime(), new Date(previousSponsor.endsAt).getTime()),
+      )
+
+      if (overlapStart < overlapEnd) {
+        const overlapDays = differenceInDays(overlapEnd, overlapStart)
+        totalDays -= overlapDays
+      }
+    }
+
+    if (totalDays >= SPONSORING_PREMIUM_TRESHOLD) {
+      if (!acc.some(({ website }) => website === sponsor.website)) {
+        acc.push(sponsor)
+      }
+    }
+
+    return acc
+  }
+
+  return sponsors.reduce(reducer, [])
 }
 
 /**

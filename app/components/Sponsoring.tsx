@@ -73,7 +73,7 @@ export const Sponsoring = ({ className, dates, ...props }: SponsoringProps) => {
       quantity: price.days,
       metadata: {
         startDate: dateRange.from.getTime(),
-        endDate: dateRange.to.getTime() + DAY_IN_MS - 1000,
+        endDate: dateRange.to.getTime() + DAY_IN_MS,
       },
     }
 
