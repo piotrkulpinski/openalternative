@@ -1,10 +1,7 @@
 import type { DateRange } from "react-day-picker"
 import { SPONSORING_PRICE, DAY_IN_MS, SPONSORING_PREMIUM_TRESHOLD } from "./constants"
-import { Sponsoring } from "@prisma/client"
-import { SerializeFrom } from "@remix-run/node"
 import { differenceInDays } from "date-fns"
-
-type Sponsor = SerializeFrom<Sponsoring>
+import { Sponsoring } from "~/services.server/api"
 
 /**
  * Calculate the sponsoring price based on the duration
@@ -25,8 +22,8 @@ export const calculateSponsoringPrice = (days: number) => {
  * @param sponsors - The list of sponsors
  * @returns The premium sponsors
  */
-export const getPremiumSponsors = (sponsors: Sponsor[]) => {
-  const reducer = (acc: Sponsor[], sponsor: Sponsor, index: number, array: Sponsor[]) => {
+export const getPremiumSponsors = (sponsors: Sponsoring[]) => {
+  const reducer = (acc: Sponsoring[], sponsor: Sponsoring, index: number, array: Sponsoring[]) => {
     let totalDays = differenceInDays(new Date(sponsor.endsAt), new Date(sponsor.startsAt))
 
     for (let i = 0; i < index; i++) {

@@ -1,7 +1,5 @@
-import { slugify } from "@curiousleaf/utils"
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import { posthog } from "posthog-js"
 import { GithubIcon, HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Card } from "~/components/Card"
@@ -12,6 +10,7 @@ import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
 import { SPONSORING_PREMIUM_TRESHOLD } from "~/utils/constants"
 import { getPremiumSponsors } from "~/utils/sponsoring"
+import { Sponsors } from "~/partials/Sponsors"
 
 export const handle = {
   breadcrumb: () => <BreadcrumbsLink to="/sponsor" label="Sponsor" />,
@@ -145,25 +144,7 @@ export default function SponsorPage() {
             <IntroTitle size="h2">Premium Sponsors</IntroTitle>
           </Intro>
 
-          <div className="flex flex-wrap items-center gap-6">
-            {premiumSponsors.map(sponsor => (
-              <a
-                key={sponsor.name}
-                href={sponsor.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="opacity-75 hover:opacity-100"
-                title={sponsor.description ?? undefined}
-                onClick={() => posthog.capture("sponsoring_clicked", { url: sponsor?.website })}
-              >
-                <img
-                  src={`/sponsors/${slugify(sponsor.name)}.svg`}
-                  alt={sponsor.name}
-                  className="h-6 max-w-30 rounded-md md:h-8 md:max-w-40"
-                />
-              </a>
-            ))}
-          </div>
+          <Sponsors sponsors={premiumSponsors} />
         </div>
       )}
     </>

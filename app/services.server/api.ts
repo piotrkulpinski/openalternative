@@ -1,4 +1,5 @@
-import { Prisma } from "@prisma/client"
+import { Prisma, Sponsoring as SponsoringPayload } from "@prisma/client"
+import { SerializeFrom } from "@remix-run/node"
 
 // Alternatives
 export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeInclude>()({})
@@ -74,3 +75,4 @@ export const sponsoringOnePayload = Prisma.validator<Prisma.SponsoringSelect>()(
 
 export type SponsoringOne = Prisma.SponsoringGetPayload<{ select: typeof sponsoringOnePayload }>
 export type SponsoringMany = Prisma.SponsoringGetPayload<{}>
+export type Sponsoring = SerializeFrom<SponsoringPayload>
