@@ -6,8 +6,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
   useLocation,
+  useRouteLoaderData,
 } from "@remix-run/react"
 import { ThemeProvider } from "next-themes"
 import { useEffect, type PropsWithChildren } from "react"
@@ -68,7 +68,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 }
 
 export function Layout({ children }: PropsWithChildren) {
-  const { categories } = useLoaderData<typeof loader>()
+  const data = useRouteLoaderData<typeof loader>("root")
   const { key } = useLocation()
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export function Layout({ children }: PropsWithChildren) {
 
             <hr className="mt-auto peer-[[href]]:mt-0" />
 
-            <Footer categories={categories} />
+            <Footer categories={data?.categories} />
           </Container>
         </ThemeProvider>
 
