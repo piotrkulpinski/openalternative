@@ -73,7 +73,7 @@ export default function Index() {
 
           <Newsletter
             placeholder="Get our newsletter"
-            note="Join 750+ open source enthusiasts"
+            note="Join 1,000+ open source enthusiasts"
             size="md"
             buttonVariant="fancy"
             className="w-full sm:items-center"
