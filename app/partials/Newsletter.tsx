@@ -43,7 +43,7 @@ export const Newsletter = ({
           </H5>
         )}
 
-        {description && <p className="-mt-2 text-sm text-muted">{description}</p>}
+        {description && <p className="-mt-2 text-sm text-muted text-balance">{description}</p>}
 
         {data?.type !== "success" && (
           <>

@@ -6,7 +6,8 @@ export const SITE_DESCRIPTION =
   "OpenAlternative is a community-driven list of open source alternatives to proprietary software and applications. Discover the best tools for your needs."
 
 export const RSS_URL = `${SITE_URL}/rss.xml`
-export const TWITTER_URL = "https://twitter.com/intent/user?screen_name=ossalternative"
+export const TWITTER_URL = "https://x.com/ossalternative"
+export const TWITTER_AUTHOR_URL = "https://x.com/piotrkulpinski"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
 
 export const LATEST_TOOLS_TRESHOLD = new Date(new Date().setDate(new Date().getDate() - 7))
