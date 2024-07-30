@@ -1,12 +1,20 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
+import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
+import {
+  json,
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+  useLocation,
+} from "@remix-run/react"
 import { ThemeProvider } from "next-themes"
 import { useEffect, type PropsWithChildren } from "react"
 import { Footer } from "~/partials/Footer"
-import { Newsletter } from "~/partials/Newsletter"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Logo } from "~/components/Logo"
-import { SITE_NAME, SITE_URL } from "./utils/constants"
+import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
 import { Header } from "~/partials/Header"
 import { ErrorPage } from "~/partials/ErrorPage"
 import { Container } from "~/components/Container"
@@ -14,6 +22,8 @@ import { publishEscape } from "@curiousleaf/utils"
 import posthog from "posthog-js"
 
 import stylesheet from "~/styles.css?url"
+import { prisma } from "./services.server/prisma"
+import { categoryManyPayload } from "./services.server/api"
 
 export const shouldRevalidate = () => {
   return false
@@ -47,7 +57,18 @@ export const meta: MetaFunction = ({ location }) => {
   ]
 }
 
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const categories = await prisma.category.findMany({
+    orderBy: { tools: { _count: "desc" } },
+    include: categoryManyPayload,
+    take: 8,
+  })
+
+  return json({ categories }, { headers: JSON_HEADERS })
+}
+
 export function Layout({ children }: PropsWithChildren) {
+  const { categories } = useLoaderData<typeof loader>()
   const { key } = useLocation()
 
   useEffect(() => {
@@ -76,17 +97,12 @@ export function Layout({ children }: PropsWithChildren) {
         >
           <Header />
 
-          <Container className="flex min-h-[calc(100dvh-var(--header-height))] mt-[calc(var(--header-top)+var(--header-height))] flex-col pt-8 pb-6 gap-8 md:gap-10 lg:gap-12 lg:pt-12">
+          <Container className="flex min-h-[calc(100dvh-var(--header-height))] mt-[calc(var(--header-top)+var(--header-height))] flex-col py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
             {children}
 
             <hr className="mt-auto peer-[[href]]:mt-0" />
 
-            <Newsletter
-              title="Newsletter"
-              description="Get updates on new tools, alternatives, and other cool stuff."
-            />
-
-            <Footer />
+            <Footer categories={categories} />
           </Container>
         </ThemeProvider>
 
