@@ -5,6 +5,13 @@ export const SITE_TAGLINE = "Open Source Alternatives to Popular Software"
 export const SITE_DESCRIPTION =
   "OpenAlternative is a community-driven list of open source alternatives to proprietary software and applications. Discover the best tools for your needs."
 
+export const SITE_STATS = {
+  visitors: 500,
+  tools: 250,
+  subscribers: 1000,
+  stars: 900,
+}
+
 export const RSS_URL = `${SITE_URL}/rss.xml`
 export const TWITTER_URL = "https://x.com/ossalternative"
 export const TWITTER_AUTHOR_URL = "https://x.com/piotrkulpinski"

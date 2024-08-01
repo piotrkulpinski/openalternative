@@ -7,7 +7,7 @@ import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/partials/records/ToolRecord"
 import { toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS, LATEST_TOOLS_TRESHOLD } from "~/utils/constants"
+import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
@@ -27,9 +27,10 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = async () => {
   const tools = await prisma.tool.findMany({
-    where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
+    where: { publishedAt: { lte: new Date() } },
     orderBy: { publishedAt: "desc" },
     include: toolManyPayload,
+    take: 36,
   })
 
   const meta = {
