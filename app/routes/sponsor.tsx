@@ -8,7 +8,7 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
 import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
-import { SPONSORING_PREMIUM_TRESHOLD } from "~/utils/constants"
+import { SITE_STATS, SPONSORING_PREMIUM_TRESHOLD } from "~/utils/constants"
 import { getPremiumSponsors } from "~/utils/sponsoring"
 import { Sponsors } from "~/partials/Sponsors"
 
@@ -51,7 +51,7 @@ export default function SponsorPage() {
       title: "Homepage Ad",
       description: "Get featured on our homepage with a banner ad linking to your website.",
       stats: {
-        value: "500",
+        value: SITE_STATS.visitors,
         label: "Visitors/day",
       },
     },
@@ -60,7 +60,7 @@ export default function SponsorPage() {
       title: "Support OSS",
       description: "Support the open-source community and help us maintain the directory.",
       stats: {
-        value: "250",
+        value: SITE_STATS.tools,
         label: "Listed Projects",
       },
     },
@@ -69,7 +69,7 @@ export default function SponsorPage() {
       title: "Newsletter Mention",
       description: "Get featured in our monthly newsletter read by OpenSource/tech enthusiasts.",
       stats: {
-        value: "1,000",
+        value: SITE_STATS.subscribers,
         label: "Subscribers",
       },
       exclusive: true,
@@ -79,7 +79,7 @@ export default function SponsorPage() {
       title: "GitHub Logo",
       description: 'Display your logo in a special "Sponsors" section in our GitHub repository.',
       stats: {
-        value: "900",
+        value: SITE_STATS.stars,
         label: "Stars",
       },
       exclusive: true,
@@ -125,7 +125,7 @@ export default function SponsorPage() {
 
               <Card.Description>{benefit.description}</Card.Description>
               <Card.Footer>
-                ~<strong>{benefit.stats.value}</strong>{" "}
+                ~<strong>{benefit.stats.value.toLocaleString()}</strong>{" "}
                 <span className="text-muted">{benefit.stats.label}</span>
               </Card.Footer>
             </Card>
