@@ -24,6 +24,10 @@
     {
       "source": "/opencap",
       "destination": "/captable"
+    },
+    {
+      "source": "/taillscale",
+      "destination": "/tailscale"
     }
   ]
 }
