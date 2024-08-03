@@ -86,6 +86,27 @@ export function Layout({ children }: PropsWithChildren) {
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <Meta />
         <Links />
+
+        {process.env.NODE_ENV === "production" && (
+          <>
+            {/* Plausible */}
+            <script
+              defer
+              data-domain={import.meta.env.VITE_PLAUSIBLE_DOMAIN}
+              src={`${import.meta.env.VITE_PLAUSIBLE_HOST}/js/script.js`}
+            />
+
+            {/* AdSense */}
+            <script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${import.meta.env.VITE_ADSENSE_PUBLIC_KEY}`}
+              crossOrigin="anonymous"
+            />
+
+            {/* Seline */}
+            <script async src="https://cdn.seline.so/seline.js" />
+          </>
+        )}
       </head>
 
       <body className="bg-background text-foreground font-sans">
@@ -108,33 +129,6 @@ export function Layout({ children }: PropsWithChildren) {
 
         <ScrollRestoration />
         <Scripts />
-
-        {process.env.NODE_ENV === "production" && (
-          <>
-            {/* Plausible */}
-            <script
-              defer
-              data-domain={import.meta.env.VITE_PLAUSIBLE_DOMAIN}
-              src={`${import.meta.env.VITE_PLAUSIBLE_HOST}/js/script.js`}
-            />
-
-            {/* OpenPanel */}
-            <script defer async src="https://openpanel.dev/op.js" />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                window.op = window.op || function (...args) { (window.op.q = window.op.q || []).push(args); };
-                window.op('ctor', {
-                  clientId: '${import.meta.env.VITE_OPENPANEL_CLIENT_ID}',
-                  trackScreenViews: true,
-                  trackOutgoingLinks: true,
-                  trackAttributes: true,
-                });
-              `,
-              }}
-            />
-          </>
-        )}
       </body>
     </html>
   )
