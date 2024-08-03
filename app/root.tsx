@@ -99,7 +99,7 @@ export function Layout({ children }: PropsWithChildren) {
             {/* AdSense */}
             <script
               async
-              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${import.meta.env.VITE_ADSENSE_PUBLIC_KEY}`}
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${import.meta.env.VITE_ADSENSE_PUBLISHER_ID}`}
               crossOrigin="anonymous"
             />
 
