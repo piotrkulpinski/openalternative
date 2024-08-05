@@ -24,6 +24,7 @@ import posthog from "posthog-js"
 import stylesheet from "~/styles.css?url"
 import { prisma } from "./services.server/prisma"
 import { categoryManyPayload } from "./services.server/api"
+import { Template } from "./partials/Template"
 
 export const shouldRevalidate = () => {
   return false
@@ -121,7 +122,7 @@ export function Layout({ children }: PropsWithChildren) {
           <Container className="flex min-h-[calc(100dvh-var(--header-height))] mt-[calc(var(--header-top)+var(--header-height))] flex-col py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
             {children}
 
-            <hr className="mt-auto peer-[[href]]:mt-0" />
+            <Template className="mt-auto peer-[[href]]:mt-0" />
 
             <Footer categories={data?.categories} />
           </Container>
