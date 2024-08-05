@@ -58,7 +58,7 @@ export default function Index() {
 
   return (
     <>
-      <section className="flex flex-col gap-y-6 w-full mb-[2vh] md:flex-1 lg:mt-[1vh]">
+      <section className="flex flex-col gap-y-6 w-full mb-[2vh] lg:mt-[1vh]">
         <Intro
           title="Discover Open Source Alternatives to Popular Software"
           description="A curated collection of the best open source alternatives to software that your business requires in day-to-day operations."

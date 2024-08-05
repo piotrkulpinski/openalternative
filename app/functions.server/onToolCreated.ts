@@ -2,6 +2,7 @@ import { got } from "got"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { uploadToS3Storage } from "~/services.server/s3"
+import { stripURLSubpath } from "~/utils/helpers"
 
 export const onToolCreated = inngest.createFunction(
   { id: "tool.created" },
@@ -25,7 +26,7 @@ export const onToolCreated = inngest.createFunction(
         return tool.faviconUrl
       }
 
-      const url = `https://www.google.com/s2/favicons?sz=128&domain_url=${tool.website}`
+      const url = `https://www.google.com/s2/favicons?sz=128&domain_url=${stripURLSubpath(tool.website)}`
       const { body } = await got(url, { responseType: "buffer" })
       const location = await uploadToS3Storage(body, `${tool.slug}/favicon.png`)
 
