@@ -13,6 +13,12 @@ import { Prisma } from "@prisma/client"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { z, ZodFormattedError } from "zod"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+
+export const handle = {
+  noTemplate: true,
+  breadcrumb: () => <BreadcrumbsLink to="/submit" label="Submit" />,
+}
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
   const { title, description } = data?.meta || {}

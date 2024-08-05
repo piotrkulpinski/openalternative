@@ -7,6 +7,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLocation,
+  useMatches,
   useRouteLoaderData,
 } from "@remix-run/react"
 import { ThemeProvider } from "next-themes"
@@ -68,7 +69,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ categories }, { headers: JSON_HEADERS })
 }
 
+type RouteMatch = {
+  handle: {
+    noTemplate?: boolean
+  }
+}
+
 export function Layout({ children }: PropsWithChildren) {
+  const matches = useMatches() as RouteMatch[]
+  const noTemplate = matches.some(({ handle }) => handle?.noTemplate === true)
   const data = useRouteLoaderData<typeof loader>("root")
   const { key } = useLocation()
 
@@ -122,7 +131,8 @@ export function Layout({ children }: PropsWithChildren) {
           <Container className="flex min-h-[calc(100dvh-var(--header-height))] mt-[calc(var(--header-top)+var(--header-height))] flex-col py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
             {children}
 
-            <Template className="mt-auto peer-[[href]]:mt-0" />
+            {!!noTemplate && <hr className="mt-auto peer-[[href]]:mt-0" />}
+            {!noTemplate && <Template className="mt-auto peer-[[href]]:mt-0" />}
 
             <Footer categories={data?.categories} />
           </Container>
