@@ -1,4 +1,5 @@
 import { Category } from "@prisma/client"
+import { posthog } from "posthog-js"
 import {
   HeadersFunction,
   type LoaderFunctionArgs,
@@ -181,7 +182,12 @@ export default function AlternativesPage() {
         )}
 
         <Card className="group/button bg-background" asChild>
-          <Link to={alternative.website} target="_blank" rel="noopener noreferrer nofollow">
+          <Link
+            to={alternative.website}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            onClick={() => posthog.capture("alternative_clicked", { url: alternative.slug })}
+          >
             <Card.Header>
               <Favicon src={alternative.faviconUrl} title={alternative.name} />
 
