@@ -14,7 +14,12 @@ export const Template = ({ className, ...props }: HTMLAttributes<HTMLElement>) =
       asChild
       {...props}
     >
-      <Link to={FRAMER_TEMPLATE_URL} onClick={() => posthog.capture("template_clicked")}>
+      <Link
+        to={FRAMER_TEMPLATE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => posthog.capture("template_clicked")}
+      >
         <div className="flex flex-col items-start flex-1 gap-4 lg:p-4">
           <H2>Get this design as a Framer template</H2>
 
