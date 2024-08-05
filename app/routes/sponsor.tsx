@@ -13,6 +13,7 @@ import { getPremiumSponsors } from "~/utils/sponsoring"
 import { Sponsors } from "~/partials/Sponsors"
 
 export const handle = {
+  noTemplate: true,
   breadcrumb: () => <BreadcrumbsLink to="/sponsor" label="Sponsor" />,
 }
 
