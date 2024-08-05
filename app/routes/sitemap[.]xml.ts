@@ -85,6 +85,11 @@ export const loader = async () => {
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
       </url>
+      <url>
+        <loc>${url}/licenses/${license.slug}/tools</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+      </url>
     `
   })
 
