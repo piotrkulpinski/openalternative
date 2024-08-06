@@ -1,31 +1,31 @@
+import { publishEscape } from "@curiousleaf/utils"
 import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import {
-  json,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  json,
   useLocation,
   useMatches,
   useRouteLoaderData,
 } from "@remix-run/react"
 import { ThemeProvider } from "next-themes"
-import { useEffect, type PropsWithChildren } from "react"
-import { Footer } from "~/partials/Footer"
-import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { Logo } from "~/components/Logo"
-import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
-import { Header } from "~/partials/Header"
-import { ErrorPage } from "~/partials/ErrorPage"
-import { Container } from "~/components/Container"
-import { publishEscape } from "@curiousleaf/utils"
 import posthog from "posthog-js"
+import { type PropsWithChildren, useEffect } from "react"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { Container } from "~/components/Container"
+import { Logo } from "~/components/Logo"
+import { ErrorPage } from "~/partials/ErrorPage"
+import { Footer } from "~/partials/Footer"
+import { Header } from "~/partials/Header"
+import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
 
 import stylesheet from "~/styles.css?url"
-import { prisma } from "./services.server/prisma"
-import { categoryManyPayload } from "./services.server/api"
 import { Template } from "./partials/Template"
+import { categoryManyPayload } from "./services.server/api"
+import { prisma } from "./services.server/prisma"
 
 export const shouldRevalidate = () => {
   return false
@@ -112,9 +112,6 @@ export function Layout({ children }: PropsWithChildren) {
               src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${import.meta.env.VITE_ADSENSE_PUBLISHER_ID}`}
               crossOrigin="anonymous"
             />
-
-            {/* Seline */}
-            <script async src="https://cdn.seline.so/seline.js" />
           </>
         )}
       </head>
