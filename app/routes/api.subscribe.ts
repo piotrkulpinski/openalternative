@@ -16,7 +16,15 @@ const subscriberSchema = z.object({
     .string()
     .email("Invalid email address, please use a correct format.")
     .refine(isRealEmail, "Invalid email address, please use a real one."),
-  groups: z.array(z.string()).optional(),
+  referring_site: z
+    .string()
+    .optional()
+    .default(process.env.VITE_SITE_URL ?? ""),
+  utm_source: z.string().optional(),
+  utm_medium: z.string().optional(),
+  utm_campaign: z.string().optional(),
+  reactivate_existing: z.boolean().optional().default(true),
+  send_welcome_email: z.boolean().optional().default(true),
 })
 
 export type ActionState =
@@ -26,17 +34,15 @@ export type ActionState =
 export async function action({ request }: ActionFunctionArgs): Promise<TypedResponse<ActionState>> {
   const data = await request.formData()
   const parsed = await subscriberSchema.safeParseAsync(Object.fromEntries(data.entries()))
+  const url = `https://api.beehiiv.com/v2/publications/${process.env.BEEHIIV_PUBLICATION_ID}/subscriptions`
+  const authorization = `Bearer ${process.env.BEEHIIV_API_KEY}`
 
   if (!parsed.success) {
     return json({ type: "error", error: parsed.error.format() })
   }
 
-  await got
-    .post("https://connect.mailerlite.com/api/subscribers", {
-      json: parsed.data,
-      headers: { authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}` },
-    })
-    .json()
+  // Subscribe to the publication
+  await got.post(url, { json: parsed.data, headers: { authorization } }).json()
 
   // Return a success response
   return json({ type: "success", message: "Thank you for subscribing!" })
