@@ -23,6 +23,7 @@ const subscriberSchema = z.object({
   utm_source: z.string().optional(),
   utm_medium: z.string().optional(),
   utm_campaign: z.string().optional(),
+  double_opt_override: z.string().optional().default("off"),
   reactivate_existing: z.boolean().optional().default(true),
   send_welcome_email: z.boolean().optional().default(true),
 })
