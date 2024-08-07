@@ -1,11 +1,16 @@
-import { HeadersFunction, type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
+import {
+  type HeadersFunction,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+  json,
+} from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolRecord } from "~/partials/records/ToolRecord"
-import { LicenseOne, licenseOnePayload, toolOnePayload } from "~/services.server/api"
+import { type LicenseOne, licenseOnePayload, toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"

@@ -1,19 +1,24 @@
-import { ActionFunctionArgs, type MetaFunction, TypedResponse, json } from "@remix-run/node"
-import slugify from "@sindresorhus/slugify"
+import { Prisma } from "@prisma/client"
+import {
+  type ActionFunctionArgs,
+  type MetaFunction,
+  type TypedResponse,
+  json,
+} from "@remix-run/node"
 import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
+import slugify from "@sindresorhus/slugify"
+import { type ZodFormattedError, z } from "zod"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
 import { Input } from "~/components/forms/Input"
 import { Label } from "~/components/forms/Label"
 import { TextArea } from "~/components/forms/TextArea"
-import { SITE_NAME } from "~/utils/constants"
-import { getMetaTags } from "~/utils/meta"
-import { Prisma } from "@prisma/client"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
-import { z, ZodFormattedError } from "zod"
-import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { SITE_NAME } from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   noTemplate: true,

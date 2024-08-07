@@ -1,12 +1,12 @@
 import { formatDate } from "@curiousleaf/utils"
-import { LoaderFunctionArgs } from "@remix-run/node"
+import type { LoaderFunctionArgs } from "@remix-run/node"
 import {
+  type MetaFunction,
   json,
-  MetaFunction,
   unstable_useViewTransitionState,
   useLoaderData,
 } from "@remix-run/react"
-import { allPosts, Post } from "content-collections"
+import { type Post, allPosts } from "content-collections"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
