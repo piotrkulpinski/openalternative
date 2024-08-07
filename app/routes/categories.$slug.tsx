@@ -1,4 +1,9 @@
-import { HeadersFunction, type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
+import {
+  type HeadersFunction,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+  json,
+} from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"

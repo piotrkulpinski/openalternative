@@ -1,5 +1,5 @@
 import { getRandomElement } from "@curiousleaf/utils"
-import { Prisma } from "@prisma/client"
+import type { Prisma } from "@prisma/client"
 import {
   type HeadersFunction,
   type LoaderFunctionArgs,
@@ -7,7 +7,7 @@ import {
   json,
 } from "@remix-run/node"
 import {
-  ShouldRevalidateFunction,
+  type ShouldRevalidateFunction,
   unstable_useViewTransitionState,
   useLoaderData,
 } from "@remix-run/react"

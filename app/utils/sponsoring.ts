@@ -1,7 +1,7 @@
-import type { DateRange } from "react-day-picker"
-import { SPONSORING_PRICE, DAY_IN_MS, SPONSORING_PREMIUM_TRESHOLD } from "./constants"
 import { differenceInDays } from "date-fns"
-import { Sponsoring } from "~/services.server/api"
+import type { DateRange } from "react-day-picker"
+import type { Sponsoring } from "~/services.server/api"
+import { DAY_IN_MS, SPONSORING_PREMIUM_TRESHOLD, SPONSORING_PRICE } from "./constants"
 
 /**
  * Calculate the sponsoring price based on the duration
@@ -118,7 +118,7 @@ export const getFirstAvailableMonth = (dates: { from: Date; to: Date }[]): Date 
     )
   }
 
-  let currentDate = new Date(today)
+  const currentDate = new Date(today)
   currentDate.setDate(1)
 
   while (true) {

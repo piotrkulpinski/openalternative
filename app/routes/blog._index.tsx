@@ -1,4 +1,4 @@
-import { json, MetaFunction, useLoaderData } from "@remix-run/react"
+import { type MetaFunction, json, useLoaderData } from "@remix-run/react"
 import { allPosts } from "content-collections"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
@@ -18,8 +18,8 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = () => {
   const meta = {
-    title: `Blog`,
-    description: `A collection of useful articles for developers and open source enthusiasts. Learn about the latest trends and technologies in the open source community.`,
+    title: "Blog",
+    description: "A collection of useful articles for developers and open source enthusiasts. Learn about the latest trends and technologies in the open source community.",
   }
 
   return json({ meta })
@@ -32,7 +32,7 @@ export default function BlogPage() {
     <>
       <Intro {...meta} />
 
-      {!!allPosts.length ? (
+      {allPosts.length ? (
         <Grid size="lg">
           {allPosts.map(post => (
             <PostRecord key={post._meta.path} post={post} />

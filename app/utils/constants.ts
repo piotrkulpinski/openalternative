@@ -6,10 +6,10 @@ export const SITE_DESCRIPTION =
   "OpenAlternative is a community-driven list of open source alternatives to proprietary software and applications. Discover the best tools for your needs."
 
 export const SITE_STATS = {
-  visitors: 500,
+  visitors: 1000,
   tools: 250,
-  subscribers: 1000,
-  stars: 900,
+  subscribers: 1100,
+  stars: 1100,
 }
 
 export const RSS_URL = `${SITE_URL}/rss.xml`

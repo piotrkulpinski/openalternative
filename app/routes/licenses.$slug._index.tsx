@@ -1,7 +1,12 @@
 import { getRandomElement } from "@curiousleaf/utils"
-import { Prisma } from "@prisma/client"
-import { HeadersFunction, type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
-import { Link, ShouldRevalidateFunction, useLoaderData } from "@remix-run/react"
+import type { Prisma } from "@prisma/client"
+import {
+  type HeadersFunction,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+  json,
+} from "@remix-run/node"
+import { Link, type ShouldRevalidateFunction, useLoaderData } from "@remix-run/react"
 import { MoveRightIcon } from "lucide-react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
@@ -11,7 +16,7 @@ import { H2 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Markdown } from "~/components/Markdown"
 import { ToolRecord } from "~/partials/records/ToolRecord"
-import { toolManyPayload, type LicenseOne } from "~/services.server/api"
+import { type LicenseOne, toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"

@@ -1,15 +1,15 @@
-import { Category } from "@prisma/client"
-import { posthog } from "posthog-js"
+import type { Category } from "@prisma/client"
 import {
-  HeadersFunction,
+  type HeadersFunction,
   type LoaderFunctionArgs,
   type MetaFunction,
-  SerializeFrom,
+  type SerializeFrom,
   json,
 } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import { ArrowUpRightIcon } from "lucide-react"
-import { Fragment, ReactNode } from "react"
+import { posthog } from "posthog-js"
+import { Fragment, type ReactNode } from "react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
@@ -111,7 +111,7 @@ export default function AlternativesPage() {
   }, {})
 
   const bestAlternatives: ReactNode[] = tools.slice(0, 5).map(tool => (
-    <Link to={`/${tool.slug}`} prefetch="intent" unstable_viewTransition>
+    <Link key={tool.id} to={`/${tool.slug}`} prefetch="intent" unstable_viewTransition>
       {tool.name}
     </Link>
   ))
@@ -120,7 +120,7 @@ export default function AlternativesPage() {
     .sort((a, b) => b.count - a.count)
     .slice(0, 3)
     .map(({ category }) => (
-      <Link to={`/categories/${category.slug}`} unstable_viewTransition>
+      <Link key={category.id} to={`/categories/${category.slug}`} unstable_viewTransition>
         {category.label || category.name}
       </Link>
     ))
