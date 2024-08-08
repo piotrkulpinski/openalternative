@@ -6,11 +6,11 @@ import { Card } from "~/components/Card"
 import { H4 } from "~/components/Heading"
 import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
-import { prisma } from "~/services.server/prisma"
-import { getMetaTags } from "~/utils/meta"
-import { SITE_STATS, SPONSORING_PREMIUM_TRESHOLD } from "~/utils/constants"
-import { getPremiumSponsors } from "~/utils/sponsoring"
 import { Sponsors } from "~/partials/Sponsors"
+import { prisma } from "~/services.server/prisma"
+import { SITE_STATS, SPONSORING_PREMIUM_TRESHOLD } from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
+import { getPremiumSponsors } from "~/utils/sponsoring"
 
 export const handle = {
   noTemplate: true,

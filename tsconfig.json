@@ -25,9 +25,6 @@
     "paths": {
       "~/*": ["./app/*"],
       "content-collections": ["./.content-collections/generated"]
-    },
-
-    // Vite takes care of building everything, not tsc.
-    "noEmit": true
+    }
   }
 }

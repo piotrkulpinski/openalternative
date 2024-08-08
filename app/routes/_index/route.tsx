@@ -1,15 +1,17 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { Link, json, useLoaderData, useLocation } from "@remix-run/react"
+import { GemIcon } from "lucide-react"
+import plur from "plur"
 import { renderToString } from "react-dom/server"
 import {
   InstantSearchSSRProvider,
-  InstantSearchServerState,
+  type InstantSearchServerState,
   getServerState,
 } from "react-instantsearch"
 import { Badge } from "~/components/Badge"
 import { Intro } from "~/components/Intro"
-import { Newsletter } from "~/partials/Newsletter"
 import { Ping } from "~/components/Ping"
+import { Newsletter } from "~/partials/Newsletter"
 import { prisma } from "~/services.server/prisma"
 import {
   LATEST_TOOLS_TRESHOLD,
@@ -19,8 +21,6 @@ import {
 } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { Search } from "./Search"
-import plur from "plur"
-import { GemIcon } from "lucide-react"
 
 export const meta: MetaFunction = ({ matches, location }) => {
   return getMetaTags({
@@ -67,11 +67,11 @@ export default function Index() {
         >
           <Badge
             className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
-            prefix={!!newToolCount ? <Ping /> : <GemIcon />}
+            prefix={newToolCount ? <Ping /> : <GemIcon />}
             asChild
           >
             <Link to="/latest">
-              {!!newToolCount
+              {newToolCount
                 ? `${newToolCount} new ${plur("tool", newToolCount)} added`
                 : `${SITE_STATS.tools.toLocaleString()}+ open source tools`}
             </Link>

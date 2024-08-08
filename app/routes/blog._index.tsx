@@ -19,7 +19,8 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 export const loader = () => {
   const meta = {
     title: "Blog",
-    description: "A collection of useful articles for developers and open source enthusiasts. Learn about the latest trends and technologies in the open source community.",
+    description:
+      "A collection of useful articles for developers and open source enthusiasts. Learn about the latest trends and technologies in the open source community.",
   }
 
   return json({ meta })

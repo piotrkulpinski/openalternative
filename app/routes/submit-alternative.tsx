@@ -65,14 +65,17 @@ export async function action({ request }: ActionFunctionArgs): Promise<TypedResp
   // Destructure the parsed data
   const { name, website, description } = parsed.data
 
+  // Generate a slug
+  const slug = slugify(name, { decamelize: false })
+
   // Save the tool to the database
   try {
     const tool = await prisma.alternative.create({
       data: {
         name,
+        slug,
         website,
         description,
-        slug: slugify(name, { decamelize: false }),
       },
     })
 

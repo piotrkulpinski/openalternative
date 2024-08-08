@@ -5,11 +5,11 @@ import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Highlight } from "react-instantsearch"
 import { format } from "timeago.js"
-import type { ToolMany } from "~/services.server/api"
 import { Card } from "~/components/Card"
 import { Favicon } from "~/components/Favicon"
 import { H4 } from "~/components/Heading"
 import { Insights } from "~/components/Insights"
+import type { ToolMany } from "~/services.server/api"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
 
