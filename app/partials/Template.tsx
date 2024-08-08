@@ -8,21 +8,6 @@ import { FRAMER_TEMPLATE_URL } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 
 export const Template = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
-  const copy =
-    posthog.getFeatureFlag("template-link-conversion") === "clone"
-      ? {
-          title: "Clone this website in Framer",
-          description:
-            "Clone this design in Framer and start building your own directory website. The template includes animations, interactions, and code components. No design or code skills required.",
-          label: "Get Framer Template",
-        }
-      : {
-          title: "Get this design as a Framer template",
-          description:
-            "Grab this design as a Framer template and start building your own directory website. The template includes animations, interactions, and code components. No design or code skills required.",
-          label: "Get the Aperto Template",
-        }
-
   return (
     <Card
       className={cx("group/button rounded-lg gap-y-8 md:flex-row md:items-center", className)}
@@ -36,11 +21,16 @@ export const Template = ({ className, ...props }: HTMLAttributes<HTMLElement>) =
         onClick={() => posthog.capture("template_clicked")}
       >
         <div className="flex flex-col items-start flex-1 gap-4 max-w-96 md:p-4">
-          <H2 className="text-pretty max-w-80">{copy.title}</H2>
-          <p className="text-muted mb-2">{copy.description}</p>
+          <H2 className="text-pretty max-w-80">Clone this website in Framer</H2>
+
+          <p className="text-muted mb-2">
+            Clone this design in Framer and start building your own directory website. The template
+            includes animations, interactions, and code components. No design or code skills
+            required.
+          </p>
 
           <Button size="lg" className="mt-auto pointer-events-none">
-            {copy.label}
+            Get Framer Template
           </Button>
         </div>
 

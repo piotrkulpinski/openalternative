@@ -62,6 +62,7 @@ export const createStripeCheckoutSession = async ({
     allow_promotion_codes: true,
     automatic_tax: { enabled: true },
     tax_id_collection: { enabled: true },
+    invoice_creation: { enabled: true },
     success_url: `${process.env.VITE_SITE_URL}/?subscribed=true`,
     cancel_url: `${process.env.VITE_SITE_URL}/?cancelled=true`,
   })
