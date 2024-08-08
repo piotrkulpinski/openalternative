@@ -1,6 +1,6 @@
-import { Intro } from "~/components/Intro"
-import { Button } from "~/components/Button"
 import { Link, isRouteErrorResponse, useLocation, useRouteError } from "@remix-run/react"
+import { Button } from "~/components/Button"
+import { Intro } from "~/components/Intro"
 
 export const ErrorPage = () => {
   const error = useRouteError()

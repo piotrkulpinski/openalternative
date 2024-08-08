@@ -74,5 +74,4 @@ export const sponsoringOnePayload = Prisma.validator<Prisma.SponsoringSelect>()(
 })
 
 export type SponsoringOne = Prisma.SponsoringGetPayload<{ select: typeof sponsoringOnePayload }>
-export type SponsoringMany = Prisma.SponsoringGetPayload<{}>
 export type Sponsoring = SerializeFrom<SponsoringPayload>

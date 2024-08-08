@@ -1,12 +1,12 @@
 import { useFetcher, useLocation } from "@remix-run/react"
+import { posthog } from "posthog-js"
 import { type ComponentProps, type HTMLAttributes, useEffect, useId } from "react"
-import type { action } from "~/routes/api.subscribe"
 import { Button } from "~/components/Button"
 import { H5 } from "~/components/Heading"
 import { Series } from "~/components/Series"
 import { Input } from "~/components/forms/Input"
+import type { action } from "~/routes/api.subscribe"
 import { cx } from "~/utils/cva"
-import { posthog } from "posthog-js"
 
 type NewsletterProps = HTMLAttributes<HTMLElement> & {
   title?: string

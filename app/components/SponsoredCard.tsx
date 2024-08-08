@@ -1,15 +1,15 @@
 import { Link } from "@remix-run/react"
+import { ArrowUpRightIcon } from "lucide-react"
 import { posthog } from "posthog-js"
+import { Badge } from "~/components/Badge"
+import { Button } from "~/components/Button"
+import { Card, type CardProps } from "~/components/Card"
 import { Favicon } from "~/components/Favicon"
+import { H4 } from "~/components/Heading"
+import { Logo } from "~/components/Logo"
 import type { SponsoringOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
-import { Button } from "~/components/Button"
-import { Card, type CardProps } from "~/components/Card"
-import { H4 } from "~/components/Heading"
-import { Logo } from "~/components/Logo"
-import { Badge } from "~/components/Badge"
-import { ArrowUpRightIcon } from "lucide-react"
 
 type SponsoredCardProps = CardProps & {
   sponsoring: SponsoringOne | null

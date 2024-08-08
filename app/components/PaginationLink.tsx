@@ -1,8 +1,8 @@
 import { Slot } from "@radix-ui/react-slot"
 import { NavLink, type NavLinkProps } from "@remix-run/react"
 import type { HTMLAttributes, ReactNode } from "react"
-import { type VariantProps, cx } from "~/utils/cva"
 import { navigationLinkVariants } from "~/components/NavigationLink"
+import { type VariantProps, cx } from "~/utils/cva"
 
 type PaginationLinkProps = Omit<HTMLAttributes<HTMLElement> & NavLinkProps, "prefix"> &
   VariantProps<typeof navigationLinkVariants> & {

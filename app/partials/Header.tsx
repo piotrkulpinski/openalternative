@@ -1,20 +1,20 @@
 import { NavLink } from "@remix-run/react"
 import {
-  ShapesIcon,
   BracesIcon,
   ChevronDownIcon,
   CopyrightIcon,
   GemIcon,
   GithubIcon,
   PlusIcon,
+  ShapesIcon,
   SmilePlusIcon,
   TagIcon,
 } from "lucide-react"
 import { type HTMLAttributes, useEffect, useState } from "react"
-import { GITHUB_URL } from "~/utils/constants"
-import { cx } from "~/utils/cva"
+import { ClientOnly } from "remix-utils/client-only"
 import { Breadcrumbs } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
+import { Container } from "~/components/Container"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,9 +23,9 @@ import {
 } from "~/components/DropdownMenu"
 import { NavigationLink, navigationLinkVariants } from "~/components/NavigationLink"
 import { Series } from "~/components/Series"
-import { ClientOnly } from "remix-utils/client-only"
 import { ThemeSwitcher } from "~/components/ThemeSwitcher"
-import { Container } from "~/components/Container"
+import { GITHUB_URL } from "~/utils/constants"
+import { cx } from "~/utils/cva"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)
@@ -68,6 +68,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             className="size-7 duration-300 select-none will-change-transform group-data-[state=open]/menu:rotate-45"
             viewBox="0 0 100 100"
             role="img"
+            aria-label="Toggle navigation icon"
           >
             <path
               className="fill-none duration-300 stroke-current stroke-[5] [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"

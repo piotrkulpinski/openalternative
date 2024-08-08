@@ -1,6 +1,6 @@
 import { graphql } from "@octokit/graphql"
-import { DAY_IN_MS } from "./constants"
 import { slugify } from "inngest"
+import { DAY_IN_MS } from "./constants"
 
 export const githubGraphqlClient = graphql.defaults({
   headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },

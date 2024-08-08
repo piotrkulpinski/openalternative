@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "react"
-import { cva, cx, VariantProps } from "~/utils/cva"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const gridVariants = cva({
   base: "grid gap-5",

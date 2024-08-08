@@ -1,13 +1,13 @@
+import { slugify } from "@curiousleaf/utils"
+import type { SerializeFrom } from "@remix-run/node"
 import { AtSignIcon, GithubIcon, RssIcon, TwitterIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
-import { GITHUB_URL, RSS_URL, SITE_EMAIL, TWITTER_AUTHOR_URL, TWITTER_URL } from "~/utils/constants"
-import { cx } from "~/utils/cva"
 import { H6 } from "~/components/Heading"
 import { NavigationLink } from "~/components/NavigationLink"
 import { Series } from "~/components/Series"
-import { CategoryMany } from "~/services.server/api"
-import { slugify } from "@curiousleaf/utils"
-import { SerializeFrom } from "@remix-run/node"
+import type { CategoryMany } from "~/services.server/api"
+import { GITHUB_URL, RSS_URL, SITE_EMAIL, TWITTER_AUTHOR_URL, TWITTER_URL } from "~/utils/constants"
+import { cx } from "~/utils/cva"
 import { Newsletter } from "./Newsletter"
 
 type FooterProps = HTMLAttributes<HTMLElement> & {

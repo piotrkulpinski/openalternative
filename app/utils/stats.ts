@@ -1,12 +1,12 @@
 import { graphql } from "@octokit/graphql"
 import { got } from "got"
 import { prisma } from "~/services.server/prisma"
-import { GITHUB_URL } from "./constants"
 import {
   type RepositoryStarsQueryResult,
   getRepoOwnerAndName,
   repositoryStarsQuery,
 } from "~/utils/github"
+import { GITHUB_URL } from "./constants"
 
 // Get the number of tools
 export const getToolCount = async () => {

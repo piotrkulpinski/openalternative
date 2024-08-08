@@ -100,13 +100,12 @@ export default function AlternativesPage() {
   const categories = tools.reduce<
     Record<string, { count: number; category: SerializeFrom<Category> }>
   >((acc, { categories }) => {
-    categories.forEach(({ category }) => {
+    for (const { category } of categories) {
       if (!acc[category.name]) {
         acc[category.name] = { count: 0, category }
       }
       acc[category.name].count += 1
-    })
-
+    }
     return acc
   }, {})
 

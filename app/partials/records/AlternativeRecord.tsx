@@ -3,9 +3,9 @@ import { NavLink } from "@remix-run/react"
 import plur from "plur"
 import type { HTMLAttributes } from "react"
 import { Card } from "~/components/Card"
-import type { AlternativeMany } from "~/services.server/api"
 import { Favicon } from "~/components/Favicon"
 import { H4 } from "~/components/Heading"
+import type { AlternativeMany } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 
 type AlternativeRecordProps = HTMLAttributes<HTMLElement> & {

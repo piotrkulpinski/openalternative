@@ -39,6 +39,8 @@ model Tool {
   faviconUrl     String?
   screenshotUrl  String?
   isFeatured     Boolean   @default(false)
+  submitterName  String?
+  submitterEmail String?
   lastCommitDate DateTime?
   publishedAt    DateTime?
   updatedAt      DateTime  @updatedAt
