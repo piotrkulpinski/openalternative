@@ -4,7 +4,6 @@ import {
   ChevronDownIcon,
   CopyrightIcon,
   GemIcon,
-  GithubIcon,
   PlusIcon,
   ShapesIcon,
   SmilePlusIcon,
@@ -24,6 +23,7 @@ import {
 import { NavigationLink, navigationLinkVariants } from "~/components/NavigationLink"
 import { Series } from "~/components/Series"
 import { ThemeSwitcher } from "~/components/ThemeSwitcher"
+import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
 import { GITHUB_URL } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 
@@ -138,7 +138,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <Button
             size="sm"
             variant="secondary"
-            prefix={<GithubIcon className="mr-0.5" />}
+            prefix={<BrandGitHubIcon className="mr-0.5" />}
             className="max-sm:hidden"
             asChild
           >

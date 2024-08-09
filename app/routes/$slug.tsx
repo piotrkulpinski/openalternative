@@ -24,6 +24,7 @@ import { Markdown } from "~/components/Markdown"
 import { Prose } from "~/components/Prose"
 import { RepositoryDetails } from "~/components/RepositoryDetails"
 import { Series } from "~/components/Series"
+import { ShareButtons } from "~/components/ShareButtons"
 import { Tag } from "~/components/Tag"
 import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
 import { ToolRecord } from "~/partials/records/ToolRecord"
@@ -37,6 +38,7 @@ import {
 } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
+import { joinAsSentence } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
@@ -117,7 +119,10 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
           () =>
             prisma.alternativeToTool.findMany({
               where: { tool: { slug } },
-              orderBy: { alternative: { name: "asc" } },
+              orderBy: [
+                { alternative: { tools: { _count: "desc" } } },
+                { alternative: { name: "asc" } },
+              ],
               include: { alternative: { include: alternativeManyPayload } },
             }),
           { type: "find alternatives", timings },
@@ -127,7 +132,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
           () =>
             prisma.categoryToTools.findMany({
               where: { tool: { slug } },
-              orderBy: { category: { name: "asc" } },
+              orderBy: [{ category: { tools: { _count: "desc" } } }, { category: { name: "asc" } }],
               include: { category: { include: categoryManyPayload } },
             }),
           { type: "find categories", timings },
@@ -137,7 +142,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
           () =>
             prisma.languageToTool.findMany({
               where: { tool: { slug } },
-              orderBy: { language: { name: "asc" } },
+              orderBy: [{ language: { tools: { _count: "desc" } } }, { language: { name: "asc" } }],
               include: { language: { include: languageManyPayload } },
             }),
           { type: "find languages", timings },
@@ -147,7 +152,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
           () =>
             prisma.topicToTool.findMany({
               where: { tool: { slug } },
-              orderBy: { topic: { slug: "asc" } },
+              orderBy: [{ topic: { tools: { _count: "desc" } } }, { topic: { slug: "asc" } }],
               include: { topic: { include: topicManyPayload } },
             }),
           { type: "find topics", timings },
@@ -197,7 +202,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     const meta = {
       title: `${tool.name}: Open Source Alternative ${
         alternatives.length
-          ? `to ${alternatives.map(({ alternative }) => alternative?.name).join(", ")}`
+          ? `to ${joinAsSentence(alternatives.map(({ alternative }) => alternative?.name))}`
           : ""
       }`,
     }
@@ -213,7 +218,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 }
 
 export default function ToolsPage() {
-  const { tool, alternatives, categories, languages, topics, relatedTools, sponsoring } =
+  const { meta, tool, alternatives, categories, languages, topics, relatedTools } =
     useLoaderData<typeof loader>()
 
   const vt = unstable_useViewTransitionState(`/${tool.slug}`)
@@ -358,6 +363,11 @@ export default function ToolsPage() {
               </Series>
             </Series>
           )}
+
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 w-full">
+            <ShareButtons title={meta.title} />
+            {/* <FeedbackButton toolId={tool.id} toolName={tool.name} /> */}
+          </div>
         </div>
 
         <div className="sticky top-14 flex flex-col gap-4 max-md:hidden">

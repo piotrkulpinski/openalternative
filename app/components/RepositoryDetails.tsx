@@ -1,5 +1,5 @@
 import type { SerializeFrom } from "@remix-run/node"
-import { CopyrightIcon, GitForkIcon, GithubIcon, StarIcon, TimerIcon } from "lucide-react"
+import { CopyrightIcon, GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { format } from "timeago.js"
@@ -8,6 +8,7 @@ import { H5 } from "~/components/Heading"
 import { Insights } from "~/components/Insights"
 import { NavigationLink } from "~/components/NavigationLink"
 import { Series } from "~/components/Series"
+import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
 import type { LanguageToToolMany, ToolOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 
@@ -76,7 +77,7 @@ export const RepositoryDetails = ({
         <Button
           size="md"
           variant="secondary"
-          prefix={<GithubIcon />}
+          prefix={<BrandGitHubIcon />}
           onClick={() => posthog.capture("repository_clicked", { url: tool.repository })}
           className="mt-1 self-start"
           asChild

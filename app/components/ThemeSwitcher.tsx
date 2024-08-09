@@ -21,6 +21,7 @@ export const ThemeSwitcher = ({ ...props }: HTMLAttributes<HTMLElement>) => {
           variant="secondary"
           title="Toggle theme"
           prefix={resolvedTheme === "dark" ? <MoonIcon /> : <SunIcon />}
+          isAffixOnly
           {...props}
         />
       </DropdownMenuTrigger>

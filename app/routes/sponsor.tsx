@@ -1,11 +1,12 @@
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import { GithubIcon, HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
+import { HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Card } from "~/components/Card"
 import { H4 } from "~/components/Heading"
 import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Sponsoring } from "~/components/Sponsoring"
+import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
 import { Sponsors } from "~/partials/Sponsors"
 import { prisma } from "~/services.server/prisma"
 import { SITE_STATS, SPONSORING_PREMIUM_TRESHOLD } from "~/utils/constants"
@@ -76,7 +77,7 @@ export default function SponsorPage() {
       exclusive: true,
     },
     {
-      icon: <GithubIcon className="size-full" />,
+      icon: <BrandGitHubIcon className="size-full" />,
       title: "GitHub Logo",
       description: 'Display your logo in a special "Sponsors" section in our GitHub repository.',
       stats: {

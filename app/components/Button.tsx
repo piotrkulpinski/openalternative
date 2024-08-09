@@ -48,7 +48,7 @@ export const buttonAffixVariants = cva({
 })
 
 export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size" | "prefix"> &
-  Omit<VariantProps<typeof buttonVariants>, "isAffixOnly"> & {
+  VariantProps<typeof buttonVariants> & {
     /**
      * If set to `true`, the button will be rendered as a child within the component.
      * This child component must be a valid React component.
@@ -82,6 +82,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     suffix,
     variant,
     size,
+    isAffixOnly,
     ...rest
   } = props
 
@@ -91,9 +92,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 
   const useAsChild = asChild && isValidElement(children)
   const Component = useAsChild ? Slot : "button"
-
-  // Determine if the button has affix only.
-  const isAffixOnly = isChildrenEmpty(children) && (!prefix || !suffix)
 
   return (
     <Component

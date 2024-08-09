@@ -18,6 +18,7 @@ import { Favicon } from "~/components/Favicon"
 import { H3 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
+import { ShareButtons } from "~/components/ShareButtons"
 import { ToolEntry } from "~/partials/records/ToolEntry"
 import { type AlternativeOne, alternativeOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
@@ -177,6 +178,8 @@ export default function AlternativesPage() {
                 specific functionality of {alternative.name}.
               </p>
             )}
+
+            <ShareButtons title={meta.title} className="not-prose" />
           </Prose>
         )}
 
