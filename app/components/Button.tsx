@@ -18,7 +18,7 @@ export const buttonVariants = cva({
       secondary: "bg-background text-secondary hover:bg-card hover:border-border-dark",
     },
     size: {
-      sm: "text-[13px]/none gap-[0.5ch] py-1 px-2 rounded-md",
+      sm: "text-[13px]/none gap-[0.66ch] py-1 px-2 rounded-md",
       md: "text-[13px]/tight gap-[0.75ch] py-1.5 px-3 rounded-md",
       lg: "text-sm/tight gap-[1ch] py-2 px-4 rounded-lg",
     },

@@ -19,7 +19,7 @@ import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
 import { FaviconImage } from "~/components/Favicon"
 import { Grid } from "~/components/Grid"
-import { H1, H4 } from "~/components/Heading"
+import { H1, H4, H5 } from "~/components/Heading"
 import { Markdown } from "~/components/Markdown"
 import { Prose } from "~/components/Prose"
 import { RepositoryDetails } from "~/components/RepositoryDetails"
@@ -310,7 +310,7 @@ export default function ToolsPage() {
             <div className="grid grid-auto-fit-sm gap-x-6 gap-y-10 w-full">
               {links && (
                 <Series size="lg" direction="column">
-                  <H4 as="h3">Links:</H4>
+                  <H5 as="h3">Links:</H5>
 
                   <Series direction="column">
                     {links.map(({ name, url }) => (
@@ -331,7 +331,7 @@ export default function ToolsPage() {
 
               {!!categories.length && (
                 <Series direction="column" className="w-full">
-                  <H4 as="h3">Categories:</H4>
+                  <H5 as="h3">Categories:</H5>
 
                   <Series direction="column">
                     {categories?.map(({ category }) => (
@@ -366,7 +366,7 @@ export default function ToolsPage() {
 
           <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 w-full">
             <ShareButtons title={meta.title} />
-            {/* <FeedbackButton toolId={tool.id} toolName={tool.name} /> */}
+            {/* <FeedbackButton tool={tool} /> */}
           </div>
         </div>
 

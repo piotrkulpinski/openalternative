@@ -138,7 +138,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <Button
             size="sm"
             variant="secondary"
-            prefix={<BrandGitHubIcon className="mr-0.5" />}
+            prefix={<BrandGitHubIcon />}
             className="max-sm:hidden"
             asChild
           >

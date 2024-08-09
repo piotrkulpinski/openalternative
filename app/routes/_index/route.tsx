@@ -2,15 +2,17 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { Link, json, useLoaderData, useLocation } from "@remix-run/react"
 import { GemIcon } from "lucide-react"
 import plur from "plur"
-import { Fragment } from "react/jsx-runtime"
+import { renderToString } from "react-dom/server"
+import {
+  InstantSearchSSRProvider,
+  type InstantSearchServerState,
+  getServerState,
+} from "react-instantsearch"
 import { Badge } from "~/components/Badge"
-import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { Ping } from "~/components/Ping"
-import { SponsoredCard } from "~/components/SponsoredCard"
 import { Newsletter } from "~/partials/Newsletter"
-import { ToolRecord } from "~/partials/records/ToolRecord"
-import { toolManyPayload } from "~/services.server/api"
+import { Search } from "~/routes/_index/Search"
 import { prisma } from "~/services.server/prisma"
 import {
   LATEST_TOOLS_TRESHOLD,
@@ -32,7 +34,7 @@ export const meta: MetaFunction = ({ matches, location }) => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
 
-  const [sponsoring, newToolCount, tools] = await Promise.all([
+  const [sponsoring, newToolCount] = await Promise.all([
     prisma.sponsoring.findFirst({
       where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
       select: { name: true, description: true, website: true, faviconUrl: true },
@@ -41,24 +43,18 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     prisma.tool.count({
       where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
     }),
-
-    prisma.tool.findMany({
-      where: { publishedAt: { lte: new Date() } },
-      include: toolManyPayload,
-      orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
-    }),
   ])
 
-  // const serverState = await getServerState(<Search url={url} sponsoring={sponsoring} />, {
-  //   renderToString,
-  // })
+  const serverState = await getServerState(<Search url={url} sponsoring={sponsoring} />, {
+    renderToString,
+  })
 
-  return json({ url, sponsoring, newToolCount, tools })
+  return json({ url, sponsoring, newToolCount, serverState })
 }
 
 export default function Index() {
   const { key } = useLocation()
-  const { url, sponsoring, newToolCount, tools } = useLoaderData<typeof loader>()
+  const { url, sponsoring, newToolCount, serverState } = useLoaderData<typeof loader>()
 
   return (
     <>
@@ -91,21 +87,9 @@ export default function Index() {
         />
       </section>
 
-      <Grid>
-        {tools.map((tool, order) => (
-          <Fragment key={tool.id}>
-            {Math.min(2, tools.length - 1) === order && <SponsoredCard sponsoring={sponsoring} />}
-
-            <ToolRecord tool={tool} style={{ order }} />
-          </Fragment>
-        ))}
-
-        {!tools?.length && <p className="col-span-full">No Open Source software found.</p>}
-      </Grid>
-
-      {/* <InstantSearchSSRProvider key={key} {...(serverState as InstantSearchServerState)}>
+      <InstantSearchSSRProvider key={key} {...(serverState as InstantSearchServerState)}>
         <Search url={url} sponsoring={sponsoring} />
-      </InstantSearchSSRProvider> */}
+      </InstantSearchSSRProvider>
     </>
   )
 }
