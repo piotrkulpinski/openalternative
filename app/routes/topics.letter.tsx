@@ -24,7 +24,7 @@ export const loader = async () => {
   return json({ meta })
 }
 
-export default function TopicsIndex() {
+export default function TopicsLetterIndex() {
   const { meta } = useLoaderData<typeof loader>()
 
   return (
