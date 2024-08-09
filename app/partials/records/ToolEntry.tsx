@@ -1,6 +1,6 @@
 import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
-import { ArrowUpRightIcon, GithubIcon } from "lucide-react"
+import { ArrowUpRightIcon } from "lucide-react"
 import posthog from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { Button } from "~/components/Button"
@@ -9,6 +9,7 @@ import { FaviconImage } from "~/components/Favicon"
 import { H2 } from "~/components/Heading"
 import { Markdown } from "~/components/Markdown"
 import { Series } from "~/components/Series"
+import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
 import type { ToolMany } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
@@ -101,7 +102,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
         {tool.repository && (
           <Button
             variant="secondary"
-            prefix={<GithubIcon />}
+            prefix={<BrandGitHubIcon />}
             onClick={() => posthog.capture("repository_clicked", { url: tool.repository })}
             asChild
           >

@@ -1,10 +1,12 @@
 import { slugify } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
-import { AtSignIcon, GithubIcon, RssIcon, TwitterIcon } from "lucide-react"
+import { AtSignIcon, RssIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { H6 } from "~/components/Heading"
 import { NavigationLink } from "~/components/NavigationLink"
 import { Series } from "~/components/Series"
+import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
+import { BrandXIcon } from "~/components/icons/BrandX"
 import type { CategoryMany } from "~/services.server/api"
 import { GITHUB_URL, RSS_URL, SITE_EMAIL, TWITTER_AUTHOR_URL, TWITTER_URL } from "~/utils/constants"
 import { cx } from "~/utils/cva"
@@ -60,11 +62,11 @@ export const Footer = ({ children, className, categories, ...props }: FooterProp
             title="Twitter"
             rel="nofollow noreferrer"
           >
-            <TwitterIcon className="size-[1.44em] stroke-[1.25]" />
+            <BrandXIcon className="size-[1.44em] stroke-[1.25]" />
           </NavigationLink>
 
           <NavigationLink to={GITHUB_URL} target="_blank" title="Source" rel="nofollow noreferrer">
-            <GithubIcon className="size-[1.44em] stroke-[1.25]" />
+            <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
           </NavigationLink>
         </Series>
 

@@ -33,3 +33,17 @@ export const stripURLSubpath = (url: string) => {
     return url
   }
 }
+
+/**
+ * Joins an array of strings into a sentence, with a maximum of 3 items.
+ *
+ * @param items The array of strings to be joined.
+ * @param maxItems The maximum number of items to include in the sentence.
+ * @returns The joined sentence.
+ */
+export const joinAsSentence = (items: string[], maxItems = 3) => {
+  return items
+    .slice(0, maxItems)
+    .join(", ")
+    .replace(/, ([^,]*)$/, " and $1")
+}

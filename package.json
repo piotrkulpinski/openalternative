@@ -38,7 +38,7 @@
     "@resvg/resvg-js": "^2.6.2",
     "@uidotdev/usehooks": "^2.4.1",
     "algoliasearch": "^4.24.0",
-    "cva": "^beta",
+    "cva": "beta",
     "date-fns": "^3.6.0",
     "got": "^14.4.2",
     "inngest": "^3.22.1",
