@@ -2,7 +2,7 @@ import type { HTMLAttributes } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const gridVariants = cva({
-  base: "grid gap-5",
+  base: "grid place-content-start gap-5",
 
   variants: {
     size: {
