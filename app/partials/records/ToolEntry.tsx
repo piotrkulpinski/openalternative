@@ -1,7 +1,6 @@
 import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
-import { ArrowUpRightIcon } from "lucide-react"
-import posthog from "posthog-js"
+import { ArrowRightIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Button } from "~/components/Button"
 import { Card } from "~/components/Card"
@@ -9,10 +8,8 @@ import { FaviconImage } from "~/components/Favicon"
 import { H2 } from "~/components/Heading"
 import { Markdown } from "~/components/Markdown"
 import { Series } from "~/components/Series"
-import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
 import type { ToolMany } from "~/services.server/api"
 import { cx } from "~/utils/cva"
-import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
 
@@ -77,41 +74,21 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       )}
 
       {tool.content && (
-        <Markdown style={{ viewTransitionName: vt ? `tool-${tool.id}-content` : undefined }}>
-          {tool.content}
-        </Markdown>
+        <div
+          className="relative max-h-72 overflow-hidden"
+          style={{ viewTransitionName: vt ? `tool-${tool.id}-content` : undefined }}
+        >
+          <Markdown>{tool.content}</Markdown>
+
+          <div className="absolute inset-0 top-auto h-1/5 bg-gradient-to-t from-background pointer-events-none" />
+        </div>
       )}
 
-      <Series>
-        {tool.website && (
-          <Button
-            suffix={<ArrowUpRightIcon />}
-            onClick={() => posthog.capture("website_clicked", { url: tool.website })}
-            asChild
-          >
-            <a
-              href={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
-              target="_blank"
-              rel="nofollow noreferrer"
-            >
-              View Website
-            </a>
-          </Button>
-        )}
-
-        {tool.repository && (
-          <Button
-            variant="secondary"
-            prefix={<BrandGitHubIcon />}
-            onClick={() => posthog.capture("repository_clicked", { url: tool.repository })}
-            asChild
-          >
-            <a href={tool.repository} target="_blank" rel="noreferrer nofollow">
-              Repository
-            </a>
-          </Button>
-        )}
-      </Series>
+      <Button suffix={<ArrowRightIcon />} className="self-start" asChild>
+        <Link to={to} prefetch="intent" unstable_viewTransition>
+          Read more
+        </Link>
+      </Button>
     </div>
   )
 }
