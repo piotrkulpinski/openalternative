@@ -96,32 +96,32 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <NavigationLink to="/latest">
+                <NavigationLink to="/latest" unstable_viewTransition>
                   <GemIcon className="size-4 opacity-75" /> Latest
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/categories">
+                <NavigationLink to="/categories" unstable_viewTransition>
                   <ShapesIcon className="size-4 opacity-75" /> Categories
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/alternatives">
+                <NavigationLink to="/alternatives" unstable_viewTransition>
                   <SmilePlusIcon className="size-4 opacity-75" /> Alternatives
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/languages">
+                <NavigationLink to="/languages" unstable_viewTransition>
                   <BracesIcon className="size-4 opacity-75" /> Languages
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/topics">
+                <NavigationLink to="/topics" unstable_viewTransition>
                   <TagIcon className="size-4 opacity-75" /> Topics
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/licenses">
+                <NavigationLink to="/licenses" unstable_viewTransition>
                   <CopyrightIcon className="size-4 opacity-75" /> Licenses
                 </NavigationLink>
               </DropdownMenuItem>
