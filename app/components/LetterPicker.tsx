@@ -20,6 +20,7 @@ export const LetterPicker = ({ path, className, ...props }: LetterPickerProps) =
             "px-2 py-1 bg-card-dark text-sm font-medium text-muted text-center rounded uppercase md:flex-1 hover:bg-border",
             pathname === `${path}/${letter}` && "bg-primary text-background hover:bg-primary",
           )}
+          unstable_viewTransition
         >
           {letter}
         </Link>
