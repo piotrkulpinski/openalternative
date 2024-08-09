@@ -20,12 +20,14 @@ import { Logo } from "~/components/Logo"
 import { ErrorPage } from "~/partials/ErrorPage"
 import { Footer } from "~/partials/Footer"
 import { Header } from "~/partials/Header"
-import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
-
-import stylesheet from "~/styles.css?url"
 import { Template } from "./partials/Template"
 import { categoryManyPayload } from "./services.server/api"
 import { prisma } from "./services.server/prisma"
+import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
+
+import stylesheet from "~/styles.css?url"
+
+export const maxDuration = 300
 
 export const shouldRevalidate = () => {
   return false

@@ -35,7 +35,7 @@ export const Template = ({ className, ...props }: HTMLAttributes<HTMLElement>) =
         </div>
 
         <img
-          src="/aperto.png"
+          src="/aperto.avif"
           alt=""
           className="w-full h-auto flex-1 rounded-md md:w-1/2 lg:w-2/3 lg:max-w-lg"
         />
