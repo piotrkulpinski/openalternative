@@ -1,23 +1,52 @@
-import { StickerIcon } from "lucide-react"
-import { posthog } from "posthog-js"
+import type { SerializeFrom } from "@remix-run/node"
+import { Form } from "@remix-run/react"
+import { ThumbsUpIcon } from "lucide-react"
+import type { ComponentProps } from "react"
 import { Button } from "~/components/Button"
+import { Popover } from "~/components/Popover"
+import { Input } from "~/components/forms/Input"
+import { TextArea } from "~/components/forms/TextArea"
+import type { ToolOne } from "~/services.server/api"
 
-interface FeedbackButtonProps {
-  toolId: string
-  toolName: string
+type FeedbackButtonProps = Omit<ComponentProps<typeof Popover>, "popover"> & {
+  tool: SerializeFrom<ToolOne>
 }
 
-export const FeedbackButton = ({ toolId, toolName }: FeedbackButtonProps) => {
-  const handleFeedback = () => {
-    // Implement your feedback logic here
-    // For example, open a modal or redirect to a feedback form
-    posthog.capture("feedback_button_clicked", { toolId, toolName })
-    alert("Feedback functionality to be implemented")
-  }
-
+export const FeedbackButton = ({ tool, ...props }: FeedbackButtonProps) => {
   return (
-    <Button size="sm" variant="secondary" onClick={handleFeedback} prefix={<StickerIcon />}>
-      Send Feedback
-    </Button>
+    <Popover
+      align="end"
+      popover={
+        <div className="flex flex-col gap-1.5">
+          <Form className="flex flex-col gap-1.5">
+            <Input
+              type="email"
+              name="email"
+              placeholder="Your email"
+              className="text-xs py-1 px-2 rounded w-full"
+              data-1p-ignore
+              required
+            />
+            <TextArea
+              name="feedback"
+              rows={3}
+              placeholder="Feedback"
+              className="text-xs py-1 px-2 rounded min-h-12 w-full"
+              required
+            />
+          </Form>
+
+          <Button size="sm" variant="primary" className="text-xs/none py-1 px-1.5 rounded">
+            Send
+          </Button>
+        </div>
+      }
+      className="p-1.5 w-48"
+      {...props}
+    >
+      <Button size="sm" variant="secondary" prefix={<ThumbsUpIcon />}>
+        Send Feedback
+      </Button>
+    </Popover>
   )
 }
