@@ -2,7 +2,6 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { Link, json, useLoaderData, useLocation } from "@remix-run/react"
 import { GemIcon } from "lucide-react"
 import plur from "plur"
-import { posthog } from "posthog-js"
 import { renderToString } from "react-dom/server"
 import {
   InstantSearchSSRProvider,
@@ -14,6 +13,7 @@ import { Intro } from "~/components/Intro"
 import { Ping } from "~/components/Ping"
 import { Newsletter } from "~/partials/Newsletter"
 import { Search } from "~/routes/_index/Search"
+import { getFeatureFlagValue } from "~/services.server/posthog"
 import { prisma } from "~/services.server/prisma"
 import {
   LATEST_TOOLS_TRESHOLD,
@@ -35,27 +35,33 @@ export const meta: MetaFunction = ({ matches, location }) => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
 
-  const [sponsoring, newToolCount] = await Promise.all([
+  const [sponsoring, newToolCount, newsletterFlag] = await Promise.all([
+    // Find sponsoring
     prisma.sponsoring.findFirst({
       where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
       select: { name: true, description: true, website: true, faviconUrl: true },
     }),
 
+    // Find too count
     prisma.tool.count({
       where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
     }),
+
+    // Get newsletter test value
+    getFeatureFlagValue(request, "newsletter-conversion"),
   ])
 
   const serverState = await getServerState(<Search url={url} sponsoring={sponsoring} />, {
     renderToString,
   })
 
-  return json({ url, sponsoring, newToolCount, serverState })
+  return json({ url, sponsoring, newToolCount, serverState, newsletterFlag })
 }
 
 export default function Index() {
   const { key } = useLocation()
-  const { url, sponsoring, newToolCount, serverState } = useLoaderData<typeof loader>()
+  const { url, sponsoring, newToolCount, serverState, newsletterFlag } =
+    useLoaderData<typeof loader>()
 
   return (
     <>
@@ -86,7 +92,7 @@ export default function Index() {
           className="w-full items-center"
         >
           <div className="flex flex-wrap items-center justify-center text-center gap-y-1 -space-x-1.5">
-            {posthog.getFeatureFlag("newsletter-conversion") === "proof" &&
+            {newsletterFlag === "proof" &&
               Array.from({ length: 5 }).map((_, index) => (
                 <img
                   key={index}
