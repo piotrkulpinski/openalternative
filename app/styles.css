@@ -77,7 +77,8 @@ svg:not([class*="size-"]):not([class*="h-"]) {
 }
 
 [href]:hover svg[class*="arrow-up-right"] {
-  @apply rotate-45;
+  @apply translate-x-[0.15em];
+  @apply rotate-12;
 }
 
 [href]:hover svg[class*="arrow-right"] {

@@ -15,7 +15,6 @@ type FeedbackButtonProps = Omit<ComponentProps<typeof Popover>, "popover"> & {
 export const FeedbackButton = ({ tool, ...props }: FeedbackButtonProps) => {
   return (
     <Popover
-      align="end"
       popover={
         <div className="flex flex-col gap-1.5">
           <Form className="flex flex-col gap-1.5">
@@ -23,7 +22,7 @@ export const FeedbackButton = ({ tool, ...props }: FeedbackButtonProps) => {
               type="email"
               name="email"
               placeholder="Your email"
-              className="text-xs py-1 px-2 rounded w-full"
+              className="py-1.5 rounded w-full"
               data-1p-ignore
               required
             />
@@ -31,12 +30,12 @@ export const FeedbackButton = ({ tool, ...props }: FeedbackButtonProps) => {
               name="feedback"
               rows={3}
               placeholder="Feedback"
-              className="text-xs py-1 px-2 rounded min-h-12 w-full"
+              className="py-1.5 rounded w-full min-h-14"
               required
             />
           </Form>
 
-          <Button size="sm" variant="primary" className="text-xs/none py-1 px-1.5 rounded">
+          <Button size="sm" variant="primary" className="py-1.5">
             Send
           </Button>
         </div>
