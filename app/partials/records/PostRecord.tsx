@@ -16,6 +16,15 @@ export const PostRecord = ({ className, post, ...props }: PostRecordProps) => {
   return (
     <Card style={{ viewTransitionName: vt ? `post-${post._meta.path}` : undefined }} asChild>
       <Link to={to} prefetch="intent" unstable_viewTransition {...props}>
+        {post.image && (
+          <img
+            src={post.image}
+            alt=""
+            className="-m-5 mb-0 w-[calc(100%+2.5rem)] max-w-none aspect-video object-cover"
+            style={{ viewTransitionName: vt ? `post-${post._meta.path}-image` : undefined }}
+          />
+        )}
+
         <Card.Header>
           <H4
             as="h3"
@@ -40,15 +49,6 @@ export const PostRecord = ({ className, post, ...props }: PostRecordProps) => {
           >
             <time dateTime={post.datePublished}>{formatDate(new Date(post.datePublished))}</time>
           </Card.Footer>
-        )}
-
-        {post.image && (
-          <img
-            src={post.image}
-            alt=""
-            className="-m-5 mt-0 w-[calc(100%+2.5rem)] max-w-none"
-            style={{ viewTransitionName: vt ? `post-${post._meta.path}-image` : undefined }}
-          />
         )}
       </Link>
     </Card>

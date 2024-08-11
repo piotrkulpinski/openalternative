@@ -14,7 +14,6 @@ import { getMetaTags } from "~/utils/meta"
 import { getPremiumSponsors } from "~/utils/sponsoring"
 
 export const handle = {
-  noTemplate: true,
   breadcrumb: () => <BreadcrumbsLink to="/sponsor" label="Sponsor" />,
 }
 

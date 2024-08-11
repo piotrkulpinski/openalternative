@@ -20,7 +20,6 @@ import { SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
-  noTemplate: true,
   breadcrumb: () => <BreadcrumbsLink to="/submit-alternative" label="Submit Alternative" />,
 }
 
