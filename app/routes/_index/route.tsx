@@ -2,6 +2,7 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { Link, json, useLoaderData, useLocation } from "@remix-run/react"
 import { GemIcon } from "lucide-react"
 import plur from "plur"
+import { posthog } from "posthog-js"
 import { renderToString } from "react-dom/server"
 import {
   InstantSearchSSRProvider,
@@ -79,12 +80,29 @@ export default function Index() {
         </Intro>
 
         <Newsletter
-          placeholder="Get our newsletter"
-          note={`Join ${SITE_STATS.subscribers.toLocaleString()}+ open source enthusiasts`}
           size="md"
+          buttonLabel="Join our community"
           buttonVariant="fancy"
           className="w-full items-center"
-        />
+        >
+          <div className="flex flex-wrap items-center justify-center text-center gap-y-1 -space-x-1.5">
+            {posthog.getFeatureFlag("newsletter-conversion") === "proof" &&
+              Array.from({ length: 5 }).map((_, index) => (
+                <img
+                  key={index}
+                  src={`/users/${index + 1}.jpg`}
+                  alt=""
+                  width="40"
+                  height="40"
+                  className="size-7 border-2 border-card rounded-full"
+                />
+              ))}
+
+            <p className="w-full text-xs text-muted">
+              Join {SITE_STATS.subscribers.toLocaleString()}+ open source enthusiasts
+            </p>
+          </div>
+        </Newsletter>
       </section>
 
       <InstantSearchSSRProvider key={key} {...(serverState as InstantSearchServerState)}>

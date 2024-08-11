@@ -1,6 +1,6 @@
 import { useFetcher, useLocation } from "@remix-run/react"
 import { posthog } from "posthog-js"
-import { type ComponentProps, type HTMLAttributes, useEffect, useId } from "react"
+import { type ComponentProps, type HTMLAttributes, type ReactNode, useEffect, useId } from "react"
 import { Button } from "~/components/Button"
 import { H5 } from "~/components/Heading"
 import { Series } from "~/components/Series"
@@ -11,18 +11,19 @@ import { cx } from "~/utils/cva"
 type NewsletterProps = HTMLAttributes<HTMLElement> & {
   title?: string
   description?: string
-  note?: string
   placeholder?: string
   size?: ComponentProps<typeof Input>["size"]
+  buttonLabel?: ReactNode
   buttonVariant?: ComponentProps<typeof Button>["variant"]
 }
 
 export const Newsletter = ({
+  children,
   title,
   description,
-  note,
-  placeholder = "Enter your email...",
+  placeholder,
   size = "sm",
+  buttonLabel,
   buttonVariant,
   ...props
 }: NewsletterProps) => {
@@ -56,7 +57,7 @@ export const Newsletter = ({
               <Input
                 type="email"
                 name="email"
-                placeholder={placeholder}
+                placeholder={placeholder || "Your email here..."}
                 data-1p-ignore
                 required
                 size={size}
@@ -72,13 +73,9 @@ export const Newsletter = ({
                   size === "md" && "text-sm/tight min-w-24",
                 )}
               >
-                Subscribe
+                {buttonLabel || "Subscribe"}
               </Button>
             </Form>
-
-            {note && data?.type !== "error" && (
-              <p className="-mt-1 px-1 text-xs text-muted">{note}</p>
-            )}
           </>
         )}
 
@@ -87,6 +84,8 @@ export const Newsletter = ({
         )}
 
         {data?.type === "success" && <p className="text-sm text-green-600">{data.message}</p>}
+
+        {children}
       </section>
     </Series>
   )
