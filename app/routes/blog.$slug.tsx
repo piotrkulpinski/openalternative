@@ -88,7 +88,7 @@ export default function BlogPostPage() {
         <img
           src={post.image}
           alt={post.title}
-          className="w-full h-auto object-cover rounded-lg"
+          className="w-full h-auto aspect-video object-cover rounded-lg"
           style={{ viewTransitionName: vt ? `post-${post._meta.path}-image` : undefined }}
         />
       )}

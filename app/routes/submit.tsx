@@ -21,7 +21,6 @@ import { SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constant
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
-  noTemplate: true,
   breadcrumb: () => <BreadcrumbsLink to="/submit" label="Submit" />,
 }
 
