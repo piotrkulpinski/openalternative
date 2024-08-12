@@ -8,7 +8,14 @@ import { Series } from "~/components/Series"
 import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
 import { BrandXIcon } from "~/components/icons/BrandX"
 import type { CategoryMany } from "~/services.server/api"
-import { GITHUB_URL, RSS_URL, SITE_EMAIL, TWITTER_AUTHOR_URL, TWITTER_URL } from "~/utils/constants"
+import {
+  CLIMATE_URL,
+  GITHUB_URL,
+  RSS_URL,
+  SITE_EMAIL,
+  TWITTER_AUTHOR_URL,
+  TWITTER_URL,
+} from "~/utils/constants"
 import { cx } from "~/utils/cva"
 import { Newsletter } from "./Newsletter"
 
@@ -70,8 +77,30 @@ export const Footer = ({ children, className, categories, ...props }: FooterProp
           </NavigationLink>
         </Series>
 
-        <NavigationLink to={TWITTER_AUTHOR_URL} className="mt-auto">
+        <NavigationLink to={TWITTER_AUTHOR_URL} className="mt-auto text-xs">
+          <img
+            src="/users/1.jpg"
+            alt="Piotr Kulpinski"
+            loading="lazy"
+            width="16"
+            height="16"
+            decoding="async"
+            className="size-4"
+          />
           Made by Piotr Kulpinski
+        </NavigationLink>
+
+        <NavigationLink to={CLIMATE_URL} target="_blank" className="-mt-2 text-xs">
+          <img
+            src="/stripe-climate-badge.svg"
+            alt="Stripe Climate Badge"
+            loading="lazy"
+            width="16"
+            height="16"
+            decoding="async"
+            className="size-4"
+          />
+          We contribute 1% of our revenue to carbon removal
         </NavigationLink>
       </div>
 

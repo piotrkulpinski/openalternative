@@ -18,6 +18,7 @@ export const RSS_URL = `${SITE_URL}/rss.xml`
 export const TWITTER_URL = "https://x.com/ossalternative"
 export const TWITTER_AUTHOR_URL = "https://x.com/piotrkulpinski"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
+export const CLIMATE_URL = "https://go.openalternative.co/climate"
 
 export const LATEST_TOOLS_TRESHOLD = new Date(new Date().setDate(new Date().getDate() - 7))
 export const TOPICS_PER_PAGE = 150
