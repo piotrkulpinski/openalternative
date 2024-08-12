@@ -1,3 +1,4 @@
+import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
 import { CopyrightIcon, GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import { posthog } from "posthog-js"
@@ -24,8 +25,8 @@ export const RepositoryDetails = ({
   ...props
 }: RepositoryDetailsProps) => {
   const insights = [
-    { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
-    { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
+    { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: StarIcon },
+    { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: GitForkIcon },
     ...(tool.lastCommitDate
       ? [
           {

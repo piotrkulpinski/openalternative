@@ -1,3 +1,4 @@
+import { formatNumber } from "@curiousleaf/utils"
 import { NavLink } from "@remix-run/react"
 import {
   BracesIcon,
@@ -11,6 +12,7 @@ import {
 } from "lucide-react"
 import { type HTMLAttributes, useEffect, useState } from "react"
 import { ClientOnly } from "remix-utils/client-only"
+import { Badge } from "~/components/Badge"
 import { Breadcrumbs } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
 import { Container } from "~/components/Container"
@@ -24,7 +26,7 @@ import { NavigationLink, navigationLinkVariants } from "~/components/NavigationL
 import { Series } from "~/components/Series"
 import { ThemeSwitcher } from "~/components/ThemeSwitcher"
 import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
-import { GITHUB_URL } from "~/utils/constants"
+import { GITHUB_URL, SITE_STATS } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
@@ -139,6 +141,11 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             size="sm"
             variant="secondary"
             prefix={<BrandGitHubIcon />}
+            suffix={
+              <Badge size="sm" className="-my-0.5 size-auto">
+                {formatNumber(SITE_STATS.stars)}
+              </Badge>
+            }
             className="max-sm:hidden"
             asChild
           >

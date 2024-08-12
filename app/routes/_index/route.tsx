@@ -1,3 +1,4 @@
+import { formatNumber } from "@curiousleaf/utils"
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { Link, json, useLoaderData, useLocation } from "@remix-run/react"
 import { GemIcon } from "lucide-react"
@@ -80,7 +81,7 @@ export default function Index() {
             <Link to="/latest">
               {newToolCount
                 ? `${newToolCount} new ${plur("tool", newToolCount)} added`
-                : `${SITE_STATS.tools.toLocaleString()}+ open source tools`}
+                : `${formatNumber(SITE_STATS.tools)}+ open source tools`}
             </Link>
           </Badge>
         </Intro>
@@ -105,7 +106,7 @@ export default function Index() {
               ))}
 
             <p className="w-full text-xs text-muted">
-              Join {SITE_STATS.subscribers.toLocaleString()}+ open source enthusiasts
+              Join {formatNumber(SITE_STATS.subscribers, "standard")}+ open source enthusiasts
             </p>
           </div>
         </Newsletter>
