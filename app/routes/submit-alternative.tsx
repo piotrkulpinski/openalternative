@@ -45,7 +45,7 @@ export const loader = () => {
 
 const schema = z.object({
   name: z.string().min(1),
-  website: z.string().url().min(1),
+  website: z.string().min(1).url(),
   description: z.string().min(1).max(200),
 })
 
