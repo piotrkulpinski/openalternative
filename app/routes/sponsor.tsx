@@ -1,3 +1,4 @@
+import { formatNumber } from "@curiousleaf/utils"
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { HandHeartIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
@@ -126,7 +127,7 @@ export default function SponsorPage() {
 
               <Card.Description>{benefit.description}</Card.Description>
               <Card.Footer>
-                ~<strong>{benefit.stats.value.toLocaleString()}</strong>{" "}
+                ~<strong>{formatNumber(benefit.stats.value)}</strong>{" "}
                 <span className="text-muted">{benefit.stats.label}</span>
               </Card.Footer>
             </Card>

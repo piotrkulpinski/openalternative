@@ -1,3 +1,4 @@
+import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import type { Hit as AlgoliaHit } from "instantsearch.js"
@@ -27,8 +28,8 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
   const vt = !isRelated && unstable_useViewTransitionState(to)
 
   const insights = [
-    { label: "Stars", value: tool.stars.toLocaleString(), icon: StarIcon },
-    { label: "Forks", value: tool.forks.toLocaleString(), icon: GitForkIcon },
+    { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: StarIcon },
+    { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: GitForkIcon },
     {
       label: "Last commit",
       value: tool.lastCommitDate && format(tool.lastCommitDate),
