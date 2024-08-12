@@ -7,6 +7,7 @@ import {
 } from "@remix-run/node"
 import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
 import slugify from "@sindresorhus/slugify"
+import { ArrowBigUpDashIcon } from "lucide-react"
 import { z } from "zod"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
@@ -76,7 +77,7 @@ const schema = z.object({
 type SubmitError = z.inferFlattenedErrors<typeof schema>
 
 export type ActionState = TypedResponse<
-  { type: "error"; error: SubmitError } | { type: "success"; message: string }
+  { type: "error"; error: SubmitError } | { type: "success"; toolName: string }
 >
 
 export const action = async ({ request }: ActionFunctionArgs): Promise<ActionState> => {
@@ -121,10 +122,10 @@ export const action = async ({ request }: ActionFunctionArgs): Promise<ActionSta
       } catch {}
     }
 
-    // Return a success response
+    // Return a success response with the tool name
     return json({
       type: "success",
-      message: "Thank you for submitting! We'll review your tool soon.",
+      toolName: tool.name,
     })
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.meta?.target) {
@@ -148,13 +149,21 @@ export default function SubmitPage() {
   const { queueLength, meta } = useLoaderData<typeof loader>()
   const data = useActionData<typeof action>()
 
+  const params =
+    data?.type === "success"
+      ? new URLSearchParams({
+          subject: `Expedite submission of ${data.toolName} — ${SITE_NAME}`,
+          body: `Hi Team,\n\nI have recently submitted ${data.toolName} on ${SITE_NAME}.\n\nIs there a way to expedite the submission process?\n\nThanks!`,
+        })
+      : undefined
+
   return (
     <>
       <Intro {...meta} />
 
       {data?.type !== "success" && (
-        <div className="flex flex-col-reverse items-start gap-y-8 gap-x-12 lg:flex-row">
-          <Form method="POST" className="grid-auto-fill-xs grid gap-6 w-full max-w-xl" noValidate>
+        <>
+          <Form method="POST" className="grid-auto-fill-sm grid gap-6 w-full max-w-2xl" noValidate>
             <div className="flex flex-col gap-1">
               <Label htmlFor="submitter" isRequired>
                 Your Name:
@@ -274,8 +283,11 @@ export default function SubmitPage() {
             <ErrorMessage errors={data?.error.formErrors} className="col-span-full" />
           </Form>
 
-          <Prose className="flex-1 text-pretty text-sm/normal">
-            <p>Please make sure the software you're submitting meets the following criteria:</p>
+          <Prose className="text-sm/normal">
+            <p>
+              <strong>Note:</strong> Submission alone does not guarantee a feature. Please make sure
+              the software you're submitting meets the following criteria:
+            </p>
 
             <ul>
               <li>It's open source</li>
@@ -284,23 +296,32 @@ export default function SubmitPage() {
               <li>It's a good alternative to a proprietary software</li>
             </ul>
           </Prose>
-        </div>
+        </>
       )}
 
-      {data?.type === "success" && <p className="text-base text-green-600">{data.message}</p>}
+      {data?.type === "success" && (
+        <Prose>
+          <p>
+            <strong>Thank you for submitting! We'll review your tool soon.</strong>
+          </p>
 
-      <Prose className="text-sm">
-        <p>
-          <strong>Note:</strong> There are currently {queueLength} submissions in the queue.
-          Considering our current posting rate, it may take up to{" "}
-          {Math.ceil(queueLength / SUBMISSION_POSTING_RATE)} weeks to publish your submission.
-        </p>
+          <p>
+            <strong>Note:</strong> There are currently {queueLength} submissions in the queue.
+            Considering our current posting rate, it may take up to{" "}
+            {Math.ceil(queueLength / SUBMISSION_POSTING_RATE)} weeks to publish your submission.
+          </p>
 
-        <p>
-          To expedite the process, please email us at{" "}
-          <a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>.
-        </p>
-      </Prose>
+          <Button size="lg" className="not-prose" suffix={<ArrowBigUpDashIcon />} asChild>
+            <a
+              href={`mailto:${SITE_EMAIL}?${params?.toString()}`}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Expedite submission of {data.toolName}
+            </a>
+          </Button>
+        </Prose>
+      )}
     </>
   )
 }
