@@ -85,7 +85,7 @@ export const Footer = ({ children, className, categories, ...props }: FooterProp
             width="16"
             height="16"
             decoding="async"
-            className="size-4"
+            className="size-4 rounded-full"
           />
           Made by Piotr Kulpinski
         </NavigationLink>
