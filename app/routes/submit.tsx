@@ -7,17 +7,21 @@ import {
 } from "@remix-run/node"
 import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
 import slugify from "@sindresorhus/slugify"
-import { type ZodFormattedError, z } from "zod"
+import { z } from "zod"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
+import { Checkbox } from "~/components/forms/Checkbox"
+import { ErrorMessage } from "~/components/forms/ErrorMessage"
 import { Input } from "~/components/forms/Input"
 import { Label } from "~/components/forms/Label"
 import { TextArea } from "~/components/forms/TextArea"
+import { subscribeToBeehiive } from "~/services.server/beehiive"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constants"
+import { isRealEmail } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
@@ -49,36 +53,42 @@ export const loader = async () => {
 }
 
 const schema = z.object({
-  submitter: z.string().min(1),
-  email: z.string().email().min(1),
-  name: z.string().min(1),
-  website: z.string().url().min(1),
+  submitter: z.string().min(1, { message: "Your name is required" }),
+  email: z
+    .string()
+    .min(1, { message: "Your email is required" })
+    .email("Invalid email address, please use a correct format.")
+    .refine(isRealEmail, "Invalid email address, please use a real one."),
+  name: z.string().min(1, { message: "Name is required" }),
+  website: z.string().min(1, { message: "Website is required" }).url(),
   repository: z
     .string()
+    .min(1, { message: "Repository is required" })
     .url()
     .refine(
       url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
       "The repository must be a valid GitHub URL with owner and repo name.",
     ),
   description: z.string().max(200),
+  newsletterOptIn: z.coerce.boolean().default(true),
 })
 
-export type ActionState =
-  | { type: "error"; error: ZodFormattedError<z.infer<typeof schema>> }
-  | { type: "success"; message: string }
+type SubmitError = z.inferFlattenedErrors<typeof schema>
 
-export const action = async ({
-  request,
-}: ActionFunctionArgs): Promise<TypedResponse<ActionState>> => {
+export type ActionState = TypedResponse<
+  { type: "error"; error: SubmitError } | { type: "success"; message: string }
+>
+
+export const action = async ({ request }: ActionFunctionArgs): Promise<ActionState> => {
   const data = await request.formData()
-  const parsed = schema.safeParse(Object.fromEntries(data.entries()))
+  const parsed = await schema.safeParseAsync(Object.fromEntries(data.entries()))
 
   if (!parsed.success) {
-    return json({ type: "error", error: parsed.error.format() })
+    return json({ type: "error", error: parsed.error.flatten() })
   }
 
   // Destructure the parsed data
-  const { name, website, repository, description, submitter, email } = parsed.data
+  const { name, website, repository, description, submitter, email, newsletterOptIn } = parsed.data
 
   // Generate a slug
   const slug = slugify(name, { decamelize: false })
@@ -100,6 +110,17 @@ export const action = async ({
     // Send an event to the Inngest pipeline
     await inngest.send({ name: "tool.created", data: { id: tool.id } })
 
+    if (newsletterOptIn) {
+      try {
+        const newsletterFormData = new FormData()
+        newsletterFormData.append("email", email)
+        newsletterFormData.append("utm_medium", "submit_form")
+
+        // Subscribe to the newsletter
+        await subscribeToBeehiive(newsletterFormData)
+      } catch {}
+    }
+
     // Return a success response
     return json({
       type: "success",
@@ -113,8 +134,8 @@ export const action = async ({
       if (name && e.code === "P2002") {
         return json({
           type: "error",
-          error: { [name]: { _errors: [`That ${name} has already been submitted.`] } },
-        } as unknown as ActionState)
+          error: { formErrors: [`That ${name} has already been submitted.`], fieldErrors: {} },
+        })
       }
     }
 
@@ -149,9 +170,7 @@ export default function SubmitPage() {
                 required
               />
 
-              {data?.error?.submitter && (
-                <p className="text-xs text-red-600">{data.error.submitter?._errors[0]}</p>
-              )}
+              <ErrorMessage errors={data?.error.fieldErrors.submitter} />
             </div>
 
             <div className="flex flex-col gap-1">
@@ -168,9 +187,7 @@ export default function SubmitPage() {
                 required
               />
 
-              {data?.error?.email && (
-                <p className="text-xs text-red-600">{data.error.email?._errors[0]}</p>
-              )}
+              <ErrorMessage errors={data?.error.fieldErrors.email} />
             </div>
 
             <div className="flex flex-col gap-1">
@@ -187,10 +204,7 @@ export default function SubmitPage() {
                 data-1p-ignore
                 required
               />
-
-              {data?.error?.name && (
-                <p className="text-xs text-red-600">{data.error.name?._errors[0]}</p>
-              )}
+              <ErrorMessage errors={data?.error.fieldErrors.name} />
             </div>
 
             <div className="flex flex-col gap-1">
@@ -207,9 +221,7 @@ export default function SubmitPage() {
                 required
               />
 
-              {data?.error?.website && (
-                <p className="text-xs text-red-600">{data.error.website?._errors[0]}</p>
-              )}
+              <ErrorMessage errors={data?.error.fieldErrors.website} />
             </div>
 
             <div className="col-span-full flex flex-col gap-1">
@@ -226,9 +238,7 @@ export default function SubmitPage() {
                 required
               />
 
-              {data?.error?.repository && (
-                <p className="text-xs text-red-600">{data.error.repository?._errors[0]}</p>
-              )}
+              <ErrorMessage errors={data?.error.fieldErrors.repository} />
             </div>
 
             <div className="col-span-full flex flex-col gap-1">
@@ -242,9 +252,17 @@ export default function SubmitPage() {
                 placeholder="A platform that helps engineers build better products"
               />
 
-              {data?.error?.description && (
-                <p className="text-xs text-red-600">{data.error.description?._errors[0]}</p>
-              )}
+              <ErrorMessage errors={data?.error.fieldErrors.description} />
+            </div>
+
+            <div className="col-span-full flex items-center gap-2">
+              <Checkbox name="newsletterOptIn" id="newsletterOptIn" defaultChecked={true} />
+
+              <Label htmlFor="newsletterOptIn" className="text-sm font-normal">
+                I'd like to receive free email updates
+              </Label>
+
+              <ErrorMessage errors={data?.error.fieldErrors.newsletterOptIn} />
             </div>
 
             <div>
@@ -252,6 +270,8 @@ export default function SubmitPage() {
                 Submit
               </Button>
             </div>
+
+            <ErrorMessage errors={data?.error.formErrors} className="col-span-full" />
           </Form>
 
           <Prose className="flex-1 text-pretty text-sm/normal">
