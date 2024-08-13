@@ -1,6 +1,5 @@
-import { type NavLinkProps, type UIMatch, useMatches } from "@remix-run/react"
+import { Link, type NavLinkProps, type UIMatch, useMatches } from "@remix-run/react"
 import { Fragment, type HTMLAttributes, type ReactNode } from "react"
-import { NavigationLink } from "~/components/NavigationLink"
 import { cx } from "~/utils/cva"
 
 type BreadcrumbsItemProps = HTMLAttributes<HTMLElement> &
@@ -10,12 +9,13 @@ type BreadcrumbsItemProps = HTMLAttributes<HTMLElement> &
 
 export const BreadcrumbsLink = ({ children, label, ...props }: BreadcrumbsItemProps) => {
   return (
-    <NavigationLink
+    <Link
       itemProp="item"
       className={cx([
+        "flex items-center gap-2 p-0.5 -m-0.5 text-sm -tracking-micro cursor-pointer",
+        "text-muted disabled:opacity-50 hover:text-foreground",
         "group-last:group-[&:not(:only-child)]:line-clamp-1",
-        "group-only:font-medium group-only:text-foreground",
-        "max-md:font-medium max-md:text-foreground",
+        "group-first:font-medium group-first:text-foreground",
       ])}
       end
       {...props}
@@ -23,7 +23,7 @@ export const BreadcrumbsLink = ({ children, label, ...props }: BreadcrumbsItemPr
       {children}
 
       <span itemProp="name">{label}</span>
-    </NavigationLink>
+    </Link>
   )
 }
 
