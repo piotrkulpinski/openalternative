@@ -41,6 +41,7 @@ model Tool {
   isFeatured     Boolean   @default(false)
   submitterName  String?
   submitterEmail String?
+  hostingUrl     String?
   lastCommitDate DateTime?
   publishedAt    DateTime?
   updatedAt      DateTime  @updatedAt

@@ -30,6 +30,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           <Newsletter
             title="Newsletter"
             description="Get updates on new tools, alternatives, and other cool stuff."
+            medium="footer_form"
           />
 
           <Series className="text-sm/normal">
@@ -126,7 +127,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
             decoding="async"
             className="max-sm:hidden size-4"
           />
-          We contribute 1% of our revenue to carbon removal
+          We contribute part of our revenue to carbon removal
         </NavigationLink>
 
         <p className="text-xs text-muted">Disclosure: This website may contain affiliate links.</p>

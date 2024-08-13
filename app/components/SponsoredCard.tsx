@@ -62,7 +62,9 @@ export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCard
           <span>{sponsoring ? `Visit ${sponsoring.name}` : "Become a sponsor"}</span>
         </Button>
 
-        <Logo className="absolute -bottom-1/4 -right-1/4 size-64 opacity-[3.5%] rotate-45 pointer-events-none" />
+        {!sponsoring && (
+          <Logo className="absolute -bottom-1/4 -right-1/4 -z-10 size-64 opacity-[3.5%] rotate-45 pointer-events-none transition group-hover/button:rotate-[60deg]" />
+        )}
       </Link>
     </Card>
   )

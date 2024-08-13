@@ -14,7 +14,7 @@ import { Intro } from "~/components/Intro"
 import { Ping } from "~/components/Ping"
 import { Newsletter } from "~/partials/Newsletter"
 import { Search } from "~/routes/_index/Search"
-import { getFeatureFlagValue } from "~/services.server/posthog"
+import { getPostHogFlagValue } from "~/services.server/posthog"
 import { prisma } from "~/services.server/prisma"
 import {
   LATEST_TOOLS_TRESHOLD,
@@ -49,7 +49,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     }),
 
     // Get newsletter test value
-    getFeatureFlagValue(request, "newsletter-conversion"),
+    getPostHogFlagValue(request, "newsletter-conversion"),
   ])
 
   const serverState = await getServerState(<Search url={url} sponsoring={sponsoring} />, {
