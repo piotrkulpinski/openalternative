@@ -59,6 +59,7 @@
     "react-instantsearch-core": "^7.12.4",
     "react-markdown": "^9.0.1",
     "remix-utils": "^7.5.0",
+    "resend": "^3.5.0",
     "satori": "^0.10.14",
     "stripe": "^15.3.0",
     "tailwind-merge": "^2.4.0",
