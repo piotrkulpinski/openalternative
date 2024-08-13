@@ -22,7 +22,7 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
               <Icon className="size-[1.1em] shrink-0 opacity-75" /> {label}
             </p>
 
-            <span className="h-px grow bg-current opacity-15" />
+            <hr className="min-w-2 flex-1" />
 
             {link ? (
               <Link

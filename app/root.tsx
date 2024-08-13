@@ -19,10 +19,11 @@ import { Logo } from "~/components/Logo"
 import { ErrorPage } from "~/partials/ErrorPage"
 import { Footer } from "~/partials/Footer"
 import { Header } from "~/partials/Header"
-import { categoryManyPayload } from "./services.server/api"
+import { alternativeManyPayload, categoryManyPayload } from "./services.server/api"
 import { prisma } from "./services.server/prisma"
 import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
 
+import { Bottom } from "~/partials/Bottom"
 import stylesheet from "~/styles.css?url"
 
 export const maxDuration = 300
@@ -60,13 +61,22 @@ export const meta: MetaFunction = ({ location }) => {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const categories = await prisma.category.findMany({
-    orderBy: { tools: { _count: "desc" } },
-    include: categoryManyPayload,
-    take: 8,
-  })
+  const [categories, alternatives] = await Promise.all([
+    prisma.category.findMany({
+      orderBy: { tools: { _count: "desc" } },
+      include: categoryManyPayload,
+      take: 12,
+    }),
 
-  return json({ categories }, { headers: JSON_HEADERS })
+    prisma.alternative.findMany({
+      where: { website: { startsWith: "https://go" } },
+      orderBy: { tools: { _count: "desc" } },
+      include: alternativeManyPayload,
+      take: 12,
+    }),
+  ])
+
+  return json({ categories, alternatives }, { headers: JSON_HEADERS })
 }
 
 export function Layout({ children }: PropsWithChildren) {
@@ -120,10 +130,11 @@ export function Layout({ children }: PropsWithChildren) {
           <Container className="flex min-h-[calc(100dvh-var(--header-height))] mt-[calc(var(--header-top)+var(--header-height))] flex-col py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
             {children}
 
-            <hr className="mt-auto peer-[[href]]:mt-0" />
+            {/* <hr className="mt-auto peer-[[href]]:mt-0" /> */}
 
-            <Footer categories={data?.categories} />
+            <Footer />
           </Container>
+          <Bottom categories={data?.categories} alternatives={data?.alternatives} />
         </ThemeProvider>
 
         <ScrollRestoration />

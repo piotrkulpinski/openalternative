@@ -2,7 +2,7 @@ import { useFetcher, useLocation } from "@remix-run/react"
 import { posthog } from "posthog-js"
 import { type ComponentProps, type HTMLAttributes, type ReactNode, useEffect, useId } from "react"
 import { Button } from "~/components/Button"
-import { H5 } from "~/components/Heading"
+import { H6 } from "~/components/Heading"
 import { Series } from "~/components/Series"
 import { ErrorMessage } from "~/components/forms/ErrorMessage"
 import { Input } from "~/components/forms/Input"
@@ -44,12 +44,14 @@ export const Newsletter = ({
     <Series size="lg" direction="column" asChild>
       <section {...props}>
         {title && (
-          <H5 as="strong" className="font-medium">
+          <H6 as="strong" className="font-medium">
             {title}
-          </H5>
+          </H6>
         )}
 
-        {description && <p className="-mt-2 text-sm text-muted text-balance">{description}</p>}
+        {description && (
+          <p className="-mt-2 text-sm text-muted text-balance first:mt-0">{description}</p>
+        )}
 
         {data?.type !== "success" && (
           <Form
