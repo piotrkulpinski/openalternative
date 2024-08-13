@@ -1,6 +1,5 @@
 import { useFetcher, useLocation } from "@remix-run/react"
-import { posthog } from "posthog-js"
-import { type ComponentProps, type HTMLAttributes, type ReactNode, useEffect, useId } from "react"
+import { type ComponentProps, type HTMLAttributes, type ReactNode, useId } from "react"
 import { Button } from "~/components/Button"
 import { H6 } from "~/components/Heading"
 import { Series } from "~/components/Series"
@@ -15,6 +14,7 @@ type InputProps = ComponentProps<typeof Input>
 type NewsletterProps = HTMLAttributes<HTMLElement> & {
   title?: string
   description?: string
+  medium?: string
   placeholder?: string
   size?: InputProps["size"]
   buttonLabel?: ReactNode
@@ -25,6 +25,7 @@ export const Newsletter = ({
   children,
   title,
   description,
+  medium = "subscribe_form",
   placeholder = "Your email here...",
   size = "sm",
   buttonLabel = "Subscribe",
@@ -35,10 +36,6 @@ export const Newsletter = ({
   const { key } = useLocation()
   const { data, state, Form } = useFetcher<typeof action>({ key: `${id}-${key}` })
   const isSmallSize = size === "sm"
-
-  useEffect(() => {
-    if (data?.type === "success") posthog.capture("subscribed")
-  }, [data])
 
   return (
     <Series size="lg" direction="column" asChild>
@@ -60,6 +57,8 @@ export const Newsletter = ({
             className={cx("relative w-full", isSmallSize ? "max-w-64" : "max-w-96")}
             noValidate
           >
+            <input type="hidden" name="utm_medium" value={medium} />
+
             <Input
               type="email"
               name="email"

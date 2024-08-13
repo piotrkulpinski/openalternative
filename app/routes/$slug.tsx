@@ -25,6 +25,7 @@ import { Prose } from "~/components/Prose"
 import { RepositoryDetails } from "~/components/RepositoryDetails"
 import { Series } from "~/components/Series"
 import { ShareButtons } from "~/components/ShareButtons"
+import { SponsoredCard } from "~/components/SponsoredCard"
 import { Tag } from "~/components/Tag"
 import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
 import { ToolRecord } from "~/partials/records/ToolRecord"
@@ -37,7 +38,7 @@ import {
   topicManyPayload,
 } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
+import { HOSTING_SPONSOR, JSON_HEADERS, SITE_URL } from "~/utils/constants"
 import { joinAsSentence } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
@@ -104,100 +105,90 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   const timings = makeTimings("tool loader")
 
   try {
-    const [tool, alternatives, categories, languages, topics, relatedTools, sponsoring] =
-      await Promise.all([
-        time(
-          () =>
-            prisma.tool.findUniqueOrThrow({
-              where: { slug },
-              include: toolOnePayload,
-            }),
-          { type: "find tool", timings },
-        ),
+    const [tool, alternatives, categories, languages, topics, relatedTools] = await Promise.all([
+      time(
+        () =>
+          prisma.tool.findUniqueOrThrow({
+            where: { slug },
+            include: toolOnePayload,
+          }),
+        { type: "find tool", timings },
+      ),
 
-        time(
-          () =>
-            prisma.alternativeToTool.findMany({
-              where: { tool: { slug } },
-              orderBy: [
-                { alternative: { tools: { _count: "desc" } } },
-                { alternative: { name: "asc" } },
-              ],
-              include: { alternative: { include: alternativeManyPayload } },
-            }),
-          { type: "find alternatives", timings },
-        ),
+      time(
+        () =>
+          prisma.alternativeToTool.findMany({
+            where: { tool: { slug } },
+            orderBy: [
+              { alternative: { tools: { _count: "desc" } } },
+              { alternative: { name: "asc" } },
+            ],
+            include: { alternative: { include: alternativeManyPayload } },
+          }),
+        { type: "find alternatives", timings },
+      ),
 
-        time(
-          () =>
-            prisma.categoryToTools.findMany({
-              where: { tool: { slug } },
-              orderBy: [{ category: { tools: { _count: "desc" } } }, { category: { name: "asc" } }],
-              include: { category: { include: categoryManyPayload } },
-            }),
-          { type: "find categories", timings },
-        ),
+      time(
+        () =>
+          prisma.categoryToTools.findMany({
+            where: { tool: { slug } },
+            orderBy: [{ category: { tools: { _count: "desc" } } }, { category: { name: "asc" } }],
+            include: { category: { include: categoryManyPayload } },
+          }),
+        { type: "find categories", timings },
+      ),
 
-        time(
-          () =>
-            prisma.languageToTool.findMany({
-              where: { tool: { slug } },
-              orderBy: [{ language: { tools: { _count: "desc" } } }, { language: { name: "asc" } }],
-              include: { language: { include: languageManyPayload } },
-            }),
-          { type: "find languages", timings },
-        ),
+      time(
+        () =>
+          prisma.languageToTool.findMany({
+            where: { tool: { slug } },
+            orderBy: [{ language: { tools: { _count: "desc" } } }, { language: { name: "asc" } }],
+            include: { language: { include: languageManyPayload } },
+          }),
+        { type: "find languages", timings },
+      ),
 
-        time(
-          () =>
-            prisma.topicToTool.findMany({
-              where: { tool: { slug } },
-              orderBy: [{ topic: { tools: { _count: "desc" } } }, { topic: { slug: "asc" } }],
-              include: { topic: { include: topicManyPayload } },
-            }),
-          { type: "find topics", timings },
-        ),
+      time(
+        () =>
+          prisma.topicToTool.findMany({
+            where: { tool: { slug } },
+            orderBy: [{ topic: { tools: { _count: "desc" } } }, { topic: { slug: "asc" } }],
+            include: { topic: { include: topicManyPayload } },
+          }),
+        { type: "find topics", timings },
+      ),
 
-        time(
-          async () => {
-            const relatedWhereClause = {
-              category: { tools: { some: { tool: { slug } } } },
-              tool: { publishedAt: { lte: new Date() } },
-              NOT: { tool: { slug } },
-            } satisfies Prisma.CategoryToToolsWhereInput
+      time(
+        async () => {
+          const relatedWhereClause = {
+            category: { tools: { some: { tool: { slug } } } },
+            tool: { publishedAt: { lte: new Date() } },
+            NOT: { tool: { slug } },
+          } satisfies Prisma.CategoryToToolsWhereInput
 
-            const take = 3
-            const itemCount = await prisma.categoryToTools.count({ where: relatedWhereClause })
-            const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
-            const properties = [
-              "id",
-              "name",
-              "score",
-            ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
-            const orderBy = getRandomElement(properties)
-            const orderDir = getRandomElement(["asc", "desc"] as const)
+          const take = 3
+          const itemCount = await prisma.categoryToTools.count({ where: relatedWhereClause })
+          const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
+          const properties = [
+            "id",
+            "name",
+            "score",
+          ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
+          const orderBy = getRandomElement(properties)
+          const orderDir = getRandomElement(["asc", "desc"] as const)
 
-            return prisma.categoryToTools.findMany({
-              where: relatedWhereClause,
-              include: { tool: true },
-              distinct: ["toolId"],
-              orderBy: { tool: { [orderBy]: orderDir } },
-              take,
-              skip,
-            })
-          },
-          { type: "find related tools", timings },
-        ),
-
-        time(
-          () => null,
-          // prisma.sponsoring.findFirst({
-          //   where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
-          //   select: { name: true, description: true, website: true, faviconUrl: true },
-          // }),
-          { type: "find sponsor", timings },
-        ),
-      ])
+          return prisma.categoryToTools.findMany({
+            where: relatedWhereClause,
+            include: { tool: true },
+            distinct: ["toolId"],
+            orderBy: { tool: { [orderBy]: orderDir } },
+            take,
+            skip,
+          })
+        },
+        { type: "find related tools", timings },
+      ),
+    ])
 
     const meta = {
       title: `${tool.name}: Open Source Alternative ${
@@ -208,7 +199,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     }
 
     return json(
-      { meta, tool, alternatives, categories, languages, topics, relatedTools, sponsoring },
+      { meta, tool, alternatives, categories, languages, topics, relatedTools },
       { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
     )
   } catch (error) {
@@ -264,20 +255,41 @@ export default function ToolsPage() {
               )}
             </div>
 
-            {tool.website && (
-              <Button
-                suffix={<ArrowUpRightIcon />}
-                onClick={() => posthog.capture("website_clicked", { url: tool.website })}
-                asChild
-              >
-                <a
-                  href={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
-                  target="_blank"
-                  rel="nofollow noreferrer"
-                >
-                  View Website
-                </a>
-              </Button>
+            {(tool.website || tool.hostingUrl) && (
+              <Series>
+                {tool.website && (
+                  <Button
+                    suffix={<ArrowUpRightIcon />}
+                    onClick={() => posthog.capture("website_clicked", { url: tool.website })}
+                    asChild
+                  >
+                    <a
+                      href={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
+                      target="_blank"
+                      rel="nofollow noreferrer"
+                    >
+                      View Website
+                    </a>
+                  </Button>
+                )}
+
+                {tool.hostingUrl && (
+                  <Button
+                    variant="secondary"
+                    suffix={<ArrowUpRightIcon />}
+                    onClick={() => posthog.capture("sponsoring_clicked", { url: tool.hostingUrl })}
+                    asChild
+                  >
+                    <a
+                      href={updateUrlWithSearchParams(tool.hostingUrl, { ref: "openalternative" })}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Self-host with {HOSTING_SPONSOR.name}
+                    </a>
+                  </Button>
+                )}
+              </Series>
             )}
           </div>
 
@@ -370,18 +382,9 @@ export default function ToolsPage() {
           </div>
         </div>
 
-        <div className="sticky top-14 flex flex-col gap-4 max-md:hidden">
+        <div className="sticky top-16 z-30 flex flex-col gap-4 max-md:hidden">
           <RepositoryDetails tool={tool} languages={languages} />
-
-          {/* {repo && (
-            <img
-              src={`https://api.star-history.com/svg?repos=${repo?.owner}/${repo?.name}&type=Date`}
-              alt="Star History"
-              loading="lazy"
-            />
-          )} */}
-
-          {/* <SponsoredCard sponsoring={sponsoring} /> */}
+          <SponsoredCard sponsoring={HOSTING_SPONSOR} />
         </div>
       </div>
 

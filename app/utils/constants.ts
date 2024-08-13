@@ -1,3 +1,5 @@
+import type { SponsoringOne } from "~/services.server/api"
+
 export const SITE_URL = import.meta.env.VITE_SITE_URL
 export const SITE_EMAIL = import.meta.env.VITE_SITE_EMAIL
 export const SITE_NAME = "OpenAlternative"
@@ -28,6 +30,14 @@ export const DAY_IN_MS = 1000 * 60 * 60 * 24
 
 export const SPONSORING_PRICE = 15
 export const SPONSORING_PREMIUM_TRESHOLD = 30
+
+export const HOSTING_SPONSOR: SponsoringOne = {
+  name: "Easypanel",
+  description:
+    "Use an intuitive interface to deploy applications, manage databases, and provision SSL certificates.",
+  website: "https://easypanel.io",
+  faviconUrl: "https://easypanel.io/img/favicon.ico",
+}
 
 export const JSON_HEADERS =
   import.meta.env.NODE_ENV === "development"
