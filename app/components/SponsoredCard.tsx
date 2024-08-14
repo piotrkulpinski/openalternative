@@ -17,7 +17,7 @@ type SponsoredCardProps = CardProps & {
 
 export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCardProps) => {
   return (
-    <Card className={cx("group/button order-2", className)} asChild {...props}>
+    <Card className={cx("group/button", className)} asChild {...props}>
       <Link
         to={
           sponsoring?.website

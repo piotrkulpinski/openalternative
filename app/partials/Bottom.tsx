@@ -23,7 +23,7 @@ export const Bottom = ({
     <Container>
       <div
         className={cx(
-          "flex flex-col gap-y-6 py-8 border-t border-muted/15 md:pt-10 lg:pt-12",
+          "flex flex-col gap-y-6 py-8 border-t border-muted/15 md:py-10 lg:py-12",
           className,
         )}
         {...props}
@@ -32,12 +32,12 @@ export const Bottom = ({
           <Series className="gap-x-4 text-sm/normal">
             <H6 as="strong">Popular Proprietary Tools:</H6>
 
-            <div className="grid grid-auto-fill-xs gap-x-4 gap-y-2 w-full">
+            <div className="grid grid-auto-fill-xxs gap-x-4 gap-y-2 w-full sm:grid-auto-fill-xs">
               {alternatives.map(alternative => (
                 <NavigationLink key={alternative.id} to={`/alternatives/${alternative.slug}`}>
                   <span className="truncate">{alternative.name} Alternatives</span>
                   <hr className="min-w-2 flex-1" />
-                  <span className="shrink-0 text-xs">{alternative._count.tools}</span>
+                  <span className="shrink-0 text-xs max-sm:hidden">{alternative._count.tools}</span>
                 </NavigationLink>
               ))}
             </div>
@@ -48,12 +48,12 @@ export const Bottom = ({
           <Series className="gap-x-4 text-sm/normal md:flex-col md:items-start md:col-span-3">
             <H6 as="strong">Popular Categories:</H6>
 
-            <div className="grid grid-auto-fill-xs gap-x-4 gap-y-2 w-full">
+            <div className="grid grid-auto-fill-xxs gap-x-4 gap-y-2 w-full sm:grid-auto-fill-xs">
               {categories.map(category => (
                 <NavigationLink key={category.id} to={`/categories/${category.slug}`}>
                   <span className="truncate">{category.label}</span>{" "}
                   <hr className="min-w-2 flex-1" />
-                  <span className="shrink-0 text-xs">{category._count.tools}</span>
+                  <span className="shrink-0 text-xs max-sm:hidden">{category._count.tools}</span>
                 </NavigationLink>
               ))}
             </div>
