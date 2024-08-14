@@ -256,7 +256,7 @@ export default function ToolsPage() {
             </div>
 
             {(tool.website || tool.hostingUrl) && (
-              <Series>
+              <Series size="sm">
                 {tool.website && (
                   <Button
                     suffix={<ArrowUpRightIcon />}
@@ -293,24 +293,28 @@ export default function ToolsPage() {
             )}
           </div>
 
-          <RepositoryDetails
-            tool={tool}
-            languages={languages}
-            className="max-sm:w-full md:hidden"
-          />
+          <div className="flex flex-col gap-6">
+            {tool.screenshotUrl && (
+              <img
+                key={tool.screenshotUrl}
+                src={tool.screenshotUrl}
+                alt={`Screenshot of ${tool.name} website`}
+                width={1280}
+                height={1024}
+                loading="eager"
+                className="aspect-video h-auto w-full rounded-md border object-cover object-top"
+                style={{ viewTransitionName: vt ? `tool-${tool.id}-screenshot` : undefined }}
+              />
+            )}
 
-          {tool.screenshotUrl && (
-            <img
-              key={tool.screenshotUrl}
-              src={tool.screenshotUrl}
-              alt={`Screenshot of ${tool.name} website`}
-              width={1280}
-              height={1024}
-              loading="eager"
-              className="aspect-video h-auto w-full rounded-md border object-cover object-top"
-              style={{ viewTransitionName: vt ? `tool-${tool.id}-screenshot` : undefined }}
+            <RepositoryDetails
+              tool={tool}
+              languages={languages}
+              className="max-sm:w-full md:hidden"
             />
-          )}
+
+            <SponsoredCard sponsoring={HOSTING_SPONSOR} className="max-sm:w-full md:hidden" />
+          </div>
 
           {tool.content && (
             <Markdown style={{ viewTransitionName: vt ? `tool-${tool.id}-content` : undefined }}>

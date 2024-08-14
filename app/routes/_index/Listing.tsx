@@ -12,24 +12,26 @@ type ListingProps = HTMLAttributes<HTMLElement> &
   }
 
 export const Listing = ({ className, sponsoring, ...props }: ListingProps) => {
-  const { hits, sendEvent } = useHits(props)
+  const { items, sendEvent } = useHits(props)
 
   return (
     <Grid className={className}>
-      {hits.map((hit, order) => (
-        <Fragment key={hit.id}>
-          {Math.min(2, hits.length - 1) === order && <SponsoredCard sponsoring={sponsoring} />}
+      {items.map((item, order) => (
+        <Fragment key={item.id}>
+          {Math.min(2, items.length - 1) === order && (
+            <SponsoredCard sponsoring={sponsoring} className="sm:order-2" />
+          )}
 
           <ToolRecord
-            tool={hit}
-            onClick={() => sendEvent("click", hit, "Hit Clicked")}
-            onAuxClick={() => sendEvent("click", hit, "Hit Clicked")}
+            tool={item}
+            onClick={() => sendEvent("click", item, "Hit Clicked")}
+            onAuxClick={() => sendEvent("click", item, "Hit Clicked")}
             style={{ order }}
           />
         </Fragment>
       ))}
 
-      {!hits.length && <H5>No results found</H5>}
+      {!items.length && <H5>No results found</H5>}
     </Grid>
   )
 }
