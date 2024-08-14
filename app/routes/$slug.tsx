@@ -22,11 +22,10 @@ import { Grid } from "~/components/Grid"
 import { H1, H4, H5 } from "~/components/Heading"
 import { Markdown } from "~/components/Markdown"
 import { Prose } from "~/components/Prose"
-import { RepositoryDetails } from "~/components/RepositoryDetails"
 import { Series } from "~/components/Series"
 import { ShareButtons } from "~/components/ShareButtons"
-import { SponsoredCard } from "~/components/SponsoredCard"
 import { Tag } from "~/components/Tag"
+import { ToolSidebar } from "~/partials/ToolSidebar"
 import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
 import { ToolRecord } from "~/partials/records/ToolRecord"
 import {
@@ -307,13 +306,7 @@ export default function ToolsPage() {
               />
             )}
 
-            <RepositoryDetails
-              tool={tool}
-              languages={languages}
-              className="max-sm:w-full md:hidden"
-            />
-
-            <SponsoredCard sponsoring={HOSTING_SPONSOR} className="max-sm:w-full md:hidden" />
+            <ToolSidebar tool={tool} languages={languages} className="md:hidden" />
           </div>
 
           {tool.content && (
@@ -386,10 +379,11 @@ export default function ToolsPage() {
           </div>
         </div>
 
-        <div className="sticky top-16 z-30 flex flex-col gap-4 max-md:hidden">
-          <RepositoryDetails tool={tool} languages={languages} />
-          <SponsoredCard sponsoring={HOSTING_SPONSOR} />
-        </div>
+        <ToolSidebar
+          tool={tool}
+          languages={languages}
+          className="sticky top-16 z-30 max-md:hidden"
+        />
       </div>
 
       {/* Alternatives */}
