@@ -76,7 +76,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     }
 
     return json(
-      { meta, tools },
+      { meta, language, tools },
       { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
     )
   } catch {
