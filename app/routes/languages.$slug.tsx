@@ -71,12 +71,12 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     ])
 
     const meta = {
-      title: `Best ${language.name} Open Source Projects`,
+      title: `${language.name} Open Source Projects`,
       description: `A curated collection of the ${tools.length} best open source software written in ${language.name}. Find the most popular and trending open source projects to learn from, contribute to, or use in your own projects.`,
     }
 
     return json(
-      { meta, language, tools },
+      { meta, tools },
       { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
     )
   } catch {
@@ -85,7 +85,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 }
 
 export default function LanguagesPage() {
-  const { meta, language, tools } = useLoaderData<typeof loader>()
+  const { meta, tools } = useLoaderData<typeof loader>()
 
   return (
     <>
