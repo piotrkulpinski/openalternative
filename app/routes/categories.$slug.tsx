@@ -74,12 +74,12 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     const name = category.label || `${category.name} Tools`
 
     const meta = {
-      title: `Best Open Source ${name}`,
+      title: `Open Source ${name}`,
       description: `A curated collection of the ${tools.length} best open source ${name} for inspiration and reference. Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
     return json(
-      { meta, category, tools },
+      { meta, tools },
       { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
     )
   } catch {
@@ -88,7 +88,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 }
 
 export default function CategoriesPage() {
-  const { meta, category, tools } = useLoaderData<typeof loader>()
+  const { meta, tools } = useLoaderData<typeof loader>()
 
   return (
     <>

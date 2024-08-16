@@ -124,7 +124,7 @@ export default function LicensesPage() {
       {!!tools.length && (
         <div className="flex flex-col gap-5">
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <H2>Top {license.name} Licensed Software Examples</H2>
+            <H2>{license.name} Licensed Software Examples</H2>
 
             <Button size="md" variant="secondary" suffix={<MoveRightIcon />} asChild>
               <Link to={"tools"}>View All Tools</Link>

@@ -20,12 +20,13 @@
     "postinstall": "bun run db:generate"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^0.0.41",
     "@aws-sdk/client-s3": "^3.627.0",
     "@aws-sdk/lib-storage": "^3.627.0",
     "@curiousleaf/utils": "^1.0.29",
     "@epic-web/cachified": "^5.2.0",
     "@epic-web/remember": "^1.1.0",
-    "@mendable/firecrawl-js": "^0.0.28",
+    "@mendable/firecrawl-js": "^0.0.36",
     "@octokit/graphql": "^8.1.1",
     "@prisma/client": "^5.18.0",
     "@radix-ui/react-checkbox": "^1.1.1",
@@ -39,6 +40,7 @@
     "@remix-run/serve": "^2.10.0",
     "@resvg/resvg-js": "^2.6.2",
     "@uidotdev/usehooks": "^2.4.1",
+    "ai": "^3.3.7",
     "algoliasearch": "^4.24.0",
     "cva": "beta",
     "date-fns": "^3.6.0",
