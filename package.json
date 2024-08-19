@@ -66,6 +66,7 @@
     "stripe": "^15.3.0",
     "tailwind-merge": "^2.4.0",
     "timeago.js": "^4.0.2",
+    "twitter-api-v2": "^1.17.2",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
   },

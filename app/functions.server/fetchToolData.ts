@@ -2,6 +2,7 @@ import { slugify } from "@curiousleaf/utils"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { fetchRepository } from "~/utils/github"
+import { sendMilestoneTweet } from "~/utils/twitter"
 
 export const fetchToolData = inngest.createFunction(
   { id: "fetch-tool-data" },
@@ -10,7 +11,6 @@ export const fetchToolData = inngest.createFunction(
     const tools = await step.run("find-tools", async () => {
       return await prisma.tool.findMany({
         where: { publishedAt: { not: null } },
-        select: { id: true, repository: true, bump: true },
       })
     })
 
@@ -18,10 +18,19 @@ export const fetchToolData = inngest.createFunction(
       tools.map(
         async tool =>
           await step.run(`update-tool-${tool.id}`, async () => {
-            const repo = await fetchRepository(tool.id, tool.bump, tool.repository)
+            const repo = await fetchRepository(tool)
 
             if (repo) {
-              const { stars, forks, license, lastCommitDate, score, topics, languages } = repo
+              const {
+                stars,
+                forks,
+                license,
+                lastCommitDate,
+                score,
+                topics,
+                languages,
+                reachedMilestone,
+              } = repo
 
               // License
               const licenseData = license && {
@@ -73,6 +82,12 @@ export const fetchToolData = inngest.createFunction(
                     },
                   },
                 })),
+              }
+
+              if (reachedMilestone) {
+                await step.run(`send-milestone-tweet-${tool.id}`, async () => {
+                  await sendMilestoneTweet(tool, stars)
+                })
               }
 
               return prisma.tool.update({
