@@ -178,8 +178,8 @@ export default function SubmitPage() {
 
               <Input
                 type="text"
-                name="submitter"
-                id="submitter"
+                name="submitterName"
+                id="submitterName"
                 size="md"
                 placeholder="John Doe"
                 data-1p-ignore
