@@ -317,7 +317,7 @@ export default function SubmitPage() {
             {Math.ceil(queueLength / SUBMISSION_POSTING_RATE)} weeks to publish your submission.
           </p>
 
-          <Button size="lg" className="not-prose" suffix={<ArrowBigUpDashIcon />} asChild>
+          <Button size="lg" className="not-prose mt-2" suffix={<ArrowBigUpDashIcon />} asChild>
             <a
               href={`mailto:${SITE_EMAIL}?${params?.toString()}`}
               target="_blank"
