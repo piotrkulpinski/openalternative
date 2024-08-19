@@ -160,13 +160,13 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       time(
         async () => {
           const relatedWhereClause = {
-            category: { tools: { some: { tool: { slug } } } },
+            alternative: { tools: { some: { tool: { slug } } } },
             tool: { publishedAt: { lte: new Date() } },
             NOT: { tool: { slug } },
-          } satisfies Prisma.CategoryToToolsWhereInput
+          } satisfies Prisma.AlternativeToToolWhereInput
 
           const take = 3
-          const itemCount = await prisma.categoryToTools.count({ where: relatedWhereClause })
+          const itemCount = await prisma.alternativeToTool.count({ where: relatedWhereClause })
           const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
           const properties = [
             "id",
@@ -176,7 +176,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
           const orderBy = getRandomElement(properties)
           const orderDir = getRandomElement(["asc", "desc"] as const)
 
-          return prisma.categoryToTools.findMany({
+          return prisma.alternativeToTool.findMany({
             where: relatedWhereClause,
             include: { tool: true },
             distinct: ["toolId"],
