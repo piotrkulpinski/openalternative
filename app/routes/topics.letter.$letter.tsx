@@ -33,7 +33,7 @@ export const loader = async ({ params: { letter } }: LoaderFunctionArgs) => {
       prisma.topic.findMany({
         where:
           letter === "&"
-            ? { NOT: ALPHABET.split("").map(l => ({ slug: { startsWith: l } })) }
+            ? { NOT: ALPHABET.split("").map(startsWith => ({ slug: { startsWith } })) }
             : { slug: { startsWith: letter } },
         orderBy: { tools: { _count: "desc" } },
         include: topicManyPayload,

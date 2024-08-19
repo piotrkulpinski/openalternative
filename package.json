@@ -66,6 +66,7 @@
     "stripe": "^15.3.0",
     "tailwind-merge": "^2.4.0",
     "timeago.js": "^4.0.2",
+    "uuid": "^10.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -76,6 +77,7 @@
     "@tailwindcss/typography": "^0.5.14",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@types/uuid": "^10.0.0",
     "@vercel/remix": "^2.10.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
