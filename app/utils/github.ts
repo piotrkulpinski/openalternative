@@ -1,6 +1,8 @@
 import { graphql } from "@octokit/graphql"
+import type { Tool } from "@prisma/client"
+import type { SerializeFrom } from "@remix-run/node"
 import { slugify } from "inngest"
-import { DAY_IN_MS } from "./constants"
+import { DAY_IN_MS, STAR_MILESTONES } from "./constants"
 
 export const githubGraphqlClient = graphql.defaults({
   headers: { authorization: `token ${process.env.GITHUB_TOKEN}` },
@@ -171,8 +173,12 @@ export const calculateHealthScore = ({
   )
 }
 
-export const fetchRepository = async (id: string, bump: number | null, repository: string) => {
-  const repo = getRepoOwnerAndName(repository)
+export const hasReachedMilestone = (currentStars: number, previousStars: number) => {
+  return STAR_MILESTONES.some(milestone => previousStars < milestone && currentStars >= milestone)
+}
+
+export const fetchRepository = async (tool: SerializeFrom<Tool>) => {
+  const repo = getRepoOwnerAndName(tool.repository)
   let queryResult: RepositoryQueryResult | null = null
 
   if (!repo) {
@@ -185,7 +191,7 @@ export const fetchRepository = async (id: string, bump: number | null, repositor
       name: repo.name,
     })
   } catch (error) {
-    console.error(`Failed to fetch repository ${repository}: ${error}`)
+    console.error(`Failed to fetch repository ${tool.repository}: ${error}`)
   }
 
   // if the repository check fails, set the tool as draft
@@ -211,7 +217,7 @@ export const fetchRepository = async (id: string, bump: number | null, repositor
     contributors: mentionableUsers.totalCount,
     watchers: watchers.totalCount,
     lastCommitDate: new Date(defaultBranchRef.target.history.edges[0].node.committedDate),
-    bump,
+    bump: tool.bump,
   }
 
   const score = calculateHealthScore(metrics)
@@ -219,6 +225,7 @@ export const fetchRepository = async (id: string, bump: number | null, repositor
   const forks = metrics.forks
   const license = !licenseInfo || licenseInfo.spdxId === "NOASSERTION" ? null : licenseInfo.spdxId
   const lastCommitDate = metrics.lastCommitDate
+  const reachedMilestone = hasReachedMilestone(stars, tool.stars)
 
   // Prepare topics data
   const topics = repositoryTopics.nodes.map(({ topic }) => ({
@@ -236,5 +243,5 @@ export const fetchRepository = async (id: string, bump: number | null, repositor
     .filter(({ percentage }) => percentage > 17.5)
 
   // Return the extracted data
-  return { stars, forks, lastCommitDate, score, license, topics, languages }
+  return { stars, forks, lastCommitDate, score, license, topics, languages, reachedMilestone }
 }

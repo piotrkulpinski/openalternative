@@ -31,6 +31,8 @@ export const DAY_IN_MS = 1000 * 60 * 60 * 24
 export const SPONSORING_PRICE = 15
 export const SPONSORING_PREMIUM_TRESHOLD = 30
 
+export const STAR_MILESTONES = [100, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000]
+
 export const HOSTING_SPONSOR: SponsoringOne = {
   name: "Easypanel",
   description:
