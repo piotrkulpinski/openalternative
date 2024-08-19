@@ -1,5 +1,6 @@
 import { remember } from "@epic-web/remember"
 import { PostHog } from "posthog-node"
+import { v4 as uuidv4 } from "uuid"
 
 /**
  * Creates and returns a PostHog instance.
@@ -31,7 +32,7 @@ export const getPostHogDistinctId = async (request: Request) => {
     }
   }
 
-  return crypto.randomUUID()
+  return uuidv4()
 }
 
 /**
