@@ -17,7 +17,6 @@ import { Checkbox } from "~/components/forms/Checkbox"
 import { ErrorMessage } from "~/components/forms/ErrorMessage"
 import { Input } from "~/components/forms/Input"
 import { Label } from "~/components/forms/Label"
-import { TextArea } from "~/components/forms/TextArea"
 import { subscribeToBeehiive } from "~/services.server/beehiive"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
@@ -54,12 +53,13 @@ export const loader = async () => {
 }
 
 const schema = z.object({
-  submitter: z.string().min(1, { message: "Your name is required" }),
-  email: z
+  submitterName: z.string().min(1, { message: "Your name is required" }),
+  submitterEmail: z
     .string()
     .min(1, { message: "Your email is required" })
     .email("Invalid email address, please use a correct format.")
     .refine(isRealEmail, "Invalid email address, please use a real one."),
+  submitterNote: z.string().max(200),
   name: z.string().min(1, { message: "Name is required" }),
   website: z.string().min(1, { message: "Website is required" }).url(),
   repository: z
@@ -70,7 +70,6 @@ const schema = z.object({
       url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
       "The repository must be a valid GitHub URL with owner and repo name.",
     ),
-  description: z.string().max(200),
   newsletterOptIn: z.coerce.boolean().default(true),
 })
 
@@ -89,7 +88,15 @@ export const action = async ({ request }: ActionFunctionArgs): Promise<ActionSta
   }
 
   // Destructure the parsed data
-  const { name, website, repository, description, submitter, email, newsletterOptIn } = parsed.data
+  const {
+    name,
+    website,
+    repository,
+    submitterName,
+    submitterEmail,
+    submitterNote,
+    newsletterOptIn,
+  } = parsed.data
 
   // Generate a slug
   const slug = slugify(name, { decamelize: false })
@@ -102,9 +109,9 @@ export const action = async ({ request }: ActionFunctionArgs): Promise<ActionSta
         slug,
         website,
         repository,
-        description,
-        submitterName: submitter,
-        submitterEmail: email,
+        submitterName,
+        submitterEmail,
+        submitterNote,
       },
     })
 
@@ -114,7 +121,7 @@ export const action = async ({ request }: ActionFunctionArgs): Promise<ActionSta
     if (newsletterOptIn) {
       try {
         const newsletterFormData = new FormData()
-        newsletterFormData.append("email", email)
+        newsletterFormData.append("email", submitterEmail)
         newsletterFormData.append("utm_medium", "submit_form")
 
         // Subscribe to the newsletter
@@ -165,7 +172,7 @@ export default function SubmitPage() {
         <>
           <Form method="POST" className="grid-auto-fill-sm grid gap-6 w-full max-w-2xl" noValidate>
             <div className="flex flex-col gap-1">
-              <Label htmlFor="submitter" isRequired>
+              <Label htmlFor="submitterName" isRequired>
                 Your Name:
               </Label>
 
@@ -179,24 +186,24 @@ export default function SubmitPage() {
                 required
               />
 
-              <ErrorMessage errors={data?.error.fieldErrors.submitter} />
+              <ErrorMessage errors={data?.error.fieldErrors.submitterName} />
             </div>
 
             <div className="flex flex-col gap-1">
-              <Label htmlFor="email" isRequired>
+              <Label htmlFor="submitterEmail" isRequired>
                 Your Email:
               </Label>
 
               <Input
                 type="url"
-                name="email"
-                id="email"
+                name="submitterEmail"
+                id="submitterEmail"
                 size="md"
                 placeholder="john@doe.com"
                 required
               />
 
-              <ErrorMessage errors={data?.error.fieldErrors.email} />
+              <ErrorMessage errors={data?.error.fieldErrors.submitterEmail} />
             </div>
 
             <div className="flex flex-col gap-1">
@@ -251,17 +258,16 @@ export default function SubmitPage() {
             </div>
 
             <div className="col-span-full flex flex-col gap-1">
-              <Label htmlFor="description">Description:</Label>
+              <Label htmlFor="submitterNote">Suggest an alternative:</Label>
 
-              <TextArea
-                name="description"
-                id="description"
-                rows={3}
+              <Input
+                name="submitterNote"
+                id="submitterNote"
                 size="md"
-                placeholder="A platform that helps engineers build better products"
+                placeholder="Which well-known tool is this an alternative to?"
               />
 
-              <ErrorMessage errors={data?.error.fieldErrors.description} />
+              <ErrorMessage errors={data?.error.fieldErrors.submitterNote} />
             </div>
 
             <div className="col-span-full flex items-center gap-2">
