@@ -1,11 +1,13 @@
 import type { SerializeFrom } from "@remix-run/node"
-import { Form } from "@remix-run/react"
+import { useFetcher, useLocation } from "@remix-run/react"
 import { ThumbsUpIcon } from "lucide-react"
-import type { ComponentProps } from "react"
+import { type ComponentProps, useId } from "react"
 import { Button } from "~/components/Button"
 import { Popover } from "~/components/Popover"
+import { ErrorMessage } from "~/components/forms/ErrorMessage"
 import { Input } from "~/components/forms/Input"
 import { TextArea } from "~/components/forms/TextArea"
+import type { action } from "~/routes/api.feedback"
 import type { ToolOne } from "~/services.server/api"
 
 type FeedbackButtonProps = Omit<ComponentProps<typeof Popover>, "popover"> & {
@@ -13,32 +15,49 @@ type FeedbackButtonProps = Omit<ComponentProps<typeof Popover>, "popover"> & {
 }
 
 export const FeedbackButton = ({ tool, ...props }: FeedbackButtonProps) => {
+  const id = useId()
+  const { key } = useLocation()
+  const { data, state, Form } = useFetcher<typeof action>({ key: `${id}-${key}` })
+
   return (
     <Popover
       popover={
-        <div className="flex flex-col gap-1.5">
-          <Form className="flex flex-col gap-1.5">
-            <Input
-              type="email"
-              name="email"
-              placeholder="Your email"
-              className="py-1.5 rounded w-full"
-              data-1p-ignore
-              required
-            />
-            <TextArea
-              name="feedback"
-              rows={3}
-              placeholder="Feedback"
-              className="py-1.5 rounded w-full min-h-14"
-              required
-            />
-          </Form>
+        <>
+          {data?.type !== "success" && (
+            <Form method="POST" action="/api/feedback" className="flex flex-col gap-1.5" noValidate>
+              <input type="hidden" name="toolId" value={tool.id} />
 
-          <Button size="sm" variant="primary" className="py-1.5">
-            Send
-          </Button>
-        </div>
+              <Input
+                type="email"
+                name="email"
+                placeholder="Your email"
+                className="py-1.5 px-2.5 rounded w-full"
+                data-1p-ignore
+              />
+
+              <ErrorMessage errors={data?.error.fieldErrors.email} />
+
+              <TextArea
+                name="feedback"
+                rows={3}
+                placeholder="Feedback"
+                className="py-1.5 px-2.5 rounded w-full min-h-14"
+              />
+
+              <ErrorMessage errors={data?.error.fieldErrors.feedback} />
+
+              <Button size="sm" variant="primary" className="py-1.5" isPending={state !== "idle"}>
+                Send
+              </Button>
+            </Form>
+          )}
+
+          {data?.type === "error" && <ErrorMessage errors={data.error.formErrors} />}
+
+          {data?.type === "success" && (
+            <p className="text-xs text-green-600 text-center">{data.message}</p>
+          )}
+        </>
       }
       className="p-1.5 w-48"
       {...props}

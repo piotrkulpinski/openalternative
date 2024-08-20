@@ -18,6 +18,7 @@ import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
 import { FaviconImage } from "~/components/Favicon"
+import { FeedbackButton } from "~/components/FeedbackButton"
 import { Grid } from "~/components/Grid"
 import { H1, H4, H5 } from "~/components/Heading"
 import { Markdown } from "~/components/Markdown"
@@ -375,9 +376,9 @@ export default function ToolsPage() {
             </Series>
           )}
 
-          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 w-full">
+          <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4 w-full">
             <ShareButtons title={meta.title} />
-            {/* <FeedbackButton tool={tool} /> */}
+            <FeedbackButton tool={tool} />
           </div>
         </div>
 

@@ -17,7 +17,7 @@ import { Checkbox } from "~/components/forms/Checkbox"
 import { ErrorMessage } from "~/components/forms/ErrorMessage"
 import { Input } from "~/components/forms/Input"
 import { Label } from "~/components/forms/Label"
-import { subscribeToBeehiive } from "~/services.server/beehiive"
+import { subscribeToBeehiiv } from "~/services.server/beehiiv"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constants"
@@ -125,7 +125,7 @@ export const action = async ({ request }: ActionFunctionArgs): Promise<ActionSta
         newsletterFormData.append("utm_medium", "submit_form")
 
         // Subscribe to the newsletter
-        await subscribeToBeehiive(newsletterFormData)
+        await subscribeToBeehiiv(newsletterFormData)
       } catch {}
     }
 

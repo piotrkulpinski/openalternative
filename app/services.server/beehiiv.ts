@@ -20,19 +20,20 @@ export const subscriberSchema = z.object({
   send_welcome_email: z.boolean().optional().default(true),
 })
 
-export const subscribeToBeehiive = async (formData: FormData) => {
+export const subscribeToBeehiiv = async (formData: FormData) => {
   const url = `https://api.beehiiv.com/v2/publications/${process.env.BEEHIIV_PUBLICATION_ID}/subscriptions`
   const authorization = `Bearer ${process.env.BEEHIIV_API_KEY}`
+  const entries = Object.fromEntries(formData.entries())
 
-  const result = await subscriberSchema.safeParseAsync(Object.fromEntries(formData.entries()))
+  const { data, success, error } = await subscriberSchema.safeParseAsync(entries)
 
-  if (!result.success) {
-    throw result.error.flatten()
+  if (!success) {
+    throw error.flatten()
   }
 
   try {
     // Subscribe to the publication
-    await got.post(url, { json: result.data, headers: { authorization } }).json()
+    await got.post(url, { json: data, headers: { authorization } }).json()
   } catch (error) {
     if (error instanceof Error) {
       throw error.message

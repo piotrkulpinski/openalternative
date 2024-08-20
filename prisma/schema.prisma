@@ -18,8 +18,8 @@ model Sponsoring {
   faviconUrl  String?
   startsAt    DateTime
   endsAt      DateTime
-  updatedAt   DateTime @updatedAt
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Tool {
@@ -45,8 +45,8 @@ model Tool {
   hostingUrl     String?
   lastCommitDate DateTime?
   publishedAt    DateTime?
-  updatedAt      DateTime  @updatedAt
   createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   // Relations
   licenseId    String?
@@ -55,6 +55,7 @@ model Tool {
   categories   CategoryToTools[]
   languages    LanguageToTool[]
   topics       TopicToTool[]
+  feedback     Feedback[]
 
   @@index([id, slug])
 }
@@ -66,8 +67,8 @@ model Alternative {
   description String?
   website     String              @unique
   faviconUrl  String?
-  updatedAt   DateTime            @updatedAt
   createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
   tools       AlternativeToTool[]
 }
 
@@ -76,8 +77,8 @@ model Category {
   name      String
   slug      String            @unique
   label     String?
-  updatedAt DateTime          @updatedAt
   createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
   tools     CategoryToTools[]
 }
 
@@ -85,15 +86,15 @@ model Language {
   slug      String           @id @unique
   name      String
   color     String?
-  updatedAt DateTime         @updatedAt
   createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
   tools     LanguageToTool[]
 }
 
 model Topic {
   slug      String        @id @unique
-  updatedAt DateTime      @updatedAt
   createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
   tools     TopicToTool[]
 }
 
@@ -103,9 +104,21 @@ model License {
   slug        String   @unique
   description String?
   content     String?
-  updatedAt   DateTime @updatedAt
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   tools       Tool[]
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  email     String
+  feedback  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  toolId String?
+  tool   Tool?   @relation(fields: [toolId], references: [id])
 }
 
 model AlternativeToTool {
