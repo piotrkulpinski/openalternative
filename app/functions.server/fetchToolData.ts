@@ -85,9 +85,7 @@ export const fetchToolData = inngest.createFunction(
               }
 
               if (reachedMilestone) {
-                await step.run(`send-milestone-tweet-${tool.id}`, async () => {
-                  await sendMilestoneTweet(tool, stars)
-                })
+                await sendMilestoneTweet(tool, stars)
               }
 
               return prisma.tool.update({
