@@ -392,7 +392,7 @@ export default function ToolsPage() {
       {/* Alternatives */}
       {!!alternatives.length && (
         <Series size="lg" direction="column">
-          <H4 as="h3">{tool.name} is an Open Source alternative to:</H4>
+          <H4 as="h3">{tool.name} is an open source alternative to:</H4>
 
           <Grid className="w-full">
             {alternatives?.map(({ alternative }) => (
@@ -405,7 +405,7 @@ export default function ToolsPage() {
       {/* Related */}
       {relatedTools.length > 0 && (
         <Series size="lg" direction="column">
-          <H4 as="h3">Other Open Source Alternatives similar to {tool.name}:</H4>
+          <H4 as="h3">Similar open source alternatives:</H4>
 
           <Grid className="w-full">
             {relatedTools.map(relatedTool => (
