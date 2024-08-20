@@ -1,11 +1,11 @@
 import { type ActionFunctionArgs, type TypedResponse, json } from "@remix-run/node"
 import type { z } from "zod"
-import { subscribeToBeehiive, type subscriberSchema } from "~/services.server/beehiive"
+import { subscribeToBeehiiv, type subscriberSchema } from "~/services.server/beehiiv"
 import { capturePostHogEvent } from "~/services.server/posthog"
 
 type SubscribeError = z.inferFlattenedErrors<typeof subscriberSchema>
 
-export type ActionState = TypedResponse<
+type ActionState = TypedResponse<
   { type: "error"; error: SubscribeError } | { type: "success"; message: string }
 >
 
@@ -14,7 +14,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionSta
 
   try {
     // Subscribe to the newsletter
-    await subscribeToBeehiive(data)
+    await subscribeToBeehiiv(data)
 
     // Capture the event
     await capturePostHogEvent(request, "subscribed", {
