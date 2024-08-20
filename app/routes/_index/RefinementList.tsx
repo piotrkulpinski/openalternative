@@ -18,6 +18,7 @@ export const RefinementList = ({ className, ...props }: RefinementListProps) => 
 
       <Input
         type="search"
+        size="sm"
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
@@ -25,7 +26,6 @@ export const RefinementList = ({ className, ...props }: RefinementListProps) => 
         maxLength={512}
         placeholder={`Search ${props.attribute}`}
         onChange={e => searchForItems(e.currentTarget.value)}
-        className="!text-xs !min-w-[0] px-2 py-1 font-normal outline-offset-0"
       />
 
       <div

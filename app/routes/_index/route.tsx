@@ -1,6 +1,6 @@
 import { formatNumber } from "@curiousleaf/utils"
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { Link, json, useLoaderData, useLocation } from "@remix-run/react"
+import { Link, json, useLoaderData, useLocation, useSearchParams } from "@remix-run/react"
 import { ArrowRightIcon, GemIcon } from "lucide-react"
 import plur from "plur"
 import { renderToString } from "react-dom/server"
@@ -75,6 +75,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function Index() {
   const { key } = useLocation()
+  const [params] = useSearchParams()
 
   const { url, sponsoring, alternatives, newToolCount, serverState, newsletterFlag } =
     useLoaderData<typeof loader>()
@@ -102,10 +103,9 @@ export default function Index() {
         </Intro>
 
         <Newsletter
-          size="md"
-          buttonLabel="Join our community"
-          buttonVariant="fancy"
+          size="lg"
           className="w-full items-center"
+          buttonProps={{ children: "Join our community", size: "md", variant: "fancy" }}
         >
           <div className="flex flex-wrap items-center justify-center text-center gap-y-1 -space-x-1.5">
             {newsletterFlag === "proof" &&

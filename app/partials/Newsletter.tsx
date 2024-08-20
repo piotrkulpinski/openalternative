@@ -1,5 +1,5 @@
 import { useFetcher, useLocation } from "@remix-run/react"
-import { type ComponentProps, type HTMLAttributes, type ReactNode, useId } from "react"
+import { type ComponentProps, type HTMLAttributes, useId } from "react"
 import { Button } from "~/components/Button"
 import { H6 } from "~/components/Heading"
 import { Series } from "~/components/Series"
@@ -17,8 +17,7 @@ type NewsletterProps = HTMLAttributes<HTMLElement> & {
   medium?: string
   placeholder?: string
   size?: InputProps["size"]
-  buttonLabel?: ReactNode
-  buttonVariant?: ButtonProps["variant"]
+  buttonProps?: ButtonProps
 }
 
 export const Newsletter = ({
@@ -27,15 +26,14 @@ export const Newsletter = ({
   description,
   medium = "subscribe_form",
   placeholder = "Your email here...",
-  size = "sm",
-  buttonLabel = "Subscribe",
-  buttonVariant,
+  size = "md",
+  buttonProps = { size: "sm", children: "Subscribe" },
   ...props
 }: NewsletterProps) => {
   const id = useId()
   const { key } = useLocation()
   const { data, state, Form } = useFetcher<typeof action>({ key: `${id}-${key}` })
-  const isSmallSize = size === "sm"
+  const isLargeSize = size === "lg"
 
   return (
     <Series size="lg" direction="column" asChild>
@@ -54,7 +52,7 @@ export const Newsletter = ({
           <Form
             method="POST"
             action="/api/subscribe"
-            className={cx("relative w-full", isSmallSize ? "max-w-64" : "max-w-96")}
+            className={cx("relative w-full", isLargeSize ? "max-w-96" : "max-w-64")}
             noValidate
           >
             <input type="hidden" name="utm_medium" value={medium} />
@@ -66,17 +64,14 @@ export const Newsletter = ({
               data-1p-ignore
               required
               size={size}
-              className={isSmallSize ? "pr-24" : "pr-28"}
+              className={isLargeSize ? "pr-28" : "pr-24"}
             />
 
             <Button
-              size={size}
-              variant={buttonVariant}
               isPending={state !== "idle"}
-              className={cx("absolute inset-y-1 right-1", !isSmallSize && "text-sm/tight min-w-24")}
-            >
-              {buttonLabel}
-            </Button>
+              className={cx("absolute inset-y-1 right-1", isLargeSize && "text-sm/tight min-w-24")}
+              {...buttonProps}
+            />
           </Form>
         )}
 

@@ -57,6 +57,7 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
             target="_blank"
             rel="noreferrer"
             className="text-foreground/40 pointer-events-auto hover:text-primary"
+            tabIndex={-1}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
