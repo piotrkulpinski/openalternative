@@ -2,31 +2,27 @@ import { MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 
 import type { HTMLAttributes } from "react"
-import { Button } from "~/components/Button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/DropdownMenu"
+import { Tooltip } from "~/components/Tooltip"
 
 export const ThemeSwitcher = ({ ...props }: HTMLAttributes<HTMLElement>) => {
   const { resolvedTheme, setTheme } = useTheme()
+  const Icon = resolvedTheme === "dark" ? MoonIcon : SunIcon
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
-        <Button
-          size="sm"
-          variant="secondary"
-          title="Toggle theme"
-          prefix={resolvedTheme === "dark" ? <MoonIcon /> : <SunIcon />}
-          isAffixOnly
-          {...props}
-        />
-      </DropdownMenuTrigger>
+      <Tooltip tooltip="Toggle Theme">
+        <DropdownMenuTrigger>
+          <Icon className="size-[1.44em] stroke-[1.25] text-muted hover:text-foreground" />
+        </DropdownMenuTrigger>
+      </Tooltip>
 
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="start">
         <DropdownMenuItem onClick={() => setTheme("light")} asChild>
           <button type="button">Light</button>
         </DropdownMenuItem>

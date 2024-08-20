@@ -1,8 +1,11 @@
 import { AtSignIcon, RssIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
+import { ClientOnly } from "remix-utils/client-only"
 import { H6 } from "~/components/Heading"
 import { NavigationLink } from "~/components/NavigationLink"
 import { Series } from "~/components/Series"
+import { ThemeSwitcher } from "~/components/ThemeSwitcher"
+import { Tooltip } from "~/components/Tooltip"
 import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
 import { BrandXIcon } from "~/components/icons/BrandX"
 import { Newsletter } from "~/partials/Newsletter"
@@ -34,36 +37,31 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           />
 
           <Series className="text-sm/normal">
-            <NavigationLink to={RSS_URL} target="_blank" title="RSS Feed" rel="nofollow noreferrer">
-              <RssIcon className="size-[1.44em] stroke-[1.25]" />
-            </NavigationLink>
+            <ClientOnly>{() => <ThemeSwitcher />}</ClientOnly>
 
-            <NavigationLink
-              to={`mailto:${SITE_EMAIL}`}
-              target="_blank"
-              title="Contact Us"
-              rel="nofollow noreferrer"
-            >
-              <AtSignIcon className="size-[1.44em] stroke-[1.25]" />
-            </NavigationLink>
+            <Tooltip tooltip="RSS Feed">
+              <NavigationLink to={RSS_URL} target="_blank" rel="nofollow noreferrer">
+                <RssIcon className="size-[1.44em] stroke-[1.25]" />
+              </NavigationLink>
+            </Tooltip>
 
-            <NavigationLink
-              to={TWITTER_URL}
-              target="_blank"
-              title="Twitter"
-              rel="nofollow noreferrer"
-            >
-              <BrandXIcon className="size-[1.44em] stroke-[1.25]" />
-            </NavigationLink>
+            <Tooltip tooltip="Contact Us">
+              <NavigationLink to={`mailto:${SITE_EMAIL}`} target="_blank" rel="nofollow noreferrer">
+                <AtSignIcon className="size-[1.44em] stroke-[1.25]" />
+              </NavigationLink>
+            </Tooltip>
 
-            <NavigationLink
-              to={GITHUB_URL}
-              target="_blank"
-              title="Source"
-              rel="nofollow noreferrer"
-            >
-              <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
-            </NavigationLink>
+            <Tooltip tooltip="X/Twitter">
+              <NavigationLink to={TWITTER_URL} target="_blank" rel="nofollow noreferrer">
+                <BrandXIcon className="size-[1.44em] stroke-[1.25]" />
+              </NavigationLink>
+            </Tooltip>
+
+            <Tooltip tooltip="Source Code">
+              <NavigationLink to={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
+                <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
+              </NavigationLink>
+            </Tooltip>
           </Series>
         </div>
 
@@ -101,8 +99,8 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         </Series>
       </div>
 
-      <div className="flex flex-row flex-wrap items-center justify-between gap-x-4 gap-y-2 w-full">
-        <div className="mt-auto w-full flex flex-row items-center gap-x-2">
+      <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
+        <Series direction="column">
           <NavigationLink to={TWITTER_AUTHOR_URL} className="text-xs">
             <img
               src="/users/1.jpg"
@@ -115,22 +113,22 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
             />
             Made by Piotr Kulpinski
           </NavigationLink>
-        </div>
 
-        <NavigationLink to={CLIMATE_URL} target="_blank" className="text-xs">
-          <img
-            src="/stripe-climate-badge.svg"
-            alt="Stripe Climate Badge"
-            loading="lazy"
-            width="16"
-            height="16"
-            decoding="async"
-            className="max-sm:hidden size-4"
-          />
-          We contribute part of our revenue to carbon removal
-        </NavigationLink>
+          <NavigationLink to={CLIMATE_URL} target="_blank" className="text-xs">
+            <img
+              src="/stripe-climate-badge.svg"
+              alt="Stripe Climate Badge"
+              loading="lazy"
+              width="16"
+              height="16"
+              decoding="async"
+              className="max-sm:hidden size-4"
+            />
+            We contribute part of our revenue to carbon removal
+          </NavigationLink>
+        </Series>
 
-        <p className="text-xs text-muted">Disclosure: This website may contain affiliate links.</p>
+        <p className="text-xs text-muted">This website may contain affiliate links</p>
       </div>
 
       {children}
