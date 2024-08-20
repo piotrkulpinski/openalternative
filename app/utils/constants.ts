@@ -10,8 +10,8 @@ export const SITE_DESCRIPTION =
 export const SITE_STATS = {
   visitors: 1000,
   tools: 250,
-  subscribers: 1100,
-  stars: 1350,
+  subscribers: 1200,
+  stars: 1400,
 }
 
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz"

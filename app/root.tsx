@@ -132,6 +132,7 @@ export function Layout({ children }: PropsWithChildren) {
 
             <Footer />
           </Container>
+
           <Bottom categories={data?.categories} alternatives={data?.alternatives} />
         </ThemeProvider>
 
