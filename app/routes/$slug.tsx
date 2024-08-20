@@ -33,6 +33,7 @@ import {
   alternativeManyPayload,
   categoryManyPayload,
   languageManyPayload,
+  toolManyPayload,
   toolOnePayload,
   topicManyPayload,
 } from "~/services.server/api"
@@ -160,13 +161,15 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       time(
         async () => {
           const relatedWhereClause = {
-            alternative: { tools: { some: { tool: { slug } } } },
-            tool: { publishedAt: { lte: new Date() } },
-            NOT: { tool: { slug } },
-          } satisfies Prisma.AlternativeToToolWhereInput
+            AND: [
+              { publishedAt: { lte: new Date() } },
+              { slug: { not: slug } },
+              { alternatives: { some: { alternative: { tools: { some: { tool: { slug } } } } } } },
+            ],
+          } satisfies Prisma.ToolWhereInput
 
           const take = 3
-          const itemCount = await prisma.alternativeToTool.count({ where: relatedWhereClause })
+          const itemCount = await prisma.tool.count({ where: relatedWhereClause })
           const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
           const properties = [
             "id",
@@ -176,11 +179,10 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
           const orderBy = getRandomElement(properties)
           const orderDir = getRandomElement(["asc", "desc"] as const)
 
-          return prisma.alternativeToTool.findMany({
+          return prisma.tool.findMany({
             where: relatedWhereClause,
-            include: { tool: true },
-            distinct: ["toolId"],
-            orderBy: { tool: { [orderBy]: orderDir } },
+            include: toolManyPayload,
+            orderBy: { [orderBy]: orderDir },
             take,
             skip,
           })
@@ -400,13 +402,13 @@ export default function ToolsPage() {
       )}
 
       {/* Related */}
-      {!!relatedTools.length && (
+      {relatedTools.length > 0 && (
         <Series size="lg" direction="column">
           <H4 as="h3">Other Open Source Alternatives similar to {tool.name}:</H4>
 
           <Grid className="w-full">
-            {relatedTools.map(({ tool }) => (
-              <ToolRecord key={tool.id} tool={tool} isRelated />
+            {relatedTools.map(relatedTool => (
+              <ToolRecord key={relatedTool.id} tool={relatedTool} isRelated />
             ))}
           </Grid>
         </Series>
