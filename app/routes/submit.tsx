@@ -180,7 +180,7 @@ export default function SubmitPage() {
                 type="text"
                 name="submitterName"
                 id="submitterName"
-                size="md"
+                size="lg"
                 placeholder="John Doe"
                 data-1p-ignore
                 required
@@ -198,7 +198,7 @@ export default function SubmitPage() {
                 type="url"
                 name="submitterEmail"
                 id="submitterEmail"
-                size="md"
+                size="lg"
                 placeholder="john@doe.com"
                 required
               />
@@ -215,7 +215,7 @@ export default function SubmitPage() {
                 type="text"
                 name="name"
                 id="name"
-                size="md"
+                size="lg"
                 placeholder="PostHog"
                 data-1p-ignore
                 required
@@ -232,7 +232,7 @@ export default function SubmitPage() {
                 type="url"
                 name="website"
                 id="website"
-                size="md"
+                size="lg"
                 placeholder="https://posthog.com"
                 required
               />
@@ -249,7 +249,7 @@ export default function SubmitPage() {
                 type="url"
                 name="repository"
                 id="repository"
-                size="md"
+                size="lg"
                 placeholder="https://github.com/posthog/posthog"
                 required
               />
@@ -263,7 +263,7 @@ export default function SubmitPage() {
               <Input
                 name="submitterNote"
                 id="submitterNote"
-                size="md"
+                size="lg"
                 placeholder="Which well-known tool is this an alternative to?"
               />
 

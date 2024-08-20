@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/DropdownMenu"
 import { NavigationLink, navigationLinkVariants } from "~/components/NavigationLink"
+import { SearchForm } from "~/components/SearchForm"
 import { Series } from "~/components/Series"
 import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
 import { GITHUB_URL, SITE_STATS } from "~/utils/constants"
@@ -132,7 +133,9 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <NavigationLink to="/sponsor">Sponsor</NavigationLink>
         </nav>
 
-        <Series size="sm">
+        <Series size="sm" className="items-stretch">
+          <SearchForm className="max-sm:hidden" />
+
           <Button
             size="sm"
             variant="secondary"
@@ -187,6 +190,8 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <NavigationLink to="/about" className="text-base">
             About
           </NavigationLink>
+
+          <SearchForm />
         </nav>
       </div>
     </Container>

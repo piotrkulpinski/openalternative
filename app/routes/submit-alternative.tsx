@@ -124,7 +124,7 @@ export default function SubmitPage() {
                 type="text"
                 name="name"
                 id="name"
-                size="md"
+                size="lg"
                 placeholder="Salesforce"
                 data-1p-ignore
                 required
@@ -144,7 +144,7 @@ export default function SubmitPage() {
                 type="url"
                 name="website"
                 id="website"
-                size="md"
+                size="lg"
                 placeholder="https://salesforce.com"
                 required
               />
