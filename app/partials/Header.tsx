@@ -95,7 +95,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
               <ChevronDownIcon className="group-data-[state=open]:-rotate-180 duration-200" />
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
                 <NavigationLink to="/latest" unstable_viewTransition>
                   <GemIcon className="size-4 opacity-75" /> Latest
@@ -129,7 +129,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <NavigationLink to="/about">About</NavigationLink>
+          <NavigationLink to="/random">Random Tool</NavigationLink>
           <NavigationLink to="/sponsor">Sponsor</NavigationLink>
         </nav>
 
