@@ -21,7 +21,7 @@ import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   breadcrumb: (data?: { post: Post }) => {
-    if (!data?.post) return <BackButton to="/" />
+    if (!data?.post) return <BackButton to="/blog" />
 
     const { _meta, title } = data.post
 
