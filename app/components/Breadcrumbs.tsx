@@ -48,7 +48,7 @@ export const Breadcrumbs = ({ className, ...props }: HTMLAttributes<HTMLElement>
     <ol
       itemScope
       itemType="https://schema.org/BreadcrumbList"
-      className={cx("flex items-center gap-2.5", className)}
+      className={cx("flex items-center gap-2", className)}
       {...props}
     >
       {matches.map(({ handle, data }, i) => (

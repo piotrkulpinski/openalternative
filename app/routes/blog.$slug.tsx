@@ -1,4 +1,4 @@
-import { formatDate } from "@curiousleaf/utils"
+import { formatDate, getReadTime } from "@curiousleaf/utils"
 import type { LoaderFunctionArgs } from "@remix-run/node"
 import {
   type MetaFunction,
@@ -7,10 +7,16 @@ import {
   useLoaderData,
 } from "@remix-run/react"
 import { type Post, allPosts } from "content-collections"
+import { Author } from "~/components/Author"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { H6 } from "~/components/Heading"
 import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Markdown } from "~/components/Markdown"
+import { Series } from "~/components/Series"
+import { ShareButtons } from "~/components/ShareButtons"
+import { SponsoredCard } from "~/components/SponsoredCard"
+import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
@@ -40,26 +46,29 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
     if (!post) throw new Error("Not Found")
 
+    const sponsor = await prisma.alternative.findUnique({
+      where: { slug: "monday" },
+    })
+
     const meta = {
       title: `${post.title}`,
       description: post.description,
     }
 
-    return json({ post, meta })
+    return json({ post, sponsor, meta })
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
 export default function BlogPostPage() {
-  const { post } = useLoaderData<typeof loader>()
-
+  const { post, sponsor } = useLoaderData<typeof loader>()
   const vt = unstable_useViewTransitionState(`/blog/${post._meta.path}`)
 
   return (
     <div
-      className="flex flex-col gap-12 max-w-prose"
       style={{ viewTransitionName: vt ? `post-${post._meta.path}` : undefined }}
+      className="flex flex-col gap-8 md:gap-10 lg:gap-12"
     >
       <Intro>
         <IntroTitle
@@ -74,26 +83,57 @@ export default function BlogPostPage() {
           {post.description}
         </IntroDescription>
 
-        {post.datePublished && (
-          <p
-            style={{ viewTransitionName: vt ? `post-${post._meta.path}-date` : undefined }}
-            className="mt-2 text-muted"
-          >
-            <time dateTime={post.datePublished}>{formatDate(new Date(post.datePublished))}</time>
-          </p>
-        )}
+        <Series
+          className="mt-2 text-sm text-muted"
+          style={{ viewTransitionName: vt ? `post-${post._meta.path}-meta` : undefined }}
+        >
+          {/* <Badge size="lg" variant="outline">Uncategorized</Badge> */}
+
+          {post.datePublished && (
+            <time dateTime={post.datePublished} className="">
+              {formatDate(new Date(post.datePublished))}
+            </time>
+          )}
+
+          <span className="-mx-1">&bull;</span>
+
+          <span>{getReadTime(post.content)} min read</span>
+        </Series>
       </Intro>
 
-      {post.image && (
-        <img
-          src={post.image}
-          alt={post.title}
-          className="w-full h-auto aspect-video object-cover rounded-lg"
-          style={{ viewTransitionName: vt ? `post-${post._meta.path}-image` : undefined }}
-        />
-      )}
+      <div className="flex gap-8 lg:gap-12">
+        <div className="flex flex-col gap-12 max-w-prose flex-1">
+          {post.image && (
+            <img
+              src={post.image}
+              alt={post.title}
+              className="w-full h-auto aspect-video object-cover rounded-lg"
+              style={{ viewTransitionName: vt ? `post-${post._meta.path}-image` : undefined }}
+            />
+          )}
 
-      <Markdown>{post.content}</Markdown>
+          <Markdown>{post.content}</Markdown>
+        </div>
+
+        <div className="sticky top-16 flex flex-col gap-8 w-64 max-h-[calc(100vh-5rem)]">
+          <Series direction="column">
+            <H6 as="strong" className="text-muted">
+              Written by
+            </H6>
+
+            <Author
+              name={post.author.name}
+              image={post.author.image}
+              twitterHandle={post.author.twitterHandle}
+            />
+          </Series>
+
+          {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}
+          <ShareButtons title={post.title} />
+
+          {sponsor && <SponsoredCard sponsoring={sponsor} className="!animate-none" />}
+        </div>
+      </div>
     </div>
   )
 }

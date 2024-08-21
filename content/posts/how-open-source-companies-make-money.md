@@ -2,7 +2,11 @@
 title: "How Open Source Companies Make Money?"
 description: "Discover how companies and developers profit from open source software despite its free nature. Explore the business models behind this tech revolution."
 image: "/content/open-source-money.avif"
-datePublished: 2024-07-11
+datePublished: 2024-08-19
+author:
+  name: Piotr Kulpinski
+  image: "/authors/piotrkulpinski.jpg"
+  twitterHandle: "piotrkulpinski"
 ---
 
 In today's tech-driven world, open source software has become a cornerstone of innovation and collaboration. From operating systems like Linux to web frameworks like React, open source projects have revolutionized the way we develop and use technology. But amidst this culture of freely available code, a pressing question arises: *How do open source companies actually make money?*

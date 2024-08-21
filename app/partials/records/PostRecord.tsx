@@ -1,4 +1,4 @@
-import { formatDate } from "@curiousleaf/utils"
+import { formatDate, getReadTime } from "@curiousleaf/utils"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import type { Post } from "content-collections"
 import type { HTMLAttributes } from "react"
@@ -45,9 +45,11 @@ export const PostRecord = ({ className, post, ...props }: PostRecordProps) => {
 
         {post.datePublished && (
           <Card.Footer
-            style={{ viewTransitionName: vt ? `post-${post._meta.path}-date` : undefined }}
+            style={{ viewTransitionName: vt ? `post-${post._meta.path}-meta` : undefined }}
           >
             <time dateTime={post.datePublished}>{formatDate(new Date(post.datePublished))}</time>
+            <span>&bull;</span>
+            <span>{getReadTime(post.content)} min read</span>
           </Card.Footer>
         )}
       </Link>

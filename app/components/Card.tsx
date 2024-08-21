@@ -38,7 +38,12 @@ export const CardHeader = ({ className, ...props }: HTMLAttributes<HTMLElement>)
 }
 
 export const CardFooter = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
-  return <div className={cx("text-xs text-secondary", className)} {...props} />
+  return (
+    <div
+      className={cx("flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted", className)}
+      {...props}
+    />
+  )
 }
 
 export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {

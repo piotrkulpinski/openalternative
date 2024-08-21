@@ -68,6 +68,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         <Series className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3 md:col-start-8">
           <H6 as="strong">Quick Links:</H6>
 
+          <NavigationLink to="/blog">Blog</NavigationLink>
           <NavigationLink to="/about">About</NavigationLink>
           <NavigationLink to="/sponsor">Sponsor</NavigationLink>
           <NavigationLink to="/submit">Submit</NavigationLink>
