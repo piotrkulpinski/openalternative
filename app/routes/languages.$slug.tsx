@@ -18,7 +18,7 @@ import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { language: LanguageOne }) => {
-    if (!data?.language) return <BackButton to="/" />
+    if (!data?.language) return <BackButton to="/languages" />
 
     const { slug, name } = data.language
 

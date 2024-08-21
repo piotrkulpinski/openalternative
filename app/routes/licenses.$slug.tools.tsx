@@ -18,7 +18,7 @@ import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { license: LicenseOne }) => {
-    if (!data?.license) return <BackButton to="/" />
+    if (!data?.license) return <BackButton to="/licenses" />
 
     const { slug, name } = data.license
 

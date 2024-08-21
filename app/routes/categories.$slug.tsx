@@ -18,7 +18,7 @@ import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { category: CategoryOne }) => {
-    if (!data?.category) return <BackButton to="/" />
+    if (!data?.category) return <BackButton to="/categories" />
 
     const { slug, name } = data.category
 

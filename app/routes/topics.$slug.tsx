@@ -19,7 +19,7 @@ import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { topic: TopicOne }) => {
-    if (!data?.topic) return <BackButton to="/" />
+    if (!data?.topic) return <BackButton to="/topics" />
 
     const { slug } = data.topic
 
