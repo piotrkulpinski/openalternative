@@ -14,6 +14,7 @@ export const badgeVariants = cva({
     size: {
       sm: "px-1 py-px text-[10px]/tight",
       md: "px-1.5 py-0.5 gap-1.5 text-xs/tight",
+      lg: "px-2 py-1 gap-2 text-sm/tight rounded-md",
     },
   },
 

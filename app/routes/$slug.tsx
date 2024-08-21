@@ -382,11 +382,7 @@ export default function ToolsPage() {
           </div>
         </div>
 
-        <ToolSidebar
-          tool={tool}
-          languages={languages}
-          className="sticky top-16 z-30 max-md:hidden"
-        />
+        <ToolSidebar tool={tool} languages={languages} className="sticky top-16 max-md:hidden" />
       </div>
 
       {/* Alternatives */}

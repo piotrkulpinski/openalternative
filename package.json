@@ -11,7 +11,7 @@
     "check": "bun biome check --write .",
     "format": "bun biome format --organize-imports-enabled --write .",
     "typecheck": "tsc",
-    "db:generate": "prisma generate",
+    "db:generate": "prisma generate --no-hints",
     "db:studio": "prisma studio",
     "db:migrate": "prisma migrate dev --name ",
     "db:migrate:deploy": "prisma migrate deploy",
