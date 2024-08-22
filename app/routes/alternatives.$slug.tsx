@@ -7,22 +7,28 @@ import {
   json,
 } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
-import { ArrowUpRightIcon } from "lucide-react"
-import { posthog } from "posthog-js"
+import { ArrowRightIcon } from "lucide-react"
 import { Fragment, type ReactNode } from "react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
-import { Card } from "~/components/Card"
-import { Favicon } from "~/components/Favicon"
-import { H3 } from "~/components/Heading"
+import { Grid } from "~/components/Grid"
+import { H4 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
+import { Section } from "~/components/Section"
+import { Series } from "~/components/Series"
 import { ShareButtons } from "~/components/ShareButtons"
+import { AlternativeCard } from "~/partials/records/AlternativeCard"
+import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
 import { ToolEntry } from "~/partials/records/ToolEntry"
-import { type AlternativeOne, alternativeOnePayload } from "~/services.server/api"
+import {
+  type AlternativeOne,
+  alternativeManyPayload,
+  alternativeOnePayload,
+} from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS } from "~/utils/constants"
+import { FEATURED_ALTERNATIVES, JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
@@ -57,7 +63,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   const timings = makeTimings("alternative loader")
 
   try {
-    const [alternative, tools] = await Promise.all([
+    const [alternative, alternatives, tools] = await Promise.all([
       time(
         () =>
           prisma.alternative.findUniqueOrThrow({
@@ -65,6 +71,16 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
             include: alternativeOnePayload,
           }),
         { type: "find alternative", timings },
+      ),
+
+      time(
+        () =>
+          prisma.alternative.findMany({
+            where: { slug: { in: FEATURED_ALTERNATIVES.filter(alt => alt !== slug) } },
+            include: alternativeManyPayload,
+            take: 6,
+          }),
+        { type: "find other alternatives", timings },
       ),
 
       time(
@@ -87,7 +103,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     }
 
     return json(
-      { meta, alternative, tools },
+      { meta, alternative, alternatives, tools },
       { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
     )
   } catch {
@@ -96,7 +112,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 }
 
 export default function AlternativesPage() {
-  const { meta, alternative, tools } = useLoaderData<typeof loader>()
+  const { meta, alternative, alternatives, tools } = useLoaderData<typeof loader>()
 
   const categories = tools.reduce<
     Record<string, { count: number; category: SerializeFrom<Category> }>
@@ -132,100 +148,97 @@ export default function AlternativesPage() {
         description={`Discover the best open source alternatives to ${alternative.name}.`}
       />
 
-      <div className="grid items-start gap-x-6 gap-y-8 md:grid-cols-3 md:gap-y-10 lg:gap-y-12">
-        {!!tools.length && (
-          <Prose className="order-last md:order-first md:col-span-2">
-            <p>
-              The best open source alternative to {alternative.name} is {bestAlternatives.shift()}.
-              If that doesn't suit you, we've compiled a ranked list of other open source{" "}
-              {alternative.name} alternatives to help you find a suitable replacement.
-              {!!bestAlternatives.length && (
-                <>
-                  {" "}
-                  Other interesting open source
-                  {bestAlternatives.length === 1
-                    ? ` alternative to ${alternative.name} is `
-                    : ` alternatives to ${alternative.name} are: `}
-                  {bestAlternatives.map((alt, index) => (
-                    <Fragment key={index}>
-                      {index > 0 && index !== bestAlternatives.length - 1 && ", "}
-                      {index > 0 && index === bestAlternatives.length - 1 && " and "}
-                      {alt}
-                    </Fragment>
-                  ))}
-                  .
-                </>
-              )}
-            </p>
+      <Section>
+        <Section.Content className="gap-12 md:gap-14 lg:gap-16">
+          {!!tools.length && (
+            <>
+              <Prose>
+                <p>
+                  The best open source alternative to {alternative.name} is{" "}
+                  {bestAlternatives.shift()}. If that doesn't suit you, we've compiled a ranked list
+                  of other open source {alternative.name} alternatives to help you find a suitable
+                  replacement.
+                  {!!bestAlternatives.length && (
+                    <>
+                      {" "}
+                      Other interesting open source
+                      {bestAlternatives.length === 1
+                        ? ` alternative to ${alternative.name} is `
+                        : ` alternatives to ${alternative.name} are: `}
+                      {bestAlternatives.map((alt, index) => (
+                        <Fragment key={index}>
+                          {index > 0 && index !== bestAlternatives.length - 1 && ", "}
+                          {index > 0 && index === bestAlternatives.length - 1 && " and "}
+                          {alt}
+                        </Fragment>
+                      ))}
+                      .
+                    </>
+                  )}
+                </p>
 
-            {!!popularCategories.length && (
-              <p>
-                {alternative.name} alternatives are mainly {popularCategories.shift()}
                 {!!popularCategories.length && (
-                  <>
-                    {" "}
-                    but may also be{" "}
-                    {popularCategories.map((category, index) => (
-                      <Fragment key={index}>
-                        {index > 0 && index !== popularCategories.length - 1 && ", "}
-                        {index > 0 && index === popularCategories.length - 1 && " or "}
-                        {category}
-                      </Fragment>
-                    ))}
-                  </>
+                  <p>
+                    {alternative.name} alternatives are mainly {popularCategories.shift()}
+                    {!!popularCategories.length && (
+                      <>
+                        {" "}
+                        but may also be{" "}
+                        {popularCategories.map((category, index) => (
+                          <Fragment key={index}>
+                            {index > 0 && index !== popularCategories.length - 1 && ", "}
+                            {index > 0 && index === popularCategories.length - 1 && " or "}
+                            {category}
+                          </Fragment>
+                        ))}
+                      </>
+                    )}
+                    . Filter by these if you want a narrower list of alternatives or looking for a
+                    specific functionality of {alternative.name}.
+                  </p>
                 )}
-                . Filter by these if you want a narrower list of alternatives or looking for a
-                specific functionality of {alternative.name}.
-              </p>
-            )}
 
-            <ShareButtons title={meta.title} className="not-prose" />
-          </Prose>
-        )}
+                <ShareButtons title={meta.title} className="not-prose" />
+              </Prose>
 
-        <Card className="group/button bg-background" asChild>
-          <Link
-            to={alternative.website}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            onClick={() => posthog.capture("alternative_clicked", { url: alternative.slug })}
-          >
-            <Card.Header>
-              <Favicon src={alternative.faviconUrl} title={alternative.name} />
+              {tools.map(tool => (
+                <ToolEntry key={tool.id} tool={tool} />
+              ))}
+            </>
+          )}
 
-              <H3 className="truncate">{alternative.name}</H3>
-            </Card.Header>
+          {!tools?.length && (
+            <p className="col-span-full">
+              No Open Source alternatives to {alternative.name} found yet.
+            </p>
+          )}
+        </Section.Content>
 
-            {alternative.description && (
-              <p className="relative -tracking-0.5 line-clamp-4 text-sm/normal text-secondary">
-                {alternative.description}
-              </p>
-            )}
+        <Section.Sidebar className="order-first md:order-last">
+          <AlternativeCard alternative={alternative} />
+        </Section.Sidebar>
+      </Section>
 
-            <Button
-              variant={alternative.website.includes("go.") ? "fancy" : "primary"}
-              size="md"
-              className="mt-auto pointer-events-none"
-              suffix={<ArrowUpRightIcon />}
-              asChild
-            >
-              <span>Visit Website</span>
+      <hr />
+
+      {/* Alternatives */}
+      {!!alternatives.length && (
+        <Series size="lg" direction="column">
+          <Series className="w-full justify-between">
+            <H4 as="h3">Discover Open Source alternatives to:</H4>
+
+            <Button size="md" variant="secondary" suffix={<ArrowRightIcon />} asChild>
+              <Link to="/alternatives">View all alternatives</Link>
             </Button>
-          </Link>
-        </Card>
-      </div>
+          </Series>
 
-      <div className="flex flex-col items-start gap-12 max-w-2xl [counter-reset:alternatives] md:gap-16 lg:gap-20">
-        {tools.map(tool => (
-          <ToolEntry key={tool.id} tool={tool} />
-        ))}
-
-        {!tools?.length && (
-          <p className="col-span-full">No Open Source alternatives to {alternative.name} found.</p>
-        )}
-      </div>
-
-      <BackButton to="/alternatives" />
+          <Grid className="w-full">
+            {alternatives?.map(alternative => (
+              <AlternativeRecord key={alternative.id} alternative={alternative} showCount />
+            ))}
+          </Grid>
+        </Series>
+      )}
     </>
   )
 }

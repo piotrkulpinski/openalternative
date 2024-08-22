@@ -13,9 +13,10 @@ import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { H6 } from "~/components/Heading"
 import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Markdown } from "~/components/Markdown"
+import { Section } from "~/components/Section"
 import { Series } from "~/components/Series"
 import { ShareButtons } from "~/components/ShareButtons"
-import { SponsoredCard } from "~/components/SponsoredCard"
+import { SponsoringCard } from "~/partials/records/SponsoringCard"
 import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
 
@@ -101,8 +102,8 @@ export default function BlogPostPage() {
         </Series>
       </Intro>
 
-      <div className="flex gap-8 lg:gap-12">
-        <div className="flex flex-col gap-12 max-w-prose flex-1">
+      <Section>
+        <Section.Content>
           {post.image && (
             <img
               src={post.image}
@@ -113,9 +114,11 @@ export default function BlogPostPage() {
           )}
 
           <Markdown>{post.content}</Markdown>
-        </div>
 
-        <div className="sticky top-16 flex flex-col gap-8 w-64 max-h-[calc(100vh-5rem)]">
+          <ShareButtons title={post.title} />
+        </Section.Content>
+
+        <Section.Sidebar>
           <Series direction="column">
             <H6 as="strong" className="text-muted">
               Written by
@@ -129,11 +132,12 @@ export default function BlogPostPage() {
           </Series>
 
           {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}
-          <ShareButtons title={post.title} />
 
-          {sponsor && <SponsoredCard sponsoring={sponsor} className="!animate-none" />}
-        </div>
-      </div>
+          {sponsor && (
+            <SponsoringCard sponsoring={sponsor} className="!animate-none max-md:hidden" />
+          )}
+        </Section.Sidebar>
+      </Section>
     </div>
   )
 }

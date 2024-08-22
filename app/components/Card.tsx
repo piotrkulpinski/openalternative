@@ -49,7 +49,7 @@ export const CardFooter = ({ className, ...props }: HTMLAttributes<HTMLElement>)
 export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <p
-      className={cx("-tracking-0.5 line-clamp-2 text-sm/normal text-secondary", className)}
+      className={cx("max-w-md -tracking-0.5 line-clamp-2 text-sm/normal text-secondary", className)}
       {...props}
     />
   )
