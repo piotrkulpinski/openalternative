@@ -6,6 +6,7 @@ import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Highlight } from "react-instantsearch"
 import { format } from "timeago.js"
+import { Badge } from "~/components/Badge"
 import { Card } from "~/components/Card"
 import { Favicon } from "~/components/Favicon"
 import { H4 } from "~/components/Heading"
@@ -54,6 +55,12 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
           >
             <ToolHighlight tool={tool} attribute="name" />
           </H4>
+
+          {tool.discountAmount && (
+            <Badge variant="success" className="ml-auto">
+              {tool.discountAmount}% off
+            </Badge>
+          )}
         </Card.Header>
 
         {tool.description && (

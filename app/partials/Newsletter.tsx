@@ -1,7 +1,7 @@
 import { useFetcher, useLocation } from "@remix-run/react"
 import { type ComponentProps, type HTMLAttributes, useId } from "react"
 import { Button } from "~/components/Button"
-import { H6 } from "~/components/Heading"
+import { H5 } from "~/components/Heading"
 import { Series } from "~/components/Series"
 import { ErrorMessage } from "~/components/forms/ErrorMessage"
 import { Input } from "~/components/forms/Input"
@@ -36,25 +36,23 @@ export const Newsletter = ({
   const isLargeSize = size === "lg"
 
   return (
-    <Series size="lg" direction="column" asChild>
+    <Series
+      size="lg"
+      direction="column"
+      className={cx("items-stretch", isLargeSize ? "max-w-96" : "max-w-64")}
+      asChild
+    >
       <section {...props}>
         {title && (
-          <H6 as="strong" className="font-medium">
+          <H5 as="strong" className="px-0.5 font-medium">
             {title}
-          </H6>
+          </H5>
         )}
 
-        {description && (
-          <p className="-mt-2 text-sm text-muted text-balance first:mt-0">{description}</p>
-        )}
+        {description && <p className="-mt-2 px-0.5 text-sm text-muted first:mt-0">{description}</p>}
 
         {data?.type !== "success" && (
-          <Form
-            method="POST"
-            action="/api/subscribe"
-            className={cx("relative w-full", isLargeSize ? "max-w-96" : "max-w-64")}
-            noValidate
-          >
+          <Form method="POST" action="/api/subscribe" className={cx("relative w-full")} noValidate>
             <input type="hidden" name="utm_medium" value={medium} />
 
             <Input

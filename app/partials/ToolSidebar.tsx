@@ -1,7 +1,7 @@
 import type { SerializeFrom } from "@remix-run/node"
 import type { HTMLAttributes } from "react"
 import { RepositoryDetails } from "~/components/RepositoryDetails"
-import { SponsoredCard } from "~/components/SponsoredCard"
+import { SponsoringCard } from "~/partials/records/SponsoringCard"
 import type { LanguageToToolMany, ToolOne } from "~/services.server/api"
 import { HOSTING_SPONSOR } from "~/utils/constants"
 import { cx } from "~/utils/cva"
@@ -21,7 +21,7 @@ export const ToolSidebar = ({
   return (
     <div className={cx("flex flex-col gap-6 md:gap-4", className)} {...props}>
       <RepositoryDetails tool={tool} languages={languages} />
-      <SponsoredCard sponsoring={HOSTING_SPONSOR} />
+      <SponsoringCard sponsoring={HOSTING_SPONSOR} />
       {children}
     </div>
   )

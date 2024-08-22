@@ -11,11 +11,11 @@ import type { SponsoringOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 
-type SponsoredCardProps = CardProps & {
+type SponsoringCardProps = CardProps & {
   sponsoring: SponsoringOne | null
 }
 
-export const SponsoredCard = ({ className, sponsoring, ...props }: SponsoredCardProps) => {
+export const SponsoringCard = ({ className, sponsoring, ...props }: SponsoringCardProps) => {
   return (
     <Card className={cx("group/button", className)} asChild {...props}>
       <Link

@@ -1,3 +1,4 @@
+import { formatNumber } from "@curiousleaf/utils"
 import { AtSignIcon, RssIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { ClientOnly } from "remix-utils/client-only"
@@ -14,6 +15,7 @@ import {
   GITHUB_URL,
   RSS_URL,
   SITE_EMAIL,
+  SITE_STATS,
   TWITTER_AUTHOR_URL,
   TWITTER_URL,
 } from "~/utils/constants"
@@ -31,8 +33,8 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
       >
         <div className="flex flex-col items-start gap-4 col-span-full md:col-span-6">
           <Newsletter
-            title="Newsletter"
-            description="Get updates on new tools, alternatives, and other cool stuff."
+            title="Subscribe to our newsletter"
+            description={`Join ${formatNumber(SITE_STATS.subscribers, "standard")}+ other members and get updates on new open source tools.`}
             medium="footer_form"
           />
 

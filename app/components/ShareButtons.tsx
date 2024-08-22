@@ -2,7 +2,7 @@ import { Link, useLocation } from "@remix-run/react"
 import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { Button } from "~/components/Button"
-import { H6 } from "~/components/Heading"
+import { H5 } from "~/components/Heading"
 import { Series } from "~/components/Series"
 import { Tooltip } from "~/components/Tooltip"
 import { BrandFacebookIcon } from "~/components/icons/BrandFacebook"
@@ -59,7 +59,7 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, ...props }) =
 
   return (
     <Series {...props}>
-      <H6 as="strong">Share:</H6>
+      <H5 as="strong">Share:</H5>
 
       <Series className="gap-1">
         {shareOptions.map(({ platform, url, icon }) => (

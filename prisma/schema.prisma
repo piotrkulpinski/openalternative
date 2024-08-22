@@ -43,6 +43,8 @@ model Tool {
   submitterEmail String?
   submitterNote  String?
   hostingUrl     String?
+  discountCode   String?
+  discountAmount Int?
   lastCommitDate DateTime?
   publishedAt    DateTime?
   createdAt      DateTime  @default(now())

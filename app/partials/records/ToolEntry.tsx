@@ -2,6 +2,7 @@ import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import { ArrowRightIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
+import { Badge } from "~/components/Badge"
 import { Button } from "~/components/Button"
 import { Card } from "~/components/Card"
 import { FaviconImage } from "~/components/Favicon"
@@ -39,13 +40,21 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
           />
 
           <H2
-            className="!leading-snug"
             style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
+            className="!leading-snug flex-1"
           >
             <Link to={to} prefetch="intent" unstable_viewTransition className="hover:underline">
               {tool.name}
             </Link>
           </H2>
+
+          {tool.discountAmount && (
+            <Badge variant="success" className="md:text-sm">
+              {tool.discountCode
+                ? `Use code ${tool.discountCode} for ${tool.discountAmount}% off`
+                : `${tool.discountAmount}% off`}
+            </Badge>
+          )}
         </Series>
 
         {tool.description && (

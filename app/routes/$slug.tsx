@@ -15,6 +15,7 @@ import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import { z } from "zod"
 import { BackButton } from "~/components/BackButton"
+import { Badge } from "~/components/Badge"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 import { Button } from "~/components/Button"
 import { FaviconImage } from "~/components/Favicon"
@@ -230,7 +231,7 @@ export default function ToolsPage() {
         <div className="flex flex-1 flex-wrap items-start gap-10 md:col-span-2 md:gap-12">
           <div className="flex flex-1 flex-col items-start gap-4 md:gap-6">
             <div className="flex w-full flex-col items-start gap-y-4">
-              <Series size="lg" className="w-full">
+              <Series className="w-full">
                 <FaviconImage
                   src={tool.faviconUrl}
                   title={tool.name}
@@ -238,11 +239,19 @@ export default function ToolsPage() {
                 />
 
                 <H1
-                  className="!leading-snug"
                   style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
+                  className="!leading-snug flex-1"
                 >
                   {tool.name}
                 </H1>
+
+                {tool.discountAmount && (
+                  <Badge variant="success" className="md:text-sm">
+                    {tool.discountCode
+                      ? `Use code ${tool.discountCode} for ${tool.discountAmount}% off`
+                      : `${tool.discountAmount}% off with our link`}
+                  </Badge>
+                )}
               </Series>
 
               {tool.description && (
@@ -364,7 +373,7 @@ export default function ToolsPage() {
           {/* Topics */}
           {!!topics.length && (
             <Series size="lg" direction="column" className="w-full">
-              <H4 as="h3">Related topics:</H4>
+              <H5 as="h3">Related topics:</H5>
 
               <Series>
                 {topics.map(({ topic }) => (
