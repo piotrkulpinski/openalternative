@@ -304,7 +304,7 @@ export default function ToolsPage() {
             )}
           </div>
 
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 w-full">
             {tool.screenshotUrl && (
               <img
                 key={tool.screenshotUrl}
