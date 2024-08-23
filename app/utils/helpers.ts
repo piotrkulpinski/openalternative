@@ -1,5 +1,3 @@
-import { got } from "got"
-
 /**
  * Determines if the given user agent string indicates a mobile device.
  *
@@ -43,24 +41,9 @@ export const stripURLSubpath = (url: string) => {
  * @param maxItems The maximum number of items to include in the sentence.
  * @returns The joined sentence.
  */
-export const joinAsSentence = (items: string[], maxItems = 3) => {
+export const joinAsSentence = (items: string[], maxItems = 3, lastItem = "and") => {
   return items
     .slice(0, maxItems)
     .join(", ")
-    .replace(/, ([^,]*)$/, " and $1")
-}
-
-/**
- * Checks if an email is real by checking if it's in the disposable email domains list.
- *
- * @param email The email to be checked.
- * @returns A boolean indicating whether the email is real.
- */
-export const isRealEmail = async (email: string) => {
-  const disposableJsonURL =
-    "https://rawcdn.githack.com/disposable/disposable-email-domains/master/domains.json"
-  const response = await got(disposableJsonURL).json<string[]>()
-  const domain = email.split("@")[1]
-
-  return !response.includes(domain)
+    .replace(/, ([^,]*)$/, ` ${lastItem} $1`)
 }

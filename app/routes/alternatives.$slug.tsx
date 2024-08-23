@@ -3,14 +3,13 @@ import {
   type HeadersFunction,
   type LoaderFunctionArgs,
   type MetaFunction,
-  type SerializeFrom,
   json,
 } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import { Fragment, type ReactNode } from "react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { Intro } from "~/components/Intro"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
 import { Section } from "~/components/Section"
 import { ShareButtons } from "~/components/ShareButtons"
@@ -24,6 +23,7 @@ import {
 } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { FEATURED_ALTERNATIVES, JSON_HEADERS } from "~/utils/constants"
+import { joinAsSentence } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
@@ -71,7 +71,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       time(
         () =>
           prisma.alternative.findMany({
-            where: { slug: { in: FEATURED_ALTERNATIVES.filter(alt => alt !== slug) } },
+            where: { slug: { in: FEATURED_ALTERNATIVES.filter(a => a !== slug) } },
             include: alternativeManyPayload,
             take: 6,
           }),
@@ -92,13 +92,26 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       ),
     ])
 
+    // Sort the categories by count
+    const categories = Object.values(
+      tools.reduce<Record<string, { count: number; category: Category }>>((acc, { categories }) => {
+        for (const { category } of categories) {
+          if (!acc[category.name]) {
+            acc[category.name] = { count: 0, category }
+          }
+          acc[category.name].count += 1
+        }
+        return acc
+      }, {}),
+    ).sort((a, b) => b.count - a.count)
+
     const meta = {
-      title: `Best Open Source ${alternative.name} Alternatives`,
+      title: `Open Source ${alternative.name} Alternatives${categories.length > 0 ? `: Best ${tools.length} ${categories[0].category.label}` : ""}`,
       description: `A curated collection of the ${tools.length} best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
     return json(
-      { meta, alternative, alternatives, tools },
+      { meta, alternative, alternatives, tools, categories },
       { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
     )
   } catch {
@@ -107,112 +120,93 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 }
 
 export default function AlternativesPage() {
-  const { meta, alternative, alternatives, tools } = useLoaderData<typeof loader>()
+  const { meta, alternative, alternatives, tools, categories } = useLoaderData<typeof loader>()
 
-  const categories = tools.reduce<
-    Record<string, { count: number; category: SerializeFrom<Category> }>
-  >((acc, { categories }) => {
-    for (const { category } of categories) {
-      if (!acc[category.name]) {
-        acc[category.name] = { count: 0, category }
-      }
-      acc[category.name].count += 1
-    }
-    return acc
-  }, {})
-
+  // Pick the top 5 tools
   const bestAlternatives: ReactNode[] = tools.slice(0, 5).map(tool => (
     <Link key={tool.id} to={`/${tool.slug}`} prefetch="intent" unstable_viewTransition>
       {tool.name}
     </Link>
   ))
 
-  const popularCategories = Object.values(categories)
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 3)
-    .map(({ category }) => (
-      <Link key={category.id} to={`/categories/${category.slug}`} unstable_viewTransition>
-        {category.label || category.name}
-      </Link>
-    ))
+  // Pick the top 3 categories
+  const bestCategories = categories.slice(0, 3).map(({ category }) => (
+    <Link key={category.id} to={`/categories/${category.slug}`} unstable_viewTransition>
+      {category.label || category.name}
+    </Link>
+  ))
+
+  // Get the category labels
+  const categoryLabels = categories.map(({ category }) => category.label || category.name)
 
   return (
     <>
-      <Intro
-        title={meta.title}
-        description={`Discover the best open source alternatives to ${alternative.name}.`}
-      />
+      <Intro>
+        <IntroTitle>Open Source {alternative.name} Alternatives</IntroTitle>
 
-      <Section>
-        <Section.Content className="gap-12 md:gap-14 lg:gap-16">
-          {!!tools.length && (
-            <>
-              <Prose>
-                <p>
-                  The best open source alternative to {alternative.name} is{" "}
-                  {bestAlternatives.shift()}. If that doesn't suit you, we've compiled a ranked list
-                  of other open source {alternative.name} alternatives to help you find a suitable
-                  replacement.
-                  {!!bestAlternatives.length && (
-                    <>
-                      {" "}
-                      Other interesting open source
-                      {bestAlternatives.length === 1
-                        ? ` alternative to ${alternative.name} is `
-                        : ` alternatives to ${alternative.name} are: `}
-                      {bestAlternatives.map((alt, index) => (
-                        <Fragment key={index}>
-                          {index > 0 && index !== bestAlternatives.length - 1 && ", "}
-                          {index > 0 && index === bestAlternatives.length - 1 && " and "}
-                          {alt}
-                        </Fragment>
-                      ))}
-                      .
-                    </>
-                  )}
-                </p>
+        <IntroDescription className="max-w-4xl">
+          {tools.length
+            ? `The Best ${joinAsSentence(categoryLabels, 2)} similar to ${alternative.name}.`
+            : `No Open Source alternatives to ${alternative.name} found yet.`}
+        </IntroDescription>
+      </Intro>
 
-                {!!popularCategories.length && (
-                  <p>
-                    {alternative.name} alternatives are mainly {popularCategories.shift()}
-                    {!!popularCategories.length && (
-                      <>
-                        {" "}
-                        but may also be{" "}
-                        {popularCategories.map((category, index) => (
-                          <Fragment key={index}>
-                            {index > 0 && index !== popularCategories.length - 1 && ", "}
-                            {index > 0 && index === popularCategories.length - 1 && " or "}
-                            {category}
-                          </Fragment>
-                        ))}
-                      </>
-                    )}
-                    . Filter by these if you want a narrower list of alternatives or looking for a
-                    specific functionality of {alternative.name}.
-                  </p>
+      {!!tools.length && (
+        <Section>
+          <Section.Content className="gap-12 md:gap-14 lg:gap-16">
+            <Prose>
+              <p>
+                The best open source alternative to {alternative.name} is {bestAlternatives.shift()}
+                . If that doesn't suit you, we've compiled a ranked list of other open source{" "}
+                {alternative.name} alternatives to help you find a suitable replacement.
+                {!!bestAlternatives.length && (
+                  <>
+                    {" "}
+                    Other interesting open source
+                    {bestAlternatives.length === 1
+                      ? ` alternative to ${alternative.name} is `
+                      : ` alternatives to ${alternative.name} are: `}
+                    {bestAlternatives.map((alt, index) => (
+                      <Fragment key={index}>
+                        {index > 0 && index !== bestAlternatives.length - 1 && ", "}
+                        {index > 0 && index === bestAlternatives.length - 1 && " and "}
+                        {alt}
+                      </Fragment>
+                    ))}
+                    .
+                  </>
                 )}
+              </p>
 
-                <ShareButtons title={meta.title} className="not-prose" />
-              </Prose>
+              {!!bestCategories.length && (
+                <p>
+                  {alternative.name} alternatives are mainly {bestCategories.shift()} but may also
+                  be{" "}
+                  {bestCategories.map((category, index) => (
+                    <Fragment key={index}>
+                      {index > 0 && index !== bestCategories.length - 1 && ", "}
+                      {index > 0 && index === bestCategories.length - 1 && " or "}
+                      {category}
+                    </Fragment>
+                  ))}
+                  . Browse these if you want a narrower list of alternatives or looking for a
+                  specific functionality of {alternative.name}.
+                </p>
+              )}
 
-              {tools.map(tool => (
-                <ToolEntry key={tool.id} tool={tool} />
-              ))}
-            </>
-          )}
+              <ShareButtons title={meta.title} className="not-prose" />
+            </Prose>
 
-          {!tools?.length && (
-            <p className="col-span-full">
-              No Open Source alternatives to {alternative.name} found yet.
-            </p>
-          )}
-        </Section.Content>
+            {tools.map(tool => (
+              <ToolEntry key={tool.id} tool={tool} />
+            ))}
+          </Section.Content>
 
-        <Section.Sidebar className="order-first md:order-last">
-          <AlternativeCard alternative={alternative} />
-        </Section.Sidebar>
-      </Section>
+          <Section.Sidebar className="order-first md:order-last">
+            <AlternativeCard alternative={alternative} />
+          </Section.Sidebar>
+        </Section>
+      )}
 
       <AlternativeList alternatives={alternatives} />
     </>
