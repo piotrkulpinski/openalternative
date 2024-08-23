@@ -32,7 +32,9 @@ export const AlternativeCard = ({ className, alternative, ...props }: Alternativ
         </Card.Header>
 
         {alternative.description && (
-          <Card.Description className="line-clamp-4">{alternative.description}</Card.Description>
+          <Card.Description className="max-w-md line-clamp-4">
+            {alternative.description}
+          </Card.Description>
         )}
 
         <Button

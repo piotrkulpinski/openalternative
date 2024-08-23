@@ -21,7 +21,7 @@ import { subscribeToBeehiiv } from "~/services.server/beehiiv"
 import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constants"
-import { isRealEmail } from "~/utils/helpers"
+import { isRealEmail } from "~/utils/email"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
