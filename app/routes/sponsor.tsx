@@ -127,8 +127,7 @@ export default function SponsorPage() {
 
               <Card.Description>{benefit.description}</Card.Description>
               <Card.Footer>
-                ~<strong>{formatNumber(benefit.stats.value)}</strong>{" "}
-                <span className="text-muted">{benefit.stats.label}</span>
+                ~{formatNumber(benefit.stats.value)} {benefit.stats.label}
               </Card.Footer>
             </Card>
           ))}

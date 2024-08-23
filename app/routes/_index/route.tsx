@@ -1,7 +1,7 @@
 import { formatNumber } from "@curiousleaf/utils"
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { Link, json, useLoaderData, useLocation } from "@remix-run/react"
-import { ArrowRightIcon, GemIcon } from "lucide-react"
+import { GemIcon } from "lucide-react"
 import plur from "plur"
 import { renderToString } from "react-dom/server"
 import {
@@ -10,14 +10,10 @@ import {
   getServerState,
 } from "react-instantsearch"
 import { Badge } from "~/components/Badge"
-import { Button } from "~/components/Button"
-import { Grid } from "~/components/Grid"
-import { H4 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Ping } from "~/components/Ping"
-import { Series } from "~/components/Series"
+import { AlternativeList } from "~/partials/AlternativeList"
 import { Newsletter } from "~/partials/Newsletter"
-import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
 import { Search } from "~/routes/_index/Search"
 import { alternativeManyPayload } from "~/services.server/api"
 import { getPostHogFlagValue } from "~/services.server/posthog"
@@ -130,26 +126,7 @@ export default function Index() {
         <Search url={url} sponsoring={sponsoring} />
       </InstantSearchSSRProvider>
 
-      <hr />
-
-      {/* Alternatives */}
-      {!!alternatives.length && (
-        <Series size="lg" direction="column">
-          <Series className="w-full justify-between">
-            <H4 as="h3">Discover Open Source alternatives to:</H4>
-
-            <Button size="md" variant="secondary" suffix={<ArrowRightIcon />} asChild>
-              <Link to="/alternatives">View all alternatives</Link>
-            </Button>
-          </Series>
-
-          <Grid className="w-full">
-            {alternatives?.map(alternative => (
-              <AlternativeRecord key={alternative.id} alternative={alternative} showCount />
-            ))}
-          </Grid>
-        </Series>
-      )}
+      <AlternativeList alternatives={alternatives} />
     </>
   )
 }

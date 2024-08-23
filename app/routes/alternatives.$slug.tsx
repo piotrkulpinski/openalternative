@@ -7,20 +7,15 @@ import {
   json,
 } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
-import { ArrowRightIcon } from "lucide-react"
 import { Fragment, type ReactNode } from "react"
 import { BackButton } from "~/components/BackButton"
 import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { Button } from "~/components/Button"
-import { Grid } from "~/components/Grid"
-import { H4 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
 import { Section } from "~/components/Section"
-import { Series } from "~/components/Series"
 import { ShareButtons } from "~/components/ShareButtons"
+import { AlternativeList } from "~/partials/AlternativeList"
 import { AlternativeCard } from "~/partials/records/AlternativeCard"
-import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
 import { ToolEntry } from "~/partials/records/ToolEntry"
 import {
   type AlternativeOne,
@@ -219,26 +214,7 @@ export default function AlternativesPage() {
         </Section.Sidebar>
       </Section>
 
-      <hr />
-
-      {/* Alternatives */}
-      {!!alternatives.length && (
-        <Series size="lg" direction="column">
-          <Series className="w-full justify-between">
-            <H4 as="h3">Discover Open Source alternatives to:</H4>
-
-            <Button size="md" variant="secondary" suffix={<ArrowRightIcon />} asChild>
-              <Link to="/alternatives">View all alternatives</Link>
-            </Button>
-          </Series>
-
-          <Grid className="w-full">
-            {alternatives?.map(alternative => (
-              <AlternativeRecord key={alternative.id} alternative={alternative} showCount />
-            ))}
-          </Grid>
-        </Series>
-      )}
+      <AlternativeList alternatives={alternatives} />
     </>
   )
 }
