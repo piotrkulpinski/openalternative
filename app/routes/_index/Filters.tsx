@@ -1,5 +1,6 @@
 import { useLocalStorage, useMediaQuery } from "@uidotdev/usehooks"
 import { PanelBottomCloseIcon, PanelBottomOpenIcon } from "lucide-react"
+import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { useInstantSearch } from "react-instantsearch"
 import { Button } from "~/components/Button"
@@ -29,6 +30,14 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
     { value: 71, label: "72 per page" },
   ]
 
+  const onToggleFilters = () => {
+    // Toggle the filters
+    setIsFiltersOpen(prev => !prev)
+
+    // Send the event to the posthog
+    posthog.capture("toggle_filters")
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <div
@@ -44,7 +53,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
           size="md"
           variant="secondary"
           suffix={isFiltersOpen ? <PanelBottomOpenIcon /> : <PanelBottomCloseIcon />}
-          onClick={() => setIsFiltersOpen(prev => !prev)}
+          onClick={onToggleFilters}
           className="flex-1"
         >
           {isFiltersOpen ? "Hide" : "Show"} Filters
