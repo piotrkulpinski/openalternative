@@ -245,12 +245,14 @@ export default function ToolsPage() {
                   style={{ viewTransitionName: vt ? `tool-${tool.id}-favicon` : undefined }}
                 />
 
-                <H1
-                  style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
-                  className="!leading-snug flex-1"
-                >
-                  {tool.name}
-                </H1>
+                <div className="flex flex-1">
+                  <H1
+                    style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
+                    className="!leading-snug truncate"
+                  >
+                    {tool.name}
+                  </H1>
+                </div>
 
                 {tool.discountAmount && (
                   <Badge variant="success" className="md:text-sm">
