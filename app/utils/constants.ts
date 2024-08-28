@@ -11,7 +11,7 @@ export const SITE_STATS = {
   visitors: 1000,
   tools: 250,
   subscribers: 1200,
-  stars: 1400,
+  stars: 1500,
 }
 
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz"
