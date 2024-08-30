@@ -85,6 +85,7 @@ export const fetchToolData = inngest.createFunction(
               }
 
               if (reachedMilestone) {
+                logger.info(`Sending milestone tweet for ${tool.name}`)
                 await sendMilestoneTweet(tool, stars)
               }
 

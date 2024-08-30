@@ -39,14 +39,16 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
             style={{ viewTransitionName: vt ? `tool-${tool.id}-favicon` : undefined }}
           />
 
-          <H2
-            style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
-            className="!leading-snug flex-1"
-          >
-            <Link to={to} prefetch="intent" unstable_viewTransition className="hover:underline">
-              {tool.name}
-            </Link>
-          </H2>
+          <div className="flex flex-1">
+            <H2
+              style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
+              className="!leading-snug"
+            >
+              <Link to={to} prefetch="intent" unstable_viewTransition className="hover:underline">
+                {tool.name}
+              </Link>
+            </H2>
+          </div>
 
           {tool.discountAmount && (
             <Badge variant="success" className="md:text-sm">
