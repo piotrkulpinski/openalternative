@@ -35,7 +35,7 @@ export const loader = async ({ params: { letter } }: LoaderFunctionArgs) => {
           letter === "&"
             ? { NOT: ALPHABET.split("").map(startsWith => ({ slug: { startsWith } })) }
             : { slug: { startsWith: letter } },
-        orderBy: { tools: { _count: "desc" } },
+        orderBy: [{ tools: { _count: "desc" } }, { slug: "asc" }],
         include: topicManyPayload,
       }),
     { type: "find topics", timings },
