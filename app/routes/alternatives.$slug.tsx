@@ -56,6 +56,7 @@ export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   const timings = makeTimings("alternative loader")
+  let suffix = ""
 
   try {
     const [alternative, alternatives, tools] = await Promise.all([
@@ -105,8 +106,19 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       }, {}),
     ).sort((a, b) => b.count - a.count)
 
+    switch (tools.length) {
+      case 0:
+        suffix = ""
+        break
+      case 1:
+        suffix = `: Best ${categories[0].category.label}`
+        break
+      default:
+        suffix = `: Top ${tools.length} ${categories[0].category.label}`
+    }
+
     const meta = {
-      title: `Open Source ${alternative.name} Alternatives${categories.length > 0 ? `: Best ${tools.length} ${categories[0].category.label}` : ""}`,
+      title: `Open Source ${alternative.name} Alternatives${suffix}`,
       description: `A curated collection of the ${tools.length} best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
