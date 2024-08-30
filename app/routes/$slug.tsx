@@ -106,6 +106,7 @@ export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
 
 export const loader = async ({ request, params: { slug } }: LoaderFunctionArgs) => {
   const timings = makeTimings("tool loader")
+  let suffix = ""
 
   try {
     const [tool, alternatives, categories, languages, topics, relatedTools, visitLabelFlag] =
@@ -200,12 +201,19 @@ export const loader = async ({ request, params: { slug } }: LoaderFunctionArgs) 
         getPostHogFlagValue(request, "visit-label"),
       ])
 
+    switch (alternatives.length) {
+      case 0:
+        suffix = `${tool.tagline}`
+        break
+      case 1:
+        suffix = `Open Source ${alternatives[0].alternative.name} Alternative`
+        break
+      default:
+        suffix = `Open Source Alternative to ${joinAsSentence(alternatives.map(({ alternative }) => alternative?.name))}`
+    }
+
     const meta = {
-      title: `${tool.name}: Open Source Alternative ${
-        alternatives.length
-          ? `to ${joinAsSentence(alternatives.map(({ alternative }) => alternative?.name))}`
-          : ""
-      }`,
+      title: `${tool.name}: ${suffix}`,
     }
 
     return json(
