@@ -1,13 +1,13 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { NavLink } from "@remix-run/react"
 import {
-  BracesIcon,
+  CalendarDaysIcon,
   ChevronDownIcon,
+  CodeXmlIcon,
   CopyrightIcon,
-  GemIcon,
+  GalleryHorizontalEndIcon,
   PlusIcon,
-  ShapesIcon,
-  SmilePlusIcon,
+  ReplaceIcon,
   TagIcon,
 } from "lucide-react"
 import { type HTMLAttributes, useEffect, useState } from "react"
@@ -98,22 +98,22 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
                 <NavigationLink to="/latest" unstable_viewTransition>
-                  <GemIcon className="size-4 opacity-75" /> Latest
+                  <CalendarDaysIcon className="size-4 opacity-75" /> Latest
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavigationLink to="/categories" unstable_viewTransition>
-                  <ShapesIcon className="size-4 opacity-75" /> Categories
+                  <GalleryHorizontalEndIcon className="size-4 opacity-75" /> Categories
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavigationLink to="/alternatives" unstable_viewTransition>
-                  <SmilePlusIcon className="size-4 opacity-75" /> Alternatives
+                  <ReplaceIcon className="size-4 opacity-75" /> Alternatives
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavigationLink to="/languages" unstable_viewTransition>
-                  <BracesIcon className="size-4 opacity-75" /> Languages
+                  <CodeXmlIcon className="size-4 opacity-75" /> Languages
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
