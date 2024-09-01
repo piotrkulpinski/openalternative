@@ -54,7 +54,7 @@ export default function SponsorPage() {
       description: "Get featured on our homepage with a banner ad linking to your website.",
       stats: {
         value: SITE_STATS.visitors,
-        label: "Visitors/day",
+        label: "Monthly Visitors",
       },
     },
     {

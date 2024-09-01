@@ -159,7 +159,7 @@ export default function AlternativesPage() {
         <IntroDescription className="max-w-4xl">
           {tools.length
             ? `The Best ${joinAsSentence(categoryLabels, 2)} similar to ${alternative.name}.`
-            : `No Open Source alternatives to ${alternative.name} found yet.`}
+            : `No open source ${alternative.name} alternatives found yet.`}
         </IntroDescription>
       </Intro>
 
