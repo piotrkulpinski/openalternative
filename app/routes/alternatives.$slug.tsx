@@ -192,8 +192,8 @@ export default function AlternativesPage() {
 
               {!!bestCategories.length && (
                 <p>
-                  {alternative.name} alternatives are mainly {bestCategories.shift()} but may also
-                  be{" "}
+                  {alternative.name} alternatives are mainly {bestCategories.shift()}
+                  {!!bestCategories.length && " but may also be "}
                   {bestCategories.map((category, index) => (
                     <Fragment key={index}>
                       {index > 0 && index !== bestCategories.length - 1 && ", "}
