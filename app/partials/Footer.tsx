@@ -88,15 +88,21 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         </Series>
 
         <Series className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
-          <H6 as="strong">The Family:</H6>
+          <H6 as="strong">Other Products:</H6>
 
-          <NavigationLink to="https://openalternative.co" target="_blank" rel="nofollow noreferrer">
-            OpenAlternative
-          </NavigationLink>
-          <NavigationLink to="https://superstash.co" target="_blank" rel="nofollow noreferrer">
+          <NavigationLink
+            to="https://superstash.co?utm_source=openalternative&utm_campaign=Family&utm_medium=web"
+            target="_blank"
+            rel="nofollow noreferrer"
+          >
             Superstash
           </NavigationLink>
-          <NavigationLink to="https://chipmunktheme.com" target="_blank" rel="nofollow noreferrer">
+
+          <NavigationLink
+            to="https://chipmunktheme.com?utm_source=openalternative&utm_campaign=Family&utm_medium=web"
+            target="_blank"
+            rel="nofollow noreferrer"
+          >
             Chipmunk Theme
           </NavigationLink>
         </Series>
