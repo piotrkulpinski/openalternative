@@ -9,8 +9,8 @@ export const SITE_DESCRIPTION =
 
 export const SITE_STATS = {
   visitors: 50000,
-  tools: 250,
-  subscribers: 1250,
+  tools: 260,
+  subscribers: 1300,
   stars: 1500,
 }
 
@@ -49,6 +49,13 @@ export const HOSTING_SPONSOR: SponsoringOne = {
     "Use an intuitive interface to deploy applications, manage databases, and provision SSL certificates.",
   website: "https://easypanel.io",
   faviconUrl: "https://easypanel.io/img/favicon.ico",
+}
+
+export const BANNER_SPONSOR: SponsoringOne = {
+  name: "Polar",
+  description: "An open source Lemon Squeezy alternative with 20% lower fees",
+  website: "https://polar.sh",
+  faviconUrl: "https://s3.us-east-1.amazonaws.com/openalternative/polar/favicon.png",
 }
 
 export const JSON_HEADERS =

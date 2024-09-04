@@ -23,6 +23,7 @@ import { alternativeManyPayload, categoryManyPayload } from "./services.server/a
 import { prisma } from "./services.server/prisma"
 import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
 
+import { Banner } from "~/components/Banner"
 import { Bottom } from "~/partials/Bottom"
 import stylesheet from "~/styles.css?url"
 
@@ -107,13 +108,6 @@ export function Layout({ children }: PropsWithChildren) {
               data-domain={import.meta.env.VITE_PLAUSIBLE_DOMAIN}
               src={`${import.meta.env.VITE_PLAUSIBLE_HOST}/js/script.js`}
             />
-
-            {/* AdSense */}
-            <script
-              async
-              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${import.meta.env.VITE_ADSENSE_PUBLISHER_ID}`}
-              crossOrigin="anonymous"
-            />
           </>
         )}
       </head>
@@ -125,9 +119,11 @@ export function Layout({ children }: PropsWithChildren) {
           enableSystem
           disableTransitionOnChange
         >
+          {false && <Banner />}
+
           <Header />
 
-          <Container className="flex min-h-[calc(100dvh-var(--header-height))] mt-[calc(var(--header-top)+var(--header-height))] flex-col py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
+          <Container className="flex min-h-[calc(100dvh-var(--header-height))] flex-col py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
             {children}
 
             <Footer />
