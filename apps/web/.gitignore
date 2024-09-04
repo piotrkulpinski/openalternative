@@ -1,5 +1,10 @@
 node_modules
 
+/.cache
+/build
+/public/*.json
+/.content-collections
+
 # Local env files
 .env
 .env.local
@@ -15,6 +20,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
-# macOS-specific files
-.DS_Store
