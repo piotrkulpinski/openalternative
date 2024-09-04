@@ -7,8 +7,9 @@ node_modules
 .env.test.local
 .env.production.local
 
-# vercel
+# vercel & turborepo
 .vercel
+.turbo
 
 # logs
 npm-debug.log*
