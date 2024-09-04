@@ -1,0 +1,38 @@
+2024-09-04T10:51:27.766414Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/1.cookie"), AnchoredSystemPathBuf(".turbo/cookies/.turbo-cookie")}
+2024-09-04T10:51:27.766436Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-09-04T10:51:27.865916Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cache")}
+2024-09-04T10:51:27.865925Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-09-04T10:51:28.566677Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/vite.config.ts.timestamp-1725447088504-58f22ea2bc3a8.mjs")}
+2024-09-04T10:51:28.566688Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2024-09-04T10:51:28.766302Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/.content-collections/cache/content-collection-config.mjs"), AnchoredSystemPathBuf("apps/web/vite.config.ts.timestamp-1725447088504-58f22ea2bc3a8.mjs")}
+2024-09-04T10:51:28.766313Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2024-09-04T10:51:28.966159Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/.content-collections/generated/index.d.ts"), AnchoredSystemPathBuf("apps/web/.content-collections/generated/index.js"), AnchoredSystemPathBuf("apps/web/vite.config.ts.timestamp-1725447088896-f5571df7c6871.mjs"), AnchoredSystemPathBuf("apps/web/.content-collections/generated/allPosts.js")}
+2024-09-04T10:51:28.966171Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2024-09-04T10:51:28.996922Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-09-04T10:51:54.066321Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/.content-collections/generated/allPosts.js"), AnchoredSystemPathBuf("apps/web/.content-collections/cache/content-collection-config.mjs"), AnchoredSystemPathBuf("apps/web/.content-collections/generated/index.js"), AnchoredSystemPathBuf("apps/web/vite.config.ts.timestamp-1725447114014-cd5f02ab83622.mjs"), AnchoredSystemPathBuf("apps/web/vite.config.ts.timestamp-1725447114026-42259497c34d8.mjs"), AnchoredSystemPathBuf("apps/web/.content-collections/generated/index.d.ts")}
+2024-09-04T10:51:54.066330Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2024-09-04T10:51:54.086447Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-09-04T10:52:55.167904Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/database/src"), AnchoredSystemPathBuf("packages/database/src/index.ts")}
+2024-09-04T10:52:55.167916Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/db"), path: AnchoredSystemPathBuf("packages/database") }}))
+2024-09-04T10:52:58.567279Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/database/src/index.ts")}
+2024-09-04T10:52:58.567288Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/db"), path: AnchoredSystemPathBuf("packages/database") }}))
+2024-09-04T10:53:14.167804Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/database/package.json")}
+2024-09-04T10:53:14.167816Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/db"), path: AnchoredSystemPathBuf("packages/database") }}))
+2024-09-04T10:54:05.968251Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/package.json")}
+2024-09-04T10:54:05.968260Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2024-09-04T10:54:22.368559Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/app/services.server/prisma.ts")}
+2024-09-04T10:54:22.368568Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2024-09-04T10:54:52.069405Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("turbo.json")}
+2024-09-04T10:54:52.069418Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(All(DefaultGlobalFileChanged))
+2024-09-04T11:42:47.500564Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("turbo.json")}
+2024-09-04T11:42:47.500583Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(All(DefaultGlobalFileChanged))
+2024-09-04T11:42:47.601949Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("turbo.json")}
+2024-09-04T11:42:47.601965Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(All(DefaultGlobalFileChanged))
+2024-09-04T11:42:53.501227Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("turbo.json")}
+2024-09-04T11:42:53.501236Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(All(DefaultGlobalFileChanged))
+2024-09-04T11:43:18.402499Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("tsconfig.json"), AnchoredSystemPathBuf("apps/web/tsconfig.json")}
+2024-09-04T11:43:18.402512Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/web"), path: AnchoredSystemPathBuf("apps/web") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-09-04T11:43:30.602090Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/tsconfig.json")}
+2024-09-04T11:43:30.602100Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2024-09-04T11:43:51.101091Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/tsconfig.json")}
+2024-09-04T11:43:51.101102Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@openalternative/web"), path: AnchoredSystemPathBuf("apps/web") }}))
