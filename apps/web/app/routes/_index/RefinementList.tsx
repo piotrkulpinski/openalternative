@@ -1,10 +1,10 @@
-import { Badge } from "apps/web/app/components/Badge"
-import { H6 } from "apps/web/app/components/Heading"
-import { navigationLinkVariants } from "apps/web/app/components/NavigationLink"
-import { Input } from "apps/web/app/components/forms/Input"
-import { cx } from "apps/web/app/utils/cva"
 import type { HTMLAttributes } from "react"
 import { type UseRefinementListProps, useRefinementList } from "react-instantsearch"
+import { Badge } from "~/components/Badge"
+import { H6 } from "~/components/Heading"
+import { navigationLinkVariants } from "~/components/NavigationLink"
+import { Input } from "~/components/forms/Input"
+import { cx } from "~/utils/cva"
 
 type RefinementListProps = HTMLAttributes<HTMLDivElement> & UseRefinementListProps
 

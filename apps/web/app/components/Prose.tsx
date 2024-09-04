@@ -1,5 +1,5 @@
-import { cx } from "apps/web/app/utils/cva"
 import type { HTMLAttributes } from "react"
+import { cx } from "~/utils/cva"
 
 export const Prose = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (

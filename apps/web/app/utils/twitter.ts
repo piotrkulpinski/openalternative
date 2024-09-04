@@ -1,8 +1,8 @@
 import { formatNumber } from "@curiousleaf/utils"
 import type { Tool } from "@prisma/client"
 import type { SerializeFrom } from "@remix-run/node"
-import { SITE_URL } from "apps/web/app/utils/constants"
 import { TwitterApi } from "twitter-api-v2"
+import { SITE_URL } from "~/utils/constants"
 
 const client = new TwitterApi({
   appKey: process.env.TWITTER_API_KEY ?? "",

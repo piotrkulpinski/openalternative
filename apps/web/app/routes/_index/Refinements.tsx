@@ -1,5 +1,5 @@
-import { cx } from "apps/web/app/utils/cva"
 import type { HTMLAttributes } from "react"
+import { cx } from "~/utils/cva"
 import { RangeSlider } from "./RangeSlider"
 import { RefinementList } from "./RefinementList"
 

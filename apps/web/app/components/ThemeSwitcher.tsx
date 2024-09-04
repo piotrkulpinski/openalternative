@@ -1,14 +1,14 @@
 import { MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 
+import type { HTMLAttributes } from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "apps/web/app/components/DropdownMenu"
-import { Tooltip } from "apps/web/app/components/Tooltip"
-import type { HTMLAttributes } from "react"
+} from "~/components/DropdownMenu"
+import { Tooltip } from "~/components/Tooltip"
 
 export const ThemeSwitcher = ({ ...props }: HTMLAttributes<HTMLElement>) => {
   const { resolvedTheme, setTheme } = useTheme()

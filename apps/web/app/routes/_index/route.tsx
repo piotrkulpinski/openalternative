@@ -1,24 +1,24 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { json, useLoaderData, useLocation } from "@remix-run/react"
-import { AlternativeList } from "apps/web/app/partials/AlternativeList"
-import { Hero } from "apps/web/app/partials/Hero"
-import { Search } from "apps/web/app/routes/_index/Search"
-import { alternativeManyPayload } from "apps/web/app/services.server/api"
-import { getPostHogFlagValue } from "apps/web/app/services.server/posthog"
-import { prisma } from "apps/web/app/services.server/prisma"
-import {
-  FEATURED_ALTERNATIVES,
-  LATEST_TOOLS_TRESHOLD,
-  SITE_DESCRIPTION,
-  SITE_TAGLINE,
-} from "apps/web/app/utils/constants"
-import { getMetaTags } from "apps/web/app/utils/meta"
 import { renderToString } from "react-dom/server"
 import {
   InstantSearchSSRProvider,
   type InstantSearchServerState,
   getServerState,
 } from "react-instantsearch"
+import { AlternativeList } from "~/partials/AlternativeList"
+import { Hero } from "~/partials/Hero"
+import { Search } from "~/routes/_index/Search"
+import { alternativeManyPayload } from "~/services.server/api"
+import { getPostHogFlagValue } from "~/services.server/posthog"
+import { prisma } from "~/services.server/prisma"
+import {
+  FEATURED_ALTERNATIVES,
+  LATEST_TOOLS_TRESHOLD,
+  SITE_DESCRIPTION,
+  SITE_TAGLINE,
+} from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction = ({ matches, location }) => {
   return getMetaTags({

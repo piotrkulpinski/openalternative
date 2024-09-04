@@ -1,6 +1,4 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
-import { navigationLinkVariants } from "apps/web/app/components/NavigationLink"
-import { cx } from "apps/web/app/utils/cva"
 import { Check, Circle } from "lucide-react"
 import {
   type ComponentPropsWithoutRef,
@@ -8,6 +6,8 @@ import {
   type HTMLAttributes,
   forwardRef,
 } from "react"
+import { navigationLinkVariants } from "~/components/NavigationLink"
+import { cx } from "~/utils/cva"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger

@@ -1,8 +1,8 @@
-import { PaginationLink } from "apps/web/app/components/PaginationLink"
-import { cx } from "apps/web/app/utils/cva"
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import type { HTMLAttributes, RefObject } from "react"
 import { type UsePaginationProps, usePagination } from "react-instantsearch"
+import { PaginationLink } from "~/components/PaginationLink"
+import { cx } from "~/utils/cva"
 
 type PaginationProps = HTMLAttributes<HTMLElement> &
   UsePaginationProps & {

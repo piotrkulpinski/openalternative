@@ -1,12 +1,12 @@
 import type { SerializeFrom } from "@remix-run/node"
 import { NavLink } from "@remix-run/react"
-import { Card } from "apps/web/app/components/Card"
-import { Favicon } from "apps/web/app/components/Favicon"
-import { H4 } from "apps/web/app/components/Heading"
-import type { AlternativeMany } from "apps/web/app/services.server/api"
-import { cx } from "apps/web/app/utils/cva"
 import plur from "plur"
 import type { HTMLAttributes } from "react"
+import { Card } from "~/components/Card"
+import { Favicon } from "~/components/Favicon"
+import { H4 } from "~/components/Heading"
+import type { AlternativeMany } from "~/services.server/api"
+import { cx } from "~/utils/cva"
 
 type AlternativeRecordProps = HTMLAttributes<HTMLElement> & {
   alternative: SerializeFrom<AlternativeMany>

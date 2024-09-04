@@ -1,5 +1,5 @@
-import { type VariantProps, cva, cx } from "apps/web/app/utils/cva"
 import { type LabelHTMLAttributes, forwardRef } from "react"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const labelVariants = cva({
   base: "block text-sm font-semibold text-foreground [&[for]]:cursor-pointer",

@@ -10,21 +10,21 @@ import {
   useLocation,
   useRouteLoaderData,
 } from "@remix-run/react"
-import { BreadcrumbsLink } from "apps/web/app/components/Breadcrumbs"
-import { Container } from "apps/web/app/components/Container"
-import { Logo } from "apps/web/app/components/Logo"
-import { ErrorPage } from "apps/web/app/partials/ErrorPage"
-import { Footer } from "apps/web/app/partials/Footer"
-import { Header } from "apps/web/app/partials/Header"
 import { ThemeProvider } from "next-themes"
 import posthog from "posthog-js"
 import { type PropsWithChildren, useEffect } from "react"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { Container } from "~/components/Container"
+import { Logo } from "~/components/Logo"
+import { ErrorPage } from "~/partials/ErrorPage"
+import { Footer } from "~/partials/Footer"
+import { Header } from "~/partials/Header"
 import { alternativeManyPayload, categoryManyPayload } from "./services.server/api"
 import { prisma } from "./services.server/prisma"
 import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
 
-import { Banner } from "apps/web/app/components/Banner"
-import { Bottom } from "apps/web/app/partials/Bottom"
+import { Banner } from "~/components/Banner"
+import { Bottom } from "~/partials/Bottom"
 import stylesheet from "~/styles.css?url"
 
 export const maxDuration = 300

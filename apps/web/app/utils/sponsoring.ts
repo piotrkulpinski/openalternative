@@ -1,6 +1,6 @@
-import type { Sponsoring } from "apps/web/app/services.server/api"
 import { differenceInDays } from "date-fns"
 import type { DateRange } from "react-day-picker"
+import type { Sponsoring } from "~/services.server/api"
 import { DAY_IN_MS, SPONSORING_PREMIUM_TRESHOLD, SPONSORING_PRICE } from "./constants"
 
 /**

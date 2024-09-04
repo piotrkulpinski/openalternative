@@ -1,11 +1,11 @@
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import { BreadcrumbsLink } from "apps/web/app/components/Breadcrumbs"
-import { Intro } from "apps/web/app/components/Intro"
-import { Markdown } from "apps/web/app/components/Markdown"
-import { Featured } from "apps/web/app/partials/Featured"
-import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "apps/web/app/utils/constants"
-import { getMetaTags } from "apps/web/app/utils/meta"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { Intro } from "~/components/Intro"
+import { Markdown } from "~/components/Markdown"
+import { Featured } from "~/partials/Featured"
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   breadcrumb: () => <BreadcrumbsLink to="/about" label="About Us" />,

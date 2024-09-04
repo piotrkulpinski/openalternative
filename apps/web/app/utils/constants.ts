@@ -1,4 +1,4 @@
-import type { SponsoringOne } from "apps/web/app/services.server/api"
+import type { SponsoringOne } from "~/services.server/api"
 
 export const SITE_URL = import.meta.env.VITE_SITE_URL
 export const SITE_EMAIL = import.meta.env.VITE_SITE_EMAIL

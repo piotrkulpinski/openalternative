@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react"
-import { Prose } from "apps/web/app/components/Prose"
 import type { HTMLAttributes } from "react"
 import ReactMarkdown, { type Components } from "react-markdown"
+import { Prose } from "~/components/Prose"
 
 export const Markdown = ({ children, ...props }: HTMLAttributes<HTMLElement>) => {
   const components: Components = {

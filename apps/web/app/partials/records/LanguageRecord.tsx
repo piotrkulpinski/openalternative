@@ -1,8 +1,8 @@
 import type { SerializeFrom } from "@remix-run/node"
-import { CardSimple } from "apps/web/app/components/CardSimple"
-import type { LanguageMany } from "apps/web/app/services.server/api"
 import plur from "plur"
 import type { HTMLAttributes } from "react"
+import { CardSimple } from "~/components/CardSimple"
+import type { LanguageMany } from "~/services.server/api"
 
 type LanguageRecordProps = HTMLAttributes<HTMLElement> & {
   language: SerializeFrom<LanguageMany>

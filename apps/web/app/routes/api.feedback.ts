@@ -1,7 +1,7 @@
 import { type ActionFunctionArgs, type TypedResponse, json } from "@remix-run/node"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { isRealEmail } from "apps/web/app/utils/email"
 import { z } from "zod"
+import { prisma } from "~/services.server/prisma"
+import { isRealEmail } from "~/utils/email"
 
 const feedbackSchema = z.object({
   toolId: z.string().optional(),

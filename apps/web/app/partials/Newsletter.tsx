@@ -1,12 +1,12 @@
 import { useFetcher, useLocation } from "@remix-run/react"
-import { Button } from "apps/web/app/components/Button"
-import { H5 } from "apps/web/app/components/Heading"
-import { Series } from "apps/web/app/components/Series"
-import { ErrorMessage } from "apps/web/app/components/forms/ErrorMessage"
-import { Input } from "apps/web/app/components/forms/Input"
-import type { action } from "apps/web/app/routes/api.subscribe"
-import { cx } from "apps/web/app/utils/cva"
 import { type ComponentProps, type HTMLAttributes, useId } from "react"
+import { Button } from "~/components/Button"
+import { H5 } from "~/components/Heading"
+import { Series } from "~/components/Series"
+import { ErrorMessage } from "~/components/forms/ErrorMessage"
+import { Input } from "~/components/forms/Input"
+import type { action } from "~/routes/api.subscribe"
+import { cx } from "~/utils/cva"
 
 type ButtonProps = ComponentProps<typeof Button>
 type InputProps = ComponentProps<typeof Input>
