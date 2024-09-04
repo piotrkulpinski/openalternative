@@ -1,8 +1,8 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover"
-import { type VariantProps, cva, cx } from "apps/web/app/utils/cva"
 import { XIcon } from "lucide-react"
 import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react"
 import { forwardRef } from "react"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const popoverVariants = cva({
   base: [

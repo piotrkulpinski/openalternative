@@ -1,14 +1,14 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { Link } from "@remix-run/react"
-import { Badge } from "apps/web/app/components/Badge"
-import { Intro } from "apps/web/app/components/Intro"
-import { Ping } from "apps/web/app/components/Ping"
-import { Newsletter } from "apps/web/app/partials/Newsletter"
-import { SITE_STATS } from "apps/web/app/utils/constants"
-import { cx } from "apps/web/app/utils/cva"
 import { GemIcon } from "lucide-react"
 import plur from "plur"
 import type { HTMLAttributes } from "react"
+import { Badge } from "~/components/Badge"
+import { Intro } from "~/components/Intro"
+import { Ping } from "~/components/Ping"
+import { Newsletter } from "~/partials/Newsletter"
+import { SITE_STATS } from "~/utils/constants"
+import { cx } from "~/utils/cva"
 
 type HeroProps = HTMLAttributes<HTMLDivElement> & {
   toolCount: number

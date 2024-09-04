@@ -1,13 +1,13 @@
 import type { SerializeFrom } from "@remix-run/node"
 import { Link } from "@remix-run/react"
-import { Button } from "apps/web/app/components/Button"
-import { Grid } from "apps/web/app/components/Grid"
-import { H4 } from "apps/web/app/components/Heading"
-import { Series } from "apps/web/app/components/Series"
-import { AlternativeRecord } from "apps/web/app/partials/records/AlternativeRecord"
-import type { AlternativeMany } from "apps/web/app/services.server/api"
 import { ArrowRightIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
+import { Button } from "~/components/Button"
+import { Grid } from "~/components/Grid"
+import { H4 } from "~/components/Heading"
+import { Series } from "~/components/Series"
+import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
+import type { AlternativeMany } from "~/services.server/api"
 
 type AlternativeListProps = HTMLAttributes<HTMLDivElement> & {
   alternatives: SerializeFrom<AlternativeMany>[]

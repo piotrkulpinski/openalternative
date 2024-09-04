@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react"
-import { cx } from "apps/web/app/utils/cva"
 import { Fragment, type HTMLAttributes, type ReactNode } from "react"
+import { cx } from "~/utils/cva"
 
 type InsightsProps = HTMLAttributes<HTMLElement> & {
   insights: {

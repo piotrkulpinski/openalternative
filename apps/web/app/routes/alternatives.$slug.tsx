@@ -6,26 +6,26 @@ import {
   json,
 } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
-import { BackButton } from "apps/web/app/components/BackButton"
-import { BreadcrumbsLink } from "apps/web/app/components/Breadcrumbs"
-import { Intro, IntroDescription, IntroTitle } from "apps/web/app/components/Intro"
-import { Prose } from "apps/web/app/components/Prose"
-import { Section } from "apps/web/app/components/Section"
-import { ShareButtons } from "apps/web/app/components/ShareButtons"
-import { AlternativeList } from "apps/web/app/partials/AlternativeList"
-import { AlternativeCard } from "apps/web/app/partials/records/AlternativeCard"
-import { ToolEntry } from "apps/web/app/partials/records/ToolEntry"
+import { Fragment, type ReactNode } from "react"
+import { BackButton } from "~/components/BackButton"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
+import { Prose } from "~/components/Prose"
+import { Section } from "~/components/Section"
+import { ShareButtons } from "~/components/ShareButtons"
+import { AlternativeList } from "~/partials/AlternativeList"
+import { AlternativeCard } from "~/partials/records/AlternativeCard"
+import { ToolEntry } from "~/partials/records/ToolEntry"
 import {
   type AlternativeOne,
   alternativeManyPayload,
   alternativeOnePayload,
-} from "apps/web/app/services.server/api"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { FEATURED_ALTERNATIVES, JSON_HEADERS } from "apps/web/app/utils/constants"
-import { joinAsSentence } from "apps/web/app/utils/helpers"
-import { getMetaTags } from "apps/web/app/utils/meta"
-import { combineServerTimings, makeTimings, time } from "apps/web/app/utils/timing.server"
-import { Fragment, type ReactNode } from "react"
+} from "~/services.server/api"
+import { prisma } from "~/services.server/prisma"
+import { FEATURED_ALTERNATIVES, JSON_HEADERS } from "~/utils/constants"
+import { joinAsSentence } from "~/utils/helpers"
+import { getMetaTags } from "~/utils/meta"
+import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { alternative: AlternativeOne }) => {

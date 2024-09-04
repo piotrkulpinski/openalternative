@@ -1,11 +1,11 @@
 import type { SerializeFrom } from "@remix-run/node"
-import { Container } from "apps/web/app/components/Container"
-import { H6 } from "apps/web/app/components/Heading"
-import { NavigationLink } from "apps/web/app/components/NavigationLink"
-import { Series } from "apps/web/app/components/Series"
-import type { AlternativeMany, CategoryMany } from "apps/web/app/services.server/api"
-import { cx } from "apps/web/app/utils/cva"
 import type { HTMLAttributes } from "react"
+import { Container } from "~/components/Container"
+import { H6 } from "~/components/Heading"
+import { NavigationLink } from "~/components/NavigationLink"
+import { Series } from "~/components/Series"
+import type { AlternativeMany, CategoryMany } from "~/services.server/api"
+import { cx } from "~/utils/cva"
 
 type BottomProps = HTMLAttributes<HTMLElement> & {
   categories?: SerializeFrom<CategoryMany>[]

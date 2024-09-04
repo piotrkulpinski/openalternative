@@ -1,6 +1,6 @@
-import { inputVariants } from "apps/web/app/components/forms/Input"
-import { type VariantProps, cx } from "apps/web/app/utils/cva"
 import { type SelectHTMLAttributes, forwardRef } from "react"
+import { inputVariants } from "~/components/forms/Input"
+import { type VariantProps, cx } from "~/utils/cva"
 
 export type SelectProps = SelectHTMLAttributes<HTMLSelectElement> &
   VariantProps<typeof inputVariants>

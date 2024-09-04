@@ -5,20 +5,16 @@ import {
   json,
 } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import { BackButton } from "apps/web/app/components/BackButton"
-import { BreadcrumbsLink } from "apps/web/app/components/Breadcrumbs"
-import { Grid } from "apps/web/app/components/Grid"
-import { Intro } from "apps/web/app/components/Intro"
-import { ToolRecord } from "apps/web/app/partials/records/ToolRecord"
-import {
-  type LicenseOne,
-  licenseOnePayload,
-  toolOnePayload,
-} from "apps/web/app/services.server/api"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { JSON_HEADERS } from "apps/web/app/utils/constants"
-import { getMetaTags } from "apps/web/app/utils/meta"
-import { combineServerTimings, makeTimings, time } from "apps/web/app/utils/timing.server"
+import { BackButton } from "~/components/BackButton"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { Grid } from "~/components/Grid"
+import { Intro } from "~/components/Intro"
+import { ToolRecord } from "~/partials/records/ToolRecord"
+import { type LicenseOne, licenseOnePayload, toolOnePayload } from "~/services.server/api"
+import { prisma } from "~/services.server/prisma"
+import { JSON_HEADERS } from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
+import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { license: LicenseOne }) => {

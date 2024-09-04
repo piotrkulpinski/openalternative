@@ -1,12 +1,15 @@
 import { formatNumber } from "@curiousleaf/utils"
-import { H6 } from "apps/web/app/components/Heading"
-import { NavigationLink } from "apps/web/app/components/NavigationLink"
-import { Series } from "apps/web/app/components/Series"
-import { ThemeSwitcher } from "apps/web/app/components/ThemeSwitcher"
-import { Tooltip } from "apps/web/app/components/Tooltip"
-import { BrandGitHubIcon } from "apps/web/app/components/icons/BrandGitHub"
-import { BrandXIcon } from "apps/web/app/components/icons/BrandX"
-import { Newsletter } from "apps/web/app/partials/Newsletter"
+import { AtSignIcon, RssIcon } from "lucide-react"
+import type { HTMLAttributes } from "react"
+import { ClientOnly } from "remix-utils/client-only"
+import { H6 } from "~/components/Heading"
+import { NavigationLink } from "~/components/NavigationLink"
+import { Series } from "~/components/Series"
+import { ThemeSwitcher } from "~/components/ThemeSwitcher"
+import { Tooltip } from "~/components/Tooltip"
+import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
+import { BrandXIcon } from "~/components/icons/BrandX"
+import { Newsletter } from "~/partials/Newsletter"
 import {
   CLIMATE_URL,
   GITHUB_URL,
@@ -15,11 +18,8 @@ import {
   SITE_STATS,
   TWITTER_AUTHOR_URL,
   TWITTER_URL,
-} from "apps/web/app/utils/constants"
-import { cx } from "apps/web/app/utils/cva"
-import { AtSignIcon, RssIcon } from "lucide-react"
-import type { HTMLAttributes } from "react"
-import { ClientOnly } from "remix-utils/client-only"
+} from "~/utils/constants"
+import { cx } from "~/utils/cva"
 
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (

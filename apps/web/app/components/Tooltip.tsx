@@ -1,7 +1,7 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
-import { type VariantProps, cva, cx } from "apps/web/app/utils/cva"
 import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react"
 import { forwardRef } from "react"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const tooltipVariants = cva({
   base: [

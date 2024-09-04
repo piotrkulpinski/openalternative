@@ -1,5 +1,5 @@
-import { type VariantProps, cva, cx } from "apps/web/app/utils/cva"
 import type { HTMLAttributes } from "react"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const gridVariants = cva({
   base: "grid place-content-start gap-5",

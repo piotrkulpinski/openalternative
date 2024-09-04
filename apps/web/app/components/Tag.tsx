@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot"
 import { Link, type LinkProps } from "@remix-run/react"
-import { cx } from "apps/web/app/utils/cva"
 import type { ReactNode } from "react"
+import { cx } from "~/utils/cva"
 
 type TagProps = Omit<LinkProps, "prefix"> & {
   /**

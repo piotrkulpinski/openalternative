@@ -1,7 +1,7 @@
-import { inngest } from "apps/web/app/services.server/inngest"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { uploadToS3Storage } from "apps/web/app/services.server/s3"
 import { got } from "got"
+import { inngest } from "~/services.server/inngest"
+import { prisma } from "~/services.server/prisma"
+import { uploadToS3Storage } from "~/services.server/s3"
 
 export const onAlternativeCreated = inngest.createFunction(
   { id: "alternative.created" },

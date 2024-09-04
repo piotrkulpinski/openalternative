@@ -1,10 +1,10 @@
 import { type LoaderFunctionArgs, json } from "@remix-run/node"
 import { Resvg } from "@resvg/resvg-js"
-import { ToolOpenGraph } from "apps/web/app/components/opengraph/tool"
-import { toolOnePayload } from "apps/web/app/services.server/api"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { SITE_URL } from "apps/web/app/utils/constants"
 import satori from "satori"
+import { ToolOpenGraph } from "~/components/opengraph/tool"
+import { toolOnePayload } from "~/services.server/api"
+import { prisma } from "~/services.server/prisma"
+import { SITE_URL } from "~/utils/constants"
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {

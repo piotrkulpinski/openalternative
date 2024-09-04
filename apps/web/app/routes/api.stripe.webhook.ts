@@ -1,9 +1,9 @@
 import { getErrorMessage } from "@curiousleaf/utils"
 import { type ActionFunctionArgs, json } from "@remix-run/node"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { stripe } from "apps/web/app/services.server/stripe"
 import type Stripe from "stripe"
 import { z } from "zod"
+import { prisma } from "~/services.server/prisma"
+import { stripe } from "~/services.server/stripe"
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const payload = await request.text()

@@ -1,10 +1,10 @@
 import { Link } from "@remix-run/react"
-import { Badge } from "apps/web/app/components/Badge"
-import { Button } from "apps/web/app/components/Button"
-import { Container } from "apps/web/app/components/Container"
-import { BANNER_SPONSOR } from "apps/web/app/utils/constants"
-import { cx } from "apps/web/app/utils/cva"
 import type { ComponentProps } from "react"
+import { Badge } from "~/components/Badge"
+import { Button } from "~/components/Button"
+import { Container } from "~/components/Container"
+import { BANNER_SPONSOR } from "~/utils/constants"
+import { cx } from "~/utils/cva"
 
 export const Banner = ({ className, ...props }: ComponentProps<typeof Container>) => {
   const sponsor = BANNER_SPONSOR

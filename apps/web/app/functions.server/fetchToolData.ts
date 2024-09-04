@@ -1,8 +1,8 @@
 import { slugify } from "@curiousleaf/utils"
-import { inngest } from "apps/web/app/services.server/inngest"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { fetchRepository } from "apps/web/app/utils/github"
-import { sendMilestoneTweet } from "apps/web/app/utils/twitter"
+import { inngest } from "~/services.server/inngest"
+import { prisma } from "~/services.server/prisma"
+import { fetchRepository } from "~/utils/github"
+import { sendMilestoneTweet } from "~/utils/twitter"
 
 export const fetchToolData = inngest.createFunction(
   { id: "fetch-tool-data" },

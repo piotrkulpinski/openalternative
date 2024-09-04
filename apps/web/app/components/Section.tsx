@@ -1,5 +1,5 @@
-import { cx } from "apps/web/app/utils/cva"
 import type { HTMLAttributes } from "react"
+import { cx } from "~/utils/cva"
 
 export const SectionBase = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return <div className={cx("flex flex-col items-start gap-8 md:flex-row", className)} {...props} />

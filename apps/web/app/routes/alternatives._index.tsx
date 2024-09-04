@@ -1,11 +1,11 @@
 import { type MetaFunction, json, useLoaderData } from "@remix-run/react"
-import { Grid } from "apps/web/app/components/Grid"
-import { Intro } from "apps/web/app/components/Intro"
-import { AlternativeRecord } from "apps/web/app/partials/records/AlternativeRecord"
-import { alternativeManyPayload } from "apps/web/app/services.server/api"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { JSON_HEADERS } from "apps/web/app/utils/constants"
-import { getMetaTags } from "apps/web/app/utils/meta"
+import { Grid } from "~/components/Grid"
+import { Intro } from "~/components/Intro"
+import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
+import { alternativeManyPayload } from "~/services.server/api"
+import { prisma } from "~/services.server/prisma"
+import { JSON_HEADERS } from "~/utils/constants"
+import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
   const { title, description } = data?.meta || {}

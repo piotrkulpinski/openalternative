@@ -11,22 +11,25 @@ import {
   unstable_useViewTransitionState,
   useLoaderData,
 } from "@remix-run/react"
-import { BackButton } from "apps/web/app/components/BackButton"
-import { Badge } from "apps/web/app/components/Badge"
-import { BreadcrumbsLink } from "apps/web/app/components/Breadcrumbs"
-import { Button } from "apps/web/app/components/Button"
-import { FaviconImage } from "apps/web/app/components/Favicon"
-import { FeedbackButton } from "apps/web/app/components/FeedbackButton"
-import { Grid } from "apps/web/app/components/Grid"
-import { H1, H4, H5 } from "apps/web/app/components/Heading"
-import { Markdown } from "apps/web/app/components/Markdown"
-import { Prose } from "apps/web/app/components/Prose"
-import { Series } from "apps/web/app/components/Series"
-import { ShareButtons } from "apps/web/app/components/ShareButtons"
-import { Tag } from "apps/web/app/components/Tag"
-import { ToolSidebar } from "apps/web/app/partials/ToolSidebar"
-import { AlternativeRecord } from "apps/web/app/partials/records/AlternativeRecord"
-import { ToolRecord } from "apps/web/app/partials/records/ToolRecord"
+import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
+import { posthog } from "posthog-js"
+import { z } from "zod"
+import { BackButton } from "~/components/BackButton"
+import { Badge } from "~/components/Badge"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { Button } from "~/components/Button"
+import { FaviconImage } from "~/components/Favicon"
+import { FeedbackButton } from "~/components/FeedbackButton"
+import { Grid } from "~/components/Grid"
+import { H1, H4, H5 } from "~/components/Heading"
+import { Markdown } from "~/components/Markdown"
+import { Prose } from "~/components/Prose"
+import { Series } from "~/components/Series"
+import { ShareButtons } from "~/components/ShareButtons"
+import { Tag } from "~/components/Tag"
+import { ToolSidebar } from "~/partials/ToolSidebar"
+import { AlternativeRecord } from "~/partials/records/AlternativeRecord"
+import { ToolRecord } from "~/partials/records/ToolRecord"
 import {
   type ToolOne,
   alternativeManyPayload,
@@ -35,17 +38,14 @@ import {
   toolManyPayload,
   toolOnePayload,
   topicManyPayload,
-} from "apps/web/app/services.server/api"
-import { getPostHogFlagValue } from "apps/web/app/services.server/posthog"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { HOSTING_SPONSOR, JSON_HEADERS, SITE_URL } from "apps/web/app/utils/constants"
-import { joinAsSentence } from "apps/web/app/utils/helpers"
-import { getMetaTags } from "apps/web/app/utils/meta"
-import { updateUrlWithSearchParams } from "apps/web/app/utils/queryString"
-import { combineServerTimings, makeTimings, time } from "apps/web/app/utils/timing.server"
-import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
-import { posthog } from "posthog-js"
-import { z } from "zod"
+} from "~/services.server/api"
+import { getPostHogFlagValue } from "~/services.server/posthog"
+import { prisma } from "~/services.server/prisma"
+import { HOSTING_SPONSOR, JSON_HEADERS, SITE_URL } from "~/utils/constants"
+import { joinAsSentence } from "~/utils/helpers"
+import { getMetaTags } from "~/utils/meta"
+import { updateUrlWithSearchParams } from "~/utils/queryString"
+import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentParams,

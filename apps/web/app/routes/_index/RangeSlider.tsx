@@ -1,8 +1,8 @@
-import { H6 } from "apps/web/app/components/Heading"
-import { Slider } from "apps/web/app/components/forms/Slider"
 import type { RangeBoundaries } from "instantsearch.js/es/connectors/range/connectRange"
 import { useEffect, useState } from "react"
 import { type UseRangeProps, useRange } from "react-instantsearch"
+import { H6 } from "~/components/Heading"
+import { Slider } from "~/components/forms/Slider"
 
 export const RangeSlider = ({ ...props }: UseRangeProps) => {
   const { start, range, canRefine, refine } = useRange(props)

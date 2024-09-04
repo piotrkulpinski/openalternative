@@ -1,7 +1,7 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
-import { cx } from "apps/web/app/utils/cva"
 import { CheckIcon } from "lucide-react"
 import { type ComponentPropsWithoutRef, type ElementRef, forwardRef } from "react"
+import { cx } from "~/utils/cva"
 
 const Checkbox = forwardRef<
   ElementRef<typeof CheckboxPrimitive.Root>,

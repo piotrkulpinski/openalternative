@@ -6,19 +6,19 @@ import {
   unstable_useViewTransitionState,
   useLoaderData,
 } from "@remix-run/react"
-import { Author } from "apps/web/app/components/Author"
-import { BackButton } from "apps/web/app/components/BackButton"
-import { BreadcrumbsLink } from "apps/web/app/components/Breadcrumbs"
-import { H6 } from "apps/web/app/components/Heading"
-import { Intro, IntroDescription, IntroTitle } from "apps/web/app/components/Intro"
-import { Markdown } from "apps/web/app/components/Markdown"
-import { Section } from "apps/web/app/components/Section"
-import { Series } from "apps/web/app/components/Series"
-import { ShareButtons } from "apps/web/app/components/ShareButtons"
-import { SponsoringCard } from "apps/web/app/partials/records/SponsoringCard"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { getMetaTags } from "apps/web/app/utils/meta"
 import { type Post, allPosts } from "content-collections"
+import { Author } from "~/components/Author"
+import { BackButton } from "~/components/BackButton"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { H6 } from "~/components/Heading"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
+import { Markdown } from "~/components/Markdown"
+import { Section } from "~/components/Section"
+import { Series } from "~/components/Series"
+import { ShareButtons } from "~/components/ShareButtons"
+import { SponsoringCard } from "~/partials/records/SponsoringCard"
+import { prisma } from "~/services.server/prisma"
+import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
   breadcrumb: (data?: { post: Post }) => {

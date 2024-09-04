@@ -1,7 +1,7 @@
 import { type ActionFunctionArgs, type TypedResponse, json } from "@remix-run/node"
-import { subscribeToBeehiiv, type subscriberSchema } from "apps/web/app/services.server/beehiiv"
-import { capturePostHogEvent } from "apps/web/app/services.server/posthog"
 import type { z } from "zod"
+import { subscribeToBeehiiv, type subscriberSchema } from "~/services.server/beehiiv"
+import { capturePostHogEvent } from "~/services.server/posthog"
 
 type SubscribeError = z.inferFlattenedErrors<typeof subscriberSchema>
 
