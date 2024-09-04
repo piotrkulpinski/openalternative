@@ -54,7 +54,7 @@ export const HOSTING_SPONSOR: SponsoringOne = {
 export const BANNER_SPONSOR: SponsoringOne = {
   name: "Polar",
   description: "An open source Lemon Squeezy alternative with 20% lower fees",
-  website: "https://polar.sh",
+  website: "https://polar.sh/?utm_source=openalternative.co",
   faviconUrl: "https://s3.us-east-1.amazonaws.com/openalternative/polar/favicon.png",
 }
 
