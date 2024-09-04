@@ -1,5 +1,5 @@
-import { type VariantProps, cva, cx } from "apps/web/app/utils/cva"
 import { type InputHTMLAttributes, forwardRef } from "react"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const inputVariants = cva({
   base: "w-full border appearance-none bg-background text-secondary resize-none [field-sizing:content] font-medium outline-offset-0 outline-primary placeholder:text-inherit placeholder:opacity-50 disabled:opacity-50",

@@ -1,14 +1,14 @@
 import type { SerializeFrom } from "@remix-run/node"
 import { Link } from "@remix-run/react"
-import { Button } from "apps/web/app/components/Button"
-import { Card } from "apps/web/app/components/Card"
-import { Favicon } from "apps/web/app/components/Favicon"
-import { H4 } from "apps/web/app/components/Heading"
-import type { AlternativeOne } from "apps/web/app/services.server/api"
 import { cx } from "cva"
 import { ArrowUpRightIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
+import { Button } from "~/components/Button"
+import { Card } from "~/components/Card"
+import { Favicon } from "~/components/Favicon"
+import { H4 } from "~/components/Heading"
+import type { AlternativeOne } from "~/services.server/api"
 
 type AlternativeCardProps = HTMLAttributes<HTMLElement> & {
   alternative: SerializeFrom<AlternativeOne>

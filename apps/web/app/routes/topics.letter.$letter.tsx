@@ -1,13 +1,13 @@
 import { type HeadersFunction, type LoaderFunctionArgs, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import { BackButton } from "apps/web/app/components/BackButton"
-import { BreadcrumbsLink } from "apps/web/app/components/Breadcrumbs"
-import { Grid } from "apps/web/app/components/Grid"
-import { TopicRecord } from "apps/web/app/partials/records/TopicRecord"
-import { topicManyPayload } from "apps/web/app/services.server/api"
-import { prisma } from "apps/web/app/services.server/prisma"
-import { ALPHABET, JSON_HEADERS } from "apps/web/app/utils/constants"
-import { combineServerTimings, makeTimings, time } from "apps/web/app/utils/timing.server"
+import { BackButton } from "~/components/BackButton"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
+import { Grid } from "~/components/Grid"
+import { TopicRecord } from "~/partials/records/TopicRecord"
+import { topicManyPayload } from "~/services.server/api"
+import { prisma } from "~/services.server/prisma"
+import { ALPHABET, JSON_HEADERS } from "~/utils/constants"
+import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { letter: string }) => {

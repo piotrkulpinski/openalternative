@@ -1,5 +1,5 @@
 import { Outlet } from "@remix-run/react"
-import { BreadcrumbsLink } from "apps/web/app/components/Breadcrumbs"
+import { BreadcrumbsLink } from "~/components/Breadcrumbs"
 
 export const handle = {
   breadcrumb: () => <BreadcrumbsLink to="/languages" label="Languages" />,

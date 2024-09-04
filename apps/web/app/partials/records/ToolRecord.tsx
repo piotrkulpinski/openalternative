@@ -1,17 +1,17 @@
 import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
-import { Badge } from "apps/web/app/components/Badge"
-import { Card } from "apps/web/app/components/Card"
-import { Favicon } from "apps/web/app/components/Favicon"
-import { H4 } from "apps/web/app/components/Heading"
-import { Insights } from "apps/web/app/components/Insights"
-import type { ToolMany } from "apps/web/app/services.server/api"
 import type { Hit as AlgoliaHit } from "instantsearch.js"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Highlight } from "react-instantsearch"
 import { format } from "timeago.js"
+import { Badge } from "~/components/Badge"
+import { Card } from "~/components/Card"
+import { Favicon } from "~/components/Favicon"
+import { H4 } from "~/components/Heading"
+import { Insights } from "~/components/Insights"
+import type { ToolMany } from "~/services.server/api"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
 

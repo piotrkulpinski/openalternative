@@ -1,8 +1,8 @@
 import { slugify } from "@curiousleaf/utils"
-import type { Sponsoring } from "apps/web/app/services.server/api"
-import { cx } from "apps/web/app/utils/cva"
 import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
+import type { Sponsoring } from "~/services.server/api"
+import { cx } from "~/utils/cva"
 
 export type SponsorsProps = HTMLAttributes<HTMLDivElement> & {
   sponsors: Sponsoring[]

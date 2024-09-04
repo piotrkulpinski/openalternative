@@ -1,9 +1,9 @@
 import { useDebounce } from "@uidotdev/usehooks"
-import { Input } from "apps/web/app/components/forms/Input"
-import { cx } from "apps/web/app/utils/cva"
 import { LoaderIcon, SearchIcon, XIcon } from "lucide-react"
 import { type HTMLAttributes, useEffect, useState } from "react"
 import { type UseSearchBoxProps, useInstantSearch, useSearchBox } from "react-instantsearch"
+import { Input } from "~/components/forms/Input"
+import { cx } from "~/utils/cva"
 
 type SearchBoxProps = HTMLAttributes<HTMLElement> & UseSearchBoxProps
 

@@ -1,5 +1,5 @@
 import { type LoaderFunction, redirect } from "@remix-run/node"
-import { prisma } from "apps/web/app/services.server/prisma"
+import { prisma } from "~/services.server/prisma"
 
 export const loader: LoaderFunction = async () => {
   const where = { publishedAt: { lte: new Date() } }

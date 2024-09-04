@@ -1,6 +1,6 @@
-import { Select } from "apps/web/app/components/forms/Select"
 import type { HTMLAttributes } from "react"
 import { type UseSortByProps, useSortBy } from "react-instantsearch"
+import { Select } from "~/components/forms/Select"
 
 type SortByProps = HTMLAttributes<HTMLElement> & UseSortByProps
 

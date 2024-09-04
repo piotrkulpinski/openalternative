@@ -1,10 +1,10 @@
-import { Grid } from "apps/web/app/components/Grid"
-import { H5 } from "apps/web/app/components/Heading"
-import { SponsoringCard } from "apps/web/app/partials/records/SponsoringCard"
-import { ToolRecord } from "apps/web/app/partials/records/ToolRecord"
-import type { SponsoringOne, ToolOne } from "apps/web/app/services.server/api"
 import { Fragment, type HTMLAttributes } from "react"
 import { type UseHitsProps, useHits } from "react-instantsearch"
+import { Grid } from "~/components/Grid"
+import { H5 } from "~/components/Heading"
+import { SponsoringCard } from "~/partials/records/SponsoringCard"
+import { ToolRecord } from "~/partials/records/ToolRecord"
+import type { SponsoringOne, ToolOne } from "~/services.server/api"
 
 type ListingProps = HTMLAttributes<HTMLElement> &
   UseHitsProps<ToolOne> & {

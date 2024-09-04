@@ -1,14 +1,14 @@
 import type { SerializeFrom } from "@remix-run/node"
 import { useFetcher, useLocation } from "@remix-run/react"
-import { Button } from "apps/web/app/components/Button"
-import { Popover } from "apps/web/app/components/Popover"
-import { ErrorMessage } from "apps/web/app/components/forms/ErrorMessage"
-import { Input } from "apps/web/app/components/forms/Input"
-import { TextArea } from "apps/web/app/components/forms/TextArea"
-import type { action } from "apps/web/app/routes/api.feedback"
-import type { ToolOne } from "apps/web/app/services.server/api"
 import { ThumbsUpIcon } from "lucide-react"
 import { type ComponentProps, useId } from "react"
+import { Button } from "~/components/Button"
+import { Popover } from "~/components/Popover"
+import { ErrorMessage } from "~/components/forms/ErrorMessage"
+import { Input } from "~/components/forms/Input"
+import { TextArea } from "~/components/forms/TextArea"
+import type { action } from "~/routes/api.feedback"
+import type { ToolOne } from "~/services.server/api"
 
 type FeedbackButtonProps = Omit<ComponentProps<typeof Popover>, "popover"> & {
   tool: SerializeFrom<ToolOne>

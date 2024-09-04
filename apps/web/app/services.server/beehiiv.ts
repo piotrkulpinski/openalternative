@@ -1,7 +1,7 @@
-import { SITE_NAME } from "apps/web/app/utils/constants"
-import { isRealEmail } from "apps/web/app/utils/email"
 import { got } from "got"
 import { z } from "zod"
+import { SITE_NAME } from "~/utils/constants"
+import { isRealEmail } from "~/utils/email"
 
 export const subscriberSchema = z.object({
   email: z

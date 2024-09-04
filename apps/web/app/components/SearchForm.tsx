@@ -1,8 +1,8 @@
 import { Form } from "@remix-run/react"
-import { Input } from "apps/web/app/components/forms/Input"
-import { cx } from "apps/web/app/utils/cva"
 import { SearchIcon } from "lucide-react"
 import { type HTMLAttributes, useRef, useState } from "react"
+import { Input } from "~/components/forms/Input"
+import { cx } from "~/utils/cva"
 
 export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormElement>) => {
   const [isExpanded, setIsExpanded] = useState(false)

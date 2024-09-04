@@ -1,10 +1,10 @@
 import type { SerializeFrom } from "@remix-run/node"
-import { RepositoryDetails } from "apps/web/app/components/RepositoryDetails"
-import { SponsoringCard } from "apps/web/app/partials/records/SponsoringCard"
-import type { LanguageToToolMany, ToolOne } from "apps/web/app/services.server/api"
-import { HOSTING_SPONSOR } from "apps/web/app/utils/constants"
-import { cx } from "apps/web/app/utils/cva"
 import type { HTMLAttributes } from "react"
+import { RepositoryDetails } from "~/components/RepositoryDetails"
+import { SponsoringCard } from "~/partials/records/SponsoringCard"
+import type { LanguageToToolMany, ToolOne } from "~/services.server/api"
+import { HOSTING_SPONSOR } from "~/utils/constants"
+import { cx } from "~/utils/cva"
 
 type ToolSidebarProps = HTMLAttributes<HTMLDivElement> & {
   tool: SerializeFrom<ToolOne>

@@ -1,8 +1,8 @@
 import type { SerializeFrom } from "@remix-run/node"
-import { CardSimple } from "apps/web/app/components/CardSimple"
-import type { LicenseMany } from "apps/web/app/services.server/api"
 import plur from "plur"
 import type { HTMLAttributes } from "react"
+import { CardSimple } from "~/components/CardSimple"
+import type { LicenseMany } from "~/services.server/api"
 
 type LicenseRecordProps = HTMLAttributes<HTMLElement> & {
   license: SerializeFrom<LicenseMany>

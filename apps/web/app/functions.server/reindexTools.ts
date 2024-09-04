@@ -1,6 +1,6 @@
-import { inngest } from "apps/web/app/services.server/inngest"
-import { prisma } from "apps/web/app/services.server/prisma"
 import { got } from "got"
+import { inngest } from "~/services.server/inngest"
+import { prisma } from "~/services.server/prisma"
 
 export const reindexTools = inngest.createFunction(
   { id: "reindex-tools" },

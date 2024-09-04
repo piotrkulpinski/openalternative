@@ -1,6 +1,6 @@
-import { type Input, inputVariants } from "apps/web/app/components/forms/Input"
-import { cx } from "apps/web/app/utils/cva"
 import { type ComponentPropsWithoutRef, type TextareaHTMLAttributes, forwardRef } from "react"
+import { type Input, inputVariants } from "~/components/forms/Input"
+import { cx } from "~/utils/cva"
 
 export type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> &
   ComponentPropsWithoutRef<typeof Input>

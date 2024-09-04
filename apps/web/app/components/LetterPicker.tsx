@@ -1,7 +1,7 @@
 import { Link, useLocation } from "@remix-run/react"
-import { ALPHABET } from "apps/web/app/utils/constants"
-import { cx } from "apps/web/app/utils/cva"
 import type { HTMLAttributes } from "react"
+import { ALPHABET } from "~/utils/constants"
+import { cx } from "~/utils/cva"
 
 type LetterPickerProps = HTMLAttributes<HTMLDivElement> & {
   path: string

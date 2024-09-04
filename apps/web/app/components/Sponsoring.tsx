@@ -1,21 +1,21 @@
 import type { SerializeFrom } from "@remix-run/node"
 import { useFetcher } from "@remix-run/react"
-import { Badge } from "apps/web/app/components/Badge"
-import { Button } from "apps/web/app/components/Button"
-import { Calendar } from "apps/web/app/components/Calendar"
-import type { action } from "apps/web/app/routes/api.stripe.create-checkout"
-import type { StripeCheckoutSchema } from "apps/web/app/services.server/stripe"
-import { DAY_IN_MS } from "apps/web/app/utils/constants"
-import { cx } from "apps/web/app/utils/cva"
-import {
-  adjustSponsoringDuration,
-  calculateSponsoringPrice,
-  getFirstAvailableMonth,
-} from "apps/web/app/utils/sponsoring"
 import plur from "plur"
 import { posthog } from "posthog-js"
 import { type HTMLAttributes, useCallback, useEffect, useMemo, useState } from "react"
 import type { DateRange } from "react-day-picker"
+import { Badge } from "~/components/Badge"
+import { Button } from "~/components/Button"
+import { Calendar } from "~/components/Calendar"
+import type { action } from "~/routes/api.stripe.create-checkout"
+import type { StripeCheckoutSchema } from "~/services.server/stripe"
+import { DAY_IN_MS } from "~/utils/constants"
+import { cx } from "~/utils/cva"
+import {
+  adjustSponsoringDuration,
+  calculateSponsoringPrice,
+  getFirstAvailableMonth,
+} from "~/utils/sponsoring"
 
 type SponsoringProps = HTMLAttributes<HTMLDivElement> & {
   dates: SerializeFrom<{

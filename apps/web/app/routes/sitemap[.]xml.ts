@@ -1,5 +1,5 @@
-import { prisma } from "apps/web/app/services.server/prisma"
 import { allPosts } from "content-collections"
+import { prisma } from "~/services.server/prisma"
 
 export const loader = async () => {
   const url = import.meta.env.VITE_SITE_URL ?? ""

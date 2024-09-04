@@ -1,21 +1,5 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { NavLink } from "@remix-run/react"
-import { Badge } from "apps/web/app/components/Badge"
-import { Breadcrumbs } from "apps/web/app/components/Breadcrumbs"
-import { Button } from "apps/web/app/components/Button"
-import { Container } from "apps/web/app/components/Container"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "apps/web/app/components/DropdownMenu"
-import { NavigationLink, navigationLinkVariants } from "apps/web/app/components/NavigationLink"
-import { SearchForm } from "apps/web/app/components/SearchForm"
-import { Series } from "apps/web/app/components/Series"
-import { BrandGitHubIcon } from "apps/web/app/components/icons/BrandGitHub"
-import { GITHUB_URL, SITE_STATS } from "apps/web/app/utils/constants"
-import { cx } from "apps/web/app/utils/cva"
 import {
   CalendarDaysIcon,
   ChevronDownIcon,
@@ -27,6 +11,22 @@ import {
   TagIcon,
 } from "lucide-react"
 import { type HTMLAttributes, useEffect, useState } from "react"
+import { Badge } from "~/components/Badge"
+import { Breadcrumbs } from "~/components/Breadcrumbs"
+import { Button } from "~/components/Button"
+import { Container } from "~/components/Container"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/DropdownMenu"
+import { NavigationLink, navigationLinkVariants } from "~/components/NavigationLink"
+import { SearchForm } from "~/components/SearchForm"
+import { Series } from "~/components/Series"
+import { BrandGitHubIcon } from "~/components/icons/BrandGitHub"
+import { GITHUB_URL, SITE_STATS } from "~/utils/constants"
+import { cx } from "~/utils/cva"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const [isNavOpen, setNavOpen] = useState(false)

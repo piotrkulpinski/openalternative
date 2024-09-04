@@ -1,11 +1,11 @@
 import { graphql } from "@octokit/graphql"
-import { prisma } from "apps/web/app/services.server/prisma"
+import { got } from "got"
+import { prisma } from "~/services.server/prisma"
 import {
   type RepositoryStarsQueryResult,
   getRepoOwnerAndName,
   repositoryStarsQuery,
-} from "apps/web/app/utils/github"
-import { got } from "got"
+} from "~/utils/github"
 import { GITHUB_URL } from "./constants"
 
 // Get the number of tools

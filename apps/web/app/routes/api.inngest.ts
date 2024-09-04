@@ -1,9 +1,9 @@
-import { fetchToolData } from "apps/web/app/functions.server/fetchToolData"
-import { onAlternativeCreated } from "apps/web/app/functions.server/onAlternativeCreated"
-import { onToolCreated } from "apps/web/app/functions.server/onToolCreated"
-import { reindexTools } from "apps/web/app/functions.server/reindexTools"
-import { inngest } from "apps/web/app/services.server/inngest"
 import { serve } from "inngest/remix"
+import { fetchToolData } from "~/functions.server/fetchToolData"
+import { onAlternativeCreated } from "~/functions.server/onAlternativeCreated"
+import { onToolCreated } from "~/functions.server/onToolCreated"
+import { reindexTools } from "~/functions.server/reindexTools"
+import { inngest } from "~/services.server/inngest"
 
 const handler = serve({
   client: inngest,

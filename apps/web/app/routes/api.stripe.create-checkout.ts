@@ -1,8 +1,5 @@
 import { type ActionFunctionArgs, type TypedResponse, json } from "@remix-run/node"
-import {
-  createStripeCheckoutSession,
-  stripeCheckoutSchema,
-} from "apps/web/app/services.server/stripe"
+import { createStripeCheckoutSession, stripeCheckoutSchema } from "~/services.server/stripe"
 
 type ActionState = { type: "error"; error: string } | { type: "success"; url: string | null }
 

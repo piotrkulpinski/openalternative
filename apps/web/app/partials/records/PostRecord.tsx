@@ -1,9 +1,9 @@
 import { formatDate, getReadTime } from "@curiousleaf/utils"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
-import { Card } from "apps/web/app/components/Card"
-import { H4 } from "apps/web/app/components/Heading"
 import type { Post } from "content-collections"
 import type { HTMLAttributes } from "react"
+import { Card } from "~/components/Card"
+import { H4 } from "~/components/Heading"
 
 type PostRecordProps = HTMLAttributes<HTMLElement> & {
   post: Post
