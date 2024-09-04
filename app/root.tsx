@@ -119,8 +119,7 @@ export function Layout({ children }: PropsWithChildren) {
           enableSystem
           disableTransitionOnChange
         >
-          {false && <Banner />}
-
+          <Banner />
           <Header />
 
           <Container className="flex min-h-[calc(100dvh-var(--header-height))] flex-col py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
