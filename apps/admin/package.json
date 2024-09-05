@@ -1,0 +1,40 @@
+{
+  "name": "@openalternative/admin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 8302 --turbo",
+    "start": "next start -p 8302",
+    "build": "next build",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@curiousleaf/utils": "^1.0.24",
+    "@epic-web/remember": "^1.1.0",
+    "@openalternative/db": "workspace:*",
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.2",
+    "@t3-oss/env-nextjs": "^0.9.2",
+    "cva": "^1.0.0-beta.1",
+    "lucide-react": "^0.438.0",
+    "next": "15.0.0-canary.140",
+    "next-auth": "5.0.0-beta.18",
+    "react": "19.0.0-rc.0",
+    "react-dom": "19.0.0-rc.0",
+    "tailwind-merge": "^2.5.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.45",
+    "tailwindcss": "^3.4.10",
+    "tailwindcss-animate": "^1.0.7"
+  }
+}
