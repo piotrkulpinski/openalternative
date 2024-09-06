@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
-import { Button } from "~/components/Button"
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/Card"
+import { Button } from "~/components/ui/Button"
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/Card"
 import { auth, signIn } from "~/services/auth"
 
 export default async function LoginPage() {

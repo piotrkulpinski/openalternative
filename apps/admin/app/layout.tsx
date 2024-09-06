@@ -1,12 +1,29 @@
-import type { PropsWithChildren } from "react"
-import "./styles.css"
+import type { Metadata, Viewport } from "next"
 import { SessionProvider } from "next-auth/react"
+import type { PropsWithChildren } from "react"
+import { siteConfig } from "~/config/site"
+import { env } from "~/env"
 import { auth } from "~/services/auth"
+import { cx } from "~/utils/cva"
+import { fontMono, fontSans } from "~/utils/fonts"
 
-export const metadata = {
-  title: "Next.js App Router + NextAuth + Tailwind CSS",
-  description:
-    "A user admin dashboard configured with Next.js, Postgres, NextAuth, Tailwind CSS, TypeScript, and Prettier.",
+import "./styles.css"
+
+export const metadata: Metadata = {
+  metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+}
+
+export const viewport: Viewport = {
+  colorScheme: "dark light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
 }
 
 export default async function RootLayout({ children }: PropsWithChildren) {
@@ -15,7 +32,15 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <SessionProvider session={session}>
-        <body className="flex min-h-screen w-full flex-col">{children}</body>
+        <body
+          className={cx(
+            "flex flex-col min-h-screen w-full font-sans antialiased",
+            fontSans.variable,
+            fontMono.variable,
+          )}
+        >
+          {children}
+        </body>
       </SessionProvider>
     </html>
   )

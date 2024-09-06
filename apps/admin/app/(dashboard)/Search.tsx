@@ -3,7 +3,7 @@
 import { LucideLoader, Search } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTransition } from "react"
-import { Input } from "~/components/Input"
+import { Input } from "~/components/ui/Input"
 
 export function SearchInput() {
   const router = useRouter()
