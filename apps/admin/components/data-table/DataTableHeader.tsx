@@ -1,5 +1,5 @@
-import { Slot } from "@radix-ui/react-slot"
 import type * as React from "react"
+import { H3 } from "~/components/ui/Heading"
 
 import { cx } from "~/utils/cva"
 
@@ -24,9 +24,11 @@ export function DataTableHeader({
       {...props}
     >
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold leading-none tracking-tight">{title}</h1>
-        <Slot className="-my-2">{callToAction}</Slot>
+        <H3 as="h1">{title}</H3>
+
+        {callToAction}
       </div>
+
       {children}
     </div>
   )

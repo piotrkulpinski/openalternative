@@ -18,38 +18,38 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <Providers>
       <main className="flex items-start min-h-screen w-full">
-        <aside className="sticky top-0 h-dvh flex flex-col gap-4 px-2 py-4 border-r bg-muted/50">
-          <nav className="contents">
-            <Link
-              href="/"
-              className="flex size-9 shrink-0 items-center justify-center gap-2 rounded-xl bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base hover:bg-primary/90"
-            >
-              <Logo className="size-5" />
-              <span className="sr-only">{siteConfig.name}</span>
-            </Link>
+        <aside className="sticky top-0 z-40 h-dvh flex flex-col gap-4 px-2 py-4 text-sm border-r bg-muted/50">
+          <Link
+            href="/"
+            className="p-1.5 shrink-0 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            <Logo className="size-5" />
+            <span className="sr-only">{siteConfig.name}</span>
+          </Link>
 
+          <nav className="contents">
             <NavItem href="/tools" label="Tools">
-              <DraftingCompassIcon className="size-5" />
+              <DraftingCompassIcon />
             </NavItem>
 
             <NavItem href="/categories" label="Categories">
-              <GalleryHorizontalEndIcon className="size-5" />
+              <GalleryHorizontalEndIcon />
             </NavItem>
 
             <NavItem href="/alternatives" label="Alternatives">
-              <ReplaceIcon className="size-5" />
+              <ReplaceIcon />
             </NavItem>
 
             <NavItem href="/languages" label="Languages">
-              <CodeXmlIcon className="size-5" />
+              <CodeXmlIcon />
             </NavItem>
 
             <NavItem href="/topics" label="Topics">
-              <TagIcon className="size-5" />
+              <TagIcon />
             </NavItem>
 
             <NavItem href="/licenses" label="Licenses">
-              <CopyrightIcon className="size-5" />
+              <CopyrightIcon />
             </NavItem>
           </nav>
 
