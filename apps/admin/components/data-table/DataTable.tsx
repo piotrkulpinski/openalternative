@@ -36,9 +36,10 @@ export function DataTable<TData>({
   ...props
 }: DataTableProps<TData>) {
   return (
-    <div className={cx("w-full space-y-2.5 overflow-auto", className)} {...props}>
+    <>
       {children}
-      <div className="overflow-hidden rounded-md border">
+
+      <div className={cx("overflow-hidden rounded-md border", className)} {...props}>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
@@ -87,10 +88,11 @@ export function DataTable<TData>({
           </TableBody>
         </Table>
       </div>
+
       <div className="flex flex-col gap-2.5">
         <DataTablePagination table={table} />
         {table.getFilteredSelectedRowModel().rows.length > 0 && floatingBar}
       </div>
-    </div>
+    </>
   )
 }
