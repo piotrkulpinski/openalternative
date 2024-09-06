@@ -1,9 +1,9 @@
 "use client"
 
-import clsx from "clsx"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/Tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/Tooltip"
+import { cx } from "~/utils/cva"
 
 export function NavItem({
   href,
@@ -21,11 +21,11 @@ export function NavItem({
       <TooltipTrigger asChild>
         <Link
           href={href}
-          className={clsx(
-            "flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
-            {
-              "bg-accent text-black": pathname === href,
-            },
+          className={cx(
+            "flex size-8 items-center justify-center rounded-lg",
+            pathname === href
+              ? "bg-accent text-foreground"
+              : "text-muted-foreground hover:text-foreground",
           )}
         >
           {children}

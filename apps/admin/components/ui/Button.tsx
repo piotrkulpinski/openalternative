@@ -2,7 +2,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { type ButtonHTMLAttributes, forwardRef } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
-const buttonVariants = cva({
+export const buttonVariants = cva({
   base: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   variants: {
     variant: {
@@ -17,7 +17,7 @@ const buttonVariants = cva({
       default: "h-10 px-4 py-2",
       sm: "h-9 rounded-md px-3",
       lg: "h-11 rounded-md px-8",
-      icon: "h-10 w-10",
+      icon: "size-9",
     },
   },
   defaultVariants: {
@@ -33,7 +33,7 @@ export interface ButtonProps
   formAction?: any
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
@@ -42,5 +42,3 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   },
 )
 Button.displayName = "Button"
-
-export { Button, buttonVariants }
