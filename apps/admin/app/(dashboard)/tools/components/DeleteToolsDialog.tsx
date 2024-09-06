@@ -2,7 +2,7 @@
 
 import type { Tool } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
-import { LoaderIcon, TrashIcon } from "lucide-react"
+import { TrashIcon } from "lucide-react"
 import * as React from "react"
 import { toast } from "sonner"
 import { Button } from "~/components/ui/Button"
@@ -66,12 +66,12 @@ export function DeleteToolsDialog({
       <Dialog {...props}>
         {showTrigger ? (
           <DialogTrigger asChild>
-            <Button variant="outline" size="sm">
-              <TrashIcon className="mr-2 size-4" aria-hidden="true" />
+            <Button variant="outline" size="sm" prefix={<TrashIcon />}>
               Delete ({tools.length})
             </Button>
           </DialogTrigger>
         ) : null}
+
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -81,19 +81,19 @@ export function DeleteToolsDialog({
               {tools.length === 1 ? " tool" : " tools"} from our servers.
             </DialogDescription>
           </DialogHeader>
+
           <DialogFooter className="gap-2 sm:space-x-0">
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
+
             <Button
               aria-label="Delete selected rows"
               variant="destructive"
               onClick={onDelete}
+              isPending={isDeletePending}
               disabled={isDeletePending}
             >
-              {isDeletePending && (
-                <LoaderIcon className="mr-2 size-4 animate-spin" aria-hidden="true" />
-              )}
               Delete
             </Button>
           </DialogFooter>
@@ -107,11 +107,12 @@ export function DeleteToolsDialog({
       {showTrigger ? (
         <DrawerTrigger asChild>
           <Button variant="outline" size="sm">
-            <TrashIcon className="mr-2 size-4" aria-hidden="true" />
+            <TrashIcon className="mr-2" aria-hidden="true" />
             Delete ({tools.length})
           </Button>
         </DrawerTrigger>
       ) : null}
+
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
@@ -121,19 +122,19 @@ export function DeleteToolsDialog({
             {tools.length === 1 ? " tool" : " tools"} from our servers.
           </DrawerDescription>
         </DrawerHeader>
+
         <DrawerFooter className="gap-2 sm:space-x-0">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
+
           <Button
             aria-label="Delete selected rows"
             variant="destructive"
             onClick={onDelete}
+            isPending={isDeletePending}
             disabled={isDeletePending}
           >
-            {isDeletePending && (
-              <LoaderIcon className="mr-2 size-4 animate-spin" aria-hidden="true" />
-            )}
             Delete
           </Button>
         </DrawerFooter>

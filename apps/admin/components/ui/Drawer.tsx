@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
+import { H4 } from "~/components/ui/Heading"
 import { cx } from "~/utils/cva"
 
 const Drawer = ({
@@ -64,12 +65,10 @@ DrawerFooter.displayName = "DrawerFooter"
 const DrawerTitle = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Title
-    ref={ref}
-    className={cx("text-lg font-semibold leading-none tracking-tight", className)}
-    {...props}
-  />
+>(({ children, ...props }, ref) => (
+  <DrawerPrimitive.Title ref={ref} asChild {...props}>
+    <H4>{children}</H4>
+  </DrawerPrimitive.Title>
 ))
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName
 

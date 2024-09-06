@@ -11,14 +11,6 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/Form"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/Select"
 import { Textarea } from "~/components/ui/Textarea"
 import type { CreateToolSchema } from "../lib/validations"
 
@@ -45,7 +37,7 @@ export function CreateToolForm({ form, onSubmit, children }: CreateToolFormProps
             </FormItem>
           )}
         />
-        <FormField
+        {/* <FormField
           control={form.control}
           name="label"
           render={({ field }) => (
@@ -122,7 +114,7 @@ export function CreateToolForm({ form, onSubmit, children }: CreateToolFormProps
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         {children}
       </form>
     </Form>

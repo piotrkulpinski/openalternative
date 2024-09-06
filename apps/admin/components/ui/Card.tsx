@@ -1,4 +1,5 @@
 import { type HTMLAttributes, forwardRef } from "react"
+import { H3 } from "~/components/ui/Heading"
 import { cx } from "~/utils/cva"
 
 const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -20,13 +21,7 @@ const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 CardHeader.displayName = "CardHeader"
 
 const CardTitle = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
-    <h3
-      ref={ref}
-      className={cx("text-2xl font-semibold leading-none tracking-tight", className)}
-      {...props}
-    />
-  ),
+  ({ ...props }, ref) => <H3 ref={ref} {...props} />,
 )
 CardTitle.displayName = "CardTitle"
 
