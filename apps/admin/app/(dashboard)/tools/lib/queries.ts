@@ -25,7 +25,13 @@ export async function getTools(input: GetToolsSchema) {
     const fromDate = from ? new Date(from) : undefined
     const toDate = to ? new Date(to) : undefined
 
+    console.log(name)
+
     const where: Prisma.ToolWhereInput = {
+      // Filter by name
+      name: name ? { contains: name, mode: "insensitive" } : undefined,
+
+      // Filter by createdAt
       createdAt: {
         gte: fromDate,
         lte: toDate,
