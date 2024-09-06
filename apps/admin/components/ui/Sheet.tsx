@@ -1,13 +1,14 @@
 "use client"
 
 import * as SheetPrimitive from "@radix-ui/react-dialog"
-import { X } from "lucide-react"
+import { XIcon } from "lucide-react"
 import {
   type ComponentPropsWithoutRef,
   type ElementRef,
   type HTMLAttributes,
   forwardRef,
 } from "react"
+import { H4 } from "~/components/ui/Heading"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const Sheet = SheetPrimitive.Root
@@ -62,7 +63,7 @@ const SheetContent = forwardRef<ElementRef<typeof SheetPrimitive.Content>, Sheet
       >
         {children}
         <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-ring disabled:pointer-events-none data-[state=open]:bg-secondary">
-          <X className="size-4" />
+          <XIcon />
           <span className="sr-only">Close</span>
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>
@@ -87,12 +88,10 @@ SheetFooter.displayName = "SheetFooter"
 const SheetTitle = forwardRef<
   ElementRef<typeof SheetPrimitive.Title>,
   ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Title
-    ref={ref}
-    className={cx("text-lg font-semibold text-foreground", className)}
-    {...props}
-  />
+>(({ children, ...props }, ref) => (
+  <SheetPrimitive.Title ref={ref} asChild {...props}>
+    <H4>{children}</H4>
+  </SheetPrimitive.Title>
 ))
 SheetTitle.displayName = SheetPrimitive.Title.displayName
 

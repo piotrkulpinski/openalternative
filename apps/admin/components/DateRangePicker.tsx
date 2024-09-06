@@ -61,7 +61,7 @@ export function DateRangePicker({
   dayCount,
   placeholder = "Pick a date",
   triggerVariant = "outline",
-  triggerSize = "default",
+  triggerSize = "md",
   triggerClassName,
   className,
   ...props
@@ -117,13 +117,13 @@ export function DateRangePicker({
         <Button
           variant={triggerVariant}
           size={triggerSize}
+          prefix={<CalendarIcon />}
           className={cx(
             "shrink-0 justify-start truncate text-left",
             !date && "text-muted-foreground",
             triggerClassName,
           )}
         >
-          <CalendarIcon className="mr-2 size-4" />
           {date?.from ? (
             date.to ? (
               `${format(date.from, "LLL dd, y")} - ${format(date.to, "LLL dd, y")}`

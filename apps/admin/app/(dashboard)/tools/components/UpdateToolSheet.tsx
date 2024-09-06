@@ -34,7 +34,6 @@ import {
 import { Textarea } from "~/components/ui/Textarea"
 
 import type { Tool } from "@openalternative/db"
-import { LoaderIcon } from "lucide-react"
 import { updateTool } from "../lib/actions"
 import { type UpdateToolSchema, updateToolSchema } from "../lib/validations"
 
@@ -179,16 +178,15 @@ export function UpdateToolSheet({ tool, ...props }: UpdateToolSheetProps) {
                 </FormItem>
               )}
             />
+
             <SheetFooter className="gap-2 pt-2 sm:space-x-0">
               <SheetClose asChild>
                 <Button type="button" variant="outline">
                   Cancel
                 </Button>
               </SheetClose>
-              <Button disabled={isUpdatePending}>
-                {isUpdatePending && (
-                  <LoaderIcon className="mr-2 size-4 animate-spin" aria-hidden="true" />
-                )}
+
+              <Button isPending={isUpdatePending} disabled={isUpdatePending}>
                 Save
               </Button>
             </SheetFooter>

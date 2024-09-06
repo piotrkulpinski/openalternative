@@ -9,6 +9,7 @@ import { DateRangePicker } from "~/components/DateRangePicker"
 import { DataTable } from "~/components/data-table/DataTable"
 import { DataTableHeader } from "~/components/data-table/DataTableHeader"
 import { DataTableToolbar } from "~/components/data-table/DataTableToolbar"
+import { DataTableViewOptions } from "~/components/data-table/DataTableViewOptions"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { getTools } from "../lib/queries"
 import { getColumns } from "./ToolsTableColumns"
@@ -82,8 +83,9 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     <DataTable table={table}>
       <DataTableHeader title="Tools" callToAction={<CreateToolDialog />}>
         <DataTableToolbar table={table} filterFields={filterFields}>
-          <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
           <ToolsTableToolbarActions table={table} />
+          <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
+          <DataTableViewOptions table={table} />
         </DataTableToolbar>
       </DataTableHeader>
     </DataTable>
