@@ -11,20 +11,21 @@ import type { PropsWithChildren } from "react"
 import { NavItem } from "~/app/(dashboard)/NavItem"
 import { User } from "~/app/(dashboard)/User"
 import { Logo } from "~/components/ui/Logo"
+import { siteConfig } from "~/config/site"
 import Providers from "./Providers"
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <Providers>
-      <main className="flex min-h-screen w-full flex-col">
-        <aside className="fixed inset-y-0 left-0 z-10 flex flex-col gap-4 px-2 py-4 border-r bg-muted/50">
+      <main className="flex items-start min-h-screen w-full">
+        <aside className="sticky top-0 h-dvh flex flex-col gap-4 px-2 py-4 border-r bg-muted/50">
           <nav className="contents">
             <Link
               href="/"
-              className="flex size-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base hover:bg-primary/90"
+              className="flex size-9 shrink-0 items-center justify-center gap-2 rounded-xl bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base hover:bg-primary/90"
             >
               <Logo className="size-5" />
-              <span className="sr-only">OpenAlternative</span>
+              <span className="sr-only">{siteConfig.name}</span>
             </Link>
 
             <NavItem href="/tools" label="Tools">
@@ -55,9 +56,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
           <User className="mt-auto" />
         </aside>
 
-        <div className="flex flex-col gap-4 py-4 pl-14">
-          <main className="grid flex-1 items-start gap-2 px-4 sm:px-6 md:gap-4">{children}</main>
-        </div>
+        <main className="grid w-full gap-4 p-4 sm:px-6">{children}</main>
       </main>
     </Providers>
   )

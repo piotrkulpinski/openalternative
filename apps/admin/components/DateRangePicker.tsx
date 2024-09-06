@@ -109,48 +109,43 @@ export function DateRangePicker({
     router.replace(`${pathname}?${newSearchParams.toString()}`, {
       scroll: false,
     })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date?.from, date?.to])
 
   return (
-    <div className="grid gap-2">
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant={triggerVariant}
-            size={triggerSize}
-            className={cx(
-              "w-full justify-start truncate text-left font-normal",
-              !date && "text-muted-foreground",
-              triggerClassName,
-            )}
-          >
-            <CalendarIcon className="mr-2 size-4" />
-            {date?.from ? (
-              date.to ? (
-                <>
-                  {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
-                </>
-              ) : (
-                format(date.from, "LLL dd, y")
-              )
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant={triggerVariant}
+          size={triggerSize}
+          className={cx(
+            "shrink-0 justify-start truncate text-left",
+            !date && "text-muted-foreground",
+            triggerClassName,
+          )}
+        >
+          <CalendarIcon className="mr-2 size-4" />
+          {date?.from ? (
+            date.to ? (
+              `${format(date.from, "LLL dd, y")} - ${format(date.to, "LLL dd, y")}`
             ) : (
-              <span>{placeholder}</span>
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className={cx("w-auto p-0", className)} {...props}>
-          <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={setDate}
-            numberOfMonths={2}
-          />
-        </PopoverContent>
-      </Popover>
-    </div>
+              `${format(date.from, "LLL dd, y")}`
+            )
+          ) : (
+            <span>{placeholder}</span>
+          )}
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent className={cx("w-auto p-0", className)} {...props}>
+        <Calendar
+          initialFocus
+          mode="range"
+          defaultMonth={date?.from}
+          selected={date}
+          onSelect={setDate}
+          numberOfMonths={2}
+        />
+      </PopoverContent>
+    </Popover>
   )
 }
