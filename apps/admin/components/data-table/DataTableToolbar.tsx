@@ -6,7 +6,6 @@ import * as React from "react"
 import type { DataTableFilterField } from "~/types"
 
 import { DataTableFacetedFilter } from "~/components/data-table/DataTableFacetedFilter"
-import { DataTableViewOptions } from "~/components/data-table/DataTableViewOptions"
 import { Button } from "~/components/ui/Button"
 import { Input } from "~/components/ui/Input"
 import { cx } from "~/utils/cva"
@@ -35,7 +34,7 @@ export function DataTableToolbar<TData>({
 
   return (
     <div
-      className={cx("flex w-full items-center justify-between space-x-2 overflow-auto", className)}
+      className={cx("flex w-full items-center justify-between gap-2 overflow-auto", className)}
       {...props}
     >
       <div className="flex flex-1 items-center space-x-2">
@@ -72,17 +71,14 @@ export function DataTableToolbar<TData>({
             variant="ghost"
             className="h-8 px-2 lg:px-3"
             onClick={() => table.resetColumnFilters()}
+            suffix={<XIcon />}
           >
             Reset
-            <XIcon className="ml-2 size-4" aria-hidden="true" />
           </Button>
         )}
       </div>
 
-      <div className="flex items-center gap-2">
-        <DataTableViewOptions table={table} />
-        {children}
-      </div>
+      {children}
     </div>
   )
 }

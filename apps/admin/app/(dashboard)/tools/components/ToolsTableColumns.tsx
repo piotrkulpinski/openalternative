@@ -33,7 +33,7 @@ export function getColumns(): ColumnDef<Tool>[] {
           }
           onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          className="mx-1.5"
+          className="block my-auto mx-1.5"
         />
       ),
       cell: ({ row }) => (
@@ -41,7 +41,7 @@ export function getColumns(): ColumnDef<Tool>[] {
           checked={row.getIsSelected()}
           onCheckedChange={value => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="mx-1.5"
+          className="block my-auto mx-1.5"
         />
       ),
       enableSorting: false,
@@ -52,7 +52,7 @@ export function getColumns(): ColumnDef<Tool>[] {
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {row.original.faviconUrl && (
             <Image
               src={row.original.faviconUrl}
@@ -111,10 +111,9 @@ export function getColumns(): ColumnDef<Tool>[] {
                   aria-label="Open menu"
                   variant="ghost"
                   size="icon"
+                  prefix={<EllipsisIcon />}
                   className="flex mr-1 -my-0.5 text-muted-foreground ml-auto data-[state=open]:bg-muted"
-                >
-                  <EllipsisIcon aria-hidden="true" />
-                </Button>
+                />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-40">
                 <DropdownMenuItem onSelect={() => setShowUpdateToolSheet(true)}>

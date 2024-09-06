@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { PlusIcon, RefreshCwIcon } from "lucide-react"
+import { PlusIcon } from "lucide-react"
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -60,8 +60,7 @@ export function CreateToolDialog({ ...props }: React.ComponentPropsWithoutRef<ty
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button size="sm" {...props}>
-            <PlusIcon className="mr-2" aria-hidden="true" />
+          <Button size="sm" prefix={<PlusIcon />} {...props}>
             New tool
           </Button>
         </DialogTrigger>
@@ -79,10 +78,8 @@ export function CreateToolDialog({ ...props }: React.ComponentPropsWithoutRef<ty
                   Cancel
                 </Button>
               </DialogClose>
-              <Button disabled={isCreatePending}>
-                {isCreatePending && (
-                  <RefreshCwIcon className="mr-2 animate-spin" aria-hidden="true" />
-                )}
+
+              <Button isPending={isCreatePending} disabled={isCreatePending}>
                 Create
               </Button>
             </DialogFooter>
@@ -94,8 +91,7 @@ export function CreateToolDialog({ ...props }: React.ComponentPropsWithoutRef<ty
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button size="sm" {...props}>
-          <PlusIcon className="mr-2" aria-hidden="true" />
+        <Button size="sm" prefix={<PlusIcon />} {...props}>
           New tool
         </Button>
       </DrawerTrigger>
@@ -111,8 +107,7 @@ export function CreateToolDialog({ ...props }: React.ComponentPropsWithoutRef<ty
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
 
-          <Button disabled={isCreatePending}>
-            {isCreatePending && <RefreshCwIcon className="mr-2 animate-spin" aria-hidden="true" />}
+          <Button isPending={isCreatePending} disabled={isCreatePending}>
             Create
           </Button>
         </DrawerFooter>

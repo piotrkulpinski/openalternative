@@ -11,12 +11,13 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex justify-center items-start md:items-center p-8">
-      <Card className="w-full max-w-sm">
+    <div className="min-h-screen flex justify-center items-start p-8 bg-muted/90 md:items-center">
+      <Card className="w-full max-w-xs">
         <CardHeader>
-          <CardTitle className="text-2xl">Sign in</CardTitle>
+          <CardTitle>Sign in</CardTitle>
           <CardDescription>Login to your account</CardDescription>
         </CardHeader>
+
         <CardFooter>
           <form
             action={async () => {

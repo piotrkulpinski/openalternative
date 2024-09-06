@@ -37,7 +37,7 @@ const SelectScrollUpButton = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollUpButton
     ref={ref}
-    className={cx("flex cursor-default items-center justify-center py-1", className)}
+    className={cx("flex cursor-pointer items-center justify-center py-1", className)}
     {...props}
   >
     <ChevronUpIcon />
@@ -51,7 +51,7 @@ const SelectScrollDownButton = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollDownButton
     ref={ref}
-    className={cx("flex cursor-default items-center justify-center py-1", className)}
+    className={cx("flex cursor-pointer items-center justify-center py-1", className)}
     {...props}
   >
     <ChevronDownIcon />
@@ -97,7 +97,7 @@ const SelectLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cx("px-2 py-1.5 text-sm font-semibold", className)}
+    className={cx("px-2 py-1.5 text-sm font-medium", className)}
     {...props}
   />
 ))
@@ -110,7 +110,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cx(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className,
     )}
     {...props}

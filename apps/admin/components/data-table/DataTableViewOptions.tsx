@@ -25,12 +25,13 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           aria-label="Toggle columns"
           variant="outline"
           size="sm"
-          className="ml-auto hidden h-8 lg:flex"
+          className="hidden lg:flex"
+          prefix={<SlidersHorizontalIcon />}
         >
-          <SlidersHorizontalIcon className="mr-2 size-4" />
           View
         </Button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent align="end" className="w-40">
         <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
