@@ -35,10 +35,7 @@ export function DataTableToolbar<TData>({
 
   return (
     <div
-      className={cx(
-        "flex w-full items-center justify-between space-x-2 overflow-auto p-1",
-        className,
-      )}
+      className={cx("flex w-full items-center justify-between space-x-2 overflow-auto", className)}
       {...props}
     >
       <div className="flex flex-1 items-center space-x-2">
@@ -81,9 +78,10 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+
       <div className="flex items-center gap-2">
-        {children}
         <DataTableViewOptions table={table} />
+        {children}
       </div>
     </div>
   )

@@ -91,7 +91,7 @@
   }
 
   svg:not([class*="size-"]):not([class*="h-"]) {
-    @apply size-[1em];
+    @apply size-[1.33em];
   }
 
   strong {
