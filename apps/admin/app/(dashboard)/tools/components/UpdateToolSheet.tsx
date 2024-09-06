@@ -15,14 +15,6 @@ import {
   FormMessage,
 } from "~/components/ui/Form"
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/Select"
-import {
   Sheet,
   SheetClose,
   SheetContent,
@@ -31,9 +23,9 @@ import {
   SheetHeader,
   SheetTitle,
 } from "~/components/ui/Sheet"
-import { Textarea } from "~/components/ui/Textarea"
 
 import type { Tool } from "@openalternative/db"
+import { Input } from "~/components/ui/Input"
 import { updateTool } from "../lib/actions"
 import { type UpdateToolSchema, updateToolSchema } from "../lib/validations"
 
@@ -47,19 +39,13 @@ export function UpdateToolSheet({ tool, ...props }: UpdateToolSheetProps) {
   const form = useForm<UpdateToolSchema>({
     resolver: zodResolver(updateToolSchema),
     defaultValues: {
-      title: tool.title ?? "",
-      label: tool.label,
-      status: tool.status,
-      priority: tool.priority,
+      name: tool.name,
     },
   })
 
   React.useEffect(() => {
     form.reset({
-      title: tool.title ?? "",
-      label: tool.label,
-      status: tool.status,
-      priority: tool.priority,
+      name: tool.name,
     })
   }, [tool, form])
 
@@ -89,18 +75,18 @@ export function UpdateToolSheet({ tool, ...props }: UpdateToolSheetProps) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
-              name="title"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Do a kickflip" className="resize-none" {...field} />
+                    <Input placeholder="PostHog" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="label"
               render={({ field }) => (
@@ -177,7 +163,7 @@ export function UpdateToolSheet({ tool, ...props }: UpdateToolSheetProps) {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <SheetFooter className="gap-2 pt-2 sm:space-x-0">
               <SheetClose asChild>
