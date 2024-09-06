@@ -11,17 +11,18 @@ export interface ToolsPageProps {
 
 export default async function ToolsPage({ searchParams }: ToolsPageProps) {
   const search = searchParamsSchema.parse(searchParams)
-
   const toolsPromise = getTools(search)
 
   return (
     <Suspense
       fallback={
         <DataTableSkeleton
+          title="Tools"
           columnCount={5}
+          rowCount={15}
           searchableColumnCount={1}
           filterableColumnCount={2}
-          cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
+          cellWidths={["12%", "48%", "15%", "15%", "10%"]}
           shrinkZero
         />
       }
