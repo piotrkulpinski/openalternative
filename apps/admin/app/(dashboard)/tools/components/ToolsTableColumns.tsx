@@ -13,7 +13,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/components/ui/DropdownMenu"
@@ -105,21 +104,29 @@ export function getColumns(): ColumnDef<Tool>[] {
               onSuccess={() => row.toggleSelected(false)}
             />
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  aria-label="Open menu"
-                  variant="ghost"
-                  size="icon"
-                  prefix={<EllipsisIcon />}
-                  className="flex mr-1 -my-0.5 text-muted-foreground ml-auto data-[state=open]:bg-muted"
-                />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-40">
-                <DropdownMenuItem onSelect={() => setShowUpdateToolSheet(true)}>
-                  Edit
-                </DropdownMenuItem>
-                {/* <DropdownMenuSub>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="outline"
+                size="sm"
+                className="ml-auto mr-1 -my-0.5"
+                onClick={() => setShowUpdateToolSheet(true)}
+              >
+                Edit
+              </Button>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    aria-label="Open menu"
+                    variant="ghost"
+                    size="icon"
+                    prefix={<EllipsisIcon />}
+                    className="text-muted-foreground data-[state=open]:bg-muted"
+                  />
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="end" className="w-40">
+                  {/*<DropdownMenuSub>
                   <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
                     <DropdownMenuRadioGroup
@@ -152,13 +159,14 @@ export function getColumns(): ColumnDef<Tool>[] {
                     </DropdownMenuRadioGroup>
                   </DropdownMenuSubContent>
                 </DropdownMenuSub> */}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={() => setShowDeleteToolDialog(true)}>
-                  Delete
-                  <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  {/* <DropdownMenuSeparator /> */}
+                  <DropdownMenuItem onSelect={() => setShowDeleteToolDialog(true)}>
+                    Delete
+                    <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </>
         )
       },

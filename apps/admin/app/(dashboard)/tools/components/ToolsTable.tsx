@@ -40,7 +40,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     {
       label: "Name",
       value: "name",
-      placeholder: "Filter names...",
+      placeholder: "Filter by name...",
     },
     // {
     //   label: "Status",

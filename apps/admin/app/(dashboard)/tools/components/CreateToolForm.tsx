@@ -11,7 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/Form"
-import { Textarea } from "~/components/ui/Textarea"
+import { Input } from "~/components/ui/Input"
 import type { CreateToolSchema } from "../lib/validations"
 
 interface CreateToolFormProps extends Omit<React.ComponentPropsWithRef<"form">, "onSubmit"> {
@@ -29,9 +29,9 @@ export function CreateToolForm({ form, onSubmit, children }: CreateToolFormProps
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <Textarea placeholder="Do a kickflip" className="resize-none" {...field} />
+                <Input placeholder="PostHog" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
