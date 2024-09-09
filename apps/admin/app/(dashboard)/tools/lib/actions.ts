@@ -8,7 +8,6 @@ import type { CreateToolSchema, UpdateToolSchema } from "./validations"
 
 export async function createTool(input: CreateToolSchema) {
   noStore()
-
   try {
     await prisma.tool.create({
       data: input,
@@ -30,7 +29,6 @@ export async function createTool(input: CreateToolSchema) {
 
 export async function updateTool(id: string, input: UpdateToolSchema) {
   noStore()
-
   try {
     await prisma.tool.update({
       where: { id },
