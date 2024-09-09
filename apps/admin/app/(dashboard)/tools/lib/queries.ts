@@ -102,14 +102,10 @@ export async function getToolCountByStatus() {
   }
 }
 
-export async function getToolBySlug(slug: string) {
+export async function getToolById(id: string) {
   noStore()
   try {
-    return await prisma.tool.findUnique({
-      where: {
-        slug,
-      },
-    })
+    return await prisma.tool.findUnique({ where: { id } })
   } catch (err) {
     return null
   }
