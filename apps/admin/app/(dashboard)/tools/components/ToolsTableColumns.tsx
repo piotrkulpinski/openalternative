@@ -99,7 +99,7 @@ export function getColumns(): ColumnDef<Tool>[] {
 
             <div className="flex items-center justify-end gap-1.5 -my-0.5">
               <Button variant="outline" size="sm" className="" asChild>
-                <Link href={`/tools/${row.original.slug}`}>Edit</Link>
+                <Link href={`/tools/${row.original.id}`}>Edit</Link>
               </Button>
 
               <DropdownMenu>

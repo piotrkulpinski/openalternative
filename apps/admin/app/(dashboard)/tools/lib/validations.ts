@@ -14,9 +14,13 @@ export const getToolsSchema = searchParamsSchema
 
 export type GetToolsSchema = z.infer<typeof getToolsSchema>
 
+const linkSchema = z.object({
+  name: z.string(),
+  url: z.string().url(),
+})
+
 export const createToolSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-  slug: z.string(),
+  name: z.string().min(1, "Name is required"),
   website: z.string().min(1, "Website is required").url(),
   repository: z
     .string()
@@ -29,7 +33,7 @@ export const createToolSchema = z.object({
   tagline: z.string().optional(),
   description: z.string().optional(),
   content: z.string().optional(),
-  links: z.array(z.string()).optional(),
+  links: z.array(linkSchema).optional(),
   bump: z.number().optional(),
   faviconUrl: z.string().optional(),
   screenshotUrl: z.string().optional(),
@@ -37,7 +41,7 @@ export const createToolSchema = z.object({
   submitterName: z.string().optional(),
   submitterEmail: z.string().optional(),
   submitterNote: z.string().optional(),
-  hostingUrl: z.string().optional(),
+  hostingUrl: z.string().url().optional().or(z.literal("")),
   discountCode: z.string().optional(),
   discountAmount: z.number().optional(),
   publishedAt: z.date().optional(),
@@ -47,7 +51,6 @@ export type CreateToolSchema = z.infer<typeof createToolSchema>
 
 export const updateToolSchema = z.object({
   name: z.string(),
-  slug: z.string().optional(),
   website: z.string().min(1, "Website is required").url(),
   repository: z
     .string()
@@ -61,7 +64,7 @@ export const updateToolSchema = z.object({
   tagline: z.string().optional(),
   description: z.string().optional(),
   content: z.string().optional(),
-  // links: z.array(z.string()).optional(),
+  links: z.array(linkSchema).optional(),
   bump: z.number().optional(),
   faviconUrl: z.string().optional(),
   screenshotUrl: z.string().optional(),
@@ -69,7 +72,7 @@ export const updateToolSchema = z.object({
   submitterName: z.string().optional(),
   submitterEmail: z.string().optional(),
   submitterNote: z.string().optional(),
-  hostingUrl: z.string().optional(),
+  hostingUrl: z.string().url().optional().or(z.literal("")),
   discountCode: z.string().optional(),
   discountAmount: z.number().optional(),
   publishedAt: z.date().optional(),
