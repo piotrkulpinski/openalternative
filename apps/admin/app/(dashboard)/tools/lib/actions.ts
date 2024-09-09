@@ -5,7 +5,7 @@ import slugify from "@sindresorhus/slugify"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
-import type { CreateToolSchema, UpdateToolSchema } from "./validations"
+import type { CreateToolSchema } from "./validations"
 
 export async function createTool(input: CreateToolSchema) {
   noStore()
@@ -31,7 +31,7 @@ export async function createTool(input: CreateToolSchema) {
   }
 }
 
-export async function updateTool(id: string, input: UpdateToolSchema) {
+export async function updateTool(id: string, input: Prisma.ToolUpdateInput) {
   noStore()
   try {
     await prisma.tool.update({

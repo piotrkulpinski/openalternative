@@ -2,7 +2,6 @@
 
 import type { ColumnDef } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
-import Image from "next/image"
 import * as React from "react"
 
 import type { Tool } from "@openalternative/db"
@@ -52,18 +51,12 @@ export function getColumns(): ColumnDef<Tool>[] {
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => (
-        <div className="flex items-center gap-3">
-          {row.original.faviconUrl && (
-            <Image
-              src={row.original.faviconUrl}
-              alt="Tool favicon"
-              height="64"
-              width="64"
-              className="h-6 w-auto aspect-square rounded object-cover"
-            />
-          )}
-          <div className="max-w-36 truncate font-medium">{row.getValue("name")}</div>
-        </div>
+        <Link
+          href={`/tools/${row.original.id}`}
+          className="max-w-36 truncate font-medium text-primary hover:text-foreground"
+        >
+          {row.getValue("name")}
+        </Link>
       ),
     },
     {
