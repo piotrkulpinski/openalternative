@@ -19,6 +19,7 @@ import {
 } from "~/components/ui/Form"
 import { Input } from "~/components/ui/Input"
 import { Textarea } from "~/components/ui/Textarea"
+import { nullsToUndefined } from "~/utils/helpers"
 
 interface UpdateToolFormProps extends React.HTMLAttributes<HTMLFormElement> {
   tool: Tool
@@ -29,11 +30,11 @@ export default function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) 
 
   const form = useForm<UpdateToolSchema>({
     resolver: zodResolver(updateToolSchema),
-    defaultValues: tool,
+    values: nullsToUndefined(tool),
   })
 
   React.useEffect(() => {
-    form.reset(tool)
+    form.reset(nullsToUndefined(tool))
   }, [tool, form])
 
   function onSubmit(input: UpdateToolSchema) {
@@ -49,6 +50,8 @@ export default function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) 
       toast.success("Tool successfully updated")
     })
   }
+
+  console.log(form.formState.errors)
 
   return (
     <Form {...form} {...props}>

@@ -78,7 +78,6 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     },
     // For remembering the previous row selection on page change
     getRowId: (originalRow, index) => `${originalRow.id}-${index}`,
-    /* */
   })
 
   return (

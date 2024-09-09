@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { SessionProvider } from "next-auth/react"
 import type { PropsWithChildren } from "react"
+import { Toaster } from "~/components/ui/Toaster"
 import { siteConfig } from "~/config/site"
 import { env } from "~/env"
 import { auth } from "~/services/auth"
@@ -40,6 +41,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           )}
         >
           {children}
+          <Toaster />
         </body>
       </SessionProvider>
     </html>
