@@ -1,12 +1,13 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+  previewFeatures = ["driverAdapters", "postgresqlExtensions"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [citext]
 }
 
 model Sponsoring {
@@ -24,7 +25,7 @@ model Sponsoring {
 
 model Tool {
   id             String    @id @default(cuid())
-  name           String
+  name           String    @db.Citext
   slug           String    @unique
   website        String    @unique
   repository     String    @unique

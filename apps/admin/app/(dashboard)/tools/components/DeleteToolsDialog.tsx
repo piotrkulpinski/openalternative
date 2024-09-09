@@ -35,16 +35,16 @@ interface DeleteToolsDialogProps extends React.ComponentPropsWithoutRef<typeof D
   onSuccess?: () => void
 }
 
-export function DeleteToolsDialog({
+export const DeleteToolsDialog = ({
   tools,
   showTrigger = true,
   onSuccess,
   ...props
-}: DeleteToolsDialogProps) {
+}: DeleteToolsDialogProps) => {
   const [isDeletePending, startDeleteTransition] = React.useTransition()
   const isDesktop = useMediaQuery("(min-width: 640px)")
 
-  function onDelete() {
+  const onDelete = () => {
     startDeleteTransition(async () => {
       const { error } = await deleteTools({
         ids: tools.map(tool => tool.id),
@@ -61,72 +61,41 @@ export function DeleteToolsDialog({
     })
   }
 
-  if (isDesktop) {
-    return (
-      <Dialog {...props}>
-        {showTrigger ? (
-          <DialogTrigger asChild>
-            <Button variant="outline" size="sm" prefix={<TrashIcon />}>
-              Delete ({tools.length})
-            </Button>
-          </DialogTrigger>
-        ) : null}
-
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your{" "}
-              <span className="font-medium">{tools.length}</span>
-              {tools.length === 1 ? " tool" : " tools"} from our servers.
-            </DialogDescription>
-          </DialogHeader>
-
-          <DialogFooter className="gap-2 sm:space-x-0">
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-
-            <Button
-              aria-label="Delete selected rows"
-              variant="destructive"
-              onClick={onDelete}
-              isPending={isDeletePending}
-              disabled={isDeletePending}
-            >
-              Delete
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    )
-  }
+  const DeleteDialog = Object.assign(isDesktop ? Dialog : Drawer, {
+    Trigger: isDesktop ? DialogTrigger : DrawerTrigger,
+    Content: isDesktop ? DialogContent : DrawerContent,
+    Header: isDesktop ? DialogHeader : DrawerHeader,
+    Title: isDesktop ? DialogTitle : DrawerTitle,
+    Description: isDesktop ? DialogDescription : DrawerDescription,
+    Footer: isDesktop ? DialogFooter : DrawerFooter,
+    Close: isDesktop ? DialogClose : DrawerClose,
+  })
 
   return (
-    <Drawer {...props}>
-      {showTrigger ? (
-        <DrawerTrigger asChild>
+    <DeleteDialog {...props}>
+      {showTrigger && (
+        <DeleteDialog.Trigger asChild>
           <Button variant="outline" size="sm">
-            <TrashIcon className="mr-2" aria-hidden="true" />
+            <TrashIcon className={isDesktop ? undefined : "mr-2"} aria-hidden="true" />
             Delete ({tools.length})
           </Button>
-        </DrawerTrigger>
-      ) : null}
+        </DeleteDialog.Trigger>
+      )}
 
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>
+      <DeleteDialog.Content>
+        <DeleteDialog.Header>
+          <DeleteDialog.Title>Are you absolutely sure?</DeleteDialog.Title>
+          <DeleteDialog.Description>
             This action cannot be undone. This will permanently delete your{" "}
             <span className="font-medium">{tools.length}</span>
             {tools.length === 1 ? " tool" : " tools"} from our servers.
-          </DrawerDescription>
-        </DrawerHeader>
+          </DeleteDialog.Description>
+        </DeleteDialog.Header>
 
-        <DrawerFooter className="gap-2 sm:space-x-0">
-          <DrawerClose asChild>
+        <DeleteDialog.Footer className="gap-2 sm:space-x-0">
+          <DeleteDialog.Close asChild>
             <Button variant="outline">Cancel</Button>
-          </DrawerClose>
+          </DeleteDialog.Close>
 
           <Button
             aria-label="Delete selected rows"
@@ -137,8 +106,8 @@ export function DeleteToolsDialog({
           >
             Delete
           </Button>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+        </DeleteDialog.Footer>
+      </DeleteDialog.Content>
+    </DeleteDialog>
   )
 }

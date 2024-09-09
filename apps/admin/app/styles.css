@@ -7,7 +7,7 @@
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
 
-    --muted: 240 4.8% 95.9%;
+    --muted: 240 4.8% 97.5%;
     --muted-foreground: 240 3.8% 46.1%;
 
     --popover: 0 0% 100%;
@@ -72,18 +72,14 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 
-  a,
-  button,
-  label[for],
-  [href] [class*="group-hover"] {
+  a {
     @apply transition;
-    @apply ease-out;
-    @apply duration-200;
-    @apply cursor-pointer;
+    @apply duration-150;
   }
 
   svg:not([class*="stroke"]) {

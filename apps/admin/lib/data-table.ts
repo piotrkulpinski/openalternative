@@ -1,6 +1,6 @@
 import type { Column } from "@tanstack/react-table"
 
-export function getCommonPinningStyles<TData>({
+export function getColumnPinningStyle<TData>({
   column,
   withBorder = false,
 }: {
@@ -27,9 +27,8 @@ export function getCommonPinningStyles<TData>({
     left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
     right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
     opacity: isPinned ? 0.97 : 1,
-    position: isPinned ? "sticky" : "relative",
-    background: isPinned ? "hsl(var(--background))" : "hsl(var(--background))",
     width: column.getSize(),
-    zIndex: isPinned ? 1 : 0,
+    position: isPinned ? "sticky" : "relative",
+    zIndex: isPinned ? 10 : undefined,
   }
 }

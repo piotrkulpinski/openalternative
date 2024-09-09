@@ -25,8 +25,6 @@ export async function getTools(input: GetToolsSchema) {
     const fromDate = from ? new Date(from) : undefined
     const toDate = to ? new Date(to) : undefined
 
-    console.log(name)
-
     const where: Prisma.ToolWhereInput = {
       // Filter by name
       name: name ? { contains: name, mode: "insensitive" } : undefined,
@@ -101,5 +99,18 @@ export async function getToolCountByStatus() {
     })
   } catch (err) {
     return []
+  }
+}
+
+export async function getToolBySlug(slug: string) {
+  noStore()
+  try {
+    return await prisma.tool.findUnique({
+      where: {
+        slug,
+      },
+    })
+  } catch (err) {
+    return null
   }
 }
