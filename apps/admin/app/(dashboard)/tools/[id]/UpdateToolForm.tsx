@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import type { Tool } from "@openalternative/db"
 import { formatDate } from "date-fns"
 import Link from "next/link"
 import { redirect } from "next/navigation"
@@ -9,7 +8,9 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { updateTool } from "~/app/(dashboard)/tools/lib/actions"
+import type { getAlternatives, getToolById } from "~/app/(dashboard)/tools/lib/queries"
 import { type UpdateToolSchema, updateToolSchema } from "~/app/(dashboard)/tools/lib/validations"
+import { AlternativesSelector } from "~/components/AlternativesSelector"
 import { Button } from "~/components/ui/Button"
 import {
   Form,
@@ -25,10 +26,11 @@ import { Textarea } from "~/components/ui/Textarea"
 import { nullsToUndefined } from "~/utils/helpers"
 
 interface UpdateToolFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  tool: Tool
+  tool: NonNullable<Awaited<ReturnType<typeof getToolById>>>
+  alternatives: Awaited<ReturnType<typeof getAlternatives>>
 }
 
-export function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) {
+export function UpdateToolForm({ tool, alternatives, ...props }: UpdateToolFormProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
   const form = useForm<UpdateToolSchema>({
@@ -40,9 +42,20 @@ export function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) {
     form.reset(nullsToUndefined(tool))
   }, [tool, form])
 
+  const [selectedAlternatives, setSelectedAlternatives] = React.useState<string[]>(
+    tool.alternatives?.map(alt => alt.alternative.id) || [],
+  )
+
   function onSubmit(input: UpdateToolSchema) {
     startUpdateTransition(async () => {
-      const { error } = await updateTool(tool.id, input)
+      const { error } = await updateTool(tool.id, {
+        ...input,
+        alternatives: {
+          connect: selectedAlternatives.map(id => ({
+            toolId_alternativeId: { toolId: tool.id, alternativeId: id },
+          })),
+        },
+      })
 
       if (error) {
         toast.error(error)
@@ -66,6 +79,14 @@ export function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) {
         className="grid grid-cols-2 gap-4 max-w-3xl"
         noValidate
       >
+        <div className="col-span-2">
+          <AlternativesSelector
+            alternatives={alternatives}
+            selectedAlternatives={selectedAlternatives}
+            onChange={setSelectedAlternatives}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="name"

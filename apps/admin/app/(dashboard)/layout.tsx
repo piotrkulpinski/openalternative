@@ -18,10 +18,10 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <Providers>
       <main className="flex items-start min-h-screen w-full">
-        <aside className="sticky top-0 z-40 h-dvh flex flex-col gap-4 px-2 py-4 text-sm border-r bg-muted/50">
+        <aside className="sticky top-0 z-40 h-dvh flex flex-col gap-4 px-2 py-4 text-sm border-r bg-muted">
           <Link
             href="/"
-            className="p-1.5 shrink-0 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
+            className="p-1.5 shrink-0 rounded-xl bg-foreground text-background hover:bg-foreground/90"
           >
             <Logo className="size-5" />
             <span className="sr-only">{siteConfig.name}</span>

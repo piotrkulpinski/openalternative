@@ -88,6 +88,18 @@ export async function getTools(input: GetToolsSchema) {
   }
 }
 
+export async function getAlternatives() {
+  noStore()
+  try {
+    return await prisma.alternative.findMany({
+      select: { id: true, name: true },
+      orderBy: { name: "asc" },
+    })
+  } catch (err) {
+    return []
+  }
+}
+
 export async function getToolCountByStatus() {
   noStore()
   try {
@@ -105,7 +117,10 @@ export async function getToolCountByStatus() {
 export async function getToolById(id: string) {
   noStore()
   try {
-    return await prisma.tool.findUnique({ where: { id } })
+    return await prisma.tool.findUnique({
+      where: { id },
+      include: { alternatives: { include: { alternative: true } } },
+    })
   } catch (err) {
     return null
   }
