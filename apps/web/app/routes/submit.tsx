@@ -53,18 +53,18 @@ export const loader = async () => {
 }
 
 const schema = z.object({
-  submitterName: z.string().min(1, { message: "Your name is required" }),
+  submitterName: z.string().min(1, "Your name is required"),
   submitterEmail: z
     .string()
-    .min(1, { message: "Your email is required" })
+    .min(1, "Your email is required")
     .email("Invalid email address, please use a correct format.")
     .refine(isRealEmail, "Invalid email address, please use a real one."),
   submitterNote: z.string().max(200),
-  name: z.string().min(1, { message: "Name is required" }),
-  website: z.string().min(1, { message: "Website is required" }).url(),
+  name: z.string().min(1, "Name is required"),
+  website: z.string().min(1, "Website is required").url(),
   repository: z
     .string()
-    .min(1, { message: "Repository is required" })
+    .min(1, "Repository is required")
     .url()
     .refine(
       url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),

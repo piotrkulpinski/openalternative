@@ -4,12 +4,14 @@ import * as React from "react"
 import type { DataTableFilterField } from "~/types"
 
 import type { Tool } from "@openalternative/db"
-import { CreateToolDialog } from "~/app/(dashboard)/tools/components/CreateToolDialog"
+import { PlusIcon } from "lucide-react"
+import Link from "next/link"
 import { DateRangePicker } from "~/components/DateRangePicker"
 import { DataTable } from "~/components/data-table/DataTable"
 import { DataTableHeader } from "~/components/data-table/DataTableHeader"
 import { DataTableToolbar } from "~/components/data-table/DataTableToolbar"
 import { DataTableViewOptions } from "~/components/data-table/DataTableViewOptions"
+import { Button } from "~/components/ui/Button"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { getTools } from "../lib/queries"
 import { getColumns } from "./ToolsTableColumns"
@@ -81,7 +83,14 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
 
   return (
     <DataTable table={table}>
-      <DataTableHeader title="Tools" callToAction={<CreateToolDialog />}>
+      <DataTableHeader
+        title="Tools"
+        callToAction={
+          <Button size="sm" prefix={<PlusIcon />} asChild>
+            <Link href="/tools/new">New tool</Link>
+          </Button>
+        }
+      >
         <DataTableToolbar table={table} filterFields={filterFields}>
           <ToolsTableToolbarActions table={table} />
           <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
