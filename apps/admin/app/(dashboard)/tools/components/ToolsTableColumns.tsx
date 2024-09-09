@@ -6,6 +6,7 @@ import Image from "next/image"
 import * as React from "react"
 
 import type { Tool } from "@openalternative/db"
+import Link from "next/link"
 import { DataTableColumnHeader } from "~/components/data-table/DataTableColumnHeader"
 import { Button } from "~/components/ui/Button"
 import { Checkbox } from "~/components/ui/Checkbox"
@@ -13,12 +14,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/components/ui/DropdownMenu"
 import { formatDate } from "~/utils/helpers"
 import { DeleteToolsDialog } from "./DeleteToolsDialog"
-import { UpdateToolSheet } from "./UpdateToolSheet"
 
 export function getColumns(): ColumnDef<Tool>[] {
   return [
@@ -84,18 +85,10 @@ export function getColumns(): ColumnDef<Tool>[] {
     {
       id: "actions",
       cell: function Cell({ row }) {
-        const [isUpdatePending, startUpdateTransition] = React.useTransition()
-        const [showUpdateToolSheet, setShowUpdateToolSheet] = React.useState(false)
         const [showDeleteToolDialog, setShowDeleteToolDialog] = React.useState(false)
 
         return (
           <>
-            <UpdateToolSheet
-              open={showUpdateToolSheet}
-              onOpenChange={setShowUpdateToolSheet}
-              tool={row.original}
-            />
-
             <DeleteToolsDialog
               open={showDeleteToolDialog}
               onOpenChange={setShowDeleteToolDialog}
@@ -104,14 +97,9 @@ export function getColumns(): ColumnDef<Tool>[] {
               onSuccess={() => row.toggleSelected(false)}
             />
 
-            <div className="flex items-center gap-1">
-              <Button
-                variant="outline"
-                size="sm"
-                className="ml-auto mr-1 -my-0.5"
-                onClick={() => setShowUpdateToolSheet(true)}
-              >
-                Edit
+            <div className="flex items-center justify-end gap-1.5 -my-0.5">
+              <Button variant="outline" size="sm" className="" asChild>
+                <Link href={`/tools/${row.original.slug}`}>Edit</Link>
               </Button>
 
               <DropdownMenu>
@@ -126,40 +114,14 @@ export function getColumns(): ColumnDef<Tool>[] {
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent align="end" className="w-40">
-                  {/*<DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuRadioGroup
-                      value={row.original.label}
-                      onValueChange={value => {
-                        startUpdateTransition(() => {
-                          toast.promise(
-                            updateTool(row.original.id, {
-                              label: value as Tool["label"],
-                            }),
-                            {
-                              loading: "Updating...",
-                              success: "Label updated",
-                              error: err => getErrorMessage(err),
-                            },
-                          )
-                        })
-                      }}
-                    >
-                      {tools.label.enumValues.map(label => (
-                        <DropdownMenuRadioItem
-                          key={label}
-                          value={label}
-                          className="capitalize"
-                          disabled={isUpdatePending}
-                        >
-                          {label}
-                        </DropdownMenuRadioItem>
-                      ))}
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub> */}
-                  {/* <DropdownMenuSeparator /> */}
+                  <DropdownMenuItem asChild>
+                    <Link href={row.original.website} target="_blank">
+                      Visit website
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+
                   <DropdownMenuItem onSelect={() => setShowDeleteToolDialog(true)}>
                     Delete
                     <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

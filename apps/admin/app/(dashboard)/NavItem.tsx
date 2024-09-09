@@ -23,8 +23,8 @@ export function NavItem({
           href={href}
           className={cx(
             "flex size-8 items-center justify-center rounded-lg",
-            pathname === href
-              ? "bg-accent text-foreground"
+            pathname.startsWith(href)
+              ? "bg-primary/10 text-foreground"
               : "text-muted-foreground hover:text-foreground",
           )}
         >

@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/Table"
-import { getCommonPinningStyles } from "~/lib/data-table"
+import { getColumnPinningStyle } from "~/lib/data-table"
 import { cx } from "~/utils/cva"
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
@@ -49,9 +49,7 @@ export function DataTable<TData>({
                     <TableHead
                       key={header.id}
                       colSpan={header.colSpan}
-                      style={{
-                        ...getCommonPinningStyles({ column: header.column }),
-                      }}
+                      style={getColumnPinningStyle({ column: header.column })}
                     >
                       {header.isPlaceholder
                         ? null
@@ -62,6 +60,7 @@ export function DataTable<TData>({
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map(row => (
@@ -69,9 +68,12 @@ export function DataTable<TData>({
                   {row.getVisibleCells().map(cell => (
                     <TableCell
                       key={cell.id}
-                      style={{
-                        ...getCommonPinningStyles({ column: cell.column }),
-                      }}
+                      style={getColumnPinningStyle({ column: cell.column })}
+                      className={cx(
+                        cell.column.getIsPinned()
+                          ? "sticky z-10 bg-background group-hover/row:!bg-muted group-data-[state=selected]/row:bg-accent"
+                          : "relative",
+                      )}
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
