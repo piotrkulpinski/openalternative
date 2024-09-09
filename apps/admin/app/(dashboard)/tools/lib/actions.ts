@@ -1,6 +1,7 @@
 "use server"
 
 import type { Prisma, Tool } from "@openalternative/db"
+import slugify from "@sindresorhus/slugify"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
@@ -10,10 +11,13 @@ export async function createTool(input: CreateToolSchema) {
   noStore()
   try {
     await prisma.tool.create({
-      data: input,
+      data: {
+        ...input,
+        slug: slugify(input.name),
+      },
     })
 
-    revalidatePath("/")
+    revalidatePath("/tools")
 
     return {
       data: null,
@@ -35,7 +39,7 @@ export async function updateTool(id: string, input: UpdateToolSchema) {
       data: input,
     })
 
-    revalidatePath("/")
+    revalidatePath("/tools")
 
     return {
       data: null,
@@ -49,10 +53,7 @@ export async function updateTool(id: string, input: UpdateToolSchema) {
   }
 }
 
-export async function updateTools(input: {
-  ids: Tool["id"][]
-  data: Prisma.ToolUpdateInput
-}) {
+export async function updateTools(input: { ids: Tool["id"][]; data: Prisma.ToolUpdateInput }) {
   noStore()
   try {
     await prisma.tool.updateMany({
@@ -60,7 +61,7 @@ export async function updateTools(input: {
       data: input.data,
     })
 
-    revalidatePath("/")
+    revalidatePath("/tools")
 
     return {
       data: null,
@@ -80,7 +81,7 @@ export async function deleteTool(input: { id: Tool["id"] }) {
       where: { id: input.id },
     })
 
-    revalidatePath("/")
+    revalidatePath("/tools")
   } catch (err) {
     return {
       data: null,
@@ -95,7 +96,7 @@ export async function deleteTools(input: { ids: Tool["id"][] }) {
       where: { id: { in: input.ids } },
     })
 
-    revalidatePath("/")
+    revalidatePath("/tools")
 
     return {
       data: null,

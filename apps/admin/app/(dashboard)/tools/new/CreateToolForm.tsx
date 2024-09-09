@@ -1,13 +1,13 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import type { Tool } from "@openalternative/db"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { updateTool } from "~/app/(dashboard)/tools/lib/actions"
-import { type UpdateToolSchema, updateToolSchema } from "~/app/(dashboard)/tools/lib/validations"
+import { createTool } from "~/app/(dashboard)/tools/lib/actions"
+import { type CreateToolSchema, createToolSchema } from "~/app/(dashboard)/tools/lib/validations"
 import { Button } from "~/components/ui/Button"
 import {
   Form,
@@ -19,27 +19,17 @@ import {
 } from "~/components/ui/Form"
 import { Input } from "~/components/ui/Input"
 import { Textarea } from "~/components/ui/Textarea"
-import { nullsToUndefined } from "~/utils/helpers"
 
-interface UpdateToolFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  tool: Tool
-}
+export function CreateToolForm() {
+  const [isCreatePending, startCreateTransition] = React.useTransition()
 
-export default function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) {
-  const [isUpdatePending, startUpdateTransition] = React.useTransition()
-
-  const form = useForm<UpdateToolSchema>({
-    resolver: zodResolver(updateToolSchema),
-    values: nullsToUndefined(tool),
+  const form = useForm<CreateToolSchema>({
+    resolver: zodResolver(createToolSchema),
   })
 
-  React.useEffect(() => {
-    form.reset(nullsToUndefined(tool))
-  }, [tool, form])
-
-  function onSubmit(input: UpdateToolSchema) {
-    startUpdateTransition(async () => {
-      const { error } = await updateTool(tool.id, input)
+  function onSubmit(input: CreateToolSchema) {
+    startCreateTransition(async () => {
+      const { error } = await createTool(input)
 
       if (error) {
         toast.error(error)
@@ -47,17 +37,20 @@ export default function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) 
       }
 
       form.reset()
-      toast.success("Tool successfully updated")
+      toast.success("Tool successfully created")
+
+      // Redirect to the tools page
+      redirect("/tools")
     })
   }
 
   console.log(form.formState.errors)
 
   return (
-    <Form {...form} {...props}>
+    <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid grid-cols-2 gap-4 max-w-4xl"
+        className="grid grid-cols-2 gap-4 max-w-3xl"
         noValidate
       >
         <FormField
@@ -81,7 +74,21 @@ export default function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) 
             <FormItem>
               <FormLabel>Website</FormLabel>
               <FormControl>
-                <Input placeholder="https://posthog.com" {...field} />
+                <Input type="url" placeholder="https://posthog.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="repository"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Repository</FormLabel>
+              <FormControl>
+                <Input type="url" placeholder="https://github.com/posthog/posthog" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -92,7 +99,7 @@ export default function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) 
           control={form.control}
           name="tagline"
           render={({ field }) => (
-            <FormItem className="col-span-2">
+            <FormItem>
               <FormLabel>Tagline</FormLabel>
               <FormControl>
                 <Input placeholder="How developers build successful products" {...field} />
@@ -215,8 +222,8 @@ export default function UpdateToolForm({ tool, ...props }: UpdateToolFormProps) 
             <Link href="/tools">Cancel</Link>
           </Button>
 
-          <Button isPending={isUpdatePending} disabled={isUpdatePending}>
-            Update tool
+          <Button isPending={isCreatePending} disabled={isCreatePending}>
+            Create tool
           </Button>
         </div>
       </form>
