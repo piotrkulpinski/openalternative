@@ -19,7 +19,7 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
 
-    --primary: 240 5.9% 10%;
+    --primary: 219 81% 50%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 240 4.8% 95.9%;
@@ -77,7 +77,8 @@
     @apply bg-background text-foreground;
   }
 
-  a {
+  a,
+  [href] [class*="group-hover"] {
     @apply transition;
     @apply duration-150;
   }
