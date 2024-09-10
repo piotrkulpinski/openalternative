@@ -17,6 +17,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/components/ui/DropdownMenu"
+import { siteConfig } from "~/config/site"
 import { formatDate } from "~/utils/helpers"
 import { DeleteToolsDialog } from "./DeleteToolsDialog"
 
@@ -106,16 +107,27 @@ export function getColumns(): ColumnDef<Tool>[] {
                   />
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuContent align="end">
+                  {row.original.publishedAt && row.original.publishedAt <= new Date() && (
+                    <DropdownMenuItem asChild>
+                      <Link href={`${siteConfig.url}/${row.original.slug}`} target="_blank">
+                        See live
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+
                   <DropdownMenuItem asChild>
                     <Link href={row.original.website} target="_blank">
-                      Visit website
+                      Visit website →
                     </Link>
                   </DropdownMenuItem>
 
                   <DropdownMenuSeparator />
 
-                  <DropdownMenuItem onSelect={() => setShowDeleteToolDialog(true)}>
+                  <DropdownMenuItem
+                    onSelect={() => setShowDeleteToolDialog(true)}
+                    className="text-destructive"
+                  >
                     Delete
                     <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
                   </DropdownMenuItem>
