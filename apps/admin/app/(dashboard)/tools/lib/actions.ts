@@ -5,12 +5,11 @@ import slugify from "@sindresorhus/slugify"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
-import type { CreateToolSchema } from "./validations"
 
-export async function createTool(input: CreateToolSchema) {
+export async function createTool(input: Prisma.ToolCreateInput) {
   noStore()
   try {
-    await prisma.tool.create({
+    const tool = await prisma.tool.create({
       data: {
         ...input,
         slug: slugify(input.name),
@@ -20,7 +19,7 @@ export async function createTool(input: CreateToolSchema) {
     revalidatePath("/tools")
 
     return {
-      data: null,
+      data: tool,
       error: null,
     }
   } catch (err) {
@@ -34,7 +33,7 @@ export async function createTool(input: CreateToolSchema) {
 export async function updateTool(id: string, input: Prisma.ToolUpdateInput) {
   noStore()
   try {
-    await prisma.tool.update({
+    const tool = await prisma.tool.update({
       where: { id },
       data: input,
     })
@@ -42,7 +41,7 @@ export async function updateTool(id: string, input: Prisma.ToolUpdateInput) {
     revalidatePath("/tools")
 
     return {
-      data: null,
+      data: tool,
       error: null,
     }
   } catch (err) {

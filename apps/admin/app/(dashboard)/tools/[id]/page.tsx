@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
+import { ToolForm } from "~/app/(dashboard)/tools/components/ToolForm"
 import { getAlternatives, getCategories, getToolById } from "~/app/(dashboard)/tools/lib/queries"
 import { H3 } from "~/components/ui/Heading"
-import { UpdateToolForm } from "./UpdateToolForm"
 
 export default async function UpdateToolPage({ params }: { params: { id: string } }) {
   const [tool, alternatives, categories] = await Promise.all([
@@ -18,7 +18,7 @@ export default async function UpdateToolPage({ params }: { params: { id: string 
     <>
       <H3>Update tool</H3>
 
-      <UpdateToolForm tool={tool} alternatives={alternatives} categories={categories} />
+      <ToolForm tool={tool} alternatives={alternatives} categories={categories} className="mt-4" />
     </>
   )
 }
