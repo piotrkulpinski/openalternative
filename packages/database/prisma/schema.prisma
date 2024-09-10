@@ -121,14 +121,14 @@ model Feedback {
 
   // Relations
   toolId String?
-  tool   Tool?   @relation(fields: [toolId], references: [id])
+  tool   Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade)
 }
 
 model AlternativeToTool {
   toolId        String
   alternativeId String
-  tool          Tool        @relation(fields: [toolId], references: [id])
-  alternative   Alternative @relation(fields: [alternativeId], references: [id])
+  tool          Tool        @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  alternative   Alternative @relation(fields: [alternativeId], references: [id], onDelete: Cascade)
 
   @@id([toolId, alternativeId])
 }
@@ -136,8 +136,8 @@ model AlternativeToTool {
 model CategoryToTools {
   toolId     String
   categoryId String
-  tool       Tool     @relation(fields: [toolId], references: [id])
-  category   Category @relation(fields: [categoryId], references: [id])
+  tool       Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@id([toolId, categoryId])
 }
@@ -146,8 +146,8 @@ model LanguageToTool {
   toolId       String
   languageSlug String
   percentage   Float?
-  tool         Tool     @relation(fields: [toolId], references: [id])
-  language     Language @relation(fields: [languageSlug], references: [slug])
+  tool         Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  language     Language @relation(fields: [languageSlug], references: [slug], onDelete: Cascade)
 
   @@id([toolId, languageSlug])
 }
@@ -155,8 +155,8 @@ model LanguageToTool {
 model TopicToTool {
   toolId    String
   topicSlug String
-  tool      Tool   @relation(fields: [toolId], references: [id])
-  topic     Topic  @relation(fields: [topicSlug], references: [slug])
+  tool      Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  topic     Topic  @relation(fields: [topicSlug], references: [slug], onDelete: Cascade)
 
   @@id([toolId, topicSlug])
 }

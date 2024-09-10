@@ -2,22 +2,22 @@ import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/data-table/DataTableSkeleton"
 import { searchParamsSchema } from "~/schema/searchParams"
 import type { SearchParams } from "~/types"
-import { ToolsTable } from "./_components/ToolsTable"
-import { getTools } from "./_lib/queries"
+import { CategoriesTable } from "./_components/CategoriesTable"
+import { getCategories } from "./_lib/queries"
 
-export interface ToolsPageProps {
+export interface CategoriesPageProps {
   searchParams: SearchParams
 }
 
-export default async function ToolsPage({ searchParams }: ToolsPageProps) {
+export default async function CategoriesPage({ searchParams }: CategoriesPageProps) {
   const search = searchParamsSchema.parse(searchParams)
-  const toolsPromise = getTools(search)
+  const categoriesPromise = getCategories(search)
 
   return (
     <Suspense
       fallback={
         <DataTableSkeleton
-          title="Tools"
+          title="Categories"
           columnCount={5}
           rowCount={15}
           searchableColumnCount={1}
@@ -27,7 +27,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
         />
       }
     >
-      <ToolsTable toolsPromise={toolsPromise} />
+      <CategoriesTable categoriesPromise={categoriesPromise} />
     </Suspense>
   )
 }

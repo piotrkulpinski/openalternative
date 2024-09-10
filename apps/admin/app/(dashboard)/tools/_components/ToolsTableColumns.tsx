@@ -1,11 +1,11 @@
 "use client"
 
+import type { Tool } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
-import * as React from "react"
-
-import type { Tool } from "@openalternative/db"
+import Image from "next/image"
 import Link from "next/link"
+import * as React from "react"
 import { DataTableColumnHeader } from "~/components/data-table/DataTableColumnHeader"
 import { Button } from "~/components/ui/Button"
 import { Checkbox } from "~/components/ui/Checkbox"
@@ -52,12 +52,24 @@ export function getColumns(): ColumnDef<Tool>[] {
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => (
-        <Link
-          href={`/tools/${row.original.id}`}
-          className="max-w-36 truncate font-medium text-primary hover:text-foreground"
-        >
-          {row.getValue("name")}
-        </Link>
+        <div className="flex items-center gap-2.5">
+          {row.original.faviconUrl && (
+            <Image
+              src={row.original.faviconUrl}
+              alt="Favicon"
+              width={16}
+              height={16}
+              className="size-5"
+            />
+          )}
+
+          <Link
+            href={`/tools/${row.original.id}`}
+            className="max-w-36 truncate font-medium text-primary hover:text-foreground"
+          >
+            {row.getValue("name")}
+          </Link>
+        </div>
       ),
     },
     {

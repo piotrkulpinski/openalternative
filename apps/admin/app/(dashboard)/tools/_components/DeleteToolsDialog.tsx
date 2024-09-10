@@ -27,7 +27,7 @@ import {
   DrawerTrigger,
 } from "~/components/ui/Drawer"
 import { useMediaQuery } from "~/hooks/use-media-query"
-import { deleteTools } from "../lib/actions"
+import { deleteTools } from "../_lib/actions"
 
 interface DeleteToolsDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   tools: Row<Tool>["original"][]

@@ -13,7 +13,7 @@ import { DataTableToolbar } from "~/components/data-table/DataTableToolbar"
 import { DataTableViewOptions } from "~/components/data-table/DataTableViewOptions"
 import { Button } from "~/components/ui/Button"
 import { useDataTable } from "~/hooks/use-data-table"
-import type { getTools } from "../lib/queries"
+import type { getTools } from "../_lib/queries"
 import { getColumns } from "./ToolsTableColumns"
 import { ToolsTableToolbarActions } from "./ToolsTableToolbarActions"
 

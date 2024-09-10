@@ -8,13 +8,13 @@ import { useRouter } from "next/navigation"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { createTool, updateTool } from "~/app/(dashboard)/tools/lib/actions"
+import { createTool, updateTool } from "~/app/(dashboard)/tools/_lib/actions"
 import type {
   getAlternatives,
   getCategories,
   getToolById,
-} from "~/app/(dashboard)/tools/lib/queries"
-import { type ToolSchema, toolSchema } from "~/app/(dashboard)/tools/lib/validations"
+} from "~/app/(dashboard)/tools/_lib/queries"
+import { type ToolSchema, toolSchema } from "~/app/(dashboard)/tools/_lib/validations"
 import { RelationSelector } from "~/components/RelationSelector"
 import { Button } from "~/components/ui/Button"
 import {
@@ -54,11 +54,11 @@ export function ToolForm({
   })
 
   const [selectedAlternatives, setSelectedAlternatives] = React.useState<string[]>(
-    tool?.alternatives?.map(alt => alt.alternative.id) || [],
+    tool?.alternatives?.map(({ alternative }) => alternative.id) || [],
   )
 
   const [selectedCategories, setSelectedCategories] = React.useState<string[]>(
-    tool?.categories?.map(cat => cat.category.id) || [],
+    tool?.categories?.map(({ category }) => category.id) || [],
   )
 
   function onSubmit(input: ToolSchema) {
@@ -119,26 +119,6 @@ export function ToolForm({
         noValidate
         {...props}
       >
-        <FormItem>
-          <FormLabel>Alternatives</FormLabel>
-
-          <RelationSelector
-            relations={alternatives}
-            selectedIds={selectedAlternatives}
-            onChange={setSelectedAlternatives}
-          />
-        </FormItem>
-
-        <FormItem>
-          <FormLabel>Categories</FormLabel>
-
-          <RelationSelector
-            relations={categories}
-            selectedIds={selectedCategories}
-            onChange={setSelectedCategories}
-          />
-        </FormItem>
-
         <FormField
           control={form.control}
           name="name"
@@ -392,6 +372,26 @@ export function ToolForm({
             </FormItem>
           )}
         />
+
+        <FormItem>
+          <FormLabel>Alternatives</FormLabel>
+
+          <RelationSelector
+            relations={alternatives}
+            selectedIds={selectedAlternatives}
+            onChange={setSelectedAlternatives}
+          />
+        </FormItem>
+
+        <FormItem>
+          <FormLabel>Categories</FormLabel>
+
+          <RelationSelector
+            relations={categories}
+            selectedIds={selectedCategories}
+            onChange={setSelectedCategories}
+          />
+        </FormItem>
 
         <div className="flex justify-end gap-2 col-span-full">
           <Button variant="outline" asChild>
