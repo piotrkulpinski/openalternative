@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/DropdownMenu"
+import { siteConfig } from "~/config/site"
 import { cx } from "~/utils/cva"
 
 export const User = ({ className, ...props }: ButtonProps) => {
@@ -41,7 +42,7 @@ export const User = ({ className, ...props }: ButtonProps) => {
           <Link href="/settings">Settings</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="https://openalternative.co" target="_blank">
+          <Link href={siteConfig.url} target="_blank">
             Visit Site
           </Link>
         </DropdownMenuItem>

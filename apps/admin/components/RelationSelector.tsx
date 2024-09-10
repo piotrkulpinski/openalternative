@@ -9,7 +9,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "~/components/ui/Command"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/Popover"
 import { ScrollArea } from "~/components/ui/ScrollArea"
@@ -89,14 +88,11 @@ export const RelationSelector = ({ relations, selectedIds, onChange }: RelationS
           </CommandList>
 
           {selectedIds.length > 0 && (
-            <>
-              <CommandSeparator />
-              <CommandGroup>
-                <CommandItem onSelect={() => onChange([])} className="justify-center text-center">
-                  Clear selection
-                </CommandItem>
-              </CommandGroup>
-            </>
+            <div className="p-1 border-t">
+              <Button variant="ghost" onClick={() => onChange([])} className="w-full">
+                Clear selection
+              </Button>
+            </div>
           )}
         </Command>
       </PopoverContent>
