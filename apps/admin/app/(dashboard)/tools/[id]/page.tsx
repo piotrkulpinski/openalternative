@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
-import { ToolForm } from "~/app/(dashboard)/tools/components/ToolForm"
-import { getAlternatives, getCategories, getToolById } from "~/app/(dashboard)/tools/lib/queries"
+import { ToolForm } from "~/app/(dashboard)/tools/_components/ToolForm"
+import { getAlternatives, getCategories, getToolById } from "~/app/(dashboard)/tools/_lib/queries"
 import { H3 } from "~/components/ui/Heading"
 
 export default async function UpdateToolPage({ params }: { params: { id: string } }) {
