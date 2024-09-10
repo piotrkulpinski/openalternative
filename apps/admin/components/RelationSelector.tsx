@@ -1,5 +1,4 @@
 import { MousePointerClickIcon } from "lucide-react"
-import type * as React from "react"
 import { Badge } from "~/components/ui/Badge"
 import { Button } from "~/components/ui/Button"
 import { Checkbox } from "~/components/ui/Checkbox"
@@ -28,47 +27,38 @@ type RelationSelectorProps = {
   onChange: (selectedIds: string[]) => void
 }
 
-export const RelationSelector: React.FC<RelationSelectorProps> = ({
-  relations,
-  selectedIds,
-  maxSelected = 3,
-  onChange,
-}) => {
+export const RelationSelector = ({ relations, selectedIds, onChange }: RelationSelectorProps) => {
+  const selectedRelations = relations.filter(rel => selectedIds.includes(rel.id))
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          className="justify-start px-3 gap-2.5"
+          className="justify-start w-full px-3 gap-2.5"
           prefix={<MousePointerClickIcon />}
         >
           <Separator orientation="vertical" />
 
-          {!selectedIds.length && <span className="font-normal text-muted-foreground">Select</span>}
-
-          <Badge variant="secondary" className="md:hidden">
-            {selectedIds.length}
-          </Badge>
-
-          <div className="space-x-1.5 max-md:hidden">
-            {selectedIds.length > maxSelected ? (
-              <Badge variant="secondary" className="px-1.5">
-                {selectedIds.length} selected
-              </Badge>
-            ) : (
-              relations
-                .filter(alt => selectedIds.includes(alt.id))
-                .map(alt => (
-                  <Badge key={alt.id} variant="secondary" className="px-1.5">
-                    {alt.name}
-                  </Badge>
-                ))
+          <div className="relative flex-1 flex items-center gap-1 overflow-hidden">
+            {selectedRelations.length === 0 && (
+              <span className="font-normal text-muted-foreground">Select</span>
             )}
+
+            {selectedRelations.map(relation => (
+              <Badge key={relation.id} variant="secondary" className="px-1.5">
+                {relation.name}
+              </Badge>
+            ))}
           </div>
+
+          <Badge variant="outline" className="px-1.5">
+            {selectedRelations.length}
+          </Badge>
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-full min-w-52 p-0" align="start">
+      <PopoverContent className="p-0" align="start">
         <Command>
           <CommandInput placeholder="Search..." />
           <CommandList>
