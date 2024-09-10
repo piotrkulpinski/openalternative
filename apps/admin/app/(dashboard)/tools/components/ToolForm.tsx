@@ -1,18 +1,20 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import slugify from "@sindresorhus/slugify"
 import { formatDate } from "date-fns"
 import Link from "next/link"
-import * as React from "react"
+import { redirect } from "next/navigation"
+import React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { updateTool } from "~/app/(dashboard)/tools/lib/actions"
+import { createTool, updateTool } from "~/app/(dashboard)/tools/lib/actions"
 import type {
   getAlternatives,
   getCategories,
   getToolById,
 } from "~/app/(dashboard)/tools/lib/queries"
-import { type UpdateToolSchema, updateToolSchema } from "~/app/(dashboard)/tools/lib/validations"
+import { type ToolSchema, toolSchema } from "~/app/(dashboard)/tools/lib/validations"
 import { RelationSelector } from "~/components/RelationSelector"
 import { Button } from "~/components/ui/Button"
 import {
@@ -26,41 +28,48 @@ import {
 import { Input } from "~/components/ui/Input"
 import { Switch } from "~/components/ui/Switch"
 import { Textarea } from "~/components/ui/Textarea"
+import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
-interface UpdateToolFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  tool: NonNullable<Awaited<ReturnType<typeof getToolById>>>
+type ToolFormProps = React.HTMLAttributes<HTMLFormElement> & {
+  tool?: Awaited<ReturnType<typeof getToolById>>
   alternatives: Awaited<ReturnType<typeof getAlternatives>>
   categories: Awaited<ReturnType<typeof getCategories>>
 }
 
-export function UpdateToolForm({ tool, alternatives, categories, ...props }: UpdateToolFormProps) {
-  const [isUpdatePending, startUpdateTransition] = React.useTransition()
+export function ToolForm({
+  children,
+  className,
+  tool,
+  alternatives,
+  categories,
+  ...props
+}: ToolFormProps) {
+  const [isSubmitPending, startSubmitTransition] = React.useTransition()
 
-  const form = useForm<UpdateToolSchema>({
-    resolver: zodResolver(updateToolSchema),
+  const form = useForm<ToolSchema>({
+    resolver: zodResolver(toolSchema),
     defaultValues: nullsToUndefined(tool),
   })
 
-  React.useEffect(() => {
-    form.reset(nullsToUndefined(tool))
-  }, [tool, form])
-
   const [selectedAlternatives, setSelectedAlternatives] = React.useState<string[]>(
-    tool.alternatives?.map(alt => alt.alternative.id) || [],
+    tool?.alternatives?.map(alt => alt.alternative.id) || [],
   )
 
   const [selectedCategories, setSelectedCategories] = React.useState<string[]>(
-    tool.categories?.map(cat => cat.category.id) || [],
+    tool?.categories?.map(cat => cat.category.id) || [],
   )
 
-  function onSubmit(input: UpdateToolSchema) {
-    startUpdateTransition(async () => {
-      const { error } = await updateTool(tool.id, {
+  function onSubmit(input: ToolSchema) {
+    startSubmitTransition(async () => {
+      const payload = {
         ...input,
+        slug: slugify(input.name),
+
         alternatives: {
           // Delete existing relations
-          deleteMany: { toolId: tool.id },
+          deleteMany: tool ? { toolId: tool.id } : undefined,
+
           // Create new relations
           create: selectedAlternatives.map(id => ({
             alternative: {
@@ -68,9 +77,11 @@ export function UpdateToolForm({ tool, alternatives, categories, ...props }: Upd
             },
           })),
         },
+
         categories: {
           // Delete existing relations
-          deleteMany: { toolId: tool.id },
+          deleteMany: tool ? { toolId: tool.id } : undefined,
+
           // Create new relations
           create: selectedCategories.map(id => ({
             category: {
@@ -78,29 +89,31 @@ export function UpdateToolForm({ tool, alternatives, categories, ...props }: Upd
             },
           })),
         },
-      })
+      }
+
+      const { error, data } = tool ? await updateTool(tool.id, payload) : await createTool(payload)
 
       if (error) {
         toast.error(error)
         return
       }
 
-      form.reset()
-      toast.success("Tool successfully updated")
-
-      // Redirect to the tools page
-      // redirect("/tools")
+      toast.success(`Tool successfully ${tool ? "updated" : "created"}`)
+      redirect(`/tools/${data?.id}`)
     })
   }
 
-  console.log(form.formState.errors)
+  React.useEffect(() => {
+    form.reset(nullsToUndefined(tool))
+  }, [tool, form])
 
   return (
-    <Form {...form} {...props}>
+    <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid gap-4 max-w-3xl sm:grid-cols-2"
+        className={cx("grid grid-cols-1 gap-4 max-w-3xl sm:grid-cols-2", className)}
         noValidate
+        {...props}
       >
         <FormItem>
           <FormLabel>Alternatives</FormLabel>
@@ -381,8 +394,8 @@ export function UpdateToolForm({ tool, alternatives, categories, ...props }: Upd
             <Link href="/tools">Cancel</Link>
           </Button>
 
-          <Button isPending={isUpdatePending} disabled={isUpdatePending}>
-            Update tool
+          <Button isPending={isSubmitPending} disabled={isSubmitPending}>
+            {tool ? "Update tool" : "Create tool"}
           </Button>
         </div>
       </form>

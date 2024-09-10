@@ -1,12 +1,15 @@
+import { ToolForm } from "~/app/(dashboard)/tools/components/ToolForm"
+import { getAlternatives, getCategories } from "~/app/(dashboard)/tools/lib/queries"
 import { H3 } from "~/components/ui/Heading"
-import { CreateToolForm } from "./CreateToolForm"
 
-export default function CreateToolPage() {
+export default async function CreateToolPage() {
+  const [alternatives, categories] = await Promise.all([getAlternatives(), getCategories()])
+
   return (
     <>
-      <H3>New tool</H3>
+      <H3>Create tool</H3>
 
-      <CreateToolForm />
+      <ToolForm alternatives={alternatives} categories={categories} className="mt-4" />
     </>
   )
 }
