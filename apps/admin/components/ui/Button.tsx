@@ -25,7 +25,7 @@ export const buttonVariants = cva({
     },
 
     isPending: {
-      true: "[&>*:not(.animate-spin)]:text-transparent select-none",
+      true: "text-transparent select-none",
     },
   },
 
@@ -84,7 +84,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           {suffix}
         </Slot>
 
-        {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
+        {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin text-white" />}
       </Comp>
     )
   },

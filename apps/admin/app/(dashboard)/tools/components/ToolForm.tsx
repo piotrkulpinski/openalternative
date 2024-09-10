@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import slugify from "@sindresorhus/slugify"
 import { formatDate } from "date-fns"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -45,6 +45,7 @@ export function ToolForm({
   categories,
   ...props
 }: ToolFormProps) {
+  const router = useRouter()
   const [isSubmitPending, startSubmitTransition] = React.useTransition()
 
   const form = useForm<ToolSchema>({
@@ -98,8 +99,11 @@ export function ToolForm({
         return
       }
 
+      if (!tool && data) {
+        router.push(`/tools/${data.id}`)
+      }
+
       toast.success(`Tool successfully ${tool ? "updated" : "created"}`)
-      redirect(`/tools/${data?.id}`)
     })
   }
 
