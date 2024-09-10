@@ -100,6 +100,18 @@ export async function getAlternatives() {
   }
 }
 
+export async function getCategories() {
+  noStore()
+  try {
+    return await prisma.category.findMany({
+      select: { id: true, name: true },
+      orderBy: { name: "asc" },
+    })
+  } catch (err) {
+    return []
+  }
+}
+
 export async function getToolCountByStatus() {
   noStore()
   try {
@@ -119,7 +131,10 @@ export async function getToolById(id: string) {
   try {
     return await prisma.tool.findUnique({
       where: { id },
-      include: { alternatives: { include: { alternative: true } } },
+      include: {
+        alternatives: { include: { alternative: true } },
+        categories: { include: { category: true } },
+      },
     })
   } catch (err) {
     return null
