@@ -3,14 +3,17 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { formatDate } from "date-fns"
 import Link from "next/link"
-import { redirect } from "next/navigation"
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { updateTool } from "~/app/(dashboard)/tools/lib/actions"
-import type { getAlternatives, getToolById } from "~/app/(dashboard)/tools/lib/queries"
+import type {
+  getAlternatives,
+  getCategories,
+  getToolById,
+} from "~/app/(dashboard)/tools/lib/queries"
 import { type UpdateToolSchema, updateToolSchema } from "~/app/(dashboard)/tools/lib/validations"
-import { AlternativesSelector } from "~/components/AlternativesSelector"
+import { RelationSelector } from "~/components/RelationSelector"
 import { Button } from "~/components/ui/Button"
 import {
   Form,
@@ -28,9 +31,10 @@ import { nullsToUndefined } from "~/utils/helpers"
 interface UpdateToolFormProps extends React.HTMLAttributes<HTMLFormElement> {
   tool: NonNullable<Awaited<ReturnType<typeof getToolById>>>
   alternatives: Awaited<ReturnType<typeof getAlternatives>>
+  categories: Awaited<ReturnType<typeof getCategories>>
 }
 
-export function UpdateToolForm({ tool, alternatives, ...props }: UpdateToolFormProps) {
+export function UpdateToolForm({ tool, alternatives, categories, ...props }: UpdateToolFormProps) {
   const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
   const form = useForm<UpdateToolSchema>({
@@ -46,13 +50,32 @@ export function UpdateToolForm({ tool, alternatives, ...props }: UpdateToolFormP
     tool.alternatives?.map(alt => alt.alternative.id) || [],
   )
 
+  const [selectedCategories, setSelectedCategories] = React.useState<string[]>(
+    tool.categories?.map(cat => cat.category.id) || [],
+  )
+
   function onSubmit(input: UpdateToolSchema) {
     startUpdateTransition(async () => {
       const { error } = await updateTool(tool.id, {
         ...input,
         alternatives: {
-          connect: selectedAlternatives.map(id => ({
-            toolId_alternativeId: { toolId: tool.id, alternativeId: id },
+          // Delete existing relations
+          deleteMany: { toolId: tool.id },
+          // Create new relations
+          create: selectedAlternatives.map(id => ({
+            alternative: {
+              connect: { id },
+            },
+          })),
+        },
+        categories: {
+          // Delete existing relations
+          deleteMany: { toolId: tool.id },
+          // Create new relations
+          create: selectedCategories.map(id => ({
+            category: {
+              connect: { id },
+            },
           })),
         },
       })
@@ -66,7 +89,7 @@ export function UpdateToolForm({ tool, alternatives, ...props }: UpdateToolFormP
       toast.success("Tool successfully updated")
 
       // Redirect to the tools page
-      redirect("/tools")
+      // redirect("/tools")
     })
   }
 
@@ -76,16 +99,28 @@ export function UpdateToolForm({ tool, alternatives, ...props }: UpdateToolFormP
     <Form {...form} {...props}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid grid-cols-2 gap-4 max-w-3xl"
+        className="grid gap-4 max-w-3xl sm:grid-cols-2"
         noValidate
       >
-        <div className="col-span-2">
-          <AlternativesSelector
-            alternatives={alternatives}
-            selectedAlternatives={selectedAlternatives}
+        <FormItem>
+          <FormLabel>Alternatives</FormLabel>
+
+          <RelationSelector
+            relations={alternatives}
+            selectedIds={selectedAlternatives}
             onChange={setSelectedAlternatives}
           />
-        </div>
+        </FormItem>
+
+        <FormItem>
+          <FormLabel>Categories</FormLabel>
+
+          <RelationSelector
+            relations={categories}
+            selectedIds={selectedCategories}
+            onChange={setSelectedCategories}
+          />
+        </FormItem>
 
         <FormField
           control={form.control}
@@ -147,7 +182,7 @@ export function UpdateToolForm({ tool, alternatives, ...props }: UpdateToolFormP
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className="col-span-2">
+            <FormItem className="col-span-full">
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
@@ -164,7 +199,7 @@ export function UpdateToolForm({ tool, alternatives, ...props }: UpdateToolFormP
           control={form.control}
           name="content"
           render={({ field }) => (
-            <FormItem className="col-span-2">
+            <FormItem className="col-span-full">
               <FormLabel>Content</FormLabel>
               <FormControl>
                 <Textarea {...field} />
@@ -238,7 +273,7 @@ export function UpdateToolForm({ tool, alternatives, ...props }: UpdateToolFormP
           control={form.control}
           name="submitterNote"
           render={({ field }) => (
-            <FormItem className="col-span-2">
+            <FormItem className="col-span-full">
               <FormLabel>Submitter Note</FormLabel>
               <FormControl>
                 <Textarea {...field} />
@@ -341,7 +376,7 @@ export function UpdateToolForm({ tool, alternatives, ...props }: UpdateToolFormP
           )}
         />
 
-        <div className="flex justify-end gap-2 col-span-2">
+        <div className="flex justify-end gap-2 col-span-full">
           <Button variant="outline" asChild>
             <Link href="/tools">Cancel</Link>
           </Button>
