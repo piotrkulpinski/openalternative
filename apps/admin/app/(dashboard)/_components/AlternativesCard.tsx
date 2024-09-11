@@ -1,6 +1,6 @@
 import { ReplaceIcon } from "lucide-react"
-import { Card } from "~/components/ui/Card"
 import { prisma } from "~/services/prisma"
+import { Card } from "./Card"
 
 export const AlternativesCard = async () => {
   const alternatives = await prisma.alternative.count()
