@@ -1,10 +1,8 @@
 import {
-  CodeXmlIcon,
   CopyrightIcon,
   DraftingCompassIcon,
   GalleryHorizontalEndIcon,
   ReplaceIcon,
-  TagIcon,
 } from "lucide-react"
 import Link from "next/link"
 import type { PropsWithChildren } from "react"
@@ -32,20 +30,12 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
               <DraftingCompassIcon />
             </NavItem>
 
-            <NavItem href="/categories" label="Categories">
-              <GalleryHorizontalEndIcon />
-            </NavItem>
-
             <NavItem href="/alternatives" label="Alternatives">
               <ReplaceIcon />
             </NavItem>
 
-            <NavItem href="/languages" label="Languages">
-              <CodeXmlIcon />
-            </NavItem>
-
-            <NavItem href="/topics" label="Topics">
-              <TagIcon />
+            <NavItem href="/categories" label="Categories">
+              <GalleryHorizontalEndIcon />
             </NavItem>
 
             <NavItem href="/licenses" label="Licenses">
