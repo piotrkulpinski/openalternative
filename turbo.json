@@ -1,7 +1,16 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["NODE_ENV", "VERCEL_URL", "DATABASE_URL", "DIRECT_URL"],
+  "globalEnv": [
+    "NODE_ENV",
+    "VERCEL_URL",
+    "NEXT_PUBLIC_SITE_URL",
+    "AUTH_SECRET",
+    "AUTH_GOOGLE_ID",
+    "AUTH_GOOGLE_SECRET",
+    "DATABASE_URL",
+    "DIRECT_URL"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^db:generate"],
