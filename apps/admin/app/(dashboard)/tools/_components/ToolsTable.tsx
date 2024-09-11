@@ -22,7 +22,7 @@ interface ToolsTableProps {
 }
 
 export function ToolsTable({ toolsPromise }: ToolsTableProps) {
-  const { data, pageCount } = React.use(toolsPromise)
+  const { tools, toolsTotal, pageCount } = React.use(toolsPromise)
 
   // Memoize the columns so they don't re-render on every render
   const columns = React.useMemo(() => getColumns(), [])
@@ -67,7 +67,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
   ]
 
   const { table } = useDataTable({
-    data,
+    data: tools,
     columns,
     pageCount,
     /* optional props */
@@ -84,8 +84,9 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     <DataTable table={table}>
       <DataTableHeader
         title="Tools"
+        total={toolsTotal}
         callToAction={
-          <Button size="sm" prefix={<PlusIcon />} asChild>
+          <Button prefix={<PlusIcon />} asChild>
             <Link href="/tools/new">New tool</Link>
           </Button>
         }

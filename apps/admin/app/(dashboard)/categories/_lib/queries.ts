@@ -38,7 +38,7 @@ export async function getCategories(input: GetCategoriesSchema) {
     }
 
     // Transaction is used to ensure both queries are executed in a single transaction
-    const [data, total] = await prisma.$transaction([
+    const [categories, categoriesTotal] = await prisma.$transaction([
       prisma.category.findMany({
         where,
         orderBy: column ? { [column]: order } : undefined,
@@ -51,10 +51,10 @@ export async function getCategories(input: GetCategoriesSchema) {
       }),
     ])
 
-    const pageCount = Math.ceil(total / per_page)
-    return { data, pageCount }
+    const pageCount = Math.ceil(categoriesTotal / per_page)
+    return { categories, categoriesTotal, pageCount }
   } catch (err) {
-    return { data: [], pageCount: 0 }
+    return { categories: [], categoriesTotal: 0, pageCount: 0 }
   }
 }
 

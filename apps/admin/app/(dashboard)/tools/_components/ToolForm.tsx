@@ -3,8 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import slugify from "@sindresorhus/slugify"
 import { formatDate } from "date-fns"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { redirect } from "next/navigation"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -45,7 +46,7 @@ export function ToolForm({
   categories,
   ...props
 }: ToolFormProps) {
-  const router = useRouter()
+  const session = useSession()
   const [isSubmitPending, startSubmitTransition] = React.useTransition()
 
   const form = useForm<ToolSchema>({
@@ -66,6 +67,12 @@ export function ToolForm({
       const payload = {
         ...input,
         slug: slugify(input.name),
+
+        ...(!tool &&
+          session.data?.user && {
+            submitterName: session.data.user.name,
+            submitterEmail: session.data.user.email,
+          }),
 
         alternatives: {
           // Delete existing relations
@@ -100,7 +107,7 @@ export function ToolForm({
       }
 
       if (!tool && data) {
-        router.push(`/tools/${data.id}`)
+        redirect(`/tools/${data.id}`)
       }
 
       toast.success(`Tool successfully ${tool ? "updated" : "created"}`)
