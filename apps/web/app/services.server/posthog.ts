@@ -7,8 +7,8 @@ import { v4 as uuidv4 } from "uuid"
  * @returns A PostHog instance configured with the API key and host from environment variables.
  */
 export const posthog = remember("posthog", () => {
-  return new PostHog(import.meta.env.VITE_POSTHOG_API_KEY ?? "", {
-    host: import.meta.env.VITE_POSTHOG_API_HOST,
+  return new PostHog(import.meta.env.NEXT_PUBLIC_POSTHOG_API_KEY ?? "", {
+    host: import.meta.env.NEXT_PUBLIC_POSTHOG_API_HOST,
   })
 })
 
@@ -18,7 +18,7 @@ export const posthog = remember("posthog", () => {
  * @returns The PostHog distinct ID.
  */
 export const getPostHogDistinctId = async (request: Request) => {
-  const projectAPIKey = import.meta.env.VITE_POSTHOG_API_KEY
+  const projectAPIKey = import.meta.env.NEXT_PUBLIC_POSTHOG_API_KEY
   const cookie = request.headers.get("cookie") || ""
   const cookieKey = `ph_${projectAPIKey}_posthog`
 

@@ -34,14 +34,18 @@ CardDescription.displayName = "CardDescription"
 
 const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cx("p-4 md:p-6 pt-0", className)} {...props} />
+    <div ref={ref} className={cx("p-4 pt-0 md:p-6 md:pt-0", className)} {...props} />
   ),
 )
 CardContent.displayName = "CardContent"
 
 const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cx("flex items-center p-4 md:p-6 pt-0", className)} {...props} />
+    <div
+      ref={ref}
+      className={cx("flex items-center p-4 pt-0 md:p-6 md:pt-0", className)}
+      {...props}
+    />
   ),
 )
 CardFooter.displayName = "CardFooter"

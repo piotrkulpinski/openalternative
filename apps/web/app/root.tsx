@@ -105,8 +105,8 @@ export function Layout({ children }: PropsWithChildren) {
             {/* Plausible */}
             <script
               defer
-              data-domain={import.meta.env.VITE_PLAUSIBLE_DOMAIN}
-              src={`${import.meta.env.VITE_PLAUSIBLE_HOST}/js/script.js`}
+              data-domain={import.meta.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+              src={`${import.meta.env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
             />
           </>
         )}

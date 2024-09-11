@@ -2,7 +2,7 @@ import { prisma } from "~/services.server/prisma"
 import { SITE_NAME, SITE_TAGLINE } from "~/utils/constants"
 
 export const loader = async () => {
-  const url = import.meta.env.VITE_SITE_URL ?? ""
+  const url = import.meta.env.NEXT_PUBLIC_SITE_URL ?? ""
 
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { lte: new Date() } },
