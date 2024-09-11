@@ -9,7 +9,7 @@ export interface ToolsPageProps {
   searchParams: SearchParams
 }
 
-export default async function ToolsPage({ searchParams }: ToolsPageProps) {
+export default function ToolsPage({ searchParams }: ToolsPageProps) {
   const search = searchParamsSchema.parse(searchParams)
   const toolsPromise = getTools(search)
 

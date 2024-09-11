@@ -1,49 +1,23 @@
-import { type HTMLAttributes, forwardRef } from "react"
-import { H3 } from "~/components/ui/Heading"
-import { cx } from "~/utils/cva"
+import { Slot } from "@radix-ui/react-slot"
+import type { ReactNode } from "react"
 
-const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cx("rounded-lg border bg-card text-card-foreground shadow-sm", className)}
-      {...props}
-    />
-  ),
+type CardProps = {
+  title: string
+  value: string | number
+  icon: ReactNode
+  subtitle?: string
+}
+
+export const Card = ({ title, value, icon, subtitle }: CardProps) => (
+  <div className="flex flex-col gap-2 p-6 rounded-xl border bg-card text-card-foreground">
+    <div className="flex flex-row items-center justify-between gap-4">
+      <h3 className="tracking-tight text-sm font-medium">{title}</h3>
+      <Slot className="size-4 text-muted-foreground">{icon}</Slot>
+    </div>
+
+    <div className="flex flex-col">
+      <div className="text-2xl font-bold">{value}</div>
+      {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+    </div>
+  </div>
 )
-Card.displayName = "Card"
-
-const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cx("flex flex-col space-y-1.5 p-6", className)} {...props} />
-  ),
-)
-CardHeader.displayName = "CardHeader"
-
-const CardTitle = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLHeadingElement>>(
-  ({ ...props }, ref) => <H3 ref={ref} {...props} />,
-)
-CardTitle.displayName = "CardTitle"
-
-const CardDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => (
-    <p ref={ref} className={cx("text-sm text-muted-foreground", className)} {...props} />
-  ),
-)
-CardDescription.displayName = "CardDescription"
-
-const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cx("p-6 pt-0", className)} {...props} />
-  ),
-)
-CardContent.displayName = "CardContent"
-
-const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cx("flex items-center p-6 pt-0", className)} {...props} />
-  ),
-)
-CardFooter.displayName = "CardFooter"
-
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
