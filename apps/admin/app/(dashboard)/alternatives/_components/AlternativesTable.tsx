@@ -3,7 +3,7 @@
 import * as React from "react"
 import type { DataTableFilterField } from "~/types"
 
-import type { Tool } from "@openalternative/db"
+import type { Alternative } from "@openalternative/db"
 import { PlusIcon } from "lucide-react"
 import Link from "next/link"
 import { DateRangePicker } from "~/components/DateRangePicker"
@@ -13,16 +13,16 @@ import { DataTableToolbar } from "~/components/data-table/DataTableToolbar"
 import { DataTableViewOptions } from "~/components/data-table/DataTableViewOptions"
 import { Button } from "~/components/ui/Button"
 import { useDataTable } from "~/hooks/use-data-table"
-import type { getTools } from "../_lib/queries"
-import { getColumns } from "./ToolsTableColumns"
-import { ToolsTableToolbarActions } from "./ToolsTableToolbarActions"
+import type { getAlternatives } from "../_lib/queries"
+import { getColumns } from "./AlternativesTableColumns"
+import { AlternativesTableToolbarActions } from "./AlternativesTableToolbarActions"
 
-interface ToolsTableProps {
-  toolsPromise: ReturnType<typeof getTools>
+interface AlternativesTableProps {
+  alternativesPromise: ReturnType<typeof getAlternatives>
 }
 
-export function ToolsTable({ toolsPromise }: ToolsTableProps) {
-  const { tools, toolsTotal, pageCount } = React.use(toolsPromise)
+export function AlternativesTable({ alternativesPromise }: AlternativesTableProps) {
+  const { alternatives, alternativesTotal, pageCount } = React.use(alternativesPromise)
 
   // Memoize the columns so they don't re-render on every render
   const columns = React.useMemo(() => getColumns(), [])
@@ -38,7 +38,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
    * @prop {React.ReactNode} [icon] - An optional icon to display next to the label.
    * @prop {boolean} [withCount] - An optional boolean to display the count of the filter option.
    */
-  const filterFields: DataTableFilterField<Tool>[] = [
+  const filterFields: DataTableFilterField<Alternative>[] = [
     {
       label: "Name",
       value: "name",
@@ -47,7 +47,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     // {
     //   label: "Status",
     //   value: "status",
-    //   options: tools.status.enumValues.map(status => ({
+    //   options: alternatives.status.enumValues.map(status => ({
     //     label: status[0]?.toUpperCase() + status.slice(1),
     //     value: status,
     //     icon: getStatusIcon(status),
@@ -57,7 +57,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     // {
     //   label: "Priority",
     //   value: "priority",
-    //   options: tools.priority.enumValues.map(priority => ({
+    //   options: alternatives.priority.enumValues.map(priority => ({
     //     label: priority[0]?.toUpperCase() + priority.slice(1),
     //     value: priority,
     //     icon: getPriorityIcon(priority),
@@ -67,13 +67,13 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
   ]
 
   const { table } = useDataTable({
-    data: tools,
+    data: alternatives,
     columns,
     pageCount,
     /* optional props */
     filterFields,
     initialState: {
-      sorting: [{ id: "createdAt", desc: true }],
+      sorting: [{ id: "name", desc: false }],
       columnPinning: { right: ["actions"] },
     },
     // For remembering the previous row selection on page change
@@ -83,18 +83,18 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
   return (
     <DataTable table={table}>
       <DataTableHeader
-        title="Tools"
-        total={toolsTotal}
+        title="Alternatives"
+        total={alternativesTotal}
         callToAction={
           <Button prefix={<PlusIcon />} asChild>
-            <Link href="/tools/new">
-              <span className="max-sm:sr-only">New tool</span>
+            <Link href="/alternatives/new">
+              <span className="max-sm:sr-only">New alternative</span>
             </Link>
           </Button>
         }
       >
         <DataTableToolbar table={table} filterFields={filterFields}>
-          <ToolsTableToolbarActions table={table} />
+          <AlternativesTableToolbarActions table={table} />
           <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
           <DataTableViewOptions table={table} />
         </DataTableToolbar>
