@@ -9,7 +9,7 @@ export interface AlternativesPageProps {
   searchParams: SearchParams
 }
 
-export default async function AlternativesPage({ searchParams }: AlternativesPageProps) {
+export default function AlternativesPage({ searchParams }: AlternativesPageProps) {
   const search = searchParamsSchema.parse(searchParams)
   const alternativesPromise = getAlternatives(search)
 
