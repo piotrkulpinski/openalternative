@@ -17,6 +17,7 @@ export const BreadcrumbsLink = ({ children, label, ...props }: BreadcrumbsItemPr
         "group-last:group-[&:not(:only-child)]:line-clamp-1",
         "group-first:font-medium group-first:text-foreground",
       ])}
+      unstable_viewTransition
       {...props}
     >
       {children}

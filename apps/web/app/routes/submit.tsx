@@ -41,7 +41,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = async () => {
   const queueLength = await prisma.tool.count({
-    where: { publishedAt: { gt: new Date() } },
+    where: { OR: [{ publishedAt: { gt: new Date() } }, { publishedAt: null }] },
   })
 
   const meta = {

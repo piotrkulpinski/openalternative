@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react"
+import { posthog } from "posthog-js"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/Badge"
 import { Button } from "~/components/Button"
@@ -9,7 +10,7 @@ import { cx } from "~/utils/cva"
 export const Banner = ({ className, ...props }: ComponentProps<typeof Container>) => {
   const sponsor = BANNER_SPONSOR
 
-  if (new Date() < new Date("2024-09-05T09:00:00Z")) {
+  if (new Date() < new Date("2024-09-05T08:00:00Z")) {
     return null
   }
 
@@ -22,7 +23,12 @@ export const Banner = ({ className, ...props }: ComponentProps<typeof Container>
       asChild
       {...props}
     >
-      <Link to={sponsor.website} target="_blank" rel="noopener noreferrer">
+      <Link
+        to={sponsor.website}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => posthog.capture("banner_clicked", { url: sponsor.website })}
+      >
         <Badge variant="outline" className="max-sm:order-last">
           Ad
         </Badge>
