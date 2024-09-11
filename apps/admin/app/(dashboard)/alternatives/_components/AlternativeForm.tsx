@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import slugify from "@sindresorhus/slugify"
-import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import React from "react"
@@ -41,7 +40,6 @@ export function AlternativeForm({
   tools,
   ...props
 }: AlternativeFormProps) {
-  const session = useSession()
   const [isSubmitPending, startSubmitTransition] = React.useTransition()
 
   const form = useForm<AlternativeSchema>({

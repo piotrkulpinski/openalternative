@@ -1,6 +1,6 @@
 "use client"
 
-import type { Category } from "@openalternative/db"
+import type { License } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
@@ -17,9 +17,9 @@ import {
 } from "~/components/ui/DropdownMenu"
 import { siteConfig } from "~/config/site"
 import { formatDate } from "~/utils/helpers"
-import { DeleteCategoriesDialog } from "./DeleteCategoriesDialog"
+import { DeleteLicensesDialog } from "./DeleteLicensesDialog"
 
-export function getColumns(): ColumnDef<Category>[] {
+export function getColumns(): ColumnDef<License>[] {
   return [
     {
       id: "select",
@@ -51,7 +51,7 @@ export function getColumns(): ColumnDef<Category>[] {
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => (
         <Link
-          href={`/categories/${row.original.id}`}
+          href={`/licenses/${row.original.id}`}
           className="max-w-36 truncate font-medium text-primary hover:text-foreground"
         >
           {row.getValue("name")}
@@ -59,44 +59,45 @@ export function getColumns(): ColumnDef<Category>[] {
       ),
     },
     {
-      accessorKey: "tagline",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Label" />,
+      accessorKey: "description",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Description" />,
       cell: ({ row }) => (
-        <span className="max-w-96 truncate text-muted-foreground">{row.original.label}</span>
+        <div className="max-w-96 truncate text-muted-foreground">{row.getValue("description")}</div>
       ),
+      enableSorting: false,
     },
     {
       accessorKey: "createdAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
-      cell: ({ cell }) => (
-        <span className="text-muted-foreground">{formatDate(cell.getValue() as Date)}</span>
+      cell: ({ row }) => (
+        <span className="text-muted-foreground">{formatDate(row.getValue<Date>("createdAt"))}</span>
       ),
       size: 0,
     },
     {
       id: "actions",
       cell: function Cell({ row }) {
-        const [showDeleteCategoryDialog, setShowDeleteCategoryDialog] = React.useState(false)
+        const [showDeleteLicenseDialog, setShowDeleteLicenseDialog] = React.useState(false)
 
         return (
           <>
-            <DeleteCategoriesDialog
-              open={showDeleteCategoryDialog}
-              onOpenChange={setShowDeleteCategoryDialog}
-              categories={[row.original]}
+            <DeleteLicensesDialog
+              open={showDeleteLicenseDialog}
+              onOpenChange={setShowDeleteLicenseDialog}
+              licenses={[row.original]}
               showTrigger={false}
               onSuccess={() => row.toggleSelected(false)}
             />
 
             <div className="flex items-center justify-end gap-1.5 -my-0.5">
               <Button variant="outline" size="sm" asChild>
-                <Link href={`${siteConfig.url}/categories/${row.original.slug}`} target="_blank">
+                <Link href={`${siteConfig.url}/licenses/${row.original.slug}`} target="_blank">
                   View
                 </Link>
               </Button>
 
               <Button variant="outline" size="sm" asChild>
-                <Link href={`/categories/${row.original.id}`}>Edit</Link>
+                <Link href={`/licenses/${row.original.id}`}>Edit</Link>
               </Button>
 
               <DropdownMenu>
@@ -112,7 +113,7 @@ export function getColumns(): ColumnDef<Category>[] {
 
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem
-                    onSelect={() => setShowDeleteCategoryDialog(true)}
+                    onSelect={() => setShowDeleteLicenseDialog(true)}
                     className="text-destructive"
                   >
                     Delete
