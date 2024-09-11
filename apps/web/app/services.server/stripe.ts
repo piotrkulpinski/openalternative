@@ -63,8 +63,8 @@ export const createStripeCheckoutSession = async ({
     automatic_tax: { enabled: true },
     tax_id_collection: { enabled: true },
     invoice_creation: { enabled: true },
-    success_url: `${process.env.VITE_SITE_URL}/?subscribed=true`,
-    cancel_url: `${process.env.VITE_SITE_URL}/?cancelled=true`,
+    success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?subscribed=true`,
+    cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?cancelled=true`,
   })
 
   // Returns newly created Checkout Session as URL.

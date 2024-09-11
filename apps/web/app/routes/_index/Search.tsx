@@ -16,7 +16,7 @@ type SearchProps = {
 
 export const Search = ({ url, sponsoring }: SearchProps) => {
   const listingRef = useRef<HTMLDivElement>(null)
-  const indexName = import.meta.env.VITE_ALGOLIA_INDEX_NAME ?? ""
+  const indexName = import.meta.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME ?? ""
 
   const instantSearchOptions: ComponentProps<typeof InstantSearch> = {
     searchClient,

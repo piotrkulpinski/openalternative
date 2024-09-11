@@ -42,7 +42,7 @@ export const Hero = ({ className, toolCount, flag, ...props }: HeroProps) => {
 
       <Newsletter
         size="lg"
-        className="w-full mx-auto items-center"
+        className="w-full mx-auto items-center text-center"
         buttonProps={{ children: "Join our community", size: "md", variant: "fancy" }}
       >
         <div className="flex flex-wrap items-center justify-center text-center gap-y-1 -space-x-1.5">

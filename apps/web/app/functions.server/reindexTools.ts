@@ -21,7 +21,7 @@ export const reindexTools = inngest.createFunction(
         {
           headers: {
             "X-Algolia-API-Key": process.env.ALGOLIA_ADMIN_API_KEY,
-            "X-Algolia-Application-Id": process.env.VITE_ALGOLIA_APP_ID,
+            "X-Algolia-Application-Id": process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
           },
         },
       )

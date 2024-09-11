@@ -11,7 +11,7 @@ export const subscriberSchema = z.object({
   referring_site: z
     .string()
     .optional()
-    .default(process.env.VITE_SITE_URL ?? ""),
+    .default(process.env.NEXT_PUBLIC_SITE_URL ?? ""),
   utm_source: z.string().optional().default(SITE_NAME),
   utm_medium: z.string().optional().default("subscribe_form"),
   utm_campaign: z.string().optional().default("organic"),

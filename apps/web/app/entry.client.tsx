@@ -5,8 +5,8 @@ import { hydrateRoot } from "react-dom/client"
 
 const PosthogInit = () => {
   useEffect(() => {
-    posthog.init(import.meta.env.VITE_POSTHOG_API_KEY ?? "", {
-      api_host: import.meta.env.VITE_POSTHOG_API_HOST,
+    posthog.init(import.meta.env.NEXT_PUBLIC_POSTHOG_API_KEY ?? "", {
+      api_host: import.meta.env.NEXT_PUBLIC_POSTHOG_API_HOST,
       capture_pageview: false,
       capture_pageleave: false,
     })
