@@ -46,7 +46,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
           <User className="mt-auto" />
         </aside>
 
-        <main className="grid content-start gap-4 grow p-4 bg-background border-l sm:px-6 lg:rounded-xl lg:border lg:my-2 lg:mr-2">
+        <main className="grid content-start gap-4 grow p-4 bg-background border-l sm:px-6 lg:rounded-xl lg:border lg:shadow lg:my-2 lg:mr-2">
           {children}
         </main>
       </main>
