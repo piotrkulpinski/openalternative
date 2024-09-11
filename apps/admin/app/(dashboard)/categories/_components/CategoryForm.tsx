@@ -75,11 +75,11 @@ export function CategoryForm({
         return
       }
 
+      toast.success(`Category successfully ${category ? "updated" : "created"}`)
+
       if (!category && data) {
         redirect(`/categories/${data.id}`)
       }
-
-      toast.success(`Category successfully ${category ? "updated" : "created"}`)
     })
   }
 

@@ -198,11 +198,7 @@ export function useDataTable<TData>({
       method === "push" ? router.push(url, { scroll }) : router.replace(url, { scroll })
     }
 
-    startTransition
-      ? startTransition(() => {
-          onUrlChange()
-        })
-      : onUrlChange()
+    startTransition ? startTransition(onUrlChange) : onUrlChange()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageIndex, pageSize, sorting, method, scroll])

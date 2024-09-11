@@ -106,11 +106,11 @@ export function ToolForm({
         return
       }
 
+      toast.success(`Tool successfully ${tool ? "updated" : "created"}`)
+
       if (!tool && data) {
         redirect(`/tools/${data.id}`)
       }
-
-      toast.success(`Tool successfully ${tool ? "updated" : "created"}`)
     })
   }
 

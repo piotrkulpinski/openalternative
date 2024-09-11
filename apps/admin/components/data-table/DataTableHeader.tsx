@@ -25,7 +25,7 @@ export function DataTableHeader({
       )}
       {...props}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <H3 as="h1">
           {title}
           {total && <span className="ml-1.5 opacity-40">({total})</span>}
