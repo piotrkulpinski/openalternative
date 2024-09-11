@@ -4,9 +4,9 @@ import type { Prisma } from "@openalternative/db"
 import { endOfDay, startOfDay } from "date-fns"
 import { unstable_noStore as noStore } from "next/cache"
 import { prisma } from "~/services/prisma"
-import type { GetCategoriesSchema } from "./validations"
+import type { GetAlternativesSchema } from "./validations"
 
-export async function getCategories(input: GetCategoriesSchema) {
+export async function getAlternatives(input: GetAlternativesSchema) {
   noStore()
   const { page, per_page, sort, name, operator, from, to } = input
 
@@ -18,15 +18,15 @@ export async function getCategories(input: GetCategoriesSchema) {
     // Spliting the sort string by "." to get the column and order
     // Example: "title.desc" => ["title", "desc"]
     const [column, order] = (sort?.split(".").filter(Boolean) ?? ["name", "asc"]) as [
-      keyof Prisma.CategoryOrderByWithRelationInput | undefined,
+      keyof Prisma.AlternativeOrderByWithRelationInput | undefined,
       "asc" | "desc" | undefined,
     ]
 
-    // Convert the date strings to Date objects and adjust the range
+    // Convert the date strings to date objects
     const fromDate = from ? startOfDay(new Date(from)) : undefined
     const toDate = to ? endOfDay(new Date(to)) : undefined
 
-    const where: Prisma.CategoryWhereInput = {
+    const where: Prisma.AlternativeWhereInput = {
       // Filter by name
       name: name ? { contains: name, mode: "insensitive" } : undefined,
 
@@ -38,23 +38,23 @@ export async function getCategories(input: GetCategoriesSchema) {
     }
 
     // Transaction is used to ensure both queries are executed in a single transaction
-    const [categories, categoriesTotal] = await prisma.$transaction([
-      prisma.category.findMany({
+    const [alternatives, alternativesTotal] = await prisma.$transaction([
+      prisma.alternative.findMany({
         where,
         orderBy: column ? { [column]: order } : undefined,
         take: per_page,
         skip: offset,
       }),
 
-      prisma.category.count({
+      prisma.alternative.count({
         where,
       }),
     ])
 
-    const pageCount = Math.ceil(categoriesTotal / per_page)
-    return { categories, categoriesTotal, pageCount }
+    const pageCount = Math.ceil(alternativesTotal / per_page)
+    return { alternatives, alternativesTotal, pageCount }
   } catch (err) {
-    return { categories: [], categoriesTotal: 0, pageCount: 0 }
+    return { alternatives: [], alternativesTotal: 0, pageCount: 0 }
   }
 }
 
@@ -70,10 +70,10 @@ export async function getTools() {
   }
 }
 
-export async function getCategoryById(id: string) {
+export async function getAlternativeById(id: string) {
   noStore()
   try {
-    return await prisma.category.findUnique({
+    return await prisma.alternative.findUnique({
       where: { id },
       include: { tools: { include: { tool: true } } },
     })

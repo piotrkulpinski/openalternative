@@ -1,6 +1,6 @@
 "use client"
 
-import type { Tool } from "@openalternative/db"
+import type { Alternative } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Image from "next/image"
@@ -19,9 +19,9 @@ import {
 } from "~/components/ui/DropdownMenu"
 import { siteConfig } from "~/config/site"
 import { formatDate } from "~/utils/helpers"
-import { DeleteToolsDialog } from "./DeleteToolsDialog"
+import { DeleteAlternativesDialog } from "./DeleteAlternativesDialog"
 
-export function getColumns(): ColumnDef<Tool>[] {
+export function getColumns(): ColumnDef<Alternative>[] {
   return [
     {
       id: "select",
@@ -64,7 +64,7 @@ export function getColumns(): ColumnDef<Tool>[] {
           )}
 
           <Link
-            href={`/tools/${row.original.id}`}
+            href={`/alternatives/${row.original.id}`}
             className="max-w-36 truncate font-medium text-primary hover:text-foreground"
           >
             {row.getValue("name")}
@@ -73,10 +73,10 @@ export function getColumns(): ColumnDef<Tool>[] {
       ),
     },
     {
-      accessorKey: "tagline",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Tagline" />,
+      accessorKey: "description",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Description" />,
       cell: ({ row }) => (
-        <div className="max-w-96 truncate text-muted-foreground">{row.getValue("tagline")}</div>
+        <div className="max-w-96 truncate text-muted-foreground">{row.getValue("description")}</div>
       ),
       enableSorting: false,
     },
@@ -91,21 +91,21 @@ export function getColumns(): ColumnDef<Tool>[] {
     {
       id: "actions",
       cell: function Cell({ row }) {
-        const [showDeleteToolDialog, setShowDeleteToolDialog] = React.useState(false)
+        const [showDeleteAlternativeDialog, setShowDeleteAlternativeDialog] = React.useState(false)
 
         return (
           <>
-            <DeleteToolsDialog
-              open={showDeleteToolDialog}
-              onOpenChange={setShowDeleteToolDialog}
-              tools={[row.original]}
+            <DeleteAlternativesDialog
+              open={showDeleteAlternativeDialog}
+              onOpenChange={setShowDeleteAlternativeDialog}
+              alternatives={[row.original]}
               showTrigger={false}
               onSuccess={() => row.toggleSelected(false)}
             />
 
             <div className="flex items-center justify-end gap-1.5 -my-0.5">
               <Button variant="outline" size="sm" className="" asChild>
-                <Link href={`/tools/${row.original.id}`}>Edit</Link>
+                <Link href={`/alternatives/${row.original.id}`}>Edit</Link>
               </Button>
 
               <DropdownMenu>
@@ -120,34 +120,25 @@ export function getColumns(): ColumnDef<Tool>[] {
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent align="end">
-                  {row.original.publishedAt && row.original.publishedAt <= new Date() && (
-                    <>
-                      <DropdownMenuItem asChild>
-                        <Link href={`${siteConfig.url}/${row.original.slug}`} target="_blank">
-                          See live
-                        </Link>
-                      </DropdownMenuItem>
-
-                      <DropdownMenuSeparator />
-                    </>
-                  )}
-
                   <DropdownMenuItem asChild>
-                    <Link href={row.original.website} target="_blank">
-                      Visit website
+                    <Link
+                      href={`${siteConfig.url}/alternatives/${row.original.slug}`}
+                      target="_blank"
+                    >
+                      See live
                     </Link>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem asChild>
-                    <Link href={row.original.repository} target="_blank">
-                      Visit repository
+                    <Link href={row.original.website} target="_blank">
+                      Visit website →
                     </Link>
                   </DropdownMenuItem>
 
                   <DropdownMenuSeparator />
 
                   <DropdownMenuItem
-                    onSelect={() => setShowDeleteToolDialog(true)}
+                    onSelect={() => setShowDeleteAlternativeDialog(true)}
                     className="text-destructive"
                   >
                     Delete

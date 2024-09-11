@@ -73,7 +73,7 @@ export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {
     /* optional props */
     filterFields,
     initialState: {
-      sorting: [{ id: "createdAt", desc: true }],
+      sorting: [{ id: "name", desc: false }],
       columnPinning: { right: ["actions"] },
     },
     // For remembering the previous row selection on page change
@@ -87,7 +87,9 @@ export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {
         total={categoriesTotal}
         callToAction={
           <Button prefix={<PlusIcon />} asChild>
-            <Link href="/categories/new">New category</Link>
+            <Link href="/categories/new">
+              <span className="max-sm:sr-only">New category</span>
+            </Link>
           </Button>
         }
       >

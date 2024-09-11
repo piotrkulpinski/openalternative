@@ -25,7 +25,6 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           aria-label="Toggle columns"
           variant="outline"
           size="sm"
-          className="hidden lg:flex"
           prefix={<SlidersHorizontalIcon />}
         >
           View
