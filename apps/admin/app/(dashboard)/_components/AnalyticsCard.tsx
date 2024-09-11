@@ -11,6 +11,7 @@ export const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) =
     `${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/api/v1/stats/timeseries?metrics=visitors&period=30d&site_id=${env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}`,
     {
       method: "GET",
+      cache: "no-store",
       headers: { Authorization: `Bearer ${env.PLAUSIBLE_API_KEY}` },
     },
   )
