@@ -46,42 +46,71 @@ OpenAlternative is an GPL-3.0-licensed open source project with its ongoing deve
   </a>
 </p>
 
+## Project Structure
+
+OpenAlternative is a monorepo project with two main applications:
+
+1. Web application (Remix) - located in `apps/web`
+2. Admin panel (Next.js) - located in `apps/admin`
+
 ## Development
 
-OpenAlternative is currently written in [Remix](https://remix.run). Please refer to the [Remix documentation](https://docs.remix.run) for more information.
+This project uses [Bun](https://bun.sh/) as the package manager and runtime. Make sure you have Bun installed before proceeding.
+
+To set up the project for development:
+
+1. Clone the repository
+2. Run `bun install` in the root directory to install all dependencies
+3. Set up the required environment variables (see below)
+4. Run `bun run dev` to start both the web and admin applications in development mode
+
+### Environment Variables
+
+Refer to the `.env.example` file for a complete list of required variables.
 
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
-| Command         | Action                                       |
-| :-------------- | :------------------------------------------- |
-| `bun install`   | Installs dependencies                        |
-| `bun run dev`   | Starts local dev server at `localhost:5173`  |
-| `bun run build` | Build your production site to `./build/`     |
-| `bun run start` | Preview your build locally, before deploying |
+| Command           | Action                                                    |
+| :---------------- | :-------------------------------------------------------- |
+| `bun install`     | Installs dependencies                                     |
+| `bun run dev`     | Starts both web and admin apps in development mode        |
+| `bun run web dev` | Starts web app at `localhost:5173`                        |
+| `bun run admin dev` | Starts admin app at `localhost:5174`                    |
+| `bun run build`   | Build both apps for production                            |
+| `bun run start`   | Preview production build locally                          |
+| `bun run lint`    | Run linter                                                |
+| `bun run format`  | Format code                                               |
+| `bun run typecheck` | Run TypeScript type checking                            |
+
+## Third-Party Services
+
+OpenAlternative uses the following third-party services:
+
+- Database: [Supabase](https://supabase.com)
+- Analytics: [Plausible](https://plausible.io), [PostHog](https://posthog.com)
+- Search: [Algolia](https://algolia.com)
+- Newsletter: [Beehiiv](https://beehiiv.com)
+- Email: [Resend](https://resend.com)
+- File Storage: [AWS S3](https://aws.amazon.com/s3)
+- Payments: [Stripe](https://stripe.com)
+- Screenshots: [ScreenshotOne](https://screenshotone.com)
+
+Make sure to set up accounts with these services and add the necessary environment variables to your `.env` file.
 
 ## Deployment
 
-First, build your app for production:
+The project is set up for deployment on Vercel. Each app (web and admin) can be deployed separately.
 
-```sh
-bun run build
-```
+To deploy manually:
 
-Then run the app in production mode:
+1. Build the project: `bun run build`
+2. For the web app: `bun run web start`
+3. For the admin app: `bun run admin start`
 
-```sh
-bun start
-```
+Ensure all environment variables are properly set in your production environment.
 
-Now you'll need to pick a host to deploy it to.
+## License
 
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `bun run build`
-
-- `build/server`
-- `build/client`
+OpenAlternative is licensed under the [GPL-3.0 License](LICENSE).
