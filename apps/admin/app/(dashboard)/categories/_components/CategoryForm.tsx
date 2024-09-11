@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import slugify from "@sindresorhus/slugify"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { redirect } from "next/navigation"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -36,7 +36,6 @@ export function CategoryForm({
   tools,
   ...props
 }: CategoryFormProps) {
-  const router = useRouter()
   const [isSubmitPending, startSubmitTransition] = React.useTransition()
 
   const form = useForm<CategorySchema>({
@@ -77,7 +76,7 @@ export function CategoryForm({
       }
 
       if (!category && data) {
-        router.push(`/categories/${data.id}`)
+        redirect(`/categories/${data.id}`)
       }
 
       toast.success(`Category successfully ${category ? "updated" : "created"}`)

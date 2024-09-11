@@ -69,7 +69,7 @@ export async function getTools(input: GetToolsSchema) {
     //   !operator || operator === "and" ? and(...expressions) : or(...expressions)
 
     // Transaction is used to ensure both queries are executed in a single transaction
-    const [data, total] = await prisma.$transaction([
+    const [tools, toolsTotal] = await prisma.$transaction([
       prisma.tool.findMany({
         where,
         orderBy: column ? { [column]: order } : undefined,
@@ -82,10 +82,10 @@ export async function getTools(input: GetToolsSchema) {
       }),
     ])
 
-    const pageCount = Math.ceil(total / per_page)
-    return { data, pageCount }
+    const pageCount = Math.ceil(toolsTotal / per_page)
+    return { tools, toolsTotal, pageCount }
   } catch (err) {
-    return { data: [], pageCount: 0 }
+    return { tools: [], toolsTotal: 0, pageCount: 0 }
   }
 }
 

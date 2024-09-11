@@ -22,7 +22,7 @@ interface CategoriesTableProps {
 }
 
 export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {
-  const { data, pageCount } = React.use(categoriesPromise)
+  const { categories, categoriesTotal, pageCount } = React.use(categoriesPromise)
 
   // Memoize the columns so they don't re-render on every render
   const columns = React.useMemo(() => getColumns(), [])
@@ -67,7 +67,7 @@ export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {
   ]
 
   const { table } = useDataTable({
-    data,
+    data: categories,
     columns,
     pageCount,
     /* optional props */
@@ -84,8 +84,9 @@ export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {
     <DataTable table={table}>
       <DataTableHeader
         title="Categories"
+        total={categoriesTotal}
         callToAction={
-          <Button size="sm" prefix={<PlusIcon />} asChild>
+          <Button prefix={<PlusIcon />} asChild>
             <Link href="/categories/new">New category</Link>
           </Button>
         }
