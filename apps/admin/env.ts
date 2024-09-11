@@ -20,6 +20,7 @@ export const env = createEnv({
     AUTH_SECRET: z.string().min(1),
     AUTH_GOOGLE_ID: z.string().min(1),
     AUTH_GOOGLE_SECRET: z.string().min(1),
+    PLAUSIBLE_API_KEY: z.string().min(1),
   },
 
   /**
@@ -28,6 +29,8 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_SITE_URL: z.string().url().min(1),
+    NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().min(1),
+    NEXT_PUBLIC_PLAUSIBLE_HOST: z.string().url().min(1),
   },
 
   /**
@@ -37,6 +40,8 @@ export const env = createEnv({
     PORT: process.env.PORT,
     VERCEL_URL: process.env.VERCEL_URL,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+    NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
+    NEXT_PUBLIC_PLAUSIBLE_HOST: process.env.NEXT_PUBLIC_PLAUSIBLE_HOST,
   },
 
   /**

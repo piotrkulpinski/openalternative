@@ -114,7 +114,7 @@ export function getColumns(): ColumnDef<License>[] {
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem
                     onSelect={() => setShowDeleteLicenseDialog(true)}
-                    className="text-destructive"
+                    className="text-red-500"
                   >
                     Delete
                     <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

@@ -236,6 +236,7 @@ export function ToolForm({
               <FormControl>
                 <Input
                   type="number"
+                  step={100}
                   {...field}
                   onChange={e => field.onChange(Number.parseFloat(e.target.value))}
                 />

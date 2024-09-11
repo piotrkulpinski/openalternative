@@ -20,7 +20,7 @@ export function DataTableHeader({
   return (
     <div
       className={cx(
-        "sticky top-0 z-20 flex flex-col gap-4 py-4 -my-4 w-full bg-white overflow-auto",
+        "sticky top-0 z-20 flex flex-col gap-4 py-4 -my-4 w-full bg-background overflow-auto",
         className,
       )}
       {...props}

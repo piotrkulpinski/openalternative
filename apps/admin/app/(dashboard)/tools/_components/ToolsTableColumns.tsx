@@ -144,7 +144,7 @@ export function getColumns(): ColumnDef<Tool>[] {
 
                   <DropdownMenuItem
                     onSelect={() => setShowDeleteToolDialog(true)}
-                    className="text-destructive"
+                    className="text-red-500"
                   >
                     Delete
                     <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

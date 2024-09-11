@@ -5,13 +5,6 @@ node_modules
 /public/*.json
 /.content-collections
 
-# Local env files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
 # vercel
 .vercel
 
