@@ -113,7 +113,7 @@ export function getColumns(): ColumnDef<Category>[] {
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem
                     onSelect={() => setShowDeleteCategoryDialog(true)}
-                    className="text-destructive"
+                    className="text-red-500"
                   >
                     Delete
                     <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

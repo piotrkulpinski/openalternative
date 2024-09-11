@@ -12,4 +12,5 @@ export default defineConfig({
     noExternal: ["tailwind-merge", "remix-utils"],
   },
   plugins: [tsconfigPaths(), remix({ presets: [vercelPreset()] }), contentCollections()],
+  envPrefix: ["VITE_", "NEXT_PUBLIC_"],
 })

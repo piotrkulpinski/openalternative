@@ -136,7 +136,7 @@ export function getColumns(): ColumnDef<Alternative>[] {
 
                   <DropdownMenuItem
                     onSelect={() => setShowDeleteAlternativeDialog(true)}
-                    className="text-destructive"
+                    className="text-red-500"
                   >
                     Delete
                     <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
