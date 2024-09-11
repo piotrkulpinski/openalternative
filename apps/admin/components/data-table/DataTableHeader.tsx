@@ -1,15 +1,17 @@
+import { Slot } from "@radix-ui/react-slot"
 import type * as React from "react"
 import { H3 } from "~/components/ui/Heading"
 
 import { cx } from "~/utils/cva"
 
 interface DataTableHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
+  total?: number
   callToAction?: React.ReactNode
 }
 
 export function DataTableHeader({
   title,
+  total,
   callToAction,
   children,
   className,
@@ -24,9 +26,12 @@ export function DataTableHeader({
       {...props}
     >
       <div className="flex items-center justify-between">
-        <H3 as="h1">{title}</H3>
+        <H3 as="h1">
+          {title}
+          {total && <span className="ml-1.5 opacity-40">({total})</span>}
+        </H3>
 
-        {callToAction}
+        <Slot className="-my-0.5">{callToAction}</Slot>
       </div>
 
       {children}
