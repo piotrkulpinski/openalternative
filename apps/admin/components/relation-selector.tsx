@@ -36,6 +36,11 @@ export const RelationSelector = ({ relations, selectedIds, onChange }: RelationS
           variant="outline"
           className="justify-start w-full px-3 gap-2.5"
           prefix={<MousePointerClickIcon />}
+          suffix={
+            <Badge variant="outline" className="ml-auto px-1.5 size-auto">
+              {selectedRelations.length}
+            </Badge>
+          }
         >
           <Separator orientation="vertical" />
 
@@ -50,10 +55,6 @@ export const RelationSelector = ({ relations, selectedIds, onChange }: RelationS
               </Badge>
             ))}
           </div>
-
-          <Badge variant="outline" className="px-1.5">
-            {selectedRelations.length}
-          </Badge>
         </Button>
       </PopoverTrigger>
 
