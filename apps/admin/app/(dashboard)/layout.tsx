@@ -4,7 +4,7 @@ import { Shell } from "~/app/(dashboard)/shell"
 import { Providers } from "./providers"
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
-  const layout = cookies().get("react-resizable-panels:layout:shell")
+  const layout = cookies().get("react-resizable-panels:layout")
   const collapsed = cookies().get("react-resizable-panels:collapsed")
 
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined

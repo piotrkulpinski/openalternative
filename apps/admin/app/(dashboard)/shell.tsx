@@ -25,18 +25,11 @@ export function Shell({
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
   const isMobile = useIsMobile()
 
-  // React.useEffect(() => {
-  //   if (isMobile) {
-  //     setIsCollapsed(true)
-  //     document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(true)}`
-  //   }
-  // }, [isMobile])
-
   return (
     <ResizablePanelGroup
       direction="horizontal"
       onLayout={sizes => {
-        document.cookie = `react-resizable-panels:layout:shell=${JSON.stringify(sizes)}`
+        document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`
       }}
       className="h-full items-stretch"
     >
@@ -77,25 +70,25 @@ export function Shell({
             {
               title: "Tools",
               href: "/tools",
-              label: "324",
+              // label: "324",
               icon: Inbox,
             },
             {
               title: "Alternatives",
               href: "/alternatives",
-              label: "9",
+              // label: "9",
               icon: File,
             },
             {
               title: "Categories",
               href: "/categories",
-              label: "41",
+              // label: "41",
               icon: Send,
             },
             {
               title: "Licenses",
               href: "/licenses",
-              label: "23",
+              // label: "23",
               icon: ArchiveX,
             },
           ]}
@@ -118,7 +111,6 @@ export function Shell({
 
       <ResizablePanel
         defaultSize={defaultLayout[1]}
-        minSize={30}
         className="grid grid-cols-1 content-start gap-4 p-4 sm:px-6"
       >
         {children}
