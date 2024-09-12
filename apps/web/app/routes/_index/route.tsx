@@ -6,11 +6,9 @@ import {
   type InstantSearchServerState,
   getServerState,
 } from "react-instantsearch"
-import { AlternativeList } from "~/partials/AlternativeList"
-import { Hero } from "~/partials/Hero"
-import { Search } from "~/routes/_index/Search"
+import { AlternativeList } from "~/components/alternative-list"
+import { Hero } from "~/components/hero"
 import { alternativeManyPayload } from "~/services.server/api"
-import { getPostHogFlagValue } from "~/services.server/posthog"
 import { prisma } from "~/services.server/prisma"
 import {
   FEATURED_ALTERNATIVES,
@@ -19,6 +17,7 @@ import {
   SITE_TAGLINE,
 } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
+import { Search } from "./search"
 
 export const meta: MetaFunction = ({ matches, location }) => {
   return getMetaTags({
@@ -32,7 +31,7 @@ export const meta: MetaFunction = ({ matches, location }) => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
 
-  const [sponsoring, newToolCount, alternatives, newsletterFlag] = await Promise.all([
+  const [sponsoring, newToolCount, alternatives] = await Promise.all([
     // Find sponsoring
     prisma.sponsoring.findFirst({
       where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
@@ -50,27 +49,24 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       include: alternativeManyPayload,
       take: 6,
     }),
-
-    // Get newsletter test value
-    getPostHogFlagValue(request, "newsletter-conversion"),
   ])
 
   const serverState = await getServerState(<Search url={url} sponsoring={sponsoring} />, {
     renderToString,
   })
 
-  return json({ url, sponsoring, alternatives, newToolCount, serverState, newsletterFlag })
+  return json({ url, sponsoring, alternatives, newToolCount, serverState })
 }
 
 export default function Index() {
   const { key } = useLocation()
 
-  const { url, sponsoring, alternatives, newToolCount, serverState, newsletterFlag } =
+  const { url, sponsoring, alternatives, newToolCount, serverState } =
     useLoaderData<typeof loader>()
 
   return (
     <>
-      <Hero toolCount={newToolCount} flag={newsletterFlag} />
+      <Hero toolCount={newToolCount} />
 
       <InstantSearchSSRProvider key={key} {...(serverState as InstantSearchServerState)}>
         <Search url={url} sponsoring={sponsoring} />

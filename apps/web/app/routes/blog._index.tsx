@@ -1,8 +1,8 @@
 import { type MetaFunction, json, useLoaderData } from "@remix-run/react"
 import { allPosts } from "content-collections"
-import { Grid } from "~/components/Grid"
-import { Intro } from "~/components/Intro"
-import { PostRecord } from "~/partials/records/PostRecord"
+import { PostRecord } from "~/components/records/post-record"
+import { Grid } from "~/components/ui/grid"
+import { Intro } from "~/components/ui/intro"
 import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {

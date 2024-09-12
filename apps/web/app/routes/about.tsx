@@ -1,9 +1,9 @@
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import { BreadcrumbsLink } from "~/components/Breadcrumbs"
-import { Intro } from "~/components/Intro"
-import { Markdown } from "~/components/Markdown"
-import { Featured } from "~/partials/Featured"
+import { Featured } from "~/components/featured"
+import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
+import { Intro } from "~/components/ui/intro"
+import { Markdown } from "~/components/ui/markdown"
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 
