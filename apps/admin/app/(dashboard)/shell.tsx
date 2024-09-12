@@ -58,7 +58,7 @@ export function Shell({
         }}
         className={cx(
           "group/collapsible sticky top-0 h-dvh z-40 flex flex-col",
-          isCollapsed ? "min-w-12 transition-all duration-300 ease-in-out" : "min-w-48 max-w-64",
+          isCollapsed ? "min-w-12 transition-all duration-300 ease-in-out" : "min-w-52 max-w-64",
         )}
       >
         <Nav

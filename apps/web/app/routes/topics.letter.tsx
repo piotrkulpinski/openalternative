@@ -1,7 +1,7 @@
 import { type MetaFunction, json } from "@remix-run/node"
 import { Outlet, useLoaderData } from "@remix-run/react"
-import { Intro } from "~/components/Intro"
-import { LetterPicker } from "~/components/LetterPicker"
+import { Intro } from "~/components/ui/intro"
+import { LetterPicker } from "~/components/ui/letter-picker"
 import { getMetaTags } from "~/utils/meta"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
