@@ -1,18 +1,18 @@
-import { Slot, Slottable } from "@radix-ui/react-slot"
+import { Slot } from "@radix-ui/react-slot"
 import { LoaderIcon } from "lucide-react"
 import * as React from "react"
+import { Slottable } from "~/components/ui/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const buttonVariants = cva({
-  base: "group/button relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50",
+  base: "group/button relative min-w-0 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50",
 
   variants: {
     variant: {
       default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-      destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-      outline:
-        "border border-input bg-background shadow-sm hover:bg-muted hover:text-accent-foreground",
-      secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+      destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+      outline: "border border-input bg-background hover:bg-muted hover:text-accent-foreground",
+      secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       ghost: "hover:bg-accent hover:text-accent-foreground",
       link: "text-primary underline-offset-4 hover:underline",
     },
@@ -74,17 +74,25 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        <Slot className={buttonAffixVariants()} aria-hidden="true">
-          {prefix}
-        </Slot>
+        <Slottable child={children} asChild={asChild}>
+          {child => (
+            <>
+              <Slot className={buttonAffixVariants()} aria-hidden="true">
+                {prefix}
+              </Slot>
 
-        <Slottable>{children}</Slottable>
+              {React.Children.count(child) !== 0 && <span className="truncate">{child}</span>}
 
-        <Slot className={buttonAffixVariants()} aria-hidden="true">
-          {suffix}
-        </Slot>
+              <Slot className={buttonAffixVariants()} aria-hidden="true">
+                {suffix}
+              </Slot>
 
-        {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin text-white" />}
+              {!!isPending && (
+                <LoaderIcon className="absolute size-[1.25em] animate-spin text-white" />
+              )}
+            </>
+          )}
+        </Slottable>
       </Comp>
     )
   },
