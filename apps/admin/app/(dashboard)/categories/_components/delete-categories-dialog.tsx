@@ -26,7 +26,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "~/components/ui/drawer"
-import { useMediaQuery } from "~/hooks/use-media-query"
+import { useIsMobile } from "~/hooks/use-mobile"
 import { deleteCategories } from "../_lib/actions"
 
 interface DeleteCategoriesDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
@@ -42,7 +42,7 @@ export const DeleteCategoriesDialog = ({
   ...props
 }: DeleteCategoriesDialogProps) => {
   const [isDeletePending, startDeleteTransition] = React.useTransition()
-  const isDesktop = useMediaQuery("(min-width: 640px)")
+  const isMobile = useIsMobile()
 
   const onDelete = () => {
     startDeleteTransition(async () => {
@@ -61,14 +61,14 @@ export const DeleteCategoriesDialog = ({
     })
   }
 
-  const DeleteDialog = Object.assign(isDesktop ? Dialog : Drawer, {
-    Trigger: isDesktop ? DialogTrigger : DrawerTrigger,
-    Content: isDesktop ? DialogContent : DrawerContent,
-    Header: isDesktop ? DialogHeader : DrawerHeader,
-    Title: isDesktop ? DialogTitle : DrawerTitle,
-    Description: isDesktop ? DialogDescription : DrawerDescription,
-    Footer: isDesktop ? DialogFooter : DrawerFooter,
-    Close: isDesktop ? DialogClose : DrawerClose,
+  const DeleteDialog = Object.assign(isMobile ? Drawer : Dialog, {
+    Trigger: isMobile ? DrawerTrigger : DialogTrigger,
+    Content: isMobile ? DrawerContent : DialogContent,
+    Header: isMobile ? DrawerHeader : DialogHeader,
+    Title: isMobile ? DrawerTitle : DialogTitle,
+    Description: isMobile ? DrawerDescription : DialogDescription,
+    Footer: isMobile ? DrawerFooter : DialogFooter,
+    Close: isMobile ? DrawerClose : DialogClose,
   })
 
   return (
@@ -76,7 +76,7 @@ export const DeleteCategoriesDialog = ({
       {showTrigger && (
         <DeleteDialog.Trigger asChild>
           <Button variant="outline" size="sm">
-            <TrashIcon className={isDesktop ? undefined : "mr-2"} aria-hidden="true" />
+            <TrashIcon className={isMobile ? "mr-2" : undefined} aria-hidden="true" />
             Delete ({categories.length})
           </Button>
         </DeleteDialog.Trigger>

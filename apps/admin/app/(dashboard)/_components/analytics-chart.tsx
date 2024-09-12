@@ -26,7 +26,7 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
       config={{
         visitors: {
           label: "Visitors",
-          color: "hsl(var(--primary))",
+          color: "hsl(var(--chart-4))",
         },
         ...config,
       }}
@@ -37,7 +37,7 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
           dataKey="visitors"
           fill="var(--color-visitors)"
           radius={5}
-          fillOpacity={0.6}
+          fillOpacity={0.75}
           activeBar={<Rectangle fillOpacity={1} />}
         />
 

@@ -28,7 +28,7 @@ export function DataTableHeader({
       <div className="flex items-center justify-between gap-4">
         <H3 as="h1">
           {title}
-          {total && <span className="ml-1.5 opacity-40">({total})</span>}
+          {typeof total === "number" && <span className="ml-1.5 opacity-40">({total})</span>}
         </H3>
 
         <Slot className="-my-0.5">{callToAction}</Slot>
