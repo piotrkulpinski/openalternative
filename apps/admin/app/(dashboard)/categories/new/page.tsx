@@ -1,6 +1,6 @@
-import { CategoryForm } from "~/app/(dashboard)/categories/_components/CategoryForm"
+import { CategoryForm } from "~/app/(dashboard)/categories/_components/category-form"
 import { getTools } from "~/app/(dashboard)/categories/_lib/queries"
-import { H3 } from "~/components/ui/Heading"
+import { H3 } from "~/components/ui/heading"
 
 export default async function CreateCategoryPage() {
   const tools = await getTools()

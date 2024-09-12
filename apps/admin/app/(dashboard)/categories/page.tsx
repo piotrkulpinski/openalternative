@@ -1,8 +1,8 @@
 import { Suspense } from "react"
-import { DataTableSkeleton } from "~/components/data-table/DataTableSkeleton"
-import { searchParamsSchema } from "~/schema/searchParams"
+import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
+import { searchParamsSchema } from "~/schema/search-params"
 import type { SearchParams } from "~/types"
-import { CategoriesTable } from "./_components/CategoriesTable"
+import { CategoriesTable } from "./_components/categories-table"
 import { getCategories } from "./_lib/queries"
 
 export interface CategoriesPageProps {

@@ -1,5 +1,5 @@
 import { type HTMLAttributes, forwardRef } from "react"
-import { H3 } from "~/components/ui/Heading"
+import { H3 } from "~/components/ui/heading"
 import { cx } from "~/utils/cva"
 
 const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(

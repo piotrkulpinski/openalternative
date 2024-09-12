@@ -95,7 +95,7 @@ OpenAlternative uses the following third-party services:
 - Email: [Resend](https://resend.com)
 - File Storage: [AWS S3](https://aws.amazon.com/s3)
 - Payments: [Stripe](https://stripe.com)
-- Screenshots: [ScreenshotOne](https://screenshotone.com)
+- Screenshots: [ScreenshotOne](https://go.openalternative.co/screenshotone)
 
 Make sure to set up accounts with these services and add the necessary environment variables to your `.env` file.
 

@@ -6,11 +6,11 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import type { PropsWithChildren } from "react"
-import { NavItem } from "~/app/(dashboard)/NavItem"
-import { User } from "~/app/(dashboard)/User"
-import { Logo } from "~/components/ui/Logo"
+import { NavItem } from "~/app/(dashboard)/nav-item"
+import { User } from "~/app/(dashboard)/user"
+import { Logo } from "~/components/ui/logo"
 import { siteConfig } from "~/config/site"
-import Providers from "./Providers"
+import { Providers } from "./providers"
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
         <aside className="sticky top-0 z-40 h-svh flex flex-col gap-4 px-2 py-4 text-sm">
           <Link
             href="/"
-            className="p-1.5 shrink-0 rounded-xl bg-foreground text-background hover:bg-foreground/90"
+            className="p-1.5 shrink-0 rounded-lg bg-foreground text-background hover:bg-foreground/90"
           >
             <Logo className="size-5" />
             <span className="sr-only">{siteConfig.name}</span>

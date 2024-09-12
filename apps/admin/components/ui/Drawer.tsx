@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
-import { H4 } from "~/components/ui/Heading"
+import { H4 } from "~/components/ui/heading"
 import { cx } from "~/utils/cva"
 
 const Drawer = ({

@@ -8,7 +8,7 @@ import {
   type HTMLAttributes,
   forwardRef,
 } from "react"
-import { H4 } from "~/components/ui/Heading"
+import { H4 } from "~/components/ui/heading"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const Sheet = SheetPrimitive.Root

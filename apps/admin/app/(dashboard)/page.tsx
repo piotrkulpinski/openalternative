@@ -1,9 +1,9 @@
 import { Suspense } from "react"
-import { AnalyticsCard } from "~/app/(dashboard)/_components/AnalyticsCard"
-import { StatsCard } from "~/app/(dashboard)/_components/StatsCard"
-import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/Card"
-import { H3 } from "~/components/ui/Heading"
-import { Skeleton } from "~/components/ui/Skeleton"
+import { AnalyticsCard } from "~/app/(dashboard)/_components/analytics-card"
+import { StatsCard } from "~/app/(dashboard)/_components/stats-card"
+import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
+import { H3 } from "~/components/ui/heading"
+import { Skeleton } from "~/components/ui/skeleton"
 
 export default function DashboardPage() {
   return (

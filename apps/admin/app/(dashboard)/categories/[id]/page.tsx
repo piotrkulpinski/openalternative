@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
-import { CategoryForm } from "~/app/(dashboard)/categories/_components/CategoryForm"
+import { CategoryForm } from "~/app/(dashboard)/categories/_components/category-form"
 import { getCategoryById, getTools } from "~/app/(dashboard)/categories/_lib/queries"
-import { H3 } from "~/components/ui/Heading"
+import { H3 } from "~/components/ui/heading"
 
 export default async function UpdateCategoryPage({ params }: { params: { id: string } }) {
   const [category, tools] = await Promise.all([getCategoryById(params.id), getTools()])

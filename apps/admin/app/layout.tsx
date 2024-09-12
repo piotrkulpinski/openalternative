@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { SessionProvider } from "next-auth/react"
 import type { PropsWithChildren } from "react"
-import { Toaster } from "~/components/ui/Toaster"
+import { Toaster } from "~/components/ui/toaster"
 import { siteConfig } from "~/config/site"
 import { env } from "~/env"
 import { auth } from "~/services/auth"
