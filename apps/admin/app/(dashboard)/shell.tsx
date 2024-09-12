@@ -1,13 +1,20 @@
 "use client"
 
-import { ArchiveX, File, Inbox, Send, Settings } from "lucide-react"
+import {
+  CopyrightIcon,
+  GalleryHorizontalEndIcon,
+  GemIcon,
+  LayoutDashboardIcon,
+  ReplaceIcon,
+  Settings,
+} from "lucide-react"
 import * as React from "react"
 import { Nav } from "~/app/(dashboard)/nav"
 import { NavUser } from "~/app/(dashboard)/nav-user"
-import { Logo } from "~/components/ui/logo"
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "~/components/ui/resizable"
 import { Separator } from "~/components/ui/separator"
 import { useIsMobile } from "~/hooks/use-mobile"
+import { useStats } from "~/hooks/use-stats-context"
 import { cx } from "~/utils/cva"
 
 interface ShellProps extends React.PropsWithChildren {
@@ -23,6 +30,7 @@ export function Shell({
   navCollapsedSize = 0,
 }: ShellProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
+  const stats = useStats()
   const isMobile = useIsMobile()
 
   return (
@@ -58,7 +66,7 @@ export function Shell({
           links={[
             {
               title: "Dashboard",
-              icon: Logo,
+              icon: LayoutDashboardIcon,
               href: "/",
             },
           ]}
@@ -70,26 +78,26 @@ export function Shell({
             {
               title: "Tools",
               href: "/tools",
-              // label: "324",
-              icon: Inbox,
+              label: stats[0].toString(),
+              icon: GemIcon,
             },
             {
               title: "Alternatives",
               href: "/alternatives",
-              // label: "9",
-              icon: File,
+              label: stats[1].toString(),
+              icon: ReplaceIcon,
             },
             {
               title: "Categories",
               href: "/categories",
-              // label: "41",
-              icon: Send,
+              label: stats[2].toString(),
+              icon: GalleryHorizontalEndIcon,
             },
             {
               title: "Licenses",
               href: "/licenses",
-              // label: "23",
-              icon: ArchiveX,
+              label: stats[5].toString(),
+              icon: CopyrightIcon,
             },
           ]}
         />

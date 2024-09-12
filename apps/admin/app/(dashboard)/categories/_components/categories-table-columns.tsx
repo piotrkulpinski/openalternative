@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
@@ -89,16 +90,6 @@ export function getColumns(): ColumnDef<Category>[] {
             />
 
             <div className="flex items-center justify-end gap-1.5 -my-0.5">
-              <Button variant="outline" size="sm" asChild>
-                <Link href={`${siteConfig.url}/categories/${row.original.slug}`} target="_blank">
-                  View
-                </Link>
-              </Button>
-
-              <Button variant="outline" size="sm" asChild>
-                <Link href={`/categories/${row.original.id}`}>Edit</Link>
-              </Button>
-
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -111,6 +102,21 @@ export function getColumns(): ColumnDef<Category>[] {
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link href={`/categories/${row.original.id}`}>Edit</Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href={`${siteConfig.url}/categories/${row.original.slug}`}
+                      target="_blank"
+                    >
+                      View
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+
                   <DropdownMenuItem
                     onSelect={() => setShowDeleteCategoryDialog(true)}
                     className="text-red-500"

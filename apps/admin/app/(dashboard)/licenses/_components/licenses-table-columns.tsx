@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
@@ -90,16 +91,6 @@ export function getColumns(): ColumnDef<License>[] {
             />
 
             <div className="flex items-center justify-end gap-1.5 -my-0.5">
-              <Button variant="outline" size="sm" asChild>
-                <Link href={`${siteConfig.url}/licenses/${row.original.slug}`} target="_blank">
-                  View
-                </Link>
-              </Button>
-
-              <Button variant="outline" size="sm" asChild>
-                <Link href={`/licenses/${row.original.id}`}>Edit</Link>
-              </Button>
-
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -112,6 +103,18 @@ export function getColumns(): ColumnDef<License>[] {
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link href={`/licenses/${row.original.id}`}>Edit</Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem asChild>
+                    <Link href={`${siteConfig.url}/licenses/${row.original.slug}`} target="_blank">
+                      View
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+
                   <DropdownMenuItem
                     onSelect={() => setShowDeleteLicenseDialog(true)}
                     className="text-red-500"

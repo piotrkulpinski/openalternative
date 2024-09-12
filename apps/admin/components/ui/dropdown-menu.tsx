@@ -80,7 +80,7 @@ const DropdownMenuItem = forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cx(
-      "relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex items-center gap-3 w-full cursor-pointer select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       inset && "pl-8",
       className,
     )}
@@ -161,7 +161,15 @@ const DropdownMenuSeparator = forwardRef<
 DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName
 
 const DropdownMenuShortcut = ({ className, ...props }: HTMLAttributes<HTMLSpanElement>) => {
-  return <span className={cx("ml-auto text-xs tracking-widest opacity-60", className)} {...props} />
+  return (
+    <span
+      className={cx(
+        "ml-auto text-xs text-muted-foreground tracking-widest rounded bg-accent px-1.5 py-0.5",
+        className,
+      )}
+      {...props}
+    />
+  )
 }
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut"
 
