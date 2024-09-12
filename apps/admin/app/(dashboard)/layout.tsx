@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
 
   return (
     <Providers>
-      <Shell defaultLayout={defaultLayout} defaultCollapsed={defaultCollapsed} navCollapsedSize={4}>
+      <Shell defaultLayout={defaultLayout} defaultCollapsed={defaultCollapsed}>
         {children}
       </Shell>
     </Providers>

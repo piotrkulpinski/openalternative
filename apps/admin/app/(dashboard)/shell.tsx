@@ -13,14 +13,14 @@ import { cx } from "~/utils/cva"
 interface ShellProps extends React.PropsWithChildren {
   defaultLayout: number[] | undefined
   defaultCollapsed?: boolean
-  navCollapsedSize: number
+  navCollapsedSize?: number
 }
 
 export function Shell({
   children,
   defaultLayout = [20, 48],
   defaultCollapsed = false,
-  navCollapsedSize,
+  navCollapsedSize = 0,
 }: ShellProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
   const isMobile = useIsMobile()
@@ -38,7 +38,7 @@ export function Shell({
         collapsedSize={navCollapsedSize}
         data-collapsed={isCollapsed}
         collapsible={true}
-        minSize={isMobile ? navCollapsedSize : 15}
+        minSize={isMobile ? navCollapsedSize : 10}
         maxSize={isMobile ? navCollapsedSize : 20}
         onCollapse={() => {
           setIsCollapsed(true)
@@ -50,7 +50,7 @@ export function Shell({
         }}
         className={cx(
           "group/collapsible sticky top-0 h-dvh z-40 flex flex-col",
-          isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out",
+          isCollapsed ? "min-w-12 transition-all duration-300 ease-in-out" : "min-w-48 max-w-64",
         )}
       >
         <Nav
@@ -106,8 +106,12 @@ export function Shell({
         />
 
         <NavUser isCollapsed={isCollapsed} className="mt-auto" />
-        <ResizableHandle withHandle={!isMobile} className="absolute inset-y-0 right-0 z-30" />
       </ResizablePanel>
+
+      <ResizableHandle
+        withHandle={!isMobile}
+        className="sticky top-0 h-dvh items-start pt-[1.33rem]"
+      />
 
       <ResizablePanel
         defaultSize={defaultLayout[1]}
