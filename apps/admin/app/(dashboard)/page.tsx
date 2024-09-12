@@ -21,7 +21,7 @@ export default function DashboardPage() {
                       <Skeleton className="w-24">&nbsp;</Skeleton>
                     </CardDescription>
                     <CardTitle className="text-3xl tabular-nums">
-                      <Skeleton className="w-32">&nbsp;</Skeleton>
+                      <Skeleton className="w-12">&nbsp;</Skeleton>
                     </CardTitle>
                   </CardHeader>
                 </Card>

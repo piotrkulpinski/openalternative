@@ -17,7 +17,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
-import { siteConfig } from "~/config/site"
 import { formatDate } from "~/utils/helpers"
 import { DeleteToolsDialog } from "./delete-tools-dialog"
 
@@ -104,7 +103,7 @@ export function getColumns(): ColumnDef<Tool>[] {
             />
 
             <div className="flex items-center justify-end gap-1.5 -my-0.5">
-              {row.original.publishedAt && row.original.publishedAt <= new Date() && (
+              {/* {row.original.publishedAt && row.original.publishedAt <= new Date() && (
                 <Button variant="outline" size="sm" asChild>
                   <Link href={`${siteConfig.url}/${row.original.slug}`} target="_blank">
                     View
@@ -114,7 +113,7 @@ export function getColumns(): ColumnDef<Tool>[] {
 
               <Button variant="outline" size="sm" asChild>
                 <Link href={`/tools/${row.original.id}`}>Edit</Link>
-              </Button>
+              </Button> */}
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
