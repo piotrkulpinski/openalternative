@@ -3,14 +3,14 @@
 import { signOut, useSession } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
-import { Button, type ButtonProps } from "~/components/ui/Button"
+import { Button, type ButtonProps } from "~/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/ui/DropdownMenu"
+} from "~/components/ui/dropdown-menu"
 import { siteConfig } from "~/config/site"
 import { cx } from "~/utils/cva"
 

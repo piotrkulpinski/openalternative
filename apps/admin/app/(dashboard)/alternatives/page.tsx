@@ -1,8 +1,8 @@
 import { Suspense } from "react"
-import { DataTableSkeleton } from "~/components/data-table/DataTableSkeleton"
-import { searchParamsSchema } from "~/schema/searchParams"
+import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
+import { searchParamsSchema } from "~/schema/search-params"
 import type { SearchParams } from "~/types"
-import { AlternativesTable } from "./_components/AlternativesTable"
+import { AlternativesTable } from "./_components/alternatives-table"
 import { getAlternatives } from "./_lib/queries"
 
 export interface AlternativesPageProps {

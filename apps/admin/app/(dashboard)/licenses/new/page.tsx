@@ -1,5 +1,5 @@
-import { LicenseForm } from "~/app/(dashboard)/licenses/_components/LicenseForm"
-import { H3 } from "~/components/ui/Heading"
+import { LicenseForm } from "~/app/(dashboard)/licenses/_components/license-form"
+import { H3 } from "~/components/ui/heading"
 
 export default async function CreateLicensePage() {
   return (

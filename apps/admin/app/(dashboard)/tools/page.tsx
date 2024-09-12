@@ -1,8 +1,8 @@
 import { Suspense } from "react"
-import { DataTableSkeleton } from "~/components/data-table/DataTableSkeleton"
-import { searchParamsSchema } from "~/schema/searchParams"
+import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
+import { searchParamsSchema } from "~/schema/search-params"
 import type { SearchParams } from "~/types"
-import { ToolsTable } from "./_components/ToolsTable"
+import { ToolsTable } from "./_components/tools-table"
 import { getTools } from "./_lib/queries"
 
 export interface ToolsPageProps {

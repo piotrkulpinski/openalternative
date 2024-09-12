@@ -3,7 +3,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { XIcon } from "lucide-react"
 import * as React from "react"
-import { H4 } from "~/components/ui/Heading"
+import { H4 } from "~/components/ui/heading"
 import { cx } from "~/utils/cva"
 
 const Dialog = DialogPrimitive.Root

@@ -1,8 +1,8 @@
 import { Suspense } from "react"
-import { DataTableSkeleton } from "~/components/data-table/DataTableSkeleton"
-import { searchParamsSchema } from "~/schema/searchParams"
+import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
+import { searchParamsSchema } from "~/schema/search-params"
 import type { SearchParams } from "~/types"
-import { LicensesTable } from "./_components/LicensesTable"
+import { LicensesTable } from "./_components/licenses-table"
 import { getLicenses } from "./_lib/queries"
 
 export interface LicensesPageProps {
