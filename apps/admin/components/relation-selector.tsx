@@ -11,7 +11,6 @@ import {
   CommandList,
 } from "~/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover"
-import { ScrollArea } from "~/components/ui/scroll-area"
 import { Separator } from "~/components/ui/separator"
 
 type Relation = {
@@ -62,30 +61,28 @@ export const RelationSelector = ({ relations, selectedIds, onChange }: RelationS
         <Command>
           <CommandInput placeholder="Search..." />
           <CommandList>
-            <ScrollArea className="h-72">
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup>
-                {relations.map(alt => {
-                  const isSelected = selectedIds.includes(alt.id)
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup>
+              {relations.map(alt => {
+                const isSelected = selectedIds.includes(alt.id)
 
-                  return (
-                    <CommandItem
-                      key={alt.id}
-                      onSelect={() => {
-                        const newSelected = isSelected
-                          ? selectedIds.filter(id => id !== alt.id)
-                          : [...selectedIds, alt.id]
-                        onChange(newSelected)
-                      }}
-                      className="gap-2"
-                    >
-                      <Checkbox checked={isSelected} />
-                      <span>{alt.name}</span>
-                    </CommandItem>
-                  )
-                })}
-              </CommandGroup>
-            </ScrollArea>
+                return (
+                  <CommandItem
+                    key={alt.id}
+                    onSelect={() => {
+                      const newSelected = isSelected
+                        ? selectedIds.filter(id => id !== alt.id)
+                        : [...selectedIds, alt.id]
+                      onChange(newSelected)
+                    }}
+                    className="gap-2"
+                  >
+                    <Checkbox checked={isSelected} />
+                    <span>{alt.name}</span>
+                  </CommandItem>
+                )
+              })}
+            </CommandGroup>
           </CommandList>
 
           {selectedIds.length > 0 && (
