@@ -6,7 +6,7 @@ import { AlternativeRecord } from "~/components/records/alternative-record"
 import { Button } from "~/components/ui/button"
 import { Grid } from "~/components/ui/grid"
 import { H4 } from "~/components/ui/heading"
-import { Series } from "~/components/ui/series"
+import { Stack } from "~/components/ui/stack"
 import type { AlternativeMany } from "~/services.server/api"
 
 type AlternativeListProps = HTMLAttributes<HTMLDivElement> & {
@@ -22,21 +22,21 @@ export const AlternativeList = ({ className, alternatives, ...props }: Alternati
     <>
       <hr />
 
-      <Series size="lg" direction="column">
-        <Series className="w-full justify-between">
+      <Stack size="lg" direction="column">
+        <Stack className="w-full justify-between">
           <H4 as="h3">Discover Open Source alternatives to:</H4>
 
           <Button size="md" variant="secondary" suffix={<ArrowRightIcon />} asChild>
             <Link to="/alternatives">View all alternatives</Link>
           </Button>
-        </Series>
+        </Stack>
 
         <Grid className="w-full">
           {alternatives?.map(alternative => (
             <AlternativeRecord key={alternative.id} alternative={alternative} showCount />
           ))}
         </Grid>
-      </Series>
+      </Stack>
     </>
   )
 }

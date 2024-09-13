@@ -16,7 +16,6 @@ export const SITE_STATS = {
 
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 
-export const RSS_URL = `${SITE_URL}/rss.xml`
 export const TWITTER_URL = "https://x.com/ossalternative"
 export const TWITTER_AUTHOR_URL = "https://x.com/piotrkulpinski"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"

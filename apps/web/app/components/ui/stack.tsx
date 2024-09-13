@@ -4,7 +4,7 @@ import { forwardRef, isValidElement } from "react"
 
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
-const seriesVariants = cva({
+const stackVariants = cva({
   base: "flex",
 
   variants: {
@@ -25,23 +25,23 @@ const seriesVariants = cva({
   },
 })
 
-type SeriesProps = HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof seriesVariants> & {
+type StackProps = HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof stackVariants> & {
     /**
-     * If series to `true`, the button will be rendered as a child within the component.
+     * If stack to `true`, the button will be rendered as a child within the component.
      * This child component must be a valid React component.
      */
     asChild?: boolean
   }
 
-export const Series = forwardRef<HTMLDivElement, SeriesProps>((props, ref) => {
+export const Stack = forwardRef<HTMLDivElement, StackProps>((props, ref) => {
   const { className, asChild, size, direction, ...rest } = props
   const useAsChild = asChild && isValidElement(props.children)
   const Component = useAsChild ? Slot : "div"
 
   return (
-    <Component ref={ref} className={cx(seriesVariants({ size, direction, className }))} {...rest} />
+    <Component ref={ref} className={cx(stackVariants({ size, direction, className }))} {...rest} />
   )
 })
 
-Series.displayName = "Series"
+Stack.displayName = "Stack"

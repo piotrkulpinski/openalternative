@@ -4,7 +4,7 @@ import { Button } from "~/components/ui/button"
 import { ErrorMessage } from "~/components/ui/forms/error-message"
 import { Input } from "~/components/ui/forms/input"
 import { H5 } from "~/components/ui/heading"
-import { Series } from "~/components/ui/series"
+import { Stack } from "~/components/ui/stack"
 import type { action } from "~/routes/api.subscribe"
 import { cx } from "~/utils/cva"
 
@@ -36,7 +36,7 @@ export const Newsletter = ({
   const isLargeSize = size === "lg"
 
   return (
-    <Series
+    <Stack
       size="lg"
       direction="column"
       className={cx("items-stretch", isLargeSize ? "max-w-96" : "max-w-64")}
@@ -87,6 +87,6 @@ export const Newsletter = ({
 
         {children}
       </section>
-    </Series>
+    </Stack>
   )
 }
