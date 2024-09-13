@@ -3,6 +3,7 @@
 import type { Alternative, Category, License, Tool } from "@openalternative/db"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
   CommandEmpty,
@@ -12,7 +13,6 @@ import {
   CommandList,
 } from "~/components/ui/command"
 import { useDebouncedState } from "~/hooks/use-debounced-state"
-import { searchItems } from "../app/actions/search"
 
 type SearchResult = {
   tools: Tool[]

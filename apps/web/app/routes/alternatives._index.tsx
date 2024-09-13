@@ -20,6 +20,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = async () => {
   const alternatives = await prisma.alternative.findMany({
+    where: { NOT: { tools: { none: {} } } },
     orderBy: { name: "asc" },
     include: alternativeManyPayload,
   })

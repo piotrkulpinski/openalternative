@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import slugify from "@sindresorhus/slugify"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import React from "react"
@@ -22,7 +21,7 @@ import {
 } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
 import { cx } from "~/utils/cva"
-import { nullsToUndefined } from "~/utils/helpers"
+import { getSlug, nullsToUndefined } from "~/utils/helpers"
 
 type CategoryFormProps = React.HTMLAttributes<HTMLFormElement> & {
   category?: Awaited<ReturnType<typeof getCategoryById>>
@@ -51,7 +50,7 @@ export function CategoryForm({
     startSubmitTransition(async () => {
       const payload = {
         ...input,
-        slug: slugify(input.name),
+        slug: getSlug(input.name),
 
         tools: {
           // Delete existing relations

@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import slugify from "@sindresorhus/slugify"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import React from "react"
@@ -22,7 +21,7 @@ import {
 import { Input } from "~/components/ui/input"
 import { Textarea } from "~/components/ui/textarea"
 import { cx } from "~/utils/cva"
-import { nullsToUndefined } from "~/utils/helpers"
+import { getSlug, nullsToUndefined } from "~/utils/helpers"
 
 type LicenseFormProps = React.HTMLAttributes<HTMLFormElement> & {
   license?: Awaited<ReturnType<typeof getLicenseById>>
@@ -40,7 +39,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
     startSubmitTransition(async () => {
       const payload = {
         ...input,
-        slug: slugify(input.name),
+        slug: getSlug(input.name),
       }
 
       const { error, data } = license

@@ -45,7 +45,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
     // Find alternatives
     prisma.alternative.findMany({
-      where: { slug: { in: FEATURED_ALTERNATIVES } },
+      where: { slug: { in: FEATURED_ALTERNATIVES }, NOT: { tools: { none: {} } } },
       include: alternativeManyPayload,
       take: 6,
     }),
