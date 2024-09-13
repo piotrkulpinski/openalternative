@@ -22,7 +22,6 @@ import { Badge } from "~/components/ui/badge"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Button } from "~/components/ui/button"
 import { FaviconImage } from "~/components/ui/favicon"
-import { FeedbackButton } from "~/components/ui/feedback-button"
 import { Grid } from "~/components/ui/grid"
 import { H1, H4, H5 } from "~/components/ui/heading"
 import { Markdown } from "~/components/ui/markdown"
@@ -402,10 +401,7 @@ export default function ToolsPage() {
             </Series>
           )}
 
-          <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4 w-full">
-            <ShareButtons title={meta.title} />
-            <FeedbackButton tool={tool} />
-          </div>
+          <ShareButtons title={meta.title} />
         </div>
 
         <ToolSidebar tool={tool} languages={languages} className="sticky top-16 max-md:hidden" />

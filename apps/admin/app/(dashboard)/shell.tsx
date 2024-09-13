@@ -46,7 +46,7 @@ export function Shell({
         collapsedSize={navCollapsedSize}
         data-collapsed={isCollapsed}
         collapsible={true}
-        minSize={isMobile ? navCollapsedSize : 10}
+        minSize={isMobile ? navCollapsedSize : 5}
         maxSize={isMobile ? navCollapsedSize : 20}
         onCollapse={() => {
           setIsCollapsed(true)
