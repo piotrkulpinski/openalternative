@@ -1,3 +1,5 @@
+import slugify, { type Options as SlugifyOptions } from "@sindresorhus/slugify"
+
 export function formatDate(date: Date | string | number, opts: Intl.DateTimeFormatOptions = {}) {
   return new Intl.DateTimeFormat("en-US", {
     month: opts.month ?? "long",
@@ -5,6 +7,18 @@ export function formatDate(date: Date | string | number, opts: Intl.DateTimeForm
     year: opts.year ?? "numeric",
     ...opts,
   }).format(new Date(date))
+}
+
+/**
+ * Generate a slug from a name
+ * @param name
+ * @returns
+ */
+export const getSlug = (name: string, options: SlugifyOptions = {}) => {
+  return slugify(name, {
+    decamelize: false,
+    ...options,
+  })
 }
 
 /**

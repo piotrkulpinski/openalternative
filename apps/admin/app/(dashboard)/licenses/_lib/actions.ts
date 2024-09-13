@@ -1,7 +1,6 @@
 "use server"
 
 import type { License, Prisma } from "@openalternative/db"
-import slugify from "@sindresorhus/slugify"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
@@ -10,10 +9,7 @@ export async function createLicense(input: Prisma.LicenseCreateInput) {
   noStore()
   try {
     const license = await prisma.license.create({
-      data: {
-        ...input,
-        slug: slugify(input.name),
-      },
+      data: input,
     })
 
     revalidatePath("/licenses")

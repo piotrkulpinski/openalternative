@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import slugify from "@sindresorhus/slugify"
 import { formatDate } from "date-fns"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
@@ -30,7 +29,7 @@ import { Input } from "~/components/ui/input"
 import { Switch } from "~/components/ui/switch"
 import { Textarea } from "~/components/ui/textarea"
 import { cx } from "~/utils/cva"
-import { nullsToUndefined } from "~/utils/helpers"
+import { getSlug, nullsToUndefined } from "~/utils/helpers"
 
 type ToolFormProps = React.HTMLAttributes<HTMLFormElement> & {
   tool?: Awaited<ReturnType<typeof getToolById>>
@@ -66,7 +65,7 @@ export function ToolForm({
     startSubmitTransition(async () => {
       const payload = {
         ...input,
-        slug: slugify(input.name),
+        slug: getSlug(input.name),
 
         ...(!tool &&
           session.data?.user && {

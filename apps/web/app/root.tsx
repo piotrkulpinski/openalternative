@@ -70,7 +70,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     }),
 
     prisma.alternative.findMany({
-      where: { website: { startsWith: "https://go" } },
+      where: { website: { startsWith: "https://go" }, NOT: { tools: { none: {} } } },
       orderBy: { tools: { _count: "desc" } },
       include: alternativeManyPayload,
       take: 12,

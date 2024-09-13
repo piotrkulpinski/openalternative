@@ -1,7 +1,6 @@
 "use server"
 
 import type { Prisma, Tool } from "@openalternative/db"
-import slugify from "@sindresorhus/slugify"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
@@ -10,10 +9,7 @@ export async function createTool(input: Prisma.ToolCreateInput) {
   noStore()
   try {
     const tool = await prisma.tool.create({
-      data: {
-        ...input,
-        slug: slugify(input.name),
-      },
+      data: input,
     })
 
     revalidatePath("/tools")
