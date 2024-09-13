@@ -24,8 +24,6 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
   const { data: session } = useSession()
   const user = session?.user
 
-  console.log(user?.image)
-
   return (
     <nav
       className={cx(

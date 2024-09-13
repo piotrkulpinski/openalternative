@@ -1,6 +1,7 @@
 import { cookies } from "next/headers"
 import type { PropsWithChildren } from "react"
 import { Shell } from "~/app/(dashboard)/shell"
+import { CommandMenu } from "~/components/command-menu"
 import { prisma } from "~/services/prisma"
 import { Providers } from "./providers"
 
@@ -25,6 +26,8 @@ export default async function DashboardLayout({ children }: PropsWithChildren) {
       <Shell defaultLayout={defaultLayout} defaultCollapsed={defaultCollapsed}>
         {children}
       </Shell>
+
+      <CommandMenu />
     </Providers>
   )
 }
