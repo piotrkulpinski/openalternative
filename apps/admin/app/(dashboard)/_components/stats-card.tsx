@@ -1,10 +1,15 @@
-"use client"
-
 import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
-import { useStats } from "~/hooks/use-stats-context"
+import { prisma } from "~/services/prisma"
 
 export const StatsCard = async () => {
-  const stats = useStats()
+  const stats = await Promise.all([
+    prisma.tool.count(),
+    prisma.alternative.count(),
+    prisma.category.count(),
+    prisma.language.count(),
+    prisma.topic.count(),
+    prisma.license.count(),
+  ])
 
   const statsLabels = {
     0: "Tools",
