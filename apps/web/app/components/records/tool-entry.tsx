@@ -8,7 +8,7 @@ import { Card } from "~/components/ui/card"
 import { FaviconImage } from "~/components/ui/favicon"
 import { H2 } from "~/components/ui/heading"
 import { Markdown } from "~/components/ui/markdown"
-import { Series } from "~/components/ui/series"
+import { Stack } from "~/components/ui/stack"
 import type { ToolMany } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 
@@ -29,7 +29,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       {...props}
     >
       <div>
-        <Series
+        <Stack
           size="lg"
           className="before:content-['#'_counter(alternatives)] before:absolute before:right-full before:-mr-3 before:font-semibold before:text-3xl before:opacity-25 max-lg:before:hidden"
         >
@@ -57,7 +57,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
                 : `${tool.discountAmount}% off`}
             </Badge>
           )}
-        </Series>
+        </Stack>
 
         {tool.description && (
           <Card.Description

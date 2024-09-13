@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "react"
 import { Container } from "~/components/ui/container"
 import { H6 } from "~/components/ui/heading"
 import { NavigationLink } from "~/components/ui/navigation-link"
-import { Series } from "~/components/ui/series"
+import { Stack } from "~/components/ui/stack"
 import type { AlternativeMany, CategoryMany } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 
@@ -29,7 +29,7 @@ export const Bottom = ({
         {...props}
       >
         {!!alternatives?.length && (
-          <Series className="gap-x-4 text-sm/normal">
+          <Stack className="gap-x-4 text-sm/normal">
             <H6 as="strong">Popular Proprietary Tools:</H6>
 
             <div className="grid grid-auto-fill-xxs gap-x-4 gap-y-2 w-full sm:grid-auto-fill-xs">
@@ -41,11 +41,11 @@ export const Bottom = ({
                 </NavigationLink>
               ))}
             </div>
-          </Series>
+          </Stack>
         )}
 
         {!!categories?.length && (
-          <Series className="gap-x-4 text-sm/normal md:flex-col md:items-start md:col-span-3">
+          <Stack className="gap-x-4 text-sm/normal md:flex-col md:items-start md:col-span-3">
             <H6 as="strong">Popular Categories:</H6>
 
             <div className="grid grid-auto-fill-xxs gap-x-4 gap-y-2 w-full sm:grid-auto-fill-xs">
@@ -57,7 +57,7 @@ export const Bottom = ({
                 </NavigationLink>
               ))}
             </div>
-          </Series>
+          </Stack>
         )}
       </div>
     </Container>

@@ -7,15 +7,15 @@ import { H6 } from "~/components/ui/heading"
 import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
 import { BrandXIcon } from "~/components/ui/icons/brand-x"
 import { NavigationLink } from "~/components/ui/navigation-link"
-import { Series } from "~/components/ui/series"
+import { Stack } from "~/components/ui/stack"
 import { ThemeSwitcher } from "~/components/ui/theme-switcher"
 import { Tooltip } from "~/components/ui/tooltip"
 import {
   CLIMATE_URL,
   GITHUB_URL,
-  RSS_URL,
   SITE_EMAIL,
   SITE_STATS,
+  SITE_URL,
   TWITTER_AUTHOR_URL,
   TWITTER_URL,
 } from "~/utils/constants"
@@ -38,11 +38,11 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
             medium="footer_form"
           />
 
-          <Series className="text-sm/normal">
+          <Stack className="text-sm/normal">
             <ClientOnly>{() => <ThemeSwitcher />}</ClientOnly>
 
             <Tooltip tooltip="RSS Feed">
-              <NavigationLink to={RSS_URL} target="_blank" rel="nofollow noreferrer">
+              <NavigationLink to={`${SITE_URL}/rss.xml`} target="_blank" rel="nofollow noreferrer">
                 <RssIcon className="size-[1.44em] stroke-[1.25]" />
               </NavigationLink>
             </Tooltip>
@@ -64,10 +64,10 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
                 <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
               </NavigationLink>
             </Tooltip>
-          </Series>
+          </Stack>
         </div>
 
-        <Series className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3 md:col-start-8">
+        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3 md:col-start-8">
           <H6 as="strong">Quick Links:</H6>
 
           <NavigationLink to="/blog">Blog</NavigationLink>
@@ -75,9 +75,9 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           <NavigationLink to="/sponsor">Sponsor</NavigationLink>
           <NavigationLink to="/submit">Submit</NavigationLink>
           <NavigationLink to={`mailto:${SITE_EMAIL}`}>Contact</NavigationLink>
-        </Series>
+        </Stack>
 
-        <Series className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
+        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
           <H6 as="strong">Browse:</H6>
 
           <NavigationLink to="/alternatives">Alternatives</NavigationLink>
@@ -85,9 +85,9 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           <NavigationLink to="/languages">Languages</NavigationLink>
           <NavigationLink to="/topics">Topics</NavigationLink>
           <NavigationLink to="/licenses">Licenses</NavigationLink>
-        </Series>
+        </Stack>
 
-        <Series className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
+        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
           <H6 as="strong">Other Products:</H6>
 
           <NavigationLink
@@ -105,11 +105,11 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           >
             Chipmunk Theme
           </NavigationLink>
-        </Series>
+        </Stack>
       </div>
 
       <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
-        <Series direction="column">
+        <Stack direction="column">
           <NavigationLink to={TWITTER_AUTHOR_URL} className="text-xs">
             <img
               src="/users/1.jpg"
@@ -135,7 +135,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
             />
             We contribute part of our revenue to carbon removal
           </NavigationLink>
-        </Series>
+        </Stack>
 
         <p className="text-xs text-muted">This website may contain affiliate links</p>
       </div>

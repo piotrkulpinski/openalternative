@@ -9,7 +9,7 @@ import { H5 } from "~/components/ui/heading"
 import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
 import { Insights } from "~/components/ui/insights"
 import { NavigationLink } from "~/components/ui/navigation-link"
-import { Series } from "~/components/ui/series"
+import { Stack } from "~/components/ui/stack"
 import type { LanguageToToolMany, ToolOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 
@@ -51,13 +51,13 @@ export const RepositoryDetails = ({
 
   return (
     <div className={cx("flex flex-col gap-4 rounded-lg border p-5", className)} {...props}>
-      <Series direction="column">
+      <Stack direction="column">
         <H5>Repository details:</H5>
         <Insights insights={insights} className="text-sm" />
-      </Series>
+      </Stack>
 
       {!!languages.length && (
-        <Series direction="column">
+        <Stack direction="column">
           <H5>Written in:</H5>
 
           {languages?.map(({ percentage, language }) => (
@@ -71,7 +71,7 @@ export const RepositoryDetails = ({
               </NavigationLink>
             </h6>
           ))}
-        </Series>
+        </Stack>
       )}
 
       {tool.repository && (

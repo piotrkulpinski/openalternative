@@ -6,7 +6,6 @@ import {
   GemIcon,
   LayoutDashboardIcon,
   ReplaceIcon,
-  Settings,
 } from "lucide-react"
 import * as React from "react"
 import { Nav } from "~/app/(dashboard)/nav"
@@ -98,17 +97,6 @@ export function Shell({
               href: "/licenses",
               label: stats[5].toString(),
               icon: CopyrightIcon,
-            },
-          ]}
-        />
-        <Separator />
-        <Nav
-          isCollapsed={isCollapsed}
-          links={[
-            {
-              title: "Settings",
-              href: "/settings",
-              icon: Settings,
             },
           ]}
         />

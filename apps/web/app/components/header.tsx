@@ -24,7 +24,7 @@ import {
 import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
 import { NavigationLink, navigationLinkVariants } from "~/components/ui/navigation-link"
 import { SearchForm } from "~/components/ui/search-form"
-import { Series } from "~/components/ui/series"
+import { Stack } from "~/components/ui/stack"
 import { GITHUB_URL, SITE_STATS } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 
@@ -133,7 +133,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <NavigationLink to="/sponsor">Sponsor</NavigationLink>
         </nav>
 
-        <Series size="sm" className="items-stretch">
+        <Stack size="sm" className="items-stretch">
           <SearchForm className="max-sm:hidden" />
 
           <Button
@@ -158,7 +158,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
               Submit
             </NavLink>
           </Button>
-        </Series>
+        </Stack>
 
         <nav
           className={cx(

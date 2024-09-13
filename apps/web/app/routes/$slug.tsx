@@ -26,8 +26,8 @@ import { Grid } from "~/components/ui/grid"
 import { H1, H4, H5 } from "~/components/ui/heading"
 import { Markdown } from "~/components/ui/markdown"
 import { Prose } from "~/components/ui/prose"
-import { Series } from "~/components/ui/series"
 import { ShareButtons } from "~/components/ui/share-buttons"
+import { Stack } from "~/components/ui/stack"
 import { Tag } from "~/components/ui/tag"
 import {
   type ToolOne,
@@ -245,7 +245,7 @@ export default function ToolsPage() {
         <div className="flex flex-1 flex-wrap items-start gap-10 md:col-span-2 md:gap-12">
           <div className="flex flex-1 flex-col items-start gap-4 md:gap-6">
             <div className="flex w-full flex-col items-start gap-y-4">
-              <Series className="w-full">
+              <Stack className="w-full">
                 <FaviconImage
                   src={tool.faviconUrl}
                   title={tool.name}
@@ -268,7 +268,7 @@ export default function ToolsPage() {
                       : `${tool.discountAmount}% off with our link`}
                   </Badge>
                 )}
-              </Series>
+              </Stack>
 
               {tool.description && (
                 <Prose>
@@ -283,7 +283,7 @@ export default function ToolsPage() {
             </div>
 
             {(tool.website || tool.hostingUrl) && (
-              <Series size="sm">
+              <Stack size="sm">
                 {tool.website && (
                   <Button
                     suffix={<ArrowUpRightIcon />}
@@ -316,7 +316,7 @@ export default function ToolsPage() {
                     </a>
                   </Button>
                 )}
-              </Series>
+              </Stack>
             )}
           </div>
 
@@ -346,10 +346,10 @@ export default function ToolsPage() {
           {(!!links?.length || !!categories.length) && (
             <div className="grid grid-auto-fit-sm gap-x-6 gap-y-10 w-full">
               {links && (
-                <Series size="lg" direction="column">
+                <Stack size="lg" direction="column">
                   <H5 as="h3">Links:</H5>
 
-                  <Series direction="column">
+                  <Stack direction="column">
                     {links.map(({ name, url }) => (
                       <Tag
                         key={url}
@@ -362,15 +362,15 @@ export default function ToolsPage() {
                         {name}
                       </Tag>
                     ))}
-                  </Series>
-                </Series>
+                  </Stack>
+                </Stack>
               )}
 
               {!!categories.length && (
-                <Series direction="column" className="w-full">
+                <Stack direction="column" className="w-full">
                   <H5 as="h3">Categories:</H5>
 
-                  <Series direction="column">
+                  <Stack direction="column">
                     {categories?.map(({ category }) => (
                       <Tag
                         key={category.id}
@@ -380,25 +380,25 @@ export default function ToolsPage() {
                         {category.name}
                       </Tag>
                     ))}
-                  </Series>
-                </Series>
+                  </Stack>
+                </Stack>
               )}
             </div>
           )}
 
           {/* Topics */}
           {!!topics.length && (
-            <Series size="lg" direction="column" className="w-full">
+            <Stack size="lg" direction="column" className="w-full">
               <H5 as="h3">Related topics:</H5>
 
-              <Series>
+              <Stack>
                 {topics.map(({ topic }) => (
                   <Tag key={topic.slug} to={`/topics/${topic.slug}`} prefix={<HashIcon />}>
                     {topic.slug}
                   </Tag>
                 ))}
-              </Series>
-            </Series>
+              </Stack>
+            </Stack>
           )}
 
           <ShareButtons title={meta.title} />
@@ -409,7 +409,7 @@ export default function ToolsPage() {
 
       {/* Alternatives */}
       {!!alternatives.length && (
-        <Series size="lg" direction="column">
+        <Stack size="lg" direction="column">
           <H4 as="h3">{tool.name} is an open source alternative to:</H4>
 
           <Grid className="w-full">
@@ -417,12 +417,12 @@ export default function ToolsPage() {
               <AlternativeRecord key={alternative.id} alternative={alternative} />
             ))}
           </Grid>
-        </Series>
+        </Stack>
       )}
 
       {/* Related */}
       {relatedTools.length > 0 && (
-        <Series size="lg" direction="column">
+        <Stack size="lg" direction="column">
           <H4 as="h3">Similar open source alternatives:</H4>
 
           <Grid className="w-full">
@@ -430,7 +430,7 @@ export default function ToolsPage() {
               <ToolRecord key={relatedTool.id} tool={relatedTool} isRelated />
             ))}
           </Grid>
-        </Series>
+        </Stack>
       )}
 
       <BackButton to="/" />

@@ -9,7 +9,7 @@ import { BrandLinkedInIcon } from "~/components/ui/icons/brand-linkedin"
 import { BrandRedditIcon } from "~/components/ui/icons/brand-reddit"
 import { BrandWhatsAppIcon } from "~/components/ui/icons/brand-whatsapp"
 import { BrandXIcon } from "~/components/ui/icons/brand-x"
-import { Series } from "~/components/ui/series"
+import { Stack } from "~/components/ui/stack"
 import { Tooltip } from "~/components/ui/tooltip"
 import { SITE_NAME, SITE_URL } from "~/utils/constants"
 
@@ -58,10 +58,10 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, ...props }) =
   ]
 
   return (
-    <Series {...props}>
+    <Stack {...props}>
       <H5 as="strong">Share:</H5>
 
-      <Series className="gap-1">
+      <Stack className="gap-1">
         {shareOptions.map(({ platform, url, icon }) => (
           <Tooltip key={platform} tooltip={platform}>
             <Button
@@ -76,7 +76,7 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, ...props }) =
             </Button>
           </Tooltip>
         ))}
-      </Series>
-    </Series>
+      </Stack>
+    </Stack>
   )
 }

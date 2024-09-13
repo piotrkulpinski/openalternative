@@ -15,8 +15,8 @@ import { H6 } from "~/components/ui/heading"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Markdown } from "~/components/ui/markdown"
 import { Section } from "~/components/ui/section"
-import { Series } from "~/components/ui/series"
 import { ShareButtons } from "~/components/ui/share-buttons"
+import { Stack } from "~/components/ui/stack"
 import { prisma } from "~/services.server/prisma"
 import { getMetaTags } from "~/utils/meta"
 
@@ -84,7 +84,7 @@ export default function BlogPostPage() {
           {post.description}
         </IntroDescription>
 
-        <Series
+        <Stack
           className="mt-2 text-sm text-muted"
           style={{ viewTransitionName: vt ? `post-${post._meta.path}-meta` : undefined }}
         >
@@ -99,7 +99,7 @@ export default function BlogPostPage() {
           <span className="-mx-1">&bull;</span>
 
           <span>{getReadTime(post.content)} min read</span>
-        </Series>
+        </Stack>
       </Intro>
 
       <Section>
@@ -119,7 +119,7 @@ export default function BlogPostPage() {
         </Section.Content>
 
         <Section.Sidebar>
-          <Series direction="column">
+          <Stack direction="column">
             <H6 as="strong" className="text-muted">
               Written by
             </H6>
@@ -129,7 +129,7 @@ export default function BlogPostPage() {
               image={post.author.image}
               twitterHandle={post.author.twitterHandle}
             />
-          </Series>
+          </Stack>
 
           {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}
 
