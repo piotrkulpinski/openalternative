@@ -58,7 +58,6 @@ model Tool {
   categories   CategoryToTools[]
   languages    LanguageToTool[]
   topics       TopicToTool[]
-  feedback     Feedback[]
 
   @@index([id, slug])
 }
@@ -110,18 +109,6 @@ model License {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   tools       Tool[]
-}
-
-model Feedback {
-  id        String   @id @default(cuid())
-  email     String
-  feedback  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  toolId String?
-  tool   Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade)
 }
 
 model AlternativeToTool {
