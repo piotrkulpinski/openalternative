@@ -1,4 +1,4 @@
-import { indexAlgoliaSearch } from "~/lib/index-search"
+import { indexSearch } from "~/actions"
 import { getMilestoneReached, sendMilestoneTweet } from "~/lib/milestones"
 import { fetchRepositoryData } from "~/lib/repositories"
 import { inngest } from "~/services/inngest"
@@ -39,9 +39,9 @@ export const fetchToolData = inngest.createFunction(
       )
     })
 
-    // Start Algolia index
-    await step.run("start-algolia-index", async () => {
-      return indexAlgoliaSearch()
+    // Index search for Algolia
+    await step.run("index-search", async () => {
+      return indexSearch()
     })
 
     // Disconnect from DB
