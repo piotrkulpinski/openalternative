@@ -3,9 +3,8 @@
 import type { Prisma, Tool } from "@openalternative/db"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
-import { prisma } from "~/services/prisma"
 import { inngest } from "~/services/inngest"
-import { sendTweet } from "~/services/twitter"
+import { prisma } from "~/services/prisma"
 
 export async function createTool(input: Prisma.ToolCreateInput) {
   noStore()
@@ -108,10 +107,6 @@ export async function deleteTools(input: { ids: Tool["id"][] }) {
       error: getErrorMessage(err),
     }
   }
-}
-
-export async function testTwitter() {
-  await sendTweet("Hello, world!")
 }
 
 export async function publishTool(id: Tool["id"], publishedAt: Date) {
