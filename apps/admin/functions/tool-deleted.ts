@@ -6,10 +6,8 @@ export const toolDeleted = inngest.createFunction(
   { event: "tool.deleted" },
 
   async ({ event, step }) => {
-    const { slug } = event.data
-
     await step.run("remove-s3-directory", async () => {
-      return removeS3Directory(`${slug}`)
+      return removeS3Directory(`${event.data.slug}`)
     })
   },
 )

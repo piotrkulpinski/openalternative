@@ -1,5 +1,5 @@
 import { publishEscape } from "@curiousleaf/utils"
-import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
+import type { LinksFunction, MetaFunction } from "@remix-run/node"
 import {
   Links,
   Meta,
@@ -61,7 +61,7 @@ export const meta: MetaFunction = ({ location }) => {
   ]
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async () => {
   const [categories, alternatives] = await Promise.all([
     prisma.category.findMany({
       orderBy: { tools: { _count: "desc" } },

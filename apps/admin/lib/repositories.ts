@@ -1,3 +1,5 @@
+import type { Tool } from "@openalternative/db"
+import type { Jsonify } from "inngest/helpers/jsonify"
 import { githubClient, repositoryQuery } from "~/services/github"
 import type { RepositoryQueryResult } from "~/types/github"
 import { getSlug } from "~/utils/helpers"
@@ -128,4 +130,85 @@ export const fetchRepository = async (url: string, bump?: number | null) => {
 
   // Return the extracted data
   return { stars, forks, lastCommitDate, score, license, topics, languages }
+}
+
+/**
+ * Fetches the repository data for a tool and returns the data
+ * in a format that can be used to update the tool.
+ *
+ * @param tool - The tool to fetch the repository data for.
+ * @returns The repository data for the tool.
+ */
+export const fetchRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
+  const repo = await fetchRepository(tool.repository, tool.bump)
+
+  if (!repo) {
+    return null
+  }
+
+  const { stars, forks, lastCommitDate, score, license, topics, languages } = repo
+
+  // License
+  const licenseData = license
+    ? {
+        connectOrCreate: {
+          where: { name: license },
+          create: {
+            name: license,
+            slug: getSlug(license).replace(/-0$/, ""),
+          },
+        },
+      }
+    : undefined
+
+  // Topics
+  const topicData = {
+    connectOrCreate: topics.map(({ slug }) => ({
+      where: {
+        toolId_topicSlug: {
+          toolId: tool.id,
+          topicSlug: slug,
+        },
+      },
+      create: {
+        topic: {
+          connectOrCreate: {
+            where: { slug },
+            create: { slug },
+          },
+        },
+      },
+    })),
+  }
+
+  // Languages
+  const languageData = {
+    connectOrCreate: languages.map(({ percentage, name, slug, color }) => ({
+      where: {
+        toolId_languageSlug: {
+          toolId: tool.id,
+          languageSlug: slug,
+        },
+      },
+      create: {
+        percentage,
+        language: {
+          connectOrCreate: {
+            where: { slug },
+            create: { name, slug, color },
+          },
+        },
+      },
+    })),
+  }
+
+  return {
+    stars,
+    forks,
+    lastCommitDate,
+    score,
+    license: licenseData,
+    topics: topicData,
+    languages: languageData,
+  }
 }

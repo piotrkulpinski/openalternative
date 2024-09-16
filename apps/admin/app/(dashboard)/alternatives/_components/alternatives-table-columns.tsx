@@ -14,7 +14,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import { siteConfig } from "~/config/site"
@@ -143,7 +142,6 @@ export function getColumns(): ColumnDef<Alternative>[] {
                     className="text-red-500"
                   >
                     Delete
-                    <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

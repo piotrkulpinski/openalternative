@@ -1,5 +1,5 @@
 import { siteConfig } from "~/config/site"
-import { twitterClient } from "~/services/twitter"
+import { sendTweet } from "~/services/twitter"
 
 /**
  * Check if a tool has reached a milestone
@@ -8,7 +8,7 @@ import { twitterClient } from "~/services/twitter"
  * @returns The milestone reached, or null if it hasn't reached any milestone
  */
 export const getMilestoneReached = (prevStars: number, newStars: number) => {
-  const milestones = [100, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000]
+  const milestones = [100, 500, 1_000, 2_500, 5_000, 10_000, 25_000, 50_000, 100_000]
   const unreachedMilestones = milestones.filter(m => prevStars < m)
   const reachedMilestones = unreachedMilestones.filter(m => newStars >= m)
 
@@ -30,7 +30,7 @@ Check it out on OpenAlternative: ${siteConfig.url}/${slug}
 #opensource #openalternative #github #software`
 
   try {
-    await twitterClient.tweet(tweet)
+    await sendTweet(tweet)
     console.log(`Tweet sent for ${name}`)
   } catch (error) {
     console.error(`Error sending tweet for ${name}:`, error)

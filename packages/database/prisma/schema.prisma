@@ -33,6 +33,7 @@ model Tool {
   description    String?
   content        String?
   links          Json?
+  twitterHandle  String?
   stars          Int       @default(0)
   forks          Int       @default(0)
   score          Int       @default(0)

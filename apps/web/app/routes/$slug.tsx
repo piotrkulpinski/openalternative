@@ -98,7 +98,7 @@ export const loader = async ({ request, params: { slug } }: LoaderFunctionArgs) 
     const [tool, alternatives, categories, languages, topics, relatedTools, visitLabelFlag] =
       await Promise.all([
         prisma.tool.findUniqueOrThrow({
-          where: { slug },
+          where: { slug, publishedAt: { lte: new Date() } },
           include: toolOnePayload,
         }),
 

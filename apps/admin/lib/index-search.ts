@@ -1,7 +1,8 @@
-import { type LoaderFunction, json } from "@remix-run/node"
-import { prisma } from "~/services.server/prisma"
+import { env } from "~/env"
+import { algoliaClient } from "~/services/algolia"
+import { prisma } from "~/services/prisma"
 
-export const loader: LoaderFunction = async () => {
+export const indexAlgoliaSearch = async () => {
   const tools = await prisma.tool
     .findMany({
       where: { publishedAt: { lte: new Date() } },
@@ -34,5 +35,8 @@ export const loader: LoaderFunction = async () => {
       })),
     )
 
-  return json(tools)
+  return await algoliaClient.saveObjects({
+    indexName: env.ALGOLIA_INDEX_TASK_ID,
+    objects: tools,
+  })
 }

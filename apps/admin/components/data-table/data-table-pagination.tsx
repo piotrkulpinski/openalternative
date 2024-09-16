@@ -55,7 +55,7 @@ export function DataTablePagination<TData>({
       </div>
 
       <div className="text-sm font-medium max-sm:hidden">
-        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount() || 1}
       </div>
 
       <div className="flex items-center gap-2">

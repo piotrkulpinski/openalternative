@@ -372,7 +372,7 @@ export function ToolForm({
                   type="datetime-local"
                   {...field}
                   value={field.value ? formatDate(field.value, "yyyy-MM-dd HH:mm") : undefined}
-                  onChange={e => field.onChange(new Date(e.target.value))}
+                  onChange={e => field.onChange(e.target.value ? new Date(e.target.value) : null)}
                 />
               </FormControl>
               <FormMessage />

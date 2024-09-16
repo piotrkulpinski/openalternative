@@ -17,7 +17,7 @@ export async function createAlternative(input: Prisma.AlternativeCreateInput) {
     revalidatePath("/alternatives")
 
     // Send an event to the Inngest pipeline
-    await inngest.send({ name: "alternative.created", data: alternative })
+    await inngest.send({ name: "alternative.created", data: { id: alternative.id } })
 
     return {
       data: alternative,
@@ -92,6 +92,7 @@ export async function deleteAlternatives(input: { ids: Alternative["id"][] }) {
   try {
     const alternatives = await prisma.alternative.findMany({
       where: { id: { in: input.ids } },
+      select: { slug: true },
     })
 
     await prisma.alternative.deleteMany({
@@ -102,7 +103,7 @@ export async function deleteAlternatives(input: { ids: Alternative["id"][] }) {
 
     // Send an event to the Inngest pipeline
     for (const alternative of alternatives) {
-      await inngest.send({ name: "alternative.deleted", data: alternative })
+      await inngest.send({ name: "alternative.deleted", data: { slug: alternative.slug } })
     }
 
     return {

@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
+import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { LicenseRecord } from "~/components/records/license-record"
 import { Grid } from "~/components/ui/grid"
@@ -19,7 +19,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async () => {
   const licenses = await prisma.license.findMany({
     orderBy: { tools: { _count: "desc" } },
     include: licenseManyPayload,

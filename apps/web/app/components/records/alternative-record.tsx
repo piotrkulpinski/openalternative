@@ -18,7 +18,13 @@ export const AlternativeRecord = ({ alternative, showCount, ...props }: Alternat
     <Card asChild>
       <NavLink to={`/alternatives/${alternative.slug}`} unstable_viewTransition {...props}>
         <Card.Header>
-          <Favicon src={alternative.faviconUrl} title={alternative.name} />
+          <Favicon
+            src={
+              alternative.faviconUrl ||
+              `https://www.google.com/s2/favicons?sz=128&domain_url=${alternative.website}`
+            }
+            title={alternative.name}
+          />
 
           <H4 as="h3" className="truncate">
             {alternative.name}
