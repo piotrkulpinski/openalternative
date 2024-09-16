@@ -4,7 +4,6 @@ import { EventSchemas, Inngest } from "inngest"
 type Events = {
   "tool.created": { data: Pick<Tool, "id"> }
   "tool.deleted": { data: Pick<Tool, "slug"> }
-  "tool.published": { data: Pick<Tool, "id"> }
   "alternative.created": { data: Pick<Alternative, "id"> }
   "alternative.deleted": { data: Pick<Alternative, "slug"> }
 }
