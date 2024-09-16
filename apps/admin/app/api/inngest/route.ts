@@ -6,6 +6,8 @@ import { toolCreated } from "~/functions/tool-created"
 import { toolDeleted } from "~/functions/tool-deleted"
 import { inngest } from "~/services/inngest"
 
+export const maxDuration = 60
+
 export const { GET, POST, PUT } = serve({
   client: inngest,
   functions: [fetchToolData, toolCreated, toolDeleted, alternativeCreated, alternativeDeleted],
