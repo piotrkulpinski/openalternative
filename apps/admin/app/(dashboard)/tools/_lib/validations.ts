@@ -44,7 +44,7 @@ export const toolSchema = z.object({
   hostingUrl: z.string().url().optional().or(z.literal("")),
   discountCode: z.string().optional(),
   discountAmount: z.number().optional(),
-  publishedAt: z.date().nullable(),
+  publishedAt: z.date().nullish(),
 })
 
 export type ToolSchema = z.infer<typeof toolSchema>
