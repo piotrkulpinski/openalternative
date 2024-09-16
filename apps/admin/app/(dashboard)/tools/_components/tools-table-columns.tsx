@@ -14,12 +14,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import { siteConfig } from "~/config/site"
 import { formatDate } from "~/utils/helpers"
 import { DeleteToolsDialog } from "./delete-tools-dialog"
+import { PublishToolDialog } from "./publish-tool-dialog"
 
 export function getColumns(): ColumnDef<Tool>[] {
   return [
@@ -92,7 +92,7 @@ export function getColumns(): ColumnDef<Tool>[] {
       id: "actions",
       cell: function Cell({ row }) {
         const [showDeleteToolDialog, setShowDeleteToolDialog] = React.useState(false)
-
+        const [showPublishToolDialog, setShowPublishToolDialog] = React.useState(false)
         return (
           <>
             <DeleteToolsDialog
@@ -101,6 +101,13 @@ export function getColumns(): ColumnDef<Tool>[] {
               tools={[row.original]}
               showTrigger={false}
               onSuccess={() => row.toggleSelected(false)}
+            />
+
+            <PublishToolDialog
+              open={showPublishToolDialog}
+              onOpenChange={setShowPublishToolDialog}
+              tool={row.original}
+              showTrigger={false}
             />
 
             <div className="flex items-center justify-end gap-1.5 -my-0.5">
@@ -119,6 +126,15 @@ export function getColumns(): ColumnDef<Tool>[] {
                   <DropdownMenuItem asChild>
                     <Link href={`/tools/${row.original.id}`}>Edit</Link>
                   </DropdownMenuItem>
+
+                  {!row.original.publishedAt && (
+                    <DropdownMenuItem
+                      onSelect={() => setShowPublishToolDialog(true)}
+                      className="text-green-600 dark:text-green-400"
+                    >
+                      Publish
+                    </DropdownMenuItem>
+                  )}
 
                   {row.original.publishedAt && row.original.publishedAt <= new Date() && (
                     <DropdownMenuItem asChild>
@@ -149,7 +165,6 @@ export function getColumns(): ColumnDef<Tool>[] {
                     className="text-red-500"
                   >
                     Delete
-                    <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

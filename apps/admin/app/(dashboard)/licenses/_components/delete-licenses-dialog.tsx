@@ -16,17 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "~/components/ui/drawer"
-import { useIsMobile } from "~/hooks/use-mobile"
 import { deleteLicenses } from "../_lib/actions"
 
 interface DeleteLicensesDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
@@ -42,7 +31,6 @@ export const DeleteLicensesDialog = ({
   ...props
 }: DeleteLicensesDialogProps) => {
   const [isDeletePending, startDeleteTransition] = React.useTransition()
-  const isMobile = useIsMobile()
 
   const onDelete = () => {
     startDeleteTransition(async () => {
@@ -61,41 +49,31 @@ export const DeleteLicensesDialog = ({
     })
   }
 
-  const DeleteDialog = Object.assign(isMobile ? Drawer : Dialog, {
-    Trigger: isMobile ? DrawerTrigger : DialogTrigger,
-    Content: isMobile ? DrawerContent : DialogContent,
-    Header: isMobile ? DrawerHeader : DialogHeader,
-    Title: isMobile ? DrawerTitle : DialogTitle,
-    Description: isMobile ? DrawerDescription : DialogDescription,
-    Footer: isMobile ? DrawerFooter : DialogFooter,
-    Close: isMobile ? DrawerClose : DialogClose,
-  })
-
   return (
-    <DeleteDialog {...props}>
+    <Dialog {...props}>
       {showTrigger && (
-        <DeleteDialog.Trigger asChild>
+        <DialogTrigger asChild>
           <Button variant="outline" size="sm">
-            <TrashIcon className={isMobile ? "mr-2" : undefined} aria-hidden="true" />
+            <TrashIcon className="max-sm:mr-2" aria-hidden="true" />
             Delete ({licenses.length})
           </Button>
-        </DeleteDialog.Trigger>
+        </DialogTrigger>
       )}
 
-      <DeleteDialog.Content>
-        <DeleteDialog.Header>
-          <DeleteDialog.Title>Are you absolutely sure?</DeleteDialog.Title>
-          <DeleteDialog.Description>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogDescription>
             This action cannot be undone. This will permanently delete your{" "}
             <span className="font-medium">{licenses.length}</span>
             {licenses.length === 1 ? " license" : " licenses"} from our servers.
-          </DeleteDialog.Description>
-        </DeleteDialog.Header>
+          </DialogDescription>
+        </DialogHeader>
 
-        <DeleteDialog.Footer className="gap-2 sm:space-x-0">
-          <DeleteDialog.Close asChild>
+        <DialogFooter>
+          <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
-          </DeleteDialog.Close>
+          </DialogClose>
 
           <Button
             aria-label="Delete selected rows"
@@ -106,8 +84,8 @@ export const DeleteLicensesDialog = ({
           >
             Delete
           </Button>
-        </DeleteDialog.Footer>
-      </DeleteDialog.Content>
-    </DeleteDialog>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }

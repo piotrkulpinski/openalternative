@@ -6,10 +6,8 @@ export const alternativeDeleted = inngest.createFunction(
   { event: "alternative.deleted" },
 
   async ({ event, step }) => {
-    const { slug } = event.data
-
     await step.run("remove-s3-directory", async () => {
-      return removeS3Directory(`alternatives/${slug}`)
+      return removeS3Directory(`alternatives/${event.data.slug}`)
     })
   },
 )

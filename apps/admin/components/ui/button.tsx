@@ -5,7 +5,7 @@ import { Slottable } from "~/components/ui/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const buttonVariants = cva({
-  base: "group/button relative min-w-0 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50",
+  base: "group/button relative shrink-0 min-w-0 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50",
 
   variants: {
     variant: {

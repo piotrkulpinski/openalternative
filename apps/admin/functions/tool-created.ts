@@ -7,18 +7,20 @@ export const toolCreated = inngest.createFunction(
   { event: "tool.created" },
 
   async ({ event, step }) => {
-    const { id, slug, website } = event.data
+    const tool = await step.run("find-tool", async () => {
+      return prisma.tool.findUniqueOrThrow({ where: { id: event.data.id } })
+    })
 
     const [faviconUrl, screenshotUrl] = await step.run("upload-assets", async () => {
       return Promise.all([
-        uploadFavicon(website, `${slug}/favicon`),
-        uploadScreenshot(website, `${slug}/screenshot`),
+        uploadFavicon(tool.website, `${tool.slug}/favicon`),
+        uploadScreenshot(tool.website, `${tool.slug}/screenshot`),
       ])
     })
 
     await step.run("update-tool", async () => {
       return prisma.tool.update({
-        where: { id },
+        where: { id: tool.id },
         data: { faviconUrl, screenshotUrl },
       })
     })

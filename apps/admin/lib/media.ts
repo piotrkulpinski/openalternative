@@ -132,6 +132,5 @@ export const uploadScreenshot = async (url: string, s3Key: string): Promise<stri
 
   const data = (await response.json()) as { store: { location: string } }
 
-  console.log(data)
   return data.store.location
 }
