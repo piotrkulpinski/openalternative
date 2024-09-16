@@ -1,9 +1,4 @@
-import {
-  type HeadersFunction,
-  type LoaderFunctionArgs,
-  type MetaFunction,
-  json,
-} from "@remix-run/node"
+import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { ToolRecord } from "~/components/records/tool-record"
 import { BackButton } from "~/components/ui/back-button"
@@ -14,7 +9,6 @@ import { type LicenseOne, licenseOnePayload, toolOnePayload } from "~/services.s
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { license: LicenseOne }) => {
@@ -37,34 +31,19 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
-  return {
-    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
-  }
-}
-
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
-  const timings = makeTimings("license loader")
-
   try {
     const [license, tools] = await Promise.all([
-      time(
-        () =>
-          prisma.license.findUniqueOrThrow({
-            where: { slug },
-            include: licenseOnePayload,
-          }),
-        { type: "find license", timings },
-      ),
-      time(
-        () =>
-          prisma.tool.findMany({
-            where: { license: { slug }, publishedAt: { lte: new Date() } },
-            include: toolOnePayload,
-            orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
-          }),
-        { type: "find tools", timings },
-      ),
+      prisma.license.findUniqueOrThrow({
+        where: { slug },
+        include: licenseOnePayload,
+      }),
+
+      prisma.tool.findMany({
+        where: { license: { slug }, publishedAt: { lte: new Date() } },
+        include: toolOnePayload,
+        orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
+      }),
     ])
 
     const meta = {
@@ -72,10 +51,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       description: `A curated collection of the ${tools.length} best open source software licensed under ${license.name}. Find the best tools, libraries, and frameworks for your next project.`,
     }
 
-    return json(
-      { meta, license, tools },
-      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
-    )
+    return json({ meta, license, tools }, { headers: { ...JSON_HEADERS } })
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }

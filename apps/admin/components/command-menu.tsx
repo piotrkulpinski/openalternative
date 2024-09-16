@@ -71,6 +71,8 @@ export const CommandMenu = () => {
     setSearchQuery(value)
   }
 
+  const handleImportAlternatives = async () => {}
+
   const handleSelectItem = (item: any, type: string) => {
     handleOpenChange(false)
     router.push(`/${type}/${item.id}`)
@@ -89,6 +91,12 @@ export const CommandMenu = () => {
 
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
+
+        {!searchResults && (
+          <CommandGroup heading="Quick Commands">
+            <CommandItem onSelect={handleImportAlternatives}>Import Alternatives</CommandItem>
+          </CommandGroup>
+        )}
 
         {!!searchResults?.tools.length && (
           <CommandGroup heading="Tools">

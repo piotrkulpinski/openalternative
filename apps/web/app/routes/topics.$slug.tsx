@@ -1,10 +1,5 @@
 import { titleCase } from "@curiousleaf/utils"
-import {
-  type HeadersFunction,
-  type LoaderFunctionArgs,
-  type MetaFunction,
-  json,
-} from "@remix-run/node"
+import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { ToolRecord } from "~/components/records/tool-record"
 import { BackButton } from "~/components/ui/back-button"
@@ -15,7 +10,6 @@ import { type TopicOne, toolManyPayload, topicOnePayload } from "~/services.serv
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { topic: TopicOne }) => {
@@ -38,38 +32,22 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
-  return {
-    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
-  }
-}
-
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
-  const timings = makeTimings("topic loader")
-
   try {
     const [topic, tools] = await Promise.all([
-      time(
-        () =>
-          prisma.topic.findUniqueOrThrow({
-            where: { slug },
-            include: topicOnePayload,
-          }),
-        { type: "find topic", timings },
-      ),
+      prisma.topic.findUniqueOrThrow({
+        where: { slug },
+        include: topicOnePayload,
+      }),
 
-      time(
-        () =>
-          prisma.tool.findMany({
-            where: {
-              topics: { some: { topic: { slug } } },
-              publishedAt: { lte: new Date() },
-            },
-            include: toolManyPayload,
-            orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
-          }),
-        { type: "find tools", timings },
-      ),
+      prisma.tool.findMany({
+        where: {
+          topics: { some: { topic: { slug } } },
+          publishedAt: { lte: new Date() },
+        },
+        include: toolManyPayload,
+        orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
+      }),
     ])
 
     const name = titleCase(topic.slug)
@@ -79,10 +57,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       description: `A curated collection of the ${tools.length} best open source projects tagged "${name}". Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
-    return json(
-      { meta, topic, tools },
-      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
-    )
+    return json({ meta, topic, tools }, { headers: { ...JSON_HEADERS } })
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }

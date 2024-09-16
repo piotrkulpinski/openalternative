@@ -1,9 +1,12 @@
 "use server"
 
 import type { Alternative, Prisma } from "@openalternative/db"
+import { tasks } from "@trigger.dev/sdk/v3"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
+import type { alternativeCreatedTask } from "~/trigger/alternative-created"
+import type { alternativeDeletedTask } from "~/trigger/alternative-deleted"
 
 export async function createAlternative(input: Prisma.AlternativeCreateInput) {
   noStore()
@@ -12,13 +15,19 @@ export async function createAlternative(input: Prisma.AlternativeCreateInput) {
       data: input,
     })
 
+    // Revalidate the alternatives page
     revalidatePath("/alternatives")
+
+    // Trigger the background task
+    await tasks.trigger<typeof alternativeCreatedTask>("alternative-created", alternative)
 
     return {
       data: alternative,
       error: null,
     }
   } catch (err) {
+    console.error(err)
+
     return {
       data: null,
       error: getErrorMessage(err),
@@ -41,6 +50,8 @@ export async function updateAlternative(id: string, input: Prisma.AlternativeUpd
       error: null,
     }
   } catch (err) {
+    console.error(err)
+
     return {
       data: null,
       error: getErrorMessage(err),
@@ -66,6 +77,8 @@ export async function updateAlternatives(input: {
       error: null,
     }
   } catch (err) {
+    console.error(err)
+
     return {
       data: null,
       error: getErrorMessage(err),
@@ -74,61 +87,33 @@ export async function updateAlternatives(input: {
 }
 
 export async function deleteAlternative(input: { id: Alternative["id"] }) {
-  try {
-    await prisma.alternative.delete({
-      where: { id: input.id },
-    })
-
-    revalidatePath("/alternatives")
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
+  await deleteAlternatives({ ids: [input.id] })
 }
 
 export async function deleteAlternatives(input: { ids: Alternative["id"][] }) {
   try {
+    const alternatives = await prisma.alternative.findMany({
+      where: { id: { in: input.ids } },
+    })
+
     await prisma.alternative.deleteMany({
       where: { id: { in: input.ids } },
     })
 
     revalidatePath("/alternatives")
 
+    // Trigger the background task
+    for (const alternative of alternatives) {
+      await tasks.trigger<typeof alternativeDeletedTask>("alternative-deleted", alternative)
+    }
+
     return {
       data: null,
       error: null,
     }
   } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    console.error(err)
 
-export async function getChunkedAlternatives(input: { chunkSize?: number } = {}) {
-  try {
-    const chunkSize = input.chunkSize ?? 1000
-
-    const totalAlternatives = await prisma.alternative.count()
-    const totalChunks = Math.ceil(totalAlternatives / chunkSize)
-
-    let chunkedAlternatives: Alternative[] = []
-
-    for (let i = 0; i < totalChunks; i++) {
-      chunkedAlternatives = await prisma.alternative.findMany({
-        take: chunkSize,
-        skip: i * chunkSize,
-      })
-    }
-
-    return {
-      data: chunkedAlternatives,
-      error: null,
-    }
-  } catch (err) {
     return {
       data: null,
       error: getErrorMessage(err),

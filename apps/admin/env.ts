@@ -20,7 +20,19 @@ export const env = createEnv({
     AUTH_SECRET: z.string().min(1),
     AUTH_GOOGLE_ID: z.string().min(1),
     AUTH_GOOGLE_SECRET: z.string().min(1),
+    ALGOLIA_INDEX_TASK_ID: z.string().min(1),
+    ALGOLIA_ADMIN_API_KEY: z.string().min(1),
+    S3_BUCKET: z.string().min(1),
+    S3_REGION: z.string().min(1),
+    S3_ACCESS_KEY: z.string().min(1),
+    S3_SECRET_ACCESS_KEY: z.string().min(1),
+    GITHUB_TOKEN: z.string().min(1),
+    SCREENSHOTONE_ACCESS_KEY: z.string().min(1),
     PLAUSIBLE_API_KEY: z.string().min(1),
+    TWITTER_API_KEY: z.string().min(1),
+    TWITTER_API_SECRET: z.string().min(1),
+    TWITTER_ACCESS_TOKEN: z.string().min(1),
+    TWITTER_ACCESS_SECRET: z.string().min(1),
   },
 
   /**
@@ -29,6 +41,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_SITE_URL: z.string().url().min(1),
+    NEXT_PUBLIC_ALGOLIA_APP_ID: z.string().min(1),
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().min(1),
     NEXT_PUBLIC_PLAUSIBLE_HOST: z.string().url().min(1),
   },
@@ -40,6 +53,7 @@ export const env = createEnv({
     PORT: process.env.PORT,
     VERCEL_URL: process.env.VERCEL_URL,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+    NEXT_PUBLIC_ALGOLIA_APP_ID: process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_HOST: process.env.NEXT_PUBLIC_PLAUSIBLE_HOST,
   },

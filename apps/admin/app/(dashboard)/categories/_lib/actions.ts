@@ -107,31 +107,3 @@ export async function deleteCategories(input: { ids: Category["id"][] }) {
     }
   }
 }
-
-export async function getChunkedCategories(input: { chunkSize?: number } = {}) {
-  try {
-    const chunkSize = input.chunkSize ?? 1000
-
-    const totalCategories = await prisma.category.count()
-    const totalChunks = Math.ceil(totalCategories / chunkSize)
-
-    let chunkedCategories: Category[] = []
-
-    for (let i = 0; i < totalChunks; i++) {
-      chunkedCategories = await prisma.category.findMany({
-        take: chunkSize,
-        skip: i * chunkSize,
-      })
-    }
-
-    return {
-      data: chunkedCategories,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}

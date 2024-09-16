@@ -1,6 +1,15 @@
-import { remember } from "@epic-web/remember"
-import { PrismaClient } from "@openalternative/db"
+import { PrismaClient } from "@prisma/client"
 
-export const prisma = remember("prisma", () => {
+const prismaClientSingleton = () => {
   return new PrismaClient()
-})
+}
+
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>
+} & typeof global
+
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
+
+export { prisma }
+
+if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma

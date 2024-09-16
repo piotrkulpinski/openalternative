@@ -1,9 +1,4 @@
-import {
-  type HeadersFunction,
-  type LoaderFunctionArgs,
-  type MetaFunction,
-  json,
-} from "@remix-run/node"
+import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { ToolRecord } from "~/components/records/tool-record"
 import { BackButton } from "~/components/ui/back-button"
@@ -14,7 +9,6 @@ import { type LanguageOne, languageOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { language: LanguageOne }) => {
@@ -37,37 +31,21 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
-  return {
-    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
-  }
-}
-
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
-  const timings = makeTimings("language loader")
-
   try {
     const [language, tools] = await Promise.all([
-      time(
-        () =>
-          prisma.language.findUniqueOrThrow({
-            where: { slug },
-            include: languageOnePayload,
-          }),
-        { type: "find language", timings },
-      ),
+      prisma.language.findUniqueOrThrow({
+        where: { slug },
+        include: languageOnePayload,
+      }),
 
-      time(
-        () =>
-          prisma.tool.findMany({
-            where: {
-              languages: { some: { language: { slug } } },
-              publishedAt: { lte: new Date() },
-            },
-            orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
-          }),
-        { type: "find tools", timings },
-      ),
+      prisma.tool.findMany({
+        where: {
+          languages: { some: { language: { slug } } },
+          publishedAt: { lte: new Date() },
+        },
+        orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
+      }),
     ])
 
     const meta = {
@@ -75,10 +53,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       description: `A curated collection of the ${tools.length} best open source software written in ${language.name}. Find the most popular and trending open source projects to learn from, contribute to, or use in your own projects.`,
     }
 
-    return json(
-      { meta, language, tools },
-      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
-    )
+    return json({ meta, language, tools }, { headers: { ...JSON_HEADERS } })
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }
