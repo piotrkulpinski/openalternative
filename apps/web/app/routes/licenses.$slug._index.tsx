@@ -1,11 +1,6 @@
 import { getRandomElement } from "@curiousleaf/utils"
 import type { Prisma } from "@prisma/client"
-import {
-  type HeadersFunction,
-  type LoaderFunctionArgs,
-  type MetaFunction,
-  json,
-} from "@remix-run/node"
+import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { Link, type ShouldRevalidateFunction, useLoaderData } from "@remix-run/react"
 import { MoveRightIcon } from "lucide-react"
 import { ToolRecord } from "~/components/records/tool-record"
@@ -20,7 +15,6 @@ import { type LicenseOne, toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentParams,
@@ -52,52 +46,39 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
-  return {
-    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
-  }
-}
-
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
-  const timings = makeTimings("tool loader")
-
   try {
     const [license, tools] = await Promise.all([
-      time(
-        () =>
-          prisma.license.findUniqueOrThrow({
-            where: { slug },
-          }),
-        { type: "find license", timings },
-      ),
-      time(
-        async () => {
-          const relatedWhereClause = {
-            license: { slug },
-            publishedAt: { lte: new Date() },
-          } satisfies Prisma.ToolWhereInput
+      prisma.license.findUniqueOrThrow({
+        where: { slug },
+      }),
 
-          const take = 3
-          const itemCount = await prisma.tool.count({ where: relatedWhereClause })
-          const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
-          const properties = [
-            "id",
-            "name",
-            "score",
-          ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
-          const orderBy = getRandomElement(properties)
-          const orderDir = getRandomElement(["asc", "desc"] as const)
+      // Get related tools
+      (async () => {
+        const relatedWhereClause = {
+          license: { slug },
+          publishedAt: { lte: new Date() },
+        } satisfies Prisma.ToolWhereInput
 
-          return prisma.tool.findMany({
-            where: relatedWhereClause,
-            include: toolManyPayload,
-            orderBy: { [orderBy]: orderDir },
-            take,
-            skip,
-          })
-        },
-        { type: "find tools", timings },
-      ),
+        const take = 3
+        const itemCount = await prisma.tool.count({ where: relatedWhereClause })
+        const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
+        const properties = [
+          "id",
+          "name",
+          "score",
+        ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
+        const orderBy = getRandomElement(properties)
+        const orderDir = getRandomElement(["asc", "desc"] as const)
+
+        return prisma.tool.findMany({
+          where: relatedWhereClause,
+          include: toolManyPayload,
+          orderBy: { [orderBy]: orderDir },
+          take,
+          skip,
+        })
+      })(),
     ])
 
     const meta = {
@@ -105,10 +86,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       description: license.description,
     }
 
-    return json(
-      { meta, license, tools },
-      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
-    )
+    return json({ meta, license, tools }, { headers: { ...JSON_HEADERS } })
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }

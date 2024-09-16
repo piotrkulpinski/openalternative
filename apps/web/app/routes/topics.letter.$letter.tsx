@@ -1,4 +1,4 @@
-import { type HeadersFunction, type LoaderFunctionArgs, json } from "@remix-run/node"
+import { type LoaderFunctionArgs, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { TopicRecord } from "~/components/records/topic-record"
 import { BackButton } from "~/components/ui/back-button"
@@ -7,7 +7,6 @@ import { Grid } from "~/components/ui/grid"
 import { topicManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { ALPHABET, JSON_HEADERS } from "~/utils/constants"
-import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { letter: string }) => {
@@ -19,32 +18,17 @@ export const handle = {
   },
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
-  return {
-    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
-  }
-}
-
 export const loader = async ({ params: { letter } }: LoaderFunctionArgs) => {
-  const timings = makeTimings("topics loader")
+  const topics = await prisma.topic.findMany({
+    where:
+      letter === "&"
+        ? { NOT: ALPHABET.split("").map(startsWith => ({ slug: { startsWith } })) }
+        : { slug: { startsWith: letter } },
+    orderBy: [{ tools: { _count: "desc" } }, { slug: "asc" }],
+    include: topicManyPayload,
+  })
 
-  const topics = await time(
-    () =>
-      prisma.topic.findMany({
-        where:
-          letter === "&"
-            ? { NOT: ALPHABET.split("").map(startsWith => ({ slug: { startsWith } })) }
-            : { slug: { startsWith: letter } },
-        orderBy: [{ tools: { _count: "desc" } }, { slug: "asc" }],
-        include: topicManyPayload,
-      }),
-    { type: "find topics", timings },
-  )
-
-  return json(
-    { topics, letter },
-    { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
-  )
+  return json({ topics, letter }, { headers: { ...JSON_HEADERS } })
 }
 
 export default function TopicsIndex() {

@@ -22,6 +22,22 @@ export const getSlug = (name: string, options: SlugifyOptions = {}) => {
 }
 
 /**
+ * Strips the subpath from a URL, returning only the protocol and host.
+ *
+ * @param url The URL to be stripped.
+ * @returns The URL with the subpath removed.
+ */
+export const stripURLSubpath = (url: string) => {
+  try {
+    const parsedUrl = new URL(url)
+    return `${parsedUrl.protocol}//${parsedUrl.host}`
+  } catch (error) {
+    // If the URL is invalid, return the original string
+    return url
+  }
+}
+
+/**
  * Stole this from the @radix-ui/primitive
  * @see https://github.com/radix-ui/primitives/blob/main/packages/core/primitive/src/primitive.tsx
  */

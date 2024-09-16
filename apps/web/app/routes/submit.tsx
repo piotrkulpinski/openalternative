@@ -18,7 +18,6 @@ import { Label } from "~/components/ui/forms/label"
 import { Intro } from "~/components/ui/intro"
 import { Prose } from "~/components/ui/prose"
 import { subscribeToBeehiiv } from "~/services.server/beehiiv"
-import { inngest } from "~/services.server/inngest"
 import { prisma } from "~/services.server/prisma"
 import { SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constants"
 import { isRealEmail } from "~/utils/email"
@@ -114,9 +113,6 @@ export const action = async ({ request }: ActionFunctionArgs): Promise<ActionSta
         submitterNote,
       },
     })
-
-    // Send an event to the Inngest pipeline
-    await inngest.send({ name: "tool.created", data: { id: tool.id } })
 
     if (newsletterOptIn) {
       try {

@@ -1,11 +1,6 @@
 import { getRandomElement } from "@curiousleaf/utils"
 import type { Prisma } from "@prisma/client"
-import {
-  type HeadersFunction,
-  type LoaderFunctionArgs,
-  type MetaFunction,
-  json,
-} from "@remix-run/node"
+import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import {
   type ShouldRevalidateFunction,
   unstable_useViewTransitionState,
@@ -44,7 +39,6 @@ import { HOSTING_SPONSOR, JSON_HEADERS, SITE_URL } from "~/utils/constants"
 import { joinAsSentence } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
-import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentParams,
@@ -97,104 +91,73 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
-  return {
-    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
-  }
-}
-
 export const loader = async ({ request, params: { slug } }: LoaderFunctionArgs) => {
-  const timings = makeTimings("tool loader")
   let suffix = ""
 
   try {
     const [tool, alternatives, categories, languages, topics, relatedTools, visitLabelFlag] =
       await Promise.all([
-        time(
-          () =>
-            prisma.tool.findUniqueOrThrow({
-              where: { slug },
-              include: toolOnePayload,
-            }),
-          { type: "find tool", timings },
-        ),
+        prisma.tool.findUniqueOrThrow({
+          where: { slug },
+          include: toolOnePayload,
+        }),
 
-        time(
-          () =>
-            prisma.alternativeToTool.findMany({
-              where: { tool: { slug } },
-              orderBy: [
-                { alternative: { tools: { _count: "desc" } } },
-                { alternative: { name: "asc" } },
-              ],
-              include: { alternative: { include: alternativeManyPayload } },
-            }),
-          { type: "find alternatives", timings },
-        ),
+        prisma.alternativeToTool.findMany({
+          where: { tool: { slug } },
+          orderBy: [
+            { alternative: { tools: { _count: "desc" } } },
+            { alternative: { name: "asc" } },
+          ],
+          include: { alternative: { include: alternativeManyPayload } },
+        }),
 
-        time(
-          () =>
-            prisma.categoryToTools.findMany({
-              where: { tool: { slug } },
-              orderBy: [{ category: { tools: { _count: "desc" } } }, { category: { name: "asc" } }],
-              include: { category: { include: categoryManyPayload } },
-            }),
-          { type: "find categories", timings },
-        ),
+        prisma.categoryToTools.findMany({
+          where: { tool: { slug } },
+          orderBy: [{ category: { tools: { _count: "desc" } } }, { category: { name: "asc" } }],
+          include: { category: { include: categoryManyPayload } },
+        }),
 
-        time(
-          () =>
-            prisma.languageToTool.findMany({
-              where: { tool: { slug } },
-              orderBy: [{ language: { tools: { _count: "desc" } } }, { language: { name: "asc" } }],
-              include: { language: { include: languageManyPayload } },
-            }),
-          { type: "find languages", timings },
-        ),
+        prisma.languageToTool.findMany({
+          where: { tool: { slug } },
+          orderBy: [{ language: { tools: { _count: "desc" } } }, { language: { name: "asc" } }],
+          include: { language: { include: languageManyPayload } },
+        }),
 
-        time(
-          () =>
-            prisma.topicToTool.findMany({
-              where: { tool: { slug } },
-              orderBy: [{ topic: { tools: { _count: "desc" } } }, { topic: { slug: "asc" } }],
-              include: { topic: { include: topicManyPayload } },
-            }),
-          { type: "find topics", timings },
-        ),
+        prisma.topicToTool.findMany({
+          where: { tool: { slug } },
+          orderBy: [{ topic: { tools: { _count: "desc" } } }, { topic: { slug: "asc" } }],
+          include: { topic: { include: topicManyPayload } },
+        }),
 
-        time(
-          async () => {
-            const relatedWhereClause = {
-              AND: [
-                { publishedAt: { lte: new Date() } },
-                { slug: { not: slug } },
-                {
-                  alternatives: { some: { alternative: { tools: { some: { tool: { slug } } } } } },
-                },
-              ],
-            } satisfies Prisma.ToolWhereInput
+        // Get related tools
+        (async () => {
+          const relatedWhereClause = {
+            AND: [
+              { publishedAt: { lte: new Date() } },
+              { slug: { not: slug } },
+              { alternatives: { some: { alternative: { tools: { some: { tool: { slug } } } } } } },
+            ],
+          } satisfies Prisma.ToolWhereInput
 
-            const take = 3
-            const itemCount = await prisma.tool.count({ where: relatedWhereClause })
-            const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
-            const properties = [
-              "id",
-              "name",
-              "score",
-            ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
-            const orderBy = getRandomElement(properties)
-            const orderDir = getRandomElement(["asc", "desc"] as const)
+          const take = 3
+          const itemCount = await prisma.tool.count({ where: relatedWhereClause })
+          const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
+          const properties = [
+            "id",
+            "name",
+            "score",
+          ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
+          const orderBy = getRandomElement(properties)
+          const orderDir = getRandomElement(["asc", "desc"] as const)
 
-            return prisma.tool.findMany({
-              where: relatedWhereClause,
-              include: toolManyPayload,
-              orderBy: { [orderBy]: orderDir },
-              take,
-              skip,
-            })
-          },
-          { type: "find related tools", timings },
-        ),
+          return prisma.tool.findMany({
+            where: relatedWhereClause,
+            include: toolManyPayload,
+            orderBy: { [orderBy]: orderDir },
+            take,
+            skip,
+          })
+        })(),
 
         // Get newsletter test value
         getPostHogFlagValue(request, "visit-label"),
@@ -217,7 +180,7 @@ export const loader = async ({ request, params: { slug } }: LoaderFunctionArgs) 
 
     return json(
       { meta, tool, alternatives, categories, languages, topics, relatedTools, visitLabelFlag },
-      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
+      { headers: { ...JSON_HEADERS } },
     )
   } catch (error) {
     console.error(error)

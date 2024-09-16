@@ -54,7 +54,7 @@ export function DataTablePagination<TData>({
         </Select>
       </div>
 
-      <div className="text-sm font-medium">
+      <div className="text-sm font-medium max-sm:hidden">
         Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </div>
 

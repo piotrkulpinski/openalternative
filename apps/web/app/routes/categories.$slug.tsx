@@ -1,9 +1,4 @@
-import {
-  type HeadersFunction,
-  type LoaderFunctionArgs,
-  type MetaFunction,
-  json,
-} from "@remix-run/node"
+import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { ToolRecord } from "~/components/records/tool-record"
 import { BackButton } from "~/components/ui/back-button"
@@ -14,7 +9,6 @@ import { type CategoryOne, categoryOnePayload, toolManyPayload } from "~/service
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import { combineServerTimings, makeTimings, time } from "~/utils/timing.server"
 
 export const handle = {
   breadcrumb: (data?: { category: CategoryOne }) => {
@@ -37,38 +31,22 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
-  return {
-    "Server-Timing": combineServerTimings(parentHeaders, loaderHeaders),
-  }
-}
-
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
-  const timings = makeTimings("category loader")
-
   try {
     const [category, tools] = await Promise.all([
-      time(
-        () =>
-          prisma.category.findUniqueOrThrow({
-            where: { slug },
-            include: categoryOnePayload,
-          }),
-        { type: "find category", timings },
-      ),
+      prisma.category.findUniqueOrThrow({
+        where: { slug },
+        include: categoryOnePayload,
+      }),
 
-      time(
-        () =>
-          prisma.tool.findMany({
-            where: {
-              categories: { some: { category: { slug } } },
-              publishedAt: { lte: new Date() },
-            },
-            include: toolManyPayload,
-            orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
-          }),
-        { type: "find tools", timings },
-      ),
+      prisma.tool.findMany({
+        where: {
+          categories: { some: { category: { slug } } },
+          publishedAt: { lte: new Date() },
+        },
+        include: toolManyPayload,
+        orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
+      }),
     ])
 
     const name = category.label || `${category.name} Tools`
@@ -78,10 +56,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       description: `A curated collection of the ${tools.length} best open source ${name} for inspiration and reference. Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
-    return json(
-      { meta, category, tools },
-      { headers: { "Server-Timing": timings.toString(), ...JSON_HEADERS } },
-    )
+    return json({ meta, category, tools }, { headers: { ...JSON_HEADERS } })
   } catch {
     throw json(null, { status: 404, statusText: "Not Found" })
   }

@@ -1,9 +1,12 @@
 "use server"
 
 import type { Prisma, Tool } from "@openalternative/db"
+import { tasks } from "@trigger.dev/sdk/v3"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
+import type { toolCreatedTask } from "~/trigger/tool-created"
+import type { toolDeletedTask } from "~/trigger/tool-deleted"
 
 export async function createTool(input: Prisma.ToolCreateInput) {
   noStore()
@@ -13,6 +16,9 @@ export async function createTool(input: Prisma.ToolCreateInput) {
     })
 
     revalidatePath("/tools")
+
+    // Trigger the background task
+    await tasks.trigger<typeof toolCreatedTask>("tool-created", tool)
 
     return {
       data: tool,
@@ -71,58 +77,28 @@ export async function updateTools(input: { ids: Tool["id"][]; data: Prisma.ToolU
 }
 
 export async function deleteTool(input: { id: Tool["id"] }) {
-  try {
-    await prisma.tool.delete({
-      where: { id: input.id },
-    })
-
-    revalidatePath("/tools")
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
+  await deleteTools({ ids: [input.id] })
 }
 
 export async function deleteTools(input: { ids: Tool["id"][] }) {
   try {
+    const tools = await prisma.tool.findMany({
+      where: { id: { in: input.ids } },
+    })
+
     await prisma.tool.deleteMany({
       where: { id: { in: input.ids } },
     })
 
     revalidatePath("/tools")
 
+    // Trigger the background task
+    for (const tool of tools) {
+      await tasks.trigger<typeof toolDeletedTask>("tool-deleted", tool)
+    }
+
     return {
       data: null,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
-
-export async function getChunkedTools(input: { chunkSize?: number } = {}) {
-  try {
-    const chunkSize = input.chunkSize ?? 1000
-
-    const totalTools = await prisma.tool.count()
-    const totalChunks = Math.ceil(totalTools / chunkSize)
-
-    let chunkedTools: Tool[] = []
-
-    for (let i = 0; i < totalChunks; i++) {
-      chunkedTools = await prisma.tool.findMany({
-        take: chunkSize,
-        skip: i * chunkSize,
-      })
-    }
-
-    return {
-      data: chunkedTools,
       error: null,
     }
   } catch (err) {

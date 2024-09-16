@@ -107,31 +107,3 @@ export async function deleteLicenses(input: { ids: License["id"][] }) {
     }
   }
 }
-
-export async function getChunkedLicenses(input: { chunkSize?: number } = {}) {
-  try {
-    const chunkSize = input.chunkSize ?? 1000
-
-    const totalLicenses = await prisma.license.count()
-    const totalChunks = Math.ceil(totalLicenses / chunkSize)
-
-    let chunkedLicenses: License[] = []
-
-    for (let i = 0; i < totalChunks; i++) {
-      chunkedLicenses = await prisma.license.findMany({
-        take: chunkSize,
-        skip: i * chunkSize,
-      })
-    }
-
-    return {
-      data: chunkedLicenses,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}

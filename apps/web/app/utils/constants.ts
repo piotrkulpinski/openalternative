@@ -8,10 +8,10 @@ export const SITE_DESCRIPTION =
   "OpenAlternative is a community-driven list of open source alternatives to proprietary software and applications. Discover the best tools for your needs."
 
 export const SITE_STATS = {
-  visitors: 50000,
+  visitors: 40000,
   tools: 260,
-  subscribers: 1300,
-  stars: 1500,
+  subscribers: 1400,
+  stars: 1600,
 }
 
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz"
@@ -39,8 +39,6 @@ export const DAY_IN_MS = 1000 * 60 * 60 * 24
 
 export const SPONSORING_PRICE = 15
 export const SPONSORING_PREMIUM_TRESHOLD = 30
-
-export const STAR_MILESTONES = [100, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000]
 
 export const HOSTING_SPONSOR: SponsoringOne = {
   name: "Easypanel",
