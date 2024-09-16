@@ -1,12 +1,10 @@
 "use server"
 
 import type { Alternative, Prisma } from "@openalternative/db"
-import { tasks } from "@trigger.dev/sdk/v3"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
-import type { alternativeCreatedTask } from "~/trigger/alternative-created"
-import type { alternativeDeletedTask } from "~/trigger/alternative-deleted"
+import { inngest } from "~/services/inngest"
 
 export async function createAlternative(input: Prisma.AlternativeCreateInput) {
   noStore()
@@ -18,8 +16,8 @@ export async function createAlternative(input: Prisma.AlternativeCreateInput) {
     // Revalidate the alternatives page
     revalidatePath("/alternatives")
 
-    // Trigger the background task
-    await tasks.trigger<typeof alternativeCreatedTask>("alternative-created", alternative)
+    // Send an event to the Inngest pipeline
+    await inngest.send({ name: "alternative.created", data: alternative })
 
     return {
       data: alternative,
@@ -102,9 +100,9 @@ export async function deleteAlternatives(input: { ids: Alternative["id"][] }) {
 
     revalidatePath("/alternatives")
 
-    // Trigger the background task
+    // Send an event to the Inngest pipeline
     for (const alternative of alternatives) {
-      await tasks.trigger<typeof alternativeDeletedTask>("alternative-deleted", alternative)
+      await inngest.send({ name: "alternative.deleted", data: alternative })
     }
 
     return {

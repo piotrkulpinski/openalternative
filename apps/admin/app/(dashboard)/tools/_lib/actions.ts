@@ -1,12 +1,10 @@
 "use server"
 
 import type { Prisma, Tool } from "@openalternative/db"
-import { tasks } from "@trigger.dev/sdk/v3"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
-import type { toolCreatedTask } from "~/trigger/tool-created"
-import type { toolDeletedTask } from "~/trigger/tool-deleted"
+import { inngest } from "~/services/inngest"
 
 export async function createTool(input: Prisma.ToolCreateInput) {
   noStore()
@@ -17,8 +15,8 @@ export async function createTool(input: Prisma.ToolCreateInput) {
 
     revalidatePath("/tools")
 
-    // Trigger the background task
-    await tasks.trigger<typeof toolCreatedTask>("tool-created", tool)
+    // Send an event to the Inngest pipeline
+    await inngest.send({ name: "tool.created", data: tool })
 
     return {
       data: tool,
@@ -92,9 +90,9 @@ export async function deleteTools(input: { ids: Tool["id"][] }) {
 
     revalidatePath("/tools")
 
-    // Trigger the background task
+    // Send an event to the Inngest pipeline
     for (const tool of tools) {
-      await tasks.trigger<typeof toolDeletedTask>("tool-deleted", tool)
+      await inngest.send({ name: "tool.deleted", data: tool })
     }
 
     return {

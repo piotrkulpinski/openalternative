@@ -1,4 +1,3 @@
-import type { Tool } from "@openalternative/db"
 import { siteConfig } from "~/config/site"
 import { twitterClient } from "~/services/twitter"
 
@@ -18,21 +17,22 @@ export const getMilestoneReached = (prevStars: number, newStars: number) => {
 
 /**
  * Send a tweet congratulating a tool for reaching a milestone
- * @param tool - The tool that reached the milestone
- * @param stars - The current number of stars for the tool
+ * @param milestone - The milestone reached
+ * @param name - The name of the tool
+ * @param slug - The slug of the tool
  */
-export const sendMilestoneTweet = async (milestone: number, tool: Tool) => {
-  const tweet = `🎉 ${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub!
+export const sendMilestoneTweet = async (milestone: number, name: string, slug: string) => {
+  const tweet = `🎉 ${name} has just reached ${milestone.toLocaleString()} stars on GitHub!
 Huge congrats to the team!
 
-Check it out on OpenAlternative: ${siteConfig.url}/${tool.slug}
+Check it out on OpenAlternative: ${siteConfig.url}/${slug}
 
 #opensource #openalternative #github #software`
 
   try {
     await twitterClient.tweet(tweet)
-    console.log(`Tweet sent for ${tool.name}`)
+    console.log(`Tweet sent for ${name}`)
   } catch (error) {
-    console.error(`Error sending tweet for ${tool.name}:`, error)
+    console.error(`Error sending tweet for ${name}:`, error)
   }
 }
