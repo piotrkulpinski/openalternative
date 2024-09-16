@@ -7,7 +7,8 @@
     "dev": "next dev -p 5174 --turbo",
     "start": "next start -p 5174",
     "build": "next build",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy:trigger": "npx trigger.dev@3.0.0-beta.56 deploy"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.50",
