@@ -27,7 +27,8 @@ export const fetchToolData = inngest.createFunction(
           const milestone = getMilestoneReached(tool.stars, updatedTool.stars)
 
           if (milestone) {
-            await sendMilestoneTweet(milestone, tool.name, tool.slug)
+            const tweetName = tool.twitterHandle ? `@${tool.twitterHandle}` : tool.name
+            await sendMilestoneTweet(milestone, tweetName, tool.slug)
           }
 
           return prisma.tool.update({
@@ -36,14 +37,6 @@ export const fetchToolData = inngest.createFunction(
           })
         }),
       )
-    })
-
-    // Run cleanup
-    await step.run("cleanup", async () => {
-      return Promise.all([
-        prisma.language.deleteMany({ where: { tools: { none: {} } } }),
-        prisma.topic.deleteMany({ where: { tools: { none: {} } } }),
-      ])
     })
 
     // Start Algolia index
