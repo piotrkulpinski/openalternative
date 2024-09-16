@@ -100,16 +100,12 @@ export function Layout({ children }: PropsWithChildren) {
         <Meta />
         <Links />
 
-        {process.env.NODE_ENV === "production" && (
-          <>
-            {/* Plausible */}
-            <script
-              defer
-              data-domain={import.meta.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-              src={`${import.meta.env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
-            />
-          </>
-        )}
+        {/* Plausible */}
+        <script
+          defer
+          data-domain={import.meta.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+          src={`${import.meta.env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
+        />
       </head>
 
       <body className="bg-background text-foreground font-sans">
