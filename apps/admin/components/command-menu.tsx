@@ -3,6 +3,8 @@
 import type { Alternative, Category, License, Tool } from "@openalternative/db"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
+import { indexSearch } from "~/actions"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -71,6 +73,11 @@ export const CommandMenu = () => {
     setSearchQuery(value)
   }
 
+  const handleIndexSearch = async () => {
+    await indexSearch()
+    toast.success("Search index updated")
+  }
+
   const handleImportAlternatives = async () => {}
 
   const handleSelectItem = (item: any, type: string) => {
@@ -95,13 +102,18 @@ export const CommandMenu = () => {
         {!searchResults && (
           <CommandGroup heading="Quick Commands">
             <CommandItem onSelect={handleImportAlternatives}>Import Alternatives</CommandItem>
+            <CommandItem onSelect={handleIndexSearch}>Index Search</CommandItem>
           </CommandGroup>
         )}
 
         {!!searchResults?.tools.length && (
           <CommandGroup heading="Tools">
             {searchResults.tools.map(tool => (
-              <CommandItem key={tool.id} onSelect={() => handleSelectItem(tool, "tools")}>
+              <CommandItem
+                key={tool.id}
+                value={`tool:${tool.name}`}
+                onSelect={() => handleSelectItem(tool, "tools")}
+              >
                 {tool.name}
               </CommandItem>
             ))}
@@ -113,6 +125,7 @@ export const CommandMenu = () => {
             {searchResults.alternatives.map(alternative => (
               <CommandItem
                 key={alternative.id}
+                value={`alternative:${alternative.name}`}
                 onSelect={() => handleSelectItem(alternative, "alternatives")}
               >
                 {alternative.name}

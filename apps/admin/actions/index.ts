@@ -1,8 +1,10 @@
+"use server"
+
 import { env } from "~/env"
 import { algoliaClient } from "~/services/algolia"
 import { prisma } from "~/services/prisma"
 
-export const indexAlgoliaSearch = async () => {
+export const indexSearch = async () => {
   const tools = await prisma.tool
     .findMany({
       where: { publishedAt: { lte: new Date() } },
