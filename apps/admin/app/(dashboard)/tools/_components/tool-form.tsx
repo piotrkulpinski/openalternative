@@ -2,11 +2,12 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { formatDate } from "date-fns"
+import { PlusIcon, TrashIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import React from "react"
-import { useForm } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { createTool, updateTool } from "~/app/(dashboard)/tools/_lib/actions"
 import type {
@@ -51,6 +52,15 @@ export function ToolForm({
   const form = useForm<ToolSchema>({
     resolver: zodResolver(toolSchema),
     defaultValues: nullsToUndefined(tool),
+  })
+
+  const {
+    fields: linkFields,
+    append: appendLink,
+    remove: removeLink,
+  } = useFieldArray({
+    control: form.control,
+    name: "links",
   })
 
   const [selectedAlternatives, setSelectedAlternatives] = React.useState<string[]>(
@@ -376,6 +386,62 @@ export function ToolForm({
                 />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="links"
+          render={() => (
+            <FormItem className="col-span-full">
+              <FormLabel>Links</FormLabel>
+              <div className="space-y-2">
+                {linkFields.map((field, index) => (
+                  <div key={field.id} className="flex flex-wrap items-center gap-2 md:gap-4">
+                    <FormField
+                      control={form.control}
+                      name={`links.${index}.name`}
+                      render={({ field }) => (
+                        <FormItem className="flex-grow">
+                          <FormControl>
+                            <Input placeholder="Name" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`links.${index}.url`}
+                      render={({ field }) => (
+                        <FormItem className="flex-grow">
+                          <FormControl>
+                            <Input placeholder="URL" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      onClick={() => removeLink(index)}
+                    >
+                      <TrashIcon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  prefix={<PlusIcon />}
+                  onClick={() => appendLink({ name: "", url: "" })}
+                >
+                  Add Link
+                </Button>
+              </div>
             </FormItem>
           )}
         />
