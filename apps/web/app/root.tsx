@@ -62,8 +62,15 @@ export const meta: MetaFunction = ({ location }) => {
       tagName: "link",
       rel: "alternate",
       type: "application/rss+xml",
-      title: `${SITE_NAME} RSS Feed`,
+      title: `${SITE_NAME} &raquo; Feed`,
       href: `${SITE_URL}/rss.xml`,
+    },
+    {
+      tagName: "link",
+      rel: "alternate",
+      type: "application/rss+xml",
+      title: `${SITE_NAME} &raquo; Alternatives Feed`,
+      href: `${SITE_URL}/alternatives/rss.xml`,
     },
   ]
 }
