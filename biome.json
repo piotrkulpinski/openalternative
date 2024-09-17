@@ -46,6 +46,7 @@
         "noDangerouslySetInnerHtml": "off"
       },
       "a11y": {
+        "noLabelWithoutControl": "off",
         "useAnchorContent": "off",
         "useValidAnchor": "off",
         "useAltText": "off"

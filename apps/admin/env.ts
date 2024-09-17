@@ -33,6 +33,7 @@ export const env = createEnv({
     TWITTER_ACCESS_TOKEN: z.string().min(1),
     TWITTER_ACCESS_SECRET: z.string().min(1),
     OPENAI_API_KEY: z.string().min(1),
+    ANTHROPIC_API_KEY: z.string().min(1),
     FIRECRAWL_API_KEY: z.string().min(1),
   },
 
