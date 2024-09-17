@@ -27,9 +27,7 @@ export const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) =
 
         <CardTitle className="text-3xl tabular-nums">
           {totalVisitors.toLocaleString()}{" "}
-          <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
-            visitors
-          </span>
+          <span className="font-sans text-sm font-normal text-muted-foreground">visitors</span>
         </CardTitle>
       </CardHeader>
 

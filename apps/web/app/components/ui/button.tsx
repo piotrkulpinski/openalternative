@@ -7,7 +7,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const buttonVariants = cva({
   base: [
-    "group/button relative inline-flex items-center justify-center border font-medium -tracking-micro rounded-md hover:z-10",
+    "group/button relative inline-flex items-center justify-center border font-medium rounded-md hover:z-10",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 

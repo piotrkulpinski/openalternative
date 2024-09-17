@@ -20,7 +20,7 @@ export const CardBase = forwardRef<HTMLDivElement, CardProps>(({ ...props }, ref
     <Component
       ref={ref}
       className={cx(
-        "fade-in relative flex flex-col items-start gap-4 w-full border bg-card p-5 overflow-clip rounded-md",
+        "fade-in relative flex flex-col items-start gap-4 w-full border bg-card p-5 overflow-clip rounded-lg",
         "hover:[&[href]]:bg-card-dark hover:[&[href]]:border-border-dark",
         className,
       )}
@@ -49,7 +49,7 @@ export const CardFooter = ({ className, ...props }: HTMLAttributes<HTMLElement>)
 export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <p
-      className={cx("-tracking-0.5 line-clamp-2 text-sm/normal text-secondary", className)}
+      className={cx("line-clamp-2 text-sm/normal text-secondary text-pretty", className)}
       {...props}
     />
   )
