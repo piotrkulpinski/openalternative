@@ -78,8 +78,6 @@ export const CommandMenu = () => {
     toast.success("Search index updated")
   }
 
-  const handleImportAlternatives = async () => {}
-
   const handleSelectItem = (item: any, type: string) => {
     handleOpenChange(false)
     router.push(`/${type}/${item.id}`)
@@ -101,7 +99,6 @@ export const CommandMenu = () => {
 
         {!searchResults && (
           <CommandGroup heading="Quick Commands">
-            <CommandItem onSelect={handleImportAlternatives}>Import Alternatives</CommandItem>
             <CommandItem onSelect={handleIndexSearch}>Index Search</CommandItem>
           </CommandGroup>
         )}
