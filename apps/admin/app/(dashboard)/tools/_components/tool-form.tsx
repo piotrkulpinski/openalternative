@@ -287,10 +287,24 @@ export function ToolForm({
           control={form.control}
           name="submitterNote"
           render={({ field }) => (
-            <FormItem className="col-span-full">
+            <FormItem>
               <FormLabel>Submitter Note</FormLabel>
               <FormControl>
-                <Textarea {...field} />
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="twitterHandle"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Twitter Handle</FormLabel>
+              <FormControl>
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

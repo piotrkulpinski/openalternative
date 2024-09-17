@@ -6,6 +6,8 @@ import { EllipsisIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import * as React from "react"
+import { toast } from "sonner"
+import { reuploadAlternativeAssets } from "~/actions/assets"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { Button } from "~/components/ui/button"
 import { Checkbox } from "~/components/ui/checkbox"
@@ -21,6 +23,11 @@ import { formatDate } from "~/utils/helpers"
 import { DeleteAlternativesDialog } from "./delete-alternatives-dialog"
 
 export function getColumns(): ColumnDef<Alternative>[] {
+  const handleReuploadAssets = async (tool: Alternative) => {
+    await reuploadAlternativeAssets(tool)
+    toast.success("Alternative assets reuploaded")
+  }
+
   return [
     {
       id: "select",
@@ -128,7 +135,12 @@ export function getColumns(): ColumnDef<Alternative>[] {
                     </Link>
                   </DropdownMenuItem>
 
+                  <DropdownMenuItem onSelect={() => handleReuploadAssets(row.original)}>
+                    Reupload Assets
+                  </DropdownMenuItem>
+
                   <DropdownMenuSeparator />
+
                   <DropdownMenuItem asChild>
                     <Link href={row.original.website} target="_blank">
                       Visit website

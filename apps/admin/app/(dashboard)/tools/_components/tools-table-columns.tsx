@@ -6,6 +6,8 @@ import { EllipsisIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import * as React from "react"
+import { toast } from "sonner"
+import { reuploadToolAssets } from "~/actions/assets"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { Button } from "~/components/ui/button"
 import { Checkbox } from "~/components/ui/checkbox"
@@ -22,6 +24,11 @@ import { DeleteToolsDialog } from "./delete-tools-dialog"
 import { PublishToolDialog } from "./publish-tool-dialog"
 
 export function getColumns(): ColumnDef<Tool>[] {
+  const handleReuploadAssets = async (tool: Tool) => {
+    await reuploadToolAssets(tool)
+    toast.success("Tool assets reuploaded")
+  }
+
   return [
     {
       id: "select",
@@ -143,6 +150,10 @@ export function getColumns(): ColumnDef<Tool>[] {
                       </Link>
                     </DropdownMenuItem>
                   )}
+
+                  <DropdownMenuItem onSelect={() => handleReuploadAssets(row.original)}>
+                    Reupload Assets
+                  </DropdownMenuItem>
 
                   <DropdownMenuSeparator />
 
