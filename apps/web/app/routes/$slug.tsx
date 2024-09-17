@@ -21,6 +21,7 @@ import { Grid } from "~/components/ui/grid"
 import { H1, H4, H5 } from "~/components/ui/heading"
 import { Markdown } from "~/components/ui/markdown"
 import { Prose } from "~/components/ui/prose"
+import { Section } from "~/components/ui/section"
 import { ShareButtons } from "~/components/ui/share-buttons"
 import { Stack } from "~/components/ui/stack"
 import { Tag } from "~/components/ui/tag"
@@ -204,8 +205,8 @@ export default function ToolsPage() {
       className="flex flex-col gap-12"
       style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }}
     >
-      <div className="grid items-start gap-5 md:grid-cols-3">
-        <div className="flex flex-1 flex-wrap items-start gap-10 md:col-span-2 md:gap-12">
+      <Section>
+        <Section.Content>
           <div className="flex flex-1 flex-col items-start gap-4 md:gap-6">
             <div className="flex w-full flex-col items-start gap-y-4">
               <Stack className="w-full">
@@ -297,7 +298,9 @@ export default function ToolsPage() {
               />
             )}
 
-            <ToolSidebar tool={tool} languages={languages} className="md:hidden" />
+            <Section.Sidebar className="md:hidden">
+              <ToolSidebar tool={tool} languages={languages} />
+            </Section.Sidebar>
           </div>
 
           {tool.content && (
@@ -365,10 +368,12 @@ export default function ToolsPage() {
           )}
 
           <ShareButtons title={meta.title} />
-        </div>
+        </Section.Content>
 
-        <ToolSidebar tool={tool} languages={languages} className="sticky top-16 max-md:hidden" />
-      </div>
+        <Section.Sidebar className="max-md:hidden">
+          <ToolSidebar tool={tool} languages={languages} />
+        </Section.Sidebar>
+      </Section>
 
       {/* Alternatives */}
       {!!alternatives.length && (

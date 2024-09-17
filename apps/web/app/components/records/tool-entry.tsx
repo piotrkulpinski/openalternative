@@ -70,7 +70,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       </div>
 
       {tool.screenshotUrl && (
-        <Link to={to} prefetch="intent" unstable_viewTransition>
+        <Link to={to} prefetch="intent" className="group" unstable_viewTransition>
           <img
             key={tool.screenshotUrl}
             src={tool.screenshotUrl}
@@ -78,7 +78,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
             width={1280}
             height={1024}
             loading="eager"
-            className="aspect-video h-auto w-full rounded-md border object-cover object-top"
+            className="aspect-video h-auto w-full rounded-md border object-cover object-top group-hover:brightness-95"
             style={{ viewTransitionName: vt ? `tool-${tool.id}-screenshot` : undefined }}
           />
         </Link>
