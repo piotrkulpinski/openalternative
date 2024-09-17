@@ -14,9 +14,9 @@ export const getToolsSchema = searchParamsSchema
 
 export type GetToolsSchema = z.infer<typeof getToolsSchema>
 
-const linkSchema = z.object({
-  name: z.string(),
-  url: z.string().url(),
+export const linkSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  url: z.string().url("Must be a valid URL"),
 })
 
 export const toolSchema = z.object({
