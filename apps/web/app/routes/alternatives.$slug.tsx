@@ -55,7 +55,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       prisma.alternative.findMany({
         where: {
           slug: { in: FEATURED_ALTERNATIVES.filter(a => a !== slug) },
-          NOT: { tools: { none: {} } },
+          NOT: { tools: { none: { tool: { publishedAt: { lte: new Date() } } } } },
         },
         include: alternativeManyPayload,
         take: 6,
