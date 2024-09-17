@@ -5,18 +5,20 @@ import {
   type TypedResponse,
   json,
 } from "@remix-run/node"
-import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
+import { Form, Link, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
 import slugify from "@sindresorhus/slugify"
 import { ArrowBigUpDashIcon } from "lucide-react"
 import { z } from "zod"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Button } from "~/components/ui/button"
+import { Card } from "~/components/ui/card"
 import { Checkbox } from "~/components/ui/forms/checkbox"
 import { ErrorMessage } from "~/components/ui/forms/error-message"
 import { Input } from "~/components/ui/forms/input"
 import { Label } from "~/components/ui/forms/label"
 import { Intro } from "~/components/ui/intro"
 import { Prose } from "~/components/ui/prose"
+import { Section } from "~/components/ui/section"
 import { subscribeToBeehiiv } from "~/services.server/beehiiv"
 import { prisma } from "~/services.server/prisma"
 import { SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constants"
@@ -164,166 +166,185 @@ export default function SubmitPage() {
     <>
       <Intro {...meta} />
 
-      {data?.type !== "success" && (
-        <>
-          <Form method="POST" className="grid-auto-fill-sm grid gap-6 w-full max-w-2xl" noValidate>
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="submitterName" isRequired>
-                Your Name:
-              </Label>
+      <Section>
+        {data?.type !== "success" && (
+          <>
+            <Section.Content>
+              <Form
+                method="POST"
+                className="grid-auto-fill-sm grid gap-6 w-full max-w-2xl"
+                noValidate
+              >
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="submitterName" isRequired>
+                    Your Name:
+                  </Label>
 
-              <Input
-                type="text"
-                name="submitterName"
-                id="submitterName"
-                size="lg"
-                placeholder="John Doe"
-                data-1p-ignore
-                required
-              />
+                  <Input
+                    type="text"
+                    name="submitterName"
+                    id="submitterName"
+                    size="lg"
+                    placeholder="John Doe"
+                    data-1p-ignore
+                    required
+                  />
 
-              <ErrorMessage errors={data?.error.fieldErrors.submitterName} />
-            </div>
+                  <ErrorMessage errors={data?.error.fieldErrors.submitterName} />
+                </div>
 
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="submitterEmail" isRequired>
-                Your Email:
-              </Label>
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="submitterEmail" isRequired>
+                    Your Email:
+                  </Label>
 
-              <Input
-                type="url"
-                name="submitterEmail"
-                id="submitterEmail"
-                size="lg"
-                placeholder="john@doe.com"
-                required
-              />
+                  <Input
+                    type="url"
+                    name="submitterEmail"
+                    id="submitterEmail"
+                    size="lg"
+                    placeholder="john@doe.com"
+                    required
+                  />
 
-              <ErrorMessage errors={data?.error.fieldErrors.submitterEmail} />
-            </div>
+                  <ErrorMessage errors={data?.error.fieldErrors.submitterEmail} />
+                </div>
 
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="name" isRequired>
-                Name:
-              </Label>
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="name" isRequired>
+                    Name:
+                  </Label>
 
-              <Input
-                type="text"
-                name="name"
-                id="name"
-                size="lg"
-                placeholder="PostHog"
-                data-1p-ignore
-                required
-              />
-              <ErrorMessage errors={data?.error.fieldErrors.name} />
-            </div>
+                  <Input
+                    type="text"
+                    name="name"
+                    id="name"
+                    size="lg"
+                    placeholder="PostHog"
+                    data-1p-ignore
+                    required
+                  />
+                  <ErrorMessage errors={data?.error.fieldErrors.name} />
+                </div>
 
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="website" isRequired>
-                Website:
-              </Label>
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="website" isRequired>
+                    Website:
+                  </Label>
 
-              <Input
-                type="url"
-                name="website"
-                id="website"
-                size="lg"
-                placeholder="https://posthog.com"
-                required
-              />
+                  <Input
+                    type="url"
+                    name="website"
+                    id="website"
+                    size="lg"
+                    placeholder="https://posthog.com"
+                    required
+                  />
 
-              <ErrorMessage errors={data?.error.fieldErrors.website} />
-            </div>
+                  <ErrorMessage errors={data?.error.fieldErrors.website} />
+                </div>
 
-            <div className="col-span-full flex flex-col gap-1">
-              <Label htmlFor="repository" isRequired>
-                Repository:
-              </Label>
+                <div className="col-span-full flex flex-col gap-1">
+                  <Label htmlFor="repository" isRequired>
+                    Repository:
+                  </Label>
 
-              <Input
-                type="url"
-                name="repository"
-                id="repository"
-                size="lg"
-                placeholder="https://github.com/posthog/posthog"
-                required
-              />
+                  <Input
+                    type="url"
+                    name="repository"
+                    id="repository"
+                    size="lg"
+                    placeholder="https://github.com/posthog/posthog"
+                    required
+                  />
 
-              <ErrorMessage errors={data?.error.fieldErrors.repository} />
-            </div>
+                  <ErrorMessage errors={data?.error.fieldErrors.repository} />
+                </div>
 
-            <div className="col-span-full flex flex-col gap-1">
-              <Label htmlFor="submitterNote">Suggest an alternative:</Label>
+                <div className="col-span-full flex flex-col gap-1">
+                  <Label htmlFor="submitterNote">Suggest an alternative:</Label>
 
-              <Input
-                name="submitterNote"
-                id="submitterNote"
-                size="lg"
-                placeholder="Which well-known tool is this an alternative to?"
-              />
+                  <Input
+                    name="submitterNote"
+                    id="submitterNote"
+                    size="lg"
+                    placeholder="Which well-known tool is this an alternative to?"
+                  />
 
-              <ErrorMessage errors={data?.error.fieldErrors.submitterNote} />
-            </div>
+                  <ErrorMessage errors={data?.error.fieldErrors.submitterNote} />
+                </div>
 
-            <div className="col-span-full flex items-center gap-2">
-              <Checkbox name="newsletterOptIn" id="newsletterOptIn" defaultChecked={true} />
+                <div className="col-span-full flex items-center gap-2">
+                  <Checkbox name="newsletterOptIn" id="newsletterOptIn" defaultChecked={true} />
 
-              <Label htmlFor="newsletterOptIn" className="text-sm font-normal">
-                I'd like to receive free email updates
-              </Label>
+                  <Label htmlFor="newsletterOptIn" className="text-sm font-normal">
+                    I'd like to receive free email updates
+                  </Label>
 
-              <ErrorMessage errors={data?.error.fieldErrors.newsletterOptIn} />
-            </div>
+                  <ErrorMessage errors={data?.error.fieldErrors.newsletterOptIn} />
+                </div>
 
-            <div>
-              <Button isPending={state !== "idle" && formMethod === "POST"} className="min-w-32">
-                Submit
+                <div>
+                  <Button
+                    isPending={state !== "idle" && formMethod === "POST"}
+                    className="min-w-32"
+                  >
+                    Submit
+                  </Button>
+                </div>
+
+                <ErrorMessage errors={data?.error.formErrors} className="col-span-full" />
+              </Form>
+            </Section.Content>
+
+            <Section.Sidebar>
+              <Card>
+                <Prose className="text-sm/normal">
+                  <p>
+                    <strong>Note:</strong> Submission alone does not guarantee a feature. Please
+                    make sure the software you're submitting is:
+                  </p>
+
+                  <ul className="[&_li]:p-0 list-inside p-0">
+                    <li>Open source</li>
+                    <li>Free to use or can be self-hosted</li>
+                    <li>Actively maintained</li>
+                    <li>
+                      An <Link to="/alternatives">alternative to proprietary software</Link>
+                    </li>
+                  </ul>
+                </Prose>
+              </Card>
+            </Section.Sidebar>
+          </>
+        )}
+
+        {data?.type === "success" && (
+          <Section.Content>
+            <Prose>
+              <p>
+                <strong>Thank you for submitting! We'll review your tool soon.</strong>
+              </p>
+
+              <p>
+                <strong>Note:</strong> There are currently {queueLength} submissions in the queue.
+                Considering our current posting rate, it may take up to{" "}
+                {Math.ceil(queueLength / SUBMISSION_POSTING_RATE)} weeks to publish your submission.
+              </p>
+
+              <Button size="lg" className="not-prose mt-2" suffix={<ArrowBigUpDashIcon />} asChild>
+                <a
+                  href={`mailto:${SITE_EMAIL}?${params?.toString()}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Expedite submission of {data.toolName}
+                </a>
               </Button>
-            </div>
-
-            <ErrorMessage errors={data?.error.formErrors} className="col-span-full" />
-          </Form>
-
-          <Prose className="text-sm/normal">
-            <p>
-              <strong>Note:</strong> Submission alone does not guarantee a feature. Please make sure
-              the software you're submitting meets the following criteria:
-            </p>
-
-            <ul>
-              <li>It's open source</li>
-              <li>It's free to use or can be self-hosted</li>
-              <li>It's actively maintained</li>
-              <li>It's a good alternative to a proprietary software</li>
-            </ul>
-          </Prose>
-        </>
-      )}
-
-      {data?.type === "success" && (
-        <Prose>
-          <p>
-            <strong>Thank you for submitting! We'll review your tool soon.</strong>
-          </p>
-
-          <p>
-            <strong>Note:</strong> There are currently {queueLength} submissions in the queue.
-            Considering our current posting rate, it may take up to{" "}
-            {Math.ceil(queueLength / SUBMISSION_POSTING_RATE)} weeks to publish your submission.
-          </p>
-
-          <Button size="lg" className="not-prose mt-2" suffix={<ArrowBigUpDashIcon />} asChild>
-            <a
-              href={`mailto:${SITE_EMAIL}?${params?.toString()}`}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Expedite submission of {data.toolName}
-            </a>
-          </Button>
-        </Prose>
-      )}
+            </Prose>
+          </Section.Content>
+        )}
+      </Section>
     </>
   )
 }
