@@ -5,7 +5,9 @@ import { algoliaClient } from "~/services/algolia"
 import { prisma } from "~/services/prisma"
 
 export const indexSearch = async () => {
-  const tools = await prisma.tool
+  const indexName = env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME
+
+  const objects = await prisma.tool
     .findMany({
       where: { publishedAt: { lte: new Date() } },
       include: {
@@ -37,8 +39,9 @@ export const indexSearch = async () => {
       })),
     )
 
-  return await algoliaClient.saveObjects({
-    indexName: env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME,
-    objects: tools,
-  })
+  // Clear the index
+  await algoliaClient.clearObjects({ indexName })
+
+  // Index the objects
+  await algoliaClient.saveObjects({ indexName, objects })
 }
