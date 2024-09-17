@@ -41,17 +41,21 @@ function generateOAuthSignature(
  * Make an authenticated request to an API endpoint using OAuth 1.0a
  * @param httpMethod - The HTTP method (GET, POST, etc.)
  * @param baseUrl - The base URL of the API endpoint
- * @param params - The OAuth and request parameters
- * @param consumerSecret - Your OAuth consumer secret
- * @param tokenSecret - Your OAuth token secret (optional)
  * @param [jsonBody] - The JSON body to send with the request
  */
-async function makeOAuthRequest(
+export async function makeOAuthRequest(
   httpMethod: string,
   baseUrl: string,
-  params: Record<string, string>,
   jsonBody?: Record<string, unknown>,
 ) {
+  const params = {
+    oauth_consumer_key: env.TWITTER_API_KEY,
+    oauth_token: env.TWITTER_ACCESS_TOKEN,
+    oauth_nonce: crypto.randomBytes(16).toString("base64"),
+    oauth_signature_method: "HMAC-SHA1",
+    oauth_timestamp: Math.floor(Date.now() / 1000).toString(),
+    oauth_version: "1.0",
+  }
   // Generate the OAuth signature
   const oauthSignature = generateOAuthSignature(httpMethod, baseUrl, params)
 
@@ -99,14 +103,6 @@ async function makeOAuthRequest(
 export const sendTweet = async (text: string) => {
   const httpMethod = "POST"
   const baseUrl = "https://api.twitter.com/2/tweets"
-  const params = {
-    oauth_consumer_key: env.TWITTER_API_KEY,
-    oauth_token: env.TWITTER_ACCESS_TOKEN,
-    oauth_nonce: crypto.randomBytes(16).toString("base64"),
-    oauth_signature_method: "HMAC-SHA1",
-    oauth_timestamp: Math.floor(Date.now() / 1000).toString(),
-    oauth_version: "1.0",
-  }
 
-  await makeOAuthRequest(httpMethod, baseUrl, params, { text })
+  await makeOAuthRequest(httpMethod, baseUrl, { text })
 }
