@@ -30,7 +30,8 @@ export default {
         DEFAULT: "hsl(var(--color-border))",
       },
       fontFamily: {
-        sans: ["Uncut Sans", ...defaultTheme.fontFamily.sans],
+        sans: ["Geist", ...defaultTheme.fontFamily.sans],
+        display: ["Geist", ...defaultTheme.fontFamily.sans],
       },
       scale: {
         flip: "-1",
