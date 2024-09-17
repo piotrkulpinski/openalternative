@@ -58,6 +58,13 @@ export const meta: MetaFunction = ({ location }) => {
     { property: "og:type", content: "website" },
     { property: "og:url", content: currentUrl },
     { property: "og:site_name", content: SITE_NAME },
+    {
+      tagName: "link",
+      rel: "alternate",
+      type: "application/rss+xml",
+      title: `${SITE_NAME} RSS Feed`,
+      href: `${SITE_URL}/rss.xml`,
+    },
   ]
 }
 
