@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Uncut Sans";
+  font-family: "Geist";
   font-style: normal;
   font-weight: 400 700;
-  src: url("/fonts/UncutSans-Variable.woff2") format("woff2");
+  src: url("/fonts/Geist-Variable.woff2") format("woff2");
 }
 
 :root {
@@ -58,7 +58,7 @@ label[for],
 [href] [class*="group-hover"] {
   @apply transition;
   @apply ease-out;
-  @apply duration-200;
+  @apply duration-100;
   @apply cursor-pointer;
 }
 

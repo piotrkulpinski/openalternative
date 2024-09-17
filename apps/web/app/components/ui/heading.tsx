@@ -3,7 +3,7 @@ import { type ElementType, type HTMLAttributes, forwardRef, isValidElement } fro
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const headingVariants = cva({
-  base: "font-semibold tracking-tight",
+  base: "font-display font-semibold tracking-tight",
 
   variants: {
     size: {
@@ -40,7 +40,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref)
   const { className, as, asChild, size, ...rest } = props
 
   const useAsChild = asChild && isValidElement(rest.children)
-  const Comp = useAsChild ? Slot : as ?? size ?? "h2"
+  const Comp = useAsChild ? Slot : (as ?? size ?? "h2")
 
   return <Comp ref={ref} className={cx(headingVariants({ size, className }))} {...rest} />
 })
