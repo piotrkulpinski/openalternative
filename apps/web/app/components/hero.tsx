@@ -24,7 +24,7 @@ export const Hero = ({ className, toolCount, ...props }: HeroProps) => {
         title="Discover Open Source Alternatives to Popular Software"
         description="A curated collection of the best open source alternatives to software that your business requires in day-to-day operations."
         alignment="center"
-        className="max-w-[35rem] mx-auto"
+        className="max-w-[37.5rem] mx-auto"
       >
         <Badge
           className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
