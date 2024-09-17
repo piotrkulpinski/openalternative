@@ -23,6 +23,7 @@ import {
   FormMessage,
 } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
+import { Switch } from "~/components/ui/switch"
 import { Textarea } from "~/components/ui/textarea"
 import { cx } from "~/utils/cva"
 import { getSlug, nullsToUndefined } from "~/utils/helpers"
@@ -145,9 +146,23 @@ export function AlternativeForm({
 
         <FormField
           control={form.control}
+          name="isFeatured"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Featured</FormLabel>
+              <FormControl>
+                <Switch onCheckedChange={field.onChange} checked={field.value} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="faviconUrl"
           render={({ field }) => (
-            <FormItem className="col-span-full">
+            <FormItem>
               <FormLabel>Favicon URL</FormLabel>
               <FormControl>
                 <Input type="url" {...field} />

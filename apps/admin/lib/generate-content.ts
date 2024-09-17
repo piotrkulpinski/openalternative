@@ -1,3 +1,4 @@
+import { createAnthropic } from "@ai-sdk/anthropic"
 import { openai } from "@ai-sdk/openai"
 import type { Tool } from "@openalternative/db"
 import { generateObject } from "ai"
@@ -14,7 +15,7 @@ import { prisma } from "~/services/prisma"
  * @returns The generated content.
  */
 export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
-  const model = openai("gpt-4o")
+  const model = createAnthropic()("claude-3-5-sonnet-20240620")
 
   try {
     const scrapedData = await firecrawlClient.scrapeUrl(tool.website, {
@@ -81,7 +82,7 @@ export const generateCategories = async (tool: string) => {
     model,
     output: "array",
     schema: z.string().describe("The name of the category"),
-    system: `
+    prompt: `
       Take the following list of categories and an open source software product.
       Assign the open source software product to the categories that it belongs to.
       Try to assign the tool to multiple categories if it belongs to multiple categories.
@@ -113,7 +114,7 @@ export const generateAlternatives = async (tool: string) => {
     model,
     output: "array",
     schema: z.string().describe("The name of the alternative"),
-    system: `
+    prompt: `
       Take the following list of proprietary software products and an open source software product.
       Assign the open source software product to the proprietary software products that it is similar to.
       Try to assign the tool to multiple alternatives if it is similar to multiple alternatives.

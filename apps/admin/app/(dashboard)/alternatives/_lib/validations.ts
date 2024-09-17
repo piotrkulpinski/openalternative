@@ -19,6 +19,7 @@ export const alternativeSchema = z.object({
   website: z.string().min(1, "Website is required").url(),
   description: z.string().optional(),
   faviconUrl: z.string().optional(),
+  isFeatured: z.boolean().optional(),
 })
 
 export type AlternativeSchema = z.infer<typeof alternativeSchema>

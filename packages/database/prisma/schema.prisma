@@ -70,6 +70,7 @@ model Alternative {
   description String?
   website     String              @unique
   faviconUrl  String?
+  isFeatured  Boolean             @default(false)
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @updatedAt
   tools       AlternativeToTool[]

@@ -26,19 +26,26 @@ export const toolCreated = inngest.createFunction(
       return fetchRepositoryData(tool)
     })
 
+    // Run steps in parallel
+    const [content, repositoryData] = await Promise.all([
+      generateContentPromise,
+      fetchRepositoryDataPromise,
+    ])
+
+    // Update tool in the database
+    await step.run("update-tool-with-content", async () => {
+      return prisma.tool.update({
+        where: { id: tool.id },
+        data: { ...repositoryData, ...content },
+      })
+    })
+
     const uploadAssetsPromise = step.run("upload-assets", async () => {
       return Promise.all([
         uploadFavicon(tool.website, `${tool.slug}/favicon`),
         uploadScreenshot(tool.website, `${tool.slug}/screenshot`),
       ])
     })
-
-    // Run steps in parallel
-    const [content, repositoryData, [faviconUrl, screenshotUrl]] = await Promise.all([
-      generateContentPromise,
-      fetchRepositoryDataPromise,
-      uploadAssetsPromise,
-    ])
 
     const twitterHandlePromise = step.run("get-twitter-handle", async () => {
       return findTwitterHandle(content.links)
@@ -53,11 +60,13 @@ export const toolCreated = inngest.createFunction(
     })
 
     // Run steps in parallel
-    const [twitterHandle, categories, alternatives] = await Promise.all([
-      twitterHandlePromise,
-      categoriesPromise,
-      alternativesPromise,
-    ])
+    const [[faviconUrl, screenshotUrl], twitterHandle, categories, alternatives] =
+      await Promise.all([
+        uploadAssetsPromise,
+        twitterHandlePromise,
+        categoriesPromise,
+        alternativesPromise,
+      ])
 
     const filteredCategoriesPromise = step.run("filter-categories", async () => {
       return prisma.category.findMany({
@@ -83,12 +92,10 @@ export const toolCreated = inngest.createFunction(
     ])
 
     // Update tool in the database
-    await step.run("update-tool", async () => {
+    await step.run("update-tool-with-relations", async () => {
       return prisma.tool.update({
         where: { id: tool.id },
         data: {
-          ...repositoryData,
-          ...content,
           faviconUrl,
           screenshotUrl,
           twitterHandle,
