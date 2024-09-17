@@ -38,7 +38,7 @@ export const indexSearch = async () => {
     )
 
   return await algoliaClient.saveObjects({
-    indexName: env.ALGOLIA_INDEX_TASK_ID,
+    indexName: env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME,
     objects: tools,
   })
 }
