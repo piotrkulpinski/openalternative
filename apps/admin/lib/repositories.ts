@@ -1,5 +1,4 @@
 import type { Tool } from "@openalternative/db"
-import type { Jsonify } from "inngest/helpers/jsonify"
 import { firstCommitQuery, githubClient, repositoryQuery } from "~/services/github"
 import type { FirstCommitQueryResult, RepositoryQueryResult } from "~/types/github"
 import { getSlug } from "~/utils/helpers"
@@ -129,6 +128,7 @@ export const fetchRepositoryData = async (url: string, bump?: number | null) => 
   const after = startCursor.replace(/\b0+\b/g, (totalCommits - 2).toString())
   const firstCommitDate = new Date((await queryFirstCommit(repo, after)) || "")
   const lastCommitDate = new Date(defaultBranchRef.target.history.nodes[0]?.committedDate || "")
+  console.log(after, firstCommitDate, lastCommitDate)
 
   // Extract and transform the necessary metrics
   const metrics = {
@@ -181,7 +181,7 @@ export const fetchRepositoryData = async (url: string, bump?: number | null) => 
  * @param tool - The tool to fetch the repository data for.
  * @returns The repository data for the tool.
  */
-export const getRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
+export const getRepositoryData = async (tool: Pick<Tool, "id" | "repository" | "bump">) => {
   const repo = await fetchRepositoryData(tool.repository, tool.bump)
 
   if (!repo) {
