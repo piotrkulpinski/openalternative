@@ -5,7 +5,7 @@ import {
   generateContent,
 } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
-import { fetchRepositoryData } from "~/lib/repositories"
+import { getRepositoryData } from "~/lib/repositories"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 
@@ -23,7 +23,7 @@ export const toolCreated = inngest.createFunction(
     })
 
     const fetchRepositoryDataPromise = step.run("fetch-repository-data", async () => {
-      return fetchRepositoryData(tool)
+      return getRepositoryData(tool)
     })
 
     // Run steps in parallel
