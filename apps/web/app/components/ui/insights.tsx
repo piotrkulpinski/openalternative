@@ -17,9 +17,10 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
     <ul className={cx("w-full text-xs", className)} {...props}>
       {insights.map(({ label, value, link, title, icon: Icon }) => (
         <Fragment key={label}>
-          <li className="flex min-w-0 items-center gap-3 py-1">
-            <p className="flex items-center gap-1.5 truncate text-secondary">
-              <Icon className="size-[1.1em] shrink-0 opacity-75" /> {label}
+          <li className="flex items-center gap-3 py-1">
+            <p className="flex items-center min-w-0 gap-1.5 text-secondary">
+              <Icon className="size-[1.1em] shrink-0 opacity-75" />
+              <span className="flex-1 truncate">{label}</span>
             </p>
 
             <hr className="min-w-2 flex-1" />
