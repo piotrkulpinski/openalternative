@@ -1,4 +1,3 @@
-import { indexSearch } from "~/actions"
 import { getMilestoneReached, sendMilestoneTweet } from "~/lib/milestones"
 import { getRepositoryData } from "~/lib/repositories"
 import { inngest } from "~/services/inngest"
@@ -12,6 +11,15 @@ export const fetchToolData = inngest.createFunction(
     const tools = await step.run("fetch-tools", async () => {
       return prisma.tool.findMany({
         where: { publishedAt: { not: null } },
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          repository: true,
+          stars: true,
+          bump: true,
+          twitterHandle: true,
+        },
       })
     })
 
@@ -19,7 +27,7 @@ export const fetchToolData = inngest.createFunction(
       return Promise.all(
         tools.map(async tool => {
           const updatedTool = await getRepositoryData(tool)
-          logger.info(`Updated tool data for ${tool.name}`, { updatedTool })
+          // logger.info(`Updated tool data for ${tool.name}`, { updatedTool })
 
           if (!updatedTool) {
             return null
@@ -29,7 +37,7 @@ export const fetchToolData = inngest.createFunction(
 
           if (milestone) {
             const tweetName = tool.twitterHandle ? `@${tool.twitterHandle}` : tool.name
-            logger.info(`Sending milestone tweet for ${tool.name}`, { milestone })
+            // logger.info(`Sending milestone tweet for ${tool.name}`, { milestone })
             await sendMilestoneTweet(milestone, tweetName, tool.slug)
           }
 
@@ -43,7 +51,7 @@ export const fetchToolData = inngest.createFunction(
 
     // Index search for Algolia
     await step.run("index-search", async () => {
-      return indexSearch()
+      // return indexSearch()
     })
 
     // Disconnect from DB
