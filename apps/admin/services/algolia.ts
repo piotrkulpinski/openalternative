@@ -1,4 +1,4 @@
-import algoliasearch from "algoliasearch"
+import { algoliasearch } from "algoliasearch"
 import { env } from "~/env"
 
 export const algoliaClient = algoliasearch(
