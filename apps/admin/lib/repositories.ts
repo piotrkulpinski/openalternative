@@ -100,9 +100,7 @@ const queryFirstCommit = async (repo: Repository, after: string) => {
       after,
     })
 
-    return new Date(
-      response.repository.defaultBranchRef.target.history.nodes[0]?.committedDate || "",
-    )
+    return response.repository.defaultBranchRef.target.history.nodes[0]?.committedDate
   } catch {}
 }
 
@@ -126,11 +124,11 @@ export const fetchRepositoryData = async (url: string, bump?: number | null) => 
     defaultBranchRef,
   } = queryResult
 
-  const lastCommitDate = new Date(defaultBranchRef.target.history.nodes[0]?.committedDate || "")
   const totalCommits = defaultBranchRef.target.history.totalCount
   const startCursor = defaultBranchRef.target.history.pageInfo.startCursor
   const after = startCursor.replace(/\b0+\b/g, (totalCommits - 2).toString())
-  const firstCommitDate = (await queryFirstCommit(repo, after)) || new Date()
+  const firstCommitDate = new Date((await queryFirstCommit(repo, after)) || "")
+  const lastCommitDate = new Date(defaultBranchRef.target.history.nodes[0]?.committedDate || "")
 
   // Extract and transform the necessary metrics
   const metrics = {
@@ -140,7 +138,7 @@ export const fetchRepositoryData = async (url: string, bump?: number | null) => 
     watchers: watchers.totalCount,
     firstCommitDate,
     lastCommitDate,
-    bump,
+    bump: 0,
   }
 
   const score = calculateHealthScore(metrics)

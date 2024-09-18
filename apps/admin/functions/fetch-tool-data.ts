@@ -8,7 +8,7 @@ export const fetchToolData = inngest.createFunction(
   { id: "fetch-tool-data" },
   { cron: "TZ=Europe/Warsaw 0 0 * * *" },
 
-  async ({ step }) => {
+  async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return prisma.tool.findMany({
         where: { publishedAt: { not: null } },
@@ -19,6 +19,7 @@ export const fetchToolData = inngest.createFunction(
       return Promise.all(
         tools.map(async tool => {
           const updatedTool = await getRepositoryData(tool)
+          logger.info(`Updated tool data for ${tool.name}`, { updatedTool })
 
           if (!updatedTool) {
             return null
@@ -28,6 +29,7 @@ export const fetchToolData = inngest.createFunction(
 
           if (milestone) {
             const tweetName = tool.twitterHandle ? `@${tool.twitterHandle}` : tool.name
+            logger.info(`Sending milestone tweet for ${tool.name}`, { milestone })
             await sendMilestoneTweet(milestone, tweetName, tool.slug)
           }
 
