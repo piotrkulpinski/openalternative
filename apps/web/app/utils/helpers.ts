@@ -1,3 +1,5 @@
+import { type FormatDistanceOptions, formatDistance } from "date-fns"
+
 /**
  * Strips the subpath from a URL, returning only the protocol and host.
  *
@@ -33,6 +35,7 @@ export const addUTMTracking = (
   urlObj.search = searchParams.toString()
   return urlObj.toString()
 }
+
 /**
  * Joins an array of strings into a sentence, with a maximum of 3 items.
  *
@@ -45,4 +48,8 @@ export const joinAsSentence = (items: string[], maxItems = 3, lastItem = "and") 
     .slice(0, maxItems)
     .join(", ")
     .replace(/, ([^,]*)$/, ` ${lastItem} $1`)
+}
+
+export const formatDate = (date: Date | string, options?: FormatDistanceOptions) => {
+  return formatDistance(new Date(date), new Date(), options).replace(/about |over |almost /, "")
 }
