@@ -4,7 +4,7 @@ import type { Alternative, Category, License, Tool } from "@openalternative/db"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { indexSearch } from "~/actions"
+import { indexSearch } from "~/actions/algolia"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
