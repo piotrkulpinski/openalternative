@@ -7,7 +7,7 @@ export const Refinements = ({ className, ...props }: HTMLAttributes<HTMLElement>
   return (
     <div
       className={cx(
-        "grid grid-auto-fill-xs justify-between gap-6 w-full py-4 px-6 border rounded-md",
+        "grid grid-auto-fill-xs justify-between gap-6 w-full py-4 px-6 border rounded-lg",
         className,
       )}
       {...props}

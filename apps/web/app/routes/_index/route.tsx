@@ -1,11 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { json, useLoaderData, useLocation } from "@remix-run/react"
 import { renderToString } from "react-dom/server"
-import {
-  InstantSearchSSRProvider,
-  type InstantSearchServerState,
-  getServerState,
-} from "react-instantsearch"
+import { getServerState } from "react-instantsearch"
 import { AlternativeList } from "~/components/alternative-list"
 import { Hero } from "~/components/hero"
 import { alternativeManyPayload } from "~/services.server/api"
@@ -68,9 +64,7 @@ export default function Index() {
     <>
       <Hero toolCount={newToolCount} />
 
-      <InstantSearchSSRProvider key={key} {...(serverState as InstantSearchServerState)}>
-        <Search url={url} sponsoring={sponsoring} />
-      </InstantSearchSSRProvider>
+      <Search key={key} serverState={serverState} url={url} sponsoring={sponsoring} />
 
       <AlternativeList alternatives={alternatives} />
     </>

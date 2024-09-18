@@ -40,7 +40,7 @@
     "@t3-oss/env-nextjs": "^0.9.2",
     "@tanstack/react-table": "^8.20.5",
     "ai": "^3.3.39",
-    "algoliasearch": "^5.4.1",
+    "algoliasearch": "^4.24.0",
     "cmdk": "^1.0.0",
     "cva": "^1.0.0-beta.1",
     "date-fns": "^3.6.0",
@@ -56,8 +56,6 @@
     "recharts": "^2.13.0-alpha.5",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.2",
-    "twitter-api-sdk": "^1.2.1",
-    "twitter-api-v2": "^1.17.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
