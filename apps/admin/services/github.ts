@@ -5,56 +5,79 @@ export const githubClient = graphql.defaults({
   headers: { authorization: `token ${env.GITHUB_TOKEN}` },
 })
 
-export const repositoryQuery = `query RepositoryQuery($owner: String!, $name: String!) {
-  repository(owner: $owner, name: $name) {
-    stargazerCount
-    forkCount
-    watchers {
-      totalCount
-    }
-    mentionableUsers {
-      totalCount
-    }
-    licenseInfo {
-      spdxId
-    }
-    defaultBranchRef {
-      target {
-        ... on Commit {
-          history(first: 1) {
-            edges {
-              node {
-                ... on Commit {
-                  committedDate
-                }
+export const repositoryQuery = `
+  query($owner: String!, $name: String!) {
+    repository(owner: $owner, name: $name) {
+      stargazerCount
+      forkCount
+      mentionableUsers {
+        totalCount
+      }
+      watchers {
+        totalCount
+      }
+      licenseInfo {
+        spdxId
+      }
+      repositoryTopics(first: 10) {
+        nodes {
+          topic {
+            name
+          }
+        }
+      }
+      languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+        totalSize
+        edges {
+          size
+          node {
+            name
+            color
+          }
+        }
+      }
+      defaultBranchRef {
+        target {
+          ... on Commit {
+            history(first: 1) {
+              totalCount
+              pageInfo {
+                startCursor
+                endCursor
+              }
+              nodes {
+                committedDate
               }
             }
           }
         }
       }
     }
-    repositoryTopics(first: 25) {
-      nodes {
-        topic {
-          name
-        }
-      }
-    }
-    languages(first: 3, orderBy: { field: SIZE, direction: DESC}) {
-      totalSize
-      edges {
-        size
-        node {
-          name
-          color
-        }
-      }
-    }
   }
-}`
+`
 
-export const repositoryStarsQuery = `query RepositoryQuery($owner: String!, $name: String!) {
-  repository(owner: $owner, name: $name) {
-    stargazerCount
+export const repositoryStarsQuery = `
+  query ($owner: String!, $name: String!) {
+    repository(owner: $owner, name: $name) {
+      stargazerCount
+    }
   }
-}`
+`
+
+export const firstCommitQuery = `
+  query($owner: String!, $name: String!, $after: String!) {
+    repository(owner: $owner, name: $name) {
+      defaultBranchRef {
+        target {
+          ... on Commit {
+            history(first: 1, after: $after) {
+              nodes {
+                committedDate
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`

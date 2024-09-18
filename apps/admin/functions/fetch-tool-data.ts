@@ -1,6 +1,6 @@
 import { indexSearch } from "~/actions"
 import { getMilestoneReached, sendMilestoneTweet } from "~/lib/milestones"
-import { fetchRepositoryData } from "~/lib/repositories"
+import { getRepositoryData } from "~/lib/repositories"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 
@@ -18,7 +18,7 @@ export const fetchToolData = inngest.createFunction(
     await step.run("fetch-repository-data", async () => {
       return Promise.all(
         tools.map(async tool => {
-          const updatedTool = await fetchRepositoryData(tool)
+          const updatedTool = await getRepositoryData(tool)
 
           if (!updatedTool) {
             return null
