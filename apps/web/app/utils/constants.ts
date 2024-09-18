@@ -32,6 +32,7 @@ export const FEATURED_ALTERNATIVES = [
   "kissmetrics",
 ]
 
+export const DAY_IN_MS = 1000 * 60 * 60 * 24
 export const LATEST_TOOLS_TRESHOLD = new Date(new Date().setDate(new Date().getDate() - 7))
 export const TOPICS_PER_PAGE = 150
 export const SUBMISSION_POSTING_RATE = 3
