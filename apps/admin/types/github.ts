@@ -11,23 +11,12 @@ export type RepositoryQueryResult = {
     licenseInfo: {
       spdxId: string
     } | null
-    defaultBranchRef: {
-      target: {
-        history: {
-          edges: Array<{
-            node: {
-              committedDate: string
-            }
-          }>
-        }
-      }
-    }
     repositoryTopics: {
-      nodes: {
+      nodes: Array<{
         topic: {
           name: string
         }
-      }[]
+      }>
     }
     languages: {
       totalSize: number
@@ -39,11 +28,33 @@ export type RepositoryQueryResult = {
         }
       }>
     }
+    defaultBranchRef: {
+      target: {
+        history: {
+          totalCount: number
+          pageInfo: {
+            startCursor: string
+            endCursor: string
+          }
+          nodes: Array<{
+            committedDate: string
+          }>
+        }
+      }
+    }
   }
 }
 
-export type RepositoryStarsQueryResult = {
+export type FirstCommitQueryResult = {
   repository: {
-    stargazerCount: number
+    defaultBranchRef: {
+      target: {
+        history: {
+          nodes: Array<{
+            committedDate: string
+          }>
+        }
+      }
+    }
   }
 }

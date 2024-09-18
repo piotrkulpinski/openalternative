@@ -24,33 +24,34 @@ model Sponsoring {
 }
 
 model Tool {
-  id             String    @id @default(cuid())
-  name           String    @db.Citext
-  slug           String    @unique
-  website        String    @unique
-  repository     String    @unique
-  tagline        String?
-  description    String?
-  content        String?
-  links          Json?
-  twitterHandle  String?
-  stars          Int       @default(0)
-  forks          Int       @default(0)
-  score          Int       @default(0)
-  bump           Int?
-  faviconUrl     String?
-  screenshotUrl  String?
-  isFeatured     Boolean   @default(false)
-  submitterName  String?
-  submitterEmail String?
-  submitterNote  String?
-  hostingUrl     String?
-  discountCode   String?
-  discountAmount Int?
-  lastCommitDate DateTime?
-  publishedAt    DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  name            String    @db.Citext
+  slug            String    @unique
+  website         String    @unique
+  repository      String    @unique
+  tagline         String?
+  description     String?
+  content         String?
+  links           Json?
+  twitterHandle   String?
+  stars           Int       @default(0)
+  forks           Int       @default(0)
+  score           Int       @default(0)
+  bump            Int?
+  faviconUrl      String?
+  screenshotUrl   String?
+  isFeatured      Boolean   @default(false)
+  submitterName   String?
+  submitterEmail  String?
+  submitterNote   String?
+  hostingUrl      String?
+  discountCode    String?
+  discountAmount  Int?
+  firstCommitDate DateTime?
+  lastCommitDate  DateTime?
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   // Relations
   licenseId    String?

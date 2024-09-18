@@ -1,8 +1,13 @@
 import type { Tool } from "@openalternative/db"
 import type { Jsonify } from "inngest/helpers/jsonify"
-import { githubClient, repositoryQuery } from "~/services/github"
-import type { RepositoryQueryResult } from "~/types/github"
+import { firstCommitQuery, githubClient, repositoryQuery } from "~/services/github"
+import type { FirstCommitQueryResult, RepositoryQueryResult } from "~/types/github"
 import { getSlug } from "~/utils/helpers"
+
+type Repository = {
+  owner: string
+  name: string
+}
 
 /**
  * Extracts the repository owner and name from a GitHub URL.
@@ -10,13 +15,12 @@ import { getSlug } from "~/utils/helpers"
  * @param url The GitHub URL from which to extract the owner and name.
  * @returns An object containing the repository owner and name, or null if the URL is invalid.
  */
-export const getRepoOwnerAndName = (url: string | null) => {
+export const getRepoOwnerAndName = (url: string | null): Repository | null => {
   const regex = /github\.com\/(?<owner>[^/]+)\/(?<name>[^/]+)(\/|$)/
   const match = url?.match(regex)
 
-  if (match?.groups) {
-    const { owner, name } = match.groups
-    return { owner, name }
+  if (match?.groups?.name) {
+    return match.groups as Repository
   }
 
   return null
@@ -28,6 +32,7 @@ type GetToolScoreProps = {
   contributors: number
   watchers: number
   lastCommitDate: Date | null
+  firstCommitDate: Date
   bump?: number | null
 }
 
@@ -38,62 +43,94 @@ type GetToolScoreProps = {
  * @param forks - The number of forks the tool has on GitHub.
  * @param contributors - The number of contributors to the tool's repository.
  * @param watchers - The number of watchers the tool has on GitHub.
+ * @param firstCommitDate - The date of the first commit to the tool's repository.
  * @param lastCommitDate - The date of the last commit to the tool's repository.
+ * @param createdAt - The date the repository was created.
  * @param bump - An optional bump to the final score.
  * @returns The calculated score for the tool.
  */
-export const calculateHealthScore = ({
+const calculateHealthScore = ({
   stars,
   forks,
   contributors,
   watchers,
+  firstCommitDate,
   lastCommitDate,
   bump,
 }: GetToolScoreProps) => {
+  const dayinMs = 1000 * 60 * 60 * 24
   const timeSinceLastCommit = Date.now() - (lastCommitDate?.getTime() || 0)
-  const daysSinceLastCommit = timeSinceLastCommit / (1000 * 60 * 60 * 24)
-  // Negative score for evey day without commit up to 90 days
+  const daysSinceLastCommit = timeSinceLastCommit / dayinMs
   const lastCommitPenalty = Math.min(daysSinceLastCommit, 90) * 0.5
 
-  const starsScore = stars * 0.25
-  const forksScore = forks * 0.5
-  const contributorsScore = contributors * 0.5
-  const watchersScore = watchers * 0.25
+  // Calculate repository age in years using firstCommitDate
+  const ageInYears = (Date.now() - firstCommitDate.getTime()) / (dayinMs * 365.25)
+
+  // This factor will be between 0.5 (for very old repos) and 1 (for new repos)
+  const ageFactor = 0.5 + 0.5 / (1 + ageInYears / 5)
+
+  const starsScore = stars * 0.25 * ageFactor
+  const forksScore = forks * 0.5 * ageFactor
+  const contributorsScore = contributors * 0.5 * ageFactor
+  const watchersScore = watchers * 0.25 * ageFactor
 
   return Math.round(
     starsScore + forksScore + contributorsScore + watchersScore - lastCommitPenalty + (bump || 0),
   )
 }
 
-export const fetchRepository = async (url: string, bump?: number | null) => {
-  const repo = getRepoOwnerAndName(url)
-  let queryResult: RepositoryQueryResult | null = null
-
-  if (!repo) {
-    return null
-  }
-
+const queryRepository = async (repo: Repository) => {
   try {
-    queryResult = await githubClient(repositoryQuery, repo)
-  } catch (error) {
-    console.error(`Failed to fetch repository ${url}: ${error}`)
-  }
+    const response = await githubClient<RepositoryQueryResult>(repositoryQuery, repo)
 
-  // if the repository check fails, set the tool as draft
-  if (!queryResult?.repository) {
-    return null
+    if (!response?.repository) {
+      return null
+    }
+
+    return response.repository
+  } catch (error) {
+    console.error(`Failed to fetch repository ${repo.name}: ${error}`)
   }
+}
+
+const queryFirstCommit = async (repo: Repository, after: string) => {
+  try {
+    const response = await githubClient<FirstCommitQueryResult>(firstCommitQuery, {
+      ...repo,
+      after,
+    })
+
+    return new Date(
+      response.repository.defaultBranchRef.target.history.nodes[0]?.committedDate || "",
+    )
+  } catch {}
+}
+
+export const fetchRepositoryData = async (url: string, bump?: number | null) => {
+  const repo = getRepoOwnerAndName(url)
+
+  if (!repo) return null
+
+  const queryResult = await queryRepository(repo)
+
+  if (!queryResult) return null
 
   const {
     stargazerCount,
     forkCount,
     mentionableUsers,
     watchers,
-    defaultBranchRef,
     licenseInfo,
     repositoryTopics,
     languages: repositoryLanguages,
-  } = queryResult.repository
+    defaultBranchRef,
+  } = queryResult
+
+  const lastCommitDate = new Date(defaultBranchRef.target.history.nodes[0]?.committedDate || "")
+  const totalCommits = defaultBranchRef.target.history.totalCount
+  const startCursor = defaultBranchRef.target.history.pageInfo.startCursor
+  const after = startCursor.replace(/\b0+\b/g, (totalCommits - 2).toString())
+  const firstCommitDate = (await queryFirstCommit(repo, after)) || new Date()
 
   // Extract and transform the necessary metrics
   const metrics = {
@@ -101,9 +138,8 @@ export const fetchRepository = async (url: string, bump?: number | null) => {
     forks: forkCount,
     contributors: mentionableUsers.totalCount,
     watchers: watchers.totalCount,
-    lastCommitDate: new Date(
-      defaultBranchRef.target.history.edges[0]?.node.committedDate || new Date(),
-    ),
+    firstCommitDate,
+    lastCommitDate,
     bump,
   }
 
@@ -111,7 +147,6 @@ export const fetchRepository = async (url: string, bump?: number | null) => {
   const stars = metrics.stars
   const forks = metrics.forks
   const license = !licenseInfo || licenseInfo.spdxId === "NOASSERTION" ? null : licenseInfo.spdxId
-  const lastCommitDate = metrics.lastCommitDate
 
   // Prepare topics data
   const topics = repositoryTopics.nodes.map(({ topic }) => ({
@@ -129,7 +164,16 @@ export const fetchRepository = async (url: string, bump?: number | null) => {
     .filter(({ percentage }) => percentage > 17.5)
 
   // Return the extracted data
-  return { stars, forks, lastCommitDate, score, license, topics, languages }
+  return {
+    stars,
+    forks,
+    firstCommitDate,
+    lastCommitDate,
+    score,
+    license,
+    topics,
+    languages,
+  }
 }
 
 /**
@@ -139,14 +183,14 @@ export const fetchRepository = async (url: string, bump?: number | null) => {
  * @param tool - The tool to fetch the repository data for.
  * @returns The repository data for the tool.
  */
-export const fetchRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
-  const repo = await fetchRepository(tool.repository, tool.bump)
+export const getRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
+  const repo = await fetchRepositoryData(tool.repository, tool.bump)
 
   if (!repo) {
     return null
   }
 
-  const { stars, forks, lastCommitDate, score, license, topics, languages } = repo
+  const { stars, forks, firstCommitDate, lastCommitDate, score, license, topics, languages } = repo
 
   // License
   const licenseData = license
@@ -205,8 +249,9 @@ export const fetchRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
   return {
     stars,
     forks,
-    lastCommitDate,
     score,
+    firstCommitDate,
+    lastCommitDate,
     license: licenseData,
     topics: topicData,
     languages: languageData,
