@@ -1,6 +1,6 @@
 import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
-import { CopyrightIcon, GitForkIcon, HistoryIcon, StarIcon, TimerIcon } from "lucide-react"
+import { CopyrightIcon, GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { format } from "timeago.js"
@@ -27,16 +27,16 @@ export const RepositoryDetails = ({
   const insights = [
     { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: StarIcon },
     { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: GitForkIcon },
-    ...(tool.firstCommitDate
-      ? [
-          {
-            label: "First commit",
-            value: format(tool.firstCommitDate),
-            title: tool.firstCommitDate,
-            icon: HistoryIcon,
-          },
-        ]
-      : []),
+    // ...(tool.firstCommitDate
+    //   ? [
+    //       {
+    //         label: "First commit",
+    //         value: format(tool.firstCommitDate),
+    //         title: tool.firstCommitDate,
+    //         icon: HistoryIcon,
+    //       },
+    //     ]
+    //   : []),
     ...(tool.lastCommitDate
       ? [
           {
