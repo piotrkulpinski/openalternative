@@ -20,7 +20,6 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
 
   return (
     <form
-      role="search"
       noValidate
       className={cx("relative", className)}
       onSubmit={e => e.preventDefault()}
@@ -29,6 +28,7 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
       <SearchIcon className="absolute top-1/2 left-3 -translate-y-1/2 size-4 shrink-0 pointer-events-none" />
 
       <Input
+        role="search"
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"

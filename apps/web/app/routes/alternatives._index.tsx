@@ -1,7 +1,7 @@
 import { type MetaFunction, json, useLoaderData } from "@remix-run/react"
 import { AlternativeRecord } from "~/components/records/alternative-record"
 import { Grid } from "~/components/ui/grid"
-import { Intro } from "~/components/ui/intro"
+import { Intro, IntroTitle } from "~/components/ui/intro"
 import { alternativeManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
@@ -21,13 +21,13 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 export const loader = async () => {
   const alternatives = await prisma.alternative.findMany({
     where: { NOT: { tools: { none: { tool: { publishedAt: { lte: new Date() } } } } } },
-    orderBy: { name: "asc" },
+    orderBy: [{ isFeatured: "desc" }, { name: "asc" }],
     include: alternativeManyPayload,
   })
 
   const meta = {
-    title: "Open Source Software Alternatives",
-    description: "Browse top alternatives to find your best Open Source software tools.",
+    title: "Popular Open Source Software Alternatives",
+    description: "Browse top proprietary software to find your best Open Source software tools.",
   }
 
   return json({ meta, alternatives }, { headers: JSON_HEADERS })
@@ -36,17 +36,28 @@ export const loader = async () => {
 export default function AlternativesIndex() {
   const { meta, alternatives } = useLoaderData<typeof loader>()
 
+  const featuredAlternatives = alternatives.filter(alt => alt.isFeatured)
+  const otherAlternatives = alternatives.filter(alt => !alt.isFeatured)
+
   return (
     <>
       <Intro {...meta} />
 
       <Grid>
-        {alternatives.map(alternative => (
+        {featuredAlternatives.map(alternative => (
           <AlternativeRecord key={alternative.id} alternative={alternative} showCount />
         ))}
 
-        {!alternatives.length && <p className="col-span-full">No alternatives found.</p>}
+        <IntroTitle size="h2" as="h2" className="mt-8 col-span-full">
+          Other Alternatives
+        </IntroTitle>
+
+        {otherAlternatives.map(alternative => (
+          <AlternativeRecord key={alternative.id} alternative={alternative} showCount />
+        ))}
       </Grid>
+
+      {!alternatives.length && <p>No alternatives found.</p>}
     </>
   )
 }

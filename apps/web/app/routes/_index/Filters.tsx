@@ -2,10 +2,9 @@ import { useLocalStorage, useMediaQuery } from "@uidotdev/usehooks"
 import { PanelBottomCloseIcon, PanelBottomOpenIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
-import { useInstantSearch } from "react-instantsearch"
 import { Button } from "~/components/ui/button"
+import { HitsPerPage } from "~/routes/_index/hits-per-page"
 import { cx } from "~/utils/cva"
-import { HitsPerPage } from "./hits-per-page"
 import { Refinements } from "./refinements"
 import { SearchBox } from "./search-box"
 import { SortBy } from "./sort-by"
@@ -13,7 +12,6 @@ import { SortBy } from "./sort-by"
 export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const isMobile = useMediaQuery("only screen and (max-width : 768px)")
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage("filtersOpen", false)
-  const { results } = useInstantSearch()
 
   const sortByItems = [
     { value: "openalternative", label: "Relevance" },
@@ -60,18 +58,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
         </Button>
       </div>
 
-      {isFiltersOpen && (
-        <>
-          <Refinements />
-
-          <div className="flex items-center justify-between gap-4 text-xs text-secondary">
-            <p>
-              Found <strong className="font-medium text-foreground">{results?.nbHits}</strong>{" "}
-              results in {results?.processingTimeMS}ms
-            </p>
-          </div>
-        </>
-      )}
+      <Refinements className={cx(!isFiltersOpen && "hidden")} />
     </div>
   )
 }

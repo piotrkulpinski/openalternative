@@ -77,7 +77,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
             alt={`Screenshot of ${tool.name} website`}
             width={1280}
             height={1024}
-            loading="eager"
+            loading="lazy"
             className="aspect-video h-auto w-full rounded-md border object-cover object-top group-hover:brightness-95"
             style={{ viewTransitionName: vt ? `tool-${tool.id}-screenshot` : undefined }}
           />

@@ -35,9 +35,13 @@ const Intro = ({ children, className, alignment, title, description, ...props }:
   )
 }
 
-const IntroTitle = ({ size = "h1", ...props }: HTMLAttributes<HTMLElement> & HeadingProps) => {
+const IntroTitle = ({
+  className,
+  size = "h1",
+  ...props
+}: HTMLAttributes<HTMLElement> & HeadingProps) => {
   return (
-    <div className="relative">
+    <div className={cx("relative", className)}>
       <Heading size={size} {...props} />
       <div className="absolute -bottom-2 inset-x-0 h-8 bg-gradient-to-t from-background/40 to-transparent pointer-events-none select-none" />
     </div>

@@ -1,6 +1,11 @@
 import { history } from "instantsearch.js/es/lib/routers"
 import { type ComponentProps, useRef } from "react"
-import { Configure, InstantSearch } from "react-instantsearch"
+import {
+  Configure,
+  InstantSearch,
+  InstantSearchSSRProvider,
+  type InstantSearchServerState,
+} from "react-instantsearch"
 import { ClientOnly } from "remix-utils/client-only"
 import { Input } from "~/components/ui/forms/input"
 import { searchClient } from "~/services.server/algolia"
@@ -10,11 +15,12 @@ import { Listing } from "./listing"
 import { Pagination } from "./pagination"
 
 type SearchProps = {
+  serverState?: InstantSearchServerState
   url: URL | string
   sponsoring: SponsoringOne | null
 }
 
-export const Search = ({ url, sponsoring }: SearchProps) => {
+export const Search = ({ serverState, url, sponsoring }: SearchProps) => {
   const listingRef = useRef<HTMLDivElement>(null)
   const indexName = import.meta.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME ?? ""
 
@@ -33,15 +39,17 @@ export const Search = ({ url, sponsoring }: SearchProps) => {
   }
 
   return (
-    <InstantSearch {...instantSearchOptions}>
-      <Configure />
+    <InstantSearchSSRProvider {...serverState}>
+      <InstantSearch {...instantSearchOptions}>
+        <Configure />
 
-      <div ref={listingRef} className="flex flex-col gap-4 scroll-mt-14">
-        <ClientOnly fallback={<Input disabled />}>{() => <Filters />}</ClientOnly>
-        <Listing sponsoring={sponsoring} />
-      </div>
+        <div ref={listingRef} className="flex flex-col gap-4 scroll-mt-14">
+          <ClientOnly fallback={<Input disabled />}>{() => <Filters />}</ClientOnly>
+          <Listing sponsoring={sponsoring} />
+        </div>
 
-      <Pagination listingRef={listingRef} padding={2} />
-    </InstantSearch>
+        <Pagination listingRef={listingRef} padding={2} />
+      </InstantSearch>
+    </InstantSearchSSRProvider>
   )
 }

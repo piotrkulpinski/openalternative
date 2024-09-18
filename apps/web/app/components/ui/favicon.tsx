@@ -26,7 +26,7 @@ export const FaviconImage = ({ className, src, title, ...props }: FaviconProps) 
   return (
     <img
       alt={title ? `Favicon of ${title} website` : undefined}
-      loading="eager"
+      loading="lazy"
       width="64"
       height="64"
       className={cx("aspect-square size-9 rounded", className)}
