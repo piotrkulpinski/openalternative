@@ -84,15 +84,17 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       }, {}),
     ).sort((a, b) => b.count - a.count)
 
-    switch (tools.length) {
-      case 0:
-        suffix = ""
-        break
-      case 1:
-        suffix = `: Best ${categories[0].category.label}`
-        break
-      default:
-        suffix = `: Top ${tools.length} ${categories[0].category.label}`
+    if (categories.length) {
+      switch (tools.length) {
+        case 0:
+          suffix = ""
+          break
+        case 1:
+          suffix = `: Best ${categories[0].category.label}`
+          break
+        default:
+          suffix = `: Top ${tools.length} ${categories[0].category.label}`
+      }
     }
 
     const meta = {
@@ -104,7 +106,8 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       { meta, alternative, alternatives, tools, categories },
       { headers: { ...JSON_HEADERS } },
     )
-  } catch {
+  } catch (error) {
+    console.error(error)
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }

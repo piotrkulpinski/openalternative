@@ -57,7 +57,8 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     }
 
     return json({ post, sponsor, meta })
-  } catch {
+  } catch (error) {
+    console.error(error)
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
