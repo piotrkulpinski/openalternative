@@ -27,7 +27,7 @@ export const meta: MetaFunction = ({ matches, location }) => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
 
-  const [sponsoring, newToolCount, alternatives] = await Promise.all([
+  const [sponsoring, newToolCount, alternatives, serverState] = await Promise.all([
     // Find sponsoring
     prisma.sponsoring.findFirst({
       where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
@@ -45,11 +45,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       include: alternativeManyPayload,
       take: 6,
     }),
-  ])
 
-  const serverState = await getServerState(<Search url={url} sponsoring={sponsoring} />, {
-    renderToString,
-  })
+    // Algolia server state
+    getServerState(<Search url={url} sponsoring={null} />, { renderToString }),
+  ])
 
   return json({ url, sponsoring, alternatives, newToolCount, serverState })
 }
