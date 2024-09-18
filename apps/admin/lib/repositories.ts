@@ -1,4 +1,5 @@
 import type { Tool } from "@openalternative/db"
+import type { Jsonify } from "inngest/helpers/jsonify"
 import { firstCommitQuery, githubClient, repositoryQuery } from "~/services/github"
 import type { FirstCommitQueryResult, RepositoryQueryResult } from "~/types/github"
 import { getSlug } from "~/utils/helpers"
@@ -103,8 +104,9 @@ const queryFirstCommit = async (repo: Repository, after: string) => {
   } catch {}
 }
 
-export const fetchRepositoryData = async (url: string, bump?: number | null) => {
-  const repo = getRepoOwnerAndName(url)
+export const fetchToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
+  const repo = getRepoOwnerAndName(tool.repository)
+  let firstCommitDate = null
 
   if (!repo) return null
 
@@ -123,12 +125,18 @@ export const fetchRepositoryData = async (url: string, bump?: number | null) => 
     defaultBranchRef,
   } = queryResult
 
-  const totalCommits = defaultBranchRef.target.history.totalCount
-  const startCursor = defaultBranchRef.target.history.pageInfo.startCursor
-  const after = startCursor.replace(/\b0+\b/g, (totalCommits - 2).toString())
-  const firstCommitDate = new Date((await queryFirstCommit(repo, after)) || "")
-  const lastCommitDate = new Date(defaultBranchRef.target.history.nodes[0]?.committedDate || "")
-  console.log(after, firstCommitDate, lastCommitDate)
+  const lastCommit = defaultBranchRef.target.history
+
+  if (tool.firstCommitDate) {
+    firstCommitDate = new Date(tool.firstCommitDate)
+  } else {
+    const totalCommits = lastCommit.totalCount
+    const startCursor = lastCommit.pageInfo.startCursor
+    const after = startCursor.replace(/\b0+\b/g, (totalCommits - 2).toString())
+    firstCommitDate = new Date((await queryFirstCommit(repo, after)) || "1970-01-01")
+  }
+
+  const lastCommitDate = new Date(lastCommit.nodes[0]?.committedDate || "1970-01-01")
 
   // Extract and transform the necessary metrics
   const metrics = {
@@ -181,8 +189,8 @@ export const fetchRepositoryData = async (url: string, bump?: number | null) => 
  * @param tool - The tool to fetch the repository data for.
  * @returns The repository data for the tool.
  */
-export const getRepositoryData = async (tool: Pick<Tool, "id" | "repository" | "bump">) => {
-  const repo = await fetchRepositoryData(tool.repository, tool.bump)
+export const getToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
+  const repo = await fetchToolRepositoryData(tool)
 
   if (!repo) {
     return null
