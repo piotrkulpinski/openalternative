@@ -12,14 +12,17 @@ import { ThemeSwitcher } from "~/components/ui/theme-switcher"
 import { Tooltip } from "~/components/ui/tooltip"
 import {
   CLIMATE_URL,
+  FAMILY_LINKS,
   GITHUB_URL,
   SITE_EMAIL,
+  SITE_NAME,
   SITE_STATS,
   SITE_URL,
   TWITTER_AUTHOR_URL,
   TWITTER_URL,
 } from "~/utils/constants"
 import { cx } from "~/utils/cva"
+import { addUTMTracking } from "~/utils/helpers"
 
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
@@ -90,21 +93,17 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
           <H6 as="strong">Other Products:</H6>
 
-          <NavigationLink
-            to="https://superstash.co?utm_source=openalternative&utm_campaign=Family&utm_medium=web"
-            target="_blank"
-            rel="nofollow noreferrer"
-          >
-            Superstash
-          </NavigationLink>
-
-          <NavigationLink
-            to="https://chipmunktheme.com?utm_source=openalternative&utm_campaign=Family&utm_medium=web"
-            target="_blank"
-            rel="nofollow noreferrer"
-          >
-            Chipmunk Theme
-          </NavigationLink>
+          {FAMILY_LINKS.map(link => (
+            <NavigationLink
+              key={link.href}
+              to={addUTMTracking(link.href, { source: SITE_NAME.toLowerCase() })}
+              target="_blank"
+              rel="nofollow noreferrer"
+              title={link.description}
+            >
+              {link.title}
+            </NavigationLink>
+          ))}
         </Stack>
       </div>
 

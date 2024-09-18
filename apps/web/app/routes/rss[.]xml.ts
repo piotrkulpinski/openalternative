@@ -1,5 +1,6 @@
 import { prisma } from "~/services.server/prisma"
 import { SITE_NAME, SITE_TAGLINE } from "~/utils/constants"
+import { addUTMTracking } from "~/utils/helpers"
 
 export const loader = async () => {
   const url = import.meta.env.NEXT_PUBLIC_SITE_URL ?? ""
@@ -16,7 +17,7 @@ export const loader = async () => {
     <channel>
       <title>${SITE_NAME}</title>
       <description>${SITE_TAGLINE}</description>
-      <link>${url}</link>
+      <link>${addUTMTracking(url, { source: "rss" })}</link>
       <language>en-us</language>
       <ttl>60</ttl>
       <atom:link href="${url}/rss.xml" rel="self" type="application/rss+xml" />
@@ -27,7 +28,7 @@ export const loader = async () => {
         <title><![CDATA[${tool.name}]]></title>
         <description><![CDATA[${tool.description}]]></description>
         <pubDate>${tool.publishedAt?.toUTCString()}</pubDate>
-        <link>${url}/${tool.slug}</link>
+        <link>${addUTMTracking(`${url}/${tool.slug}`, { source: "rss" })}</link>
         <guid isPermaLink="false">${tool.id}</guid>
       </item>`,
         )

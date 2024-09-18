@@ -1,4 +1,5 @@
 import type { SponsoringOne } from "~/services.server/api"
+import { addUTMTracking } from "~/utils/helpers"
 
 export const SITE_URL = import.meta.env.NEXT_PUBLIC_SITE_URL
 export const SITE_EMAIL = import.meta.env.NEXT_PUBLIC_SITE_EMAIL
@@ -35,10 +36,21 @@ export const LATEST_TOOLS_TRESHOLD = new Date(new Date().setDate(new Date().getD
 export const TOPICS_PER_PAGE = 150
 export const SUBMISSION_POSTING_RATE = 3
 
-export const DAY_IN_MS = 1000 * 60 * 60 * 24
-
 export const SPONSORING_PRICE = 15
 export const SPONSORING_PREMIUM_TRESHOLD = 30
+
+export const FAMILY_LINKS = [
+  {
+    title: "Superstash",
+    href: "https://superstash.co",
+    description: "No-code directory website builder",
+  },
+  {
+    title: "Chipmunk Theme",
+    href: "https://chipmunktheme.com",
+    description: "Build directory websites in WordPress",
+  },
+]
 
 export const HOSTING_SPONSOR: SponsoringOne = {
   name: "Easypanel",
@@ -51,7 +63,7 @@ export const HOSTING_SPONSOR: SponsoringOne = {
 export const BANNER_SPONSOR: SponsoringOne = {
   name: "Polar",
   description: "An open source Lemon Squeezy alternative with 20% lower fees",
-  website: "https://polar.sh/?utm_source=openalternative.co",
+  website: addUTMTracking("https://polar.sh", { source: "openalternative.co" }),
   faviconUrl: "https://s3.us-east-1.amazonaws.com/openalternative/polar/favicon.png",
 }
 
