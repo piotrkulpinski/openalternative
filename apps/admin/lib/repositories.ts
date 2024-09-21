@@ -70,9 +70,9 @@ const calculateHealthScore = ({
   const ageFactor = 0.5 + 0.5 / (1 + ageInYears / 5)
 
   const starsScore = stars * 0.25 * ageFactor
-  const forksScore = forks * 0.5 * ageFactor
-  const contributorsScore = contributors * 0.5 * ageFactor
+  const forksScore = forks * 0.25 * ageFactor
   const watchersScore = watchers * 0.25 * ageFactor
+  const contributorsScore = contributors * 0.5 * ageFactor
 
   return Math.round(
     starsScore + forksScore + contributorsScore + watchersScore - lastCommitPenalty + (bump || 0),

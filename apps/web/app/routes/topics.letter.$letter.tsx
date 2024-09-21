@@ -20,10 +20,12 @@ export const handle = {
 
 export const loader = async ({ params: { letter } }: LoaderFunctionArgs) => {
   const topics = await prisma.topic.findMany({
-    where:
-      letter === "&"
+    where: {
+      tools: { some: { tool: { publishedAt: { lte: new Date() } } } },
+      ...(letter === "&"
         ? { NOT: ALPHABET.split("").map(startsWith => ({ slug: { startsWith } })) }
-        : { slug: { startsWith: letter } },
+        : { slug: { startsWith: letter } }),
+    },
     orderBy: [{ tools: { _count: "desc" } }, { slug: "asc" }],
     include: topicManyPayload,
   })
