@@ -2,10 +2,6 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/latest",
-      "destination": "/?openalternative[sortBy]=openalternative_published_desc"
-    },
-    {
       "source": "/tool/:path*",
       "destination": "/:path*"
     },
