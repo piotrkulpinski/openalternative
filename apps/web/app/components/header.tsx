@@ -98,7 +98,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
                 <NavigationLink to="/latest" unstable_viewTransition>
-                  <CalendarDaysIcon className="size-4 opacity-75" /> Latest
+                  <CalendarDaysIcon className="size-4 opacity-75" /> Latest tools
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
