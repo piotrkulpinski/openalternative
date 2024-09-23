@@ -30,6 +30,7 @@ export const FEATURED_ALTERNATIVES = [
   "teamwork",
   "todoist",
   "kissmetrics",
+  "fathom-analytics",
 ]
 
 export const DAY_IN_MS = 1000 * 60 * 60 * 24

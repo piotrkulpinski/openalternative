@@ -15,7 +15,7 @@ This article delves into the fascinating world of open source business models, e
 
 ## 1. Donations: The Power of Community Support
 
-At its core, **open source is about community**, and many projects rely on the generosity of their users for financial support. Platforms like [Patreon](https://patreon.com), [Open Collective](https://opencollective.com), and [GitHub Sponsors](https://github.com/sponsors) have made it easier than ever for individuals and organizations to contribute financially to the development and maintenance of open source software.
+At its core, **open source is about community**, and many projects rely on the generosity of their users for financial support. Platforms like [Polar](/polar), [Patreon](https://patreon.com), [Open Collective](https://opencollective.com), and [GitHub Sponsors](https://github.com/sponsors) have made it easier than ever for individuals and organizations to contribute financially to the development and maintenance of open source software.
 
 ### How It Works:
 - Projects set up donation pages or accounts on crowdfunding platforms.
@@ -56,7 +56,7 @@ One of the most popular ways open source companies monetize their software is by
 ### Examples:
 1. [WordPress.com](/wordpress) (by Automattic) offers hosted versions of the open source WordPress software.
 2. [GitLab](/gitlab) provides both self-hosted and fully-managed versions of their DevOps platform.
-3. [Elastic](https://elastic.co) offers Elastic Cloud, a managed service for their open source search and analytics engine.
+3. [Elastic](/alternatives/elasticsearch) offers Elastic Cloud, a managed service for their open source search and analytics engine.
 
 This model is particularly effective for complex software that requires significant setup and maintenance, such as databases, content management systems, and development tools. It allows companies to leverage their expertise in running and scaling their own software, **providing value that goes beyond the code itself**.
 
