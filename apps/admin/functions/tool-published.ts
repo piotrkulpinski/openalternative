@@ -9,9 +9,9 @@ import { getToolRepositoryData } from "~/lib/repositories"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 
-export const toolCreated = inngest.createFunction(
-  { id: "tool.created" },
-  { event: "tool.created" },
+export const toolPublished = inngest.createFunction(
+  { id: "tool.published" },
+  { event: "tool.published" },
 
   async ({ event, step }) => {
     const tool = await step.run("find-tool", async () => {
