@@ -24,7 +24,7 @@ export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
       className={cx("flex items-center shrink-0", className)}
       {...props}
     >
-      <div className="relative flex items-center">
+      <div className="relative flex">
         <Input
           ref={inputRef}
           name="openalternative[query]"
@@ -41,7 +41,7 @@ export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
         <button
           type="button"
           className={cx(
-            "p-1 text-muted hover:text-foreground duration-200 ease-in-out absolute right-0",
+            "p-1 text-muted hover:text-foreground duration-200 ease-in-out absolute inset-y-0 right-0",
             isExpanded ? "opacity-0 translate-x-0.5 pointer-events-none" : "opacity-100",
           )}
           onClick={handleExpand}

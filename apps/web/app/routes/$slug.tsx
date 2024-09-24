@@ -154,9 +154,6 @@ export const loader = async ({ request, params: { slug } }: LoaderFunctionArgs) 
           skip,
         })
       })(),
-
-      // Get newsletter test value
-      // getPostHogFlagValue(request, "visit-label"),
     ])
 
     switch (alternatives.length) {
