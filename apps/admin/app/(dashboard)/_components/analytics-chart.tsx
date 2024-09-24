@@ -41,7 +41,7 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
           {data.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={index === data.length - 1 ? "hsl(var(--chart-4) / 0.5)" : "hsl(var(--chart-4))"}
+              fill={`hsl(var(--chart-4) / ${index === data.length - 1 ? "0.5" : "1"})`}
             />
           ))}
         </Bar>
