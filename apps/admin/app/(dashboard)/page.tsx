@@ -1,10 +1,10 @@
 import { Suspense } from "react"
 import { AnalyticsCard, AnalyticsCardSkeleton } from "~/app/(dashboard)/_components/analytics-card"
-import { StatsCard } from "~/app/(dashboard)/_components/stats-card"
 import {
-  UpcomingToolsCard,
-  UpcomingToolsCardSkeleton,
-} from "~/app/(dashboard)/_components/upcoming-tools-card"
+  ScheduledToolsCard,
+  ScheduledToolsCardSkeleton,
+} from "~/app/(dashboard)/_components/scheduled-tools-card"
+import { StatsCard } from "~/app/(dashboard)/_components/stats-card"
 import { Card, CardHeader } from "~/components/ui/card"
 import { H3 } from "~/components/ui/heading"
 import { Skeleton } from "~/components/ui/skeleton"
@@ -32,8 +32,8 @@ export default function DashboardPage() {
           <AnalyticsCard className="col-span-full lg:col-span-3" />
         </Suspense>
 
-        <Suspense fallback={<UpcomingToolsCardSkeleton className="col-span-full lg:col-span-3" />}>
-          <UpcomingToolsCard className="col-span-full lg:col-span-3" />
+        <Suspense fallback={<ScheduledToolsCardSkeleton className="col-span-full lg:col-span-3" />}>
+          <ScheduledToolsCard className="col-span-full lg:col-span-3" />
         </Suspense>
       </div>
     </>

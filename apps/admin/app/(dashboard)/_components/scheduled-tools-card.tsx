@@ -1,12 +1,12 @@
-import { formatDistance } from "date-fns"
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { ScrollArea } from "~/components/ui/scroll-area"
 import { Skeleton } from "~/components/ui/skeleton"
 import { prisma } from "~/services/prisma"
+import { formatRelativeDate } from "~/utils/helpers"
 
-export const UpcomingToolsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
+export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { gt: new Date() } },
     select: { id: true, name: true, publishedAt: true },
@@ -16,7 +16,7 @@ export const UpcomingToolsCard = async ({ ...props }: ComponentProps<typeof Card
   return (
     <Card {...props}>
       <CardHeader>
-        <CardDescription>Upcoming Tools</CardDescription>
+        <CardDescription>Scheduled Tools</CardDescription>
         <CardTitle className="text-3xl tabular-nums">{tools.length}</CardTitle>
       </CardHeader>
 
@@ -34,7 +34,7 @@ export const UpcomingToolsCard = async ({ ...props }: ComponentProps<typeof Card
 
                 {tool.publishedAt && (
                   <span className="shrink-0 text-muted-foreground group-hover:text-foreground">
-                    in {formatDistance(tool.publishedAt, new Date())}
+                    {formatRelativeDate(tool.publishedAt, { addSuffix: true })}
                   </span>
                 )}
               </Link>
@@ -48,7 +48,7 @@ export const UpcomingToolsCard = async ({ ...props }: ComponentProps<typeof Card
   )
 }
 
-export const UpcomingToolsCardSkeleton = ({ ...props }: ComponentProps<typeof Card>) => {
+export const ScheduledToolsCardSkeleton = ({ ...props }: ComponentProps<typeof Card>) => {
   return (
     <Card {...props}>
       <CardHeader>
