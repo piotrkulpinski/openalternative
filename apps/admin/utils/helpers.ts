@@ -1,5 +1,13 @@
 import slugify, { type Options as SlugifyOptions } from "@sindresorhus/slugify"
+import { type FormatDistanceOptions, formatDistance } from "date-fns"
 
+/**
+ * Formats a date using the `Intl.DateTimeFormat` function.
+ *
+ * @param date - The date to be formatted.
+ * @param opts - Additional formatting options.
+ * @returns The formatted date string.
+ */
 export function formatDate(date: Date | string | number, opts: Intl.DateTimeFormatOptions = {}) {
   return new Intl.DateTimeFormat("en-US", {
     month: opts.month ?? "long",
@@ -7,6 +15,18 @@ export function formatDate(date: Date | string | number, opts: Intl.DateTimeForm
     year: opts.year ?? "numeric",
     ...opts,
   }).format(new Date(date))
+}
+
+/**
+ * Formats a date using the `formatDistance` function from `date-fns`,
+ * removing the "about", "over", and "almost" prefixes.
+ *
+ * @param date - The date to be formatted.
+ * @param options - Additional formatting options.
+ * @returns The formatted date string.
+ */
+export const formatRelativeDate = (date: Date | string, options?: FormatDistanceOptions) => {
+  return formatDistance(new Date(date), new Date(), options).replace(/about |over |almost /, "")
 }
 
 /**
@@ -55,6 +75,11 @@ export function composeEventHandlers<E>(
   }
 }
 
+/**
+ * Converts null and undefined values to undefined
+ * @param obj
+ * @returns
+ */
 export function nullsToUndefined<T>(obj: T) {
   if (obj === null || obj === undefined) {
     return undefined as any
