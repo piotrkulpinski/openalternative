@@ -1,7 +1,7 @@
 "use client"
 
 import type { ComponentProps } from "react"
-import { Bar, BarChart, Label, Rectangle, ReferenceLine, XAxis } from "recharts"
+import { Bar, BarChart, Cell, Label, Rectangle, ReferenceLine, XAxis } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "~/components/ui/chart"
 import { Skeleton } from "~/components/ui/skeleton"
 import { formatDate } from "~/utils/helpers"
@@ -26,7 +26,6 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
       config={{
         visitors: {
           label: "Visitors",
-          color: "hsl(var(--chart-4))",
         },
         ...config,
       }}
@@ -35,11 +34,17 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
       <BarChart accessibilityLayer margin={{ left: -2, right: -2 }} data={data}>
         <Bar
           dataKey="visitors"
-          fill="var(--color-visitors)"
-          radius={5}
+          radius={4}
           fillOpacity={0.75}
           activeBar={<Rectangle fillOpacity={1} />}
-        />
+        >
+          {data.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={index === data.length - 1 ? "hsl(var(--chart-4) / 0.5)" : "hsl(var(--chart-4))"}
+            />
+          ))}
+        </Bar>
 
         <XAxis
           dataKey="date"
