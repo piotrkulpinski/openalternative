@@ -16,7 +16,9 @@ export async function createTool(input: Prisma.ToolCreateInput) {
     revalidatePath("/tools")
 
     // Send an event to the Inngest pipeline
-    await inngest.send({ name: "tool.created", data: { id: tool.id } })
+    if (tool.publishedAt) {
+      await inngest.send({ name: "tool.published", data: { id: tool.id } })
+    }
 
     return {
       data: tool,
@@ -120,7 +122,7 @@ export async function publishTool(id: Tool["id"], publishedAt: Date) {
     revalidatePath(`/tools/${tool.slug}`)
 
     // Send an event to the Inngest pipeline
-    await inngest.send({ name: "tool.created", data: { id: tool.id } })
+    await inngest.send({ name: "tool.published", data: { id: tool.id } })
 
     return {
       data: null,

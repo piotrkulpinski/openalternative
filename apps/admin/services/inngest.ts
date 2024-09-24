@@ -2,7 +2,7 @@ import type { Alternative, Tool } from "@openalternative/db"
 import { EventSchemas, Inngest } from "inngest"
 
 type Events = {
-  "tool.created": { data: Pick<Tool, "id"> }
+  "tool.published": { data: Pick<Tool, "id"> }
   "tool.deleted": { data: Pick<Tool, "slug"> }
   "alternative.created": { data: Pick<Alternative, "id"> }
   "alternative.deleted": { data: Pick<Alternative, "slug"> }
