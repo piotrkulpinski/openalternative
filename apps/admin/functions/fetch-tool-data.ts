@@ -28,9 +28,8 @@ export const fetchToolData = inngest.createFunction(
           const milestone = getMilestoneReached(tool.stars, updatedTool.stars)
 
           if (milestone) {
-            const tweetName = tool.twitterHandle ? `@${tool.twitterHandle}` : tool.name
             logger.info(`Sending milestone tweet for ${tool.name}`, { milestone })
-            await sendMilestoneTweet(milestone, tweetName, tool.slug)
+            await sendMilestoneTweet(milestone, tool)
           }
 
           return prisma.tool.update({

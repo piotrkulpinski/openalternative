@@ -9,6 +9,8 @@ import { prisma } from "~/services/prisma"
 export const UpcomingToolsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { gt: new Date() } },
+    select: { id: true, name: true, publishedAt: true },
+    orderBy: { publishedAt: "asc" },
   })
 
   return (
