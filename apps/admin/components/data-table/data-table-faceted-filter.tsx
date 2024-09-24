@@ -100,7 +100,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                           : "opacity-50 [&_svg]:invisible",
                       )}
                     >
-                      <CheckIcon aria-hidden="true" />
+                      <CheckIcon className="size-4" aria-hidden="true" />
                     </div>
                     {option.icon && (
                       <option.icon className="mr-2 text-muted-foreground" aria-hidden="true" />

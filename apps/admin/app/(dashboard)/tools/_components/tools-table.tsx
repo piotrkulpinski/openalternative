@@ -46,23 +46,14 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     },
     // {
     //   label: "Status",
-    //   value: "status",
-    //   options: tools.status.enumValues.map(status => ({
-    //     label: status[0]?.toUpperCase() + status.slice(1),
-    //     value: status,
-    //     icon: getStatusIcon(status),
-    //     withCount: true,
-    //   })),
-    // },
-    // {
-    //   label: "Priority",
-    //   value: "priority",
-    //   options: tools.priority.enumValues.map(priority => ({
-    //     label: priority[0]?.toUpperCase() + priority.slice(1),
-    //     value: priority,
-    //     icon: getPriorityIcon(priority),
-    //     withCount: true,
-    //   })),
+    //   value: "publishedAt",
+    //   options: [
+    //     {
+    //       label: "Published",
+    //       value: "published",
+    //       icon: CheckIcon,
+    //     },
+    //   ],
     // },
   ]
 

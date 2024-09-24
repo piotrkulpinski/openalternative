@@ -96,6 +96,19 @@ export function getColumns(): ColumnDef<Tool>[] {
       size: 0,
     },
     {
+      accessorKey: "publishedAt",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Published At" />,
+      cell: ({ row }) =>
+        row.original.publishedAt ? (
+          <span className="text-muted-foreground">
+            {formatDate(row.getValue<Date>("publishedAt"))}
+          </span>
+        ) : (
+          <span className="text-muted-foreground">—</span>
+        ),
+      size: 0,
+    },
+    {
       id: "actions",
       cell: function Cell({ row }) {
         const [showDeleteToolDialog, setShowDeleteToolDialog] = React.useState(false)
