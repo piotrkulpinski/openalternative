@@ -1,3 +1,5 @@
+import type { Tool } from "@openalternative/db"
+import type { Jsonify } from "inngest/helpers/jsonify"
 import { siteConfig } from "~/config/site"
 import { sendTweet } from "~/services/twitter"
 
@@ -18,21 +20,17 @@ export const getMilestoneReached = (prevStars: number, newStars: number) => {
 /**
  * Send a tweet congratulating a tool for reaching a milestone
  * @param milestone - The milestone reached
- * @param name - The name of the tool
- * @param slug - The slug of the tool
+ * @param tool - The tool object
  */
-export const sendMilestoneTweet = async (milestone: number, name: string, slug: string) => {
-  const tweet = `🎉 ${name} has just reached ${milestone.toLocaleString()} stars on GitHub!
-Huge congrats to the team!
+export const sendMilestoneTweet = async (milestone: number, tool: Tool | Jsonify<Tool>) => {
+  const tweet = `${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub! Huge congrats to the${tool.twitterHandle ? ` @${tool.twitterHandle}` : ""} team! 🎉
 
-Check it out on OpenAlternative: ${siteConfig.url}/${slug}
-
-#opensource #openalternative #github #software`
+Check it out on OpenAlternative: ${siteConfig.url}/${tool.slug}`
 
   try {
     await sendTweet(tweet)
-    console.log(`Tweet sent for ${name}`)
+    console.log(`Tweet sent for ${tool.name}`)
   } catch (error) {
-    console.error(`Error sending tweet for ${name}:`, error)
+    console.error(`Error sending tweet for ${tool.name}:`, error)
   }
 }
