@@ -22,18 +22,8 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
       width: 1200,
       height: 630,
       fonts: [
-        {
-          name: "Geist",
-          data: fontRegular,
-          weight: 400,
-          style: "normal",
-        },
-        {
-          name: "Geist",
-          data: fontBold,
-          weight: 600,
-          style: "normal",
-        },
+        { name: "Geist", data: fontRegular, weight: 400, style: "normal" },
+        { name: "Geist", data: fontBold, weight: 600, style: "normal" },
       ],
     })
 
