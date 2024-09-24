@@ -2,6 +2,7 @@ import type { Tool } from "@openalternative/db"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { firstCommitQuery, githubClient, repositoryQuery } from "~/services/github"
 import type { FirstCommitQueryResult, RepositoryQueryResult } from "~/types/github"
+import { DAY_IN_MS } from "~/utils/constants"
 import { getSlug } from "~/utils/helpers"
 
 type Repository = {
@@ -58,13 +59,12 @@ const calculateHealthScore = ({
   lastCommitDate,
   bump,
 }: GetToolScoreProps) => {
-  const dayinMs = 1000 * 60 * 60 * 24
   const timeSinceLastCommit = Date.now() - (lastCommitDate?.getTime() || 0)
-  const daysSinceLastCommit = timeSinceLastCommit / dayinMs
+  const daysSinceLastCommit = timeSinceLastCommit / DAY_IN_MS
   const lastCommitPenalty = Math.min(daysSinceLastCommit, 90) * 0.5
 
   // Calculate repository age in years using firstCommitDate
-  const ageInYears = (Date.now() - firstCommitDate.getTime()) / (dayinMs * 365.25)
+  const ageInYears = (Date.now() - firstCommitDate.getTime()) / (DAY_IN_MS * 365.25)
 
   // This factor will be between 0.5 (for very old repos) and 1 (for new repos)
   const ageFactor = 0.5 + 0.5 / (1 + ageInYears / 5)
