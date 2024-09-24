@@ -126,7 +126,7 @@ export function CategoryForm({
           control={form.control}
           name="label"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="col-span-full">
               <FormLabel>Label</FormLabel>
               <FormControl>
                 <Input {...field} />
