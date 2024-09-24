@@ -50,7 +50,7 @@ export function CategoryForm({
     startSubmitTransition(async () => {
       const payload = {
         ...input,
-        slug: getSlug(input.name),
+        slug: input.slug || getSlug(input.name),
 
         tools: {
           // Delete existing relations
@@ -100,6 +100,20 @@ export function CategoryForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Slug</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
