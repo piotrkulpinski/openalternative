@@ -50,6 +50,14 @@ export const joinAsSentence = (items: string[], maxItems = 3, lastItem = "and") 
     .replace(/, ([^,]*)$/, ` ${lastItem} $1`)
 }
 
+/**
+ * Formats a date using the `formatDistance` function from `date-fns`,
+ * removing the "about", "over", and "almost" prefixes.
+ *
+ * @param date - The date to be formatted.
+ * @param options - Additional formatting options.
+ * @returns The formatted date string.
+ */
 export const formatDate = (date: Date | string, options?: FormatDistanceOptions) => {
   return formatDistance(new Date(date), new Date(), options).replace(/about |over |almost /, "")
 }

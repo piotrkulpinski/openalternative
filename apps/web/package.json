@@ -33,7 +33,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "algoliasearch": "^5.4.1",
     "cva": "beta",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "got": "^14.4.2",
     "instantsearch.js": "^4.74.1",
     "isbot": "^4.4.0",
