@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot"
-import { type HTMLAttributes, type ReactNode, isValidElement } from "react"
+import { type HTMLAttributes, type ReactNode, forwardRef, isValidElement } from "react"
 import { Slottable } from "~/components/ui/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -51,14 +51,14 @@ export const badgeAffixVariants = cva({
   base: "shrink-0 size-[1.1em]",
 })
 
-export const Badge = (props: BadgeProps) => {
+export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props: BadgeProps, ref) => {
   const { children, className, asChild, variant, size, prefix, suffix, ...rest } = props
 
   const useAsChild = asChild && isValidElement(props.children)
   const Component = useAsChild ? Slot : "span"
 
   return (
-    <Component className={cx(badgeVariants({ variant, size, className }))} {...rest}>
+    <Component className={cx(badgeVariants({ variant, size, className }))} {...rest} ref={ref}>
       <Slottable child={children} asChild={asChild}>
         {child => (
           <>
@@ -70,4 +70,4 @@ export const Badge = (props: BadgeProps) => {
       </Slottable>
     </Component>
   )
-}
+})
