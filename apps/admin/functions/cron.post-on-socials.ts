@@ -11,7 +11,12 @@ export const postOnSocials = inngest.createFunction(
   async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return prisma.tool.findMany({
-        where: { publishedAt: { gte: new Date(new Date().getTime() - DAY_IN_MS) } },
+        where: {
+          publishedAt: {
+            gte: new Date(new Date().getTime() - DAY_IN_MS),
+            lte: new Date(),
+          },
+        },
       })
     })
 
