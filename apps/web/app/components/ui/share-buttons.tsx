@@ -10,7 +10,7 @@ import { BrandRedditIcon } from "~/components/ui/icons/brand-reddit"
 import { BrandWhatsAppIcon } from "~/components/ui/icons/brand-whatsapp"
 import { BrandXIcon } from "~/components/ui/icons/brand-x"
 import { Stack } from "~/components/ui/stack"
-import { Tooltip } from "~/components/ui/tooltip"
+import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import { SITE_NAME, SITE_URL } from "~/utils/constants"
 
 type ShareButtonsProps = Omit<HTMLAttributes<HTMLDivElement>, "title"> & {
@@ -62,20 +62,22 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, ...props }) =
       <H5 as="strong">Share:</H5>
 
       <Stack className="gap-1">
-        {shareOptions.map(({ platform, url, icon }) => (
-          <Tooltip key={platform} tooltip={platform}>
-            <Button
-              size="sm"
-              variant="secondary"
-              onClick={() => posthog.capture("share_clicked", { url, platform })}
-              prefix={icon}
-              isAffixOnly
-              asChild
-            >
-              <Link to={url} target="_blank" rel="noopener noreferrer nofollow" />
-            </Button>
-          </Tooltip>
-        ))}
+        <TooltipProvider delayDuration={500} disableHoverableContent>
+          {shareOptions.map(({ platform, url, icon }) => (
+            <Tooltip key={platform} tooltip={platform}>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => posthog.capture("share_clicked", { url, platform })}
+                prefix={icon}
+                isAffixOnly
+                asChild
+              >
+                <Link to={url} target="_blank" rel="noopener noreferrer nofollow" />
+              </Button>
+            </Tooltip>
+          ))}
+        </TooltipProvider>
       </Stack>
     </Stack>
   )
