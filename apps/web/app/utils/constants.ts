@@ -11,13 +11,14 @@ export const SITE_DESCRIPTION =
 export const SITE_STATS = {
   visitors: 40000,
   tools: 260,
-  subscribers: 1400,
+  subscribers: 1500,
   stars: 1600,
 }
 
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 
 export const TWITTER_URL = "https://x.com/ossalternative"
+export const LINKEDIN_URL = "https://linkedin.com/company/openalternative"
 export const TWITTER_AUTHOR_URL = "https://x.com/piotrkulpinski"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
 export const CLIMATE_URL = "https://go.openalternative.co/climate"
@@ -42,6 +43,11 @@ export const SPONSORING_PRICE = 15
 export const SPONSORING_PREMIUM_TRESHOLD = 30
 
 export const FAMILY_LINKS = [
+  {
+    title: "DevSuite",
+    href: "https://devsuite.co",
+    description: "A collection of developer tools that help you Ship Faster",
+  },
   {
     title: "Superstash",
     href: "https://superstash.co",

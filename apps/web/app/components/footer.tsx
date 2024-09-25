@@ -5,15 +5,17 @@ import { ClientOnly } from "remix-utils/client-only"
 import { Newsletter } from "~/components/newsletter"
 import { H6 } from "~/components/ui/heading"
 import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
+import { BrandLinkedInIcon } from "~/components/ui/icons/brand-linkedin"
 import { BrandXIcon } from "~/components/ui/icons/brand-x"
 import { NavigationLink } from "~/components/ui/navigation-link"
 import { Stack } from "~/components/ui/stack"
 import { ThemeSwitcher } from "~/components/ui/theme-switcher"
-import { Tooltip } from "~/components/ui/tooltip"
+import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import {
   CLIMATE_URL,
   FAMILY_LINKS,
   GITHUB_URL,
+  LINKEDIN_URL,
   SITE_EMAIL,
   SITE_NAME,
   SITE_STATS,
@@ -42,31 +44,47 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           />
 
           <Stack className="text-sm/normal">
-            <ClientOnly>{() => <ThemeSwitcher />}</ClientOnly>
+            <TooltipProvider delayDuration={500} disableHoverableContent>
+              <ClientOnly>{() => <ThemeSwitcher />}</ClientOnly>
 
-            <Tooltip tooltip="RSS Feed">
-              <NavigationLink to={`${SITE_URL}/rss.xml`} target="_blank" rel="nofollow noreferrer">
-                <RssIcon className="size-[1.44em] stroke-[1.25]" />
-              </NavigationLink>
-            </Tooltip>
+              <Tooltip tooltip="RSS Feed">
+                <NavigationLink
+                  to={`${SITE_URL}/rss.xml`}
+                  target="_blank"
+                  rel="nofollow noreferrer"
+                >
+                  <RssIcon className="size-[1.44em] stroke-[1.25]" />
+                </NavigationLink>
+              </Tooltip>
 
-            <Tooltip tooltip="Contact Us">
-              <NavigationLink to={`mailto:${SITE_EMAIL}`} target="_blank" rel="nofollow noreferrer">
-                <AtSignIcon className="size-[1.44em] stroke-[1.25]" />
-              </NavigationLink>
-            </Tooltip>
+              <Tooltip tooltip="Contact Us">
+                <NavigationLink
+                  to={`mailto:${SITE_EMAIL}`}
+                  target="_blank"
+                  rel="nofollow noreferrer"
+                >
+                  <AtSignIcon className="size-[1.44em] stroke-[1.25]" />
+                </NavigationLink>
+              </Tooltip>
 
-            <Tooltip tooltip="X/Twitter">
-              <NavigationLink to={TWITTER_URL} target="_blank" rel="nofollow noreferrer">
-                <BrandXIcon className="size-[1.44em] stroke-[1.25]" />
-              </NavigationLink>
-            </Tooltip>
+              <Tooltip tooltip="X/Twitter">
+                <NavigationLink to={TWITTER_URL} target="_blank" rel="nofollow noreferrer">
+                  <BrandXIcon className="size-[1.44em] stroke-[1.25]" />
+                </NavigationLink>
+              </Tooltip>
 
-            <Tooltip tooltip="Source Code">
-              <NavigationLink to={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
-                <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
-              </NavigationLink>
-            </Tooltip>
+              <Tooltip tooltip="LinkedIn">
+                <NavigationLink to={LINKEDIN_URL} target="_blank" rel="nofollow noreferrer">
+                  <BrandLinkedInIcon className="size-[1.44em] stroke-[1.25]" />
+                </NavigationLink>
+              </Tooltip>
+
+              <Tooltip tooltip="Source Code">
+                <NavigationLink to={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
+                  <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
+                </NavigationLink>
+              </Tooltip>
+            </TooltipProvider>
           </Stack>
         </div>
 
@@ -111,7 +129,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         <Stack direction="column">
           <NavigationLink to={TWITTER_AUTHOR_URL} className="text-xs">
             <img
-              src="/users/1.jpg"
+              src="/authors/piotrkulpinski.jpg"
               alt="Piotr Kulpinski"
               loading="lazy"
               width="16"

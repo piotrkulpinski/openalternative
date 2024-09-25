@@ -80,24 +80,22 @@ export const TooltipArrow = forwardRef<
 TooltipArrow.displayName = TooltipPrimitive.Arrow.displayName
 
 export const TooltipBase = forwardRef<TooltipElement, TooltipProps>((props, ref) => {
-  const { children, className, delayDuration = 0, tooltip, ...rest } = props
+  const { children, className, delayDuration, tooltip, ...rest } = props
 
   if (!tooltip) {
     return children
   }
 
   return (
-    <TooltipPrimitive.Provider disableHoverableContent>
-      <TooltipPrimitive.Root delayDuration={delayDuration}>
-        <TooltipPrimitive.Trigger ref={ref} className={className} asChild>
-          {children}
-        </TooltipPrimitive.Trigger>
+    <TooltipRoot delayDuration={delayDuration}>
+      <TooltipTrigger ref={ref} className={className} asChild>
+        {children}
+      </TooltipTrigger>
 
-        <TooltipPrimitive.Portal>
-          <TooltipContent {...rest}>{tooltip}</TooltipContent>
-        </TooltipPrimitive.Portal>
-      </TooltipPrimitive.Root>
-    </TooltipPrimitive.Provider>
+      <TooltipPortal>
+        <TooltipContent {...rest}>{tooltip}</TooltipContent>
+      </TooltipPortal>
+    </TooltipRoot>
   )
 })
 TooltipBase.displayName = "Tooltip"
