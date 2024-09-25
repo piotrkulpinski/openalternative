@@ -1,4 +1,4 @@
-import { siteConfig } from "~/config/site"
+import { generateLaunchTweet } from "~/lib/generate-content"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 import { sendTweet } from "~/services/twitter"
@@ -6,7 +6,7 @@ import { DAY_IN_MS } from "~/utils/constants"
 
 export const postOnSocials = inngest.createFunction(
   { id: "post-on-socials" },
-  { cron: "TZ=Europe/Warsaw 0 10 * * *" },
+  { cron: "TZ=Europe/Warsaw 0 14 * * *" },
 
   async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
@@ -21,18 +21,17 @@ export const postOnSocials = inngest.createFunction(
     })
 
     if (tools.length) {
-      await step.run("post-on-socials", async () => {
-        return Promise.all(
-          tools.map(async tool => {
-            logger.info(`Sending tweet about ${tool.name}`)
-            await sendTweet(`${tool.name} has just been published on OpenAlternative! Congrats to the ${tool.twitterHandle ? `@${tool.twitterHandle}` : ""} team! 🎉
+      const promises = tools.map(async tool =>
+        step.run(`post-on-socials-${tool.name}`, async () => {
+          logger.info(`Generating tweet about ${tool.name}`)
+          const { tweet } = await generateLaunchTweet(tool)
 
-➡️ ${tool.tagline}
+          logger.info(`Sending tweet about ${tool.name}`, { tweet })
+          return sendTweet(tweet)
+        }),
+      )
 
-Check it out: ${siteConfig.url}/${tool.slug}`)
-          }),
-        )
-      })
+      await Promise.all(promises)
     }
 
     // Disconnect from DB

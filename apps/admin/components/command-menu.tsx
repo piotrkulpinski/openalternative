@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { indexSearch } from "~/actions/algolia"
 import { searchItems } from "~/actions/search"
+import { generateTweet } from "~/actions/tweet"
 import {
   CommandDialog,
   CommandEmpty,
@@ -78,6 +79,11 @@ export const CommandMenu = () => {
     toast.success("Search index updated")
   }
 
+  const handleGenerateTweet = async () => {
+    await generateTweet()
+    toast.success("Tweet generated")
+  }
+
   const handleSelectItem = (item: any, type: string) => {
     handleOpenChange(false)
     router.push(`/${type}/${item.id}`)
@@ -100,6 +106,7 @@ export const CommandMenu = () => {
         {!searchResults && (
           <CommandGroup heading="Quick Commands">
             <CommandItem onSelect={handleIndexSearch}>Index Search</CommandItem>
+            <CommandItem onSelect={handleGenerateTweet}>Generate Tweet</CommandItem>
           </CommandGroup>
         )}
 

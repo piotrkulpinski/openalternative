@@ -5,6 +5,7 @@ import { generateObject } from "ai"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { z } from "zod"
 import { linkSchema } from "~/app/(dashboard)/tools/_lib/validations"
+import { siteConfig } from "~/config/site"
 import { getErrorMessage } from "~/lib/handle-error"
 import { firecrawlClient } from "~/services/firecrawl"
 import { prisma } from "~/services/prisma"
@@ -127,6 +128,45 @@ export const generateAlternatives = async (tool: string) => {
       === Start of Open Source Product ===
       ${tool}
       === End of Open Source Product ===
+    `,
+  })
+
+  return object
+}
+
+/**
+ * Generates a launch tweet for a tool.
+ * @param tool The tool to generate a launch tweet for.
+ * @returns The launch tweet.
+ */
+export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
+  const model = openai("gpt-4o")
+
+  const { object } = await generateObject({
+    model,
+    schema: z.object({
+      tweet: z.string().max(280).describe("The launch tweet"),
+    }),
+    system: `
+      You are an expert content creator.
+      Use new lines to separate paragraphs.
+      Use the following template:
+      "
+      🚀 Just published — {name} ({twitter handle}): {tagline}
+
+      {description}
+
+      {links}
+      "
+    `,
+    prompt: `
+      Generate a tweet to announce the feature of the following open source software product:
+
+      Name: "${tool.name}"
+      Tagline: "${tool.tagline}"
+      Description: "${tool.description}"
+      Twitter Handle: "${tool.twitterHandle}"
+      Link: "${siteConfig.url}/${tool.slug}"
     `,
   })
 
