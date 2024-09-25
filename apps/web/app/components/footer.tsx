@@ -12,7 +12,6 @@ import { Stack } from "~/components/ui/stack"
 import { ThemeSwitcher } from "~/components/ui/theme-switcher"
 import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import {
-  CLIMATE_URL,
   FAMILY_LINKS,
   GITHUB_URL,
   LINKEDIN_URL,
@@ -126,33 +125,18 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
       </div>
 
       <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
-        <Stack direction="column">
-          <NavigationLink to={TWITTER_AUTHOR_URL} className="text-xs">
-            <img
-              src="/authors/piotrkulpinski.jpg"
-              alt="Piotr Kulpinski"
-              loading="lazy"
-              width="16"
-              height="16"
-              decoding="async"
-              className="max-sm:hidden size-4 rounded-full"
-            />
-            Made by Piotr Kulpinski
-          </NavigationLink>
-
-          <NavigationLink to={CLIMATE_URL} target="_blank" className="text-xs">
-            <img
-              src="/stripe-climate-badge.svg"
-              alt="Stripe Climate Badge"
-              loading="lazy"
-              width="16"
-              height="16"
-              decoding="async"
-              className="max-sm:hidden size-4"
-            />
-            We contribute part of our revenue to carbon removal
-          </NavigationLink>
-        </Stack>
+        <NavigationLink to={TWITTER_AUTHOR_URL} className="text-xs">
+          <img
+            src="/authors/piotrkulpinski.jpg"
+            alt="Piotr Kulpinski"
+            loading="lazy"
+            width="16"
+            height="16"
+            decoding="async"
+            className="max-sm:hidden size-4 rounded-full"
+          />
+          Made by Piotr Kulpinski
+        </NavigationLink>
 
         <p className="text-xs text-muted">This website may contain affiliate links</p>
       </div>
