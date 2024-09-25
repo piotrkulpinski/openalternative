@@ -2,7 +2,7 @@ import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import type { Hit as AlgoliaHit } from "instantsearch.js"
-import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
+import { GitForkIcon, SparklesIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Highlight } from "react-instantsearch"
 import { Badge } from "~/components/ui/badge"
@@ -10,7 +10,10 @@ import { Card } from "~/components/ui/card"
 import { Favicon } from "~/components/ui/favicon"
 import { H4 } from "~/components/ui/heading"
 import { Insights } from "~/components/ui/insights"
+import { Stack } from "~/components/ui/stack"
+import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import type { ToolMany } from "~/services.server/api"
+import { DAY_IN_MS } from "~/utils/constants"
 import { formatDate } from "~/utils/helpers"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
@@ -56,11 +59,29 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
             <ToolHighlight tool={tool} attribute="name" />
           </H4>
 
-          {tool.discountAmount && (
-            <Badge variant="success" className="ml-auto">
-              {tool.discountAmount}% off
-            </Badge>
-          )}
+          <TooltipProvider delayDuration={500}>
+            <Stack size="sm" className="ml-auto flex-nowrap">
+              {tool.firstCommitDate &&
+                new Date(tool.firstCommitDate).getTime() > Date.now() - DAY_IN_MS * 365 && (
+                  <Tooltip tooltip="Repo is less than 1 year old">
+                    <SparklesIcon className="text-yellow-500" />
+                  </Tooltip>
+                )}
+
+              {tool.publishedAt &&
+                new Date(tool.publishedAt).getTime() > Date.now() - DAY_IN_MS * 30 && (
+                  <Tooltip tooltip="Recently added">
+                    <Badge variant="success">New</Badge>
+                  </Tooltip>
+                )}
+
+              {tool.discountAmount && (
+                <Tooltip tooltip="Discounted price">
+                  <Badge variant="success">{tool.discountAmount}% off</Badge>
+                </Tooltip>
+              )}
+            </Stack>
+          </TooltipProvider>
         </Card.Header>
 
         {tool.description && (
