@@ -2,7 +2,7 @@ import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import type { Hit as AlgoliaHit } from "instantsearch.js"
-import { GitForkIcon, SparklesIcon, StarIcon, TimerIcon } from "lucide-react"
+import { GitForkIcon, PercentIcon, SparklesIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Highlight } from "react-instantsearch"
 import { Badge } from "~/components/ui/badge"
@@ -59,7 +59,12 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
             <ToolHighlight tool={tool} attribute="name" />
           </H4>
 
-          <TooltipProvider delayDuration={500}>
+          {tool.publishedAt &&
+            new Date(tool.publishedAt).getTime() > Date.now() - DAY_IN_MS * 30 && (
+              <Badge variant="success">New</Badge>
+            )}
+
+          <TooltipProvider delayDuration={500} disableHoverableContent>
             <Stack size="sm" className="ml-auto flex-nowrap">
               {tool.firstCommitDate &&
                 new Date(tool.firstCommitDate).getTime() > Date.now() - DAY_IN_MS * 365 && (
@@ -68,16 +73,9 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
                   </Tooltip>
                 )}
 
-              {tool.publishedAt &&
-                new Date(tool.publishedAt).getTime() > Date.now() - DAY_IN_MS * 30 && (
-                  <Tooltip tooltip="Recently added">
-                    <Badge variant="success">New</Badge>
-                  </Tooltip>
-                )}
-
               {tool.discountAmount && (
-                <Tooltip tooltip="Discounted price">
-                  <Badge variant="success">{tool.discountAmount}% off</Badge>
+                <Tooltip tooltip="Exclusive discount">
+                  <PercentIcon className="text-green-500" />
                 </Tooltip>
               )}
             </Stack>

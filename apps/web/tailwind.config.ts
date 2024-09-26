@@ -24,7 +24,7 @@ export default {
         },
       },
       letterSpacing: {
-        micro: "0.0125em",
+        micro: "-0.0125em",
       },
       borderColor: {
         DEFAULT: "hsl(var(--color-border))",

@@ -2,17 +2,17 @@ import { Slot } from "@radix-ui/react-slot"
 import { type ElementType, type HTMLAttributes, forwardRef, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
-export const headingVariants = cva({
-  base: "font-display font-semibold tracking-tight",
+const headingVariants = cva({
+  base: "font-display",
 
   variants: {
     size: {
-      h1: "text-3xl text-pretty md:text-4xl",
-      h2: "text-2xl md:text-3xl",
-      h3: "text-2xl",
-      h4: "text-xl",
+      h1: "text-3xl font-semibold tracking-tight text-pretty md:text-4xl",
+      h2: "text-2xl font-semibold tracking-tight md:text-3xl",
+      h3: "text-2xl font-semibold tracking-tight",
+      h4: "text-xl font-semibold tracking-tight",
       h5: "text-base font-medium tracking-micro",
-      h6: "text-sm font-medium tracking-micro",
+      h6: "text-sm font-medium",
     },
   },
 
