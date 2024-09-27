@@ -157,7 +157,7 @@ export function ToolForm({
               <FormItem>
                 <FormLabel>Slug</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder="posthog" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

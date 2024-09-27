@@ -39,7 +39,7 @@ export const Newsletter = ({
     <Stack
       size="lg"
       direction="column"
-      className={cx("items-stretch", isLargeSize ? "max-w-96" : "max-w-64")}
+      className={cx("items-stretch min-w-0", isLargeSize ? "max-w-96" : "max-w-64")}
       asChild
     >
       <section {...props}>
@@ -52,7 +52,12 @@ export const Newsletter = ({
         {description && <p className="-mt-2 px-0.5 text-sm text-muted first:mt-0">{description}</p>}
 
         {data?.type !== "success" && (
-          <Form method="POST" action="/api/subscribe" className={cx("relative w-full")} noValidate>
+          <Form
+            method="POST"
+            action="/api/subscribe"
+            className="flex border rounded-lg overflow-clip focus-within:outline focus-within:outline-2 focus-within:-outline-offset-1 focus-within:outline-primary"
+            noValidate
+          >
             <input type="hidden" name="utm_medium" value={medium} />
 
             <Input
@@ -62,12 +67,12 @@ export const Newsletter = ({
               data-1p-ignore
               required
               size={size}
-              className={isLargeSize ? "pr-28" : "pr-24"}
+              className="flex-1 min-w-0 border-0 outline-0"
             />
 
             <Button
               isPending={state !== "idle"}
-              className={cx("absolute inset-y-1 right-1", isLargeSize && "text-sm/tight min-w-24")}
+              className={cx("shrink-0 ", isLargeSize ? "text-sm/tight px-4 m-1" : "px-3 m-0.5")}
               {...buttonProps}
             />
           </Form>
