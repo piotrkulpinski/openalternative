@@ -310,7 +310,7 @@ export default function SubmitPage() {
                     <li>Free to use or can be self-hosted</li>
                     <li>Actively maintained</li>
                     <li>
-                      An <Link to="/alternatives">alternative to proprietary software</Link>
+                      An <Link to="/alternatives">alternative to popular software</Link>
                     </li>
                   </ul>
                 </Prose>

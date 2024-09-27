@@ -16,6 +16,7 @@ export type GetAlternativesSchema = z.infer<typeof getAlternativesSchema>
 
 export const alternativeSchema = z.object({
   name: z.string().min(1, "Name is required"),
+  slug: z.string().optional(),
   website: z.string().min(1, "Website is required").url(),
   description: z.string().optional(),
   faviconUrl: z.string().optional(),
