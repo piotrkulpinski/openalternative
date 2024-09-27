@@ -18,7 +18,6 @@ import {
 } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { FEATURED_ALTERNATIVES, JSON_HEADERS } from "~/utils/constants"
-import { joinAsSentence } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
@@ -93,7 +92,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
           suffix = `: Best ${categories[0].category.label}`
           break
         default:
-          suffix = `: Top ${tools.length} ${categories[0].category.label}`
+          suffix = `: Top ${tools.length}+ ${categories[0].category.label}`
       }
     }
 
@@ -129,9 +128,6 @@ export default function AlternativesPage() {
     </Link>
   ))
 
-  // Get the category labels
-  const categoryLabels = categories.map(({ category }) => category.label || category.name)
-
   return (
     <>
       <Intro>
@@ -139,7 +135,7 @@ export default function AlternativesPage() {
 
         <IntroDescription className="max-w-4xl">
           {tools.length
-            ? `The Best ${joinAsSentence(categoryLabels, 2)} similar to ${alternative.name}.`
+            ? `A curated collection of the ${tools.length} best open source alternatives to ${alternative.name}.`
             : `No open source ${alternative.name} alternatives found yet.`}
         </IntroDescription>
       </Intro>
