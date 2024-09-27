@@ -1,6 +1,7 @@
 "use client"
 
 import type { Alternative, Category, License, Tool } from "@openalternative/db"
+import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
@@ -29,6 +30,7 @@ export const CommandMenu = () => {
   const [open, setOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useDebouncedState("", 250)
   const [searchResults, setSearchResults] = useState<SearchResult | null>(null)
+  const [isSearching, setIsSearching] = useState(false)
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -53,8 +55,10 @@ export const CommandMenu = () => {
   useEffect(() => {
     const performSearch = async () => {
       if (searchQuery.length > 1) {
+        setIsSearching(true)
         const results = await searchItems(searchQuery)
         setSearchResults(results)
+        setIsSearching(false)
       } else {
         setSearchResults(null)
       }
@@ -84,9 +88,9 @@ export const CommandMenu = () => {
     toast.success("Tweet generated")
   }
 
-  const handleSelectItem = (item: any, type: string) => {
+  const handleSelect = (url: string) => {
     handleOpenChange(false)
-    router.push(`/${type}/${item.id}`)
+    router.push(url)
   }
 
   const clearSearch = () => {
@@ -100,15 +104,28 @@ export const CommandMenu = () => {
     <CommandDialog open={open} onOpenChange={handleOpenChange}>
       <CommandInput placeholder="Type to search..." onValueChange={handleSearch} />
 
+      {isSearching && (
+        <div className="absolute top-4 left-3 bg-background text-muted-foreground">
+          <LoaderIcon className="size-4 animate-spin" />
+        </div>
+      )}
+
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
 
-        {!searchResults && (
-          <CommandGroup heading="Quick Commands">
-            <CommandItem onSelect={handleIndexSearch}>Index Search</CommandItem>
-            <CommandItem onSelect={handleGenerateTweet}>Generate Tweet</CommandItem>
-          </CommandGroup>
-        )}
+        <CommandGroup heading="Create">
+          <CommandItem onSelect={() => handleSelect("/tools/new")}>New Tool</CommandItem>
+          <CommandItem onSelect={() => handleSelect("/alternatives/new")}>
+            New Alternative
+          </CommandItem>
+          <CommandItem onSelect={() => handleSelect("/categories/new")}>New Category</CommandItem>
+          <CommandItem onSelect={() => handleSelect("/licenses/new")}>New License</CommandItem>
+        </CommandGroup>
+
+        <CommandGroup heading="Quick Commands">
+          <CommandItem onSelect={handleIndexSearch}>Index Search</CommandItem>
+          <CommandItem onSelect={handleGenerateTweet}>Generate Tweet</CommandItem>
+        </CommandGroup>
 
         {!!searchResults?.tools.length && (
           <CommandGroup heading="Tools">
@@ -116,7 +133,7 @@ export const CommandMenu = () => {
               <CommandItem
                 key={tool.id}
                 value={`tool:${tool.name}`}
-                onSelect={() => handleSelectItem(tool, "tools")}
+                onSelect={() => handleSelect(`/tools/${tool.id}`)}
               >
                 {tool.name}
               </CommandItem>
@@ -130,7 +147,7 @@ export const CommandMenu = () => {
               <CommandItem
                 key={alternative.id}
                 value={`alternative:${alternative.name}`}
-                onSelect={() => handleSelectItem(alternative, "alternatives")}
+                onSelect={() => handleSelect(`/alternatives/${alternative.id}`)}
               >
                 {alternative.name}
               </CommandItem>
@@ -143,7 +160,7 @@ export const CommandMenu = () => {
             {searchResults.categories.map(category => (
               <CommandItem
                 key={category.id}
-                onSelect={() => handleSelectItem(category, "categories")}
+                onSelect={() => handleSelect(`/categories/${category.id}`)}
               >
                 {category.name}
               </CommandItem>
@@ -154,7 +171,10 @@ export const CommandMenu = () => {
         {!!searchResults?.licenses.length && (
           <CommandGroup heading="Licenses">
             {searchResults.licenses.map(license => (
-              <CommandItem key={license.id} onSelect={() => handleSelectItem(license, "licenses")}>
+              <CommandItem
+                key={license.id}
+                onSelect={() => handleSelect(`/licenses/${license.id}`)}
+              >
                 {license.name}
               </CommandItem>
             ))}
