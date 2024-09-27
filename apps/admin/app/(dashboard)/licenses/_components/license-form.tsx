@@ -39,7 +39,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
     startSubmitTransition(async () => {
       const payload = {
         ...input,
-        slug: getSlug(input.name),
+        slug: input.slug || getSlug(input.name),
       }
 
       const { error, data } = license
@@ -75,10 +75,24 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem className="col-span-full">
+            <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input placeholder="MIT" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Slug</FormLabel>
+              <FormControl>
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

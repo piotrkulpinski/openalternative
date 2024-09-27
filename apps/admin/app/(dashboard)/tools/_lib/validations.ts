@@ -21,6 +21,7 @@ export const linkSchema = z.object({
 
 export const toolSchema = z.object({
   name: z.string().min(1, "Name is required"),
+  slug: z.string().optional(),
   website: z.string().min(1, "Website is required").url(),
   repository: z
     .string()

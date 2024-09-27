@@ -8,7 +8,10 @@ export const Logo = ({ className, ...props }: HTMLAttributes<SVGSVGElement>) => 
       viewBox="0 0 327 309"
       height="24"
       width="24"
-      className={cx("text-foreground", className)}
+      className={cx(
+        "text-foreground !duration-300 !ease-in-out will-change-transform group-hover/link:rotate-90",
+        className,
+      )}
       role="img"
       aria-label="Logo"
       {...props}

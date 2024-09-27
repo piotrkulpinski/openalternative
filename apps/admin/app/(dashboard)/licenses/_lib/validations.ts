@@ -16,6 +16,7 @@ export type GetLicensesSchema = z.infer<typeof getLicensesSchema>
 
 export const licenseSchema = z.object({
   name: z.string().min(1, "Name is required"),
+  slug: z.string().optional(),
   description: z.string().optional(),
   content: z.string().optional(),
 })
