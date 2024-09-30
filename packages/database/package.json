@@ -11,10 +11,14 @@
     "db:reset": "prisma migrate reset"
   },
   "dependencies": {
-    "@prisma/client": "^5.19.1"
+    "@prisma/client": "^5.20.0"
   },
   "devDependencies": {
-    "prisma": "^5.19.1"
+    "prisma": "^5.20.0"
   },
-  "trustedDependencies": ["@prisma/client", "@prisma/engines", "prisma"]
+  "trustedDependencies": [
+    "@prisma/client",
+    "@prisma/engines",
+    "prisma"
+  ]
 }

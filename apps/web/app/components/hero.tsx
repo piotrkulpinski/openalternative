@@ -28,7 +28,7 @@ export const Hero = ({ className, toolCount, ...props }: HeroProps) => {
       >
         {new Date() < new Date("2024-10-07") ? (
           <Link
-            to="https://peerlist.io/piotrkulpinski/project/openalternative"
+            to="https://go.openalternative.co/peerlist"
             target="_blank"
             rel="noopener noreferrer nofollow"
             className="-mt-4 mb-2 mx-auto order-first hover:opacity-80 transition-all duration-300"
