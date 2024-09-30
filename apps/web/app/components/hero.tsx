@@ -35,7 +35,6 @@ export const Hero = ({ className, toolCount, ...props }: HeroProps) => {
             className="relative block -mt-4 mb-2 mx-auto order-first hover:opacity-80 transition-all duration-300"
           >
             <PeerlistIcon className="w-32 h-10" />
-            <Ping className="absolute -top-3 left-1/2 -translate-x-1/2 size-2.5" />
           </Link>
         ) : (
           <Badge
