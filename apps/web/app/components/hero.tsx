@@ -5,6 +5,7 @@ import plur from "plur"
 import type { HTMLAttributes } from "react"
 import { Newsletter } from "~/components/newsletter"
 import { Badge } from "~/components/ui/badge"
+import { PeerlistIcon } from "~/components/ui/icons/peerlist"
 import { Intro } from "~/components/ui/intro"
 import { Ping } from "~/components/ui/ping"
 import { SITE_STATS } from "~/utils/constants"
@@ -33,7 +34,7 @@ export const Hero = ({ className, toolCount, ...props }: HeroProps) => {
             rel="noopener noreferrer nofollow"
             className="-mt-4 mb-2 mx-auto order-first hover:opacity-80 transition-all duration-300"
           >
-            <img src="/peerlist.svg" alt="Peerlist" width="120" height="36" />
+            <PeerlistIcon className="w-32 h-10" />
           </Link>
         ) : (
           <Badge
