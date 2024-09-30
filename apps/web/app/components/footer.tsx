@@ -115,7 +115,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
               key={link.href}
               to={addUTMTracking(link.href, { source: SITE_NAME.toLowerCase() })}
               target="_blank"
-              rel="nofollow noreferrer"
+              rel="noreferrer noopener"
               title={link.description}
             >
               {link.title}
@@ -125,7 +125,12 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
       </div>
 
       <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
-        <NavigationLink to={TWITTER_AUTHOR_URL} className="text-xs">
+        <NavigationLink
+          to={TWITTER_AUTHOR_URL}
+          className="text-xs"
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+        >
           <img
             src="/authors/piotrkulpinski.jpg"
             alt="Piotr Kulpinski"
