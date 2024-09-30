@@ -135,7 +135,11 @@ export default function BlogPostPage() {
           {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}
 
           {sponsor && (
-            <SponsoringCard sponsoring={sponsor} className="!animate-none max-md:hidden" />
+            <SponsoringCard
+              sponsoring={sponsor}
+              rel="noopener noreferrer nofollow"
+              className="!animate-none max-md:hidden"
+            />
           )}
         </Section.Sidebar>
       </Section>

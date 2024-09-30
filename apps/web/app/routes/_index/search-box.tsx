@@ -55,7 +55,7 @@ export const SearchBox = ({ className, ...props }: SearchBoxProps) => {
           <a
             href="https://www.algolia.com/developers/?utm_source=openalternative&utm_medium=referral"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer nofollow"
             className="text-foreground/40 pointer-events-auto hover:text-primary"
             tabIndex={-1}
           >

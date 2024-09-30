@@ -13,9 +13,12 @@ import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 type SponsoringCardProps = CardProps & {
   sponsoring: SponsoringOne | null
+  rel?: string
 }
 
-export const SponsoringCard = ({ className, sponsoring, ...props }: SponsoringCardProps) => {
+export const SponsoringCard = ({ className, sponsoring, rel, ...props }: SponsoringCardProps) => {
+  const linkRel = rel ?? (sponsoring?.website ? "noopener noreferrer" : "")
+
   return (
     <Card className={cx("group/button", className)} asChild {...props}>
       <Link
@@ -25,7 +28,7 @@ export const SponsoringCard = ({ className, sponsoring, ...props }: SponsoringCa
             : "/sponsor"
         }
         target={sponsoring?.website ? "_blank" : "_self"}
-        rel={sponsoring?.website ? "noopener noreferrer" : ""}
+        rel={linkRel}
         onClick={() => posthog.capture("sponsoring_clicked", { url: sponsoring?.website })}
       >
         <Card.Header>
