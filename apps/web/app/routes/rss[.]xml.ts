@@ -1,5 +1,6 @@
+import RSS from "rss"
 import { prisma } from "~/services.server/prisma"
-import { SITE_NAME, SITE_TAGLINE } from "~/utils/constants"
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 import { addUTMTracking } from "~/utils/helpers"
 
 export const loader = async () => {
@@ -8,35 +9,40 @@ export const loader = async () => {
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { lte: new Date() } },
     orderBy: { publishedAt: "desc" },
-    select: { id: true, name: true, slug: true, description: true, publishedAt: true },
     take: 50,
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      description: true,
+      publishedAt: true,
+      categories: { include: { category: true } },
+    },
   })
 
-  const feed = `<?xml version="1.0" encoding="UTF-8"?>
-  <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-      <title>${SITE_NAME}</title>
-      <description>${SITE_TAGLINE}</description>
-      <link>${addUTMTracking(url, { source: "rss" })}</link>
-      <language>en-us</language>
-      <ttl>60</ttl>
-      <atom:link href="${url}/rss.xml" rel="self" type="application/rss+xml" />
-      ${tools
-        .map(
-          tool => `
-      <item>
-        <title><![CDATA[${tool.name}]]></title>
-        <description><![CDATA[${tool.description}]]></description>
-        <pubDate>${tool.publishedAt?.toUTCString()}</pubDate>
-        <link>${addUTMTracking(`${url}/${tool.slug}`, { source: "rss" })}</link>
-        <guid isPermaLink="false">${tool.id}</guid>
-      </item>`,
-        )
-        .join("\n")}
-    </channel>
-  </rss>`
+  const feed = new RSS({
+    title: SITE_NAME,
+    description: SITE_TAGLINE,
+    site_url: addUTMTracking(SITE_URL, { source: "rss" }),
+    feed_url: `${SITE_URL}/rss.xml`,
+    copyright: `${new Date().getFullYear()} ${SITE_NAME}`,
+    language: "en",
+    ttl: 14400,
+    pubDate: new Date(),
+  })
 
-  return new Response(feed, {
+  tools.map(tool => {
+    feed.item({
+      guid: tool.id,
+      title: tool.name,
+      url: addUTMTracking(`${SITE_URL}/${tool.slug}`, { source: "rss" }),
+      date: tool.publishedAt?.toUTCString() ?? new Date().toUTCString(),
+      description: tool.description ?? "",
+      categories: tool.categories?.map(c => c.category.name) || [],
+    })
+  })
+
+  return new Response(feed.xml({ indent: true }), {
     headers: {
       "Content-Type": "application/xml",
       "X-Content-Type-Options": "nosniff",
