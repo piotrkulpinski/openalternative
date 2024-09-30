@@ -112,7 +112,7 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
 
 const ToolHighlight = ({ tool, attribute }: { tool: Tool; attribute: keyof Tool }) => {
   if (!(tool as AlgoliaHit<Tool>)._highlightResult) {
-    return <>{tool[attribute]}</>
+    return <>{String(tool[attribute])}</>
   }
 
   return (

@@ -1,4 +1,4 @@
-import { getRandomElement } from "@curiousleaf/utils"
+import { getRandomElement, joinAsSentence } from "@curiousleaf/utils"
 import type { Prisma } from "@prisma/client"
 import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import {
@@ -36,7 +36,6 @@ import {
 } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { HOSTING_SPONSOR, JSON_HEADERS, SITE_URL } from "~/utils/constants"
-import { joinAsSentence } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 

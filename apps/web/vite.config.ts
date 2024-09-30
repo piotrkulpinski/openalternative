@@ -9,7 +9,7 @@ installGlobals()
 
 export default defineConfig({
   ssr: {
-    noExternal: ["tailwind-merge", "remix-utils"],
+    noExternal: ["tailwind-merge", "remix-utils", "@curiousleaf/utils"],
   },
   plugins: [tsconfigPaths(), remix({ presets: [vercelPreset()] }), contentCollections()],
   envPrefix: ["VITE_", "NEXT_PUBLIC_"],
