@@ -4,8 +4,6 @@ import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 import { addUTMTracking } from "~/utils/helpers"
 
 export const loader = async () => {
-  const url = import.meta.env.NEXT_PUBLIC_SITE_URL ?? ""
-
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { lte: new Date() } },
     orderBy: { publishedAt: "desc" },
