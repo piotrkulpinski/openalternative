@@ -26,17 +26,28 @@ export const Hero = ({ className, toolCount, ...props }: HeroProps) => {
         alignment="center"
         className="max-w-[37.5rem] mx-auto"
       >
-        <Badge
-          className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
-          prefix={toolCount ? <Ping /> : <GemIcon />}
-          asChild
-        >
-          <Link to="/latest">
-            {toolCount
-              ? `${toolCount} new ${plur("tool", toolCount)} added`
-              : `${formatNumber(SITE_STATS.tools)}+ open source tools`}
+        {new Date() < new Date("2024-10-07") ? (
+          <Link
+            to="https://peerlist.io/piotrkulpinski/project/openalternative"
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="-mt-4 mb-2 mx-auto order-first hover:opacity-80 transition-all duration-300"
+          >
+            <img src="/peerlist.svg" alt="Peerlist" width="120" height="36" />
           </Link>
-        </Badge>
+        ) : (
+          <Badge
+            className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
+            prefix={toolCount ? <Ping /> : <GemIcon />}
+            asChild
+          >
+            <Link to="/latest">
+              {toolCount
+                ? `${toolCount} new ${plur("tool", toolCount)} added`
+                : `${formatNumber(SITE_STATS.tools)}+ open source tools`}
+            </Link>
+          </Badge>
+        )}
       </Intro>
 
       <Newsletter
