@@ -49,6 +49,7 @@
     "react-instantsearch": "^7.13.1",
     "react-instantsearch-core": "^7.13.1",
     "react-markdown": "^9.0.1",
+    "rehype-slug": "^6.0.0",
     "remix-utils": "^7.6.0",
     "resend": "^3.5.0",
     "rss": "^1.2.2",
@@ -59,8 +60,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@content-collections/core": "^0.6.4",
-    "@content-collections/remix-vite": "^0.1.1",
+    "@content-collections/core": "0.6.4",
+    "@content-collections/remix-vite": "0.1.1",
     "@remix-run/dev": "^2.12.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/react": "^18.3.10",
