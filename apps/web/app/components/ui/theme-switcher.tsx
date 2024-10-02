@@ -22,7 +22,7 @@ export const ThemeSwitcher = ({ ...props }: HTMLAttributes<HTMLElement>) => {
         </DropdownMenuTrigger>
       </Tooltip>
 
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent align="start" side="top">
         <DropdownMenuItem onClick={() => setTheme("light")} asChild>
           <button type="button">Light</button>
         </DropdownMenuItem>

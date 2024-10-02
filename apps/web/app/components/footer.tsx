@@ -3,6 +3,12 @@ import { AtSignIcon, RssIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { ClientOnly } from "remix-utils/client-only"
 import { Newsletter } from "~/components/newsletter"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu"
 import { H6 } from "~/components/ui/heading"
 import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
 import { BrandLinkedInIcon } from "~/components/ui/icons/brand-linkedin"
@@ -46,15 +52,30 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
             <TooltipProvider delayDuration={500} disableHoverableContent>
               <ClientOnly>{() => <ThemeSwitcher />}</ClientOnly>
 
-              <Tooltip tooltip="RSS Feed">
-                <NavigationLink
-                  to={`${SITE_URL}/rss.xml`}
-                  target="_blank"
-                  rel="nofollow noreferrer"
-                >
-                  <RssIcon className="size-[1.44em] stroke-[1.25]" />
-                </NavigationLink>
-              </Tooltip>
+              <DropdownMenu modal={false}>
+                <Tooltip tooltip="RSS Feeds">
+                  <DropdownMenuTrigger {...props}>
+                    <RssIcon className="size-[1.44em] stroke-[1.25] text-muted hover:text-foreground" />
+                  </DropdownMenuTrigger>
+                </Tooltip>
+
+                <DropdownMenuContent align="start" side="top">
+                  <DropdownMenuItem asChild>
+                    <a href={`${SITE_URL}/rss.xml`} target="_blank" rel="nofollow noreferrer">
+                      RSS &raquo; Open Source Tools
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <a
+                      href={`${SITE_URL}/alternatives/rss.xml`}
+                      target="_blank"
+                      rel="nofollow noreferrer"
+                    >
+                      RSS &raquo; Proprietary Alternatives
+                    </a>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
               <Tooltip tooltip="Contact Us">
                 <NavigationLink
