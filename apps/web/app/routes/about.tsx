@@ -4,7 +4,7 @@ import { Featured } from "~/components/featured"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Intro } from "~/components/ui/intro"
 import { Markdown } from "~/components/ui/markdown"
-import { FAMILY_LINKS, SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
+import { FAMILY_LINKS, GITHUB_URL, SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 import { addUTMTracking } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 
@@ -36,11 +36,11 @@ export default function AboutPage() {
   const { meta } = useLoaderData<typeof loader>()
 
   const content = `
-## What is OpenAlternative?
+## What is ${SITE_NAME}?
 
-[OpenAlternative](${SITE_URL} "${SITE_TAGLINE}") is a community driven list of **open source alternatives to proprietary software** and applications. The goal of the site is to be your first stop when researching for a new open source service to help you grow your business. It will help you find alternatives and reviews of the products you already use.
+[${SITE_NAME}](${SITE_URL} "${SITE_TAGLINE}") is a community driven list of **open source alternatives to proprietary software** and applications. The goal of the site is to be your first stop when researching for a new open source service to help you grow your business. It will help you find alternatives and reviews of the products you already use.
 
-## How did OpenAlternative get started?
+## How did ${SITE_NAME} get started?
 
 The project started as a weekend project to learn a new technology and try something new and fun from scratch. It gained a lot of traction early on ([100k unique visitors](https://kulp.in/launch) in one week, [#1 on Hacker News](https://news.ycombinator.com/item?id=39639386)) so it was clear that there was a need for a site like this.
 
@@ -48,7 +48,7 @@ I’ve always been a fan of open source software and I’ve always wanted to con
 
 ## How are rankings calculated?
 
-OpenAlternative uses a sophisticated algorithm to calculate the health score of each open-source project, which determines its ranking. The score is based on several factors:
+${SITE_NAME} uses a sophisticated algorithm to calculate the health score of each open-source project, which determines its ranking. The score is based on several factors:
 
 1. **GitHub Metrics**: We consider stars, forks, watchers, and contributors, with each metric weighted differently.
 2. **Project Age**: Newer projects get a slight boost to balance out the advantage of older, more established projects.
@@ -75,7 +75,7 @@ This approach helps us balance between popular, well-established projects and pr
 
 ## Contribute
 
-If you have any suggestions for open source alternatives to proprietary software and applications, feel free to contribute to the list. You can also contribute by suggesting new categories or improving the website. The source code is available on [GitHub](https://github.com/piotrkulpinski/openalternative).
+If you have any suggestions for open source alternatives to proprietary software and applications, feel free to contribute to the list. You can also contribute by suggesting new categories or improving the website. The source code is available on [GitHub](${GITHUB_URL}).
 
 Enjoy and feel free to contribute!
 

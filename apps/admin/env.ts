@@ -18,6 +18,7 @@ export const env = createEnv({
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
     VERCEL_ENV: z.enum(["development", "preview", "production"]).default("development"),
     AUTH_SECRET: z.string().min(1),
+    AUTH_ALLOWED_EMAILS: z.string().optional(),
     AUTH_GOOGLE_ID: z.string().min(1),
     AUTH_GOOGLE_SECRET: z.string().min(1),
     ALGOLIA_ADMIN_API_KEY: z.string().min(1),

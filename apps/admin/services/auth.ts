@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
 import { env } from "~/env"
+import { isAllowedEmail } from "~/utils/auth"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -12,7 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   callbacks: {
     signIn({ profile }) {
-      return profile?.email?.endsWith("@kulpinski.pl") || false
+      return isAllowedEmail(profile?.email)
     },
   },
 
