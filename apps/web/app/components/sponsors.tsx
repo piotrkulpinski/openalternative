@@ -10,14 +10,14 @@ export type SponsorsProps = HTMLAttributes<HTMLDivElement> & {
 
 export const Sponsors = ({ className, sponsors, ...props }: SponsorsProps) => {
   return (
-    <div className={cx("flex flex-wrap items-center gap-6", className)} {...props}>
+    <div className={cx("flex flex-wrap items-center justify-center gap-6", className)} {...props}>
       {sponsors.map(sponsor => (
         <a
           key={sponsor.name}
           href={sponsor.website}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-wrap items-center gap-x-2 font-semibold opacity-75 hover:opacity-100 md:text-lg"
+          className="flex flex-wrap items-center gap-x-2 font-semibold opacity-85 hover:opacity-100 md:text-lg"
           title={sponsor.description ?? undefined}
           onClick={() => posthog.capture("sponsoring_clicked", { url: sponsor.website })}
         >

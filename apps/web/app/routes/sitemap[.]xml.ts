@@ -116,7 +116,7 @@ export const loader = async () => {
         <changefreq>weekly</changefreq>
       </url>
       <url>
-        <loc>${url}/sponsor</loc>
+        <loc>${url}/advertise</loc>
         <changefreq>weekly</changefreq>
       </url>
       ${postItems.join("\n")}
