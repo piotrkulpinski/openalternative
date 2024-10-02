@@ -9,8 +9,8 @@ export const SITE_DESCRIPTION =
   "OpenAlternative is a community-driven list of open source alternatives to proprietary software and applications. Discover the best tools for your needs."
 
 export const SITE_STATS = {
-  visitors: 40000,
-  tools: 260,
+  pageviews: 120000,
+  tools: 275,
   subscribers: 1500,
   stars: 1600,
 }

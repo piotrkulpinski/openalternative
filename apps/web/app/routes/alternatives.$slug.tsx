@@ -146,8 +146,12 @@ export default function AlternativesPage() {
             <Prose>
               <p>
                 The best open source alternative to {alternative.name} is {bestAlternatives.shift()}
-                . If that doesn't suit you, we've compiled a ranked list of other open source{" "}
-                {alternative.name} alternatives to help you find a suitable replacement.
+                . If that doesn't suit you, we've compiled a{" "}
+                <Link to="/about#how-are-rankings-calculated" unstable_viewTransition>
+                  ranked list
+                </Link>{" "}
+                of other open source {alternative.name} alternatives to help you find a suitable
+                replacement.
                 {!!bestAlternatives.length && (
                   <>
                     {" "}

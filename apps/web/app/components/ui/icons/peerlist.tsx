@@ -26,8 +26,8 @@ export const PeerlistIcon = ({ ...props }: SVGAttributes<SVGSVGElement>) => {
       />
       <path
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-width=".375"
+        strokeLinecap="round"
+        strokeWidth=".375"
         opacity={0.5}
         d="M83.489 31.188v11.625"
       />

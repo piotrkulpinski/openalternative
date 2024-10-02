@@ -88,16 +88,6 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         </div>
 
         <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3 md:col-start-8">
-          <H6 as="strong">Quick Links:</H6>
-
-          <NavigationLink to="/blog">Blog</NavigationLink>
-          <NavigationLink to="/about">About</NavigationLink>
-          <NavigationLink to="/sponsor">Sponsor</NavigationLink>
-          <NavigationLink to="/submit">Submit</NavigationLink>
-          <NavigationLink to={`mailto:${SITE_EMAIL}`}>Contact</NavigationLink>
-        </Stack>
-
-        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
           <H6 as="strong">Browse:</H6>
 
           <NavigationLink to="/alternatives">Alternatives</NavigationLink>
@@ -105,6 +95,16 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           <NavigationLink to="/languages">Languages</NavigationLink>
           <NavigationLink to="/topics">Topics</NavigationLink>
           <NavigationLink to="/licenses">Licenses</NavigationLink>
+        </Stack>
+
+        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
+          <H6 as="strong">Quick Links:</H6>
+
+          <NavigationLink to="/advertise">Advertise with Us</NavigationLink>
+          <NavigationLink to="/submit">Add a Free Listing</NavigationLink>
+          <NavigationLink to="/about">About Us</NavigationLink>
+          <NavigationLink to={`mailto:${SITE_EMAIL}`}>Contact Us</NavigationLink>
+          <NavigationLink to="/blog">Blog</NavigationLink>
         </Stack>
 
         <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">

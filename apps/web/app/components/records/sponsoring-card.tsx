@@ -25,7 +25,7 @@ export const SponsoringCard = ({ className, sponsoring, rel, ...props }: Sponsor
         to={
           sponsoring?.website
             ? updateUrlWithSearchParams(sponsoring.website, { ref: "openalternative" })
-            : "/sponsor"
+            : "/advertise"
         }
         target={sponsoring?.website ? "_blank" : "_self"}
         rel={linkRel}
@@ -42,7 +42,7 @@ export const SponsoringCard = ({ className, sponsoring, rel, ...props }: Sponsor
           )}
 
           <H4 as="h3" className="truncate">
-            {sponsoring?.name || "Sponsor OpenAlternative"}
+            {sponsoring?.name || "Advertise with us"}
           </H4>
 
           {sponsoring && (
@@ -62,7 +62,7 @@ export const SponsoringCard = ({ className, sponsoring, rel, ...props }: Sponsor
           suffix={sponsoring && <ArrowUpRightIcon />}
           asChild
         >
-          <span>{sponsoring ? `Visit ${sponsoring.name}` : "Become a sponsor"}</span>
+          <span>{sponsoring ? `Visit ${sponsoring.name}` : "Advertise with us"}</span>
         </Button>
 
         {!sponsoring && (

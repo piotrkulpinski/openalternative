@@ -98,39 +98,39 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
                 <NavigationLink to="/latest" unstable_viewTransition>
-                  <CalendarDaysIcon className="size-4 opacity-75" /> Latest tools
+                  <CalendarDaysIcon className="shrink-0 size-4 opacity-75" /> Latest tools
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavigationLink to="/categories" unstable_viewTransition>
-                  <GalleryHorizontalEndIcon className="size-4 opacity-75" /> Categories
+                  <GalleryHorizontalEndIcon className="shrink-0 size-4 opacity-75" /> Categories
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavigationLink to="/alternatives" unstable_viewTransition>
-                  <ReplaceIcon className="size-4 opacity-75" /> Alternatives
+                  <ReplaceIcon className="shrink-0 size-4 opacity-75" /> Alternatives
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavigationLink to="/languages" unstable_viewTransition>
-                  <CodeXmlIcon className="size-4 opacity-75" /> Languages
+                  <CodeXmlIcon className="shrink-0 size-4 opacity-75" /> Languages
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavigationLink to="/topics" unstable_viewTransition>
-                  <TagIcon className="size-4 opacity-75" /> Topics
+                  <TagIcon className="shrink-0 size-4 opacity-75" /> Topics
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavigationLink to="/licenses" unstable_viewTransition>
-                  <CopyrightIcon className="size-4 opacity-75" /> Licenses
+                  <CopyrightIcon className="shrink-0 size-4 opacity-75" /> Licenses
                 </NavigationLink>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
           <NavigationLink to="/random">Random Tool</NavigationLink>
-          <NavigationLink to="/sponsor">Sponsor</NavigationLink>
+          <NavigationLink to="/advertise">Advertise</NavigationLink>
         </nav>
 
         <Stack size="sm" className="items-stretch">
@@ -184,7 +184,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <NavigationLink to="/submit" className="text-base">
             Submit
           </NavigationLink>
-          <NavigationLink to="/sponsor" className="text-base">
+          <NavigationLink to="/advertise" className="text-base">
             Sponsor
           </NavigationLink>
           <NavigationLink to="/about" className="text-base">

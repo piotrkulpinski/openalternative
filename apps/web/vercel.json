@@ -2,6 +2,10 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/sponsor",
+      "destination": "/advertise"
+    },
+    {
       "source": "/tool/:path*",
       "destination": "/:path*"
     },
