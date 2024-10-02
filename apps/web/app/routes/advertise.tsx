@@ -9,10 +9,8 @@ import { Button } from "~/components/ui/button"
 import { H4 } from "~/components/ui/heading"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Stack } from "~/components/ui/stack"
-import { prisma } from "~/services.server/prisma"
 import { SITE_EMAIL, SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
-import { getPremiumSponsors } from "~/utils/sponsoring"
 
 export const handle = {
   breadcrumb: () => <BreadcrumbsLink to="/advertise" label="Advertise" />,
@@ -30,22 +28,17 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 }
 
 export const loader = async () => {
-  const sponsorings = await prisma.sponsoring.findMany({
-    orderBy: { createdAt: "asc" },
-  })
-
   const meta = {
     title: `Advertise on ${SITE_NAME}`,
     description:
       "Promote your business or software on OpenAlternative and reach a wide audience of open source enthusiasts.",
   }
 
-  return json({ sponsorings, meta })
+  return json({ meta })
 }
 
-export default function SponsorPage() {
-  const { sponsorings, meta } = useLoaderData<typeof loader>()
-  const premiumSponsors = getPremiumSponsors(sponsorings)
+export default function AdvertisePage() {
+  const { meta } = useLoaderData<typeof loader>()
 
   const options = [
     {
@@ -132,15 +125,13 @@ export default function SponsorPage() {
         ))}
       </div>
 
-      {!!premiumSponsors.length && (
-        <div className="flex flex-col items-center text-center gap-6 mt-4" id="sponsors">
-          <p className="text-sm text-muted">
-            Join these companies in advertising their business on OpenAlternative
-          </p>
+      <div className="flex flex-col items-center text-center gap-6 mt-4" id="sponsors">
+        <p className="text-sm text-muted">
+          Join these companies in advertising their business on OpenAlternative
+        </p>
 
-          <Sponsors sponsors={premiumSponsors} />
-        </div>
-      )}
+        <Sponsors />
+      </div>
 
       <hr />
 

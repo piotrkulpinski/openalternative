@@ -39,7 +39,7 @@ export const Newsletter = ({
     <Stack
       size="lg"
       direction="column"
-      className={cx("items-stretch min-w-0", isLargeSize ? "max-w-96" : "max-w-64")}
+      className={cx("items-stretch min-w-0", isLargeSize ? "max-w-sm" : "max-w-64")}
       asChild
     >
       <section {...props}>
