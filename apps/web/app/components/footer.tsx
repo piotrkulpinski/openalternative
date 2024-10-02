@@ -124,7 +124,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           <NavigationLink to="/advertise">Advertise with Us</NavigationLink>
           <NavigationLink to="/submit">Add a Free Listing</NavigationLink>
           <NavigationLink to="/about">About Us</NavigationLink>
-          <NavigationLink to={`mailto:${SITE_EMAIL}`}>Contact Us</NavigationLink>
+          <NavigationLink to="/newsletter">Newsletter</NavigationLink>
           <NavigationLink to="/blog">Blog</NavigationLink>
         </Stack>
 
