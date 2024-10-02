@@ -129,14 +129,16 @@ export function Layout({ children }: PropsWithChildren) {
           enableSystem
           disableTransitionOnChange
         >
-          <Banner />
-          <Header />
+          <div className="flex flex-col min-h-dvh">
+            <Banner />
+            <Header />
 
-          <Container className="flex min-h-[calc(100dvh-var(--header-height))] flex-col py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
-            {children}
+            <Container className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
+              {children}
 
-            <Footer />
-          </Container>
+              <Footer />
+            </Container>
+          </div>
 
           <Bottom categories={data?.categories} alternatives={data?.alternatives} />
         </ThemeProvider>
