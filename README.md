@@ -62,11 +62,36 @@ To set up the project for development:
 1. Clone the repository
 2. Run `bun install` in the root directory to install all dependencies
 3. Set up the required environment variables (see below)
-4. Run `bun run dev` to start both the web and admin applications in development mode
+4. Run `bun run db:push` to push the Prisma schema to the database
+5. Create symlinks for the .env file (see Environment Variables section)
+6. Run `bun run dev` to start both the web and admin applications in development mode
 
 ### Environment Variables
 
 Refer to the `.env.example` file for a complete list of required variables.
+
+To manage environment variables across the monorepo, you have two options:
+
+1. Create symlinks to the root .env file:
+   - For Unix-based systems (macOS, Linux):
+     ```
+     ln -s ../../.env apps/web/.env
+     ln -s ../../.env apps/admin/.env
+     ln -s ../.env packages/database/.env
+     ```
+   - For Windows (run in Command Prompt as Administrator):
+     ```
+     mklink apps\web\.env ..\..\\.env
+     mklink apps\admin\.env ..\..\\.env
+     mklink packages\database\.env ..\.\.env
+     ```
+
+2. Create separate .env files for each app and package:
+   - Copy the `.env.example` file to each app and package directory
+   - Rename it to `.env`
+   - Update the variables as needed for each app or package
+
+Choose the method that best fits your development workflow and security requirements.
 
 ## 🧞 Commands
 
@@ -82,7 +107,12 @@ All commands are run from the root of the project, from a terminal:
 | `bun run start`   | Preview production build locally                          |
 | `bun run lint`    | Run linter                                                |
 | `bun run format`  | Format code                                               |
-| `bun run typecheck` | Run TypeScript type checking                            |
+| `bun run typecheck` | Run TypeScript type checking 
+| `bun run db:generate` | Generate Prisma client
+| `bun run db:studio` | Start Prisma Studio
+| `bun run db:push` | Push Prisma schema to database
+| `bun run db:pull` | Pull Prisma schema from database
+| `bun run db:reset` | Reset Prisma schema
 
 ## Third-Party Services
 

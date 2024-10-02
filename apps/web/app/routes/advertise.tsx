@@ -30,8 +30,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 export const loader = async () => {
   const meta = {
     title: `Advertise on ${SITE_NAME}`,
-    description:
-      "Promote your business or software on OpenAlternative and reach a wide audience of open source enthusiasts.",
+    description: `Promote your business or software on ${SITE_NAME} and reach a wide audience of open source enthusiasts.`,
   }
 
   return json({ meta })
@@ -127,7 +126,7 @@ export default function AdvertisePage() {
 
       <div className="flex flex-col items-center text-center gap-6 mt-4" id="sponsors">
         <p className="text-sm text-muted">
-          Join these companies in advertising their business on OpenAlternative
+          Join these companies in advertising their business on {SITE_NAME}
         </p>
 
         <Sponsors />
