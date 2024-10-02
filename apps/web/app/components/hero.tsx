@@ -4,6 +4,7 @@ import { GemIcon } from "lucide-react"
 import plur from "plur"
 import type { HTMLAttributes } from "react"
 import { Newsletter } from "~/components/newsletter"
+import { NewsletterProof } from "~/components/newsletter-proof"
 import { Badge } from "~/components/ui/badge"
 import { PeerlistIcon } from "~/components/ui/icons/peerlist"
 import { Intro } from "~/components/ui/intro"
@@ -56,22 +57,7 @@ export const Hero = ({ className, toolCount, ...props }: HeroProps) => {
         className="w-full mx-auto items-center text-center"
         buttonProps={{ children: "Join our community", size: "md", variant: "fancy" }}
       >
-        <div className="flex flex-wrap items-center justify-center text-center gap-y-1 -space-x-1.5">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <img
-              key={index}
-              src={`/users/${index + 1}.jpg`}
-              alt=""
-              width="40"
-              height="40"
-              className="size-7 border-2 border-card rounded-full"
-            />
-          ))}
-
-          <p className="w-full text-xs text-muted">
-            Join {formatNumber(SITE_STATS.subscribers, "standard")}+ open source enthusiasts
-          </p>
-        </div>
+        <NewsletterProof />
       </Newsletter>
     </section>
   )
