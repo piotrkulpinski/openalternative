@@ -1,7 +1,10 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { type MetaFunction, json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
+import { PartyPopperIcon } from "lucide-react"
 import { Newsletter } from "~/components/newsletter"
+import { NewsletterProof } from "~/components/newsletter-proof"
+import { Badge } from "~/components/ui/badge"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { SITE_STATS } from "~/utils/constants"
@@ -36,9 +39,14 @@ export default function NewsletterPage() {
 
   return (
     <Intro alignment="center">
-      <IntroTitle className="max-w-xl mb-2">
+      <Badge size="lg" prefix={<PartyPopperIcon />} className="text-xs/tight">
+        No spam, just good stuff
+      </Badge>
+
+      <IntroTitle className="max-w-xl my-1">
         Latest Open Source Tools Delivered Straight to Your Inbox
       </IntroTitle>
+
       <IntroDescription>{meta.description}</IntroDescription>
 
       <Newsletter
@@ -48,7 +56,7 @@ export default function NewsletterPage() {
         medium="newsletter_page"
       />
 
-      <p className="text-sm/normal text-muted">No spam, just good stuff.</p>
+      <NewsletterProof className="mt-4" />
     </Intro>
   )
 }
