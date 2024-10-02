@@ -122,7 +122,6 @@ OpenAlternative uses the following third-party services:
 - Analytics: [Plausible](https://plausible.io), [PostHog](https://posthog.com)
 - Search: [Algolia](https://algolia.com)
 - Newsletter: [Beehiiv](https://beehiiv.com)
-- Email: [Resend](https://resend.com)
 - Background Jobs: [Inngest](https://inngest.com)
 - File Storage: [AWS S3](https://aws.amazon.com/s3)
 - Payments: [Stripe](https://stripe.com)
