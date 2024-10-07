@@ -10,9 +10,9 @@ export const SITE_DESCRIPTION =
 
 export const SITE_STATS = {
   pageviews: 120000,
-  tools: 275,
-  subscribers: 1500,
-  stars: 1600,
+  tools: 280,
+  subscribers: 1600,
+  stars: 1700,
 }
 
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz"
@@ -34,7 +34,6 @@ export const FEATURED_ALTERNATIVES = [
 ]
 
 export const DAY_IN_MS = 1000 * 60 * 60 * 24
-export const LATEST_TOOLS_TRESHOLD = new Date(new Date().setDate(new Date().getDate() - 7))
 export const TOPICS_PER_PAGE = 150
 export const SUBMISSION_POSTING_RATE = 3
 

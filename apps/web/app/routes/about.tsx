@@ -48,7 +48,7 @@ I’ve always been a fan of open source software and I’ve always wanted to con
 
 ## How are rankings calculated?
 
-${SITE_NAME} uses a sophisticated algorithm to calculate the health score of each open-source project, which determines its ranking. The score is based on several factors:
+${SITE_NAME} uses a sophisticated algorithm to calculate the health score of each open source project, which determines its ranking. The score is based on several factors:
 
 1. **GitHub Metrics**: We consider stars, forks, watchers, and contributors, with each metric weighted differently.
 2. **Project Age**: Newer projects get a slight boost to balance out the advantage of older, more established projects.
@@ -62,7 +62,7 @@ Here's a breakdown of how the score is calculated:
 - We apply a penalty for projects that haven't been updated recently, with the penalty increasing for up to 90 days of inactivity.
 - The project's age is factored in to give newer projects a fair chance. Very new projects get a full score, while older projects (5+ years) get about half the score for each metric.
 
-This approach helps us balance between popular, well-established projects and promising newcomers in the open-source community.
+This approach helps us balance between popular, well-established projects and promising newcomers in the open source community.
 
 ## Tools Used
 
