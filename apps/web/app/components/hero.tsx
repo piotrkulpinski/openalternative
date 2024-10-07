@@ -6,7 +6,6 @@ import type { HTMLAttributes } from "react"
 import { Newsletter } from "~/components/newsletter"
 import { NewsletterProof } from "~/components/newsletter-proof"
 import { Badge } from "~/components/ui/badge"
-import { PeerlistIcon } from "~/components/ui/icons/peerlist"
 import { Intro } from "~/components/ui/intro"
 import { Ping } from "~/components/ui/ping"
 import { SITE_STATS } from "~/utils/constants"
@@ -28,28 +27,17 @@ export const Hero = ({ className, toolCount, ...props }: HeroProps) => {
         alignment="center"
         className="max-w-[37.5rem] mx-auto"
       >
-        {new Date() < new Date("2024-10-07") ? (
-          <Link
-            to="https://go.openalternative.co/peerlist"
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            className="relative block -mt-4 mb-2 mx-auto order-first hover:opacity-80 transition-all duration-300"
-          >
-            <PeerlistIcon className="w-32 h-10" />
+        <Badge
+          className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
+          prefix={toolCount ? <Ping /> : <GemIcon />}
+          asChild
+        >
+          <Link to="/latest">
+            {toolCount
+              ? `${toolCount} new ${plur("tool", toolCount)} added`
+              : `${formatNumber(SITE_STATS.tools)}+ open source tools`}
           </Link>
-        ) : (
-          <Badge
-            className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
-            prefix={toolCount ? <Ping /> : <GemIcon />}
-            asChild
-          >
-            <Link to="/latest">
-              {toolCount
-                ? `${toolCount} new ${plur("tool", toolCount)} added`
-                : `${formatNumber(SITE_STATS.tools)}+ open source tools`}
-            </Link>
-          </Badge>
-        )}
+        </Badge>
       </Intro>
 
       <Newsletter

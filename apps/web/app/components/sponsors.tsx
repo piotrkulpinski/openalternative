@@ -9,7 +9,7 @@ export const Sponsors = ({ className, ...props }: HTMLAttributes<HTMLDivElement>
     {
       name: "Preline UI",
       description:
-        "Open-source set of prebuilt UI components based on the utility-first Tailwind CSS framework.",
+        "Open source set of prebuilt UI components based on the utility-first Tailwind CSS framework.",
       websiteUrl: "https://preline.co",
       logo: "preline.svg",
     },

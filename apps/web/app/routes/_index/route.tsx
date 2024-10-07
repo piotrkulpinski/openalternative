@@ -1,17 +1,13 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import { json, useLoaderData, useLocation } from "@remix-run/react"
+import { subDays } from "date-fns"
 import { renderToString } from "react-dom/server"
 import { getServerState } from "react-instantsearch"
 import { AlternativeList } from "~/components/alternative-list"
 import { Hero } from "~/components/hero"
 import { alternativeManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import {
-  FEATURED_ALTERNATIVES,
-  LATEST_TOOLS_TRESHOLD,
-  SITE_DESCRIPTION,
-  SITE_TAGLINE,
-} from "~/utils/constants"
+import { FEATURED_ALTERNATIVES, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { Search } from "./search"
 
@@ -27,7 +23,7 @@ export const meta: MetaFunction = ({ matches, location }) => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
 
-  const [sponsoring, newToolCount, alternatives, serverState] = await Promise.all([
+  const [sponsoring, newToolsCount, alternatives, serverState] = await Promise.all([
     // Find sponsoring
     prisma.sponsoring.findFirst({
       where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
@@ -36,7 +32,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
     // Find tool count
     prisma.tool.count({
-      where: { publishedAt: { gte: LATEST_TOOLS_TRESHOLD, lte: new Date() } },
+      where: { publishedAt: { gte: subDays(new Date(), 7), lte: new Date() } },
     }),
 
     // Find alternatives
@@ -50,18 +46,18 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     getServerState(<Search url={url} sponsoring={null} />, { renderToString }),
   ])
 
-  return json({ url, sponsoring, alternatives, newToolCount, serverState })
+  return json({ url, sponsoring, alternatives, newToolsCount, serverState })
 }
 
 export default function Index() {
   const { key } = useLocation()
 
-  const { url, sponsoring, alternatives, newToolCount, serverState } =
+  const { url, sponsoring, alternatives, newToolsCount, serverState } =
     useLoaderData<typeof loader>()
 
   return (
     <>
-      <Hero toolCount={newToolCount} />
+      <Hero toolCount={newToolsCount} />
 
       <Search key={key} serverState={serverState} url={url} sponsoring={sponsoring} />
 
