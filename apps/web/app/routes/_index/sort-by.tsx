@@ -8,7 +8,12 @@ export const SortBy = ({ className, ...props }: SortByProps) => {
   const { currentRefinement, options, refine } = useSortBy(props)
 
   return (
-    <Select onChange={e => refine(e.target.value)} value={currentRefinement} className={className}>
+    <Select
+      onChange={e => refine(e.target.value)}
+      value={currentRefinement}
+      className={className}
+      aria-label="Sort by"
+    >
       <option value="" disabled>
         Order by
       </option>
