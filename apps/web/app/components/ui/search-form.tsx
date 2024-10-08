@@ -46,6 +46,7 @@ export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
           )}
           onClick={handleExpand}
           tabIndex={-1}
+          aria-label="Search"
         >
           <SearchIcon className="size-4" />
         </button>

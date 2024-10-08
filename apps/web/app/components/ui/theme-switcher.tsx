@@ -17,7 +17,7 @@ export const ThemeSwitcher = ({ ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <DropdownMenu modal={false}>
       <Tooltip tooltip="Toggle Theme">
-        <DropdownMenuTrigger {...props}>
+        <DropdownMenuTrigger aria-label="Toggle Theme" {...props}>
           <Icon className="size-[1.44em] stroke-[1.25] text-muted hover:text-foreground" />
         </DropdownMenuTrigger>
       </Tooltip>
