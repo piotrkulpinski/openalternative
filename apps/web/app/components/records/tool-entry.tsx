@@ -2,6 +2,7 @@ import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import { ArrowRightIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
+import { ToolBadges } from "~/components/records/tool-badges"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
 import { Card } from "~/components/ui/card"
@@ -50,13 +51,18 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
             </H2>
           </div>
 
-          {tool.discountAmount && (
-            <Badge variant="success" className="md:text-sm">
-              {tool.discountCode
-                ? `Use code ${tool.discountCode} for ${tool.discountAmount}% off`
-                : `${tool.discountAmount}% off`}
-            </Badge>
-          )}
+          <ToolBadges
+            tool={tool}
+            style={{ viewTransitionName: vt ? `tool-${tool.id}-badges` : undefined }}
+          >
+            {tool.discountAmount && (
+              <Badge size="lg" variant="success">
+                {tool.discountCode
+                  ? `Use code ${tool.discountCode} for ${tool.discountAmount}!`
+                  : `Get ${tool.discountAmount} with our link!`}
+              </Badge>
+            )}
+          </ToolBadges>
         </Stack>
 
         {tool.description && (

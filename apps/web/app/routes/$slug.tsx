@@ -10,6 +10,7 @@ import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import { z } from "zod"
 import { AlternativeRecord } from "~/components/records/alternative-record"
+import { ToolBadges } from "~/components/records/tool-badges"
 import { ToolRecord } from "~/components/records/tool-record"
 import { ToolSidebar } from "~/components/tool-sidebar"
 import { BackButton } from "~/components/ui/back-button"
@@ -216,13 +217,18 @@ export default function ToolsPage() {
                   </H1>
                 </div>
 
-                {tool.discountAmount && (
-                  <Badge variant="success" className="md:text-sm">
-                    {tool.discountCode
-                      ? `Use code ${tool.discountCode} for ${tool.discountAmount}% off`
-                      : `${tool.discountAmount}% off with our link`}
-                  </Badge>
-                )}
+                <ToolBadges
+                  tool={tool}
+                  style={{ viewTransitionName: vt ? `tool-${tool.id}-badges` : undefined }}
+                >
+                  {tool.discountAmount && (
+                    <Badge size="lg" variant="success">
+                      {tool.discountCode
+                        ? `Use code ${tool.discountCode} for ${tool.discountAmount}!`
+                        : `Get ${tool.discountAmount} with our link!`}
+                    </Badge>
+                  )}
+                </ToolBadges>
               </Stack>
 
               {tool.description && (

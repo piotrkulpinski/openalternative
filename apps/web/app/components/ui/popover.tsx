@@ -4,18 +4,18 @@ import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react"
 import { forwardRef } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
-export const popoverVariants = cva({
+const popoverVariants = cva({
   base: [
     "z-50 p-2 min-w-[8rem] rounded-md bg-background border shadow-md text-foreground text-xs outline-none shadow-[hsl(var(--color-foreground)/_10%)_0px_10px_38px_-10px,_hsl(var(--color-foreground)/_15%)_0px_10px_20px_-15px] will-change-[transform,opacity]",
     "animate-in fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
   ],
 })
 
-export const popoverArrowVariants = cva({
+const popoverArrowVariants = cva({
   base: "w-2 h-1 block fill-background drop-shadow-sm",
 })
 
-export const popoverCloseVariants = cva({
+const popoverCloseVariants = cva({
   base: [
     "absolute right-4 top-4 rounded p-px opacity-50 outline-none transition-opacity hover:opacity-75",
   ],

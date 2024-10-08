@@ -2,18 +2,16 @@ import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import type { Hit as AlgoliaHit } from "instantsearch.js"
-import { GitForkIcon, PercentIcon, SparklesIcon, StarIcon, TimerIcon } from "lucide-react"
+import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Highlight } from "react-instantsearch"
+import { ToolBadges } from "~/components/records/tool-badges"
 import { Badge } from "~/components/ui/badge"
 import { Card } from "~/components/ui/card"
 import { Favicon } from "~/components/ui/favicon"
 import { H4 } from "~/components/ui/heading"
 import { Insights } from "~/components/ui/insights"
-import { Stack } from "~/components/ui/stack"
-import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import type { ToolMany } from "~/services.server/api"
-import { DAY_IN_MS } from "~/utils/constants"
 import { formatDate } from "~/utils/helpers"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
@@ -53,33 +51,20 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
 
           <H4
             as="h3"
-            className="!leading-snug truncate"
+            className="!leading-snug truncate flex-1"
             style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
           >
             <ToolHighlight tool={tool} attribute="name" />
           </H4>
 
-          {tool.publishedAt &&
-            new Date(tool.publishedAt).getTime() > Date.now() - DAY_IN_MS * 30 && (
-              <Badge variant="success">New</Badge>
-            )}
-
-          <TooltipProvider delayDuration={500} disableHoverableContent>
-            <Stack size="sm" className="ml-auto flex-nowrap">
-              {tool.firstCommitDate &&
-                new Date(tool.firstCommitDate).getTime() > Date.now() - DAY_IN_MS * 365 && (
-                  <Tooltip tooltip="Repo is less than 1 year old">
-                    <SparklesIcon className="text-yellow-500" />
-                  </Tooltip>
-                )}
-
-              {tool.discountAmount && (
-                <Tooltip tooltip="Exclusive discount">
-                  <PercentIcon className="text-green-500" />
-                </Tooltip>
-              )}
-            </Stack>
-          </TooltipProvider>
+          <ToolBadges
+            tool={tool}
+            size="sm"
+            className="text-base"
+            style={{ viewTransitionName: vt ? `tool-${tool.id}-badges` : undefined }}
+          >
+            {tool.discountAmount && <Badge variant="success">Get {tool.discountAmount}!</Badge>}
+          </ToolBadges>
         </Card.Header>
 
         {tool.description && (

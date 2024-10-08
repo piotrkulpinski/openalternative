@@ -46,7 +46,7 @@ model Tool {
   submitterNote   String?
   hostingUrl      String?
   discountCode    String?
-  discountAmount  Int?
+  discountAmount  String?
   firstCommitDate DateTime?
   lastCommitDate  DateTime?
   publishedAt     DateTime?
@@ -65,16 +65,18 @@ model Tool {
 }
 
 model Alternative {
-  id          String              @id @default(cuid())
-  name        String
-  slug        String              @unique
-  description String?
-  website     String              @unique
-  faviconUrl  String?
-  isFeatured  Boolean             @default(false)
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
-  tools       AlternativeToTool[]
+  id             String              @id @default(cuid())
+  name           String
+  slug           String              @unique
+  description    String?
+  website        String              @unique
+  faviconUrl     String?
+  isFeatured     Boolean             @default(false)
+  discountCode   String?
+  discountAmount String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  tools          AlternativeToTool[]
 }
 
 model Category {
