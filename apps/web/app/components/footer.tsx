@@ -54,7 +54,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
 
               <DropdownMenu modal={false}>
                 <Tooltip tooltip="RSS Feeds">
-                  <DropdownMenuTrigger {...props}>
+                  <DropdownMenuTrigger aria-label="RSS Feeds" {...props}>
                     <RssIcon className="size-[1.44em] stroke-[1.25] text-muted hover:text-foreground" />
                   </DropdownMenuTrigger>
                 </Tooltip>
@@ -82,6 +82,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
                   to={`mailto:${SITE_EMAIL}`}
                   target="_blank"
                   rel="nofollow noreferrer"
+                  aria-label="Contact Us"
                 >
                   <AtSignIcon className="size-[1.44em] stroke-[1.25]" />
                 </NavigationLink>

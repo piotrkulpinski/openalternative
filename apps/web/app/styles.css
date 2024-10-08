@@ -21,9 +21,9 @@
   --color-border: 0 0% 88%;
   --color-border-dark: 0 0% 83%;
 
-  --color-muted: 0 0% 50%;
-  --color-secondary: 0 0% 33.3%;
-  --color-foreground: 0 0% 15%;
+  --color-muted: 0 0% 40%;
+  --color-secondary: 0 0% 30%;
+  --color-foreground: 0 0% 13%;
 }
 
 .dark {
@@ -35,8 +35,8 @@
   --color-border: 0 0% 16%;
   --color-border-dark: 0 0% 19%;
 
-  --color-muted: 0 0% 50%;
-  --color-secondary: 0 0% 66.6%;
+  --color-muted: 0 0% 60%;
+  --color-secondary: 0 0% 70%;
   --color-foreground: 0 0% 87%;
 }
 

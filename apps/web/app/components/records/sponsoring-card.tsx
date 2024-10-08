@@ -38,6 +38,7 @@ export const SponsoringCard = ({ className, sponsoring, rel, ...props }: Sponsor
                 sponsoring?.faviconUrl ||
                 `https://www.google.com/s2/favicons?sz=128&domain_url=${sponsoring.website}`
               }
+              title={sponsoring?.name}
             />
           )}
 
