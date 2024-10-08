@@ -21,6 +21,8 @@ export const alternativeSchema = z.object({
   description: z.string().optional(),
   faviconUrl: z.string().optional(),
   isFeatured: z.boolean().optional(),
+  discountCode: z.string().optional(),
+  discountAmount: z.string().optional(),
 })
 
 export type AlternativeSchema = z.infer<typeof alternativeSchema>

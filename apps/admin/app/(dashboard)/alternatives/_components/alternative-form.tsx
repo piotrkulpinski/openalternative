@@ -188,6 +188,34 @@ export function AlternativeForm({
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="discountCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Discount Code</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="discountAmount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Discount Amount</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormItem className="col-span-full">
           <FormLabel>Tools</FormLabel>
 

@@ -376,11 +376,7 @@ export function ToolForm({
             <FormItem>
               <FormLabel>Discount Amount</FormLabel>
               <FormControl>
-                <Input
-                  type="number"
-                  {...field}
-                  onChange={e => field.onChange(Number.parseFloat(e.target.value))}
-                />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

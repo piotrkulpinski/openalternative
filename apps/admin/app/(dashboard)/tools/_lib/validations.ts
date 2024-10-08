@@ -44,7 +44,7 @@ export const toolSchema = z.object({
   submitterNote: z.string().optional(),
   hostingUrl: z.string().url().optional().or(z.literal("")),
   discountCode: z.string().optional(),
-  discountAmount: z.number().optional(),
+  discountAmount: z.string().optional(),
   twitterHandle: z.string().optional(),
   publishedAt: z.date().nullish(),
 })

@@ -32,7 +32,7 @@ export const AlternativeCard = ({ className, alternative, ...props }: Alternativ
             title={alternative.name}
           />
 
-          <H4 as="h3" className="truncate">
+          <H4 as="h3" className="truncate flex-1">
             {alternative.name}
           </H4>
         </Card.Header>
@@ -41,6 +41,18 @@ export const AlternativeCard = ({ className, alternative, ...props }: Alternativ
           <Card.Description className="max-w-md line-clamp-4">
             {alternative.description}
           </Card.Description>
+        )}
+
+        {alternative.discountAmount && (
+          <p className="text-sm/normal text-green-600">
+            {alternative.discountCode && (
+              <>
+                Use code <strong className="whitespace-nowrap">{alternative.discountCode}</strong>{" "}
+                to{" "}
+              </>
+            )}
+            get <strong className="whitespace-nowrap">{alternative.discountAmount}</strong>!
+          </p>
         )}
 
         <Button
