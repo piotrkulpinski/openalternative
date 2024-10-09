@@ -44,14 +44,14 @@ export const AlternativeCard = ({ className, alternative, ...props }: Alternativ
         )}
 
         {alternative.discountAmount && (
-          <p className="text-sm/normal text-green-600">
+          <p className="text-sm/normal text-green-600 dark:text-green-400">
             {alternative.discountCode && (
               <>
-                Use code <strong className="whitespace-nowrap">{alternative.discountCode}</strong>{" "}
-                to{" "}
+                Use code <span className="font-semibold underline">{alternative.discountCode}</span>{" "}
+                to get{" "}
               </>
             )}
-            get <strong className="whitespace-nowrap">{alternative.discountAmount}</strong>!
+            <span className="font-semibold underline">{alternative.discountAmount}</span>!
           </p>
         )}
 
