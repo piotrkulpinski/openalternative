@@ -145,7 +145,7 @@ export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
   const { object } = await generateObject({
     model,
     schema: z.object({
-      tweet: z.string().max(280).describe("The launch tweet"),
+      tweet: z.string().max(240).describe("The launch tweet"),
     }),
     system: `
       You are an expert content creator.

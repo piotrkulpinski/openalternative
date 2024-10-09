@@ -419,7 +419,7 @@ export function ToolForm({
                       size="icon"
                       prefix={<TrashIcon />}
                       onClick={() => removeLink(index)}
-                      className="text-destructive"
+                      className="text-red-500"
                     />
                   </div>
                 ))}
@@ -468,7 +468,7 @@ export function ToolForm({
           )}
         />
 
-        <div className="flex justify-end gap-2 col-span-full">
+        <div className="flex justify-between gap-4 col-span-full">
           <Button variant="outline" asChild>
             <Link href="/tools">Cancel</Link>
           </Button>

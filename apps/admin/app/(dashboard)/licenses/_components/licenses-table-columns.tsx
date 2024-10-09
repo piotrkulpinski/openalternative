@@ -2,22 +2,11 @@
 
 import type { License } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
-import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
-import * as React from "react"
+import { LicenseActions } from "~/app/(dashboard)/licenses/_components/license-actions"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
-import { Button } from "~/components/ui/button"
 import { Checkbox } from "~/components/ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
-import { siteConfig } from "~/config/site"
 import { formatDate } from "~/utils/helpers"
-import { DeleteLicensesDialog } from "./delete-licenses-dialog"
 
 export function getColumns(): ColumnDef<License>[] {
   return [
@@ -76,56 +65,9 @@ export function getColumns(): ColumnDef<License>[] {
     },
     {
       id: "actions",
-      cell: function Cell({ row }) {
-        const [showDeleteLicenseDialog, setShowDeleteLicenseDialog] = React.useState(false)
-
-        return (
-          <>
-            <DeleteLicensesDialog
-              open={showDeleteLicenseDialog}
-              onOpenChange={setShowDeleteLicenseDialog}
-              licenses={[row.original]}
-              showTrigger={false}
-              onSuccess={() => row.toggleSelected(false)}
-            />
-
-            <div className="flex items-center justify-end gap-1.5 -my-0.5">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    aria-label="Open menu"
-                    variant="ghost"
-                    size="icon"
-                    prefix={<EllipsisIcon />}
-                    className="text-muted-foreground data-[state=open]:bg-muted"
-                  />
-                </DropdownMenuTrigger>
-
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link href={`/licenses/${row.original.id}`}>Edit</Link>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem asChild>
-                    <Link href={`${siteConfig.url}/licenses/${row.original.slug}`} target="_blank">
-                      View
-                    </Link>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem
-                    onSelect={() => setShowDeleteLicenseDialog(true)}
-                    className="text-red-500"
-                  >
-                    Delete
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </>
-        )
-      },
+      cell: ({ row }) => (
+        <LicenseActions license={row.original} row={row} className="float-right -my-0.5" />
+      ),
       size: 0,
     },
   ]

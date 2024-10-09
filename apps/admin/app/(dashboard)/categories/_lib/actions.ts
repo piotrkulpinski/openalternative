@@ -1,109 +1,83 @@
 "use server"
 
-import type { Category, Prisma } from "@openalternative/db"
-import { unstable_noStore as noStore, revalidatePath } from "next/cache"
-import { getErrorMessage } from "~/lib/handle-error"
+import "server-only"
+import { revalidatePath } from "next/cache"
+import { z } from "zod"
+import { categorySchema } from "~/app/(dashboard)/categories/_lib/validations"
+import { authedProcedure } from "~/lib/safe-actions"
 import { prisma } from "~/services/prisma"
+import { getSlug } from "~/utils/helpers"
 
-export async function createCategory(input: Prisma.CategoryCreateInput) {
-  noStore()
-  try {
+export const createCategory = authedProcedure
+  .createServerAction()
+  .input(categorySchema)
+  .handler(async ({ input: { tools, ...input } }) => {
     const category = await prisma.category.create({
-      data: input,
+      data: {
+        ...input,
+        slug: input.slug || getSlug(input.name),
+
+        tools: {
+          create: tools?.map(id => ({
+            tool: { connect: { id } },
+          })),
+        },
+      },
     })
 
     revalidatePath("/categories")
 
-    return {
-      data: category,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return category
+  })
 
-export async function updateCategory(id: string, input: Prisma.CategoryUpdateInput) {
-  noStore()
-  try {
+export const updateCategory = authedProcedure
+  .createServerAction()
+  .input(categorySchema.extend({ id: z.string() }))
+  .handler(async ({ input: { id, tools, ...input } }) => {
     const category = await prisma.category.update({
       where: { id },
-      data: input,
+      data: {
+        ...input,
+        slug: input.slug || getSlug(input.name),
+
+        tools: {
+          deleteMany: { categoryId: id },
+
+          create: tools?.map(id => ({
+            tool: { connect: { id } },
+          })),
+        },
+      },
     })
 
     revalidatePath("/categories")
 
-    return {
-      data: category,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return category
+  })
 
-export async function updateCategories(input: {
-  ids: Category["id"][]
-  data: Prisma.CategoryUpdateInput
-}) {
-  noStore()
-  try {
+export const updateCategories = authedProcedure
+  .createServerAction()
+  .input(z.object({ ids: z.array(z.string()), data: categorySchema.partial() }))
+  .handler(async ({ input: { ids, data } }) => {
     await prisma.category.updateMany({
-      where: { id: { in: input.ids } },
-      data: input.data,
+      where: { id: { in: ids } },
+      data,
     })
 
     revalidatePath("/categories")
 
-    return {
-      data: null,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return true
+  })
 
-export async function deleteCategory(input: { id: Category["id"] }) {
-  try {
-    await prisma.category.delete({
-      where: { id: input.id },
-    })
-
-    revalidatePath("/categories")
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
-
-export async function deleteCategories(input: { ids: Category["id"][] }) {
-  try {
+export const deleteCategories = authedProcedure
+  .createServerAction()
+  .input(z.object({ ids: z.array(z.string()) }))
+  .handler(async ({ input: { ids } }) => {
     await prisma.category.deleteMany({
-      where: { id: { in: input.ids } },
+      where: { id: { in: ids } },
     })
 
     revalidatePath("/categories")
 
-    return {
-      data: null,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return true
+  })

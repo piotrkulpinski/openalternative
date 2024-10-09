@@ -2,22 +2,11 @@
 
 import type { Category } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
-import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
-import * as React from "react"
+import { CategoryActions } from "~/app/(dashboard)/categories/_components/category-actions"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
-import { Button } from "~/components/ui/button"
 import { Checkbox } from "~/components/ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
-import { siteConfig } from "~/config/site"
 import { formatDate } from "~/utils/helpers"
-import { DeleteCategoriesDialog } from "./delete-categories-dialog"
 
 export function getColumns(): ColumnDef<Category>[] {
   return [
@@ -75,59 +64,9 @@ export function getColumns(): ColumnDef<Category>[] {
     },
     {
       id: "actions",
-      cell: function Cell({ row }) {
-        const [showDeleteCategoryDialog, setShowDeleteCategoryDialog] = React.useState(false)
-
-        return (
-          <>
-            <DeleteCategoriesDialog
-              open={showDeleteCategoryDialog}
-              onOpenChange={setShowDeleteCategoryDialog}
-              categories={[row.original]}
-              showTrigger={false}
-              onSuccess={() => row.toggleSelected(false)}
-            />
-
-            <div className="flex items-center justify-end gap-1.5 -my-0.5">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    aria-label="Open menu"
-                    variant="ghost"
-                    size="icon"
-                    prefix={<EllipsisIcon />}
-                    className="text-muted-foreground data-[state=open]:bg-muted"
-                  />
-                </DropdownMenuTrigger>
-
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link href={`/categories/${row.original.id}`}>Edit</Link>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href={`${siteConfig.url}/categories/${row.original.slug}`}
-                      target="_blank"
-                    >
-                      View
-                    </Link>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem
-                    onSelect={() => setShowDeleteCategoryDialog(true)}
-                    className="text-red-500"
-                  >
-                    Delete
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </>
-        )
-      },
+      cell: ({ row }) => (
+        <CategoryActions category={row.original} row={row} className="float-right -my-0.5" />
+      ),
       size: 0,
     },
   ]

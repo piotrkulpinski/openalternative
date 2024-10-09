@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation"
 import React from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { DeleteToolsDialog } from "~/app/(dashboard)/tools/_components/delete-tools-dialog"
-import { PublishToolDialog } from "~/app/(dashboard)/tools/_components/publish-tool-dialog"
+import { ToolPublishDialog } from "~/app/(dashboard)/tools/_components/tool-publish-dialog"
+import { ToolsDeleteDialog } from "~/app/(dashboard)/tools/_components/tools-delete-dialog"
 import { reuploadToolAssets } from "~/app/(dashboard)/tools/_lib/actions"
 import { Button } from "~/components/ui/button"
 
@@ -30,8 +30,8 @@ interface ToolActionsProps extends React.ComponentPropsWithoutRef<typeof Button>
 
 export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps) => {
   const router = useRouter()
-  const [showDeleteToolDialog, setShowDeleteToolDialog] = React.useState(false)
-  const [showPublishToolDialog, setShowPublishToolDialog] = React.useState(false)
+  const [showToolsDeleteDialog, setShowToolsDeleteDialog] = React.useState(false)
+  const [showToolPublishDialog, setShowToolPublishDialog] = React.useState(false)
 
   const { execute: reuploadAssetsAction } = useServerAction(reuploadToolAssets, {
     onSuccess: () => {
@@ -45,17 +45,17 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
   return (
     <>
-      <DeleteToolsDialog
-        open={showDeleteToolDialog}
-        onOpenChange={setShowDeleteToolDialog}
+      <ToolsDeleteDialog
+        open={showToolsDeleteDialog}
+        onOpenChange={setShowToolsDeleteDialog}
         tools={[tool]}
         showTrigger={false}
         onSuccess={() => row?.toggleSelected(false) || router.push("/tools")}
       />
 
-      <PublishToolDialog
-        open={showPublishToolDialog}
-        onOpenChange={setShowPublishToolDialog}
+      <ToolPublishDialog
+        open={showToolPublishDialog}
+        onOpenChange={setShowToolPublishDialog}
         tool={tool}
         showTrigger={false}
       />
@@ -79,7 +79,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           {!tool.publishedAt && (
             <DropdownMenuItem
-              onSelect={() => setShowPublishToolDialog(true)}
+              onSelect={() => setShowToolPublishDialog(true)}
               className="text-green-600 dark:text-green-400"
             >
               Publish
@@ -114,7 +114,10 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onSelect={() => setShowDeleteToolDialog(true)} className="text-red-500">
+          <DropdownMenuItem
+            onSelect={() => setShowToolsDeleteDialog(true)}
+            className="text-red-500"
+          >
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

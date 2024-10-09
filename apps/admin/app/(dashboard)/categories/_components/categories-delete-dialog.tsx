@@ -3,8 +3,8 @@
 import type { Category } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
-import * as React from "react"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
 import { Button } from "~/components/ui/button"
 import {
   Dialog,
@@ -18,36 +18,29 @@ import {
 } from "~/components/ui/dialog"
 import { deleteCategories } from "../_lib/actions"
 
-interface DeleteCategoriesDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+interface CategoriesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   categories: Row<Category>["original"][]
   showTrigger?: boolean
   onSuccess?: () => void
 }
 
-export const DeleteCategoriesDialog = ({
+export const CategoriesDeleteDialog = ({
   categories,
   showTrigger = true,
   onSuccess,
   ...props
-}: DeleteCategoriesDialogProps) => {
-  const [isDeletePending, startDeleteTransition] = React.useTransition()
-
-  const onDelete = () => {
-    startDeleteTransition(async () => {
-      const { error } = await deleteCategories({
-        ids: categories.map(({ id }) => id),
-      })
-
-      if (error) {
-        toast.error(error)
-        return
-      }
-
+}: CategoriesDeleteDialogProps) => {
+  const { execute, isPending } = useServerAction(deleteCategories, {
+    onSuccess: () => {
       props.onOpenChange?.(false)
       toast.success("Categories deleted")
       onSuccess?.()
-    })
-  }
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
   return (
     <Dialog {...props}>
@@ -77,9 +70,9 @@ export const DeleteCategoriesDialog = ({
           <Button
             aria-label="Delete selected rows"
             variant="destructive"
-            onClick={onDelete}
-            isPending={isDeletePending}
-            disabled={isDeletePending}
+            onClick={() => execute({ ids: categories.map(({ id }) => id) })}
+            isPending={isPending}
+            disabled={isPending}
           >
             Delete
           </Button>

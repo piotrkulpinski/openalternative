@@ -1,6 +1,6 @@
 "use client"
 
-import type { Tool } from "@openalternative/db"
+import type { License } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
 import type * as React from "react"
@@ -17,24 +17,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
-import { deleteTools } from "../_lib/actions"
+import { deleteLicenses } from "../_lib/actions"
 
-interface DeleteToolsDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  tools: Row<Tool>["original"][]
+interface LicensesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+  licenses: Row<License>["original"][]
   showTrigger?: boolean
   onSuccess?: () => void
 }
 
-export const DeleteToolsDialog = ({
-  tools,
+export const LicensesDeleteDialog = ({
+  licenses,
   showTrigger = true,
   onSuccess,
   ...props
-}: DeleteToolsDialogProps) => {
-  const { execute, isPending } = useServerAction(deleteTools, {
+}: LicensesDeleteDialogProps) => {
+  const { execute, isPending } = useServerAction(deleteLicenses, {
     onSuccess: () => {
       props.onOpenChange?.(false)
-      toast.success("Tools deleted")
+      toast.success("Licenses deleted")
       onSuccess?.()
     },
 
@@ -48,7 +48,7 @@ export const DeleteToolsDialog = ({
       {showTrigger && (
         <DialogTrigger asChild>
           <Button variant="outline" size="sm" prefix={<TrashIcon />}>
-            Delete ({tools.length})
+            Delete ({licenses.length})
           </Button>
         </DialogTrigger>
       )}
@@ -58,8 +58,8 @@ export const DeleteToolsDialog = ({
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete your{" "}
-            <span className="font-medium">{tools.length}</span>
-            {tools.length === 1 ? " tool" : " tools"} from our servers.
+            <span className="font-medium">{licenses.length}</span>
+            {licenses.length === 1 ? " license" : " licenses"} from our servers.
           </DialogDescription>
         </DialogHeader>
 
@@ -71,7 +71,7 @@ export const DeleteToolsDialog = ({
           <Button
             aria-label="Delete selected rows"
             variant="destructive"
-            onClick={() => execute({ ids: tools.map(({ id }) => id) })}
+            onClick={() => execute({ ids: licenses.map(({ id }) => id) })}
             isPending={isPending}
             disabled={isPending}
           >

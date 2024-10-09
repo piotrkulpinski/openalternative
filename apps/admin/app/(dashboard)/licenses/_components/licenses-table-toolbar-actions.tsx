@@ -2,7 +2,7 @@
 
 import type { License } from "@openalternative/db"
 import type { Table } from "@tanstack/react-table"
-import { DeleteLicensesDialog } from "./delete-licenses-dialog"
+import { LicensesDeleteDialog } from "./licenses-delete-dialog"
 
 interface LicensesTableToolbarActionsProps {
   table: Table<License>
@@ -12,7 +12,7 @@ export function LicensesTableToolbarActions({ table }: LicensesTableToolbarActio
   return (
     <>
       {table.getFilteredSelectedRowModel().rows.length > 0 ? (
-        <DeleteLicensesDialog
+        <LicensesDeleteDialog
           licenses={table.getFilteredSelectedRowModel().rows.map(row => row.original)}
           onSuccess={() => table.toggleAllRowsSelected(false)}
         />

@@ -1,10 +1,11 @@
 "use client"
 
-import type { Alternative } from "@openalternative/db"
+import type { Tool } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
-import * as React from "react"
+import type * as React from "react"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
 import { Button } from "~/components/ui/button"
 import {
   Dialog,
@@ -16,45 +17,38 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
-import { deleteAlternatives } from "../_lib/actions"
+import { deleteTools } from "../_lib/actions"
 
-interface DeleteAlternativesDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  alternatives: Row<Alternative>["original"][]
+interface ToolsDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+  tools: Row<Tool>["original"][]
   showTrigger?: boolean
   onSuccess?: () => void
 }
 
-export const DeleteAlternativesDialog = ({
-  alternatives,
+export const ToolsDeleteDialog = ({
+  tools,
   showTrigger = true,
   onSuccess,
   ...props
-}: DeleteAlternativesDialogProps) => {
-  const [isDeletePending, startDeleteTransition] = React.useTransition()
-
-  const onDelete = () => {
-    startDeleteTransition(async () => {
-      const { error } = await deleteAlternatives({
-        ids: alternatives.map(({ id }) => id),
-      })
-
-      if (error) {
-        toast.error(error)
-        return
-      }
-
+}: ToolsDeleteDialogProps) => {
+  const { execute, isPending } = useServerAction(deleteTools, {
+    onSuccess: () => {
       props.onOpenChange?.(false)
-      toast.success("Alternatives deleted")
+      toast.success("Tools deleted")
       onSuccess?.()
-    })
-  }
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
   return (
     <Dialog {...props}>
       {showTrigger && (
         <DialogTrigger asChild>
           <Button variant="outline" size="sm" prefix={<TrashIcon />}>
-            Delete ({alternatives.length})
+            Delete ({tools.length})
           </Button>
         </DialogTrigger>
       )}
@@ -64,8 +58,8 @@ export const DeleteAlternativesDialog = ({
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete your{" "}
-            <span className="font-medium">{alternatives.length}</span>
-            {alternatives.length === 1 ? " alternative" : " alternatives"} from our servers.
+            <span className="font-medium">{tools.length}</span>
+            {tools.length === 1 ? " tool" : " tools"} from our servers.
           </DialogDescription>
         </DialogHeader>
 
@@ -77,9 +71,9 @@ export const DeleteAlternativesDialog = ({
           <Button
             aria-label="Delete selected rows"
             variant="destructive"
-            onClick={onDelete}
-            isPending={isDeletePending}
-            disabled={isDeletePending}
+            onClick={() => execute({ ids: tools.map(({ id }) => id) })}
+            isPending={isPending}
+            disabled={isPending}
           >
             Delete
           </Button>

@@ -2,7 +2,7 @@
 
 import type { Tool } from "@openalternative/db"
 import type { Table } from "@tanstack/react-table"
-import { DeleteToolsDialog } from "./delete-tools-dialog"
+import { ToolsDeleteDialog } from "./tools-delete-dialog"
 
 interface ToolsTableToolbarActionsProps {
   table: Table<Tool>
@@ -12,7 +12,7 @@ export function ToolsTableToolbarActions({ table }: ToolsTableToolbarActionsProp
   return (
     <>
       {table.getFilteredSelectedRowModel().rows.length > 0 ? (
-        <DeleteToolsDialog
+        <ToolsDeleteDialog
           tools={table.getFilteredSelectedRowModel().rows.map(row => row.original)}
           onSuccess={() => table.toggleAllRowsSelected(false)}
         />

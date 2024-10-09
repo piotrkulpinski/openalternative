@@ -2,7 +2,7 @@
 
 import type { Category } from "@openalternative/db"
 import type { Table } from "@tanstack/react-table"
-import { DeleteCategoriesDialog } from "./delete-categories-dialog"
+import { CategoriesDeleteDialog } from "./categories-delete-dialog"
 
 interface CategoriesTableToolbarActionsProps {
   table: Table<Category>
@@ -12,7 +12,7 @@ export function CategoriesTableToolbarActions({ table }: CategoriesTableToolbarA
   return (
     <>
       {table.getFilteredSelectedRowModel().rows.length > 0 ? (
-        <DeleteCategoriesDialog
+        <CategoriesDeleteDialog
           categories={table.getFilteredSelectedRowModel().rows.map(row => row.original)}
           onSuccess={() => table.toggleAllRowsSelected(false)}
         />
