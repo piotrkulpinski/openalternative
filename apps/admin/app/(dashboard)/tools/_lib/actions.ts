@@ -80,7 +80,7 @@ export const updateTool = authedProcedure
 
 export const updateTools = authedProcedure
   .createServerAction()
-  .input(z.object({ ids: z.array(z.string()), data: toolSchema }))
+  .input(z.object({ ids: z.array(z.string()), data: toolSchema.partial() }))
   .handler(async ({ input: { ids, data } }) => {
     await prisma.tool.updateMany({
       where: { id: { in: ids } },
@@ -88,15 +88,6 @@ export const updateTools = authedProcedure
     })
 
     revalidatePath("/tools")
-
-    return true
-  })
-
-export const deleteTool = authedProcedure
-  .createServerAction()
-  .input(z.object({ id: z.string() }))
-  .handler(async ({ input: { id } }) => {
-    await deleteTools({ ids: [id] })
 
     return true
   })

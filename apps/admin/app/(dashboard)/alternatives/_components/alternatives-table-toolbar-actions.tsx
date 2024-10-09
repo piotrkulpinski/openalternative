@@ -2,7 +2,7 @@
 
 import type { Alternative } from "@openalternative/db"
 import type { Table } from "@tanstack/react-table"
-import { DeleteAlternativesDialog } from "./delete-alternatives-dialog"
+import { AlternativesDeleteDialog } from "./alternatives-delete-dialog"
 
 interface AlternativesTableToolbarActionsProps {
   table: Table<Alternative>
@@ -12,7 +12,7 @@ export function AlternativesTableToolbarActions({ table }: AlternativesTableTool
   return (
     <>
       {table.getFilteredSelectedRowModel().rows.length > 0 ? (
-        <DeleteAlternativesDialog
+        <AlternativesDeleteDialog
           alternatives={table.getFilteredSelectedRowModel().rows.map(row => row.original)}
           onSuccess={() => table.toggleAllRowsSelected(false)}
         />

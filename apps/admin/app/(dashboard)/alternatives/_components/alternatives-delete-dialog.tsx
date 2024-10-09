@@ -1,10 +1,11 @@
 "use client"
 
-import type { License } from "@openalternative/db"
+import type { Alternative } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
-import * as React from "react"
+import type * as React from "react"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
 import { Button } from "~/components/ui/button"
 import {
   Dialog,
@@ -16,45 +17,38 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
-import { deleteLicenses } from "../_lib/actions"
+import { deleteAlternatives } from "../_lib/actions"
 
-interface DeleteLicensesDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  licenses: Row<License>["original"][]
+interface AlternativesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+  alternatives: Row<Alternative>["original"][]
   showTrigger?: boolean
   onSuccess?: () => void
 }
 
-export const DeleteLicensesDialog = ({
-  licenses,
+export const AlternativesDeleteDialog = ({
+  alternatives,
   showTrigger = true,
   onSuccess,
   ...props
-}: DeleteLicensesDialogProps) => {
-  const [isDeletePending, startDeleteTransition] = React.useTransition()
-
-  const onDelete = () => {
-    startDeleteTransition(async () => {
-      const { error } = await deleteLicenses({
-        ids: licenses.map(({ id }) => id),
-      })
-
-      if (error) {
-        toast.error(error)
-        return
-      }
-
+}: AlternativesDeleteDialogProps) => {
+  const { execute, isPending } = useServerAction(deleteAlternatives, {
+    onSuccess: () => {
       props.onOpenChange?.(false)
-      toast.success("Licenses deleted")
+      toast.success("Alternatives deleted")
       onSuccess?.()
-    })
-  }
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
   return (
     <Dialog {...props}>
       {showTrigger && (
         <DialogTrigger asChild>
           <Button variant="outline" size="sm" prefix={<TrashIcon />}>
-            Delete ({licenses.length})
+            Delete ({alternatives.length})
           </Button>
         </DialogTrigger>
       )}
@@ -64,8 +58,8 @@ export const DeleteLicensesDialog = ({
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete your{" "}
-            <span className="font-medium">{licenses.length}</span>
-            {licenses.length === 1 ? " license" : " licenses"} from our servers.
+            <span className="font-medium">{alternatives.length}</span>
+            {alternatives.length === 1 ? " alternative" : " alternatives"} from our servers.
           </DialogDescription>
         </DialogHeader>
 
@@ -77,9 +71,9 @@ export const DeleteLicensesDialog = ({
           <Button
             aria-label="Delete selected rows"
             variant="destructive"
-            onClick={onDelete}
-            isPending={isDeletePending}
-            disabled={isDeletePending}
+            onClick={() => execute({ ids: alternatives.map(({ id }) => id) })}
+            isPending={isPending}
+            disabled={isPending}
           >
             Delete
           </Button>

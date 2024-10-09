@@ -72,14 +72,6 @@ export const updateAlternatives = authedProcedure
     return true
   })
 
-export const deleteAlternative = authedProcedure
-  .createServerAction()
-  .input(z.object({ id: z.string() }))
-  .handler(async ({ input: { id } }) => {
-    await deleteAlternatives({ ids: [id] })
-    return true
-  })
-
 export const deleteAlternatives = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))

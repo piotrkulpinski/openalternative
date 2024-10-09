@@ -20,18 +20,18 @@ import {
 } from "~/components/ui/dialog"
 import { publishTool } from "../_lib/actions"
 
-interface PublishToolDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+interface ToolPublishDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   tool: Row<Tool>["original"]
   showTrigger?: boolean
   onSuccess?: () => void
 }
 
-export const PublishToolDialog = ({
+export const ToolPublishDialog = ({
   tool,
   showTrigger = true,
   onSuccess,
   ...props
-}: PublishToolDialogProps) => {
+}: ToolPublishDialogProps) => {
   const [publishedAt, setPublishedAt] = React.useState<Date | undefined>(undefined)
 
   const { execute, isPending } = useServerAction(publishTool, {

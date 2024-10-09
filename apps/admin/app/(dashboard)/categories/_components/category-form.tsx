@@ -3,9 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import React from "react"
+import type React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
 import { createCategory, updateCategory } from "~/app/(dashboard)/categories/_lib/actions"
 import type { getCategoryById, getTools } from "~/app/(dashboard)/categories/_lib/queries"
 import { type CategorySchema, categorySchema } from "~/app/(dashboard)/categories/_lib/validations"
@@ -21,7 +22,7 @@ import {
 } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
 import { cx } from "~/utils/cva"
-import { getSlug, nullsToUndefined } from "~/utils/helpers"
+import { nullsToUndefined } from "~/utils/helpers"
 
 type CategoryFormProps = React.HTMLAttributes<HTMLFormElement> & {
   category?: Awaited<ReturnType<typeof getCategoryById>>
@@ -35,61 +36,54 @@ export function CategoryForm({
   tools,
   ...props
 }: CategoryFormProps) {
-  const [isSubmitPending, startSubmitTransition] = React.useTransition()
-
   const form = useForm<CategorySchema>({
     resolver: zodResolver(categorySchema),
-    defaultValues: nullsToUndefined(category),
+    defaultValues: {
+      ...nullsToUndefined(category),
+      tools: category?.tools.map(({ tool }) => tool.id),
+    },
   })
 
-  const [selectedTools, setSelectedTools] = React.useState<string[]>(
-    category?.tools?.map(({ tool }) => tool.id) || [],
+  // Create category
+  const { execute: createCategoryAction, isPending: isCreatingCategory } = useServerAction(
+    createCategory,
+    {
+      onSuccess: ({ data }) => {
+        toast.success("Category successfully created")
+        redirect(`/categories/${data.id}`)
+      },
+
+      onError: ({ err }) => {
+        toast.error(err.message)
+      },
+    },
   )
 
-  function onSubmit(input: CategorySchema) {
-    startSubmitTransition(async () => {
-      const payload = {
-        ...input,
-        slug: input.slug || getSlug(input.name),
-
-        tools: {
-          // Delete existing relations
-          deleteMany: category ? { categoryId: category.id } : undefined,
-
-          // Create new relations
-          create: selectedTools.map(id => ({
-            tool: {
-              connect: { id },
-            },
-          })),
-        },
-      }
-
-      const { error, data } = category
-        ? await updateCategory(category.id, payload)
-        : await createCategory(payload)
-
-      if (error) {
-        toast.error(error)
-        return
-      }
-
-      toast.success(`Category successfully ${category ? "updated" : "created"}`)
-
-      if (!category && data) {
+  // Update category
+  const { execute: updateCategoryAction, isPending: isUpdatingCategory } = useServerAction(
+    updateCategory,
+    {
+      onSuccess: ({ data }) => {
+        toast.success("Category successfully updated")
         redirect(`/categories/${data.id}`)
-      }
-    })
-  }
+      },
 
-  React.useEffect(() => {
-    form.reset(nullsToUndefined(category))
-  }, [category, form])
+      onError: ({ err }) => {
+        toast.error(err.message)
+      },
+    },
+  )
+
+  const onSubmit = form.handleSubmit(data => {
+    category ? updateCategoryAction({ id: category.id, ...data }) : createCategoryAction(data)
+  })
+
+  const isPending = isCreatingCategory || isUpdatingCategory
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={onSubmit}
         className={cx("grid grid-cols-1 gap-4 max-w-3xl sm:grid-cols-2", className)}
         noValidate
         {...props}
@@ -138,22 +132,27 @@ export function CategoryForm({
           )}
         />
 
-        <FormItem className="col-span-full">
-          <FormLabel>Tools</FormLabel>
+        <FormField
+          control={form.control}
+          name="tools"
+          render={({ field }) => (
+            <FormItem className="col-span-full">
+              <FormLabel>Tools</FormLabel>
+              <RelationSelector
+                relations={tools}
+                selectedIds={field.value ?? []}
+                onChange={field.onChange}
+              />
+            </FormItem>
+          )}
+        />
 
-          <RelationSelector
-            relations={tools}
-            selectedIds={selectedTools}
-            onChange={setSelectedTools}
-          />
-        </FormItem>
-
-        <div className="flex justify-end gap-2 col-span-full">
+        <div className="flex justify-between gap-4 col-span-full">
           <Button variant="outline" asChild>
             <Link href="/categories">Cancel</Link>
           </Button>
 
-          <Button isPending={isSubmitPending} disabled={isSubmitPending}>
+          <Button isPending={isPending} disabled={isPending}>
             {category ? "Update category" : "Create category"}
           </Button>
         </div>

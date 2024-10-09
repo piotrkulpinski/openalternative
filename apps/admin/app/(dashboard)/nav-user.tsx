@@ -54,7 +54,11 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent side="top" align="start">
+        <DropdownMenuContent
+          side="top"
+          align="start"
+          className="min-w-[var(--radix-dropdown-menu-trigger-width)]"
+        >
           <DropdownMenuItem asChild>
             <Link href={siteConfig.url} target="_blank">
               Visit Site

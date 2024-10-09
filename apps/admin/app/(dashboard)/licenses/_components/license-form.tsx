@@ -3,9 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import React from "react"
+import type React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
 import { createLicense, updateLicense } from "~/app/(dashboard)/licenses/_lib/actions"
 import type { getLicenseById } from "~/app/(dashboard)/licenses/_lib/queries"
 import { type LicenseSchema, licenseSchema } from "~/app/(dashboard)/licenses/_lib/validations"
@@ -21,52 +22,58 @@ import {
 import { Input } from "~/components/ui/input"
 import { Textarea } from "~/components/ui/textarea"
 import { cx } from "~/utils/cva"
-import { getSlug, nullsToUndefined } from "~/utils/helpers"
+import { nullsToUndefined } from "~/utils/helpers"
 
 type LicenseFormProps = React.HTMLAttributes<HTMLFormElement> & {
   license?: Awaited<ReturnType<typeof getLicenseById>>
 }
 
 export function LicenseForm({ children, className, license, ...props }: LicenseFormProps) {
-  const [isSubmitPending, startSubmitTransition] = React.useTransition()
-
   const form = useForm<LicenseSchema>({
     resolver: zodResolver(licenseSchema),
     defaultValues: nullsToUndefined(license),
   })
 
-  function onSubmit(input: LicenseSchema) {
-    startSubmitTransition(async () => {
-      const payload = {
-        ...input,
-        slug: input.slug || getSlug(input.name),
-      }
-
-      const { error, data } = license
-        ? await updateLicense(license.id, payload)
-        : await createLicense(payload)
-
-      if (error) {
-        toast.error(error)
-        return
-      }
-
-      toast.success(`License successfully ${license ? "updated" : "created"}`)
-
-      if (!license && data) {
+  // Create license
+  const { execute: createLicenseAction, isPending: isCreatingLicense } = useServerAction(
+    createLicense,
+    {
+      onSuccess: ({ data }) => {
+        toast.success("License successfully created")
         redirect(`/licenses/${data.id}`)
-      }
-    })
-  }
+      },
 
-  React.useEffect(() => {
-    form.reset(nullsToUndefined(license))
-  }, [license, form])
+      onError: ({ err }) => {
+        toast.error(err.message)
+      },
+    },
+  )
+
+  // Update license
+  const { execute: updateLicenseAction, isPending: isUpdatingLicense } = useServerAction(
+    updateLicense,
+    {
+      onSuccess: ({ data }) => {
+        toast.success("License successfully updated")
+        redirect(`/licenses/${data.id}`)
+      },
+
+      onError: ({ err }) => {
+        toast.error(err.message)
+      },
+    },
+  )
+
+  const onSubmit = form.handleSubmit(data => {
+    license ? updateLicenseAction({ id: license.id, ...data }) : createLicenseAction(data)
+  })
+
+  const isPending = isCreatingLicense || isUpdatingLicense
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={onSubmit}
         className={cx("grid grid-cols-1 gap-4 max-w-3xl sm:grid-cols-2", className)}
         noValidate
         {...props}
@@ -127,12 +134,12 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
           )}
         />
 
-        <div className="flex justify-end gap-2 col-span-full">
+        <div className="flex justify-between gap-4 col-span-full">
           <Button variant="outline" asChild>
             <Link href="/licenses">Cancel</Link>
           </Button>
 
-          <Button isPending={isSubmitPending} disabled={isSubmitPending}>
+          <Button isPending={isPending} disabled={isPending}>
             {license ? "Update license" : "Create license"}
           </Button>
         </div>

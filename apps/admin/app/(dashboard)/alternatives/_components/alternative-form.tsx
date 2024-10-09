@@ -49,7 +49,7 @@ export function AlternativeForm({
     },
   })
 
-  // Create tool
+  // Create alternative
   const { execute: createAlternativeAction, isPending: isCreatingAlternative } = useServerAction(
     createAlternative,
     {
@@ -227,7 +227,7 @@ export function AlternativeForm({
           )}
         />
 
-        <div className="flex justify-end gap-2 col-span-full">
+        <div className="flex justify-between gap-4 col-span-full">
           <Button variant="outline" asChild>
             <Link href="/alternatives">Cancel</Link>
           </Button>

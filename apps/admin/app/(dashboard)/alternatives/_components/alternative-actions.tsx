@@ -9,10 +9,9 @@ import type React from "react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { DeleteAlternativesDialog } from "~/app/(dashboard)/alternatives/_components/delete-alternatives-dialog"
+import { AlternativesDeleteDialog } from "~/app/(dashboard)/alternatives/_components/alternatives-delete-dialog"
 import { reuploadAlternativeAssets } from "~/app/(dashboard)/alternatives/_lib/actions"
 import { Button } from "~/components/ui/button"
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,7 +34,7 @@ export const AlternativeActions = ({
   ...props
 }: AlternativeActionsProps) => {
   const router = useRouter()
-  const [showDeleteAlternativeDialog, setShowDeleteAlternativeDialog] = useState(false)
+  const [showAlternativesDeleteDialog, setShowAlternativesDeleteDialog] = useState(false)
 
   const { execute: reuploadAssets } = useServerAction(reuploadAlternativeAssets, {
     onSuccess: () => {
@@ -49,9 +48,9 @@ export const AlternativeActions = ({
 
   return (
     <>
-      <DeleteAlternativesDialog
-        open={showDeleteAlternativeDialog}
-        onOpenChange={setShowDeleteAlternativeDialog}
+      <AlternativesDeleteDialog
+        open={showAlternativesDeleteDialog}
+        onOpenChange={setShowAlternativesDeleteDialog}
         alternatives={[alternative]}
         showTrigger={false}
         onSuccess={() => row?.toggleSelected(false) || router.push("/alternatives")}
@@ -95,7 +94,7 @@ export const AlternativeActions = ({
           <DropdownMenuSeparator />
 
           <DropdownMenuItem
-            onSelect={() => setShowDeleteAlternativeDialog(true)}
+            onSelect={() => setShowAlternativesDeleteDialog(true)}
             className="text-red-500"
           >
             Delete

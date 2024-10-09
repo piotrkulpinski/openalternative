@@ -1,34 +1,33 @@
 "use server"
 
-import type { License, Prisma } from "@openalternative/db"
-import { unstable_noStore as noStore, revalidatePath } from "next/cache"
-import { getErrorMessage } from "~/lib/handle-error"
+import "server-only"
+import { revalidatePath } from "next/cache"
+import { z } from "zod"
+import { licenseSchema } from "~/app/(dashboard)/licenses/_lib/validations"
+import { authedProcedure } from "~/lib/safe-actions"
 import { prisma } from "~/services/prisma"
+import { getSlug } from "~/utils/helpers"
 
-export async function createLicense(input: Prisma.LicenseCreateInput) {
-  noStore()
-  try {
+export const createLicense = authedProcedure
+  .createServerAction()
+  .input(licenseSchema)
+  .handler(async ({ input }) => {
     const license = await prisma.license.create({
-      data: input,
+      data: {
+        ...input,
+        slug: input.slug || getSlug(input.name),
+      },
     })
 
     revalidatePath("/licenses")
 
-    return {
-      data: license,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return license
+  })
 
-export async function updateLicense(id: string, input: Prisma.LicenseUpdateInput) {
-  noStore()
-  try {
+export const updateLicense = authedProcedure
+  .createServerAction()
+  .input(licenseSchema.extend({ id: z.string() }))
+  .handler(async ({ input: { id, ...input } }) => {
     const license = await prisma.license.update({
       where: { id },
       data: input,
@@ -36,74 +35,32 @@ export async function updateLicense(id: string, input: Prisma.LicenseUpdateInput
 
     revalidatePath("/licenses")
 
-    return {
-      data: license,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return license
+  })
 
-export async function updateLicenses(input: {
-  ids: License["id"][]
-  data: Prisma.LicenseUpdateInput
-}) {
-  noStore()
-  try {
+export const updateLicenses = authedProcedure
+  .createServerAction()
+  .input(z.object({ ids: z.array(z.string()), data: licenseSchema.partial() }))
+  .handler(async ({ input: { ids, data } }) => {
     await prisma.license.updateMany({
-      where: { id: { in: input.ids } },
-      data: input.data,
+      where: { id: { in: ids } },
+      data,
     })
 
     revalidatePath("/licenses")
 
-    return {
-      data: null,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return true
+  })
 
-export async function deleteLicense(input: { id: License["id"] }) {
-  try {
-    await prisma.license.delete({
-      where: { id: input.id },
-    })
-
-    revalidatePath("/licenses")
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
-
-export async function deleteLicenses(input: { ids: License["id"][] }) {
-  try {
+export const deleteLicenses = authedProcedure
+  .createServerAction()
+  .input(z.object({ ids: z.array(z.string()) }))
+  .handler(async ({ input: { ids } }) => {
     await prisma.license.deleteMany({
-      where: { id: { in: input.ids } },
+      where: { id: { in: ids } },
     })
 
     revalidatePath("/licenses")
 
-    return {
-      data: null,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return true
+  })
