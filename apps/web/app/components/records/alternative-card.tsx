@@ -8,6 +8,7 @@ import { Button } from "~/components/ui/button"
 import { Card } from "~/components/ui/card"
 import { Favicon } from "~/components/ui/favicon"
 import { H4 } from "~/components/ui/heading"
+import { Prose } from "~/components/ui/prose"
 import type { AlternativeOne } from "~/services.server/api"
 
 type AlternativeCardProps = HTMLAttributes<HTMLElement> & {
@@ -44,15 +45,18 @@ export const AlternativeCard = ({ className, alternative, ...props }: Alternativ
         )}
 
         {alternative.discountAmount && (
-          <p className="text-sm/normal text-green-600 dark:text-green-400">
-            {alternative.discountCode && (
+          <Prose className="prose-strong:underline text-balance text-sm text-green-600 dark:text-green-400">
+            {alternative.discountCode ? (
               <>
-                Use code <span className="font-semibold underline">{alternative.discountCode}</span>{" "}
-                to get{" "}
+                Use code <strong>{alternative.discountCode}</strong> to get{" "}
+                <strong>{alternative.discountAmount}</strong>.
+              </>
+            ) : (
+              <>
+                Get <strong>{alternative.discountAmount}</strong> with this link.
               </>
             )}
-            <span className="font-semibold underline">{alternative.discountAmount}</span>!
-          </p>
+          </Prose>
         )}
 
         <Button
@@ -62,7 +66,7 @@ export const AlternativeCard = ({ className, alternative, ...props }: Alternativ
           suffix={<ArrowUpRightIcon />}
           asChild
         >
-          <span>Visit Website</span>
+          <span>Visit {alternative.name}</span>
         </Button>
       </Link>
     </Card>
