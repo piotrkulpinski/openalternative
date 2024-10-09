@@ -1,16 +1,37 @@
 "use server"
 
-import type { Prisma, Tool } from "@openalternative/db"
-import { unstable_noStore as noStore, revalidatePath } from "next/cache"
-import { getErrorMessage } from "~/lib/handle-error"
+import { revalidatePath } from "next/cache"
+import { z } from "zod"
+import { toolSchema } from "~/app/(dashboard)/tools/_lib/validations"
+import { uploadFavicon, uploadScreenshot } from "~/lib/media"
+import { authedProcedure } from "~/lib/safe-actions"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
+import { getSlug } from "~/utils/helpers"
 
-export async function createTool(input: Prisma.ToolCreateInput) {
-  noStore()
-  try {
+export const createTool = authedProcedure
+  .createServerAction()
+  .input(toolSchema)
+  .handler(async ({ input: { alternatives, categories, ...input }, ctx: { user } }) => {
     const tool = await prisma.tool.create({
-      data: input,
+      data: {
+        ...input,
+        slug: input.slug || getSlug(input.name),
+        submitterName: user.name,
+        submitterEmail: user.email,
+
+        alternatives: {
+          create: alternatives?.map(id => ({
+            alternative: { connect: { id } },
+          })),
+        },
+
+        categories: {
+          create: categories?.map(id => ({
+            category: { connect: { id } },
+          })),
+        },
+      },
     })
 
     revalidatePath("/tools")
@@ -20,76 +41,80 @@ export async function createTool(input: Prisma.ToolCreateInput) {
       await inngest.send({ name: "tool.published", data: { id: tool.id } })
     }
 
-    return {
-      data: tool,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return tool
+  })
 
-export async function updateTool(id: string, input: Prisma.ToolUpdateInput) {
-  noStore()
-  try {
+export const updateTool = authedProcedure
+  .createServerAction()
+  .input(toolSchema.extend({ id: z.string() }))
+  .handler(async ({ input: { id, alternatives, categories, ...input } }) => {
     const tool = await prisma.tool.update({
       where: { id },
-      data: input,
+      data: {
+        ...input,
+
+        alternatives: {
+          // Delete existing relations
+          deleteMany: { toolId: id },
+
+          // Create new relations
+          create: alternatives?.map(id => ({
+            alternative: { connect: { id } },
+          })),
+        },
+
+        categories: {
+          // Delete existing relations
+          deleteMany: { toolId: id },
+
+          // Create new relations
+          create: categories?.map(id => ({
+            category: { connect: { id } },
+          })),
+        },
+      },
     })
 
     revalidatePath("/tools")
     revalidatePath(`/tools/${tool.slug}`)
 
-    return {
-      data: tool,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return tool
+  })
 
-export async function updateTools(input: { ids: Tool["id"][]; data: Prisma.ToolUpdateInput }) {
-  noStore()
-  try {
+export const updateTools = authedProcedure
+  .createServerAction()
+  .input(z.object({ ids: z.array(z.string()), data: toolSchema }))
+  .handler(async ({ input: { ids, data } }) => {
     await prisma.tool.updateMany({
-      where: { id: { in: input.ids } },
-      data: input.data,
+      where: { id: { in: ids } },
+      data,
     })
 
     revalidatePath("/tools")
 
-    return {
-      data: null,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return true
+  })
 
-export async function deleteTool(input: { id: Tool["id"] }) {
-  await deleteTools({ ids: [input.id] })
-}
+export const deleteTool = authedProcedure
+  .createServerAction()
+  .input(z.object({ id: z.string() }))
+  .handler(async ({ input: { id } }) => {
+    await deleteTools({ ids: [id] })
 
-export async function deleteTools(input: { ids: Tool["id"][] }) {
-  try {
+    return true
+  })
+
+export const deleteTools = authedProcedure
+  .createServerAction()
+  .input(z.object({ ids: z.array(z.string()) }))
+  .handler(async ({ input: { ids } }) => {
     const tools = await prisma.tool.findMany({
-      where: { id: { in: input.ids } },
+      where: { id: { in: ids } },
       select: { slug: true },
     })
 
     await prisma.tool.deleteMany({
-      where: { id: { in: input.ids } },
+      where: { id: { in: ids } },
     })
 
     revalidatePath("/tools")
@@ -99,20 +124,13 @@ export async function deleteTools(input: { ids: Tool["id"][] }) {
       await inngest.send({ name: "tool.deleted", data: { slug: tool.slug } })
     }
 
-    return {
-      data: null,
-      error: null,
-    }
-  } catch (err) {
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+    return true
+  })
 
-export async function publishTool(id: Tool["id"], publishedAt: Date) {
-  try {
+export const publishTool = authedProcedure
+  .createServerAction()
+  .input(z.object({ id: z.string(), publishedAt: z.date() }))
+  .handler(async ({ input: { id, publishedAt } }) => {
     const tool = await prisma.tool.update({
       where: { id },
       data: { publishedAt },
@@ -124,16 +142,22 @@ export async function publishTool(id: Tool["id"], publishedAt: Date) {
     // Send an event to the Inngest pipeline
     await inngest.send({ name: "tool.published", data: { id: tool.id } })
 
-    return {
-      data: null,
-      error: null,
-    }
-  } catch (err) {
-    console.error("Tool publishing failed: ", err)
+    return true
+  })
 
-    return {
-      data: null,
-      error: getErrorMessage(err),
-    }
-  }
-}
+export const reuploadToolAssets = authedProcedure
+  .createServerAction()
+  .input(z.object({ id: z.string() }))
+  .handler(async ({ input: { id } }) => {
+    const tool = await prisma.tool.findUniqueOrThrow({ where: { id } })
+
+    const [faviconUrl, screenshotUrl] = await Promise.all([
+      uploadFavicon(tool.website, `${tool.slug}/favicon`),
+      uploadScreenshot(tool.website, `${tool.slug}/screenshot`),
+    ])
+
+    await prisma.tool.update({
+      where: { id: tool.id },
+      data: { faviconUrl, screenshotUrl },
+    })
+  })

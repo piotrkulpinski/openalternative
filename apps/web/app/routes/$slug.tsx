@@ -241,21 +241,28 @@ export default function ToolsPage() {
             </div>
 
             {!!alternatives.length && (
-              <Stack>
-                <p>Open Source Alternative to:</p>
+              <>
+                <h3 className="sr-only">
+                  Open Source Alternative to{" "}
+                  {joinAsSentence(alternatives.map(({ alternative }) => alternative?.name))}
+                </h3>
 
-                {alternatives.map(({ alternative }) => (
-                  <NavigationLink key={alternative.id} to={`/alternatives/${alternative.slug}`}>
-                    <FaviconImage
-                      src={alternative.faviconUrl}
-                      title={alternative.name}
-                      className="size-4"
-                    />
+                <Stack>
+                  <span className="text-sm">Open Source Alternative to:</span>
 
-                    {alternative.name}
-                  </NavigationLink>
-                ))}
-              </Stack>
+                  {alternatives.map(({ alternative }) => (
+                    <NavigationLink key={alternative.id} to={`/alternatives/${alternative.slug}`}>
+                      {alternative.name}
+
+                      <FaviconImage
+                        src={alternative.faviconUrl}
+                        title={alternative.name}
+                        className="size-4 order-first"
+                      />
+                    </NavigationLink>
+                  ))}
+                </Stack>
+              </>
             )}
 
             <Stack size="sm">
@@ -323,7 +330,7 @@ export default function ToolsPage() {
             <div className="grid grid-auto-fit-sm gap-x-6 gap-y-10 w-full">
               {links && (
                 <Stack size="lg" direction="column">
-                  <H5 as="h3">Links:</H5>
+                  <H5 as="strong">Links:</H5>
 
                   <Stack direction="column">
                     {links.map(({ name, url }) => (
@@ -344,7 +351,7 @@ export default function ToolsPage() {
 
               {!!categories.length && (
                 <Stack direction="column" className="w-full">
-                  <H5 as="h3">Categories:</H5>
+                  <H5 as="strong">Categories:</H5>
 
                   <Stack direction="column">
                     {categories?.map(({ category }) => (
@@ -365,7 +372,7 @@ export default function ToolsPage() {
           {/* Topics */}
           {!!topics.length && (
             <Stack size="lg" direction="column" className="w-full">
-              <H5 as="h3">Related topics:</H5>
+              <H5 as="strong">Related topics:</H5>
 
               <Stack>
                 {topics.map(({ topic }) => (
@@ -380,7 +387,7 @@ export default function ToolsPage() {
           <ShareButtons title={meta.title} />
         </Section.Content>
 
-        <Section.Sidebar className="max-md:hidden" style={{ viewTransitionName: "sidebar" }}>
+        <Section.Sidebar className="max-md:hidden">
           <ToolSidebar tool={tool} languages={languages} />
         </Section.Sidebar>
       </Section>
@@ -388,7 +395,7 @@ export default function ToolsPage() {
       {/* Related */}
       {relatedTools.length > 0 && (
         <Stack size="lg" direction="column">
-          <H4 as="h3">Similar open source alternatives:</H4>
+          <H4 as="h2">Similar open source alternatives:</H4>
 
           <Grid className="w-full">
             {relatedTools.map(relatedTool => (

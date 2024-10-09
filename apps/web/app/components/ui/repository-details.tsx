@@ -62,25 +62,27 @@ export const RepositoryDetails = ({
   return (
     <div className={cx("flex flex-col gap-4 rounded-lg border p-5", className)} {...props}>
       <Stack direction="column">
-        <H5>Repository details:</H5>
+        <H5 as="strong">Repository details:</H5>
         <Insights insights={insights} className="text-sm" />
       </Stack>
 
       {!!languages.length && (
         <Stack direction="column">
-          <H5>Written in:</H5>
+          <H5 as="strong">Written in:</H5>
 
           <Stack>
             {languages?.map(({ percentage, language }) => (
-              <h6 key={language.slug}>
-                <NavigationLink to={`/languages/${language.slug}`} className="gap-1">
-                  <span
-                    className="size-2 rounded-full"
-                    style={{ backgroundColor: language.color ?? undefined }}
-                  />
-                  {language.name} <span className="opacity-50">({percentage}%)</span>
-                </NavigationLink>
-              </h6>
+              <NavigationLink
+                key={language.slug}
+                to={`/languages/${language.slug}`}
+                className="gap-1"
+              >
+                <span
+                  className="size-2 rounded-full"
+                  style={{ backgroundColor: language.color ?? undefined }}
+                />
+                {language.name} <span className="opacity-50">({percentage}%)</span>
+              </NavigationLink>
             ))}
           </Stack>
         </Stack>

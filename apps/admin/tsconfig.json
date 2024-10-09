@@ -8,6 +8,7 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "strict": true,
+    "allowUmdGlobalAccess": true,
     "noUncheckedIndexedAccess": true,
     "forceConsistentCasingInFileNames": false,
     "checkJs": true,

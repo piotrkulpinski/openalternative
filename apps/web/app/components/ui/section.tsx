@@ -26,6 +26,7 @@ export const SectionSidebar = ({ className, ...props }: HTMLAttributes<HTMLEleme
         "flex flex-col gap-6 w-full md:sticky md:top-16 md:z-10 md:max-h-[calc(100vh-5rem)]",
         className,
       )}
+      style={{ viewTransitionName: "sidebar" }}
       {...props}
     />
   )

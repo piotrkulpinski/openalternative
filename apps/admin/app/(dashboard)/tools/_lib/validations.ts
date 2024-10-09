@@ -47,6 +47,8 @@ export const toolSchema = z.object({
   discountAmount: z.string().optional(),
   twitterHandle: z.string().optional(),
   publishedAt: z.date().nullish(),
+  alternatives: z.array(z.string()).optional(),
+  categories: z.array(z.string()).optional(),
 })
 
 export type ToolSchema = z.infer<typeof toolSchema>

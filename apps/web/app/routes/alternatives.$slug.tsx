@@ -200,10 +200,7 @@ export default function AlternativesPage() {
             ))}
           </Section.Content>
 
-          <Section.Sidebar
-            className="order-first md:order-last"
-            style={{ viewTransitionName: "sidebar" }}
-          >
+          <Section.Sidebar className="order-first md:order-last">
             <AlternativeCard alternative={alternative} />
 
             <InlineMenu
@@ -222,7 +219,9 @@ export default function AlternativesPage() {
                 className="font-normal text-muted"
                 asChild
               >
-                <Link to="/submit">Suggest an alternative</Link>
+                <Link to="/submit" unstable_viewTransition>
+                  Suggest an alternative
+                </Link>
               </Button>
             </InlineMenu>
           </Section.Sidebar>

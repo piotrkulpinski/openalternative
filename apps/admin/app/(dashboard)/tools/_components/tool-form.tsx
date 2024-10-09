@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { formatDate } from "date-fns"
 import { PlusIcon, TrashIcon } from "lucide-react"
-import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import React from "react"
+import type React from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
 import { createTool, updateTool } from "~/app/(dashboard)/tools/_lib/actions"
 import type {
   getAlternatives,
@@ -30,7 +30,7 @@ import { Input } from "~/components/ui/input"
 import { Switch } from "~/components/ui/switch"
 import { Textarea } from "~/components/ui/textarea"
 import { cx } from "~/utils/cva"
-import { getSlug, nullsToUndefined } from "~/utils/helpers"
+import { nullsToUndefined } from "~/utils/helpers"
 
 type ToolFormProps = React.HTMLAttributes<HTMLFormElement> & {
   tool?: Awaited<ReturnType<typeof getToolById>>
@@ -46,101 +46,63 @@ export function ToolForm({
   categories,
   ...props
 }: ToolFormProps) {
-  const session = useSession()
-  const [isSubmitPending, startSubmitTransition] = React.useTransition()
-
   const form = useForm<ToolSchema>({
     resolver: zodResolver(toolSchema),
-    defaultValues: nullsToUndefined(tool),
+    defaultValues: {
+      ...nullsToUndefined(tool),
+      alternatives: tool?.alternatives?.map(({ alternative }) => alternative.id) || [],
+      categories: tool?.categories?.map(({ category }) => category.id) || [],
+    },
   })
 
   const {
     fields: linkFields,
     append: appendLink,
     remove: removeLink,
-  } = useFieldArray({
-    control: form.control,
-    name: "links",
+  } = useFieldArray({ control: form.control, name: "links" })
+
+  // Create tool
+  const { execute: createToolAction, isPending: isCreatingTool } = useServerAction(createTool, {
+    onSuccess: ({ data }) => {
+      toast.success("Tool successfully created")
+      redirect(`/tools/${data.id}`)
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
   })
 
-  const [selectedAlternatives, setSelectedAlternatives] = React.useState<string[]>(
-    tool?.alternatives?.map(({ alternative }) => alternative.id) || [],
-  )
+  // Update tool
+  const { execute: updateToolAction, isPending: isUpdatingTool } = useServerAction(updateTool, {
+    onSuccess: ({ data }) => {
+      toast.success("Tool successfully updated")
+      redirect(`/tools/${data.id}`)
+    },
 
-  const [selectedCategories, setSelectedCategories] = React.useState<string[]>(
-    tool?.categories?.map(({ category }) => category.id) || [],
-  )
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
-  function onSubmit(input: ToolSchema) {
-    startSubmitTransition(async () => {
-      const payload = {
-        ...input,
-        slug: input.slug || getSlug(input.name),
-
-        ...(!tool &&
-          session.data?.user && {
-            submitterName: session.data.user.name,
-            submitterEmail: session.data.user.email,
-          }),
-
-        alternatives: {
-          // Delete existing relations
-          deleteMany: tool ? { toolId: tool.id } : undefined,
-
-          // Create new relations
-          create: selectedAlternatives.map(id => ({
-            alternative: {
-              connect: { id },
-            },
-          })),
-        },
-
-        categories: {
-          // Delete existing relations
-          deleteMany: tool ? { toolId: tool.id } : undefined,
-
-          // Create new relations
-          create: selectedCategories.map(id => ({
-            category: {
-              connect: { id },
-            },
-          })),
-        },
-      }
-
-      const { error, data } = tool ? await updateTool(tool.id, payload) : await createTool(payload)
-
-      if (error) {
-        toast.error(error)
-        return
-      }
-
-      toast.success(`Tool successfully ${tool ? "updated" : "created"}`)
-
-      if (!tool && data) {
-        redirect(`/tools/${data.id}`)
-      }
-    })
-  }
-
-  React.useEffect(() => {
-    form.reset(nullsToUndefined(tool))
-  }, [tool, form])
+  const isPending = isCreatingTool || isUpdatingTool
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className={cx("grid grid-cols-1 gap-4 max-w-3xl sm:grid-cols-2", className)}
+        onSubmit={form.handleSubmit(data =>
+          tool ? updateToolAction({ id: tool.id, ...data }) : createToolAction(data),
+        )}
+        className={cx("grid grid-cols-1 gap-4 sm:grid-cols-2", className)}
         noValidate
         {...props}
       >
-        <div className="flex flex-col gap-4 sm:flex-row">
+        <div className="flex flex-row gap-4 max-sm:contents">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="PostHog" {...field} />
@@ -154,7 +116,7 @@ export function ToolForm({
             control={form.control}
             name="slug"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>Slug</FormLabel>
                 <FormControl>
                   <Input placeholder="posthog" {...field} />
@@ -436,6 +398,7 @@ export function ToolForm({
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
                       name={`links.${index}.url`}
@@ -447,13 +410,14 @@ export function ToolForm({
                         </FormItem>
                       )}
                     />
+
                     <Button
                       type="button"
                       variant="outline"
                       size="icon"
                       onClick={() => removeLink(index)}
                     >
-                      <TrashIcon className="h-4 w-4" />
+                      <TrashIcon className="size-4" />
                     </Button>
                   </div>
                 ))}
@@ -472,32 +436,42 @@ export function ToolForm({
           )}
         />
 
-        <FormItem>
-          <FormLabel>Alternatives</FormLabel>
+        <FormField
+          control={form.control}
+          name="alternatives"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Alternatives</FormLabel>
+              <RelationSelector
+                relations={alternatives}
+                selectedIds={field.value ?? []}
+                onChange={field.onChange}
+              />
+            </FormItem>
+          )}
+        />
 
-          <RelationSelector
-            relations={alternatives}
-            selectedIds={selectedAlternatives}
-            onChange={setSelectedAlternatives}
-          />
-        </FormItem>
-
-        <FormItem>
-          <FormLabel>Categories</FormLabel>
-
-          <RelationSelector
-            relations={categories}
-            selectedIds={selectedCategories}
-            onChange={setSelectedCategories}
-          />
-        </FormItem>
+        <FormField
+          control={form.control}
+          name="categories"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Categories</FormLabel>
+              <RelationSelector
+                relations={categories}
+                selectedIds={field.value ?? []}
+                onChange={field.onChange}
+              />
+            </FormItem>
+          )}
+        />
 
         <div className="flex justify-end gap-2 col-span-full">
           <Button variant="outline" asChild>
             <Link href="/tools">Cancel</Link>
           </Button>
 
-          <Button isPending={isSubmitPending} disabled={isSubmitPending}>
+          <Button isPending={isPending} disabled={isPending}>
             {tool ? "Update tool" : "Create tool"}
           </Button>
         </div>
