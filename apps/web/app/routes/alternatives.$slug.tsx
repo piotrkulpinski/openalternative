@@ -200,7 +200,10 @@ export default function AlternativesPage() {
             ))}
           </Section.Content>
 
-          <Section.Sidebar className="order-first md:order-last">
+          <Section.Sidebar
+            className="order-first md:order-last"
+            style={{ viewTransitionName: "sidebar" }}
+          >
             <AlternativeCard alternative={alternative} />
 
             <InlineMenu
