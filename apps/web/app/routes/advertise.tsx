@@ -141,7 +141,7 @@ export default function AdvertisePage() {
           Tell us more about your company and we will get back to you as soon as possible.
         </IntroDescription>
 
-        <Button variant="fancy" className="mt-4 min-w-48 !text-base" asChild>
+        <Button variant="fancy" className="mt-4 min-w-40 !text-base" asChild>
           <Link to={`mailto:${SITE_EMAIL}`}>Contact us</Link>
         </Button>
       </Intro>

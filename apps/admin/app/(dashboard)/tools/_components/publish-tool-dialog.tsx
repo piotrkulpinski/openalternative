@@ -5,8 +5,8 @@ import type { Row } from "@tanstack/react-table"
 import { ClockIcon } from "lucide-react"
 import * as React from "react"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
 import { Button } from "~/components/ui/button"
-import { publishTool } from "../_lib/actions"
 import { Calendar } from "~/components/ui/calendar"
 import {
   Dialog,
@@ -18,6 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
+import { publishTool } from "../_lib/actions"
 
 interface PublishToolDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   tool: Row<Tool>["original"]
@@ -31,28 +32,19 @@ export const PublishToolDialog = ({
   onSuccess,
   ...props
 }: PublishToolDialogProps) => {
-  const [isPublishPending, startPublishTransition] = React.useTransition()
-  const [publishDate, setPublishDate] = React.useState<Date | undefined>(undefined)
+  const [publishedAt, setPublishedAt] = React.useState<Date | undefined>(undefined)
 
-  const onPublish = () => {
-    startPublishTransition(async () => {
-      if (!publishDate) {
-        toast.error("Please select a date to publish")
-        return
-      }
-
-      const { error } = await publishTool(tool.id, publishDate)
-
-      if (error) {
-        toast.error(error)
-        return
-      }
-
+  const { execute, isPending } = useServerAction(publishTool, {
+    onSuccess: () => {
       props.onOpenChange?.(false)
       toast.success("Tool published")
       onSuccess?.()
-    })
-  }
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
   return (
     <Dialog {...props}>
@@ -74,8 +66,8 @@ export const PublishToolDialog = ({
         <Calendar
           initialFocus
           mode="single"
-          selected={publishDate}
-          onSelect={setPublishDate}
+          selected={publishedAt}
+          onSelect={setPublishedAt}
           className="px-0"
         />
 
@@ -87,9 +79,9 @@ export const PublishToolDialog = ({
           <Button
             aria-label="Publish"
             variant="default"
-            onClick={onPublish}
-            isPending={isPublishPending}
-            disabled={!publishDate || isPublishPending}
+            onClick={() => publishedAt && execute({ id: tool.id, publishedAt })}
+            isPending={isPending}
+            disabled={!publishedAt || isPending}
           >
             Publish
           </Button>

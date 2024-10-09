@@ -2,33 +2,14 @@
 
 import type { Tool } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
-import { EllipsisIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import * as React from "react"
-import { toast } from "sonner"
-import { reuploadToolAssets } from "~/actions/assets"
+import { ToolActions } from "~/app/(dashboard)/tools/_components/tool-actions"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
-import { Button } from "~/components/ui/button"
 import { Checkbox } from "~/components/ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
-import { siteConfig } from "~/config/site"
 import { formatDate } from "~/utils/helpers"
-import { DeleteToolsDialog } from "./delete-tools-dialog"
-import { PublishToolDialog } from "./publish-tool-dialog"
 
 export function getColumns(): ColumnDef<Tool>[] {
-  const handleReuploadAssets = async (tool: Tool) => {
-    await reuploadToolAssets(tool)
-    toast.success("Tool assets reuploaded")
-  }
-
   return [
     {
       id: "select",
@@ -110,92 +91,9 @@ export function getColumns(): ColumnDef<Tool>[] {
     },
     {
       id: "actions",
-      cell: function Cell({ row }) {
-        const [showDeleteToolDialog, setShowDeleteToolDialog] = React.useState(false)
-        const [showPublishToolDialog, setShowPublishToolDialog] = React.useState(false)
-        return (
-          <>
-            <DeleteToolsDialog
-              open={showDeleteToolDialog}
-              onOpenChange={setShowDeleteToolDialog}
-              tools={[row.original]}
-              showTrigger={false}
-              onSuccess={() => row.toggleSelected(false)}
-            />
-
-            <PublishToolDialog
-              open={showPublishToolDialog}
-              onOpenChange={setShowPublishToolDialog}
-              tool={row.original}
-              showTrigger={false}
-            />
-
-            <div className="flex items-center justify-end gap-1.5 -my-0.5">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    aria-label="Open menu"
-                    variant="ghost"
-                    size="icon"
-                    prefix={<EllipsisIcon />}
-                    className="text-muted-foreground data-[state=open]:bg-muted"
-                  />
-                </DropdownMenuTrigger>
-
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link href={`/tools/${row.original.id}`}>Edit</Link>
-                  </DropdownMenuItem>
-
-                  {!row.original.publishedAt && (
-                    <DropdownMenuItem
-                      onSelect={() => setShowPublishToolDialog(true)}
-                      className="text-green-600 dark:text-green-400"
-                    >
-                      Publish
-                    </DropdownMenuItem>
-                  )}
-
-                  {row.original.publishedAt && row.original.publishedAt <= new Date() && (
-                    <DropdownMenuItem asChild>
-                      <Link href={`${siteConfig.url}/${row.original.slug}`} target="_blank">
-                        View
-                      </Link>
-                    </DropdownMenuItem>
-                  )}
-
-                  <DropdownMenuItem onSelect={() => handleReuploadAssets(row.original)}>
-                    Reupload Assets
-                  </DropdownMenuItem>
-
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem asChild>
-                    <Link href={row.original.website} target="_blank">
-                      Visit website
-                    </Link>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem asChild>
-                    <Link href={row.original.repository} target="_blank">
-                      Visit repository
-                    </Link>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem
-                    onSelect={() => setShowDeleteToolDialog(true)}
-                    className="text-red-500"
-                  >
-                    Delete
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </>
-        )
-      },
+      cell: ({ row }) => (
+        <ToolActions tool={row.original} row={row} className="float-right -my-0.5" />
+      ),
       size: 0,
     },
   ]

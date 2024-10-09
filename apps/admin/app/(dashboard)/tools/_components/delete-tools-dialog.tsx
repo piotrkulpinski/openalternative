@@ -3,8 +3,9 @@
 import type { Tool } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
-import * as React from "react"
+import type * as React from "react"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
 import { Button } from "~/components/ui/button"
 import {
   Dialog,
@@ -30,31 +31,23 @@ export const DeleteToolsDialog = ({
   onSuccess,
   ...props
 }: DeleteToolsDialogProps) => {
-  const [isDeletePending, startDeleteTransition] = React.useTransition()
-
-  const onDelete = () => {
-    startDeleteTransition(async () => {
-      const { error } = await deleteTools({
-        ids: tools.map(({ id }) => id),
-      })
-
-      if (error) {
-        toast.error(error)
-        return
-      }
-
+  const { execute, isPending } = useServerAction(deleteTools, {
+    onSuccess: () => {
       props.onOpenChange?.(false)
       toast.success("Tools deleted")
       onSuccess?.()
-    })
-  }
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
   return (
     <Dialog {...props}>
       {showTrigger && (
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm">
-            <TrashIcon className="max-sm:mr-2" aria-hidden="true" />
+          <Button variant="outline" size="sm" prefix={<TrashIcon />}>
             Delete ({tools.length})
           </Button>
         </DialogTrigger>
@@ -78,9 +71,9 @@ export const DeleteToolsDialog = ({
           <Button
             aria-label="Delete selected rows"
             variant="destructive"
-            onClick={onDelete}
-            isPending={isDeletePending}
-            disabled={isDeletePending}
+            onClick={() => execute({ ids: tools.map(({ id }) => id) })}
+            isPending={isPending}
+            disabled={isPending}
           >
             Delete
           </Button>

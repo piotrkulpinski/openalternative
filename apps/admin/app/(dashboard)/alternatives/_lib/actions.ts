@@ -3,8 +3,9 @@
 import type { Alternative, Prisma } from "@openalternative/db"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getErrorMessage } from "~/lib/handle-error"
-import { prisma } from "~/services/prisma"
+import { uploadFavicon } from "~/lib/media"
 import { inngest } from "~/services/inngest"
+import { prisma } from "~/services/prisma"
 
 export async function createAlternative(input: Prisma.AlternativeCreateInput) {
   noStore()
@@ -118,4 +119,16 @@ export async function deleteAlternatives(input: { ids: Alternative["id"][] }) {
       error: getErrorMessage(err),
     }
   }
+}
+
+export const reuploadAlternativeAssets = async (alternative: Alternative) => {
+  const faviconUrl = await uploadFavicon(
+    alternative.website,
+    `alternatives/${alternative.slug}/favicon`,
+  )
+
+  await prisma.alternative.update({
+    where: { id: alternative.id },
+    data: { faviconUrl },
+  })
 }

@@ -42,7 +42,7 @@ export const SponsoringCard = ({ className, sponsoring, rel, ...props }: Sponsor
             />
           )}
 
-          <H4 as="h3" className="truncate">
+          <H4 as="strong" className="truncate">
             {sponsoring?.name || "Advertise with us"}
           </H4>
 
