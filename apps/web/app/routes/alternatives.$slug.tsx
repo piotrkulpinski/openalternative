@@ -1,7 +1,7 @@
 import type { Category } from "@prisma/client"
 import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
-import { AwardIcon } from "lucide-react"
+import { ArrowUpRightIcon, AwardIcon, SmilePlusIcon } from "lucide-react"
 import { Fragment, type ReactNode } from "react"
 import { AlternativeList } from "~/components/alternative-list"
 import { InlineMenu } from "~/components/inline-menu"
@@ -9,6 +9,7 @@ import { AlternativeCard } from "~/components/records/alternative-card"
 import { ToolEntry } from "~/components/records/tool-entry"
 import { BackButton } from "~/components/ui/back-button"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
+import { Button } from "~/components/ui/button"
 import { FaviconImage } from "~/components/ui/favicon"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Prose } from "~/components/ui/prose"
@@ -116,6 +117,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
 export default function AlternativesPage() {
   const { meta, alternative, alternatives, tools, categories } = useLoaderData<typeof loader>()
+  const medalColors = ["text-amber-500", "text-slate-400", "text-orange-700"]
 
   // Pick the top 5 tools
   const bestAlternatives: ReactNode[] = tools.slice(0, 5).map(tool => (
@@ -201,21 +203,25 @@ export default function AlternativesPage() {
           <Section.Sidebar className="order-first md:order-last">
             <AlternativeCard alternative={alternative} />
 
-            {tools.length > 1 && (
-              <InlineMenu
-                items={tools.map(({ slug, name, faviconUrl }, index) => ({
-                  id: slug,
-                  title: name,
-                  prefix: <FaviconImage src={faviconUrl} title={name} />,
-                  suffix: index ? (
-                    <span className="w-auto tabular-nums">#{index + 1}</span>
-                  ) : (
-                    <AwardIcon className="text-amber-600" />
-                  ),
-                }))}
-                className="flex-1 mx-5 max-md:hidden"
-              />
-            )}
+            <InlineMenu
+              items={tools.map(({ slug, name, faviconUrl }, index) => ({
+                id: slug,
+                title: name,
+                prefix: <FaviconImage src={faviconUrl} title={name} />,
+                suffix: index < 3 && <AwardIcon className={medalColors[index]} />,
+              }))}
+              className="flex-1 mx-5 max-md:hidden"
+            >
+              <Button
+                variant="ghost"
+                prefix={<SmilePlusIcon />}
+                suffix={<ArrowUpRightIcon />}
+                className="font-normal text-muted"
+                asChild
+              >
+                <Link to="/submit">Suggest an alternative</Link>
+              </Button>
+            </InlineMenu>
           </Section.Sidebar>
         </Section>
       )}
