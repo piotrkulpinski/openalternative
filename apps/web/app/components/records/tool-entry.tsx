@@ -32,7 +32,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       <div>
         <Stack
           size="lg"
-          className="before:content-['#'_counter(alternatives)] before:absolute before:right-full before:-mr-3 before:font-semibold before:text-3xl before:opacity-25 max-lg:before:hidden"
+          className="before:content-['#'_counter(alternatives)] before:tabular-nums before:absolute before:right-full before:-mr-3 before:font-semibold before:text-3xl before:opacity-25 max-lg:before:hidden"
         >
           <FaviconImage
             src={tool.faviconUrl}

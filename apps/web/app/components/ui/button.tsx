@@ -16,6 +16,7 @@ export const buttonVariants = cva({
       fancy: "border-transparent bg-primary text-white hover:bg-primary/90",
       primary: "border-transparent text-background bg-foreground hover:opacity-90",
       secondary: "bg-background text-secondary hover:bg-card hover:border-border-dark",
+      ghost: "bg-transparent border-transparent text-foreground hover:bg-card",
     },
     size: {
       sm: "text-[13px]/none gap-[0.66ch] py-1 px-2",
@@ -104,7 +105,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         {child => (
           <>
             <Slot className={buttonAffixVariants()}>{prefix}</Slot>
-            {!isChildrenEmpty(child) && <span className="truncate">{child}</span>}
+            {!isChildrenEmpty(child) && <span className="flex-1 truncate">{child}</span>}
             <Slot className={buttonAffixVariants()}>{suffix}</Slot>
 
             {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}

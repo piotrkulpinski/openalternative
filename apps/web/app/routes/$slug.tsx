@@ -9,10 +9,9 @@ import {
 import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import { z } from "zod"
-import { AlternativeRecord } from "~/components/records/alternative-record"
 import { ToolBadges } from "~/components/records/tool-badges"
 import { ToolRecord } from "~/components/records/tool-record"
-import { ToolSidebar } from "~/components/tool-sidebar"
+import { ToolSidebar } from "~/components/records/tool-sidebar"
 import { BackButton } from "~/components/ui/back-button"
 import { Badge } from "~/components/ui/badge"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
@@ -21,6 +20,7 @@ import { FaviconImage } from "~/components/ui/favicon"
 import { Grid } from "~/components/ui/grid"
 import { H1, H4, H5 } from "~/components/ui/heading"
 import { Markdown } from "~/components/ui/markdown"
+import { NavigationLink } from "~/components/ui/navigation-link"
 import { Prose } from "~/components/ui/prose"
 import { Section } from "~/components/ui/section"
 import { ShareButtons } from "~/components/ui/share-buttons"
@@ -243,42 +243,58 @@ export default function ToolsPage() {
               )}
             </div>
 
-            {(tool.website || tool.hostingUrl) && (
-              <Stack size="sm">
-                {tool.website && (
-                  <Button
-                    suffix={<ArrowUpRightIcon />}
-                    onClick={() => posthog.capture("website_clicked", { url: tool.website })}
-                    asChild
-                  >
-                    <a
-                      href={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
-                      target="_blank"
-                      rel="nofollow noreferrer"
-                    >
-                      Visit {tool.name}
-                    </a>
-                  </Button>
-                )}
+            {!!alternatives.length && (
+              <Stack>
+                <p>Open Source Alternative to:</p>
 
-                {tool.hostingUrl && (
-                  <Button
-                    variant="secondary"
-                    suffix={<ArrowUpRightIcon />}
-                    onClick={() => posthog.capture("sponsoring_clicked", { url: tool.hostingUrl })}
-                    asChild
-                  >
-                    <a
-                      href={updateUrlWithSearchParams(tool.hostingUrl, { ref: "openalternative" })}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Self-host with {HOSTING_SPONSOR.name}
-                    </a>
-                  </Button>
-                )}
+                {alternatives.map(({ alternative }) => (
+                  <NavigationLink key={alternative.id} to={`/alternatives/${alternative.slug}`}>
+                    <FaviconImage
+                      src={alternative.faviconUrl}
+                      title={alternative.name}
+                      className="size-4"
+                    />
+
+                    {alternative.name}
+                  </NavigationLink>
+                ))}
               </Stack>
             )}
+
+            <Stack size="sm">
+              {tool.website && (
+                <Button
+                  suffix={<ArrowUpRightIcon />}
+                  onClick={() => posthog.capture("website_clicked", { url: tool.website })}
+                  asChild
+                >
+                  <a
+                    href={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
+                    target="_blank"
+                    rel="nofollow noreferrer"
+                  >
+                    Visit {tool.name}
+                  </a>
+                </Button>
+              )}
+
+              {tool.hostingUrl && (
+                <Button
+                  variant="secondary"
+                  suffix={<ArrowUpRightIcon />}
+                  onClick={() => posthog.capture("sponsoring_clicked", { url: tool.hostingUrl })}
+                  asChild
+                >
+                  <a
+                    href={updateUrlWithSearchParams(tool.hostingUrl, { ref: "openalternative" })}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Self-host with {HOSTING_SPONSOR.name}
+                  </a>
+                </Button>
+              )}
+            </Stack>
           </div>
 
           <div className="flex flex-col gap-6 w-full">
@@ -371,19 +387,6 @@ export default function ToolsPage() {
           <ToolSidebar tool={tool} languages={languages} />
         </Section.Sidebar>
       </Section>
-
-      {/* Alternatives */}
-      {!!alternatives.length && (
-        <Stack size="lg" direction="column">
-          <H4 as="h3">{tool.name} is an open source alternative to:</H4>
-
-          <Grid className="w-full">
-            {alternatives?.map(({ alternative }) => (
-              <AlternativeRecord key={alternative.id} alternative={alternative} />
-            ))}
-          </Grid>
-        </Stack>
-      )}
 
       {/* Related */}
       {relatedTools.length > 0 && (

@@ -1,12 +1,15 @@
 import type { Category } from "@prisma/client"
 import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
+import { AwardIcon } from "lucide-react"
 import { Fragment, type ReactNode } from "react"
 import { AlternativeList } from "~/components/alternative-list"
+import { InlineMenu } from "~/components/inline-menu"
 import { AlternativeCard } from "~/components/records/alternative-card"
 import { ToolEntry } from "~/components/records/tool-entry"
 import { BackButton } from "~/components/ui/back-button"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
+import { FaviconImage } from "~/components/ui/favicon"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Prose } from "~/components/ui/prose"
 import { Section } from "~/components/ui/section"
@@ -191,12 +194,28 @@ export default function AlternativesPage() {
             </Prose>
 
             {tools.map(tool => (
-              <ToolEntry key={tool.id} tool={tool} />
+              <ToolEntry key={tool.id} id={tool.slug} tool={tool} className="scroll-m-20" />
             ))}
           </Section.Content>
 
           <Section.Sidebar className="order-first md:order-last">
             <AlternativeCard alternative={alternative} />
+
+            {tools.length > 1 && (
+              <InlineMenu
+                items={tools.map(({ slug, name, faviconUrl }, index) => ({
+                  id: slug,
+                  title: name,
+                  prefix: <FaviconImage src={faviconUrl} title={name} />,
+                  suffix: index ? (
+                    <span className="w-auto tabular-nums">#{index + 1}</span>
+                  ) : (
+                    <AwardIcon className="text-amber-600" />
+                  ),
+                }))}
+                className="flex-1 mx-5 max-md:hidden"
+              />
+            )}
           </Section.Sidebar>
         </Section>
       )}
