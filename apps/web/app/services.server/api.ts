@@ -65,6 +65,14 @@ export type LanguageToToolMany = Prisma.LanguageToToolGetPayload<{
   include: typeof languageToToolManyPayload
 }>
 
+export const alternativeToToolManyPayload = Prisma.validator<Prisma.AlternativeToToolInclude>()({
+  alternative: true,
+})
+
+export type AlternativeToToolMany = Prisma.AlternativeToToolGetPayload<{
+  include: typeof alternativeToToolManyPayload
+}>
+
 // Sponsoring
 export const sponsoringOnePayload = Prisma.validator<Prisma.SponsoringSelect>()({
   name: true,
