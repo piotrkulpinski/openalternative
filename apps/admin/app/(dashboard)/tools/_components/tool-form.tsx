@@ -50,8 +50,8 @@ export function ToolForm({
     resolver: zodResolver(toolSchema),
     defaultValues: {
       ...nullsToUndefined(tool),
-      alternatives: tool?.alternatives?.map(({ alternative }) => alternative.id) || [],
-      categories: tool?.categories?.map(({ category }) => category.id) || [],
+      alternatives: tool?.alternatives?.map(({ alternative }) => alternative.id),
+      categories: tool?.categories?.map(({ category }) => category.id),
     },
   })
 
@@ -85,14 +85,16 @@ export function ToolForm({
     },
   })
 
+  const onSubmit = form.handleSubmit(data => {
+    tool ? updateToolAction({ id: tool.id, ...data }) : createToolAction(data)
+  })
+
   const isPending = isCreatingTool || isUpdatingTool
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(data =>
-          tool ? updateToolAction({ id: tool.id, ...data }) : createToolAction(data),
-        )}
+        onSubmit={onSubmit}
         className={cx("grid grid-cols-1 gap-4 sm:grid-cols-2", className)}
         noValidate
         {...props}
@@ -415,10 +417,10 @@ export function ToolForm({
                       type="button"
                       variant="outline"
                       size="icon"
+                      prefix={<TrashIcon />}
                       onClick={() => removeLink(index)}
-                    >
-                      <TrashIcon className="size-4" />
-                    </Button>
+                      className="text-destructive"
+                    />
                   </div>
                 ))}
 

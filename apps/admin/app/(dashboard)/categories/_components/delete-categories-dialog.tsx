@@ -53,8 +53,7 @@ export const DeleteCategoriesDialog = ({
     <Dialog {...props}>
       {showTrigger && (
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm">
-            <TrashIcon className="max-sm:mr-2" aria-hidden="true" />
+          <Button variant="outline" size="sm" prefix={<TrashIcon />}>
             Delete ({categories.length})
           </Button>
         </DialogTrigger>
