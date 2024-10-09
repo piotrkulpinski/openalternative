@@ -193,12 +193,9 @@ export default function ToolsPage() {
     .parse(tool.links)
 
   return (
-    <div
-      className="flex flex-col gap-12"
-      style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }}
-    >
+    <div className="flex flex-col gap-12">
       <Section>
-        <Section.Content>
+        <Section.Content style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }}>
           <div className="flex flex-1 flex-col items-start gap-4 md:gap-6">
             <div className="flex w-full flex-col items-start gap-y-4">
               <Stack className="w-full">
@@ -383,7 +380,7 @@ export default function ToolsPage() {
           <ShareButtons title={meta.title} />
         </Section.Content>
 
-        <Section.Sidebar className="max-md:hidden">
+        <Section.Sidebar className="max-md:hidden" style={{ viewTransitionName: "sidebar" }}>
           <ToolSidebar tool={tool} languages={languages} />
         </Section.Sidebar>
       </Section>
