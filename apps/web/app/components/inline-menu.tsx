@@ -10,7 +10,7 @@ type InlineMenuProps = ComponentProps<typeof Stack> & {
   items: MenuItem[]
 }
 
-export const InlineMenu = ({ className, items, title, ...props }: InlineMenuProps) => {
+export const InlineMenu = ({ children, className, items, ...props }: InlineMenuProps) => {
   const activeId = useInlineMenu(items)
 
   return (
@@ -41,6 +41,8 @@ export const InlineMenu = ({ className, items, title, ...props }: InlineMenuProp
             <a href={`#${id}`}>{title}</a>
           </Button>
         ))}
+
+        {children}
       </nav>
     </Stack>
   )
