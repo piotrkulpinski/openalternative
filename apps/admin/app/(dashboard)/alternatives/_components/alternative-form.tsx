@@ -3,9 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import React from "react"
+import type React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
 import { createAlternative, updateAlternative } from "~/app/(dashboard)/alternatives/_lib/actions"
 import type { getAlternativeById, getTools } from "~/app/(dashboard)/alternatives/_lib/queries"
 import {
@@ -26,7 +27,7 @@ import { Input } from "~/components/ui/input"
 import { Switch } from "~/components/ui/switch"
 import { Textarea } from "~/components/ui/textarea"
 import { cx } from "~/utils/cva"
-import { getSlug, nullsToUndefined } from "~/utils/helpers"
+import { nullsToUndefined } from "~/utils/helpers"
 
 type AlternativeFormProps = React.HTMLAttributes<HTMLFormElement> & {
   alternative?: Awaited<ReturnType<typeof getAlternativeById>>
@@ -40,61 +41,56 @@ export function AlternativeForm({
   tools,
   ...props
 }: AlternativeFormProps) {
-  const [isSubmitPending, startSubmitTransition] = React.useTransition()
-
   const form = useForm<AlternativeSchema>({
     resolver: zodResolver(alternativeSchema),
-    defaultValues: nullsToUndefined(alternative),
+    defaultValues: {
+      ...nullsToUndefined(alternative),
+      tools: alternative?.tools.map(({ tool }) => tool.id),
+    },
   })
 
-  const [selectedTools, setSelectedTools] = React.useState<string[]>(
-    alternative?.tools?.map(({ tool }) => tool.id) || [],
+  // Create tool
+  const { execute: createAlternativeAction, isPending: isCreatingAlternative } = useServerAction(
+    createAlternative,
+    {
+      onSuccess: ({ data }) => {
+        toast.success("Alternative successfully created")
+        redirect(`/alternatives/${data.id}`)
+      },
+
+      onError: ({ err }) => {
+        toast.error(err.message)
+      },
+    },
   )
 
-  function onSubmit(input: AlternativeSchema) {
-    startSubmitTransition(async () => {
-      const payload = {
-        ...input,
-        slug: input.slug || getSlug(input.name),
-
-        tools: {
-          // Delete existing relations
-          deleteMany: alternative ? { alternativeId: alternative.id } : undefined,
-
-          // Create new relations
-          create: selectedTools.map(id => ({
-            tool: {
-              connect: { id },
-            },
-          })),
-        },
-      }
-
-      const { error, data } = alternative
-        ? await updateAlternative(alternative.id, payload)
-        : await createAlternative(payload)
-
-      if (error) {
-        toast.error(error)
-        return
-      }
-
-      toast.success(`Alternative successfully ${alternative ? "updated" : "created"}`)
-
-      if (!alternative && data) {
+  // Update alternative
+  const { execute: updateAlternativeAction, isPending: isUpdatingAlternative } = useServerAction(
+    updateAlternative,
+    {
+      onSuccess: ({ data }) => {
+        toast.success("Alternative successfully updated")
         redirect(`/alternatives/${data.id}`)
-      }
-    })
-  }
+      },
 
-  React.useEffect(() => {
-    form.reset(nullsToUndefined(alternative))
-  }, [alternative, form])
+      onError: ({ err }) => {
+        toast.error(err.message)
+      },
+    },
+  )
+
+  const onSubmit = form.handleSubmit(data => {
+    alternative
+      ? updateAlternativeAction({ id: alternative.id, ...data })
+      : createAlternativeAction(data)
+  })
+
+  const isPending = isCreatingAlternative || isUpdatingAlternative
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={onSubmit}
         className={cx("grid grid-cols-1 gap-4 max-w-3xl sm:grid-cols-2", className)}
         noValidate
         {...props}
@@ -216,22 +212,27 @@ export function AlternativeForm({
           )}
         />
 
-        <FormItem className="col-span-full">
-          <FormLabel>Tools</FormLabel>
-
-          <RelationSelector
-            relations={tools}
-            selectedIds={selectedTools}
-            onChange={setSelectedTools}
-          />
-        </FormItem>
+        <FormField
+          control={form.control}
+          name="tools"
+          render={({ field }) => (
+            <FormItem className="col-span-full">
+              <FormLabel>Tools</FormLabel>
+              <RelationSelector
+                relations={tools}
+                selectedIds={field.value ?? []}
+                onChange={field.onChange}
+              />
+            </FormItem>
+          )}
+        />
 
         <div className="flex justify-end gap-2 col-span-full">
           <Button variant="outline" asChild>
             <Link href="/alternatives">Cancel</Link>
           </Button>
 
-          <Button isPending={isSubmitPending} disabled={isSubmitPending}>
+          <Button isPending={isPending} disabled={isPending}>
             {alternative ? "Update alternative" : "Create alternative"}
           </Button>
         </div>

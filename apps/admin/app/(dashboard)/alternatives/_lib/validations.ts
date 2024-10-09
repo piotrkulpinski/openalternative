@@ -23,6 +23,7 @@ export const alternativeSchema = z.object({
   isFeatured: z.boolean().optional(),
   discountCode: z.string().optional(),
   discountAmount: z.string().optional(),
+  tools: z.array(z.string()).optional(),
 })
 
 export type AlternativeSchema = z.infer<typeof alternativeSchema>

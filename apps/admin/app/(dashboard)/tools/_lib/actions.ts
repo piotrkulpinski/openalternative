@@ -1,5 +1,6 @@
 "use server"
 
+import "server-only"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { toolSchema } from "~/app/(dashboard)/tools/_lib/validations"
@@ -54,20 +55,16 @@ export const updateTool = authedProcedure
         ...input,
 
         alternatives: {
-          // Delete existing relations
           deleteMany: { toolId: id },
 
-          // Create new relations
           create: alternatives?.map(id => ({
             alternative: { connect: { id } },
           })),
         },
 
         categories: {
-          // Delete existing relations
           deleteMany: { toolId: id },
 
-          // Create new relations
           create: categories?.map(id => ({
             category: { connect: { id } },
           })),
