@@ -1,4 +1,3 @@
-import { formatNumber } from "@curiousleaf/utils"
 import { NavLink } from "@remix-run/react"
 import {
   CalendarDaysIcon,
@@ -11,7 +10,6 @@ import {
   TagIcon,
 } from "lucide-react"
 import { type HTMLAttributes, useEffect, useState } from "react"
-import { Badge } from "~/components/ui/badge"
 import { Breadcrumbs } from "~/components/ui/breadcrumbs"
 import { Button } from "~/components/ui/button"
 import { Container } from "~/components/ui/container"
@@ -21,11 +19,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
-import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
 import { NavigationLink, navigationLinkVariants } from "~/components/ui/navigation-link"
 import { SearchForm } from "~/components/ui/search-form"
 import { Stack } from "~/components/ui/stack"
-import { GITHUB_URL, SITE_STATS } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
@@ -135,23 +131,6 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
         <Stack size="sm" className="items-stretch">
           <SearchForm className="max-sm:hidden" />
-
-          <Button
-            size="sm"
-            variant="secondary"
-            prefix={<BrandGitHubIcon />}
-            suffix={
-              <Badge size="sm" className="-my-0.5 size-auto">
-                {formatNumber(SITE_STATS.stars)}
-              </Badge>
-            }
-            className="max-sm:hidden"
-            asChild
-          >
-            <a href={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
-              Star
-            </a>
-          </Button>
 
           <Button size="sm" variant="secondary" prefix={<PlusIcon />} asChild>
             <NavLink to="/submit" unstable_viewTransition>

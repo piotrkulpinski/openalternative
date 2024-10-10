@@ -7,6 +7,7 @@ import {
   useState,
 } from "react"
 import { Ping } from "~/components/ui/ping"
+import type { ProductInterval } from "~/hooks/use-plan-prices"
 import { cx } from "~/utils/cva"
 
 type Interval = {
@@ -17,8 +18,8 @@ type Interval = {
 
 type PlanIntervalSwitchProps = Omit<ComponentProps<"div">, "onChange"> & {
   intervals: Interval[]
-  value: string
-  onChange: (value: string) => void
+  value: ProductInterval
+  onChange: (value: ProductInterval) => void
 }
 
 export const PlanIntervalSwitch = ({
@@ -69,7 +70,7 @@ export const PlanIntervalSwitch = ({
             type="radio"
             value={interval.value}
             checked={interval.value === value}
-            onChange={() => onChange(interval.value)}
+            onChange={() => onChange(interval.value as ProductInterval)}
             className="peer sr-only"
           />
 
