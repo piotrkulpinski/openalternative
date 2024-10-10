@@ -1,9 +1,9 @@
-import { Prisma } from "@prisma/client"
 import {
   type ActionFunctionArgs,
   type MetaFunction,
   type TypedResponse,
   json,
+  redirect,
 } from "@remix-run/node"
 import { Form, Link, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
 import slugify from "@sindresorhus/slugify"
@@ -89,64 +89,45 @@ export const action = async ({ request }: ActionFunctionArgs): Promise<ActionSta
   }
 
   // Destructure the parsed data
-  const {
-    name,
-    website,
-    repository,
-    submitterName,
-    submitterEmail,
-    submitterNote,
-    newsletterOptIn,
-  } = parsed.data
+  const { newsletterOptIn, ...toolData } = parsed.data
+
+  // Subscribe to the newsletter
+  if (newsletterOptIn) {
+    try {
+      const newsletterFormData = new FormData()
+      newsletterFormData.append("email", toolData.submitterEmail)
+      newsletterFormData.append("utm_medium", "submit_form")
+
+      // Subscribe to the newsletter
+      await subscribeToBeehiiv(newsletterFormData)
+    } catch {}
+  }
 
   // Generate a slug
-  const slug = slugify(name, { decamelize: false })
+  const slug = slugify(toolData.name, { decamelize: false })
 
-  // Save the tool to the database
-  try {
-    const tool = await prisma.tool.create({
-      data: {
-        name,
-        slug,
-        website,
-        repository,
-        submitterName,
-        submitterEmail,
-        submitterNote,
-      },
-    })
+  // Check if the tool already exists
+  const existingTool = await prisma.tool.findFirst({
+    where: { OR: [{ slug }, { website: toolData.website }, { repository: toolData.repository }] },
+  })
 
-    if (newsletterOptIn) {
-      try {
-        const newsletterFormData = new FormData()
-        newsletterFormData.append("email", submitterEmail)
-        newsletterFormData.append("utm_medium", "submit_form")
-
-        // Subscribe to the newsletter
-        await subscribeToBeehiiv(newsletterFormData)
-      } catch {}
+  // If the tool exists, redirect to the tool or submit page
+  if (existingTool) {
+    if (existingTool.publishedAt && existingTool.publishedAt <= new Date()) {
+      throw redirect(`/${existingTool.slug}`)
     }
 
     // Return a success response with the tool name
-    return json({
-      type: "success",
-      toolName: tool.name,
-    })
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError && e.meta?.target) {
-      const schemaKeys = Object.keys(schema.shape)
-      const name = (e.meta?.target as string[]).find(t => schemaKeys.includes(t)) || "name"
-
-      if (name && e.code === "P2002") {
-        return json({
-          type: "error",
-          error: { formErrors: [`That ${name} has already been submitted.`], fieldErrors: {} },
-        })
-      }
-    }
-
-    throw e
+    return json({ type: "success", toolName: existingTool.name })
   }
+
+  // Save the tool to the database
+  const tool = await prisma.tool.create({
+    data: { ...toolData, slug },
+  })
+
+  // Return a success response with the tool name
+  return json({ type: "success", toolName: tool.name })
 }
 
 export default function SubmitPage() {
