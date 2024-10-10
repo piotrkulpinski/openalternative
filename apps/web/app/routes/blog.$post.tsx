@@ -41,7 +41,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
+export const loader = async ({ params: { post: slug } }: LoaderFunctionArgs) => {
   try {
     const post = allPosts.find(post => post._meta.path === slug)
 

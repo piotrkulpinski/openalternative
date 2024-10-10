@@ -21,6 +21,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = async () => {
   const languages = await prisma.language.findMany({
+    where: { tools: { some: { tool: { publishedAt: { lte: new Date() } } } } },
     orderBy: [{ tools: { _count: "desc" } }, { name: "asc" }],
     include: languageManyPayload,
   })

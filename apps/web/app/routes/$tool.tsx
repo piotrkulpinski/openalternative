@@ -91,7 +91,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const loader = async ({ request, params: { slug } }: LoaderFunctionArgs) => {
+export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => {
   let suffix = ""
 
   try {
