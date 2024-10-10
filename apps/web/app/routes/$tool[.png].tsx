@@ -6,7 +6,7 @@ import { toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { SITE_URL } from "~/utils/constants"
 
-export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
+export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => {
   try {
     const tool = await prisma.tool.findUniqueOrThrow({
       where: { slug, publishedAt: { lte: new Date() } },

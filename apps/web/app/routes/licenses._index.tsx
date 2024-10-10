@@ -21,6 +21,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = async () => {
   const licenses = await prisma.license.findMany({
+    where: { tools: { some: { publishedAt: { lte: new Date() } } } },
     orderBy: { tools: { _count: "desc" } },
     include: licenseManyPayload,
   })

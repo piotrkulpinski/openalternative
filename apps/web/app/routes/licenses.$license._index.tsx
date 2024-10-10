@@ -46,7 +46,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
+export const loader = async ({ params: { license: slug } }: LoaderFunctionArgs) => {
   try {
     const [license, tools] = await Promise.all([
       prisma.license.findUniqueOrThrow({

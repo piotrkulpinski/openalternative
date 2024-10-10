@@ -45,7 +45,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
+export const loader = async ({ params: { alternative: slug } }: LoaderFunctionArgs) => {
   let suffix = ""
 
   try {
@@ -198,6 +198,8 @@ export default function AlternativesPage() {
             {tools.map(tool => (
               <ToolEntry key={tool.id} id={tool.slug} tool={tool} className="scroll-m-20" />
             ))}
+
+            <BackButton to="/alternatives" />
           </Section.Content>
 
           <Section.Sidebar className="order-first md:order-last">
