@@ -59,9 +59,9 @@ export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => 
     const queueMonths = differenceInMonths(addDays(new Date(), queueDays), new Date())
 
     const meta = {
-      title: isPublished ? `Boost ${tool.name}'s Visibility` : `Choose a package for ${tool.name}`,
+      title: isPublished ? `Boost ${tool.name}'s Visibility` : "Choose a submission package",
       description: isPublished
-        ? `Elevate ${tool.name}'s presence on ${SITE_NAME}. Choose a featured package to increase visibility, attract more users, and stand out from the competition. Benefit from premium placement, a featured badge, and a do-follow link.`
+        ? `Elevate ${tool.name}'s presence on ${SITE_NAME}. Choose a featured package to increase visibility, attract more users, and stand out from the competition. Benefit from a homepage spot, a prominent placement, and a do-follow link.`
         : `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listings to premium features. Expedite your launch, gain visibility, and start connecting with your target audience faster.`,
     }
 
@@ -80,7 +80,7 @@ export default function SubmitPagePackage() {
   const plans = [
     {
       name: "Free",
-      description: "Free listing with a basic description and a link to your website.",
+      description: "Free listing with a wait time and a direct link to your website.",
       prices: [],
       features: [
         {
@@ -91,7 +91,7 @@ export default function SubmitPagePackage() {
         { text: "Link to your website", type: "neutral" },
         { text: "No content updates", type: "negative" },
         { text: "No featured spot", type: "negative" },
-        { text: "No featured badge", type: "negative" },
+        { text: "No prominent placement", type: "negative" },
       ],
       buttonProps: {
         variant: "secondary",
@@ -103,13 +103,13 @@ export default function SubmitPagePackage() {
       isHidden: !!isPublished,
       name: "Standard",
       description: "Skip the queue and get your site published on the site within 24 hours.",
-      prices: [{ price: 9700, priceId: "price_1Q7CtHDUyMoajCx1CWZch7qn" }],
+      prices: [{ price: 14700, priceId: "price_1Q8MYFBc0A3vG34CuqhLGkVF" }],
       features: [
         { text: "24h processing time", type: "positive" },
         { text: "Unlimited content updates", type: "positive" },
         { text: "Do-follow link to your website", type: "negative" },
         { text: "No featured spot", type: "negative" },
-        { text: "No featured badge", type: "negative" },
+        { text: "No prominent placement", type: "negative" },
       ],
       isFeatured: true,
       buttonProps: {
@@ -119,17 +119,17 @@ export default function SubmitPagePackage() {
     },
     {
       name: "Featured",
-      description: "Featured listing with a homepage spot and a featured badge.",
+      description: "Featured listing with a homepage spot and a prominent placement.",
       prices: [
-        { interval: "month", price: 19700, priceId: "price_1Q7CwiDUyMoajCx14a53vJJF" },
-        { interval: "year", price: 197000, priceId: "price_1Q7CwiDUyMoajCx1M48a1Fv4" },
+        { interval: "month", price: 19700, priceId: "price_1Q8MYwBc0A3vG34C1WQr6yfZ" },
+        { interval: "year", price: 197000, priceId: "price_1Q8Ma0Bc0A3vG34CH0PRXvb1" },
       ],
       features: [
         { text: "12h processing time", type: "positive" },
         { text: "Unlimited content updates", type: "positive" },
         { text: "Do-follow link to your website", type: "positive" },
         { text: "Featured spot on homepage", type: "positive" },
-        { text: "Featured badge", type: "positive" },
+        { text: "Prominent placement", type: "positive" },
       ],
       isFeatured: !!isPublished,
       buttonProps: {

@@ -5,7 +5,7 @@ import { Children, forwardRef, isValidElement } from "react"
 import { Slottable } from "~/components/ui/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
-export const buttonVariants = cva({
+const buttonVariants = cva({
   base: [
     "group/button relative inline-flex items-center justify-center border font-medium text-left rounded-md hover:z-10",
     "disabled:opacity-60 disabled:pointer-events-none",
@@ -44,7 +44,7 @@ export const buttonVariants = cva({
   },
 })
 
-export const buttonAffixVariants = cva({
+const buttonAffixVariants = cva({
   base: "shrink-0 size-[1.1em]",
 })
 
