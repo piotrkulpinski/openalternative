@@ -51,9 +51,23 @@ export default {
           from: { left: "-90%" },
           to: { left: "90%" },
         },
+
+        reveal: {
+          from: {
+            scale: "0.9",
+            opacity: "0",
+            transform: "translateY(20px) perspective(250px) rotateX(-15deg)",
+          },
+          to: {
+            scale: "1",
+            opacity: "1",
+            transform: "translateY(0) perspective(500px) rotateX(0deg)",
+          },
+        },
       },
       animation: {
         shimmer: "shimmer 1.25s cubic-bezier(0.5, 0.25, 0.25, 0.5) infinite",
+        reveal: "reveal linear forwards",
       },
     },
   },
