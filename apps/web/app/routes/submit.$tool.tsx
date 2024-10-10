@@ -1,26 +1,21 @@
-import { Prisma } from "@prisma/client"
 import {
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
   type MetaFunction,
   json,
 } from "@remix-run/node"
-import { Form, Link, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
-import slugify from "@sindresorhus/slugify"
-import { ArrowBigUpDashIcon } from "lucide-react"
+import { Link, useLoaderData } from "@remix-run/react"
+import { addDays, differenceInMonths } from "date-fns"
+import plur from "plur"
+import { Plan, type PlanProps } from "~/components/plan"
 import { BackButton } from "~/components/ui/back-button"
+import { Badge } from "~/components/ui/badge"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
-import { Button } from "~/components/ui/button"
-import { Card } from "~/components/ui/card"
-import { Checkbox } from "~/components/ui/forms/checkbox"
-import { ErrorMessage } from "~/components/ui/forms/error-message"
-import { Input } from "~/components/ui/forms/input"
-import { Label } from "~/components/ui/forms/label"
-import { Intro } from "~/components/ui/intro"
+import { BrandStripeIcon } from "~/components/ui/icons/brand-stripe"
+import { Intro, IntroTitle } from "~/components/ui/intro"
 import { Prose } from "~/components/ui/prose"
-import { Section } from "~/components/ui/section"
+import { Stack } from "~/components/ui/stack"
 import { type ToolOne, toolOnePayload } from "~/services.server/api"
-import { subscribeToBeehiiv } from "~/services.server/beehiiv"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS, SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
@@ -48,9 +43,9 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => {
   try {
-    const [tool, queueLength] = await Promise.all([
+    const [tool, unpublishedToolCount] = await Promise.all([
       prisma.tool.findUniqueOrThrow({
-        where: { slug },
+        where: { slug, isFeatured: false },
         include: toolOnePayload,
       }),
 
@@ -59,283 +54,123 @@ export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => 
       }),
     ])
 
+    const isPublished = tool.publishedAt && tool.publishedAt <= new Date()
+    const queueDays = Math.ceil((unpublishedToolCount / SUBMISSION_POSTING_RATE) * 7)
+    const queueMonths = differenceInMonths(addDays(new Date(), queueDays), new Date())
+
     const meta = {
-      title: "Submit your Open Source Software",
-      description: `Help us grow the list of open source alternatives to proprietary software. Contribute to ${SITE_NAME} by submitting a new open source alternative.`,
+      title: isPublished ? `Boost ${tool.name}'s Visibility` : `Choose a package for ${tool.name}`,
+      description: isPublished
+        ? `Elevate ${tool.name}'s presence on ${SITE_NAME}. Choose a featured package to increase visibility, attract more users, and stand out from the competition. Benefit from premium placement, a featured badge, and a do-follow link.`
+        : `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listings to premium features. Expedite your launch, gain visibility, and start connecting with your target audience faster.`,
     }
 
-    return json({ tool, queueLength, meta }, { headers: { ...JSON_HEADERS } })
+    return json({ tool, queueMonths, isPublished, meta }, { headers: { ...JSON_HEADERS } })
   } catch (error) {
     console.error(error)
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const data = await request.formData()
-  const parsed = await schema.safeParseAsync(Object.fromEntries(data.entries()))
+export const action = async ({ request }: ActionFunctionArgs) => {}
 
-  if (!parsed.success) {
-    return json({ type: "error", error: parsed.error.flatten() })
-  }
+export default function SubmitPagePackage() {
+  const { tool, queueMonths, isPublished, meta } = useLoaderData<typeof loader>()
 
-  // Destructure the parsed data
-  const {
-    name,
-    website,
-    repository,
-    submitterName,
-    submitterEmail,
-    submitterNote,
-    newsletterOptIn,
-  } = parsed.data
-
-  // Generate a slug
-  const slug = slugify(name, { decamelize: false })
-
-  // Save the tool to the database
-  try {
-    const tool = await prisma.tool.create({
-      data: {
-        name,
-        slug,
-        website,
-        repository,
-        submitterName,
-        submitterEmail,
-        submitterNote,
+  const plans = [
+    {
+      name: "Free",
+      description: "Free listing with a basic description and a link to your website.",
+      prices: [],
+      features: [
+        {
+          text: `${queueMonths}+ ${plur("month", queueMonths)} processing time`,
+          type: "neutral",
+          footnote: "Calculated based on the number of tools in the queue.",
+        },
+        { text: "Link to your website", type: "neutral" },
+        { text: "No content updates", type: "negative" },
+        { text: "No featured spot", type: "negative" },
+        { text: "No featured badge", type: "negative" },
+      ],
+      buttonProps: {
+        variant: "secondary",
+        disabled: true,
+        children: "Current package",
       },
-    })
-
-    if (newsletterOptIn) {
-      try {
-        const newsletterFormData = new FormData()
-        newsletterFormData.append("email", submitterEmail)
-        newsletterFormData.append("utm_medium", "submit_form")
-
-        // Subscribe to the newsletter
-        await subscribeToBeehiiv(newsletterFormData)
-      } catch {}
-    }
-
-    // Return a success response with the tool name
-    return json({
-      type: "success",
-      toolName: tool.name,
-    })
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError && e.meta?.target) {
-      const schemaKeys = Object.keys(schema.shape)
-      const name = (e.meta?.target as string[]).find(t => schemaKeys.includes(t)) || "name"
-
-      if (name && e.code === "P2002") {
-        return json({
-          type: "error",
-          error: { formErrors: [`That ${name} has already been submitted.`], fieldErrors: {} },
-        })
-      }
-    }
-
-    throw e
-  }
-}
-
-export default function SubmitPage() {
-  const { formMethod, state } = useNavigation()
-  const { queueLength, meta } = useLoaderData<typeof loader>()
-  const data = useActionData<typeof action>()
-
-  const params =
-    data?.type === "success"
-      ? new URLSearchParams({
-          subject: `Expedite submission of ${data.toolName} — ${SITE_NAME}`,
-          body: `Hi Team,\n\nI have recently submitted ${data.toolName} on ${SITE_NAME}.\n\nIs there a way to expedite the submission process?\n\nThanks!`,
-        })
-      : undefined
+    },
+    {
+      isHidden: !!isPublished,
+      name: "Standard",
+      description: "Skip the queue and get your site published on the site within 24 hours.",
+      prices: [{ price: 9700, priceId: "price_1Q7CtHDUyMoajCx1CWZch7qn" }],
+      features: [
+        { text: "24h processing time", type: "positive" },
+        { text: "Unlimited content updates", type: "positive" },
+        { text: "Do-follow link to your website", type: "negative" },
+        { text: "No featured spot", type: "negative" },
+        { text: "No featured badge", type: "negative" },
+      ],
+      isFeatured: true,
+      buttonProps: {
+        variant: "primary",
+        children: "Expedite Listing",
+      },
+    },
+    {
+      name: "Featured",
+      description: "Featured listing with a homepage spot and a featured badge.",
+      prices: [
+        { interval: "month", price: 19700, priceId: "price_1Q7CwiDUyMoajCx14a53vJJF" },
+        { interval: "year", price: 197000, priceId: "price_1Q7CwiDUyMoajCx1M48a1Fv4" },
+      ],
+      features: [
+        { text: "12h processing time", type: "positive" },
+        { text: "Unlimited content updates", type: "positive" },
+        { text: "Do-follow link to your website", type: "positive" },
+        { text: "Featured spot on homepage", type: "positive" },
+        { text: "Featured badge", type: "positive" },
+      ],
+      isFeatured: !!isPublished,
+      buttonProps: {
+        variant: "primary",
+        children: tool.publishedAt ? "Upgrade to Featured" : "List as Featured",
+      },
+    },
+  ] satisfies PlanProps[]
 
   return (
     <>
-      <Intro {...meta} />
+      <Intro alignment="center" {...meta} />
 
-      <Section>
-        {data?.type !== "success" && (
-          <>
-            <Section.Content>
-              <Form
-                method="POST"
-                className="grid-auto-fill-sm grid gap-6 w-full max-w-2xl"
-                noValidate
-              >
-                <div className="flex flex-col gap-1">
-                  <Label htmlFor="submitterName" isRequired>
-                    Your Name:
-                  </Label>
+      <div className="flex flex-wrap justify-center gap-6">
+        {plans.map(({ features, ...plan }) => {
+          if (isPublished) {
+            features.shift()
+          }
 
-                  <Input
-                    type="text"
-                    name="submitterName"
-                    id="submitterName"
-                    size="lg"
-                    placeholder="John Doe"
-                    data-1p-ignore
-                    required
-                  />
+          return <Plan key={plan.name} features={features} {...plan} />
+        })}
 
-                  <ErrorMessage errors={data?.error.fieldErrors.submitterName} />
-                </div>
+        <Stack size="xs" className="place-content-center w-full -mt-2">
+          <p className="text-xs text-muted">Payments secured by</p>
 
-                <div className="flex flex-col gap-1">
-                  <Label htmlFor="submitterEmail" isRequired>
-                    Your Email:
-                  </Label>
+          <Badge variant="outline" prefix={<BrandStripeIcon className="rounded-sm" />}>
+            Stripe
+          </Badge>
+        </Stack>
+      </div>
 
-                  <Input
-                    type="url"
-                    name="submitterEmail"
-                    id="submitterEmail"
-                    size="lg"
-                    placeholder="john@doe.com"
-                    required
-                  />
+      <Intro alignment="center">
+        <IntroTitle size="h3">Have questions?</IntroTitle>
 
-                  <ErrorMessage errors={data?.error.fieldErrors.submitterEmail} />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <Label htmlFor="name" isRequired>
-                    Name:
-                  </Label>
-
-                  <Input
-                    type="text"
-                    name="name"
-                    id="name"
-                    size="lg"
-                    placeholder="PostHog"
-                    data-1p-ignore
-                    required
-                  />
-                  <ErrorMessage errors={data?.error.fieldErrors.name} />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <Label htmlFor="website" isRequired>
-                    Website:
-                  </Label>
-
-                  <Input
-                    type="url"
-                    name="website"
-                    id="website"
-                    size="lg"
-                    placeholder="https://posthog.com"
-                    required
-                  />
-
-                  <ErrorMessage errors={data?.error.fieldErrors.website} />
-                </div>
-
-                <div className="col-span-full flex flex-col gap-1">
-                  <Label htmlFor="repository" isRequired>
-                    Repository:
-                  </Label>
-
-                  <Input
-                    type="url"
-                    name="repository"
-                    id="repository"
-                    size="lg"
-                    placeholder="https://github.com/posthog/posthog"
-                    required
-                  />
-
-                  <ErrorMessage errors={data?.error.fieldErrors.repository} />
-                </div>
-
-                <div className="col-span-full flex flex-col gap-1">
-                  <Label htmlFor="submitterNote">Suggest an alternative:</Label>
-
-                  <Input
-                    name="submitterNote"
-                    id="submitterNote"
-                    size="lg"
-                    placeholder="Which well-known tool is this an alternative to?"
-                  />
-
-                  <ErrorMessage errors={data?.error.fieldErrors.submitterNote} />
-                </div>
-
-                <div className="col-span-full flex items-center gap-2">
-                  <Checkbox name="newsletterOptIn" id="newsletterOptIn" defaultChecked={true} />
-
-                  <Label htmlFor="newsletterOptIn" className="text-sm font-normal">
-                    I'd like to receive free email updates
-                  </Label>
-
-                  <ErrorMessage errors={data?.error.fieldErrors.newsletterOptIn} />
-                </div>
-
-                <div>
-                  <Button
-                    isPending={state !== "idle" && formMethod === "POST"}
-                    className="min-w-32"
-                  >
-                    Submit
-                  </Button>
-                </div>
-
-                <ErrorMessage errors={data?.error.formErrors} className="col-span-full" />
-              </Form>
-            </Section.Content>
-
-            <Section.Sidebar>
-              <Card>
-                <Prose className="text-sm/normal">
-                  <p>
-                    <strong>Note:</strong> Submission alone does not guarantee a feature. Please
-                    make sure the software you're submitting is:
-                  </p>
-
-                  <ul className="[&_li]:p-0 list-inside p-0">
-                    <li>Open source</li>
-                    <li>Free to use or can be self-hosted</li>
-                    <li>Actively maintained</li>
-                    <li>
-                      An <Link to="/alternatives">alternative to popular software</Link>
-                    </li>
-                  </ul>
-                </Prose>
-              </Card>
-            </Section.Sidebar>
-          </>
-        )}
-
-        {data?.type === "success" && (
-          <Section.Content>
-            <Prose>
-              <p>
-                <strong>Thank you for submitting! We'll review your tool soon.</strong>
-              </p>
-
-              <p>
-                <strong>Note:</strong> There are currently {queueLength} submissions in the queue.
-                Considering our current posting rate, it may take up to{" "}
-                {Math.ceil(queueLength / SUBMISSION_POSTING_RATE)} weeks to publish your submission.
-              </p>
-
-              <Button size="lg" className="not-prose mt-2" suffix={<ArrowBigUpDashIcon />} asChild>
-                <a
-                  href={`mailto:${SITE_EMAIL}?${params?.toString()}`}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  Expedite submission of {data.toolName}
-                </a>
-              </Button>
-            </Prose>
-          </Section.Content>
-        )}
-      </Section>
+        <Prose>
+          <p>
+            If you have any questions, please contact us at{" "}
+            <Link to={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</Link>.
+          </p>
+        </Prose>
+      </Intro>
     </>
   )
 }

@@ -52,7 +52,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
           variant="secondary"
           suffix={isFiltersOpen ? <PanelBottomOpenIcon /> : <PanelBottomCloseIcon />}
           onClick={onToggleFilters}
-          className="flex-1 text-left"
+          className="flex-1"
         >
           {isFiltersOpen ? "Hide" : "Show"} Filters
         </Button>
