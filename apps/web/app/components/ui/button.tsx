@@ -5,9 +5,9 @@ import { Children, forwardRef, isValidElement } from "react"
 import { Slottable } from "~/components/ui/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
-export const buttonVariants = cva({
+const buttonVariants = cva({
   base: [
-    "group/button relative inline-flex items-center justify-center border font-medium rounded-md hover:z-10",
+    "group/button relative inline-flex items-center justify-center border font-medium text-left rounded-md hover:z-10",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
@@ -44,7 +44,7 @@ export const buttonVariants = cva({
   },
 })
 
-export const buttonAffixVariants = cva({
+const buttonAffixVariants = cva({
   base: "shrink-0 size-[1.1em]",
 })
 
@@ -105,7 +105,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         {child => (
           <>
             <Slot className={buttonAffixVariants()}>{prefix}</Slot>
-            {!isChildrenEmpty(child) && <span className="flex-1 truncate">{child}</span>}
+            {!isChildrenEmpty(child) && (
+              <span className="flex-1 truncate only:text-center">{child}</span>
+            )}
             <Slot className={buttonAffixVariants()}>{suffix}</Slot>
 
             {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}

@@ -1,9 +1,14 @@
 import { getErrorMessage } from "@curiousleaf/utils"
-import { type ActionFunctionArgs, json } from "@remix-run/node"
+import type { ActionFunctionArgs } from "@remix-run/node"
 import type Stripe from "stripe"
-import { z } from "zod"
 import { prisma } from "~/services.server/prisma"
 import { stripe } from "~/services.server/stripe"
+
+const relevantEvents = new Set([
+  "payment_intent.created",
+  "customer.subscription.created",
+  "customer.subscription.deleted",
+])
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const payload = await request.text()
@@ -14,47 +19,65 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   // Make sure the event is valid
   if (!signature) {
-    throw json(null, { status: 403, statusText: "Invalid signature" })
+    return new Response("Invalid signature", { status: 403 })
   }
 
   try {
-    // Constructs and verifies the signature of an Event.
     event = stripe.webhooks.constructEvent(payload, signature, secret)
   } catch (error) {
-    throw json(null, { status: 500, statusText: getErrorMessage(error) })
+    return new Response(getErrorMessage(error), { status: 500 })
   }
 
-  // Webhook Events.
-  switch (event?.type) {
-    // This event is sent when a Checkout Session has been successfully completed.
-    case "checkout.session.completed": {
-      const session = event.data.object as Stripe.Checkout.Session
+  if (!relevantEvents.has(event.type)) {
+    return new Response("Webhook not relevant", { status: 200 })
+  }
 
-      const schema = z.object({
-        email: z.string().email(),
-        name: z.string(),
-        description: z.string().nullish(),
-        website: z.string(),
-        startsAt: z.coerce.number().transform(date => new Date(date)),
-        endsAt: z.coerce.number().transform(date => new Date(date)),
-      })
+  try {
+    switch (event.type) {
+      case "payment_intent.created": {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent
+        const { slug } = paymentIntent.metadata as Stripe.Metadata
 
-      const data = schema.parse({
-        email: session.customer_details?.email,
-        name: session.custom_fields?.find(({ key }) => key === "name")?.text?.value,
-        description: session.custom_fields?.find(({ key }) => key === "description")?.text?.value,
-        website: session.custom_fields?.find(({ key }) => key === "website")?.text?.value,
-        startsAt: session.metadata?.startDate,
-        endsAt: session.metadata?.endDate,
-      })
+        // TODO: Send admin email about new expedited listing
 
-      // Do something with the session
-      await prisma.sponsoring.create({ data })
+        break
+      }
 
-      return json({}, { status: 200 })
+      case "customer.subscription.created": {
+        const subscription = event.data.object as Stripe.Subscription
+        const { slug } = subscription.metadata as Stripe.Metadata
+
+        await prisma.tool.update({
+          where: { slug },
+          data: { isFeatured: true },
+        })
+
+        // TODO: Send admin email about new featured listing
+
+        break
+      }
+
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object as Stripe.Subscription
+        const { slug } = subscription.metadata as Stripe.Metadata
+
+        await prisma.tool.update({
+          where: { slug },
+          data: { isFeatured: false },
+        })
+
+        // TODO: Send admin email about deleted featured listing
+
+        break
+      }
+
+      default:
+        throw new Response("Unhandled relevant event!", { status: 500 })
     }
+  } catch (error) {
+    console.log(error)
+    return new Response("Webhook handler failed. Check the logs.", { status: 400 })
   }
 
-  // Possible status returns: 200 | 404.
-  return json({}, { status: 200 })
+  return new Response(JSON.stringify({ received: true }))
 }

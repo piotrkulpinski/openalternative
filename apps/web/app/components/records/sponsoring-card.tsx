@@ -20,7 +20,7 @@ export const SponsoringCard = ({ className, sponsoring, rel, ...props }: Sponsor
   const linkRel = rel ?? (sponsoring?.website ? "noopener noreferrer" : "")
 
   return (
-    <Card className={cx("group/button", className)} asChild {...props}>
+    <Card className={cx("group/button", className)} isRevealed={false} asChild {...props}>
       <Link
         to={
           sponsoring?.website

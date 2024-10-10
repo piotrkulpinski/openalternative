@@ -138,7 +138,8 @@ export default function BlogPostPage() {
             <SponsoringCard
               sponsoring={sponsor}
               rel="noopener noreferrer nofollow"
-              className="!animate-none max-md:hidden"
+              isRevealed={false}
+              className="max-md:hidden"
             />
           )}
         </Section.Sidebar>

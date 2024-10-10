@@ -52,6 +52,14 @@
     "ss08" on;
 }
 
+@layer utilities {
+  .animate-reveal {
+    animation-timeline: view();
+    animation-range-start: cover;
+    animation-range-end: 15%;
+  }
+}
+
 a,
 button,
 label[for],
@@ -71,39 +79,22 @@ svg:not([class*="size-"]):not([class*="h-"]) {
 }
 
 [href] svg[class*="arrow-up-right"],
-[href] svg[class*="arrow-right"] {
+[href] svg[class*="arrow-right"],
+[type] svg[class*="arrow-up-right"],
+[type] svg[class*="arrow-right"] {
   @apply will-change-transform;
   @apply duration-150;
 }
 
-[href]:hover svg[class*="arrow-up-right"] {
+[href]:hover svg[class*="arrow-up-right"],
+[type]:hover svg[class*="arrow-up-right"] {
   @apply translate-x-[0.15em];
   @apply rotate-12;
 }
 
-[href]:hover svg[class*="arrow-right"] {
+[href]:hover svg[class*="arrow-right"],
+[type]:hover svg[class*="arrow-right"] {
   @apply translate-x-[0.15em];
-}
-
-.fade-in {
-  animation: fade-in linear forwards;
-  animation-timeline: view();
-  animation-range-start: 0;
-  animation-range-end: 15%;
-  transform-style: preserve-3d;
-}
-
-@keyframes fade-in {
-  from {
-    scale: 0.9;
-    opacity: 0;
-    transform: translateY(20px) perspective(250px) rotateX(-15deg);
-  }
-  to {
-    scale: 1;
-    opacity: 1;
-    transform: translateY(0) perspective(500px) rotateX(0deg);
-  }
 }
 
 hr {
