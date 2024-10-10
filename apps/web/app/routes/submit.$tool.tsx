@@ -1,14 +1,14 @@
+import { Prisma } from "@prisma/client"
 import {
   type ActionFunctionArgs,
+  type LoaderFunctionArgs,
   type MetaFunction,
-  type TypedResponse,
   json,
-  redirect,
 } from "@remix-run/node"
 import { Form, Link, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
 import slugify from "@sindresorhus/slugify"
 import { ArrowBigUpDashIcon } from "lucide-react"
-import { z } from "zod"
+import { BackButton } from "~/components/ui/back-button"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Button } from "~/components/ui/button"
 import { Card } from "~/components/ui/card"
@@ -19,14 +19,20 @@ import { Label } from "~/components/ui/forms/label"
 import { Intro } from "~/components/ui/intro"
 import { Prose } from "~/components/ui/prose"
 import { Section } from "~/components/ui/section"
+import { type ToolOne, toolOnePayload } from "~/services.server/api"
 import { subscribeToBeehiiv } from "~/services.server/beehiiv"
 import { prisma } from "~/services.server/prisma"
-import { SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constants"
-import { isRealEmail } from "~/utils/email"
+import { JSON_HEADERS, SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
-  breadcrumb: () => <BreadcrumbsLink to="/submit" label="Submit" />,
+  breadcrumb: (data?: { tool: ToolOne }) => {
+    if (!data?.tool) return <BackButton to="/submit" />
+
+    const { slug, name } = data.tool
+
+    return <BreadcrumbsLink to={`/submit/${slug}`} label={name} />
+  },
 }
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
@@ -40,49 +46,32 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const loader = async () => {
-  const queueLength = await prisma.tool.count({
-    where: { OR: [{ publishedAt: { gt: new Date() } }, { publishedAt: null }] },
-  })
+export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => {
+  try {
+    const [tool, queueLength] = await Promise.all([
+      prisma.tool.findUniqueOrThrow({
+        where: { slug },
+        include: toolOnePayload,
+      }),
 
-  const meta = {
-    title: "Submit your Open Source Software",
-    description: `Help us grow the list of open source alternatives to proprietary software. Contribute to ${SITE_NAME} by submitting a new open source alternative.`,
+      prisma.tool.count({
+        where: { OR: [{ publishedAt: { gt: new Date() } }, { publishedAt: null }] },
+      }),
+    ])
+
+    const meta = {
+      title: "Submit your Open Source Software",
+      description: `Help us grow the list of open source alternatives to proprietary software. Contribute to ${SITE_NAME} by submitting a new open source alternative.`,
+    }
+
+    return json({ tool, queueLength, meta }, { headers: { ...JSON_HEADERS } })
+  } catch (error) {
+    console.error(error)
+    throw json(null, { status: 404, statusText: "Not Found" })
   }
-
-  console.log(queueLength)
-
-  return json({ queueLength, meta })
 }
 
-const schema = z.object({
-  submitterName: z.string().min(1, "Your name is required"),
-  submitterEmail: z
-    .string()
-    .min(1, "Your email is required")
-    .email("Invalid email address, please use a correct format.")
-    .refine(isRealEmail, "Invalid email address, please use a real one."),
-  submitterNote: z.string().max(200),
-  name: z.string().min(1, "Name is required"),
-  website: z.string().min(1, "Website is required").url(),
-  repository: z
-    .string()
-    .min(1, "Repository is required")
-    .url()
-    .refine(
-      url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
-      "The repository must be a valid GitHub URL with owner and repo name.",
-    ),
-  newsletterOptIn: z.coerce.boolean().default(true),
-})
-
-type SubmitError = z.inferFlattenedErrors<typeof schema>
-
-export type ActionState = TypedResponse<
-  { type: "error"; error: SubmitError } | { type: "success"; toolName: string }
->
-
-export const action = async ({ request }: ActionFunctionArgs): Promise<ActionState> => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const data = await request.formData()
   const parsed = await schema.safeParseAsync(Object.fromEntries(data.entries()))
 
@@ -91,45 +80,64 @@ export const action = async ({ request }: ActionFunctionArgs): Promise<ActionSta
   }
 
   // Destructure the parsed data
-  const { newsletterOptIn, ...toolData } = parsed.data
-
-  // Subscribe to the newsletter
-  if (newsletterOptIn) {
-    try {
-      const newsletterFormData = new FormData()
-      newsletterFormData.append("email", toolData.submitterEmail)
-      newsletterFormData.append("utm_medium", "submit_form")
-
-      // Subscribe to the newsletter
-      await subscribeToBeehiiv(newsletterFormData)
-    } catch {}
-  }
+  const {
+    name,
+    website,
+    repository,
+    submitterName,
+    submitterEmail,
+    submitterNote,
+    newsletterOptIn,
+  } = parsed.data
 
   // Generate a slug
-  const slug = slugify(toolData.name, { decamelize: false })
+  const slug = slugify(name, { decamelize: false })
 
-  // Check if the tool already exists
-  const existingTool = await prisma.tool.findFirst({
-    where: { OR: [{ slug }, { website: toolData.website }, { repository: toolData.repository }] },
-  })
+  // Save the tool to the database
+  try {
+    const tool = await prisma.tool.create({
+      data: {
+        name,
+        slug,
+        website,
+        repository,
+        submitterName,
+        submitterEmail,
+        submitterNote,
+      },
+    })
 
-  // If the tool exists, redirect to the tool or submit page
-  if (existingTool) {
-    if (existingTool.publishedAt && existingTool.publishedAt <= new Date()) {
-      throw redirect(`/${existingTool.slug}`)
+    if (newsletterOptIn) {
+      try {
+        const newsletterFormData = new FormData()
+        newsletterFormData.append("email", submitterEmail)
+        newsletterFormData.append("utm_medium", "submit_form")
+
+        // Subscribe to the newsletter
+        await subscribeToBeehiiv(newsletterFormData)
+      } catch {}
     }
 
     // Return a success response with the tool name
-    return json({ type: "success", toolName: existingTool.name })
+    return json({
+      type: "success",
+      toolName: tool.name,
+    })
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError && e.meta?.target) {
+      const schemaKeys = Object.keys(schema.shape)
+      const name = (e.meta?.target as string[]).find(t => schemaKeys.includes(t)) || "name"
+
+      if (name && e.code === "P2002") {
+        return json({
+          type: "error",
+          error: { formErrors: [`That ${name} has already been submitted.`], fieldErrors: {} },
+        })
+      }
+    }
+
+    throw e
   }
-
-  // Save the tool to the database
-  const tool = await prisma.tool.create({
-    data: { ...toolData, slug },
-  })
-
-  // Return a success response with the tool name
-  return json({ type: "success", toolName: tool.name })
 }
 
 export default function SubmitPage() {
