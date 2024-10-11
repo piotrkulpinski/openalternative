@@ -1,13 +1,6 @@
-import {
-  type ActionFunctionArgs,
-  type LoaderFunctionArgs,
-  type MetaFunction,
-  json,
-} from "@remix-run/node"
+import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
-import { addDays, differenceInMonths } from "date-fns"
-import plur from "plur"
-import { Plan, type PlanProps } from "~/components/plan"
+import { Plan } from "~/components/plan"
 import { BackButton } from "~/components/ui/back-button"
 import { Badge } from "~/components/ui/badge"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
@@ -17,8 +10,10 @@ import { Prose } from "~/components/ui/prose"
 import { Stack } from "~/components/ui/stack"
 import { type ToolOne, toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { JSON_HEADERS, SITE_EMAIL, SITE_NAME, SUBMISSION_POSTING_RATE } from "~/utils/constants"
+import { stripe } from "~/services.server/stripe"
+import { JSON_HEADERS, SITE_EMAIL, SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
+import { getProductsForPricing } from "~/utils/products"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -43,7 +38,7 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 
 export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => {
   try {
-    const [tool, unpublishedToolCount] = await Promise.all([
+    const [tool, queueLength, stripeProducts] = await Promise.all([
       prisma.tool.findUniqueOrThrow({
         where: { slug, isFeatured: false },
         include: toolOnePayload,
@@ -52,11 +47,16 @@ export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => 
       prisma.tool.count({
         where: { OR: [{ publishedAt: { gt: new Date() } }, { publishedAt: null }] },
       }),
+
+      stripe.products.list({
+        active: true,
+        ids: process.env.STRIPE_PRODUCT_IDS?.split(",").map(e => e.trim()),
+        expand: ["data.default_price"],
+      }),
     ])
 
-    const isPublished = tool.publishedAt && tool.publishedAt <= new Date()
-    const queueDays = Math.ceil((unpublishedToolCount / SUBMISSION_POSTING_RATE) * 7)
-    const queueMonths = differenceInMonths(addDays(new Date(), queueDays), new Date())
+    const isPublished = !!(tool.publishedAt && tool.publishedAt <= new Date())
+    const products = getProductsForPricing(stripeProducts.data, isPublished, queueLength)
 
     const meta = {
       title: isPublished ? `Boost ${tool.name}'s Visibility` : "Choose a submission package",
@@ -65,92 +65,24 @@ export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => 
         : `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listings to premium features. Expedite your launch, gain visibility, and start connecting with your target audience faster.`,
     }
 
-    return json({ tool, queueMonths, isPublished, meta }, { headers: { ...JSON_HEADERS } })
+    return json({ tool, products, meta }, { headers: { ...JSON_HEADERS } })
   } catch (error) {
     console.error(error)
     throw json(null, { status: 404, statusText: "Not Found" })
   }
 }
 
-export const action = async ({ request }: ActionFunctionArgs) => {}
-
 export default function SubmitPagePackage() {
-  const { tool, queueMonths, isPublished, meta } = useLoaderData<typeof loader>()
-
-  const plans = [
-    {
-      name: "Free",
-      description: "Free listing with a wait time and a direct link to your website.",
-      prices: [],
-      features: [
-        {
-          text: `${queueMonths}+ ${plur("month", queueMonths)} processing time`,
-          type: "neutral",
-          footnote: "Calculated based on the number of tools in the queue.",
-        },
-        { text: "Link to your website", type: "neutral" },
-        { text: "No content updates", type: "negative" },
-        { text: "No featured spot", type: "negative" },
-        { text: "No prominent placement", type: "negative" },
-      ],
-      buttonProps: {
-        variant: "secondary",
-        disabled: true,
-        children: "Current package",
-      },
-    },
-    {
-      isHidden: !!isPublished,
-      name: "Standard",
-      description: "Skip the queue and get your site published on the site within 24 hours.",
-      prices: [{ price: 14700, priceId: "price_1Q8MYFBc0A3vG34CuqhLGkVF" }],
-      features: [
-        { text: "24h processing time", type: "positive" },
-        { text: "Unlimited content updates", type: "positive" },
-        { text: "Do-follow link to your website", type: "negative" },
-        { text: "No featured spot", type: "negative" },
-        { text: "No prominent placement", type: "negative" },
-      ],
-      isFeatured: true,
-      buttonProps: {
-        variant: "primary",
-        children: "Expedite Listing",
-      },
-    },
-    {
-      name: "Featured",
-      description: "Featured listing with a homepage spot and a prominent placement.",
-      prices: [
-        { interval: "month", price: 19700, priceId: "price_1Q8MYwBc0A3vG34C1WQr6yfZ" },
-        { interval: "year", price: 197000, priceId: "price_1Q8Ma0Bc0A3vG34CH0PRXvb1" },
-      ],
-      features: [
-        { text: "12h processing time", type: "positive" },
-        { text: "Unlimited content updates", type: "positive" },
-        { text: "Do-follow link to your website", type: "positive" },
-        { text: "Featured spot on homepage", type: "positive" },
-        { text: "Prominent placement", type: "positive" },
-      ],
-      isFeatured: !!isPublished,
-      buttonProps: {
-        variant: "primary",
-        children: tool.publishedAt ? "Upgrade to Featured" : "List as Featured",
-      },
-    },
-  ] satisfies PlanProps[]
+  const { products, meta } = useLoaderData<typeof loader>()
 
   return (
     <>
       <Intro alignment="center" {...meta} />
 
       <div className="flex flex-wrap justify-center gap-6">
-        {plans.map(({ features, ...plan }) => {
-          if (isPublished) {
-            features.shift()
-          }
-
-          return <Plan key={plan.name} features={features} {...plan} />
-        })}
+        {products.map((plan, index) => (
+          <Plan key={plan.id} isFeatured={index === 1} {...plan} />
+        ))}
 
         <Stack size="xs" className="place-content-center w-full -mt-2">
           <p className="text-xs text-muted">Payments secured by</p>

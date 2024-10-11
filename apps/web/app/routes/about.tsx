@@ -4,7 +4,14 @@ import { Featured } from "~/components/featured"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Intro } from "~/components/ui/intro"
 import { Markdown } from "~/components/ui/markdown"
-import { FAMILY_LINKS, GITHUB_URL, SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
+import {
+  AUTHOR_URL,
+  FAMILY_LINKS,
+  GITHUB_URL,
+  SITE_NAME,
+  SITE_TAGLINE,
+  SITE_URL,
+} from "~/utils/constants"
 import { addUTMTracking } from "~/utils/helpers"
 import { getMetaTags } from "~/utils/meta"
 
@@ -69,6 +76,7 @@ This approach helps us balance between popular, well-established projects and pr
 * [Remix](https://remix.run) – Web framework
 * [GitHub](https://github.com) – Repository data
 * [Airtable](https://kulp.in/airtable) – Database
+* [Beehiiv](https://kulp.in/beehiiv) – Newsletter
 * [Screen Studio](https://kulp.in/screenstudio) – Screen recording for marketing videos
 * [ScreenshotOne](https://kulp.in/screenshotone) – The screenshot API for developers
 * [Typefully](https://kulp.in/typefully) – Twitter scheduling/analytics
@@ -89,7 +97,7 @@ ${FAMILY_LINKS.map(link => `* [${link.title}](${addUTMTracking(link.href, { sour
 
 I’m always looking for new projects to work on and new people to collaborate with. Feel free to reach out to me if you have any questions or suggestions.
 
-– [Piotr Kulpinski](https://x.com/piotrkulpinski)
+– [Piotr Kulpinski](${AUTHOR_URL})
   `
 
   return (
