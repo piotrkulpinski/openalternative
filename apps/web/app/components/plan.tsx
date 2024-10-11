@@ -102,9 +102,11 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
   }, [checkoutFetcher.data])
 
   const onSubmit = () => {
+    if (!params.tool) return
+
     const payload: StripeCheckoutSchema = {
       priceId: currentPrice.id,
-      slug: params.slug ?? "",
+      tool: params.tool,
       mode: isSubscription ? "subscription" : "payment",
     }
 

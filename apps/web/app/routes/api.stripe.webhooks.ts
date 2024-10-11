@@ -6,10 +6,7 @@ import { stripe } from "~/services.server/stripe"
 
 const relevantEvents = new Set([
   "payment_intent.created",
-  "customer.subscription.created",
   "customer.subscription.updated",
-  "customer.subscription.paused",
-  "customer.subscription.resumed",
   "customer.subscription.deleted",
 ])
 
@@ -39,37 +36,20 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     switch (event.type) {
       case "payment_intent.created": {
         const paymentIntent = event.data.object as Stripe.PaymentIntent
-        const { slug } = paymentIntent.metadata as Stripe.Metadata
+        const { tool: slug } = paymentIntent.metadata as Stripe.Metadata
 
         if (slug) {
+          console.log("paid", slug)
           // TODO: Send admin email about new expedited listing
         }
 
         break
       }
 
-      case "customer.subscription.created": {
-        const subscription = event.data.object as Stripe.Subscription
-        const { slug } = subscription.metadata as Stripe.Metadata
-
-        if (slug) {
-          await prisma.tool.update({
-            where: { slug },
-            data: { isFeatured: true },
-          })
-
-          // TODO: Send admin email about new featured listing
-        }
-
-        break
-      }
-
       case "customer.subscription.updated":
-      case "customer.subscription.paused":
-      case "customer.subscription.resumed":
       case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription
-        const { slug } = subscription.metadata as Stripe.Metadata
+        const { tool: slug } = subscription.metadata as Stripe.Metadata
 
         if (slug) {
           const isFeatured = subscription.status === "active"
