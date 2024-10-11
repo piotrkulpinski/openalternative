@@ -66,7 +66,7 @@ model Tool {
 
 model Alternative {
   id             String              @id @default(cuid())
-  name           String
+  name           String              @db.Citext
   slug           String              @unique
   description    String?
   website        String              @unique
@@ -81,7 +81,7 @@ model Alternative {
 
 model Category {
   id        String            @id @default(cuid())
-  name      String
+  name      String            @db.Citext
   slug      String            @unique
   label     String?
   createdAt DateTime          @default(now())
@@ -91,7 +91,7 @@ model Category {
 
 model Language {
   slug      String           @id @unique
-  name      String
+  name      String           @db.Citext
   color     String?
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
@@ -107,7 +107,7 @@ model Topic {
 
 model License {
   id          String   @id @default(cuid())
-  name        String   @unique
+  name        String   @db.Citext
   slug        String   @unique
   description String?
   content     String?

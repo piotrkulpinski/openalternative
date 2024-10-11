@@ -134,6 +134,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           </Button>
         </Stack>
       </div>
+
       <nav
         className={cx(
           "absolute top-full inset-x-0 h-[calc(100dvh-var(--header-top)-var(--header-height))] -mt-px py-4 px-6 grid grid-cols-2 place-items-start place-content-start gap-x-4 gap-y-6 bg-background/90 backdrop-blur-lg transition-opacity lg:hidden",
