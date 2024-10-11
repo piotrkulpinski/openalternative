@@ -46,7 +46,7 @@ export const getProductsForPricing = (
       .filter(product => !isPublished || !product.name.includes("Expedited"))
 
       // Map to features
-      .map(product => {
+      .map(({ name, ...product }) => {
         let features = product.marketing_features.filter(
           feature => !isPublished || !feature.name?.includes("processing time"),
         )
@@ -66,7 +66,7 @@ export const getProductsForPricing = (
           return { ...feature, name, type }
         })
 
-        return { ...product, features }
+        return { ...product, name: name.replace("Listing", "").trim(), features }
       })
   )
 }
