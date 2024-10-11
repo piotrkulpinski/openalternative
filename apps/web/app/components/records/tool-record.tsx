@@ -1,6 +1,6 @@
 import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
-import { Link, useViewTransitionState } from "@remix-run/react"
+import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import type { Hit as AlgoliaHit } from "instantsearch.js"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
@@ -27,7 +27,7 @@ type ToolRecordProps = HTMLAttributes<HTMLElement> & {
 
 export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordProps) => {
   const to = `/${tool.slug}`
-  const vt = !isRelated && useViewTransitionState(to)
+  const vt = !isRelated && unstable_useViewTransitionState(to)
 
   const insights = [
     { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: StarIcon },
@@ -41,7 +41,7 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
 
   return (
     <Card style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }} asChild>
-      <Link to={to} prefetch="intent" viewTransition {...props}>
+      <Link to={to} prefetch="intent" unstable_viewTransition {...props}>
         <Card.Header>
           <Favicon
             src={tool.faviconUrl}

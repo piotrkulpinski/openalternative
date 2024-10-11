@@ -1,5 +1,5 @@
 import { formatDate, getReadTime } from "@curiousleaf/utils"
-import { Link, useViewTransitionState } from "@remix-run/react"
+import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import type { Post } from "content-collections"
 import type { HTMLAttributes } from "react"
 import { Card } from "~/components/ui/card"
@@ -11,11 +11,11 @@ type PostRecordProps = HTMLAttributes<HTMLElement> & {
 
 export const PostRecord = ({ className, post, ...props }: PostRecordProps) => {
   const to = `/blog/${post._meta.path}`
-  const vt = useViewTransitionState(to)
+  const vt = unstable_useViewTransitionState(to)
 
   return (
     <Card style={{ viewTransitionName: vt ? `post-${post._meta.path}` : undefined }} asChild>
-      <Link to={to} prefetch="intent" viewTransition {...props}>
+      <Link to={to} prefetch="intent" unstable_viewTransition {...props}>
         {post.image && (
           <img
             src={post.image}

@@ -9,7 +9,7 @@ export const Markdown = ({ children, ...props }: HTMLAttributes<HTMLElement>) =>
     a: ({ children, href }) => {
       if (href?.startsWith("/")) {
         return (
-          <Link to={href} prefetch="intent" viewTransition>
+          <Link to={href} prefetch="intent" unstable_viewTransition>
             {children}
           </Link>
         )

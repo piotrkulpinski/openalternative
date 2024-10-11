@@ -88,32 +88,32 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
-                <NavigationLink to="/latest" viewTransition>
+                <NavigationLink to="/latest" unstable_viewTransition>
                   <CalendarDaysIcon className="shrink-0 size-4 opacity-75" /> Latest tools
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/categories" viewTransition>
+                <NavigationLink to="/categories" unstable_viewTransition>
                   <GalleryHorizontalEndIcon className="shrink-0 size-4 opacity-75" /> Categories
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/alternatives" viewTransition>
+                <NavigationLink to="/alternatives" unstable_viewTransition>
                   <ReplaceIcon className="shrink-0 size-4 opacity-75" /> Alternatives
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/languages" viewTransition>
+                <NavigationLink to="/languages" unstable_viewTransition>
                   <CodeXmlIcon className="shrink-0 size-4 opacity-75" /> Languages
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/topics" viewTransition>
+                <NavigationLink to="/topics" unstable_viewTransition>
                   <TagIcon className="shrink-0 size-4 opacity-75" /> Topics
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/licenses" viewTransition>
+                <NavigationLink to="/licenses" unstable_viewTransition>
                   <CopyrightIcon className="shrink-0 size-4 opacity-75" /> Licenses
                 </NavigationLink>
               </DropdownMenuItem>
@@ -128,7 +128,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <SearchForm className="max-sm:hidden" />
 
           <Button size="sm" variant="secondary" prefix={<PlusIcon />} asChild>
-            <NavLink to="/submit" viewTransition>
+            <NavLink to="/submit" unstable_viewTransition>
               Submit
             </NavLink>
           </Button>
