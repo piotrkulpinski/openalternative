@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot"
-import { redirect, useFetcher, useParams } from "@remix-run/react"
+import { useFetcher, useParams } from "@remix-run/react"
 import { ArrowRightIcon, CheckIcon, XIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import { type ComponentProps, type HTMLAttributes, forwardRef, useEffect } from "react"
@@ -62,28 +62,29 @@ export type PlanFeature = {
 
 export type PlanProps = Omit<HTMLAttributes<HTMLDivElement>, "size"> &
   ComponentProps<typeof Card> &
-  VariantProps<typeof planVariants> &
-  Stripe.Product & {
-    /**
-     * The features of the plan.
-     */
-    features?: PlanFeature[]
+  VariantProps<typeof planVariants> & {
+    plan: Stripe.Product & {
+      /**
+       * The features of the plan.
+       */
+      features?: PlanFeature[]
+    }
   }
 
 export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
-  const { className, id, name, description, features, isFeatured } = props
+  const { className, plan, isFeatured, ...rest } = props
 
   const params = useParams()
   const checkoutFetcher = useFetcher<typeof createCheckoutAction>()
   const pricesFetcher = useFetcher<typeof createGetPricesAction>()
 
   const { isSubscription, currentPrice, price, fullPrice, discount, interval, setInterval } =
-    usePlanPrices(id.startsWith("prod_") ? pricesFetcher.data?.prices || [] : [])
+    usePlanPrices(pricesFetcher.data?.prices || [])
 
   useEffect(() => {
-    if (id.startsWith("prod_") && pricesFetcher.state === "idle" && !pricesFetcher.data) {
+    if (pricesFetcher.state === "idle" && !pricesFetcher.data) {
       const payload: StripeGetPricesSchema = {
-        productId: id,
+        productId: plan.id,
       }
 
       pricesFetcher.submit(payload, {
@@ -92,7 +93,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
         action: "/api/stripe/get-prices",
       })
     }
-  }, [pricesFetcher, id])
+  }, [pricesFetcher, plan.id])
 
   useEffect(() => {
     if (checkoutFetcher.data?.url) {
@@ -101,10 +102,6 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
   }, [checkoutFetcher.data])
 
   const onSubmit = () => {
-    if (!currentPrice.id) {
-      throw redirect("/submit/thanks")
-    }
-
     const payload: StripeCheckoutSchema = {
       priceId: currentPrice.id,
       slug: params.slug ?? "",
@@ -127,10 +124,11 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
       isRevealed={false}
       isFeatured={isFeatured}
       className={cx(planVariants({ className }))}
+      {...rest}
     >
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-2">
-          <H5>{name}</H5>
+          <H5>{plan.name}</H5>
 
           {isSubscription && pricesFetcher.data?.prices && pricesFetcher.data.prices.length > 1 && (
             <PlanIntervalSwitch
@@ -145,7 +143,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
           )}
         </div>
 
-        {description && <p className="text-muted text-sm text-pretty">{description}</p>}
+        {plan.description && <p className="text-muted text-sm text-pretty">{plan.description}</p>}
       </div>
 
       <div className="relative flex items-end w-full">
@@ -174,10 +172,10 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
         )}
       </div>
 
-      {!!features?.length && (
+      {!!plan.features && (
         <TooltipProvider delayDuration={0} disableHoverableContent>
           <Stack direction="column" className="mb-auto">
-            {features.map(({ type, name, footnote }) => (
+            {plan.features.map(({ type, name, footnote }) => (
               <div key={name} className={cx(planFeatureVariants())}>
                 <Slot className={cx(planFeatureCheckVariants({ type }))}>
                   {type === "negative" ? <XIcon /> : <CheckIcon />}
@@ -200,12 +198,12 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
         type="button"
         className="mt-auto w-full"
         variant={!price ? "secondary" : "primary"}
-        isPending={checkoutFetcher.state !== "idle"}
+        isPending={checkoutFetcher.state !== "idle" || !pricesFetcher.data}
         disabled={!price}
         suffix={<ArrowRightIcon />}
         onClick={onSubmit}
       >
-        {!price ? "Current Package" : `Choose ${name}`}
+        {!price ? "Current Package" : (plan.metadata.label ?? `Choose ${plan.name}`)}
       </Button>
     </Card>
   )
