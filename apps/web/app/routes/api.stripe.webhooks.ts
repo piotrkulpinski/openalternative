@@ -10,6 +10,10 @@ const relevantEvents = new Set([
   "customer.subscription.deleted",
 ])
 
+export const loader = () => {
+  return new Response("Invalid request", { status: 400 })
+}
+
 export const action = async ({ request }: ActionFunctionArgs) => {
   const payload = await request.text()
   const signature = request.headers.get("stripe-signature")

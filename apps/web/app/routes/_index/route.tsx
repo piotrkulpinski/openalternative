@@ -6,10 +6,15 @@ import { getServerState } from "react-instantsearch"
 import { AlternativeList } from "~/components/alternative-list"
 import { Hero } from "~/components/hero"
 import { alternativeManyPayload } from "~/services.server/api"
+import { type UserPrefs, userPrefs } from "~/services.server/cookies"
 import { prisma } from "~/services.server/prisma"
 import { FEATURED_ALTERNATIVES, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { Search } from "./search"
+
+export const shouldRevalidate = () => {
+  return false
+}
 
 export const meta: MetaFunction = ({ matches, location }) => {
   return getMetaTags({
@@ -22,6 +27,8 @@ export const meta: MetaFunction = ({ matches, location }) => {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
+  const cookieHeader = request.headers.get("Cookie")
+  const cookie = ((await userPrefs.parse(cookieHeader)) || {}) as UserPrefs
 
   const [sponsoring, newToolsCount, alternatives, serverState] = await Promise.all([
     // Find sponsoring
@@ -46,18 +53,18 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     getServerState(<Search url={url} sponsoring={null} />, { renderToString }),
   ])
 
-  return json({ url, sponsoring, alternatives, newToolsCount, serverState })
+  return json({ url, sponsoring, alternatives, newToolsCount, serverState, ...cookie })
 }
 
 export default function Index() {
   const { key } = useLocation()
 
-  const { url, sponsoring, alternatives, newToolsCount, serverState } =
+  const { url, sponsoring, alternatives, newToolsCount, serverState, hideNewsletter } =
     useLoaderData<typeof loader>()
 
   return (
     <>
-      <Hero toolCount={newToolsCount} />
+      <Hero toolCount={newToolsCount} hideNewsletter={hideNewsletter} />
 
       <Search key={key} serverState={serverState} url={url} sponsoring={sponsoring} />
 
