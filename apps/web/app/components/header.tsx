@@ -51,7 +51,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
       <div
         className={cx(
-          "flex flex-wrap items-center py-3.5 gap-x-3 text-sm h-[var(--header-height)] isolate overflow-clip duration-300 lg:flex-nowrap lg:gap-4",
+          "flex flex-wrap items-center py-3.5 gap-x-3 text-sm h-[var(--header-height)] isolate duration-300 lg:flex-nowrap lg:gap-4",
           "max-lg:group-data-[state=open]/menu:h-[calc(100dvh-(var(--header-top)*2))]",
         )}
       >

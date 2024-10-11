@@ -31,7 +31,7 @@ export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
           size="sm"
           placeholder="Search tools..."
           className={cx(
-            "transition-[width,opacity,transform] duration-200 ease-in-out w-32",
+            "transition-[width,opacity,transform] duration-200 ease-in-out",
             isExpanded ? "w-32 opacity-100" : "w-0 opacity-0",
           )}
           onFocus={handleExpand}

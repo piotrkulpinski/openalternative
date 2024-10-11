@@ -237,7 +237,7 @@ export default function SubmitPage() {
         </Section.Content>
 
         <Section.Sidebar>
-          <Card>
+          <Card hover={false}>
             <Prose className="text-sm/normal">
               <p>
                 <strong>Note:</strong> Submission alone does not guarantee a feature. Please make
