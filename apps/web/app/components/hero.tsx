@@ -45,7 +45,7 @@ export const Hero = ({ className, toolCount, hideNewsletter, ...props }: HeroPro
 
       {hideNewsletter ? (
         <Stack className="mx-auto place-content-center">
-          <Button variant="fancy" asChild>
+          <Button variant="primary" asChild>
             <Link to="/alternatives" unstable_viewTransition>
               Browse by Alternatives
             </Link>

@@ -1,5 +1,6 @@
 import { useFetcher, useLocation } from "@remix-run/react"
 import { type ComponentProps, type HTMLAttributes, useId } from "react"
+import { Box } from "~/components/ui/box"
 import { Button } from "~/components/ui/button"
 import { ErrorMessage } from "~/components/ui/forms/error-message"
 import { Input } from "~/components/ui/forms/input"
@@ -52,30 +53,32 @@ export const Newsletter = ({
         {description && <p className="-mt-2 px-0.5 text-sm text-muted first:mt-0">{description}</p>}
 
         {data?.type !== "success" && (
-          <Form
-            method="POST"
-            action="/api/subscribe"
-            className="flex border rounded-lg overflow-clip focus-within:outline focus-within:outline-2 focus-within:-outline-offset-1 focus-within:outline-primary"
-            noValidate
-          >
-            <input type="hidden" name="utm_medium" value={medium} />
+          <Box focusWithin>
+            <Form
+              method="POST"
+              action="/api/subscribe"
+              className="flex rounded-lg overflow-clip"
+              noValidate
+            >
+              <input type="hidden" name="utm_medium" value={medium} />
 
-            <Input
-              type="email"
-              name="email"
-              placeholder={placeholder}
-              data-1p-ignore
-              required
-              size={size}
-              className="flex-1 min-w-0 border-0 outline-0"
-            />
+              <Input
+                type="email"
+                name="email"
+                placeholder={placeholder}
+                data-1p-ignore
+                required
+                size={size}
+                className="flex-1 min-w-0 border-0 outline-0 !ring-0"
+              />
 
-            <Button
-              isPending={state !== "idle"}
-              className={cx("shrink-0 ", isLargeSize ? "text-sm/tight px-4 m-1" : "px-3 m-0.5")}
-              {...buttonProps}
-            />
-          </Form>
+              <Button
+                isPending={state !== "idle"}
+                className={cx("shrink-0 ", isLargeSize ? "text-sm/tight px-4 m-1" : "px-3 m-0.5")}
+                {...buttonProps}
+              />
+            </Form>
+          </Box>
         )}
 
         {data?.type === "error" && (

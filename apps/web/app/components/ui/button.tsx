@@ -2,6 +2,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { LoaderIcon } from "lucide-react"
 import type { ButtonHTMLAttributes, ReactNode } from "react"
 import { Children, forwardRef, isValidElement } from "react"
+import { Box } from "~/components/ui/box"
 import { Slottable } from "~/components/ui/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -13,10 +14,10 @@ const buttonVariants = cva({
 
   variants: {
     variant: {
-      fancy: "border-transparent bg-primary text-white hover:bg-primary/90",
-      primary: "border-transparent text-background bg-foreground hover:opacity-90",
+      fancy: "!border-transparent bg-primary text-white hover:bg-primary/90",
+      primary: "!border-transparent text-background bg-foreground hover:opacity-90",
       secondary: "bg-background text-secondary hover:bg-card hover:border-border-dark",
-      ghost: "bg-transparent border-transparent text-foreground hover:bg-card",
+      ghost: "!border-transparent bg-transparent text-foreground hover:bg-card",
     },
     size: {
       sm: "text-[13px]/none gap-[0.66ch] py-1 px-2",
@@ -95,26 +96,28 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   const Component = useAsChild ? Slot : "button"
 
   return (
-    <Component
-      ref={ref}
-      disabled={disabled ?? isPending}
-      className={cx(buttonVariants({ variant, size, isAffixOnly, isPending, className }))}
-      {...rest}
-    >
-      <Slottable child={children} asChild={asChild}>
-        {child => (
-          <>
-            <Slot className={buttonAffixVariants()}>{prefix}</Slot>
-            {!isChildrenEmpty(child) && (
-              <span className="flex-1 truncate only:text-center">{child}</span>
-            )}
-            <Slot className={buttonAffixVariants()}>{suffix}</Slot>
+    <Box hover focus>
+      <Component
+        ref={ref}
+        disabled={disabled ?? isPending}
+        className={cx(buttonVariants({ variant, size, isAffixOnly, isPending, className }))}
+        {...rest}
+      >
+        <Slottable child={children} asChild={asChild}>
+          {child => (
+            <>
+              <Slot className={buttonAffixVariants()}>{prefix}</Slot>
+              {!isChildrenEmpty(child) && (
+                <span className="flex-1 truncate only:text-center">{child}</span>
+              )}
+              <Slot className={buttonAffixVariants()}>{suffix}</Slot>
 
-            {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
-          </>
-        )}
-      </Slottable>
-    </Component>
+              {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
+            </>
+          )}
+        </Slottable>
+      </Component>
+    </Box>
   )
 })
 
