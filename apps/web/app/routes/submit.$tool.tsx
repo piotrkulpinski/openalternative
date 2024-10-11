@@ -81,7 +81,7 @@ export default function SubmitPagePackage() {
 
       <div className="flex flex-wrap justify-center gap-6">
         {products.map((plan, index) => (
-          <Plan key={plan.id} isFeatured={index === 1} {...plan} />
+          <Plan key={plan.id} isFeatured={index === 1} plan={plan} />
         ))}
 
         <Stack size="xs" className="place-content-center w-full -mt-2">

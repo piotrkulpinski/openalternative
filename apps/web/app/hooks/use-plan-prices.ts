@@ -13,19 +13,20 @@ const getPriceForInterval = (prices: Stripe.Price[], interval?: ProductInterval)
 }
 
 const calculatePrices = (prices: Stripe.Price[], interval: ProductInterval) => {
-  const isSubscription = prices.length > 0 && prices.some(p => p.recurring?.interval)
+  const isSubscription = prices.length > 0 && prices.some(p => p.type === "recurring")
+
   const currentPrice = getPriceForInterval(prices, isSubscription ? interval : undefined)
+  const currentPriceValue = (currentPrice.unit_amount ?? 0) / 100
   const monthlyPrice = isSubscription ? getPriceForInterval(prices, "month") : currentPrice
+  const monthlyPriceValue = (monthlyPrice.unit_amount ?? 0) / 100
 
   const price = isSubscription
-    ? (currentPrice.unit_amount ?? 0) / (interval === "month" ? 100 : 1200)
-    : (currentPrice.unit_amount ?? 0) / 100
-
-  const monthlyPriceValue = (monthlyPrice.unit_amount ?? 0) / 100
+    ? currentPriceValue / (interval === "month" ? 1 : 12)
+    : currentPriceValue
 
   const fullPrice = isSubscription && interval === "year" ? monthlyPriceValue : null
   const discount =
-    isSubscription && interval === "year" ? Math.round((1 - price / monthlyPriceValue) * 100) : null
+    monthlyPriceValue < currentPriceValue ? Math.round((1 - price / monthlyPriceValue) * 100) : null
 
   return {
     isSubscription,
