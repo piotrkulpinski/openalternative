@@ -41,20 +41,15 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
     <Container
       className={cx(
         "group/menu sticky top-[var(--header-top)] inset-x-0 z-40 duration-300",
-        "max-lg:data-[state=open]:bg-background/90 max-lg:data-[state=open]:backdrop-blur-sm",
+        "max-lg:data-[state=open]:bg-background/90",
         className,
       )}
       data-state={isNavOpen ? "open" : "close"}
       {...props}
     >
-      <div className="fixed top-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-gradient-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
+      <div className="absolute top-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-gradient-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
 
-      <div
-        className={cx(
-          "flex flex-wrap items-center py-3.5 gap-x-3 text-sm h-[var(--header-height)] isolate duration-300 lg:flex-nowrap lg:gap-4",
-          "max-lg:group-data-[state=open]/menu:h-[calc(100dvh-(var(--header-top)*2))]",
-        )}
-      >
+      <div className="relative flex flex-nowrap items-center py-3.5 gap-x-3 text-sm h-[var(--header-height)] isolate duration-300 lg:gap-4">
         <button
           type="button"
           onClick={() => setNavOpen(!isNavOpen)}
@@ -93,32 +88,32 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
-                <NavigationLink to="/latest" unstable_viewTransition>
+                <NavigationLink to="/latest" viewTransition>
                   <CalendarDaysIcon className="shrink-0 size-4 opacity-75" /> Latest tools
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/categories" unstable_viewTransition>
+                <NavigationLink to="/categories" viewTransition>
                   <GalleryHorizontalEndIcon className="shrink-0 size-4 opacity-75" /> Categories
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/alternatives" unstable_viewTransition>
+                <NavigationLink to="/alternatives" viewTransition>
                   <ReplaceIcon className="shrink-0 size-4 opacity-75" /> Alternatives
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/languages" unstable_viewTransition>
+                <NavigationLink to="/languages" viewTransition>
                   <CodeXmlIcon className="shrink-0 size-4 opacity-75" /> Languages
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/topics" unstable_viewTransition>
+                <NavigationLink to="/topics" viewTransition>
                   <TagIcon className="shrink-0 size-4 opacity-75" /> Topics
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink to="/licenses" unstable_viewTransition>
+                <NavigationLink to="/licenses" viewTransition>
                   <CopyrightIcon className="shrink-0 size-4 opacity-75" /> Licenses
                 </NavigationLink>
               </DropdownMenuItem>
@@ -133,7 +128,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <SearchForm className="max-sm:hidden" />
 
           <Button size="sm" variant="secondary" prefix={<PlusIcon />} asChild>
-            <NavLink to="/submit" unstable_viewTransition>
+            <NavLink to="/submit" viewTransition>
               Submit
             </NavLink>
           </Button>
@@ -141,7 +136,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
         <nav
           className={cx(
-            "size-full mt-10 mb-4 grid grid-auto-fill-xs place-items-start place-content-start gap-x-4 gap-y-6 px-1 transition-opacity lg:hidden",
+            "absolute top-full inset-x-0 h-[calc(100dvh-var(--header-top)-var(--header-height))] -mt-px py-4 grid grid-cols-2 place-items-start place-content-start gap-x-4 gap-y-6 bg-background/90 backdrop-blur-lg transition-opacity lg:hidden",
             isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none",
           )}
         >
@@ -170,7 +165,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             About
           </NavigationLink>
 
-          <SearchForm />
+          <SearchForm className="sm:hidden" />
         </nav>
       </div>
     </Container>

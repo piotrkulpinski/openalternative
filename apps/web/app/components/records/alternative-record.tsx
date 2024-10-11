@@ -16,7 +16,7 @@ type AlternativeRecordProps = HTMLAttributes<HTMLElement> & {
 export const AlternativeRecord = ({ alternative, showCount, ...props }: AlternativeRecordProps) => {
   return (
     <Card asChild>
-      <NavLink to={`/alternatives/${alternative.slug}`} unstable_viewTransition {...props}>
+      <NavLink to={`/alternatives/${alternative.slug}`} viewTransition {...props}>
         <Card.Header>
           <Favicon
             src={

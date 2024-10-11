@@ -30,7 +30,7 @@ export const PaginationLink = ({
           className,
         }),
       )}
-      unstable_viewTransition
+      viewTransition
       {...props}
     >
       <Slot className="size-5 duration-150 group-hover:-translate-x-0.5">{prefix}</Slot>

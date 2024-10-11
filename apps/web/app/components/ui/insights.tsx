@@ -30,7 +30,7 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
                 to={link}
                 className="shrink-0 font-medium hover:underline"
                 title={title}
-                unstable_viewTransition
+                viewTransition
               >
                 {value}
               </Link>
