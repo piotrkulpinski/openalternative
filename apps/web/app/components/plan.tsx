@@ -24,7 +24,7 @@ import type {
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const planVariants = cva({
-  base: "gap-6 p-4 basis-72 grow max-w-80 bg-transparent md:p-6",
+  base: "gap-6 basis-72 grow max-w-80 bg-transparent",
 })
 
 const planFeatureVariants = cva({
@@ -123,6 +123,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
   return (
     <Card
       ref={ref}
+      hover={false}
       isRevealed={false}
       isFeatured={isFeatured}
       className={cx(planVariants({ className }))}
