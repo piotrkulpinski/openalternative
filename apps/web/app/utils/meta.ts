@@ -1,6 +1,14 @@
 import type { MetaDescriptor } from "@remix-run/node"
 import type { Location } from "@remix-run/router"
-import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "./constants"
+import {
+  AUTHOR_URL,
+  GITHUB_URL,
+  LINKEDIN_URL,
+  SITE_NAME,
+  SITE_TAGLINE,
+  SITE_URL,
+  TWITTER_URL,
+} from "./constants"
 
 type GetMetaTagsProps = {
   location: Location
@@ -40,7 +48,7 @@ export const getMetaTags = ({
             "@id": `${SITE_URL}/#/schema/organization/1`,
             name: SITE_NAME,
             url: `${SITE_URL}/`,
-            sameAs: ["https://x.com/ossalternative"],
+            sameAs: [TWITTER_URL, LINKEDIN_URL, GITHUB_URL],
             logo: {
               "@type": "ImageObject",
               "@id": `${SITE_URL}/#/schema/image/1`,
@@ -68,11 +76,7 @@ export const getMetaTags = ({
             "@type": "Person",
             "@id": `${SITE_URL}#/schema/person/2`,
             name: "Piotr Kulpinski",
-            sameAs: [
-              "https://x.com/piotrkulpinski",
-              "https://linkedin.com/in/piotrkulpinski",
-              "https://github.com/piotrkulpinski",
-            ],
+            sameAs: [AUTHOR_URL],
           },
           {
             "@type": "ImageObject",

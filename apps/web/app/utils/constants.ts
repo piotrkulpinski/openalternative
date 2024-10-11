@@ -17,9 +17,9 @@ export const SITE_STATS = {
 
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 
+export const AUTHOR_URL = "https://x.com/piotrkulpinski"
 export const TWITTER_URL = "https://x.com/ossalternative"
 export const LINKEDIN_URL = "https://linkedin.com/company/openalternative"
-export const TWITTER_AUTHOR_URL = "https://x.com/piotrkulpinski"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
 
 export const FEATURED_ALTERNATIVES = [

@@ -121,7 +121,7 @@ OpenAlternative uses the following third-party services:
 - Database: [Supabase](https://supabase.com)
 - Analytics: [Plausible](https://plausible.io), [PostHog](https://posthog.com)
 - Search: [Algolia](https://algolia.com)
-- Newsletter: [Beehiiv](https://beehiiv.com)
+- Newsletter: [Beehiiv](https://go.openalternative.co/beehiiv)
 - Background Jobs: [Inngest](https://inngest.com)
 - File Storage: [AWS S3](https://aws.amazon.com/s3)
 - Payments: [Stripe](https://stripe.com)
