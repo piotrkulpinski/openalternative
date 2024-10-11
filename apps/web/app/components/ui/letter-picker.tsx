@@ -22,7 +22,7 @@ export const LetterPicker = ({ path, className, ...props }: LetterPickerProps) =
               ? "bg-primary text-background"
               : "bg-card-dark text-muted hover:bg-border",
           )}
-          unstable_viewTransition
+          viewTransition
         >
           {letter}
         </Link>

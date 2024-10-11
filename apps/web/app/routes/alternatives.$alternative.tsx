@@ -121,14 +121,14 @@ export default function AlternativesPage() {
 
   // Pick the top 5 tools
   const bestAlternatives: ReactNode[] = tools.slice(0, 5).map(tool => (
-    <Link key={tool.id} to={`/${tool.slug}`} prefetch="intent" unstable_viewTransition>
+    <Link key={tool.id} to={`/${tool.slug}`} prefetch="intent" viewTransition>
       {tool.name}
     </Link>
   ))
 
   // Pick the top 3 categories
   const bestCategories = categories.slice(0, 3).map(({ category }) => (
-    <Link key={category.id} to={`/categories/${category.slug}`} unstable_viewTransition>
+    <Link key={category.id} to={`/categories/${category.slug}`} viewTransition>
       {category.label || category.name}
     </Link>
   ))
@@ -152,7 +152,7 @@ export default function AlternativesPage() {
               <p>
                 The best open source alternative to {alternative.name} is {bestAlternatives.shift()}
                 . If that doesn't suit you, we've compiled a{" "}
-                <Link to="/about#how-are-rankings-calculated" unstable_viewTransition>
+                <Link to="/about#how-are-rankings-calculated" viewTransition>
                   ranked list
                 </Link>{" "}
                 of other open source {alternative.name} alternatives to help you find a suitable
@@ -221,7 +221,7 @@ export default function AlternativesPage() {
                 className="font-normal text-muted !ring-0"
                 asChild
               >
-                <Link to="/submit" unstable_viewTransition>
+                <Link to="/submit" viewTransition>
                   Suggest an alternative
                 </Link>
               </Button>

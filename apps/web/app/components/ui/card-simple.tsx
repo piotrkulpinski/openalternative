@@ -14,7 +14,7 @@ export const CardSimple = ({ ...props }: CardSimpleProps) => {
   return (
     <NavLink
       className={cx("fade-in group -my-2 flex min-w-0 items-center gap-4 py-2", className)}
-      unstable_viewTransition
+      viewTransition
       {...rest}
     >
       <H5 as="h3" className="truncate group-hover:underline">
