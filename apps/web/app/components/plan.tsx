@@ -1,3 +1,4 @@
+import NumberFlow from "@number-flow/react"
 import { Slot } from "@radix-ui/react-slot"
 import { useFetcher, useParams } from "@remix-run/react"
 import { ArrowRightIcon, CheckIcon, XIcon } from "lucide-react"
@@ -153,7 +154,12 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
         <span className="self-start mt-1 mr-1 text-xl/none font-display">$</span>
 
         <strong className="relative font-display font-semibold -tracking-wide text-4xl/[0.9] sm:text-5xl/[0.9]">
-          <span className="tabular-nums">{Math.round(price)}</span>
+          <NumberFlow
+            value={price}
+            format={{ notation: "compact" }}
+            locales="en-US"
+            className="!flex items-center h-[0.9em] tabular-nums"
+          />
 
           {!!fullPrice && (
             <del className="absolute ml-1 left-full -top-3 text-[0.4em] font-normal align-top">

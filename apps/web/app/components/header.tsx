@@ -160,7 +160,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           Submit
         </NavigationLink>
         <NavigationLink to="/advertise" className="text-base">
-          Sponsor
+          Advertise
         </NavigationLink>
         <NavigationLink to="/about" className="text-base">
           About
