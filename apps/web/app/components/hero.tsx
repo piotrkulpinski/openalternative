@@ -20,10 +20,7 @@ type HeroProps = HTMLAttributes<HTMLDivElement> & {
 
 export const Hero = ({ className, toolCount, hideNewsletter, ...props }: HeroProps) => {
   return (
-    <section
-      className={cx("flex flex-col gap-y-6 w-full mb-[2vh] lg:mt-[1vh]", className)}
-      {...props}
-    >
+    <section className={cx("flex flex-col gap-y-6 w-full mb-[2vh]", className)} {...props}>
       <Intro
         title="Discover Open Source Alternatives to Popular Software"
         description="A curated collection of the best open source alternatives to software that your business requires in day-to-day operations."
