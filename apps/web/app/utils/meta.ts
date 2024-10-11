@@ -10,7 +10,7 @@ import {
   TWITTER_URL,
 } from "./constants"
 
-type GetMetaTagsProps = {
+export type GetMetaTagsProps = {
   location: Location
   title?: string | null
   description?: string | null

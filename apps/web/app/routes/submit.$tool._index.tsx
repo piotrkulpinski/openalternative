@@ -11,8 +11,8 @@ import { Stack } from "~/components/ui/stack"
 import { type ToolOne, toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { stripe } from "~/services.server/stripe"
-import { JSON_HEADERS, SITE_EMAIL, SITE_NAME } from "~/utils/constants"
-import { getMetaTags } from "~/utils/meta"
+import { JSON_HEADERS, SITE_EMAIL } from "~/utils/constants"
+import { type GetMetaTagsProps, getMetaTags } from "~/utils/meta"
 import { getProductsForPricing } from "~/utils/products"
 
 export const handle = {
@@ -37,6 +37,8 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 }
 
 export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => {
+  let meta: Partial<GetMetaTagsProps> = {}
+
   try {
     const [tool, queueLength, stripeProducts] = await Promise.all([
       prisma.tool.findUniqueOrThrow({
@@ -58,11 +60,17 @@ export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => 
     const isPublished = !!(tool.publishedAt && tool.publishedAt <= new Date())
     const products = getProductsForPricing(stripeProducts.data, isPublished, queueLength)
 
-    const meta = {
-      title: isPublished ? `Boost ${tool.name}'s Visibility` : "Choose a submission package",
-      description: isPublished
-        ? `Elevate ${tool.name}'s presence on ${SITE_NAME}. Choose a featured package to increase visibility, attract more users, and stand out from the competition. Benefit from a homepage spot, a prominent placement, and a do-follow link.`
-        : `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listings to premium features. Expedite your launch, gain visibility, and start connecting with your target audience faster.`,
+    // Meta tags
+    if (isPublished) {
+      meta = {
+        title: `Boost ${tool.name}'s Visibility`,
+        description: `Choose a featured package to increase ${tool.name}'s presence, attract more users, and stand out from the competition. Benefit from a homepage spot, a prominent placement, and a do-follow link.`,
+      }
+    } else {
+      meta = {
+        title: "Choose a submission package",
+        description: `Maximize Zed's impact from day one. Select a package that suits your goals - from free listing to premium features.`,
+      }
     }
 
     return json({ tool, products, meta }, { headers: { ...JSON_HEADERS } })
