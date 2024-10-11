@@ -66,7 +66,7 @@ label[for],
 [href] [class*="group-hover"] {
   @apply transition;
   @apply ease-out;
-  @apply duration-150;
+  @apply duration-100;
   @apply cursor-pointer;
 }
 
