@@ -27,6 +27,7 @@ export const InlineMenu = ({ children, className, items, ...props }: InlineMenuP
             key={id}
             variant="ghost"
             className={cx(
+              "!ring-0",
               activeId === id
                 ? "bg-card-dark text-foreground"
                 : "text-muted font-normal hover:text-foreground",
