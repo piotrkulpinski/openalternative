@@ -3,8 +3,8 @@ import type { Prisma } from "@prisma/client"
 import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import {
   type ShouldRevalidateFunction,
+  unstable_useViewTransitionState,
   useLoaderData,
-  useViewTransitionState,
 } from "@remix-run/react"
 import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
 import { posthog } from "posthog-js"
@@ -185,7 +185,7 @@ export default function ToolsPage() {
   const { meta, tool, alternatives, categories, languages, topics, relatedTools } =
     useLoaderData<typeof loader>()
 
-  const vt = useViewTransitionState(`/${tool.slug}`)
+  const vt = unstable_useViewTransitionState(`/${tool.slug}`)
 
   const links = z
     .array(z.object({ name: z.string(), url: z.string().url() }))

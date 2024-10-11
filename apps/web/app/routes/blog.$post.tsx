@@ -1,6 +1,11 @@
 import { formatDate, getReadTime } from "@curiousleaf/utils"
 import type { LoaderFunctionArgs } from "@remix-run/node"
-import { type MetaFunction, json, useLoaderData, useViewTransitionState } from "@remix-run/react"
+import {
+  type MetaFunction,
+  json,
+  unstable_useViewTransitionState,
+  useLoaderData,
+} from "@remix-run/react"
 import { type Post, allPosts } from "content-collections"
 import { SponsoringCard } from "~/components/records/sponsoring-card"
 import { Author } from "~/components/ui/author"
@@ -60,7 +65,7 @@ export const loader = async ({ params: { post: slug } }: LoaderFunctionArgs) => 
 
 export default function BlogPostPage() {
   const { post, sponsor } = useLoaderData<typeof loader>()
-  const vt = useViewTransitionState(`/blog/${post._meta.path}`)
+  const vt = unstable_useViewTransitionState(`/blog/${post._meta.path}`)
 
   return (
     <div

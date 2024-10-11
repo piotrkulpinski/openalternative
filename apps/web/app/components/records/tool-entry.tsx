@@ -1,5 +1,5 @@
 import type { SerializeFrom } from "@remix-run/node"
-import { Link, useViewTransitionState } from "@remix-run/react"
+import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import { ArrowRightIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { ToolBadges } from "~/components/records/tool-badges"
@@ -21,7 +21,7 @@ type ToolEntryProps = HTMLAttributes<HTMLElement> & {
 
 export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
   const to = `/${tool.slug}`
-  const vt = useViewTransitionState(to)
+  const vt = unstable_useViewTransitionState(to)
 
   return (
     <div
@@ -45,7 +45,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
               style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
               className="!leading-snug"
             >
-              <Link to={to} prefetch="intent" viewTransition className="hover:underline">
+              <Link to={to} prefetch="intent" unstable_viewTransition className="hover:underline">
                 {tool.name}
               </Link>
             </H2>
@@ -76,7 +76,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       </div>
 
       {tool.screenshotUrl && (
-        <Link to={to} prefetch="intent" className="group" viewTransition>
+        <Link to={to} prefetch="intent" className="group" unstable_viewTransition>
           <img
             key={tool.screenshotUrl}
             src={tool.screenshotUrl}
@@ -102,7 +102,7 @@ export const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       )}
 
       <Button suffix={<ArrowRightIcon />} className="self-start" asChild>
-        <Link to={to} prefetch="intent" viewTransition>
+        <Link to={to} prefetch="intent" unstable_viewTransition>
           Read more
         </Link>
       </Button>

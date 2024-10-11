@@ -20,7 +20,7 @@ export const NavigationLink = forwardRef<ElementRef<typeof NavLink>, NavLinkProp
       <NavLink
         ref={ref}
         className={({ isActive }) => cx(navigationLinkVariants({ isActive, className }))}
-        viewTransition
+        unstable_viewTransition
         {...props}
       />
     )
