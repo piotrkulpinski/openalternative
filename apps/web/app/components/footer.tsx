@@ -18,6 +18,7 @@ import { Stack } from "~/components/ui/stack"
 import { ThemeSwitcher } from "~/components/ui/theme-switcher"
 import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import {
+  AUTHOR_URL,
   FAMILY_LINKS,
   GITHUB_URL,
   LINKEDIN_URL,
@@ -25,7 +26,6 @@ import {
   SITE_NAME,
   SITE_STATS,
   SITE_URL,
-  TWITTER_AUTHOR_URL,
   TWITTER_URL,
 } from "~/utils/constants"
 import { cx } from "~/utils/cva"
@@ -148,7 +148,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
 
       <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
         <NavigationLink
-          to={TWITTER_AUTHOR_URL}
+          to={AUTHOR_URL}
           className="text-xs"
           target="_blank"
           rel="noopener noreferrer nofollow"
