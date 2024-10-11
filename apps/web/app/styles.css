@@ -13,7 +13,7 @@
   --header-height: 3.125rem;
   --header-top: 0rem;
 
-  --color-primary: 15 63% 50%;
+  --color-primary: 359 47% 51%;
   --color-background: 0 0% 100%;
 
   --color-card: 0 0% 98%;
@@ -66,7 +66,7 @@ label[for],
 [href] [class*="group-hover"] {
   @apply transition;
   @apply ease-out;
-  @apply duration-100;
+  @apply duration-150;
   @apply cursor-pointer;
 }
 

@@ -1,11 +1,12 @@
 import { Slot } from "@radix-ui/react-slot"
 import { type HTMLAttributes, forwardRef, isValidElement } from "react"
+import { Box, type BoxProps } from "~/components/ui/box"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const cardVariants = cva({
   base: [
     "relative flex flex-col items-start gap-4 w-full border bg-card p-5 overflow-clip rounded-lg",
-    "hover:[&[href]]:bg-card-dark hover:[&[href]]:border-border-dark",
+    "hover:[&[href]]:bg-card-dark",
   ],
 
   variants: {
@@ -24,6 +25,7 @@ const cardVariants = cva({
 })
 
 export type CardProps = HTMLAttributes<HTMLElement> &
+  BoxProps &
   VariantProps<typeof cardVariants> & {
     /**
      * If set to `true`, the button will be rendered as a child within the component.
@@ -33,19 +35,19 @@ export type CardProps = HTMLAttributes<HTMLElement> &
   }
 
 export const CardBase = forwardRef<HTMLDivElement, CardProps>(({ ...props }, ref) => {
-  const { children, className, asChild, isFeatured, isRevealed, ...rest } = props
+  const { className, hover = true, focus = true, asChild, isFeatured, isRevealed, ...rest } = props
 
-  const useAsChild = asChild && isValidElement(children)
+  const useAsChild = asChild && isValidElement(props.children)
   const Component = useAsChild ? Slot : "div"
 
   return (
-    <Component
-      ref={ref}
-      className={cx(cardVariants({ isFeatured, isRevealed, className }))}
-      {...rest}
-    >
-      {children}
-    </Component>
+    <Box hover={hover} focus={focus}>
+      <Component
+        ref={ref}
+        className={cx(cardVariants({ isFeatured, isRevealed, className }))}
+        {...rest}
+      />
+    </Box>
   )
 })
 

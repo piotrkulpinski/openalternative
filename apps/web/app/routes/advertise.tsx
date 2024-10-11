@@ -71,19 +71,8 @@ export default function AdvertisePage() {
       <Intro alignment="center">
         <IntroTitle>{meta.title}</IntroTitle>
 
-        <IntroDescription>{meta.description}</IntroDescription>
-
-        <Button className="mt-4 min-w-40 !text-base" asChild>
-          <Link to={`mailto:${SITE_EMAIL}`}>Contact us</Link>
-        </Button>
-      </Intro>
-
-      <Intro alignment="center" className="mt-8">
-        <p className="text-sm text-muted">Why {SITE_NAME}?</p>
-        <IntroTitle as="h2">The Numbers Don't Lie</IntroTitle>
-
-        <IntroDescription className="mt-2">
-          Discover the potential of advertising with us. Check our{" "}
+        <IntroDescription>
+          {meta.description} Check our{" "}
           <a
             href="https://go.openalternative.co/analytics"
             target="_blank"
@@ -93,12 +82,18 @@ export default function AdvertisePage() {
           </a>{" "}
           to see what impact it could have on your business.
         </IntroDescription>
+
+        <Button className="mt-4 min-w-40 self-center !text-base" asChild>
+          <Link to={`mailto:${SITE_EMAIL}`}>Contact us</Link>
+        </Button>
       </Intro>
 
       <Stats className="my-4" />
 
       <Intro alignment="center" className="mt-8">
-        <IntroTitle as="h2">Advertising Options</IntroTitle>
+        <IntroTitle size="h2" as="h2">
+          Advertising Options
+        </IntroTitle>
 
         <IntroDescription className="mt-2">
           We only accept advertisements promoting services and products that are relevant to open
