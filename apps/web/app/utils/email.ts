@@ -11,6 +11,7 @@ export const isRealEmail = async (email: string) => {
     "https://rawcdn.githack.com/disposable/disposable-email-domains/master/domains.json"
   const response = await got(disposableJsonURL).json<string[]>()
   const domain = email.split("@")[1]
+  const fakeDomains = [...response, "kill-the-newsletter.com", "dont-reply.me"]
 
-  return !response.includes(domain)
+  return !fakeDomains.includes(domain)
 }
