@@ -1,5 +1,5 @@
-import { formatNumber } from "@curiousleaf/utils"
 import type { HTMLAttributes } from "react"
+import { Stat } from "~/components/ui/stat"
 import { SITE_STATS } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 
@@ -16,9 +16,19 @@ export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
       className={cx("flex flex-wrap items-center justify-around gap-x-4 gap-y-8", className)}
       {...props}
     >
-      {stats.map(({ value, label }) => (
-        <div key={value} className="flex flex-col items-center gap-2 flex-1 basis-[12rem]">
-          <strong className="text-5xl font-semibold tabular-nums">{formatNumber(value)}</strong>
+      {stats.map(({ value, label }, index) => (
+        <div
+          key={`${index}-${label}`}
+          className="flex flex-col items-center gap-1 flex-1 basis-[12rem]"
+        >
+          <Stat
+            value={value}
+            format={{ notation: "compact" }}
+            locales="en-US"
+            // @ts-ignore
+            style={{ "--number-flow-char-height": "0.75em" }}
+            className="text-5xl font-semibold tabular-nums"
+          />
           <p className="text-muted">{label}</p>
         </div>
       ))}
