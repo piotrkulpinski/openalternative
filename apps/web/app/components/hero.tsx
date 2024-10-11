@@ -6,16 +6,19 @@ import type { HTMLAttributes } from "react"
 import { Newsletter } from "~/components/newsletter"
 import { NewsletterProof } from "~/components/newsletter-proof"
 import { Badge } from "~/components/ui/badge"
+import { Button } from "~/components/ui/button"
 import { Intro } from "~/components/ui/intro"
 import { Ping } from "~/components/ui/ping"
+import { Stack } from "~/components/ui/stack"
 import { SITE_STATS } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 
 type HeroProps = HTMLAttributes<HTMLDivElement> & {
   toolCount: number
+  hideNewsletter?: boolean
 }
 
-export const Hero = ({ className, toolCount, ...props }: HeroProps) => {
+export const Hero = ({ className, toolCount, hideNewsletter, ...props }: HeroProps) => {
   return (
     <section
       className={cx("flex flex-col gap-y-6 w-full mb-[2vh] lg:mt-[1vh]", className)}
@@ -40,13 +43,29 @@ export const Hero = ({ className, toolCount, ...props }: HeroProps) => {
         </Badge>
       </Intro>
 
-      <Newsletter
-        size="lg"
-        className="w-full mx-auto items-center text-center"
-        buttonProps={{ children: "Join our community", size: "md", variant: "fancy" }}
-      >
-        <NewsletterProof />
-      </Newsletter>
+      {hideNewsletter ? (
+        <Stack className="mx-auto place-content-center">
+          <Button variant="fancy" asChild>
+            <Link to="/alternatives" unstable_viewTransition>
+              Browse by Alternatives
+            </Link>
+          </Button>
+
+          <Button variant="secondary" asChild>
+            <Link to="/submit" unstable_viewTransition>
+              Submit a Tool
+            </Link>
+          </Button>
+        </Stack>
+      ) : (
+        <Newsletter
+          size="lg"
+          className="w-full mx-auto items-center text-center"
+          buttonProps={{ children: "Join our community", size: "md", variant: "fancy" }}
+        >
+          <NewsletterProof />
+        </Newsletter>
+      )}
     </section>
   )
 }
