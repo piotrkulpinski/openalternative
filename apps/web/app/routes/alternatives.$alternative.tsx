@@ -218,7 +218,7 @@ export default function AlternativesPage() {
                 variant="ghost"
                 prefix={<SmilePlusIcon />}
                 suffix={<ArrowUpRightIcon />}
-                className="font-normal text-muted"
+                className="font-normal text-muted !ring-0"
                 asChild
               >
                 <Link to="/submit" unstable_viewTransition>

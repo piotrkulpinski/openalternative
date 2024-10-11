@@ -61,7 +61,7 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, ...props }) =
     <Stack {...props}>
       <H5 as="strong">Share:</H5>
 
-      <Stack className="gap-1">
+      <Stack size="sm">
         <TooltipProvider delayDuration={500} disableHoverableContent>
           {shareOptions.map(({ platform, url, icon }) => (
             <Tooltip key={platform} tooltip={platform}>
