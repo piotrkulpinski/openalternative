@@ -15,10 +15,12 @@ export async function action({ request }: ActionFunctionArgs) {
   const parsedData = stripeCheckoutSchema.parse(data)
   const { priceId, slug, mode } = parsedData
 
+  console.log({ priceId, slug, mode })
+
   const checkout = await stripe.checkout.sessions.create({
     mode,
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/submit/thanks?subscribed=true`,
+    success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/submit/${slug}/thanks`,
     cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/submit/${slug}?cancelled=true`,
     allow_promotion_codes: true,
     automatic_tax: { enabled: true },

@@ -7,6 +7,9 @@ import { stripe } from "~/services.server/stripe"
 const relevantEvents = new Set([
   "payment_intent.created",
   "customer.subscription.created",
+  "customer.subscription.updated",
+  "customer.subscription.paused",
+  "customer.subscription.resumed",
   "customer.subscription.deleted",
 ])
 
@@ -38,7 +41,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         const paymentIntent = event.data.object as Stripe.PaymentIntent
         const { slug } = paymentIntent.metadata as Stripe.Metadata
 
-        // TODO: Send admin email about new expedited listing
+        if (slug) {
+          // TODO: Send admin email about new expedited listing
+        }
 
         break
       }
@@ -47,26 +52,33 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         const subscription = event.data.object as Stripe.Subscription
         const { slug } = subscription.metadata as Stripe.Metadata
 
-        await prisma.tool.update({
-          where: { slug },
-          data: { isFeatured: true },
-        })
+        if (slug) {
+          await prisma.tool.update({
+            where: { slug },
+            data: { isFeatured: true },
+          })
 
-        // TODO: Send admin email about new featured listing
+          // TODO: Send admin email about new featured listing
+        }
 
         break
       }
 
+      case "customer.subscription.updated":
+      case "customer.subscription.paused":
+      case "customer.subscription.resumed":
       case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription
         const { slug } = subscription.metadata as Stripe.Metadata
 
-        await prisma.tool.update({
-          where: { slug },
-          data: { isFeatured: false },
-        })
+        if (slug) {
+          const isFeatured = subscription.status === "active"
 
-        // TODO: Send admin email about deleted featured listing
+          await prisma.tool.update({
+            where: { slug },
+            data: { isFeatured },
+          })
+        }
 
         break
       }
