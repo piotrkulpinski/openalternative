@@ -133,41 +133,40 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             </NavLink>
           </Button>
         </Stack>
-
-        <nav
-          className={cx(
-            "absolute top-full inset-x-0 h-[calc(100dvh-var(--header-top)-var(--header-height))] -mt-px py-4 grid grid-cols-2 place-items-start place-content-start gap-x-4 gap-y-6 bg-background/90 backdrop-blur-lg transition-opacity lg:hidden",
-            isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none",
-          )}
-        >
-          <NavigationLink to="/latest" className="text-base">
-            Latest
-          </NavigationLink>
-          <NavigationLink to="/categories" className="text-base">
-            Categories
-          </NavigationLink>
-          <NavigationLink to="/alternatives" className="text-base">
-            Alternatives
-          </NavigationLink>
-          <NavigationLink to="/languages" className="text-base">
-            Languages
-          </NavigationLink>
-          <NavigationLink to="/topics" className="text-base">
-            Topics
-          </NavigationLink>
-          <NavigationLink to="/submit" className="text-base">
-            Submit
-          </NavigationLink>
-          <NavigationLink to="/advertise" className="text-base">
-            Sponsor
-          </NavigationLink>
-          <NavigationLink to="/about" className="text-base">
-            About
-          </NavigationLink>
-
-          <SearchForm className="sm:hidden" />
-        </nav>
       </div>
+      <nav
+        className={cx(
+          "absolute top-full inset-x-0 h-[calc(100dvh-var(--header-top)-var(--header-height))] -mt-px py-4 px-6 grid grid-cols-2 place-items-start place-content-start gap-x-4 gap-y-6 bg-background/90 backdrop-blur-lg transition-opacity lg:hidden",
+          isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none",
+        )}
+      >
+        <NavigationLink to="/latest" className="text-base">
+          Latest
+        </NavigationLink>
+        <NavigationLink to="/categories" className="text-base">
+          Categories
+        </NavigationLink>
+        <NavigationLink to="/alternatives" className="text-base">
+          Alternatives
+        </NavigationLink>
+        <NavigationLink to="/languages" className="text-base">
+          Languages
+        </NavigationLink>
+        <NavigationLink to="/topics" className="text-base">
+          Topics
+        </NavigationLink>
+        <NavigationLink to="/submit" className="text-base">
+          Submit
+        </NavigationLink>
+        <NavigationLink to="/advertise" className="text-base">
+          Sponsor
+        </NavigationLink>
+        <NavigationLink to="/about" className="text-base">
+          About
+        </NavigationLink>
+
+        <SearchForm className="sm:hidden" />
+      </nav>
     </Container>
   )
 }
