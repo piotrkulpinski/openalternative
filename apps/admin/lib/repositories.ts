@@ -1,4 +1,4 @@
-import type { Tool } from "@openalternative/db"
+import type { Prisma, Tool } from "@openalternative/db"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { firstCommitQuery, githubClient, repositoryQuery } from "~/services/github"
 import type { FirstCommitQueryResult, RepositoryQueryResult } from "~/types/github"
@@ -198,68 +198,65 @@ export const getToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
 
   const { stars, forks, firstCommitDate, lastCommitDate, score, license, topics, languages } = repo
 
-  // License
-  const licenseData = license
-    ? {
-        connectOrCreate: {
-          where: { name: license },
-          create: {
-            name: license,
-            slug: getSlug(license).replace(/-0$/, ""),
-          },
-        },
-      }
-    : undefined
-
-  // Topics
-  const topicData = {
-    connectOrCreate: topics.map(({ slug }) => ({
-      where: {
-        toolId_topicSlug: {
-          toolId: tool.id,
-          topicSlug: slug,
-        },
-      },
-      create: {
-        topic: {
-          connectOrCreate: {
-            where: { slug },
-            create: { slug },
-          },
-        },
-      },
-    })),
-  }
-
-  // Languages
-  const languageData = {
-    connectOrCreate: languages.map(({ percentage, name, slug, color }) => ({
-      where: {
-        toolId_languageSlug: {
-          toolId: tool.id,
-          languageSlug: slug,
-        },
-      },
-      create: {
-        percentage,
-        language: {
-          connectOrCreate: {
-            where: { slug },
-            create: { name, slug, color },
-          },
-        },
-      },
-    })),
-  }
-
   return {
     stars,
     forks,
     score,
     firstCommitDate,
     lastCommitDate,
-    license: licenseData,
-    topics: topicData,
-    languages: languageData,
-  }
+
+    // License
+    license: license
+      ? ({
+          connectOrCreate: {
+            where: { name: license },
+            create: {
+              name: license,
+              slug: getSlug(license).replace(/-0$/, ""),
+            },
+          },
+        } satisfies Prisma.ToolUpdateInput["license"])
+      : undefined,
+
+    // Topics
+    topics: {
+      connectOrCreate: topics.map(({ slug }) => ({
+        where: {
+          toolId_topicSlug: {
+            toolId: tool.id,
+            topicSlug: slug,
+          },
+        },
+        create: {
+          topic: {
+            connectOrCreate: {
+              where: { slug },
+              create: { slug },
+            },
+          },
+        },
+      })),
+    },
+
+    // Languages
+    languages: {
+      connectOrCreate: languages.map(({ percentage, name, slug, color }) => ({
+        where: {
+          toolId_languageSlug: {
+            toolId: tool.id,
+            languageSlug: slug,
+          },
+        },
+        create: {
+          percentage,
+          language: {
+            connectOrCreate: {
+              where: { slug },
+              create: { name, slug, color },
+            },
+          },
+        },
+      })),
+    },
+  } satisfies Prisma.ToolUpdateInput
 }
