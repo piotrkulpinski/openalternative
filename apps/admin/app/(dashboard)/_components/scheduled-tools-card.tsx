@@ -1,10 +1,10 @@
+import { formatDistanceToNowStrict } from "date-fns"
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { ScrollArea } from "~/components/ui/scroll-area"
 import { Skeleton } from "~/components/ui/skeleton"
 import { prisma } from "~/services/prisma"
-import { formatRelativeDate } from "~/utils/helpers"
 
 export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await prisma.tool.findMany({
@@ -34,7 +34,7 @@ export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Car
 
                 {tool.publishedAt && (
                   <span className="shrink-0 text-muted-foreground group-hover:text-foreground">
-                    {formatRelativeDate(tool.publishedAt, { addSuffix: true })}
+                    {formatDistanceToNowStrict(tool.publishedAt, { addSuffix: true })}
                   </span>
                 )}
               </Link>

@@ -1,6 +1,7 @@
 import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
 import { Link, unstable_useViewTransitionState } from "@remix-run/react"
+import { formatDistanceToNowStrict } from "date-fns"
 import type { Hit as AlgoliaHit } from "instantsearch.js"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
@@ -12,7 +13,6 @@ import { Favicon } from "~/components/ui/favicon"
 import { H4 } from "~/components/ui/heading"
 import { Insights } from "~/components/ui/insights"
 import type { ToolMany } from "~/services.server/api"
-import { formatDate } from "~/utils/helpers"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
 
@@ -34,7 +34,8 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
     { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: GitForkIcon },
     {
       label: "Last commit",
-      value: tool.lastCommitDate && formatDate(tool.lastCommitDate, { addSuffix: true }),
+      value:
+        tool.lastCommitDate && formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
       icon: TimerIcon,
     },
   ]

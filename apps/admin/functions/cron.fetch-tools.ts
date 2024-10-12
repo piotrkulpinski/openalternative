@@ -1,8 +1,10 @@
 import { indexSearch } from "~/actions/algolia"
 import { getMilestoneReached, sendMilestoneTweet } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
+import { generateSocialTweet } from "~/lib/socials"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
+import { sendTweet } from "~/services/twitter"
 
 export const fetchToolData = inngest.createFunction(
   { id: "fetch-tool-data" },
@@ -38,6 +40,12 @@ export const fetchToolData = inngest.createFunction(
           })
         }),
       )
+    })
+
+    // Post on Twitter about a random tool
+    await step.run("post-on-twitter", async () => {
+      const tweet = await generateSocialTweet()
+      return tweet ? await sendTweet(tweet) : null
     })
 
     // Index search for Algolia

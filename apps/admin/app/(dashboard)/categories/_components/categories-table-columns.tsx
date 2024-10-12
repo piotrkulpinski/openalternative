@@ -1,12 +1,12 @@
 "use client"
 
+import { formatDate } from "@curiousleaf/utils"
 import type { Category } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
 import { CategoryActions } from "~/app/(dashboard)/categories/_components/category-actions"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { Checkbox } from "~/components/ui/checkbox"
-import { formatDate } from "~/utils/helpers"
 
 export function getColumns(): ColumnDef<Category>[] {
   return [
