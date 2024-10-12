@@ -1,5 +1,6 @@
 "use client"
 
+import { formatDate } from "@curiousleaf/utils"
 import type { Tool } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
 import Image from "next/image"
@@ -7,7 +8,6 @@ import Link from "next/link"
 import { ToolActions } from "~/app/(dashboard)/tools/_components/tool-actions"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { Checkbox } from "~/components/ui/checkbox"
-import { formatDate } from "~/utils/helpers"
 
 export function getColumns(): ColumnDef<Tool>[] {
   return [

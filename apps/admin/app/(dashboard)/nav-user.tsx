@@ -64,6 +64,7 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
               Visit Site
             </Link>
           </DropdownMenuItem>
+
           <DropdownMenuSeparator />
 
           {user ? (

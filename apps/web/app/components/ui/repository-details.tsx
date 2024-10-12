@@ -1,5 +1,6 @@
 import { formatNumber } from "@curiousleaf/utils"
 import type { SerializeFrom } from "@remix-run/node"
+import { formatDistanceToNowStrict } from "date-fns"
 import { CopyrightIcon, GitForkIcon, HistoryIcon, StarIcon, TimerIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
@@ -11,7 +12,6 @@ import { NavigationLink } from "~/components/ui/navigation-link"
 import { Stack } from "~/components/ui/stack"
 import type { LanguageToToolMany, ToolOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
-import { formatDate } from "~/utils/helpers"
 
 type RepositoryDetailsProps = HTMLAttributes<HTMLElement> & {
   tool: SerializeFrom<ToolOne>
@@ -31,7 +31,7 @@ export const RepositoryDetails = ({
       ? [
           {
             label: "Last commit",
-            value: formatDate(tool.lastCommitDate, { addSuffix: true }),
+            value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
             title: tool.lastCommitDate,
             icon: TimerIcon,
           },
@@ -41,7 +41,7 @@ export const RepositoryDetails = ({
       ? [
           {
             label: "Repository age",
-            value: formatDate(tool.firstCommitDate),
+            value: formatDistanceToNowStrict(tool.firstCommitDate),
             title: tool.firstCommitDate,
             icon: HistoryIcon,
           },

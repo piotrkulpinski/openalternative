@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { indexSearch } from "~/actions/algolia"
-import { searchItems } from "~/actions/search"
+import { searchItems, sendOutSocialTweet } from "~/actions/search"
 import {
   CommandDialog,
   CommandEmpty,
@@ -82,6 +82,11 @@ export const CommandMenu = () => {
     toast.success("Search index updated")
   }
 
+  const handleSendSocialTweet = async () => {
+    await sendOutSocialTweet()
+    toast.success("Social tweet sent")
+  }
+
   const handleSelect = (url: string) => {
     handleOpenChange(false)
     router.push(url)
@@ -118,6 +123,7 @@ export const CommandMenu = () => {
 
         <CommandGroup heading="Quick Commands">
           <CommandItem onSelect={handleIndexSearch}>Index Search</CommandItem>
+          <CommandItem onSelect={handleSendSocialTweet}>Send Social Tweet</CommandItem>
         </CommandGroup>
 
         {!!searchResults?.tools.length && (
