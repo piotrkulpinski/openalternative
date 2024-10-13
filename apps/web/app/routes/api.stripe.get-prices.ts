@@ -1,6 +1,7 @@
 import { type ActionFunctionArgs, json } from "@remix-run/node"
 import { z } from "zod"
 import { stripe } from "~/services.server/stripe"
+import { JSON_HEADERS } from "~/utils/constants"
 
 export const stripeGetPricesSchema = z.object({
   productId: z.string(),
@@ -17,5 +18,5 @@ export async function action({ request }: ActionFunctionArgs) {
     product: parsedData.productId,
   })
 
-  return json({ prices: prices.data })
+  return json({ prices: prices.data }, { headers: JSON_HEADERS })
 }
