@@ -23,8 +23,8 @@ export async function action({ request }: ActionFunctionArgs) {
     automatic_tax: { enabled: true },
     tax_id_collection: { enabled: true },
     invoice_creation: mode === "payment" ? { enabled: true } : undefined,
+    metadata: mode === "payment" ? { tool } : undefined,
     subscription_data: mode === "subscription" ? { metadata: { tool } } : undefined,
-    payment_intent_data: mode === "payment" ? { metadata: { tool } } : undefined,
   })
 
   if (!checkout.url) {

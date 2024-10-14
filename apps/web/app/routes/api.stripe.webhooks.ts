@@ -4,12 +4,6 @@ import type Stripe from "stripe"
 import { prisma } from "~/services.server/prisma"
 import { stripe } from "~/services.server/stripe"
 
-const relevantEvents = new Set([
-  "payment_intent.created",
-  "customer.subscription.updated",
-  "customer.subscription.deleted",
-])
-
 export const loader = () => {
   return new Response("Invalid request", { status: 400 })
 }
@@ -32,43 +26,50 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return new Response(getErrorMessage(error), { status: 500 })
   }
 
-  if (!relevantEvents.has(event.type)) {
-    return new Response("Webhook not relevant", { status: 200 })
-  }
-
   try {
     switch (event.type) {
-      case "payment_intent.created": {
-        const paymentIntent = event.data.object as Stripe.PaymentIntent
-        const { tool: slug } = paymentIntent.metadata as Stripe.Metadata
+      case "checkout.session.completed": {
+        const checkoutSession = event.data.object
+        const metadata = checkoutSession.metadata
 
-        if (slug) {
-          console.log("paid", slug)
-          // TODO: Send admin email about new expedited listing
+        if (!metadata?.tool || checkoutSession.mode !== "payment") {
+          break
         }
+
+        const tool = await prisma.tool.findUniqueOrThrow({
+          where: { slug: metadata.tool },
+        })
+
+        // TODO: Send submission email to user and inform admin
 
         break
       }
 
+      case "customer.subscription.created":
       case "customer.subscription.updated":
       case "customer.subscription.deleted": {
-        const subscription = event.data.object as Stripe.Subscription
-        const { tool: slug } = subscription.metadata as Stripe.Metadata
+        const subscription = event.data.object
+        const metadata = subscription.metadata
 
-        if (slug) {
-          const isFeatured = subscription.status === "active"
+        if (!metadata?.tool) {
+          break
+        }
 
-          await prisma.tool.update({
-            where: { slug },
-            data: { isFeatured },
-          })
+        await prisma.tool.update({
+          where: { slug: metadata?.tool },
+          data: { isFeatured: subscription.status === "active" },
+        })
+
+        if (event.type === "customer.subscription.created") {
+          // TODO: Send admin email about new featured listing
+        }
+
+        if (event.type === "customer.subscription.deleted") {
+          // TODO: Send admin email about deleted featured listing
         }
 
         break
       }
-
-      default:
-        throw new Response("Unhandled relevant event!", { status: 500 })
     }
   } catch (error) {
     console.log(error)
