@@ -69,7 +69,7 @@ export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => 
     } else {
       meta = {
         title: "Choose a submission package",
-        description: `Maximize Zed's impact from day one. Select a package that suits your goals - from free listing to premium features.`,
+        description: `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listing to premium features.`,
       }
     }
 

@@ -10,7 +10,7 @@ export const SITE_DESCRIPTION =
 
 export const SITE_STATS = {
   pageviews: 120000,
-  tools: 280,
+  tools: 300,
   subscribers: 1700,
   stars: 1700,
 }

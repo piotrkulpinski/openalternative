@@ -1,7 +1,7 @@
 import NumberFlow from "@number-flow/react"
 import { Slot } from "@radix-ui/react-slot"
 import { useFetcher, useParams } from "@remix-run/react"
-import { ArrowRightIcon, CheckIcon, XIcon } from "lucide-react"
+import { ArrowUpRightIcon, CheckIcon, XIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import { type ComponentProps, type HTMLAttributes, forwardRef, useEffect } from "react"
 import type Stripe from "stripe"
@@ -130,7 +130,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
       className={cx(planVariants({ className }))}
       {...rest}
     >
-      <div className="space-y-3">
+      <div className="w-full space-y-3">
         <div className="flex items-center justify-between gap-2">
           <H5>{plan.name}</H5>
 
@@ -153,20 +153,20 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
       <div className="relative flex items-end w-full">
         <span className="self-start mt-1 mr-1 text-xl/none font-display">$</span>
 
-        <strong className="relative font-display font-semibold -tracking-wide text-4xl/[0.9] sm:text-5xl/[0.9]">
+        <div className="relative font-display -tracking-wide text-4xl/[0.9] sm:text-5xl/[0.9]">
           <NumberFlow
             value={price}
             format={{ notation: "compact" }}
             locales="en-US"
-            className="!flex items-center h-[0.9em] tabular-nums"
+            className="!flex items-center h-[0.9em] font-semibold tabular-nums"
           />
 
           {!!fullPrice && (
-            <del className="absolute ml-1 left-full -top-3 text-[0.4em] font-normal align-top">
+            <del className="absolute ml-1 left-full -top-3 text-[0.4em] text-muted">
               <span className="tabular-nums">{Math.round(fullPrice)}</span>
             </del>
           )}
-        </strong>
+        </div>
 
         {price > 0 && (
           <div className="m-1 text-muted text-base/none md:text-lg/none">
@@ -183,7 +183,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
 
       {!!plan.features && (
         <TooltipProvider delayDuration={0} disableHoverableContent>
-          <Stack direction="column" className="mb-auto">
+          <Stack direction="column">
             {plan.features.map(({ type, name, footnote }) => (
               <div key={name} className={cx(planFeatureVariants())}>
                 <Slot className={cx(planFeatureCheckVariants({ type }))}>
@@ -209,7 +209,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
         variant={!price ? "secondary" : "primary"}
         isPending={checkoutFetcher.state !== "idle" || !pricesFetcher.data}
         disabled={!price}
-        suffix={<ArrowRightIcon />}
+        suffix={<ArrowUpRightIcon />}
         onClick={onSubmit}
       >
         {!price ? "Current Package" : (plan.metadata.label ?? `Choose ${plan.name}`)}
