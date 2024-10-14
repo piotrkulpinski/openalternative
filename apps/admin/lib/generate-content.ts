@@ -145,11 +145,12 @@ export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
   const { object } = await generateObject({
     model,
     schema: z.object({
-      tweet: z.string().max(240).describe("The launch tweet"),
+      tweet: z.string().max(280).describe("The launch tweet"),
     }),
     system: `
       You are an expert content creator.
       Use new lines to separate paragraphs.
+      Tweet should do not exceed 240 characters.
       Use the following template:
       "
       🚀 Just published — {name} ({twitter handle}): {tagline}
