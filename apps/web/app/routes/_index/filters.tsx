@@ -14,7 +14,7 @@ export const Filters = ({ className, ...props }: HTMLAttributes<HTMLElement>) =>
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage("filtersOpen", false)
 
   const sortByItems = [
-    { value: "openalternative", label: "Relevance" },
+    { value: "openalternative", label: "Default" },
     { value: "openalternative_published_desc", label: "Latest" },
     { value: "openalternative_name_asc", label: "Name" },
     { value: "openalternative_stars_desc", label: "Stars" },
