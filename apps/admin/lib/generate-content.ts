@@ -27,8 +27,32 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
       throw new Error(scrapedData.error)
     }
 
+    const schema = z.object({
+      tagline: z
+        .string()
+        .describe(
+          "A tagline (up to 60 characters) that captures the essence of the tool. Should not include the tool name.",
+        ),
+      description: z
+        .string()
+        .describe(
+          "A concise description (up to 160 characters) that highlights the main features and benefits. Should not include the tool name.",
+        ),
+      content: z
+        .string()
+        .describe(
+          "A detailed and engaging longer description with key benefits (up to 1000 characters). Can be Markdown formatted, but should start with paragraph. Make sure the lists use correct Markdown syntax.",
+        ),
+      links: z
+        .array(linkSchema)
+        .describe(
+          "A list of relevant links to pricing information, documentation, social profiles and other resources. Make sure to include the name of the link and the URL. Social profiles should be last. Skip landing page and Github repository links.",
+        ),
+    })
+
     const { object } = await generateObject({
       model,
+      schema,
       system: `
         You are an expert content creator specializing in open source products.
         Your task is to generate high-quality, engaging content to display on a directory website.
@@ -40,31 +64,11 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
         description: ${scrapedData.metadata?.description}
         content: ${scrapedData.markdown}
       `,
-      schema: z.object({
-        tagline: z
-          .string()
-          .describe(
-            "A tagline (up to 60 characters) that captures the essence of the tool. Should not include the tool name.",
-          ),
-        description: z
-          .string()
-          .describe(
-            "A concise description (up to 160 characters) that highlights the main features and benefits. Should not include the tool name.",
-          ),
-        content: z
-          .string()
-          .describe(
-            "A detailed and engaging longer description with key benefits (up to 1000 characters). Can be Markdown formatted, but should start with paragraph. Make sure the lists use correct Markdown syntax.",
-          ),
-        links: z
-          .array(linkSchema)
-          .describe(
-            "A list of relevant links to pricing information, documentation, social profiles and other resources. Make sure to include the name of the link and the URL. Social profiles should be last. Skip landing page and Github repository links.",
-          ),
-      }),
     })
 
-    return object
+    const twitterHandle = findTwitterHandle(object.links.flatMap(link => link.url))
+
+    return { ...object, twitterHandle }
   } catch (error) {
     throw new Error(getErrorMessage(error))
   }
@@ -99,7 +103,8 @@ export const generateCategories = async (tool: string) => {
     `,
   })
 
-  return object
+  // Filter out categories that does not exist
+  return object.filter(category => categories.find(c => c.name === category))
 }
 
 /**
@@ -131,7 +136,8 @@ export const generateAlternatives = async (tool: string) => {
     `,
   })
 
-  return object
+  // Filter out alternatives that does not exist
+  return object.filter(alternative => alternatives.find(a => a.name === alternative))
 }
 
 /**
@@ -179,16 +185,15 @@ export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
  * @param links The list of links.
  * @returns The Twitter handle, or undefined if not found.
  */
-export const findTwitterHandle = (links: z.infer<typeof linkSchema>[]) => {
-  const regex = /(?:https?:\/\/)?(?:www\.)?(?:twitter\.com\/|x\.com\/)?@?([a-zA-Z0-9_]{1,25})/
+export const findTwitterHandle = (urls: string[]) => {
+  const regex = /^https?:\/\/(?:www\.)?(twitter|x)\.com\/(@?[a-zA-Z0-9_]{1,25})/i
 
-  const twitterLink = links.find(
-    ({ url }) => url.startsWith("https://twitter.com/") || url.startsWith("https://x.com/"),
-  )
+  for (const url of urls) {
+    const match = url.match(regex)
+    if (match) {
+      return match[2]?.startsWith("@") ? match[2].slice(1) : match[2]
+    }
+  }
 
-  if (!twitterLink) return undefined
-
-  const match = twitterLink.url.match(regex)
-
-  return match ? match[1] : undefined
+  return undefined
 }

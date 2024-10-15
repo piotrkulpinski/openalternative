@@ -1,9 +1,4 @@
-import {
-  findTwitterHandle,
-  generateAlternatives,
-  generateCategories,
-  generateContent,
-} from "~/lib/generate-content"
+import { generateAlternatives, generateCategories, generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { inngest } from "~/services/inngest"
@@ -18,37 +13,20 @@ export const toolPublished = inngest.createFunction(
       return prisma.tool.findUniqueOrThrow({ where: { id: event.data.id } })
     })
 
-    const generateContentPromise = step.run("generate-content", async () => {
+    const content = await step.run("generate-content", async () => {
       return generateContent(tool)
     })
 
-    const fetchRepositoryDataPromise = step.run("fetch-repository-data", async () => {
+    const repoDataPromise = step.run("fetch-repository-data", async () => {
       return getToolRepositoryData(tool)
     })
 
-    // Run steps in parallel
-    const [content, repositoryData] = await Promise.all([
-      generateContentPromise,
-      fetchRepositoryDataPromise,
-    ])
-
-    // Update tool in the database
-    await step.run("update-tool-with-content", async () => {
-      return prisma.tool.update({
-        where: { id: tool.id },
-        data: { ...repositoryData, ...content },
-      })
+    const faviconPromise = step.run("upload-favicon", async () => {
+      return uploadFavicon(tool.website, `${tool.slug}/favicon`)
     })
 
-    const uploadAssetsPromise = step.run("upload-assets", async () => {
-      return Promise.all([
-        uploadFavicon(tool.website, `${tool.slug}/favicon`),
-        uploadScreenshot(tool.website, `${tool.slug}/screenshot`),
-      ])
-    })
-
-    const twitterHandlePromise = step.run("get-twitter-handle", async () => {
-      return findTwitterHandle(content.links)
+    const screenshotPromise = step.run("upload-screenshot", async () => {
+      return uploadScreenshot(tool.website, `${tool.slug}/screenshot`)
     })
 
     const categoriesPromise = step.run("generate-categories", async () => {
@@ -60,55 +38,33 @@ export const toolPublished = inngest.createFunction(
     })
 
     // Run steps in parallel
-    const [[faviconUrl, screenshotUrl], twitterHandle, categories, alternatives] =
-      await Promise.all([
-        uploadAssetsPromise,
-        twitterHandlePromise,
-        categoriesPromise,
-        alternativesPromise,
-      ])
-
-    const filteredCategoriesPromise = step.run("filter-categories", async () => {
-      return prisma.category.findMany({
-        where: {
-          name: { in: categories },
-          NOT: { tools: { some: { toolId: tool.id } } },
-        },
-      })
-    })
-
-    const filteredAlternativesPromise = step.run("filter-alternatives", async () => {
-      return prisma.alternative.findMany({
-        where: {
-          name: { in: alternatives },
-          NOT: { tools: { some: { toolId: tool.id } } },
-        },
-      })
-    })
-
-    const [filteredCategories, filteredAlternatives] = await Promise.all([
-      filteredCategoriesPromise,
-      filteredAlternativesPromise,
+    const [repoData, faviconUrl, screenshotUrl, categories, alternatives] = await Promise.all([
+      repoDataPromise,
+      faviconPromise,
+      screenshotPromise,
+      categoriesPromise,
+      alternativesPromise,
     ])
 
     // Update tool in the database
-    await step.run("update-tool-with-relations", async () => {
+    await step.run("update-tool", async () => {
       return prisma.tool.update({
         where: { id: tool.id },
         data: {
+          ...repoData,
+          ...content,
           faviconUrl,
           screenshotUrl,
-          twitterHandle,
 
           categories: {
-            create: filteredCategories.map(category => ({
-              category: { connect: { slug: category.slug } },
+            create: categories.map(slug => ({
+              category: { connect: { slug } },
             })),
           },
 
           alternatives: {
-            create: filteredAlternatives.map(alternative => ({
-              alternative: { connect: { slug: alternative.slug } },
+            create: alternatives.map(slug => ({
+              alternative: { connect: { slug } },
             })),
           },
         },
