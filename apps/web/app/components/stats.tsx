@@ -1,14 +1,27 @@
-import type { HTMLAttributes } from "react"
+import { Link } from "@remix-run/react"
+import type { ComponentProps, HTMLAttributes } from "react"
 import { Stat } from "~/components/ui/stat"
-import { SITE_STATS } from "~/utils/constants"
+import { ANALYTICS_URL, GITHUB_URL, SITE_STATS } from "~/utils/constants"
 import { cx } from "~/utils/cva"
+
+const StatLink = ({ href, ...props }: ComponentProps<"a">) => {
+  if (!href) {
+    return <div {...(props as HTMLAttributes<HTMLDivElement>)} />
+  }
+
+  if (href.startsWith("/")) {
+    return <Link to={href} unstable_viewTransition {...props} />
+  }
+
+  return <a href={href} target="_blank" rel="noopener noreferrer nofollow" {...props} />
+}
 
 export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const stats = [
-    { value: SITE_STATS.pageviews, label: "Monthly Pageviews" },
-    { value: SITE_STATS.tools, label: "Listed Projects" },
-    { value: SITE_STATS.subscribers, label: "Newsletter Subscribers" },
-    { value: SITE_STATS.stars, label: "GitHub Stars" },
+    { value: SITE_STATS.pageviews, label: "Monthly Pageviews", link: ANALYTICS_URL },
+    { value: SITE_STATS.tools, label: "Listed Projects", link: "/" },
+    { value: SITE_STATS.subscribers, label: "Newsletter Subscribers", link: "/newsletter" },
+    { value: SITE_STATS.stars, label: "GitHub Stars", link: GITHUB_URL },
   ]
 
   return (
@@ -16,10 +29,11 @@ export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
       className={cx("flex flex-wrap items-center justify-around gap-x-4 gap-y-8", className)}
       {...props}
     >
-      {stats.map(({ value, label }, index) => (
-        <div
+      {stats.map(({ value, label, link }, index) => (
+        <StatLink
           key={`${index}-${label}`}
-          className="flex flex-col items-center gap-1 flex-1 basis-[12rem]"
+          href={link}
+          className="flex flex-col items-center gap-1 basis-[12rem] hover:[&[href]]:opacity-80"
         >
           <Stat
             value={value}
@@ -30,7 +44,7 @@ export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
             className="text-5xl font-semibold tabular-nums"
           />
           <p className="text-muted">{label}</p>
-        </div>
+        </StatLink>
       ))}
     </div>
   )

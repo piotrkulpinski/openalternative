@@ -9,7 +9,7 @@ import { Button } from "~/components/ui/button"
 import { H4 } from "~/components/ui/heading"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Stack } from "~/components/ui/stack"
-import { SITE_EMAIL, SITE_NAME } from "~/utils/constants"
+import { ANALYTICS_URL, SITE_EMAIL, SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
@@ -73,11 +73,7 @@ export default function AdvertisePage() {
 
         <IntroDescription>
           {meta.description} Check our{" "}
-          <a
-            href="https://go.openalternative.co/analytics"
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-          >
+          <a href={ANALYTICS_URL} target="_blank" rel="noopener noreferrer nofollow">
             real-time analytics
           </a>{" "}
           to see what impact it could have on your business.

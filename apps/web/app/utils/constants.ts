@@ -21,6 +21,7 @@ export const AUTHOR_URL = "https://x.com/piotrkulpinski"
 export const TWITTER_URL = "https://x.com/ossalternative"
 export const LINKEDIN_URL = "https://linkedin.com/company/openalternative"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
+export const ANALYTICS_URL = "https://go.openalternative.co/analytics"
 
 export const FEATURED_ALTERNATIVES = [
   "monday",
