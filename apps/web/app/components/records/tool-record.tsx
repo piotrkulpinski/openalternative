@@ -13,6 +13,7 @@ import { Card } from "~/components/ui/card"
 import { Favicon } from "~/components/ui/favicon"
 import { H4 } from "~/components/ui/heading"
 import { Insights } from "~/components/ui/insights"
+import { Stack } from "~/components/ui/stack"
 import type { ToolMany } from "~/services.server/api"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
@@ -29,6 +30,7 @@ type ToolRecordProps = HTMLAttributes<HTMLElement> & {
 export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordProps) => {
   const to = `/${tool.slug}`
   const vt = !isRelated && unstable_useViewTransitionState(to)
+  const featuredFlag = posthog.getFeatureFlag("featured_badge")?.toString()
 
   const insights = [
     { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: StarIcon },
@@ -52,11 +54,17 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
         unstable_viewTransition
         {...props}
       >
-        {/* {tool.isFeatured && (
-          <Stack size="sm" className="absolute top-0 inset-x-5 z-10 -translate-y-1/2 mx-px">
-            <Badge variant="outline">Featured</Badge>
-          </Stack>
-        )} */}
+        {tool.isFeatured && featuredFlag && (
+          <>
+            {featuredFlag.includes("bg") && <Card.Bg />}
+
+            {featuredFlag.includes("badge") && (
+              <Stack size="sm" className="absolute top-0 inset-x-5 z-10 -translate-y-1/2 mx-px">
+                <Badge variant="outline">Featured</Badge>
+              </Stack>
+            )}
+          </>
+        )}
 
         <Card.Header>
           <Favicon
