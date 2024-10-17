@@ -7,17 +7,18 @@ import {
   Scripts,
   ScrollRestoration,
   json,
+  useFetchers,
   useLocation,
+  useNavigation,
   useRouteLoaderData,
 } from "@remix-run/react"
 import { ThemeProvider } from "next-themes"
+import NProgress from "nprogress"
 import posthog from "posthog-js"
-import { type PropsWithChildren, useEffect } from "react"
+import { type PropsWithChildren, useEffect, useMemo } from "react"
 import { Bottom } from "~/components/bottom"
 import { ErrorPage } from "~/components/error-page"
 import { Footer } from "~/components/footer"
-import { Header } from "~/components/header"
-import { Banner } from "~/components/ui/banner"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Container } from "~/components/ui/container"
 import { Logo } from "~/components/ui/logo"
@@ -25,6 +26,8 @@ import { alternativeManyPayload, categoryManyPayload } from "./services.server/a
 import { prisma } from "./services.server/prisma"
 import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
 
+import { Banner } from "~/components/banner"
+import { Header } from "~/components/header"
 import stylesheet from "~/styles.css?url"
 
 export const maxDuration = 300
@@ -97,6 +100,25 @@ export const loader = async () => {
 export function Layout({ children }: PropsWithChildren) {
   const data = useRouteLoaderData<typeof loader>("root")
   const { key } = useLocation()
+  const navigation = useNavigation()
+  const fetchers = useFetchers()
+
+  NProgress.configure({
+    minimum: 0.25,
+    parent: "#header",
+    template:
+      '<div class="fixed !z-50 top-0 inset-x-0 h-0.5 bg-foreground transform-gpu" role="bar" />',
+  })
+
+  const state = useMemo<"idle" | "loading">(() => {
+    const states = [navigation.state, ...fetchers.map(fetcher => fetcher.state)]
+
+    if (states.every(state => state === "idle")) {
+      return "idle"
+    }
+
+    return "loading"
+  }, [navigation.state, fetchers])
 
   useEffect(() => {
     // Trigger escape hatch when the route changes
@@ -105,6 +127,11 @@ export function Layout({ children }: PropsWithChildren) {
     // Track pageview
     posthog.capture("$pageview")
   }, [key])
+
+  useEffect(() => {
+    if (state === "loading") NProgress.start()
+    if (state === "idle") NProgress.done()
+  }, [navigation.state])
 
   return (
     <html lang="en" suppressHydrationWarning>
