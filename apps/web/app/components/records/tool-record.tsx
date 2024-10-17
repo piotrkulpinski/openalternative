@@ -13,7 +13,6 @@ import { Card } from "~/components/ui/card"
 import { Favicon } from "~/components/ui/favicon"
 import { H4 } from "~/components/ui/heading"
 import { Insights } from "~/components/ui/insights"
-import { Stack } from "~/components/ui/stack"
 import type { ToolMany } from "~/services.server/api"
 
 type Tool = ToolMany | SerializeFrom<ToolMany>
@@ -59,9 +58,9 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
             {featuredFlag.includes("bg") && <Card.Bg />}
 
             {featuredFlag.includes("badge") && (
-              <Stack size="sm" className="absolute top-0 inset-x-5 z-10 -translate-y-1/2 mx-px">
+              <Card.Badges>
                 <Badge variant="outline">Featured</Badge>
-              </Stack>
+              </Card.Badges>
             )}
           </>
         )}
