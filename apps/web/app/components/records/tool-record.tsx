@@ -4,6 +4,7 @@ import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import { formatDistanceToNowStrict } from "date-fns"
 import type { Hit as AlgoliaHit } from "instantsearch.js"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
+import posthog from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { Highlight } from "react-instantsearch"
 import { ToolBadges } from "~/components/records/tool-badges"
@@ -42,7 +43,19 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
 
   return (
     <Card style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }} asChild>
-      <Link to={to} prefetch="intent" unstable_viewTransition {...props}>
+      <Link
+        to={to}
+        prefetch="intent"
+        onClick={() => posthog.capture("featured_tool_clicked", { toolId: tool.id })}
+        unstable_viewTransition
+        {...props}
+      >
+        {/* {tool.isFeatured && (
+          <Stack size="sm" className="absolute top-0 inset-x-5 z-10 -translate-y-1/2 mx-px">
+            <Badge variant="outline">Featured</Badge>
+          </Stack>
+        )} */}
+
         <Card.Header>
           <Favicon
             src={tool.faviconUrl}

@@ -70,6 +70,11 @@ export type PlanProps = Omit<HTMLAttributes<HTMLDivElement>, "size"> &
        */
       features?: PlanFeature[]
     }
+
+    /**
+     * Whether the plan is featured.
+     */
+    isFeatured?: boolean
   }
 
 export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
@@ -126,10 +131,11 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
       ref={ref}
       hover={false}
       isRevealed={false}
-      isFeatured={isFeatured}
       className={cx(planVariants({ className }))}
       {...rest}
     >
+      {isFeatured && <Card.Bg />}
+
       <div className="w-full space-y-3">
         <div className="flex items-center justify-between gap-2">
           <H5>{plan.name}</H5>
