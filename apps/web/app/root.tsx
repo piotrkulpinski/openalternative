@@ -106,8 +106,7 @@ export function Layout({ children }: PropsWithChildren) {
   NProgress.configure({
     minimum: 0.25,
     parent: "#header",
-    template:
-      '<div class="fixed !z-50 top-0 inset-x-0 h-0.5 bg-foreground transform-gpu" role="bar" />',
+    template: '<div class="fixed z-50 top-0 inset-x-0 h-0.5 bg-foreground/25" role="bar" />',
   })
 
   const state = useMemo<"idle" | "loading">(() => {
