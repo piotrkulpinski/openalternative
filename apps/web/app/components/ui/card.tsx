@@ -1,6 +1,7 @@
 import { Slot } from "@radix-ui/react-slot"
-import { type HTMLAttributes, forwardRef, isValidElement } from "react"
+import { type ComponentProps, forwardRef, isValidElement } from "react"
 import { Box, type BoxProps } from "~/components/ui/box"
+import { Stack } from "~/components/ui/stack"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const cardVariants = cva({
@@ -20,7 +21,7 @@ const cardVariants = cva({
   },
 })
 
-export type CardProps = HTMLAttributes<HTMLElement> &
+export type CardProps = ComponentProps<"div"> &
   BoxProps &
   VariantProps<typeof cardVariants> & {
     /**
@@ -45,11 +46,11 @@ export const CardBase = forwardRef<HTMLDivElement, CardProps>(({ ...props }, ref
 
 CardBase.displayName = "Card"
 
-export const CardHeader = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const CardHeader = ({ className, ...props }: ComponentProps<"div">) => {
   return <div className={cx("flex w-full items-center gap-x-3 gap-y-2", className)} {...props} />
 }
 
-export const CardFooter = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const CardFooter = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
       className={cx("flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted", className)}
@@ -58,7 +59,7 @@ export const CardFooter = ({ className, ...props }: HTMLAttributes<HTMLElement>)
   )
 }
 
-export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const CardDescription = ({ className, ...props }: ComponentProps<"p">) => {
   return (
     <p
       className={cx("line-clamp-2 text-sm/normal text-secondary text-pretty", className)}
@@ -67,7 +68,17 @@ export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElem
   )
 }
 
-export const CardBg = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const CardBadges = ({ className, size = "sm", ...props }: ComponentProps<typeof Stack>) => {
+  return (
+    <Stack
+      size={size}
+      className={cx("absolute top-0 inset-x-5 z-10 -translate-y-1/2", className)}
+      {...props}
+    />
+  )
+}
+
+export const CardBg = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
       className={cx(
@@ -85,5 +96,6 @@ export const Card = Object.assign(CardBase, {
   Header: CardHeader,
   Footer: CardFooter,
   Description: CardDescription,
+  Badges: CardBadges,
   Bg: CardBg,
 })

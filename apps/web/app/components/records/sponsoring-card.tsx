@@ -7,7 +7,6 @@ import { Card, type CardProps } from "~/components/ui/card"
 import { Favicon } from "~/components/ui/favicon"
 import { H4 } from "~/components/ui/heading"
 import { Logo } from "~/components/ui/logo"
-import { Stack } from "~/components/ui/stack"
 import type { SponsoringOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
@@ -33,9 +32,9 @@ export const SponsoringCard = ({ className, sponsoring, rel, ...props }: Sponsor
         onClick={() => posthog.capture("sponsoring_clicked", { url: sponsoring?.website })}
       >
         {sponsoring && (
-          <Stack size="sm" className="absolute top-0 inset-x-5 z-10 -translate-y-1/2 mx-px">
+          <Card.Badges>
             <Badge variant="outline">Ad</Badge>
-          </Stack>
+          </Card.Badges>
         )}
 
         <Card.Header>
