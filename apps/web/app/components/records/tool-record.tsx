@@ -46,7 +46,9 @@ export const ToolRecord = ({ className, tool, isRelated, ...props }: ToolRecordP
       <Link
         to={to}
         prefetch="intent"
-        onClick={() => posthog.capture("featured_tool_clicked", { toolId: tool.id })}
+        onClick={() =>
+          tool.isFeatured && posthog.capture("featured_tool_clicked", { slug: tool.slug })
+        }
         unstable_viewTransition
         {...props}
       >

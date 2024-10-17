@@ -1,3 +1,4 @@
+import { posthog } from "posthog-js"
 import { Fragment, type HTMLAttributes } from "react"
 import { type UseHitsProps, useHits } from "react-instantsearch"
 import { SponsoringCard } from "~/components/records/sponsoring-card"
@@ -24,7 +25,10 @@ export const Listing = ({ className, sponsoring, ...props }: ListingProps) => {
 
           <ToolRecord
             tool={item}
-            onClick={() => sendEvent("click", item, "Hit Clicked")}
+            onClick={() => {
+              sendEvent("click", item, "Hit Clicked")
+              item.isFeatured && posthog.capture("featured_tool_clicked", { slug: item.slug })
+            }}
             onAuxClick={() => sendEvent("click", item, "Hit Clicked")}
             style={{ order }}
           />
