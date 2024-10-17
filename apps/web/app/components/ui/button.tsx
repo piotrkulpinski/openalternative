@@ -14,7 +14,8 @@ const buttonVariants = cva({
 
   variants: {
     variant: {
-      fancy: "!border-transparent bg-primary text-white hover:bg-primary/90",
+      fancy:
+        "!border-transparent bg-gradient-to-br from-primary to-primary/75 text-white hover:opacity-90",
       primary: "!border-transparent text-background bg-foreground hover:opacity-90",
       secondary: "bg-background text-secondary hover:bg-card hover:border-border-dark",
       ghost: "!border-transparent bg-transparent text-foreground hover:bg-card",

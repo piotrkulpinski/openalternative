@@ -5,21 +5,17 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const cardVariants = cva({
   base: [
-    "relative flex flex-col items-start gap-4 w-full border bg-card p-5 overflow-clip rounded-lg",
+    "relative flex flex-col items-start gap-4 w-full border bg-card p-5 rounded-lg",
     "hover:[&[href]]:bg-card-dark",
   ],
 
   variants: {
-    isFeatured: {
-      true: "before:absolute before:-z-0 before:-top-12 before:left-1/2 before:-translate-x-1/2 before:h-1/3 before:w-full before:bg-green-700/10 before:blur-xl before:rounded-full before:rotate-12 before:pointer-events-none dark:before:bg-green-400/10",
-    },
     isRevealed: {
       true: "animate-reveal",
     },
   },
 
   defaultVariants: {
-    isFeatured: false,
     isRevealed: true,
   },
 })
@@ -35,18 +31,14 @@ export type CardProps = HTMLAttributes<HTMLElement> &
   }
 
 export const CardBase = forwardRef<HTMLDivElement, CardProps>(({ ...props }, ref) => {
-  const { className, hover = true, focus = true, asChild, isFeatured, isRevealed, ...rest } = props
+  const { className, hover = true, focus = true, asChild, isRevealed, ...rest } = props
 
   const useAsChild = asChild && isValidElement(props.children)
   const Component = useAsChild ? Slot : "div"
 
   return (
     <Box hover={hover} focus={focus}>
-      <Component
-        ref={ref}
-        className={cx(cardVariants({ isFeatured, isRevealed, className }))}
-        {...rest}
-      />
+      <Component ref={ref} className={cx(cardVariants({ isRevealed, className }))} {...rest} />
     </Box>
   )
 })
@@ -75,8 +67,23 @@ export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElem
   )
 }
 
+export const CardBg = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+  return (
+    <div
+      className={cx(
+        "absolute -z-10 top-0 inset-x-0 h-1/3 rounded-lg overflow-clip pointer-events-none",
+        className,
+      )}
+      {...props}
+    >
+      <div className="-mt-12 size-full rotate-12 bg-green-700/10 blur-xl rounded-full dark:bg-green-400/10" />
+    </div>
+  )
+}
+
 export const Card = Object.assign(CardBase, {
   Header: CardHeader,
   Footer: CardFooter,
   Description: CardDescription,
+  Bg: CardBg,
 })
