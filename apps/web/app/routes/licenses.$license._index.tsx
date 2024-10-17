@@ -11,6 +11,7 @@ import { Grid } from "~/components/ui/grid"
 import { H2 } from "~/components/ui/heading"
 import { Intro } from "~/components/ui/intro"
 import { Markdown } from "~/components/ui/markdown"
+import { Section } from "~/components/ui/section"
 import { type LicenseOne, toolManyPayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS } from "~/utils/constants"
@@ -118,14 +119,18 @@ export default function LicensesPage() {
         </div>
       )}
 
-      {license.content && (
-        <>
-          <H2>What is {license.name} License?</H2>
-          <Markdown className="-mt-5">{license.content}</Markdown>
-        </>
-      )}
+      <Section>
+        <Section.Content className="gap-12 md:gap-14 lg:gap-16">
+          {license.content && (
+            <>
+              <H2>What is {license.name} License?</H2>
+              <Markdown className="-mt-5">{license.content}</Markdown>
+            </>
+          )}
 
-      <BackButton to="/licenses" />
+          <BackButton to="/licenses" />
+        </Section.Content>
+      </Section>
     </>
   )
 }

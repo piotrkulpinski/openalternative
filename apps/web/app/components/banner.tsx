@@ -19,7 +19,7 @@ export const Banner = ({ className, ...props }: ComponentProps<typeof Container>
     <Box hover>
       <Container
         className={cx(
-          "group/button relative -top-px inset-x-0 z-50 flex items-center justify-between gap-3 bg-card border-b py-2 hover:bg-card-dark lg:border-x lg:rounded-b-lg",
+          "group/button relative -top-px inset-x-0 z-40 flex items-center justify-between gap-3 bg-card border-b py-2 hover:bg-card-dark lg:border-x lg:rounded-b-lg",
           className,
         )}
         asChild

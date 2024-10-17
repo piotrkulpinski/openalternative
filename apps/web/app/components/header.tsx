@@ -40,10 +40,11 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   return (
     <Container
       className={cx(
-        "group/menu sticky top-[var(--header-top)] inset-x-0 z-40 duration-300",
+        "group/menu sticky top-[var(--header-top)] inset-x-0 z-50 duration-300",
         "max-lg:data-[state=open]:bg-background/90",
         className,
       )}
+      id="header"
       data-state={isNavOpen ? "open" : "close"}
       {...props}
     >
