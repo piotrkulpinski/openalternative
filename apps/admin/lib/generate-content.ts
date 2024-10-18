@@ -1,5 +1,6 @@
 import { createAnthropic } from "@ai-sdk/anthropic"
 import { openai } from "@ai-sdk/openai"
+import { isTruthy } from "@curiousleaf/utils"
 import type { Tool } from "@openalternative/db"
 import { generateObject } from "ai"
 import type { Jsonify } from "inngest/helpers/jsonify"
@@ -94,7 +95,7 @@ export const generateCategories = async (tool: string) => {
       If a tool does not belong to any category, return an empty array.
 
       === Start of Categories ===
-      ${categories.map(cat => cat.name).join("\n")}
+      ${categories.map(({ name }) => name).join("\n")}
       === End of Categories ===
 
       === Start of Open Source Product ===
@@ -104,7 +105,7 @@ export const generateCategories = async (tool: string) => {
   })
 
   // Filter out categories that does not exist
-  return object.filter(category => categories.find(c => c.name === category))
+  return object.map(name => categories.find(c => c.name === name)).filter(isTruthy)
 }
 
 /**
@@ -127,7 +128,7 @@ export const generateAlternatives = async (tool: string) => {
       If a tool does not have an alternative, return an empty array.
 
       === Start of Proprietary Products ===
-      ${alternatives.map(alt => `${alt.name}: ${alt.description}`).join("\n")}
+      ${alternatives.map(({ name, description }) => `${name}: ${description}`).join("\n")}
       === End of Proprietary Products ===
 
       === Start of Open Source Product ===
@@ -137,7 +138,7 @@ export const generateAlternatives = async (tool: string) => {
   })
 
   // Filter out alternatives that does not exist
-  return object.filter(alternative => alternatives.find(a => a.name === alternative))
+  return object.map(name => alternatives.find(a => a.name === name)).filter(isTruthy)
 }
 
 /**
