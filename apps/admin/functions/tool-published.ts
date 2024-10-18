@@ -57,14 +57,14 @@ export const toolPublished = inngest.createFunction(
           screenshotUrl,
 
           categories: {
-            create: categories.map(slug => ({
-              category: { connect: { slug } },
+            create: categories.map(({ id }) => ({
+              category: { connect: { id } },
             })),
           },
 
           alternatives: {
-            create: alternatives.map(slug => ({
-              alternative: { connect: { slug } },
+            create: alternatives.map(({ id }) => ({
+              alternative: { connect: { id } },
             })),
           },
         },
