@@ -48,7 +48,7 @@ export function DataTableColumnHeader<TData, TValue>({
           <Button
             variant="ghost"
             size="sm"
-            className="-ml-3 data-[state=open]:bg-accent"
+            className="-ml-1.5 px-1.5 py-1 h-auto data-[state=open]:bg-accent"
             suffix={buttonSuffix}
             aria-label={buttonLabel}
           >
