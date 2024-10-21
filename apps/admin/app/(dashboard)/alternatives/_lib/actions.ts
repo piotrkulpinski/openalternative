@@ -54,6 +54,7 @@ export const updateAlternative = authedProcedure
     })
 
     revalidatePath("/alternatives")
+    revalidatePath(`/alternatives/${alternative.id}`)
 
     return alternative
   })
