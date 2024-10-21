@@ -4,59 +4,52 @@ import { formatDate } from "@curiousleaf/utils"
 import type { Tool } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
 import Image from "next/image"
-import Link from "next/link"
 import { ToolActions } from "~/app/(dashboard)/tools/_components/tool-actions"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
+import { DataTableLink } from "~/components/data-table/data-table-link"
 import { Checkbox } from "~/components/ui/checkbox"
 
 export function getColumns(): ColumnDef<Tool>[] {
   return [
     {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-          }
-          onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-          className="block my-auto mx-1.5"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={value => row.toggleSelected(!!value)}
-          aria-label="Select row"
-          className="block my-auto mx-1.5"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-      size: 0,
-    },
-    {
       accessorKey: "name",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
-      cell: ({ row }) => (
-        <div className="flex items-center gap-2.5">
-          {row.original.faviconUrl && (
-            <Image
-              src={row.original.faviconUrl}
-              alt="Favicon"
-              width={16}
-              height={16}
-              className="size-5 rounded"
-            />
-          )}
+      header: ({ table, column }) => (
+        <div className="flex items-center gap-2">
+          <Checkbox
+            checked={
+              table.getIsAllPageRowsSelected() ||
+              (table.getIsSomePageRowsSelected() && "indeterminate")
+            }
+            onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+            aria-label="Select all"
+            className="block my-auto mx-1.5"
+          />
 
-          <Link
-            href={`/tools/${row.original.id}`}
-            className="max-w-36 truncate font-medium text-primary hover:text-foreground"
-          >
+          <DataTableColumnHeader column={column} title="Name" />
+        </div>
+      ),
+      cell: ({ row }) => (
+        <div className="flex items-center gap-2">
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={value => row.toggleSelected(!!value)}
+            aria-label="Select row"
+            className="block my-auto mx-1.5"
+          />
+
+          <DataTableLink href={`/tools/${row.original.id}`} className="flex items-center gap-2">
+            {row.original.faviconUrl && (
+              <Image
+                src={row.original.faviconUrl}
+                alt="Favicon"
+                width={16}
+                height={16}
+                className="size-4 rounded"
+              />
+            )}
+
             {row.getValue("name")}
-          </Link>
+          </DataTableLink>
         </div>
       ),
     },
