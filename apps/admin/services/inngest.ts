@@ -1,6 +1,5 @@
 import type { Alternative, Tool } from "@openalternative/db"
 import { EventSchemas, Inngest } from "inngest"
-import { siteConfig } from "~/config/site"
 
 type Events = {
   "tool.published": { data: Pick<Tool, "id"> }
@@ -10,6 +9,6 @@ type Events = {
 }
 
 export const inngest = new Inngest({
-  id: siteConfig.name,
+  id: "openalternative",
   schemas: new EventSchemas().fromRecord<Events>(),
 })
