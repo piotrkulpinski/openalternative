@@ -73,7 +73,7 @@ export const updateTool = authedProcedure
     })
 
     revalidatePath("/tools")
-    revalidatePath(`/tools/${tool.slug}`)
+    revalidatePath(`/tools/${tool.id}`)
 
     return tool
   })
@@ -125,7 +125,7 @@ export const publishTool = authedProcedure
     })
 
     revalidatePath("/tools")
-    revalidatePath(`/tools/${tool.slug}`)
+    revalidatePath(`/tools/${tool.id}`)
 
     // Send an event to the Inngest pipeline
     await inngest.send({ name: "tool.published", data: { id: tool.id } })

@@ -22,7 +22,10 @@ interface NavUserProps extends ComponentProps<"nav"> {
 
 export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
   const { data: session } = useSession()
-  const user = session?.user
+
+  if (!session?.user) {
+    return null
+  }
 
   return (
     <nav
@@ -38,9 +41,9 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
             variant="outline"
             size={isCollapsed ? "icon" : "md"}
             prefix={
-              user?.image ? (
+              session.user.image ? (
                 <Avatar className="size-5">
-                  <AvatarImage src={user.image} />
+                  <AvatarImage src={session.user.image} />
                 </Avatar>
               ) : (
                 <User />
@@ -48,9 +51,9 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
             }
             suffix={!isCollapsed && <ChevronsUpDown className="ml-auto text-muted-foreground" />}
             className={cx(!isCollapsed && "justify-start")}
-            aria-label={user?.name ?? "User"}
+            aria-label={session.user.name ?? "User"}
           >
-            {isCollapsed ? null : user?.name}
+            {isCollapsed ? null : session.user.name}
           </Button>
         </DropdownMenuTrigger>
 
@@ -67,17 +70,11 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
 
           <DropdownMenuSeparator />
 
-          {user ? (
-            <DropdownMenuItem asChild>
-              <button type="button" onClick={() => signOut()}>
-                Sign Out
-              </button>
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem asChild>
-              <Link href="/signin">Sign In</Link>
-            </DropdownMenuItem>
-          )}
+          <DropdownMenuItem asChild>
+            <button type="button" onClick={() => signOut()}>
+              Sign Out
+            </button>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </nav>

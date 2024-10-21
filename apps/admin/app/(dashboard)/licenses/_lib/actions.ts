@@ -34,6 +34,7 @@ export const updateLicense = authedProcedure
     })
 
     revalidatePath("/licenses")
+    revalidatePath(`/licenses/${license.id}`)
 
     return license
   })

@@ -6,5 +6,5 @@ export const Stat = ({ value, ...props }: ComponentProps<typeof NumberFlow>) => 
 
   useEffect(() => setState(value), [value])
 
-  return <NumberFlow {...props} value={state} />
+  return <NumberFlow {...props} value={state} continuous />
 }

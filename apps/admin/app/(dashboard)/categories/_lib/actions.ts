@@ -51,6 +51,7 @@ export const updateCategory = authedProcedure
     })
 
     revalidatePath("/categories")
+    revalidatePath(`/categories/${category.id}`)
 
     return category
   })
