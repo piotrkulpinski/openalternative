@@ -46,7 +46,7 @@ interface DateRangePickerProps extends React.ComponentPropsWithoutRef<typeof Pop
    * @default "default"
    * @type "default" | "sm" | "lg"
    */
-  triggerSize?: Exclude<ButtonProps["size"], "sm">
+  triggerSize?: ButtonProps["size"]
 
   /**
    * The class name of the calendar trigger button.
