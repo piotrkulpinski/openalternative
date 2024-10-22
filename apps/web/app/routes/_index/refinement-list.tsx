@@ -37,7 +37,7 @@ export const RefinementList = ({ className, ...props }: RefinementListProps) => 
         {items?.map(item => (
           <label
             key={item.label}
-            className="flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-secondary duration-150 hover:!text-primary"
+            className="flex items-center gap-2.5 select-none text-[0.8125rem] cursor-pointer text-secondary duration-150 hover:!text-primary"
           >
             <input type="checkbox" checked={item.isRefined} onChange={() => refine(item.value)} />
             <span className="flex-1 truncate">{item.label}</span>
