@@ -47,7 +47,7 @@ export function Nav({ className, links, isCollapsed, ...props }: NavProps) {
           <Tooltip key={index}>
             <TooltipTrigger asChild>
               <Button
-                size="icon"
+                size="sm"
                 variant={getButtonVariant(link.href)}
                 prefix={<link.icon />}
                 aria-label={link.title}

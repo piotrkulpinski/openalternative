@@ -416,7 +416,7 @@ export function ToolForm({
                     <Button
                       type="button"
                       variant="outline"
-                      size="icon"
+                      size="sm"
                       prefix={<TrashIcon />}
                       onClick={() => removeLink(index)}
                       className="text-red-500"

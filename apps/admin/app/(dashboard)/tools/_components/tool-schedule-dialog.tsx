@@ -18,26 +18,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
-import { publishTool } from "../_lib/actions"
+import { scheduleTool } from "../_lib/actions"
 
-interface ToolPublishDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+interface ToolScheduleDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   tool: Row<Tool>["original"]
   showTrigger?: boolean
   onSuccess?: () => void
 }
 
-export const ToolPublishDialog = ({
+export const ToolScheduleDialog = ({
   tool,
   showTrigger = true,
   onSuccess,
   ...props
-}: ToolPublishDialogProps) => {
+}: ToolScheduleDialogProps) => {
   const [publishedAt, setPublishedAt] = React.useState<Date | undefined>(undefined)
 
-  const { execute, isPending } = useServerAction(publishTool, {
+  const { execute, isPending } = useServerAction(scheduleTool, {
     onSuccess: () => {
       props.onOpenChange?.(false)
-      toast.success("Tool published")
+      toast.success("Tool scheduled")
       onSuccess?.()
     },
 
@@ -52,7 +52,7 @@ export const ToolPublishDialog = ({
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">
             <ClockIcon className="max-sm:mr-2" aria-hidden="true" />
-            Publish
+            Schedule
           </Button>
         </DialogTrigger>
       )}
@@ -83,7 +83,7 @@ export const ToolPublishDialog = ({
             isPending={isPending}
             disabled={!publishedAt || isPending}
           >
-            Publish
+            Schedule
           </Button>
         </DialogFooter>
       </DialogContent>
