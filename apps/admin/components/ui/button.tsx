@@ -1,11 +1,12 @@
 import { Slot } from "@radix-ui/react-slot"
 import { LoaderIcon } from "lucide-react"
 import * as React from "react"
+import { Children, type ReactNode } from "react"
 import { Slottable } from "~/components/ui/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const buttonVariants = cva({
-  base: "group/button relative shrink-0 min-w-0 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50",
+  base: "group/button relative shrink-0 min-w-0 inline-flex items-center justify-center rounded-md text-sm/tight font-medium focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50",
 
   variants: {
     variant: {
@@ -18,16 +19,26 @@ export const buttonVariants = cva({
     },
 
     size: {
-      sm: "h-8 gap-[0.66ch] rounded-md px-3 text-xs",
-      md: "h-9 gap-[0.75ch] px-4 py-2",
-      lg: "h-10 gap-[1ch] rounded-md px-8",
-      icon: "size-8 text-sm",
+      sm: "px-3 py-2 gap-[0.66ch] rounded-md text-xs/tight",
+      md: "px-4 py-2 gap-[0.75ch]",
+      lg: "px-6 py-2.5 gap-[1ch] rounded-md",
+    },
+
+    isAffixOnly: {
+      true: "",
     },
 
     isPending: {
       true: "text-transparent select-none",
     },
   },
+
+  compoundVariants: [
+    // Is affix only
+    { size: "sm", isAffixOnly: true, class: "px-2" },
+    { size: "md", isAffixOnly: true, class: "px-2" },
+    { size: "lg", isAffixOnly: true, class: "px-2.5" },
+  ],
 
   defaultVariants: {
     variant: "default",
@@ -68,9 +79,16 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, className, variant, size, asChild, isPending, prefix, suffix, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
 
+    const isChildrenEmpty = (children: ReactNode) => {
+      return Children.count(children) === 0
+    }
+
+    // Determine if the button has affix only.
+    const isAffixOnly = isChildrenEmpty(children) && (!prefix || !suffix)
+
     return (
       <Comp
-        className={cx(buttonVariants({ variant, size, isPending, className }))}
+        className={cx(buttonVariants({ variant, size, isPending, isAffixOnly, className }))}
         ref={ref}
         {...props}
       >

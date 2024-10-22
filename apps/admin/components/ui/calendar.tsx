@@ -19,11 +19,13 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-sm font-medium",
         nav: "flex items-center gap-x-1",
-        nav_button: buttonVariants({
-          size: "icon",
-          variant: "outline",
-          className: "absolute size-7",
-        }),
+        nav_button: cx(
+          buttonVariants({
+            size: "sm",
+            variant: "outline",
+            className: "absolute text-xs p-1.5",
+          }),
+        ),
         nav_button_previous: "left-1",
         nav_button_next: "right-1",
         table: "w-full border-collapse gap-y-1",
@@ -37,8 +39,11 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
             : "[&:has([aria-selected])]:rounded-md",
         ),
         day: cx(
-          buttonVariants({ size: "icon", variant: "ghost" }),
-          "w-full text-xs font-normal aria-selected:opacity-100",
+          buttonVariants({
+            size: "sm",
+            variant: "ghost",
+            className: "w-full p-1.5 font-normal aria-selected:opacity-100",
+          }),
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",

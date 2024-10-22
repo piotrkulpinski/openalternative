@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 import React from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { ToolPublishDialog } from "~/app/(dashboard)/tools/_components/tool-publish-dialog"
+import { ToolScheduleDialog } from "~/app/(dashboard)/tools/_components/tool-schedule-dialog"
 import { ToolsDeleteDialog } from "~/app/(dashboard)/tools/_components/tools-delete-dialog"
 import { reuploadToolAssets } from "~/app/(dashboard)/tools/_lib/actions"
 import { Button } from "~/components/ui/button"
@@ -31,7 +31,7 @@ interface ToolActionsProps extends React.ComponentPropsWithoutRef<typeof Button>
 export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps) => {
   const router = useRouter()
   const [showToolsDeleteDialog, setShowToolsDeleteDialog] = React.useState(false)
-  const [showToolPublishDialog, setShowToolPublishDialog] = React.useState(false)
+  const [showToolScheduleDialog, setShowToolScheduleDialog] = React.useState(false)
 
   const { execute: reuploadAssetsAction } = useServerAction(reuploadToolAssets, {
     onSuccess: () => {
@@ -53,9 +53,9 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
         onSuccess={() => row?.toggleSelected(false) || router.push("/tools")}
       />
 
-      <ToolPublishDialog
-        open={showToolPublishDialog}
-        onOpenChange={setShowToolPublishDialog}
+      <ToolScheduleDialog
+        open={showToolScheduleDialog}
+        onOpenChange={setShowToolScheduleDialog}
         tool={tool}
         showTrigger={false}
       />
@@ -65,9 +65,9 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
           <Button
             aria-label="Open menu"
             variant="outline"
-            size="icon"
+            size="sm"
             prefix={<EllipsisIcon />}
-            className={cx("text-muted-foreground data-[state=open]:bg-muted", className)}
+            className={cx("size-7 data-[state=open]:bg-muted", className)}
             {...props}
           />
         </DropdownMenuTrigger>
@@ -79,10 +79,10 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           {!tool.publishedAt && (
             <DropdownMenuItem
-              onSelect={() => setShowToolPublishDialog(true)}
+              onSelect={() => setShowToolScheduleDialog(true)}
               className="text-green-600 dark:text-green-400"
             >
-              Publish
+              Schedule
             </DropdownMenuItem>
           )}
 

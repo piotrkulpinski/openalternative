@@ -39,7 +39,7 @@ export const createTool = authedProcedure
 
     // Send an event to the Inngest pipeline
     if (tool.publishedAt) {
-      await inngest.send({ name: "tool.published", data: { id: tool.id } })
+      await inngest.send({ name: "tool.scheduled", data: { id: tool.id } })
     }
 
     return tool
@@ -115,7 +115,7 @@ export const deleteTools = authedProcedure
     return true
   })
 
-export const publishTool = authedProcedure
+export const scheduleTool = authedProcedure
   .createServerAction()
   .input(z.object({ id: z.string(), publishedAt: z.date() }))
   .handler(async ({ input: { id, publishedAt } }) => {
@@ -128,7 +128,7 @@ export const publishTool = authedProcedure
     revalidatePath(`/tools/${tool.id}`)
 
     // Send an event to the Inngest pipeline
-    await inngest.send({ name: "tool.published", data: { id: tool.id } })
+    await inngest.send({ name: "tool.scheduled", data: { id: tool.id } })
 
     return true
   })

@@ -43,9 +43,9 @@ export const LicenseActions = ({ license, row, className, ...props }: LicenseAct
           <Button
             aria-label="Open menu"
             variant="outline"
-            size="icon"
+            size="sm"
             prefix={<EllipsisIcon />}
-            className={cx("text-muted-foreground data-[state=open]:bg-muted", className)}
+            className={cx("size-7 data-[state=open]:bg-muted", className)}
             {...props}
           />
         </DropdownMenuTrigger>

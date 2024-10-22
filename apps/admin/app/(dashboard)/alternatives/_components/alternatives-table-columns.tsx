@@ -3,10 +3,10 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { Alternative } from "@openalternative/db"
 import type { ColumnDef } from "@tanstack/react-table"
-import Image from "next/image"
 import { AlternativeActions } from "~/app/(dashboard)/alternatives/_components/alternative-actions"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
+import { DataTableThumbnail } from "~/components/data-table/data-table-thumbnail"
 import { Checkbox } from "~/components/ui/checkbox"
 
 export function getColumns(): ColumnDef<Alternative>[] {
@@ -37,20 +37,8 @@ export function getColumns(): ColumnDef<Alternative>[] {
             className="block my-auto mx-1.5"
           />
 
-          <DataTableLink
-            href={`/alternatives/${row.original.id}`}
-            className="flex items-center gap-2"
-          >
-            {row.original.faviconUrl && (
-              <Image
-                src={row.original.faviconUrl}
-                alt="Favicon"
-                width={16}
-                height={16}
-                className="size-4 rounded-md"
-              />
-            )}
-
+          <DataTableLink href={`/alternatives/${row.original.id}`}>
+            {row.original.faviconUrl && <DataTableThumbnail src={row.original.faviconUrl} />}
             {row.getValue("name")}
           </DataTableLink>
         </div>

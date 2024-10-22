@@ -4,7 +4,7 @@ import { alternativeDeleted } from "~/functions/alternative-deleted"
 import { fetchToolData } from "~/functions/cron.fetch-tools"
 import { postOnSocials } from "~/functions/cron.post-on-socials"
 import { toolDeleted } from "~/functions/tool-deleted"
-import { toolPublished } from "~/functions/tool-published"
+import { toolScheduled } from "~/functions/tool-scheduled"
 import { inngest } from "~/services/inngest"
 
 export const maxDuration = 60
@@ -14,7 +14,7 @@ export const { GET, POST, PUT } = serve({
   functions: [
     fetchToolData,
     postOnSocials,
-    toolPublished,
+    toolScheduled,
     toolDeleted,
     alternativeCreated,
     alternativeDeleted,
