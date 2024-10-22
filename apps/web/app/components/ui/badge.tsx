@@ -16,9 +16,9 @@ const badgeVariants = cva({
       danger: "bg-red-700/90 text-background dark:bg-red-300/90",
     },
     size: {
-      sm: "px-1 py-px text-[10px]/tight",
+      sm: "px-1 py-px text-[0.625rem]/tight",
       md: "px-1.5 py-0.5 gap-1.5 text-xs/tight",
-      lg: "px-2 py-1 gap-2 text-[13px]/tight rounded-md",
+      lg: "px-2 py-1 gap-2 text-[0.8125rem]/tight rounded-md",
     },
   },
 

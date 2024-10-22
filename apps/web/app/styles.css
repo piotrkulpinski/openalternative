@@ -52,6 +52,12 @@
     "ss08" on;
 }
 
+@media (min-width: 1280px) {
+  html {
+    font-size: 1.125rem;
+  }
+}
+
 @layer utilities {
   .animate-reveal {
     animation-timeline: view();

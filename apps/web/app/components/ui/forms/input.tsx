@@ -7,8 +7,8 @@ export const inputVariants = cva({
 
   variants: {
     size: {
-      sm: "px-2 py-1 text-[13px]/none font-normal rounded-md",
-      md: "px-3 py-2 text-[13px]/tight rounded-md",
+      sm: "px-2 py-1 text-[0.8125rem]/none font-normal rounded-md",
+      md: "px-3 py-2 text-[0.8125rem]/tight rounded-md",
       lg: "px-4 py-2.5 text-sm/tight rounded-lg",
     },
     hoverable: {

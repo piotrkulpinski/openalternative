@@ -21,9 +21,9 @@ const buttonVariants = cva({
       ghost: "!border-transparent bg-transparent text-foreground hover:bg-card",
     },
     size: {
-      sm: "text-[13px]/none gap-[0.66ch] py-1 px-2",
-      md: "text-[13px]/tight gap-[0.75ch] py-1.5 px-3",
-      lg: "text-[13px]/tight gap-[1ch] py-2 px-4 sm:text-sm/tight",
+      sm: "text-[0.8125rem]/none gap-[0.66ch] py-1 px-2",
+      md: "text-[0.8125rem]/tight gap-[0.75ch] py-1.5 px-3",
+      lg: "text-[0.8125rem]/tight gap-[1ch] py-2 px-4 sm:text-sm/tight",
     },
     isAffixOnly: {
       true: "",

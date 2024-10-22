@@ -13,13 +13,11 @@ import { getSlug } from "~/utils/helpers"
 export const createTool = authedProcedure
   .createServerAction()
   .input(toolSchema)
-  .handler(async ({ input: { alternatives, categories, ...input }, ctx: { user } }) => {
+  .handler(async ({ input: { alternatives, categories, ...input } }) => {
     const tool = await prisma.tool.create({
       data: {
         ...input,
         slug: input.slug || getSlug(input.name),
-        submitterName: user.name,
-        submitterEmail: user.email,
 
         alternatives: {
           create: alternatives?.map(id => ({
