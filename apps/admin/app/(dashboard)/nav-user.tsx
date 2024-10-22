@@ -39,7 +39,7 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
-            size={isCollapsed ? "icon" : "md"}
+            size={isCollapsed ? "sm" : "md"}
             prefix={
               session.user.image ? (
                 <Avatar className="size-5">
