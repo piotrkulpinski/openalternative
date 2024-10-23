@@ -31,7 +31,10 @@ export default {
       },
       fontFamily: {
         sans: ["Geist", ...defaultTheme.fontFamily.sans],
-        display: ["Geist", ...defaultTheme.fontFamily.sans],
+        display: ["Uncut Sans", ...defaultTheme.fontFamily.sans],
+      },
+      fontSize: {
+        "5xl": ["2.75rem", "1.05"],
       },
       scale: {
         flip: "-1",

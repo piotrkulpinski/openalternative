@@ -9,6 +9,13 @@
   src: url("/fonts/Geist-Variable.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "Uncut Sans";
+  font-style: normal;
+  font-weight: 400 900;
+  src: url("/fonts/UncutSans-Variable.woff2") format("woff2");
+}
+
 :root {
   --header-height: 3.125rem;
   --header-top: 0rem;
