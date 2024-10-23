@@ -6,7 +6,7 @@ import { getServerState } from "react-instantsearch"
 import { AlternativeList } from "~/components/alternative-list"
 import { Hero } from "~/components/hero"
 import { alternativeManyPayload } from "~/services.server/api"
-import { type UserPrefs, userPrefs } from "~/services.server/cookies"
+import { getUserPrefs } from "~/services.server/cookies"
 import { prisma } from "~/services.server/prisma"
 import { FEATURED_ALTERNATIVES, SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
@@ -27,8 +27,7 @@ export const meta: MetaFunction = ({ matches, location }) => {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
-  const cookieHeader = request.headers.get("Cookie")
-  const cookie = ((await userPrefs.parse(cookieHeader)) || {}) as UserPrefs
+  const userPrefs = await getUserPrefs(request)
 
   const [sponsoring, newToolsCount, alternatives, serverState] = await Promise.all([
     // Find sponsoring
@@ -53,7 +52,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     getServerState(<Search url={url} sponsoring={null} />, { renderToString }),
   ])
 
-  return json({ url, sponsoring, alternatives, newToolsCount, serverState, ...cookie })
+  return json({ url, sponsoring, alternatives, newToolsCount, serverState, ...userPrefs })
 }
 
 export default function Index() {

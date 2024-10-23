@@ -1,4 +1,5 @@
 import { formatNumber } from "@curiousleaf/utils"
+import { Link } from "@remix-run/react"
 import { AtSignIcon, RssIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { ClientOnly } from "remix-utils/client-only"
@@ -13,6 +14,7 @@ import { H6 } from "~/components/ui/heading"
 import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
 import { BrandLinkedInIcon } from "~/components/ui/icons/brand-linkedin"
 import { BrandXIcon } from "~/components/ui/icons/brand-x"
+import { Logo } from "~/components/ui/logo"
 import { NavigationLink } from "~/components/ui/navigation-link"
 import { Stack } from "~/components/ui/stack"
 import { ThemeSwitcher } from "~/components/ui/theme-switcher"
@@ -22,6 +24,7 @@ import {
   FAMILY_LINKS,
   GITHUB_URL,
   LINKEDIN_URL,
+  SITE_DESCRIPTION,
   SITE_EMAIL,
   SITE_NAME,
   SITE_STATS,
@@ -31,7 +34,11 @@ import {
 import { cx } from "~/utils/cva"
 import { addUTMTracking } from "~/utils/helpers"
 
-export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
+type FooterProps = HTMLAttributes<HTMLElement> & {
+  hideNewsletter?: boolean
+}
+
+export const Footer = ({ children, className, hideNewsletter, ...props }: FooterProps) => {
   return (
     <footer className="flex flex-col gap-y-8 mt-auto pt-8 border-t border-muted/15 md:pt-10 lg:pt-12">
       <div
@@ -42,11 +49,24 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         {...props}
       >
         <div className="flex flex-col items-start gap-4 col-span-full md:col-span-6">
-          <Newsletter
-            title="Subscribe to our newsletter"
-            description={`Join ${formatNumber(SITE_STATS.subscribers, "standard")}+ other members and get updates on new open source tools.`}
-            medium="footer_form"
-          />
+          {hideNewsletter ? (
+            <Stack direction="column" className="text-sm/normal">
+              <Stack size="sm" asChild>
+                <Link to="/" unstable_viewTransition>
+                  <Logo className="size-5 shrink-0" />
+                  <span className="font-display font-medium text-sm">{SITE_NAME}</span>
+                </Link>
+              </Stack>
+
+              <p className="text-foreground/65 max-w-80">{SITE_DESCRIPTION}</p>
+            </Stack>
+          ) : (
+            <Newsletter
+              title="Subscribe to our newsletter"
+              description={`Join ${formatNumber(SITE_STATS.subscribers, "standard")}+ other members and get updates on new open source tools.`}
+              medium="footer_form"
+            />
+          )}
 
           <Stack className="text-sm/normal">
             <TooltipProvider delayDuration={500} disableHoverableContent>
