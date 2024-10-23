@@ -15,9 +15,9 @@ export const subscriberSchema = z.object({
   utm_source: z.string().optional().default(SITE_NAME),
   utm_medium: z.string().optional().default("subscribe_form"),
   utm_campaign: z.string().optional().default("organic"),
-  double_opt_override: z.string().optional().default("off"),
-  reactivate_existing: z.boolean().optional().default(true),
-  send_welcome_email: z.boolean().optional().default(true),
+  double_opt_override: z.string().optional(),
+  reactivate_existing: z.boolean().optional(),
+  send_welcome_email: z.boolean().optional(),
 })
 
 export const subscribeToBeehiiv = async (formData: FormData) => {
