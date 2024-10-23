@@ -7,7 +7,7 @@ import { Newsletter } from "~/components/newsletter"
 import { NewsletterProof } from "~/components/newsletter-proof"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
-import { Intro } from "~/components/ui/intro"
+import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Ping } from "~/components/ui/ping"
 import { Stack } from "~/components/ui/stack"
 import { SITE_STATS } from "~/utils/constants"
@@ -21,12 +21,16 @@ type HeroProps = HTMLAttributes<HTMLDivElement> & {
 export const Hero = ({ className, toolCount, hideNewsletter, ...props }: HeroProps) => {
   return (
     <section className={cx("flex flex-col gap-y-6 w-full mb-[2vh]", className)} {...props}>
-      <Intro
-        title="Discover Open Source Alternatives to Popular Software"
-        description="A curated collection of the best open source alternatives to software that your business requires in day-to-day operations."
-        alignment="center"
-        className="max-w-[37.5rem] mx-auto"
-      >
+      <Intro alignment="center">
+        <IntroTitle className="max-w-[45rem] lg:!text-5xl">
+          Discover Open Source Alternatives to Popular Software
+        </IntroTitle>
+
+        <IntroDescription className="max-w-xl lg:mt-2">
+          A curated collection of the best open source alternatives to software that your business
+          requires in day-to-day operations.
+        </IntroDescription>
+
         <Badge
           className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
           prefix={toolCount ? <Ping /> : <GemIcon />}
