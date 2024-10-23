@@ -19,9 +19,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
+import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
+import { BrandXIcon } from "~/components/ui/icons/brand-x"
 import { NavigationLink, navigationLinkVariants } from "~/components/ui/navigation-link"
 import { SearchForm } from "~/components/ui/search-form"
 import { Stack } from "~/components/ui/stack"
+import { GITHUB_URL, TWITTER_URL } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
@@ -125,8 +128,16 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <NavigationLink to="/advertise">Advertise</NavigationLink>
         </nav>
 
-        <Stack size="sm" className="items-stretch">
+        <Stack size="sm">
           <SearchForm className="max-sm:hidden" />
+
+          <NavigationLink to={TWITTER_URL} target="_blank" rel="nofollow noreferrer">
+            <BrandXIcon className="size-4" />
+          </NavigationLink>
+
+          <NavigationLink to={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
+            <BrandGitHubIcon className="size-4" />
+          </NavigationLink>
 
           <Button size="sm" variant="secondary" prefix={<PlusIcon />} asChild>
             <NavLink to="/submit" unstable_viewTransition>
