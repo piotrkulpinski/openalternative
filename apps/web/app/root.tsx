@@ -1,5 +1,5 @@
 import { publishEscape } from "@curiousleaf/utils"
-import type { LinksFunction, MetaFunction } from "@remix-run/node"
+import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
 import {
   Links,
   Meta,
@@ -8,9 +8,9 @@ import {
   ScrollRestoration,
   json,
   useFetchers,
+  useLoaderData,
   useLocation,
   useNavigation,
-  useRouteLoaderData,
 } from "@remix-run/react"
 import { ThemeProvider } from "next-themes"
 import NProgress from "nprogress"
@@ -22,6 +22,7 @@ import { Footer } from "~/components/footer"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Container } from "~/components/ui/container"
 import { Logo } from "~/components/ui/logo"
+import { getUserPrefs } from "~/services.server/cookies"
 import { alternativeManyPayload, categoryManyPayload } from "./services.server/api"
 import { prisma } from "./services.server/prisma"
 import { JSON_HEADERS, SITE_NAME, SITE_URL } from "./utils/constants"
@@ -78,7 +79,9 @@ export const meta: MetaFunction = ({ location }) => {
   ]
 }
 
-export const loader = async () => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const userPrefs = await getUserPrefs(request)
+
   const [categories, alternatives] = await Promise.all([
     prisma.category.findMany({
       orderBy: { tools: { _count: "desc" } },
@@ -94,11 +97,11 @@ export const loader = async () => {
     }),
   ])
 
-  return json({ categories, alternatives }, { headers: JSON_HEADERS })
+  return json({ categories, alternatives, ...userPrefs }, { headers: JSON_HEADERS })
 }
 
 export function Layout({ children }: PropsWithChildren) {
-  const data = useRouteLoaderData<typeof loader>("root")
+  const { categories, alternatives, hideNewsletter } = useLoaderData<typeof loader>()
   const { key } = useLocation()
   const navigation = useNavigation()
   const fetchers = useFetchers()
@@ -162,11 +165,11 @@ export function Layout({ children }: PropsWithChildren) {
             <Container className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
               {children}
 
-              <Footer />
+              <Footer hideNewsletter={hideNewsletter} />
             </Container>
           </div>
 
-          <Bottom categories={data?.categories} alternatives={data?.alternatives} />
+          <Bottom categories={categories} alternatives={alternatives} />
         </ThemeProvider>
 
         <ScrollRestoration />
