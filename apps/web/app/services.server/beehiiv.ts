@@ -3,11 +3,6 @@ import { z } from "zod"
 import { SITE_NAME } from "~/utils/constants"
 import { isRealEmail } from "~/utils/email"
 
-const subscriberCustomFieldSchema = z.object({
-  name: z.string().optional(),
-  value: z.union([z.string(), z.number(), z.boolean()]).optional(),
-})
-
 export const subscriberSchema = z.object({
   email: z
     .string()
@@ -23,7 +18,7 @@ export const subscriberSchema = z.object({
   double_opt_override: z.string().optional(),
   reactivate_existing: z.boolean().optional(),
   send_welcome_email: z.boolean().optional(),
-  custom_fields: z.array(subscriberCustomFieldSchema).optional(),
+  ip: z.string().optional(),
 })
 
 export const subscribeToBeehiiv = async (formData: FormData) => {
@@ -37,9 +32,15 @@ export const subscribeToBeehiiv = async (formData: FormData) => {
     throw error.flatten()
   }
 
+  const { ip, ...json } = data
+
   try {
-    // Subscribe to the publication
-    await got.post(url, { json: data, headers: { authorization } }).json()
+    await got
+      .post(url, {
+        json: { ...json, custom_fields: ip ? [{ name: "ip", value: ip }] : undefined },
+        headers: { authorization },
+      })
+      .json()
   } catch (error) {
     if (error instanceof Error) {
       throw error.message

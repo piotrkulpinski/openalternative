@@ -16,9 +16,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionSta
   const ip = request.headers.get("x-forwarded-for")
 
   try {
-    if (ip) {
-      data.append("custom_fields", JSON.stringify([{ name: "ip", value: ip }]))
-    }
+    if (ip) data.append("ip", ip)
 
     // Subscribe to the newsletter
     await subscribeToBeehiiv(data)
