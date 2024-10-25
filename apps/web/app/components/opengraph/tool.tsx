@@ -53,7 +53,7 @@ export const ToolOpenGraph = ({ tool }: ToolOpenGraphProps) => {
           </p>
 
           <ul style={{ display: "flex", alignItems: "center", gap: "12" }}>
-            {tool.stars && (
+            {!!tool.stars && (
               <li
                 style={{
                   display: "flex",
@@ -86,7 +86,8 @@ export const ToolOpenGraph = ({ tool }: ToolOpenGraphProps) => {
                 Stars
               </li>
             )}
-            {tool.forks && (
+
+            {!!tool.forks && (
               <li
                 style={{
                   display: "flex",
