@@ -8,9 +8,9 @@ import {
   ScrollRestoration,
   json,
   useFetchers,
-  useLoaderData,
   useLocation,
   useNavigation,
+  useRouteLoaderData,
 } from "@remix-run/react"
 import { ThemeProvider } from "next-themes"
 import NProgress from "nprogress"
@@ -101,7 +101,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 }
 
 export function Layout({ children }: PropsWithChildren) {
-  const { categories, alternatives, hideNewsletter } = useLoaderData<typeof loader>()
+  const data = useRouteLoaderData<typeof loader>("root")
   const { key } = useLocation()
   const navigation = useNavigation()
   const fetchers = useFetchers()
@@ -165,11 +165,11 @@ export function Layout({ children }: PropsWithChildren) {
             <Container className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
               {children}
 
-              <Footer hideNewsletter={hideNewsletter} />
+              <Footer hideNewsletter={data?.hideNewsletter} />
             </Container>
           </div>
 
-          <Bottom categories={categories} alternatives={alternatives} />
+          <Bottom categories={data?.categories} alternatives={data?.alternatives} />
         </ThemeProvider>
 
         <ScrollRestoration />
