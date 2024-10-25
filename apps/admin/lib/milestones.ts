@@ -10,8 +10,12 @@ import { sendTweet } from "~/services/twitter"
  * @returns The milestone reached, or null if it hasn't reached any milestone
  */
 export const getMilestoneReached = (prevStars: number, newStars: number) => {
-  const milestones = [100, 500, 1_000, 2_500, 5_000, 10_000, 25_000, 50_000, 100_000]
-  const unreachedMilestones = milestones.filter(m => prevStars < m)
+  const baseMilestones = [100, 500, 1000, 2500, 5000]
+  const tenThousands = Array.from({ length: 30 }, (_, i) => (i + 1) * 10000)
+  const twentyFiveThousands = Array.from({ length: 12 }, (_, i) => (i + 1) * 25000)
+  const milestones = [...new Set([...baseMilestones, ...tenThousands, ...twentyFiveThousands])]
+
+  const unreachedMilestones = milestones.sort((a, b) => a - b).filter(m => prevStars < m)
   const reachedMilestones = unreachedMilestones.filter(m => newStars >= m)
 
   return reachedMilestones.length ? Math.max(...reachedMilestones) : null
@@ -23,9 +27,9 @@ export const getMilestoneReached = (prevStars: number, newStars: number) => {
  * @param tool - The tool object
  */
 export const sendMilestoneTweet = async (milestone: number, tool: Tool | Jsonify<Tool>) => {
-  const tweet = `${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub! Huge congrats to the${tool.twitterHandle ? ` @${tool.twitterHandle}` : ""} team! 🎉
+  const tweet = `⭐ ${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub! Huge congrats to the${tool.twitterHandle ? ` @${tool.twitterHandle}` : ""} team! 🎉
 
-Check it out on OpenAlternative: ${siteConfig.url}/${tool.slug}`
+${siteConfig.url}/${tool.slug}`
 
   try {
     await sendTweet(tweet)

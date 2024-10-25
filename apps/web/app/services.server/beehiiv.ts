@@ -3,6 +3,11 @@ import { z } from "zod"
 import { SITE_NAME } from "~/utils/constants"
 import { isRealEmail } from "~/utils/email"
 
+const subscriberCustomFieldSchema = z.object({
+  name: z.string().optional(),
+  value: z.union([z.string(), z.number(), z.boolean()]).optional(),
+})
+
 export const subscriberSchema = z.object({
   email: z
     .string()
@@ -18,6 +23,7 @@ export const subscriberSchema = z.object({
   double_opt_override: z.string().optional(),
   reactivate_existing: z.boolean().optional(),
   send_welcome_email: z.boolean().optional(),
+  custom_fields: z.array(subscriberCustomFieldSchema).optional(),
 })
 
 export const subscribeToBeehiiv = async (formData: FormData) => {

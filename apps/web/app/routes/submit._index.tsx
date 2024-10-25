@@ -75,6 +75,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const newsletterFormData = new FormData()
     newsletterFormData.append("email", toolData.submitterEmail)
     newsletterFormData.append("utm_medium", "submit_form")
+    newsletterFormData.append("double_opt_override", "off")
 
     // Subscribe to the newsletter
     await subscribeToBeehiiv(newsletterFormData)
