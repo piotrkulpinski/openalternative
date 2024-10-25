@@ -13,8 +13,13 @@ type ActionState = TypedResponse<
 export async function action({ request }: ActionFunctionArgs): Promise<ActionState> {
   const data = await request.formData()
   const userPrefs = await getUserPrefs(request)
+  const ip = request.headers.get("x-forwarded-for")
 
   try {
+    if (ip) {
+      data.append("custom_fields", JSON.stringify([{ name: "ip", value: ip }]))
+    }
+
     // Subscribe to the newsletter
     await subscribeToBeehiiv(data)
 
