@@ -6,7 +6,7 @@ export const SITE_EMAIL = import.meta.env.NEXT_PUBLIC_SITE_EMAIL
 export const SITE_NAME = "OpenAlternative"
 export const SITE_TAGLINE = "Open Source Alternatives to Popular Software"
 export const SITE_DESCRIPTION =
-  "A community-driven list of open source alternatives to proprietary software. Discover the best tools for your needs."
+  "A curated collection of the best open source alternatives to everyday SaaS products. Save money with reliable tools hand-picked for you."
 
 export const SITE_STATS = {
   pageviews: 150000,
