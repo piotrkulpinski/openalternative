@@ -82,12 +82,12 @@ export const CardBg = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
       className={cx(
-        "absolute -z-10 top-0 inset-x-0 h-1/3 rounded-lg overflow-clip pointer-events-none",
+        "absolute -top-px -inset-x-px h-1/3 rounded-lg overflow-clip pointer-events-none",
         className,
       )}
       {...props}
     >
-      <div className="-mt-12 size-full rotate-12 bg-green-700/10 blur-xl rounded-full dark:bg-green-400/10" />
+      <div className="-mt-12 size-full rotate-12 bg-primary/10 blur-xl rounded-full" />
     </div>
   )
 }

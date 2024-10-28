@@ -25,7 +25,7 @@ import type {
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const planVariants = cva({
-  base: "gap-6 basis-72 grow max-w-80 bg-transparent",
+  base: "gap-6 basis-72 grow max-w-80",
 })
 
 const planFeatureVariants = cva({
