@@ -17,12 +17,7 @@ type AlternativeCardProps = HTMLAttributes<HTMLElement> & {
 
 export const AlternativeCard = ({ className, alternative, ...props }: AlternativeCardProps) => {
   return (
-    <Card
-      className={cx("group/button bg-background", className)}
-      isRevealed={false}
-      {...props}
-      asChild
-    >
+    <Card className={cx("group/button", className)} isRevealed={false} {...props} asChild>
       <Link
         to={alternative.website}
         target="_blank"
