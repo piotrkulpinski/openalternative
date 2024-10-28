@@ -48,6 +48,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         className,
       )}
       id="header"
+      role="banner"
       data-state={isNavOpen ? "open" : "close"}
       {...props}
     >
