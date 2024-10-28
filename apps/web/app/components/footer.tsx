@@ -51,7 +51,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
         <div className="flex flex-col items-start gap-4 col-span-full md:col-span-6">
           {hideNewsletter ? (
             <Stack direction="column" className="text-sm/normal">
-              <Stack size="sm" asChild>
+              <Stack size="sm" className="group/link" asChild>
                 <Link to="/" unstable_viewTransition>
                   <Logo className="size-5 shrink-0" />
                   <span className="font-display font-medium text-sm">{SITE_NAME}</span>
@@ -97,30 +97,30 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <Tooltip tooltip="Contact Us">
+              <Tooltip tooltip="Contact us">
                 <NavigationLink
                   to={`mailto:${SITE_EMAIL}`}
                   target="_blank"
                   rel="nofollow noreferrer"
-                  aria-label="Contact Us"
+                  aria-label="Contact us"
                 >
                   <AtSignIcon className="size-[1.44em] stroke-[1.25]" />
                 </NavigationLink>
               </Tooltip>
 
-              <Tooltip tooltip="X/Twitter">
+              <Tooltip tooltip="Follow us on X/Twitter">
                 <NavigationLink to={TWITTER_URL} target="_blank" rel="nofollow noreferrer">
                   <BrandXIcon className="size-[1.44em] stroke-[1.25]" />
                 </NavigationLink>
               </Tooltip>
 
-              <Tooltip tooltip="LinkedIn">
+              <Tooltip tooltip="Follow us on LinkedIn">
                 <NavigationLink to={LINKEDIN_URL} target="_blank" rel="nofollow noreferrer">
                   <BrandLinkedInIcon className="size-[1.44em] stroke-[1.25]" />
                 </NavigationLink>
               </Tooltip>
 
-              <Tooltip tooltip="Source Code">
+              <Tooltip tooltip="View source code">
                 <NavigationLink to={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
                   <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
                 </NavigationLink>
