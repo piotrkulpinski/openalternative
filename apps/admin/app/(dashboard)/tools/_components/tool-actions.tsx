@@ -8,6 +8,7 @@ import type React from "react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
+import { analyzeRepository } from "~/actions/check-repository"
 import { ToolScheduleDialog } from "~/app/(dashboard)/tools/_components/tool-schedule-dialog"
 import { ToolsDeleteDialog } from "~/app/(dashboard)/tools/_components/tools-delete-dialog"
 import { reuploadToolAssets } from "~/app/(dashboard)/tools/_lib/actions"
@@ -35,6 +36,17 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
   const { execute: reuploadAssetsAction } = useServerAction(reuploadToolAssets, {
     onSuccess: () => {
       toast.success("Tool assets reuploaded")
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
+
+  const { execute: analyzeRepositoryAction } = useServerAction(analyzeRepository, {
+    onSuccess: ({ data }) => {
+      console.log(data)
+      toast.success("Repository analyzed")
     },
 
     onError: ({ err }) => {
@@ -101,6 +113,10 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           <DropdownMenuItem onSelect={() => reuploadAssetsAction({ id: tool.id })}>
             Reupload Assets
+          </DropdownMenuItem>
+
+          <DropdownMenuItem onSelect={() => analyzeRepositoryAction({ id: tool.id })}>
+            Analyze Repository
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
