@@ -1,7 +1,23 @@
 import { formatNumber, joinAsSentence } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict } from "date-fns"
+import wretch from "wretch"
 import { siteConfig } from "~/config/site"
 import { prisma } from "~/services/prisma"
+
+export type Socials = Record<string, Array<Record<string, string> & { url: string }>>
+
+export const getSocialsFromUrl = async (url: string) => {
+  const brandLinkApi = wretch("https://brandlink.piotr-f64.workers.dev/api")
+    .errorType("json")
+    .resolve(r => r.json<Socials>())
+
+  try {
+    return await brandLinkApi.get(`/links?url=${url}`)
+  } catch (error) {
+    console.error("Error fetching socials:", error)
+    return {}
+  }
+}
 
 export const generateSocialTweet = async () => {
   const where = { publishedAt: { not: null, lte: new Date() } }
