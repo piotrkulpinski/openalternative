@@ -1,6 +1,7 @@
-import { generateAlternatives, generateCategories, generateContent } from "~/lib/generate-content"
+import { generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
+import { getSocialsFromUrl } from "~/lib/socials"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 
@@ -13,62 +14,83 @@ export const toolScheduled = inngest.createFunction(
       return prisma.tool.findUniqueOrThrow({ where: { id: event.data.id } })
     })
 
-    const content = await step.run("generate-content", async () => {
-      return generateContent(tool)
-    })
-
-    const repoDataPromise = step.run("fetch-repository-data", async () => {
-      return getToolRepositoryData(tool)
-    })
-
-    const faviconPromise = step.run("upload-favicon", async () => {
-      return uploadFavicon(tool.website, `${tool.slug}/favicon`)
-    })
-
-    const screenshotPromise = step.run("upload-screenshot", async () => {
-      return uploadScreenshot(tool.website, `${tool.slug}/screenshot`)
-    })
-
-    const categoriesPromise = step.run("generate-categories", async () => {
-      return generateCategories(`${tool.name}: ${content.description}`)
-    })
-
-    const alternativesPromise = step.run("generate-alternatives", async () => {
-      return generateAlternatives(`${tool.name}: ${content.description}`)
-    })
-
     // Run steps in parallel
-    const [repoData, faviconUrl, screenshotUrl, categories, alternatives] = await Promise.all([
-      repoDataPromise,
-      faviconPromise,
-      screenshotPromise,
-      categoriesPromise,
-      alternativesPromise,
+    await Promise.all([
+      step.run("generate-content", async () => {
+        const { categories, alternatives, ...content } = await generateContent(tool)
+
+        return prisma.tool.update({
+          where: { id: tool.id },
+          data: {
+            ...content,
+
+            categories: {
+              connectOrCreate: categories.map(({ id }) => ({
+                where: { toolId_categoryId: { toolId: tool.id, categoryId: id } },
+                create: { category: { connect: { id } } },
+              })),
+            },
+
+            alternatives: {
+              connectOrCreate: alternatives.map(({ id }) => ({
+                where: { toolId_alternativeId: { toolId: tool.id, alternativeId: id } },
+                create: { alternative: { connect: { id } } },
+              })),
+            },
+          },
+        })
+      }),
+
+      step.run("fetch-repository-data", async () => {
+        const data = await getToolRepositoryData(tool)
+
+        if (!data) return
+
+        return prisma.tool.update({
+          where: { id: tool.id },
+          data,
+        })
+      }),
+
+      step.run("upload-favicon", async () => {
+        const { id, slug, website } = tool
+        const faviconUrl = await uploadFavicon(website, `${slug}/favicon`)
+
+        return prisma.tool.update({
+          where: { id },
+          data: { faviconUrl },
+        })
+      }),
+
+      step.run("upload-screenshot", async () => {
+        const { id, slug, website } = tool
+        const screenshotUrl = await uploadScreenshot(website, `${slug}/screenshot`)
+
+        return prisma.tool.update({
+          where: { id },
+          data: { screenshotUrl },
+        })
+      }),
+
+      step.run("get-socials", async () => {
+        const socials = await getSocialsFromUrl(tool.website)
+
+        const links = Object.entries(socials)
+          .filter(([name]) => name !== "GitHub")
+          .map(([name, links]) => ({ name, url: links[0]?.url }))
+
+        const twitterHandle = socials.X?.[0]?.user
+
+        return prisma.tool.update({
+          where: { id: tool.id },
+          data: { twitterHandle, links },
+        })
+      }),
     ])
 
-    // Update tool in the database
-    await step.run("update-tool", async () => {
-      return prisma.tool.update({
-        where: { id: tool.id },
-        data: {
-          ...repoData,
-          ...content,
-          faviconUrl,
-          screenshotUrl,
-
-          categories: {
-            create: categories.map(({ id }) => ({
-              category: { connect: { id } },
-            })),
-          },
-
-          alternatives: {
-            create: alternatives.map(({ id }) => ({
-              alternative: { connect: { id } },
-            })),
-          },
-        },
-      })
+    // Disconnect from DB
+    await step.run("disconnect-from-db", async () => {
+      return prisma.$disconnect()
     })
   },
 )

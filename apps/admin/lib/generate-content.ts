@@ -5,7 +5,6 @@ import type { Tool } from "@openalternative/db"
 import { generateObject } from "ai"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { z } from "zod"
-import { linkSchema } from "~/app/(dashboard)/tools/_lib/validations"
 import { siteConfig } from "~/config/site"
 import { getErrorMessage } from "~/lib/handle-error"
 import { firecrawlClient } from "~/services/firecrawl"
@@ -18,6 +17,11 @@ import { prisma } from "~/services/prisma"
  */
 export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
   const model = createAnthropic()("claude-3-5-sonnet-20240620")
+
+  const [categories, alternatives] = await Promise.all([
+    prisma.category.findMany(),
+    prisma.alternative.findMany(),
+  ])
 
   try {
     const scrapedData = await firecrawlClient.scrapeUrl(tool.website, {
@@ -42,13 +46,24 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
       content: z
         .string()
         .describe(
-          "A detailed and engaging longer description with key benefits (up to 1000 characters). Can be Markdown formatted, but should start with paragraph. Make sure the lists use correct Markdown syntax.",
+          "A detailed and engaging longer description with key benefits (up to 1000 characters). Can be Markdown formatted, but should start with paragraph and not use headings. Highlight important points with bold text. Make sure the lists use correct Markdown syntax.",
         ),
-      links: z
-        .array(linkSchema)
-        .describe(
-          "A list of relevant links to pricing information, documentation, social profiles and other resources. Make sure to include the name of the link and the URL. Social profiles should be last. Skip landing page and Github repository links.",
-        ),
+      categories: z
+        .array(z.string())
+        .transform(a => a.map(name => categories.find(cat => cat.name === name)).filter(isTruthy))
+        .describe(`
+          Assign the open source software product to the categories that it belongs to.
+          Try to assign the tool to multiple categories if it belongs to multiple categories.
+          If a tool does not belong to any category, return an empty array.
+        `),
+      alternatives: z
+        .array(z.string())
+        .transform(a => a.map(name => alternatives.find(alt => alt.name === name)).filter(isTruthy))
+        .describe(`
+          Assign the open source software product to the proprietary software products that it is similar to.
+          Try to assign the tool to multiple alternatives if it is similar to multiple alternatives.
+          If a tool does not have an alternative, return an empty array.
+        `),
     })
 
     const { object } = await generateObject({
@@ -61,15 +76,20 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
       `,
       prompt: `
         Provide me details for the following data:
-        title: ${scrapedData.metadata?.title}
-        description: ${scrapedData.metadata?.description}
-        content: ${scrapedData.markdown}
+        Title: ${scrapedData.metadata?.title}
+        Description: ${scrapedData.metadata?.description}
+        Content: ${scrapedData.markdown}
+        
+        Here is the list of categories to assign to the tool:
+        ${categories.map(({ name }) => name).join("\n")}
+
+        Here is the list of proprietary software alternatives to assign to the tool:
+        ${alternatives.map(({ name, description }) => `${name}: ${description}`).join("\n")}
       `,
+      temperature: 0.3,
     })
 
-    const twitterHandle = findTwitterHandle(object.links.flatMap(link => link.url))
-
-    return { ...object, twitterHandle }
+    return object
   } catch (error) {
     throw new Error(getErrorMessage(error))
   }

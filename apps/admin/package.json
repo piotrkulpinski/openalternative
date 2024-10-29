@@ -55,6 +55,7 @@
     "recharts": "^2.13.0-alpha.5",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.3",
+    "wretch": "^2.11.0",
     "zod": "^3.23.8",
     "zsa": "^0.6.0",
     "zsa-react": "^0.2.3"

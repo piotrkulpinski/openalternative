@@ -6,7 +6,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const cardVariants = cva({
   base: [
-    "relative flex flex-col items-start gap-4 w-full border bg-card p-5 rounded-lg",
+    "relative flex flex-col items-start gap-4 w-full border bg-card p-5 rounded-lg transform-gpu",
     "hover:[&[href]]:bg-card-dark",
   ],
 
@@ -82,12 +82,12 @@ export const CardBg = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
       className={cx(
-        "absolute -top-px -inset-x-px h-1/3 rounded-lg overflow-clip pointer-events-none",
+        "absolute -top-px -inset-x-px -z-10 h-1/3 rounded-lg overflow-clip pointer-events-none",
         className,
       )}
       {...props}
     >
-      <div className="-mt-12 size-full rotate-12 bg-primary/10 blur-xl rounded-full" />
+      <div className="-mt-12 size-full -rotate-12 bg-primary/10 blur-xl rounded-full" />
     </div>
   )
 }
