@@ -4,11 +4,13 @@ import type { Prisma } from "@openalternative/db"
 import { endOfDay, startOfDay } from "date-fns"
 import { unstable_noStore as noStore } from "next/cache"
 import { prisma } from "~/services/prisma"
-import type { GetCategoriesSchema } from "./validations"
+import type { SearchParams } from "~/types"
+import { searchParamsSchema } from "./validations"
 
-export async function getCategories(input: GetCategoriesSchema) {
+export async function getCategories(searchParams: SearchParams) {
   noStore()
-  const { page, per_page, sort, name, operator, from, to } = input
+  const search = searchParamsSchema.parse(searchParams)
+  const { page, per_page, sort, name, operator, from, to } = search
 
   try {
     // Offset to paginate the results
