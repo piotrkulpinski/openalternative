@@ -36,7 +36,6 @@ export const ToolScheduleDialog = ({
 
   const { execute, isPending } = useServerAction(scheduleTool, {
     onSuccess: () => {
-      props.onOpenChange?.(false)
       toast.success("Tool scheduled")
       onSuccess?.()
     },

@@ -33,7 +33,6 @@ export const AlternativesDeleteDialog = ({
 }: AlternativesDeleteDialogProps) => {
   const { execute, isPending } = useServerAction(deleteAlternatives, {
     onSuccess: () => {
-      props.onOpenChange?.(false)
       toast.success("Alternatives deleted")
       onSuccess?.()
     },

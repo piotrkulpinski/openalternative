@@ -4,7 +4,6 @@ import type { Category } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import type React from "react"
 import { useState } from "react"
 import { CategoriesDeleteDialog } from "~/app/(dashboard)/categories/_components/categories-delete-dialog"
@@ -25,20 +24,24 @@ interface CategoryActionsProps extends React.ComponentPropsWithoutRef<typeof But
 }
 
 export const CategoryActions = ({ category, row, className, ...props }: CategoryActionsProps) => {
-  const router = useRouter()
-  const [showCategoriesDeleteDialog, setShowCategoriesDeleteDialog] = useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+
+  const handleDialogSuccess = () => {
+    setShowDeleteDialog(false)
+    row?.toggleSelected(false)
+  }
 
   return (
     <>
       <CategoriesDeleteDialog
-        open={showCategoriesDeleteDialog}
-        onOpenChange={setShowCategoriesDeleteDialog}
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
         categories={[category]}
         showTrigger={false}
-        onSuccess={() => row?.toggleSelected(false) || router.push("/categories")}
+        onSuccess={handleDialogSuccess}
       />
 
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button
             aria-label="Open menu"
@@ -63,10 +66,7 @@ export const CategoryActions = ({ category, row, className, ...props }: Category
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            onSelect={() => setShowCategoriesDeleteDialog(true)}
-            className="text-red-500"
-          >
+          <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)} className="text-red-500">
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

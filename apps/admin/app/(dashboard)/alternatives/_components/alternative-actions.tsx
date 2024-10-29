@@ -4,7 +4,6 @@ import type { Alternative } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import type React from "react"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -33,8 +32,7 @@ export const AlternativeActions = ({
   className,
   ...props
 }: AlternativeActionsProps) => {
-  const router = useRouter()
-  const [showAlternativesDeleteDialog, setShowAlternativesDeleteDialog] = useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   const { execute: reuploadAssets } = useServerAction(reuploadAlternativeAssets, {
     onSuccess: () => {
@@ -46,17 +44,22 @@ export const AlternativeActions = ({
     },
   })
 
+  const handleDialogSuccess = () => {
+    setShowDeleteDialog(false)
+    row?.toggleSelected(false)
+  }
+
   return (
     <>
       <AlternativesDeleteDialog
-        open={showAlternativesDeleteDialog}
-        onOpenChange={setShowAlternativesDeleteDialog}
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
         alternatives={[alternative]}
         showTrigger={false}
-        onSuccess={() => row?.toggleSelected(false) || router.push("/alternatives")}
+        onSuccess={handleDialogSuccess}
       />
 
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button
             aria-label="Open menu"
@@ -93,10 +96,7 @@ export const AlternativeActions = ({
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            onSelect={() => setShowAlternativesDeleteDialog(true)}
-            className="text-red-500"
-          >
+          <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)} className="text-red-500">
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
