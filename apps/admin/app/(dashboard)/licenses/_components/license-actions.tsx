@@ -66,7 +66,7 @@ export const LicenseActions = ({ license, row, className, ...props }: LicenseAct
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)} className="text-red-500">
+          <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)} className="text-destructive">
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

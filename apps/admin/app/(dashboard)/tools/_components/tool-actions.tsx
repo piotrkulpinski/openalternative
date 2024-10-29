@@ -29,8 +29,7 @@ interface ToolActionsProps extends React.ComponentPropsWithoutRef<typeof Button>
 }
 
 export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps) => {
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const [showcheduleDialog, setShowcheduleDialog] = useState(false)
+  const [dialog, setDialog] = useState<"delete" | "schedule" | null>(null)
 
   const { execute: reuploadAssetsAction } = useServerAction(reuploadToolAssets, {
     onSuccess: () => {
@@ -43,23 +42,23 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
   })
 
   const handleDialogSuccess = () => {
-    setShowDeleteDialog(false)
+    setDialog(null)
     row?.toggleSelected(false)
   }
 
   return (
     <>
       <ToolsDeleteDialog
-        open={showDeleteDialog}
-        onOpenChange={setShowDeleteDialog}
+        open={dialog === "delete"}
+        onOpenChange={open => setDialog(open ? "delete" : null)}
         tools={[tool]}
         showTrigger={false}
         onSuccess={handleDialogSuccess}
       />
 
       <ToolScheduleDialog
-        open={showcheduleDialog}
-        onOpenChange={setShowcheduleDialog}
+        open={dialog === "schedule"}
+        onOpenChange={open => setDialog(open ? "schedule" : null)}
         tool={tool}
         showTrigger={false}
         onSuccess={handleDialogSuccess}
@@ -83,10 +82,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
           </DropdownMenuItem>
 
           {!tool.publishedAt && (
-            <DropdownMenuItem
-              onSelect={() => setShowcheduleDialog(true)}
-              className="text-green-600 dark:text-green-400"
-            >
+            <DropdownMenuItem onSelect={() => setDialog("schedule")} className="text-green-600">
               Schedule
             </DropdownMenuItem>
           )}
@@ -119,7 +115,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)} className="text-red-500">
+          <DropdownMenuItem onSelect={() => setDialog("delete")} className="text-destructive">
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

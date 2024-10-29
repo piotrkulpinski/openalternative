@@ -419,7 +419,7 @@ export function ToolForm({
                       size="sm"
                       prefix={<TrashIcon />}
                       onClick={() => removeLink(index)}
-                      className="text-red-500"
+                      className="text-destructive"
                     />
                   </div>
                 ))}
