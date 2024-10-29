@@ -15,7 +15,7 @@ const EmailToolScheduled = ({ tool, ...props }: EmailToolScheduledProps) => {
   const publishedAt = tool?.publishedAt || new Date()
   const isLongQueue = differenceInDays(publishedAt, new Date()) > 7
   const dateRelative = formatDistanceToNowStrict(publishedAt, { addSuffix: true })
-  const dateFormatted = format(publishedAt, "MMMM d, yyyy")
+  const dateFormatted = format(publishedAt, "MMMM do, yyyy")
 
   return (
     <EmailWrapper {...props}>
@@ -30,8 +30,9 @@ const EmailToolScheduled = ({ tool, ...props }: EmailToolScheduledProps) => {
         <>
           <Text>
             Due to the high volume of submissions we're currently receiving, there's a bit of a
-            queue. {tool?.name} is scheduled to be added <strong>{dateFormatted}</strong>. However,
-            if you'd like to fast-track your submission, you have the option to skip the queue.
+            queue. {tool?.name} is scheduled to be added on <strong>{dateFormatted}</strong>.
+            However, if you'd like to fast-track your submission, you have the option to skip the
+            queue.
           </Text>
 
           <EmailButton href={`${config.site.url}/submit/${tool?.slug}`}>
