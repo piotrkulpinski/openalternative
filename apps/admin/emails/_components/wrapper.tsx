@@ -33,7 +33,7 @@ export const EmailWrapper = ({ to, subject, children, ...props }: EmailWrapperPr
                 alt={`${config.site.name} Logo`}
                 width="572"
                 height="91"
-                className="h-7 w-auto"
+                className="h-6 w-auto"
               />
             </Link>
 
