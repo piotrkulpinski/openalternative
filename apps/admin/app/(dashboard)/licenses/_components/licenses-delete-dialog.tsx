@@ -33,7 +33,6 @@ export const LicensesDeleteDialog = ({
 }: LicensesDeleteDialogProps) => {
   const { execute, isPending } = useServerAction(deleteLicenses, {
     onSuccess: () => {
-      props.onOpenChange?.(false)
       toast.success("Licenses deleted")
       onSuccess?.()
     },

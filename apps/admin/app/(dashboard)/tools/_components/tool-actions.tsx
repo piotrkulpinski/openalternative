@@ -4,8 +4,8 @@ import type { Tool } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import React from "react"
+import type React from "react"
+import { useState } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { ToolScheduleDialog } from "~/app/(dashboard)/tools/_components/tool-schedule-dialog"
@@ -29,9 +29,8 @@ interface ToolActionsProps extends React.ComponentPropsWithoutRef<typeof Button>
 }
 
 export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps) => {
-  const router = useRouter()
-  const [showToolsDeleteDialog, setShowToolsDeleteDialog] = React.useState(false)
-  const [showToolScheduleDialog, setShowToolScheduleDialog] = React.useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [showcheduleDialog, setShowcheduleDialog] = useState(false)
 
   const { execute: reuploadAssetsAction } = useServerAction(reuploadToolAssets, {
     onSuccess: () => {
@@ -43,24 +42,30 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
     },
   })
 
+  const handleDialogSuccess = () => {
+    setShowDeleteDialog(false)
+    row?.toggleSelected(false)
+  }
+
   return (
     <>
       <ToolsDeleteDialog
-        open={showToolsDeleteDialog}
-        onOpenChange={setShowToolsDeleteDialog}
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
         tools={[tool]}
         showTrigger={false}
-        onSuccess={() => row?.toggleSelected(false) || router.push("/tools")}
+        onSuccess={handleDialogSuccess}
       />
 
       <ToolScheduleDialog
-        open={showToolScheduleDialog}
-        onOpenChange={setShowToolScheduleDialog}
+        open={showcheduleDialog}
+        onOpenChange={setShowcheduleDialog}
         tool={tool}
         showTrigger={false}
+        onSuccess={handleDialogSuccess}
       />
 
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button
             aria-label="Open menu"
@@ -79,7 +84,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           {!tool.publishedAt && (
             <DropdownMenuItem
-              onSelect={() => setShowToolScheduleDialog(true)}
+              onSelect={() => setShowcheduleDialog(true)}
               className="text-green-600 dark:text-green-400"
             >
               Schedule
@@ -114,10 +119,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            onSelect={() => setShowToolsDeleteDialog(true)}
-            className="text-red-500"
-          >
+          <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)} className="text-red-500">
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

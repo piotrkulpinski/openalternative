@@ -4,7 +4,6 @@ import type { License } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import type React from "react"
 import { useState } from "react"
 import { LicensesDeleteDialog } from "~/app/(dashboard)/licenses/_components/licenses-delete-dialog"
@@ -25,20 +24,24 @@ interface LicenseActionsProps extends React.ComponentPropsWithoutRef<typeof Butt
 }
 
 export const LicenseActions = ({ license, row, className, ...props }: LicenseActionsProps) => {
-  const router = useRouter()
-  const [showLicenseDeleteDialog, setShowLicenseDeleteDialog] = useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+
+  const handleDialogSuccess = () => {
+    setShowDeleteDialog(false)
+    row?.toggleSelected(false)
+  }
 
   return (
     <>
       <LicensesDeleteDialog
-        open={showLicenseDeleteDialog}
-        onOpenChange={setShowLicenseDeleteDialog}
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
         licenses={[license]}
         showTrigger={false}
-        onSuccess={() => row?.toggleSelected(false) || router.push("/licenses")}
+        onSuccess={handleDialogSuccess}
       />
 
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button
             aria-label="Open menu"
@@ -63,10 +66,7 @@ export const LicenseActions = ({ license, row, className, ...props }: LicenseAct
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            onSelect={() => setShowLicenseDeleteDialog(true)}
-            className="text-red-500"
-          >
+          <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)} className="text-red-500">
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

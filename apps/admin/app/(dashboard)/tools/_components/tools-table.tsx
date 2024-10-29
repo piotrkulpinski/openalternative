@@ -51,17 +51,17 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
         {
           label: "Published",
           value: "published",
-          icon: <CircleIcon className="text-green-700" />,
+          icon: <CircleIcon className="!text-lime-600" />,
         },
         {
           label: "Scheduled",
           value: "scheduled",
-          icon: <CircleDotDashedIcon className="text-yellow-600" />,
+          icon: <CircleDotDashedIcon className="!text-yellow-600" />,
         },
         {
           label: "Draft",
           value: "draft",
-          icon: <CircleDashedIcon className="text-gray-400" />,
+          icon: <CircleDashedIcon className="!text-gray-400" />,
         },
       ],
     },

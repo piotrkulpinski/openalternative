@@ -32,7 +32,6 @@ export const CategoriesDeleteDialog = ({
 }: CategoriesDeleteDialogProps) => {
   const { execute, isPending } = useServerAction(deleteCategories, {
     onSuccess: () => {
-      props.onOpenChange?.(false)
       toast.success("Categories deleted")
       onSuccess?.()
     },
