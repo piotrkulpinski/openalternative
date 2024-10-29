@@ -1,9 +1,11 @@
 import type { Column } from "@tanstack/react-table"
-import { CheckIcon, PlusCircleIcon } from "lucide-react"
+import { PlusCircleIcon } from "lucide-react"
 import type { Option } from "~/types"
 
+import { Slot } from "@radix-ui/react-slot"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
+import { Checkbox } from "~/components/ui/checkbox"
 import {
   Command,
   CommandEmpty,
@@ -15,7 +17,6 @@ import {
 } from "~/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover"
 import { Separator } from "~/components/ui/separator"
-import { cx } from "~/utils/cva"
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>
@@ -33,22 +34,19 @@ export function DataTableFacetedFilter<TData, TValue>({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-8 border-dashed"
-          prefix={<PlusCircleIcon />}
-        >
+        <Button variant="outline" size="sm" className="border-dashed" prefix={<PlusCircleIcon />}>
           {title}
           {selectedValues?.size > 0 && (
             <>
-              <Separator orientation="vertical" className="mx-2 h-4" />
-              <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
+              <Separator orientation="vertical" className="mx-0.5 h-3.5" />
+
+              <Badge variant="secondary" className="px-1.5 -my-1 rounded lg:hidden">
                 {selectedValues.size}
               </Badge>
+
               <div className="hidden space-x-1 lg:flex">
                 {selectedValues.size > 2 ? (
-                  <Badge variant="secondary" className="rounded-sm px-1 font-normal">
+                  <Badge variant="secondary" className="px-1.5 -my-1 rounded">
                     {selectedValues.size} selected
                   </Badge>
                 ) : (
@@ -56,9 +54,9 @@ export function DataTableFacetedFilter<TData, TValue>({
                     .filter(option => selectedValues.has(option.value))
                     .map(option => (
                       <Badge
-                        variant="secondary"
                         key={option.value}
-                        className="rounded-sm px-1 font-normal"
+                        variant="secondary"
+                        className="px-1.5 -my-1 rounded"
                       >
                         {option.label}
                       </Badge>
@@ -70,7 +68,7 @@ export function DataTableFacetedFilter<TData, TValue>({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-[12.5rem] p-0" align="start">
+      <PopoverContent className="p-0" align="start">
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
@@ -91,21 +89,16 @@ export function DataTableFacetedFilter<TData, TValue>({
                       const filterValues = Array.from(selectedValues)
                       column?.setFilterValue(filterValues.length ? filterValues : undefined)
                     }}
+                    className="flex items-center gap-2"
                   >
-                    <div
-                      className={cx(
-                        "mr-2 flex items-center justify-center rounded-sm border border-primary",
-                        isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible",
-                      )}
-                    >
-                      <CheckIcon className="size-4" aria-hidden="true" />
-                    </div>
-                    {option.icon && (
-                      <option.icon className="mr-2 text-muted-foreground" aria-hidden="true" />
-                    )}
+                    <Checkbox checked={isSelected} />
+
+                    <Slot className="size-4 text-muted-foreground" aria-hidden="true">
+                      {option.icon}
+                    </Slot>
+
                     <span>{option.label}</span>
+
                     {option.withCount && column?.getFacetedUniqueValues()?.get(option.value) && (
                       <span className="ml-auto flex items-center justify-center font-mono text-xs">
                         {column?.getFacetedUniqueValues().get(option.value)}
@@ -115,6 +108,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                 )
               })}
             </CommandGroup>
+
             {selectedValues.size > 0 && (
               <>
                 <CommandSeparator />

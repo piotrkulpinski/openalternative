@@ -1,14 +1,17 @@
 import "server-only"
 
+import { isTruthy } from "@curiousleaf/utils"
 import type { Prisma } from "@openalternative/db"
 import { endOfDay, startOfDay } from "date-fns"
 import { unstable_noStore as noStore } from "next/cache"
 import { prisma } from "~/services/prisma"
-import type { GetToolsSchema } from "./validations"
+import type { SearchParams } from "~/types"
+import { searchParamsSchema } from "./validations"
 
-export async function getTools(input: GetToolsSchema) {
+export async function getTools(searchParams: SearchParams) {
   noStore()
-  const { page, per_page, sort, name, operator, from, to } = input
+  const search = searchParamsSchema.parse(searchParams)
+  const { page, per_page, sort, name, publishedAt, operator, from, to } = search
 
   try {
     // Offset to paginate the results
@@ -26,47 +29,35 @@ export async function getTools(input: GetToolsSchema) {
     const fromDate = from ? startOfDay(new Date(from)) : undefined
     const toDate = to ? endOfDay(new Date(to)) : undefined
 
-    const where: Prisma.ToolWhereInput = {
-      // Filter by name
-      name: name ? { contains: name, mode: "insensitive" } : undefined,
+    const expressions: (Prisma.ToolWhereInput | undefined)[] = [
+      name
+        ? {
+            name: { contains: name, mode: "insensitive" },
+          }
+        : undefined,
+
+      // Filter tasks by status
+      publishedAt
+        ? {
+            publishedAt: publishedAt.includes("draft")
+              ? null
+              : publishedAt.includes("scheduled")
+                ? { gt: new Date() }
+                : { lte: new Date() },
+          }
+        : undefined,
 
       // Filter by createdAt
-      createdAt: {
-        gte: fromDate,
-        lte: toDate,
-      },
-    }
+      fromDate || toDate
+        ? {
+            createdAt: { gte: fromDate, lte: toDate },
+          }
+        : undefined,
+    ]
 
-    // const expressions: (SQL<unknown> | undefined)[] = [
-    //   title
-    //     ? filterColumn({
-    //         column: tasks.title,
-    //         value: title,
-    //       })
-    //     : undefined,
-    //   // Filter tasks by status
-    //   status
-    //     ? filterColumn({
-    //         column: tasks.status,
-    //         value: status,
-    //         isSelectable: true,
-    //       })
-    //     : undefined,
-    //   // Filter tasks by priority
-    //   priority
-    //     ? filterColumn({
-    //         column: tasks.priority,
-    //         value: priority,
-    //         isSelectable: true,
-    //       })
-    //     : undefined,
-    //   // Filter by createdAt
-    //   fromDay && toDay
-    //     ? and(gte(tasks.createdAt, fromDay), lte(tasks.createdAt, toDay))
-    //     : undefined,
-    // ]
-    // const where: DrizzleWhere<Tool> =
-    //   !operator || operator === "and" ? and(...expressions) : or(...expressions)
+    const where: Prisma.ToolWhereInput = {
+      [operator]: expressions.filter(isTruthy),
+    }
 
     // Transaction is used to ensure both queries are executed in a single transaction
     const [tools, toolsTotal] = await prisma.$transaction([

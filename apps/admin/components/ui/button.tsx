@@ -99,7 +99,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 {prefix}
               </Slot>
 
-              {React.Children.count(child) !== 0 && <span className="truncate">{child}</span>}
+              {child}
 
               <Slot className={buttonAffixVariants()} aria-hidden="true">
                 {suffix}

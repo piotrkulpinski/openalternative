@@ -1,14 +1,16 @@
 import "server-only"
 
 import type { Prisma } from "@openalternative/db"
+import type { SearchParams } from "algoliasearch"
 import { endOfDay, startOfDay } from "date-fns"
 import { unstable_noStore as noStore } from "next/cache"
 import { prisma } from "~/services/prisma"
-import type { GetLicensesSchema } from "./validations"
+import { searchParamsSchema } from "./validations"
 
-export async function getLicenses(input: GetLicensesSchema) {
+export async function getLicenses(searchParams: SearchParams) {
   noStore()
-  const { page, per_page, sort, name, operator, from, to } = input
+  const search = searchParamsSchema.parse(searchParams)
+  const { page, per_page, sort, name, operator, from, to } = search
 
   try {
     // Offset to paginate the results

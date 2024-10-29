@@ -1,6 +1,5 @@
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
-import { searchParamsSchema } from "~/schema/search-params"
 import type { SearchParams } from "~/types"
 import { CategoriesTable } from "./_components/categories-table"
 import { getCategories } from "./_lib/queries"
@@ -10,8 +9,7 @@ export interface CategoriesPageProps {
 }
 
 export default function CategoriesPage({ searchParams }: CategoriesPageProps) {
-  const search = searchParamsSchema.parse(searchParams)
-  const categoriesPromise = getCategories(search)
+  const categoriesPromise = getCategories(searchParams)
 
   return (
     <Suspense

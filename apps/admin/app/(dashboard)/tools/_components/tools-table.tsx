@@ -4,7 +4,7 @@ import * as React from "react"
 import type { DataTableFilterField } from "~/types"
 
 import type { Tool } from "@openalternative/db"
-import { PlusIcon } from "lucide-react"
+import { CircleDashedIcon, CircleDotDashedIcon, CircleIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
 import { DataTable } from "~/components/data-table/data-table"
 import { DataTableHeader } from "~/components/data-table/data-table-header"
@@ -44,17 +44,27 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
       value: "name",
       placeholder: "Filter by name...",
     },
-    // {
-    //   label: "Status",
-    //   value: "publishedAt",
-    //   options: [
-    //     {
-    //       label: "Published",
-    //       value: "published",
-    //       icon: CheckIcon,
-    //     },
-    //   ],
-    // },
+    {
+      label: "Status",
+      value: "publishedAt",
+      options: [
+        {
+          label: "Published",
+          value: "published",
+          icon: <CircleIcon className="text-green-700" />,
+        },
+        {
+          label: "Scheduled",
+          value: "scheduled",
+          icon: <CircleDotDashedIcon className="text-yellow-600" />,
+        },
+        {
+          label: "Draft",
+          value: "draft",
+          icon: <CircleDashedIcon className="text-gray-400" />,
+        },
+      ],
+    },
   ]
 
   const { table } = useDataTable({

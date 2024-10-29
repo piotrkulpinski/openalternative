@@ -1,6 +1,5 @@
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
-import { searchParamsSchema } from "~/schema/search-params"
 import type { SearchParams } from "~/types"
 import { LicensesTable } from "./_components/licenses-table"
 import { getLicenses } from "./_lib/queries"
@@ -10,8 +9,7 @@ export interface LicensesPageProps {
 }
 
 export default function LicensesPage({ searchParams }: LicensesPageProps) {
-  const search = searchParamsSchema.parse(searchParams)
-  const licensesPromise = getLicenses(search)
+  const licensesPromise = getLicenses(searchParams)
 
   return (
     <Suspense
