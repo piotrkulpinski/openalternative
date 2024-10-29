@@ -2,7 +2,7 @@ import type * as React from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const badgeVariants = cva({
-  base: "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-ring",
+  base: "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-medium whitespace-nowrap transition-colors focus:outline-ring",
 
   variants: {
     variant: {

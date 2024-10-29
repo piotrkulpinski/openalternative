@@ -49,11 +49,11 @@ export const AlternativeCard = ({ className, alternative, ...props }: Alternativ
             {alternative.discountCode ? (
               <>
                 Use code <strong>{alternative.discountCode}</strong> to get{" "}
-                <strong>{alternative.discountAmount}</strong>.
+                <strong>{alternative.discountAmount}</strong>
               </>
             ) : (
               <>
-                Get <strong>{alternative.discountAmount}</strong> with this link.
+                Get <strong>{alternative.discountAmount}</strong> with this link
               </>
             )}
           </Prose>
