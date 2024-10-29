@@ -13,8 +13,8 @@ import "./styles.css"
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: {
-    default: config.site.name,
-    template: `%s - ${config.site.name}`,
+    default: `${config.site.name} Admin`,
+    template: `%s - ${config.site.name} Admin`,
   },
   description: config.site.description,
 }
