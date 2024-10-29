@@ -29,7 +29,7 @@ export const createAlternative = authedProcedure
 
     revalidatePath("/alternatives")
 
-    await inngest.send({ name: "alternative.created", data: { id: alternative.id } })
+    await inngest.send({ name: "alternative.created", data: { slug: alternative.slug } })
 
     return alternative
   })

@@ -37,7 +37,7 @@ export const createTool = authedProcedure
 
     // Send an event to the Inngest pipeline
     if (tool.publishedAt) {
-      await inngest.send({ name: "tool.scheduled", data: { id: tool.id } })
+      await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } })
     }
 
     return tool
@@ -126,7 +126,7 @@ export const scheduleTool = authedProcedure
     revalidatePath(`/tools/${tool.id}`)
 
     // Send an event to the Inngest pipeline
-    await inngest.send({ name: "tool.scheduled", data: { id: tool.id } })
+    await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } })
 
     return true
   })

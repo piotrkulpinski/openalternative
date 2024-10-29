@@ -1,7 +1,7 @@
 import { formatNumber, joinAsSentence } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict } from "date-fns"
 import wretch from "wretch"
-import { siteConfig } from "~/config/site"
+import { config } from "~/config"
 import { prisma } from "~/services/prisma"
 
 export type Socials = Record<string, Array<Record<string, string> & { url: string }>>
@@ -63,6 +63,6 @@ export const generateSocialTweet = async () => {
 
 ${insights.map(({ label, value, icon }) => `${icon} ${label}: ${value}`).join("\n")}
 
-${siteConfig.url}/${tool.slug}`
+${config.site.url}/${tool.slug}`
   }
 }

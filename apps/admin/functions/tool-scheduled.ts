@@ -1,3 +1,6 @@
+import { config } from "~/config"
+import EmailToolScheduled from "~/emails/tool-scheduled"
+import { sendEmails } from "~/lib/email"
 import { generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
@@ -11,7 +14,7 @@ export const toolScheduled = inngest.createFunction(
 
   async ({ event, step }) => {
     const tool = await step.run("find-tool", async () => {
-      return prisma.tool.findUniqueOrThrow({ where: { id: event.data.id } })
+      return prisma.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
     })
 
     // Run steps in parallel
@@ -91,6 +94,20 @@ export const toolScheduled = inngest.createFunction(
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
       return prisma.$disconnect()
+    })
+
+    // Send email
+    await step.run("send-email", async () => {
+      if (!tool.submitterEmail) return
+
+      const to = tool.submitterEmail
+      const subject = `Great news! ${tool.name} is scheduled for publication on ${config.site.name} 🎉`
+
+      return sendEmails({
+        to,
+        subject,
+        react: EmailToolScheduled({ to, subject, tool }),
+      })
     })
   },
 )

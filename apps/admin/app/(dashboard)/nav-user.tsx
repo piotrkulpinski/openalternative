@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
-import { siteConfig } from "~/config/site"
+import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
 interface NavUserProps extends ComponentProps<"nav"> {
@@ -63,7 +63,7 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
           className="min-w-[var(--radix-dropdown-menu-trigger-width)]"
         >
           <DropdownMenuItem asChild>
-            <Link href={siteConfig.url} target="_blank">
+            <Link href={config.site.url} target="_blank">
               Visit Site
             </Link>
           </DropdownMenuItem>

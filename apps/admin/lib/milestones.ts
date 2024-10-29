@@ -1,6 +1,6 @@
 import type { Tool } from "@openalternative/db"
 import type { Jsonify } from "inngest/helpers/jsonify"
-import { siteConfig } from "~/config/site"
+import { config } from "~/config"
 import { sendTweet } from "~/services/twitter"
 
 /**
@@ -29,7 +29,7 @@ export const getMilestoneReached = (prevStars: number, newStars: number) => {
 export const sendMilestoneTweet = async (milestone: number, tool: Tool | Jsonify<Tool>) => {
   const tweet = `⭐ ${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub! Huge congrats to the${tool.twitterHandle ? ` @${tool.twitterHandle}` : ""} team! 🎉
 
-${siteConfig.url}/${tool.slug}`
+${config.site.url}/${tool.slug}`
 
   try {
     await sendTweet(tweet)

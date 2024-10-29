@@ -8,7 +8,7 @@ export const alternativeCreated = inngest.createFunction(
 
   async ({ event, step }) => {
     const alternative = await step.run("find-alternative", async () => {
-      return prisma.alternative.findUniqueOrThrow({ where: { id: event.data.id } })
+      return prisma.alternative.findUniqueOrThrow({ where: { slug: event.data.slug } })
     })
 
     const faviconUrl = await step.run("upload-favicon", async () => {
