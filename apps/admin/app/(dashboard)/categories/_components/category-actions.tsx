@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
-import { siteConfig } from "~/config/site"
+import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
 interface CategoryActionsProps extends React.ComponentPropsWithoutRef<typeof Button> {
@@ -59,7 +59,7 @@ export const CategoryActions = ({ category, row, className, ...props }: Category
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href={`${siteConfig.url}/categories/${category.slug}`} target="_blank">
+            <Link href={`${config.site.url}/categories/${category.slug}`} target="_blank">
               View
             </Link>
           </DropdownMenuItem>

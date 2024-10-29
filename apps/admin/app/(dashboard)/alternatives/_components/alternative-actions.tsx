@@ -18,7 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
-import { siteConfig } from "~/config/site"
+import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
 interface AlternativeActionsProps extends React.ComponentPropsWithoutRef<typeof Button> {
@@ -77,7 +77,7 @@ export const AlternativeActions = ({
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href={`${siteConfig.url}/alternatives/${alternative.slug}`} target="_blank">
+            <Link href={`${config.site.url}/alternatives/${alternative.slug}`} target="_blank">
               View
             </Link>
           </DropdownMenuItem>

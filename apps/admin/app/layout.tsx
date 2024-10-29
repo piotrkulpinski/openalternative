@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { SessionProvider } from "next-auth/react"
 import type { PropsWithChildren } from "react"
 import { Toaster } from "~/components/ui/toaster"
-import { siteConfig } from "~/config/site"
+import { config } from "~/config"
 import { env } from "~/env"
 import { auth } from "~/services/auth"
 import { cx } from "~/utils/cva"
@@ -13,10 +13,10 @@ import "./styles.css"
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    default: config.site.name,
+    template: `%s - ${config.site.name}`,
   },
-  description: siteConfig.description,
+  description: config.site.description,
 }
 
 export const viewport: Viewport = {

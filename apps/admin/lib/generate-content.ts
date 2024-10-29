@@ -5,7 +5,7 @@ import type { Tool } from "@openalternative/db"
 import { generateObject } from "ai"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { z } from "zod"
-import { siteConfig } from "~/config/site"
+import { config } from "~/config"
 import { getErrorMessage } from "~/lib/handle-error"
 import { firecrawlClient } from "~/services/firecrawl"
 import { prisma } from "~/services/prisma"
@@ -194,7 +194,7 @@ export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
       Tagline: "${tool.tagline}"
       Description: "${tool.description}"
       Twitter Handle: "${tool.twitterHandle}"
-      Link: "${siteConfig.url}/${tool.slug}"
+      Link: "${config.site.url}/${tool.slug}"
     `,
   })
 

@@ -1,11 +1,17 @@
-import type { Alternative, Tool } from "@openalternative/db"
 import { EventSchemas, Inngest } from "inngest"
 
+type ToolEventData = { slug: string }
+type AlternativeEventData = { slug: string }
+
 type Events = {
-  "tool.scheduled": { data: Pick<Tool, "id"> }
-  "tool.deleted": { data: Pick<Tool, "slug"> }
-  "alternative.created": { data: Pick<Alternative, "id"> }
-  "alternative.deleted": { data: Pick<Alternative, "slug"> }
+  "tool.submitted": { data: ToolEventData }
+  "tool.expedited": { data: ToolEventData }
+  "tool.featured": { data: ToolEventData }
+  "tool.scheduled": { data: ToolEventData }
+  "tool.published": { data: ToolEventData }
+  "tool.deleted": { data: ToolEventData }
+  "alternative.created": { data: AlternativeEventData }
+  "alternative.deleted": { data: AlternativeEventData }
 }
 
 export const inngest = new Inngest({

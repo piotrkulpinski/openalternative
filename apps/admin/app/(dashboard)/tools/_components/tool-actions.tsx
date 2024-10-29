@@ -20,7 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
-import { siteConfig } from "~/config/site"
+import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
 interface ToolActionsProps extends React.ComponentPropsWithoutRef<typeof Button> {
@@ -93,7 +93,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           {tool.publishedAt && tool.publishedAt <= new Date() && (
             <DropdownMenuItem asChild>
-              <Link href={`${siteConfig.url}/${tool.slug}`} target="_blank">
+              <Link href={`${config.site.url}/${tool.slug}`} target="_blank">
                 View
               </Link>
             </DropdownMenuItem>
