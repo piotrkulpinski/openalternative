@@ -1,7 +1,11 @@
 "use client"
 
+import { isTruthy } from "@curiousleaf/utils"
 import type { Tool } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
+import { isFriday } from "date-fns"
+import { addDays, isWednesday } from "date-fns"
+import { isMonday } from "date-fns"
 import { ClockIcon } from "lucide-react"
 import * as React from "react"
 import { toast } from "sonner"
@@ -67,6 +71,16 @@ export const ToolScheduleDialog = ({
           mode="single"
           selected={publishedAt}
           onSelect={setPublishedAt}
+          modifiers={{
+            schedulable: Array.from({ length: 365 }, (_, i) => {
+              const date = addDays(new Date(), i)
+              return isMonday(date) || isWednesday(date) || isFriday(date) ? date : undefined
+            }).filter(isTruthy),
+          }}
+          modifiersClassNames={{
+            schedulable: "bg-yellow-500/15",
+          }}
+          showOutsideDays={false}
           className="px-0"
         />
 
