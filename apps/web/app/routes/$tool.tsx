@@ -91,13 +91,14 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
   })
 }
 
-export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => {
+export const loader = async ({ request, params: { tool: slug } }: LoaderFunctionArgs) => {
+  const preview = new URL(request.url).searchParams.get("preview")
   let suffix = ""
 
   try {
     const [tool, alternatives, categories, languages, topics, relatedTools] = await Promise.all([
       prisma.tool.findUniqueOrThrow({
-        where: { slug, publishedAt: { lte: new Date() } },
+        where: preview ? { id: preview, slug } : { slug, publishedAt: { lte: new Date() } },
         include: toolOnePayload,
       }),
 
