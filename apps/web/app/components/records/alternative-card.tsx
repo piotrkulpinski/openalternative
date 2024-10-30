@@ -60,7 +60,7 @@ export const AlternativeCard = ({ className, alternative, ...props }: Alternativ
         )}
 
         <Button
-          variant={alternative.website.includes("go.") ? "fancy" : "primary"}
+          variant={alternative.website.startsWith("https://go") ? "fancy" : "primary"}
           size="lg"
           className="w-full pointer-events-none"
           suffix={<ArrowUpRightIcon />}

@@ -269,7 +269,7 @@ export default function ToolsPage() {
             <Stack size="sm">
               {tool.website && (
                 <Button
-                  variant={tool.website.includes("go.") ? "fancy" : "primary"}
+                  variant={tool.website.startsWith("https://go") ? "fancy" : "primary"}
                   suffix={<ArrowUpRightIcon />}
                   onClick={() => posthog.capture("website_clicked", { url: tool.website })}
                   asChild

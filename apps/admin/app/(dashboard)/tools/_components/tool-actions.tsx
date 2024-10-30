@@ -4,6 +4,7 @@ import type { Tool } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import type React from "react"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -29,6 +30,7 @@ interface ToolActionsProps extends React.ComponentPropsWithoutRef<typeof Button>
 }
 
 export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps) => {
+  const router = useRouter()
   const [dialog, setDialog] = useState<"delete" | "schedule" | null>(null)
 
   const { execute: reuploadAssetsAction } = useServerAction(reuploadToolAssets, {
@@ -44,6 +46,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
   const handleDialogSuccess = () => {
     setDialog(null)
     row?.toggleSelected(false)
+    router.push("/tools")
   }
 
   return (
@@ -81,17 +84,17 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
             <Link href={`/tools/${tool.id}`}>Edit</Link>
           </DropdownMenuItem>
 
-          {!tool.publishedAt && (
-            <DropdownMenuItem onSelect={() => setDialog("schedule")} className="text-green-600">
-              Schedule
-            </DropdownMenuItem>
-          )}
-
           <DropdownMenuItem asChild>
             <Link href={`${config.site.url}/${tool.slug}?preview=${tool.id}`} target="_blank">
               View
             </Link>
           </DropdownMenuItem>
+
+          {!tool.publishedAt && (
+            <DropdownMenuItem onSelect={() => setDialog("schedule")} className="text-green-600">
+              Schedule
+            </DropdownMenuItem>
+          )}
 
           <DropdownMenuItem onSelect={() => reuploadAssetsAction({ id: tool.id })}>
             Reupload Assets

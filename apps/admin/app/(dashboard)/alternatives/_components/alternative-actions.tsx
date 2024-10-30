@@ -3,6 +3,7 @@
 import type { Alternative } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
+import { useRouter } from "next/dist/client/router"
 import Link from "next/link"
 import type React from "react"
 import { useState } from "react"
@@ -32,6 +33,7 @@ export const AlternativeActions = ({
   className,
   ...props
 }: AlternativeActionsProps) => {
+  const router = useRouter()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   const { execute: reuploadAssets } = useServerAction(reuploadAlternativeAssets, {
@@ -47,6 +49,7 @@ export const AlternativeActions = ({
   const handleDialogSuccess = () => {
     setShowDeleteDialog(false)
     row?.toggleSelected(false)
+    router.push("/alternatives")
   }
 
   return (

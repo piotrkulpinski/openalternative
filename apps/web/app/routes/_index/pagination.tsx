@@ -71,7 +71,7 @@ export const Pagination = ({ className, containerRef, ...props }: PaginationProp
         isDisabled={isLastPage}
         suffix={<MoveRightIcon />}
         onClick={e => refinePage(e, currentRefinement + 1)}
-        rel="prev"
+        rel="next"
       >
         next
       </PaginationLink>
