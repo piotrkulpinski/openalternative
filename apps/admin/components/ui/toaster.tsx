@@ -11,7 +11,7 @@ function Toaster({ ...props }: ToasterProps) {
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}
-      className="bg-background text-foreground shadow-lg select-none"
+      className="!z-40 bg-background text-foreground shadow-lg select-none"
       toastOptions={{
         classNames: {
           description: "text-muted-foreground",

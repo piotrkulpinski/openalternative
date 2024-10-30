@@ -162,7 +162,9 @@ export function useDataTable<TData>({
 
   // Table states
   const [rowSelection, setRowSelection] = React.useState({})
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(
+    props.initialState?.columnVisibility ?? {},
+  )
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(initialColumnFilters)
 
   // Handle server-side pagination

@@ -76,6 +76,9 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     initialState: {
       sorting: [{ id: "createdAt", desc: true }],
       columnPinning: { right: ["actions"] },
+      columnVisibility: {
+        submitterEmail: false,
+      },
     },
     // For remembering the previous row selection on page change
     getRowId: (originalRow, index) => `${originalRow.id}-${index}`,

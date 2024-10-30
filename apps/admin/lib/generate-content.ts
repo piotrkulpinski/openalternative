@@ -53,7 +53,7 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
         .transform(a => a.map(name => categories.find(cat => cat.name === name)).filter(isTruthy))
         .describe(`
           Assign the open source software product to the categories that it belongs to.
-          Try to assign the tool to multiple categories if it belongs to multiple categories.
+          Try to assign the tool to multiple categories.
           If a tool does not belong to any category, return an empty array.
         `),
       alternatives: z
@@ -61,7 +61,7 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
         .transform(a => a.map(name => alternatives.find(alt => alt.name === name)).filter(isTruthy))
         .describe(`
           Assign the open source software product to the proprietary software products that it is similar to.
-          Try to assign the tool to multiple alternatives if it is similar to multiple alternatives.
+          Try to assign the tool to multiple alternatives.
           If a tool does not have an alternative, return an empty array.
         `),
     })
@@ -96,72 +96,6 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
 }
 
 /**
- * Generates a list of categories for a tool.
- * @param tool The tool to generate categories for.
- * @returns The list of categories.
- */
-export const generateCategories = async (tool: string) => {
-  const model = openai("gpt-4o")
-  const categories = await prisma.category.findMany()
-
-  const { object } = await generateObject({
-    model,
-    output: "array",
-    schema: z.string().describe("The name of the category"),
-    prompt: `
-      Take the following list of categories and an open source software product.
-      Assign the open source software product to the categories that it belongs to.
-      Try to assign the tool to multiple categories if it belongs to multiple categories.
-      If a tool does not belong to any category, return an empty array.
-
-      === Start of Categories ===
-      ${categories.map(({ name }) => name).join("\n")}
-      === End of Categories ===
-
-      === Start of Open Source Product ===
-      ${tool}
-      === End of Open Source Product ===
-    `,
-  })
-
-  // Filter out categories that does not exist
-  return object.map(name => categories.find(c => c.name === name)).filter(isTruthy)
-}
-
-/**
- * Generates a list of alternatives for a tool.
- * @param tool The tool to generate alternatives for.
- * @returns The list of alternatives.
- */
-export const generateAlternatives = async (tool: string) => {
-  const model = openai("gpt-4o")
-  const alternatives = await prisma.alternative.findMany()
-
-  const { object } = await generateObject({
-    model,
-    output: "array",
-    schema: z.string().describe("The name of the alternative"),
-    prompt: `
-      Take the following list of proprietary software products and an open source software product.
-      Assign the open source software product to the proprietary software products that it is similar to.
-      Try to assign the tool to multiple alternatives if it is similar to multiple alternatives.
-      If a tool does not have an alternative, return an empty array.
-
-      === Start of Proprietary Products ===
-      ${alternatives.map(({ name, description }) => `${name}: ${description}`).join("\n")}
-      === End of Proprietary Products ===
-
-      === Start of Open Source Product ===
-      ${tool}
-      === End of Open Source Product ===
-    `,
-  })
-
-  // Filter out alternatives that does not exist
-  return object.map(name => alternatives.find(a => a.name === name)).filter(isTruthy)
-}
-
-/**
  * Generates a launch tweet for a tool.
  * @param tool The tool to generate a launch tweet for.
  * @returns The launch tweet.
@@ -179,8 +113,8 @@ export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
       Use new lines to separate paragraphs.
       Tweet should do not exceed 240 characters.
       Use the following template:
-      "
-      🚀 Just published — {name} ({twitter handle}): {tagline}
+      
+      "🚀 Just published — {name} ({twitter handle}): {tagline}
 
       {description}
 
@@ -199,22 +133,4 @@ export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
   })
 
   return object
-}
-
-/**
- * Finds the Twitter handle from a list of links.
- * @param links The list of links.
- * @returns The Twitter handle, or undefined if not found.
- */
-export const findTwitterHandle = (urls: string[]) => {
-  const regex = /^https?:\/\/(?:www\.)?(twitter|x)\.com\/(@?[a-zA-Z0-9_]{1,25})/i
-
-  for (const url of urls) {
-    const match = url.match(regex)
-    if (match) {
-      return match[2]?.startsWith("@") ? match[2].slice(1) : match[2]
-    }
-  }
-
-  return undefined
 }
