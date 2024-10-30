@@ -87,13 +87,11 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
             </DropdownMenuItem>
           )}
 
-          {tool.publishedAt && tool.publishedAt <= new Date() && (
-            <DropdownMenuItem asChild>
-              <Link href={`${config.site.url}/${tool.slug}`} target="_blank">
-                View
-              </Link>
-            </DropdownMenuItem>
-          )}
+          <DropdownMenuItem asChild>
+            <Link href={`${config.site.url}/${tool.slug}?preview=${tool.id}`} target="_blank">
+              View
+            </Link>
+          </DropdownMenuItem>
 
           <DropdownMenuItem onSelect={() => reuploadAssetsAction({ id: tool.id })}>
             Reupload Assets
