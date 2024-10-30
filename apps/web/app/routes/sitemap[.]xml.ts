@@ -1,20 +1,43 @@
+import type { Prisma } from "@openalternative/db"
 import { allPosts } from "content-collections"
 import { prisma } from "~/services.server/prisma"
 
 export const loader = async () => {
   const url = import.meta.env.NEXT_PUBLIC_SITE_URL ?? ""
+  const toolWhere: Prisma.ToolWhereInput = { publishedAt: { lte: new Date() } }
 
-  const tools = await prisma.tool.findMany({
-    where: { publishedAt: { lte: new Date() } },
-    orderBy: { createdAt: "asc" },
-    select: { slug: true, updatedAt: true },
-  })
+  const [tools, categories, alternatives, languages, topics, licenses] = await prisma.$transaction([
+    prisma.tool.findMany({
+      where: toolWhere,
+      orderBy: { createdAt: "asc" },
+      select: { slug: true, updatedAt: true },
+    }),
 
-  const categories = await prisma.category.findMany({ select: { slug: true } })
-  const alternatives = await prisma.alternative.findMany({ select: { slug: true } })
-  const languages = await prisma.language.findMany({ select: { slug: true } })
-  const topics = await prisma.topic.findMany({ select: { slug: true } })
-  const licenses = await prisma.license.findMany({ select: { slug: true } })
+    prisma.category.findMany({
+      where: { tools: { some: { tool: toolWhere } } },
+      select: { slug: true },
+    }),
+
+    prisma.alternative.findMany({
+      where: { tools: { some: { tool: toolWhere } } },
+      select: { slug: true },
+    }),
+
+    prisma.language.findMany({
+      where: { tools: { some: { tool: toolWhere } } },
+      select: { slug: true },
+    }),
+
+    prisma.topic.findMany({
+      where: { tools: { some: { tool: toolWhere } } },
+      select: { slug: true },
+    }),
+
+    prisma.license.findMany({
+      where: { tools: { some: toolWhere } },
+      select: { slug: true },
+    }),
+  ])
 
   const postItems = allPosts.map(post => {
     return `

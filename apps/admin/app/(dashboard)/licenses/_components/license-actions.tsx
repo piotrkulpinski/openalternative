@@ -4,6 +4,7 @@ import type { License } from "@openalternative/db"
 import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import type React from "react"
 import { useState } from "react"
 import { LicensesDeleteDialog } from "~/app/(dashboard)/licenses/_components/licenses-delete-dialog"
@@ -24,11 +25,13 @@ interface LicenseActionsProps extends React.ComponentPropsWithoutRef<typeof Butt
 }
 
 export const LicenseActions = ({ license, row, className, ...props }: LicenseActionsProps) => {
+  const router = useRouter()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   const handleDialogSuccess = () => {
     setShowDeleteDialog(false)
     row?.toggleSelected(false)
+    router.push("/licenses")
   }
 
   return (
