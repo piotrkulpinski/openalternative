@@ -39,7 +39,6 @@ export const toolSchema = z.object({
   description: z.string().optional(),
   content: z.string().optional(),
   links: z.array(linkSchema).optional(),
-  bump: z.number().optional(),
   faviconUrl: z.string().optional(),
   screenshotUrl: z.string().optional(),
   isFeatured: z.boolean().default(false),

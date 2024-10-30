@@ -36,7 +36,6 @@ model Tool {
   stars           Int       @default(0)
   forks           Int       @default(0)
   score           Int       @default(0)
-  bump            Int?
   faviconUrl      String?
   screenshotUrl   String?
   isFeatured      Boolean   @default(false)
