@@ -1,5 +1,4 @@
 import type { SponsoringOne } from "~/services.server/api"
-import { addUTMTracking } from "~/utils/helpers"
 
 export const SITE_URL = import.meta.env.NEXT_PUBLIC_SITE_URL
 export const SITE_EMAIL = import.meta.env.NEXT_PUBLIC_SITE_EMAIL
@@ -59,7 +58,7 @@ export const FAMILY_LINKS = [
   },
 ]
 
-export const HOSTING_SPONSOR: SponsoringOne = {
+export const HOSTING_SPONSOR: SponsoringOne | null = {
   name: "Easypanel",
   description:
     "Use an intuitive interface to deploy applications, manage databases, and provision SSL certificates.",
@@ -67,12 +66,7 @@ export const HOSTING_SPONSOR: SponsoringOne = {
   faviconUrl: "https://easypanel.io/img/favicon.ico",
 }
 
-export const BANNER_SPONSOR: SponsoringOne = {
-  name: "Polar",
-  description: "An open source Lemon Squeezy alternative with 20% lower fees",
-  website: addUTMTracking("https://polar.sh", { source: "openalternative.co" }),
-  faviconUrl: "https://s3.us-east-1.amazonaws.com/openalternative/polar/favicon.png",
-}
+export const BANNER_SPONSOR: SponsoringOne | null = null
 
 export const JSON_HEADERS = {
   "Cache-Control": "public, max-age=3600, s-maxage=7200 stale-while-revalidate=3.154e7",

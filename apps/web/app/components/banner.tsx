@@ -11,9 +11,7 @@ import { cx } from "~/utils/cva"
 export const Banner = ({ className, ...props }: ComponentProps<typeof Container>) => {
   const sponsor = BANNER_SPONSOR
 
-  if (new Date() < new Date("2024-09-05T08:00:00Z")) {
-    return null
-  }
+  if (!sponsor) return null
 
   return (
     <Box>
