@@ -34,11 +34,10 @@ type GetToolScoreProps = {
   watchers: number
   lastCommitDate: Date | null
   firstCommitDate: Date
-  bump?: number | null
 }
 
 /**
- * Calculates a score for a tool based on its GitHub statistics and an optional bump.
+ * Calculates a score for a tool based on its GitHub statistics.
  *
  * @param stars - The number of stars the tool has on GitHub.
  * @param forks - The number of forks the tool has on GitHub.
@@ -47,7 +46,6 @@ type GetToolScoreProps = {
  * @param firstCommitDate - The date of the first commit to the tool's repository.
  * @param lastCommitDate - The date of the last commit to the tool's repository.
  * @param createdAt - The date the repository was created.
- * @param bump - An optional bump to the final score.
  * @returns The calculated score for the tool.
  */
 const calculateHealthScore = ({
@@ -57,7 +55,6 @@ const calculateHealthScore = ({
   watchers,
   firstCommitDate,
   lastCommitDate,
-  bump,
 }: GetToolScoreProps) => {
   const timeSinceLastCommit = Date.now() - (lastCommitDate?.getTime() || 0)
   const daysSinceLastCommit = timeSinceLastCommit / DAY_IN_MS
@@ -74,9 +71,7 @@ const calculateHealthScore = ({
   const watchersScore = watchers * 0.25 * ageFactor
   const contributorsScore = contributors * 0.5 * ageFactor
 
-  return Math.round(
-    starsScore + forksScore + contributorsScore + watchersScore - lastCommitPenalty + (bump || 0),
-  )
+  return Math.round(starsScore + forksScore + contributorsScore + watchersScore - lastCommitPenalty)
 }
 
 const queryRepository = async (repo: Repository) => {
@@ -146,7 +141,6 @@ export const fetchToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
     watchers: watchers.totalCount,
     firstCommitDate,
     lastCommitDate,
-    bump: 0,
   }
 
   const score = calculateHealthScore(metrics)

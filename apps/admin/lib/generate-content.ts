@@ -50,6 +50,7 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
         ),
       categories: z
         .array(z.string())
+        .max(3)
         .transform(a => a.map(name => categories.find(cat => cat.name === name)).filter(isTruthy))
         .describe(`
           Assign the open source software product to the categories that it belongs to.

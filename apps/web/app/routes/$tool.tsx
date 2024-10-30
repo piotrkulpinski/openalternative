@@ -330,7 +330,7 @@ export default function ToolsPage() {
 
           {(!!links?.length || !!categories.length) && (
             <div className="grid grid-auto-fit-sm gap-x-6 gap-y-10 w-full">
-              {links && (
+              {!!links?.length && (
                 <Stack size="lg" direction="column">
                   <H5 as="strong">Links:</H5>
 

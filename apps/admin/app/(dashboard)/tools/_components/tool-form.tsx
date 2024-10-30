@@ -218,16 +218,16 @@ export function ToolForm({
 
         <FormField
           control={form.control}
-          name="bump"
+          name="publishedAt"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bump</FormLabel>
+              <FormLabel>Published At</FormLabel>
               <FormControl>
                 <Input
-                  type="number"
-                  step={100}
+                  type="datetime-local"
                   {...field}
-                  onChange={e => field.onChange(Number.parseFloat(e.target.value))}
+                  value={field.value ? formatDate(field.value, "yyyy-MM-dd HH:mm") : undefined}
+                  onChange={e => field.onChange(e.target.value ? new Date(e.target.value) : null)}
                 />
               </FormControl>
               <FormMessage />
@@ -235,33 +235,35 @@ export function ToolForm({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="submitterName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Submitter Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex flex-row gap-4 max-sm:contents">
+          <FormField
+            control={form.control}
+            name="submitterName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Submitter Name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="submitterEmail"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Submitter Email</FormLabel>
-              <FormControl>
-                <Input type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="submitterEmail"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Submitter Email</FormLabel>
+                <FormControl>
+                  <Input type="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
@@ -355,25 +357,6 @@ export function ToolForm({
               <FormLabel>Hosting URL</FormLabel>
               <FormControl>
                 <Input type="url" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="publishedAt"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Published At</FormLabel>
-              <FormControl>
-                <Input
-                  type="datetime-local"
-                  {...field}
-                  value={field.value ? formatDate(field.value, "yyyy-MM-dd HH:mm") : undefined}
-                  onChange={e => field.onChange(e.target.value ? new Date(e.target.value) : null)}
-                />
               </FormControl>
               <FormMessage />
             </FormItem>
