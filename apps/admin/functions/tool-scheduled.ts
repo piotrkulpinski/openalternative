@@ -9,7 +9,7 @@ import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 
 export const toolScheduled = inngest.createFunction(
-  { id: "tool.scheduled" },
+  { id: "tool.scheduled", concurrency: { limit: 2 } },
   { event: "tool.scheduled" },
 
   async ({ event, step }) => {
