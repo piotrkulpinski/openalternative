@@ -104,10 +104,6 @@ export const loader = async () => {
         <changefreq>daily</changefreq>
       </url>
       <url>
-        <loc>${url}/latest</loc>
-        <changefreq>daily</changefreq>
-      </url>
-      <url>
         <loc>${url}/about</loc>
         <changefreq>weekly</changefreq>
       </url>

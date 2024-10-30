@@ -295,6 +295,20 @@ export function ToolForm({
 
         <FormField
           control={form.control}
+          name="hostingUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Hosting URL</FormLabel>
+              <FormControl>
+                <Input type="url" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="faviconUrl"
           render={({ field }) => (
             <FormItem>
@@ -343,20 +357,6 @@ export function ToolForm({
               <FormLabel>Discount Amount</FormLabel>
               <FormControl>
                 <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="hostingUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Hosting URL</FormLabel>
-              <FormControl>
-                <Input type="url" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

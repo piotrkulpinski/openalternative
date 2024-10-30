@@ -21,7 +21,7 @@ type SearchProps = {
 }
 
 export const Search = ({ serverState, url, sponsoring }: SearchProps) => {
-  const listingRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const indexName = import.meta.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME ?? ""
 
   const instantSearchOptions: ComponentProps<typeof InstantSearch> = {
@@ -43,12 +43,12 @@ export const Search = ({ serverState, url, sponsoring }: SearchProps) => {
       <InstantSearch {...instantSearchOptions}>
         <Configure />
 
-        <div ref={listingRef} className="flex flex-col gap-4 scroll-mt-14">
+        <div ref={containerRef} className="flex flex-col gap-4 scroll-mt-16">
           <ClientOnly fallback={<Input disabled />}>{() => <Filters />}</ClientOnly>
           <Listing sponsoring={sponsoring} />
         </div>
 
-        <Pagination listingRef={listingRef} padding={2} />
+        <Pagination containerRef={containerRef} padding={2} />
       </InstantSearch>
     </InstantSearchSSRProvider>
   )
