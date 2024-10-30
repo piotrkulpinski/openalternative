@@ -6,10 +6,10 @@ import { cx } from "~/utils/cva"
 
 type PaginationProps = HTMLAttributes<HTMLElement> &
   UsePaginationProps & {
-    listingRef: RefObject<HTMLDivElement>
+    containerRef: RefObject<HTMLDivElement>
   }
 
-export const Pagination = ({ className, listingRef, ...props }: PaginationProps) => {
+export const Pagination = ({ className, containerRef, ...props }: PaginationProps) => {
   const {
     pages,
     currentRefinement,
@@ -27,7 +27,7 @@ export const Pagination = ({ className, listingRef, ...props }: PaginationProps)
 
   const refinePage = (e: React.MouseEvent<HTMLElement>, page: number) => {
     e.preventDefault()
-    listingRef.current?.scrollIntoView({ behavior: "smooth" })
+    containerRef.current?.scrollIntoView({ behavior: "smooth" })
     refine(page)
   }
 
