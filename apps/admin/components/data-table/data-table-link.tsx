@@ -7,7 +7,7 @@ export const DataTableLink = ({ className, ...props }: ComponentProps<typeof Lin
   return (
     <Link
       className={cx(
-        "max-w-40 truncate font-medium text-primary underline underline-offset-4 decoration-foreground/10 hover:decoration-foreground/25",
+        "w-40 truncate font-medium text-primary underline underline-offset-4 decoration-foreground/10 hover:decoration-foreground/25",
         className,
       )}
       {...props}

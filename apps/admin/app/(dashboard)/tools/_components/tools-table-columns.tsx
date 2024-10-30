@@ -74,6 +74,14 @@ export function getColumns(): ColumnDef<Tool>[] {
       size: 0,
     },
     {
+      accessorKey: "submitterEmail",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Submitter" />,
+      cell: ({ row }) => (
+        <span className="text-muted-foreground text-sm">{row.getValue("submitterEmail")}</span>
+      ),
+      size: 0,
+    },
+    {
       id: "actions",
       cell: ({ row }) => (
         <ToolActions tool={row.original} row={row} className="float-right -my-0.5" />
