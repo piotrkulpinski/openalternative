@@ -283,7 +283,7 @@ export default function ToolsPage() {
                 </Button>
               )}
 
-              {tool.hostingUrl && (
+              {tool.hostingUrl && HOSTING_SPONSOR && (
                 <Button
                   variant="secondary"
                   suffix={<ArrowUpRightIcon />}

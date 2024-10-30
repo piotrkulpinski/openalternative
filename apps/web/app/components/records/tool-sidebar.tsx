@@ -14,7 +14,7 @@ export const ToolSidebar = ({ children, tool, languages }: ToolSidebarProps) => 
   return (
     <>
       <RepositoryDetails tool={tool} languages={languages} />
-      <SponsoringCard sponsoring={HOSTING_SPONSOR} />
+      {HOSTING_SPONSOR && <SponsoringCard sponsoring={HOSTING_SPONSOR} />}
       {children}
     </>
   )
