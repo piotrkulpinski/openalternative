@@ -76,7 +76,7 @@ export const ToolOpenGraph = ({ tool }: ToolOpenGraphProps) => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ width: "1.75rem", marginBottom: "-0.25rem" }}
+                  style={{ height: "1.75rem", width: "1.75rem" }}
                   role="img"
                   aria-label="Star icon"
                 >
@@ -110,7 +110,7 @@ export const ToolOpenGraph = ({ tool }: ToolOpenGraphProps) => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ width: "1.75rem", marginBottom: "-0.25rem" }}
+                  style={{ height: "1.75rem", width: "1.75rem" }}
                   role="img"
                   aria-label="Star icon"
                 >

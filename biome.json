@@ -7,7 +7,8 @@
     "enabled": true,
     "lineWidth": 100,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 2,
+    "formatWithErrors": true
   },
   "javascript": {
     "formatter": {
@@ -22,6 +23,9 @@
     "parser": {
       "allowComments": false,
       "allowTrailingCommas": true
+    },
+    "formatter": {
+      "trailingCommas": "none"
     }
   },
   "vcs": {
@@ -46,7 +50,6 @@
         "noDangerouslySetInnerHtml": "off"
       },
       "a11y": {
-        "noLabelWithoutControl": "off",
         "useAnchorContent": "off",
         "useValidAnchor": "off",
         "useAltText": "off"

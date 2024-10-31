@@ -16,6 +16,7 @@ import { prisma } from "~/services.server/prisma"
 import { SITE_NAME } from "~/utils/constants"
 import { isRealEmail } from "~/utils/email"
 import { getMetaTags } from "~/utils/meta"
+import { isToolPublished } from "~/utils/tools"
 
 export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) => {
   const { title, description } = data?.meta || {}
@@ -91,7 +92,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   // If the tool exists, redirect to the tool or submit page
   if (existingTool) {
-    if (existingTool.publishedAt && existingTool.publishedAt <= new Date()) {
+    if (isToolPublished(existingTool)) {
       throw redirect(`/${existingTool.slug}`)
     }
 
