@@ -2,6 +2,7 @@ import { indexSearch } from "~/actions/algolia"
 import { getMilestoneReached, sendMilestoneTweet } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { generateSocialTweet } from "~/lib/socials"
+import { isToolPublished } from "~/lib/tools"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 import { sendTweet } from "~/services/twitter"
@@ -27,11 +28,9 @@ export const fetchToolData = inngest.createFunction(
             return null
           }
 
-          const milestone = getMilestoneReached(tool.stars, updatedTool.stars)
-
-          if (milestone) {
-            logger.info(`Sending milestone tweet for ${tool.name}`, { milestone })
-            await sendMilestoneTweet(milestone, tool)
+          if (isToolPublished(tool) && updatedTool.stars > tool.stars) {
+            const milestone = getMilestoneReached(tool.stars, updatedTool.stars)
+            milestone && (await sendMilestoneTweet(milestone, tool))
           }
 
           return prisma.tool.update({

@@ -14,6 +14,7 @@ import { stripe } from "~/services.server/stripe"
 import { JSON_HEADERS, SITE_EMAIL } from "~/utils/constants"
 import { type GetMetaTagsProps, getMetaTags } from "~/utils/meta"
 import { getProductsForPricing } from "~/utils/products"
+import { isToolPublished } from "~/utils/tools"
 
 export const handle = {
   breadcrumb: (data?: { tool: ToolOne }) => {
@@ -57,7 +58,7 @@ export const loader = async ({ params: { tool: slug } }: LoaderFunctionArgs) => 
       }),
     ])
 
-    const isPublished = !!(tool.publishedAt && tool.publishedAt <= new Date())
+    const isPublished = isToolPublished(tool)
     const products = getProductsForPricing(stripeProducts.data, isPublished, queueLength)
 
     // Meta tags
