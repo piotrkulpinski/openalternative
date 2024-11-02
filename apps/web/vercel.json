@@ -6,26 +6,6 @@
       "destination": "/advertise"
     },
     {
-      "source": "/tool/:path*",
-      "destination": "/:path*"
-    },
-    {
-      "source": "/alternatives-to/:path*",
-      "destination": "/alternatives/:path*"
-    },
-    {
-      "source": "/category/:path*",
-      "destination": "/categories/:path*"
-    },
-    {
-      "source": "/language/:path*",
-      "destination": "/languages/:path*"
-    },
-    {
-      "source": "/topic/:path*",
-      "destination": "/topics/:path*"
-    },
-    {
       "source": "/opencap",
       "destination": "/captable"
     },

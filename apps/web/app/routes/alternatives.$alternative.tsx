@@ -46,8 +46,6 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 }
 
 export const loader = async ({ params: { alternative: slug } }: LoaderFunctionArgs) => {
-  let suffix = ""
-
   try {
     const [alternative, alternatives, tools] = await Promise.all([
       prisma.alternative.findUniqueOrThrow({
@@ -87,22 +85,9 @@ export const loader = async ({ params: { alternative: slug } }: LoaderFunctionAr
       }, {}),
     ).sort((a, b) => b.count - a.count)
 
-    if (categories.length) {
-      switch (tools.length) {
-        case 0:
-          suffix = ""
-          break
-        case 1:
-          suffix = `: Best ${categories[0].category.label}`
-          break
-        default:
-          suffix = `: Top ${tools.length}+ ${categories[0].category.label}`
-      }
-    }
-
     const meta = {
-      title: `Open Source ${alternative.name} Alternatives${suffix}`,
-      description: `A curated collection of the ${tools.length} best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
+      title: `${tools.length > 1 ? `${tools.length} Best ` : ""} Open Source ${alternative.name} Alternatives`,
+      description: `A curated collection of the best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
     return json(
