@@ -162,10 +162,12 @@ export function Layout({ children }: PropsWithChildren) {
             <Banner />
             <Header />
 
-            <Container className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
-              {children}
+            <Container asChild>
+              <main className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
+                {children}
 
-              <Footer hideNewsletter={data?.hideNewsletter} />
+                <Footer hideNewsletter={data?.hideNewsletter} />
+              </main>
             </Container>
           </div>
 

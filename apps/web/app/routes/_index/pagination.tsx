@@ -32,10 +32,7 @@ export const Pagination = ({ className, containerRef, ...props }: PaginationProp
   }
 
   return (
-    <nav
-      className={cx("-mt-px flex w-full items-start justify-between md:w-auto", className)}
-      {...props}
-    >
+    <nav className={cx("-mt-px flex w-full items-start justify-between md:w-auto", className)}>
       <PaginationLink
         to={createURL(currentRefinement - 1)}
         isDisabled={isFirstPage}
