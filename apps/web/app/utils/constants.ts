@@ -23,6 +23,7 @@ export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
 export const ANALYTICS_URL = "https://go.openalternative.co/analytics"
 
 export const FEATURED_ALTERNATIVES = [
+  "keap",
   "monday",
   "notion",
   "airtable",

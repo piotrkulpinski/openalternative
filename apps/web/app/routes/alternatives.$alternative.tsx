@@ -86,7 +86,7 @@ export const loader = async ({ params: { alternative: slug } }: LoaderFunctionAr
     ).sort((a, b) => b.count - a.count)
 
     const meta = {
-      title: `${tools.length > 1 ? `${tools.length} Best ` : ""} Open Source ${alternative.name} Alternatives`,
+      title: `${tools.length > 1 ? `${tools.length} Best ` : ""}Open Source ${alternative.name} Alternatives`,
       description: `A curated collection of the best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
