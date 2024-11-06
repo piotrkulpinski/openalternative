@@ -22,7 +22,7 @@ export const Author = ({ className, name, image, twitterHandle, ...props }: Auth
         alt={`${name}'s profile`}
         width={48}
         height={48}
-        className="size-10 rounded-full group-hover:brightness-90"
+        className="size-12 rounded-full group-hover:brightness-90"
       />
 
       <div>

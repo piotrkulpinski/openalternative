@@ -174,7 +174,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           rel="noopener noreferrer nofollow"
         >
           <img
-            src="/authors/piotrkulpinski.jpg"
+            src="/authors/piotrkulpinski.webp"
             alt="Piotr Kulpinski"
             loading="lazy"
             width="16"
