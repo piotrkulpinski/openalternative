@@ -1,4 +1,5 @@
 import type { ComponentProps } from "react"
+import wretch from "wretch"
 import {
   AnalyticsChart,
   type AnalyticsChartData,
@@ -8,18 +9,21 @@ import { Skeleton } from "~/components/ui/skeleton"
 import { env } from "~/env"
 
 export const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
-  const response = await fetch(
-    `${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/api/v1/stats/timeseries?metrics=visitors&period=30d&site_id=${env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}`,
-    {
-      method: "GET",
-      cache: "no-store",
-      headers: { Authorization: `Bearer ${env.PLAUSIBLE_API_KEY}` },
-    },
-  )
+  const api = wretch(`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/api/v1`)
+    .errorType("json")
+    .auth(`Bearer ${env.PLAUSIBLE_API_KEY}`)
+    .options({ cache: "no-store" })
+    .resolve(r => r.json<{ results: AnalyticsChartData[] }>())
 
-  const data = (await response.json()) as { results: AnalyticsChartData[] }
-  const totalVisitors = data.results.reduce((acc, curr) => acc + curr.visitors, 0)
-  const averageVisitors = Math.round(totalVisitors / data.results.length)
+  const options = {
+    metrics: "visitors",
+    period: "30d",
+    site_id: env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
+  }
+
+  const { results } = await api.get(`/stats/timeseries?${new URLSearchParams(options).toString()}`)
+  const totalVisitors = results.reduce((acc, curr) => acc + curr.visitors, 0)
+  const averageVisitors = Math.round(totalVisitors / results.length)
 
   return (
     <Card {...props}>
@@ -29,7 +33,7 @@ export const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) =
       </CardHeader>
 
       <CardContent>
-        <AnalyticsChart data={data.results} average={averageVisitors} className="h-56 w-full" />
+        <AnalyticsChart data={results} average={averageVisitors} className="h-56 w-full" />
       </CardContent>
     </Card>
   )
