@@ -5,7 +5,7 @@ image: "/content/open-source-money.avif"
 datePublished: 2024-08-19
 author:
   name: Piotr Kulpinski
-  image: "/authors/piotrkulpinski.jpg"
+  image: "/authors/piotrkulpinski.webp"
   twitterHandle: "piotrkulpinski"
 ---
 

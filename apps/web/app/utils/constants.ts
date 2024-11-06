@@ -45,7 +45,7 @@ export const FAMILY_LINKS = [
   {
     title: "DevSuite",
     href: "https://devsuite.co",
-    description: "A collection of developer tools that help you Ship Faster",
+    description: "Find the perfect developer tools for your next project",
   },
   {
     title: "Superstash",
