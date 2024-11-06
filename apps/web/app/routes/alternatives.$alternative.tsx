@@ -1,6 +1,7 @@
 import type { Category } from "@prisma/client"
 import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
+import { addMonths } from "date-fns"
 import { ArrowUpRightIcon, AwardIcon, SmilePlusIcon } from "lucide-react"
 import { Fragment, type ReactNode } from "react"
 import { AlternativeList } from "~/components/alternative-list"
@@ -46,6 +47,8 @@ export const meta: MetaFunction<typeof loader> = ({ matches, data, location }) =
 }
 
 export const loader = async ({ params: { alternative: slug } }: LoaderFunctionArgs) => {
+  const year = addMonths(new Date(), 1).getFullYear()
+
   try {
     const [alternative, alternatives, tools] = await Promise.all([
       prisma.alternative.findUniqueOrThrow({
@@ -86,7 +89,7 @@ export const loader = async ({ params: { alternative: slug } }: LoaderFunctionAr
     ).sort((a, b) => b.count - a.count)
 
     const meta = {
-      title: `${tools.length > 1 ? `${tools.length} Best ` : ""}Open Source ${alternative.name} Alternatives`,
+      title: `${tools.length > 1 ? `${tools.length} ` : ""}Best Open Source ${alternative.name} Alternatives in ${year}`,
       description: `A curated collection of the best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
     }
 
