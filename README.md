@@ -30,11 +30,11 @@
 
 ## About this project
 
-OpenAlternative is a community driven list of open source alternatives to proprietary software and applications.
+OpenAlternative is a community driven list of **open source alternatives to proprietary software** and applications.
 
-Our goal is to be your first stop when researching for a new open source service to help you grow your business. We will help you find alternatives and reviews of the products you already use.
+Our goal is to be your first stop when researching for a new open source service to help you grow your business. We will help you **find alternatives** of the products you already use.
 
-Join us in creating the biggest directory of open source software.
+Join us in creating the biggest **directory of open source software**.
 
 ## Sponsors
 
