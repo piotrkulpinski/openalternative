@@ -1,7 +1,8 @@
 import type { Tool } from "@openalternative/db"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
-import { sendTweet } from "~/services/twitter"
+import { sendBlueskyPost } from "~/services/bluesky"
+import { sendTwitterPost } from "~/services/twitter"
 
 /**
  * Check if a tool has reached a milestone
@@ -22,19 +23,20 @@ export const getMilestoneReached = (prevStars: number, newStars: number) => {
 }
 
 /**
- * Send a tweet congratulating a tool for reaching a milestone
+ * Send a post congratulating a tool for reaching a milestone
  * @param milestone - The milestone reached
  * @param tool - The tool object
  */
-export const sendMilestoneTweet = async (milestone: number, tool: Tool | Jsonify<Tool>) => {
-  const tweet = `⭐ ${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub! Huge congrats to the${tool.twitterHandle ? ` @${tool.twitterHandle}` : ""} team! 🎉
+export const sendMilestonePost = async (milestone: number, tool: Tool | Jsonify<Tool>) => {
+  const post = `⭐ ${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub! Huge congrats to the${tool.twitterHandle ? ` @${tool.twitterHandle}` : ""} team! 🎉
 
 ${config.site.url}/${tool.slug}`
 
   try {
-    await sendTweet(tweet)
-    console.log(`Tweet sent for ${tool.name}`)
+    await sendTwitterPost(post)
+    await sendBlueskyPost(post)
+    console.log(`Social posts sent for ${tool.name}`)
   } catch (error) {
-    console.error(`Error sending tweet for ${tool.name}:`, error)
+    console.error(`Error sending social posts for ${tool.name}:`, error)
   }
 }

@@ -1,8 +1,9 @@
 "use server"
 
-import { generateSocialTweet } from "~/lib/socials"
+import { generateSocialPost } from "~/lib/socials"
+import { sendBlueskyPost } from "~/services/bluesky"
 import { prisma } from "~/services/prisma"
-import { sendTweet } from "~/services/twitter"
+import { sendTwitterPost } from "~/services/twitter"
 
 export async function searchItems(query: string) {
   const [tools, alternatives, categories, licenses] = await Promise.all([
@@ -36,7 +37,11 @@ export async function searchItems(query: string) {
   }
 }
 
-export const sendOutSocialTweet = async () => {
-  const tweet = await generateSocialTweet()
-  return tweet ? await sendTweet(tweet) : null
+export const sendOutSocialPost = async () => {
+  const post = await generateSocialPost()
+
+  if (post) {
+    await sendTwitterPost(post)
+    await sendBlueskyPost(post)
+  }
 }

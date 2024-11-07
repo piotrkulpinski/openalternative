@@ -19,7 +19,7 @@ export const getSocialsFromUrl = async (url: string) => {
   }
 }
 
-export const generateSocialTweet = async () => {
+export const generateSocialPost = async () => {
   const where = { publishedAt: { not: null, lte: new Date() } }
   const count = await prisma.tool.count({ where })
   const skip = Math.floor(Math.random() * count)

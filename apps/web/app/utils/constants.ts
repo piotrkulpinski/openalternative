@@ -11,13 +11,14 @@ export const SITE_STATS = {
   pageviews: 150000,
   tools: 300,
   subscribers: 1800,
-  stars: 1700,
+  stars: 1800,
 }
 
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 
 export const AUTHOR_URL = "https://kulpinski.pl"
 export const TWITTER_URL = "https://x.com/ossalternative"
+export const BLUESKY_URL = "https://bsky.app/profile/openalternative.co"
 export const LINKEDIN_URL = "https://linkedin.com/company/openalternative"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/openalternative"
 export const ANALYTICS_URL = "https://go.openalternative.co/analytics"
