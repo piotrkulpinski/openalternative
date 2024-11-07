@@ -10,14 +10,13 @@ import { env, isProd } from "~/env"
  * @param tokenSecret - Your OAuth token secret (optional)
  * @returns The generated OAuth signature
  */
-function generateOAuthSignature(
+const generateOAuthSignature = (
   httpMethod: string,
   baseUrl: string,
+  consumerSecret: string,
+  tokenSecret: string,
   params: Record<string, string>,
-) {
-  const consumerSecret = env.TWITTER_API_SECRET
-  const tokenSecret = env.TWITTER_ACCESS_SECRET
-
+) => {
   // Normalize parameters
   const normalizedParams = Object.keys(params)
     .sort()
@@ -48,6 +47,18 @@ export async function makeOAuthRequest(
   baseUrl: string,
   jsonBody?: Record<string, unknown>,
 ) {
+  if (
+    !env.TWITTER_API_KEY ||
+    !env.TWITTER_ACCESS_TOKEN ||
+    !env.TWITTER_API_SECRET ||
+    !env.TWITTER_ACCESS_SECRET
+  ) {
+    return
+  }
+
+  const consumerSecret = env.TWITTER_API_SECRET
+  const tokenSecret = env.TWITTER_ACCESS_SECRET
+
   const params = {
     oauth_consumer_key: env.TWITTER_API_KEY,
     oauth_token: env.TWITTER_ACCESS_TOKEN,
@@ -56,8 +67,15 @@ export async function makeOAuthRequest(
     oauth_timestamp: Math.floor(Date.now() / 1000).toString(),
     oauth_version: "1.0",
   }
+
   // Generate the OAuth signature
-  const oauthSignature = generateOAuthSignature(httpMethod, baseUrl, params)
+  const oauthSignature = generateOAuthSignature(
+    httpMethod,
+    baseUrl,
+    consumerSecret,
+    tokenSecret,
+    params,
+  )
 
   // Construct the OAuth header
   const oauthHeader = Object.entries({
@@ -97,12 +115,16 @@ export async function makeOAuthRequest(
 }
 
 /**
- * Send a tweet to Twitter
- * @param text - The text of the tweet
+ * Send a post to Twitter
+ * @param text - The text of the post
  */
-export const sendTweet = async (text: string) => {
+export const sendTwitterPost = async (text: string) => {
+  if (!isProd) {
+    return
+  }
+
   const httpMethod = "POST"
   const baseUrl = "https://api.twitter.com/2/tweets"
 
-  isProd && (await makeOAuthRequest(httpMethod, baseUrl, { text }))
+  await makeOAuthRequest(httpMethod, baseUrl, { text })
 }

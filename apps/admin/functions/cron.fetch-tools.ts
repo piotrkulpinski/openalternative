@@ -1,11 +1,12 @@
 import { indexSearch } from "~/actions/algolia"
-import { getMilestoneReached, sendMilestoneTweet } from "~/lib/milestones"
+import { getMilestoneReached, sendMilestonePost } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
-import { generateSocialTweet } from "~/lib/socials"
+import { generateSocialPost } from "~/lib/socials"
 import { isToolPublished } from "~/lib/tools"
+import { sendBlueskyPost } from "~/services/bluesky"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
-import { sendTweet } from "~/services/twitter"
+import { sendTwitterPost } from "~/services/twitter"
 
 export const fetchToolData = inngest.createFunction(
   { id: "fetch-tool-data" },
@@ -30,7 +31,7 @@ export const fetchToolData = inngest.createFunction(
 
           if (isToolPublished(tool) && updatedTool.stars > tool.stars) {
             const milestone = getMilestoneReached(tool.stars, updatedTool.stars)
-            milestone && (await sendMilestoneTweet(milestone, tool))
+            milestone && (await sendMilestonePost(milestone, tool))
           }
 
           return prisma.tool.update({
@@ -41,10 +42,14 @@ export const fetchToolData = inngest.createFunction(
       )
     })
 
-    // Post on Twitter about a random tool
-    await step.run("post-on-twitter", async () => {
-      const tweet = await generateSocialTweet()
-      return tweet ? await sendTweet(tweet) : null
+    // Post on Socials about a random tool
+    await step.run("post-on-socials", async () => {
+      const post = await generateSocialPost()
+
+      if (post) {
+        await sendTwitterPost(post)
+        await sendBlueskyPost(post)
+      }
     })
 
     // Index search for Algolia
