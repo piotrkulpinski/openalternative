@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import { H6 } from "~/components/ui/heading"
+import { BrandBlueskyIcon } from "~/components/ui/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
 import { BrandLinkedInIcon } from "~/components/ui/icons/brand-linkedin"
 import { BrandXIcon } from "~/components/ui/icons/brand-x"
@@ -21,6 +22,7 @@ import { ThemeSwitcher } from "~/components/ui/theme-switcher"
 import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import {
   AUTHOR_URL,
+  BLUESKY_URL,
   FAMILY_LINKS,
   GITHUB_URL,
   LINKEDIN_URL,
@@ -111,6 +113,12 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               <Tooltip tooltip="Follow us on X/Twitter">
                 <NavigationLink to={TWITTER_URL} target="_blank" rel="nofollow noreferrer">
                   <BrandXIcon className="size-[1.44em] stroke-[1.25]" />
+                </NavigationLink>
+              </Tooltip>
+
+              <Tooltip tooltip="Follow us on Bluesky">
+                <NavigationLink to={BLUESKY_URL} target="_blank" rel="nofollow noreferrer">
+                  <BrandBlueskyIcon className="size-[1.44em] stroke-[1.25]" />
                 </NavigationLink>
               </Tooltip>
 

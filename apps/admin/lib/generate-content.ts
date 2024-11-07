@@ -97,22 +97,22 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
 }
 
 /**
- * Generates a launch tweet for a tool.
- * @param tool The tool to generate a launch tweet for.
- * @returns The launch tweet.
+ * Generates a launch post for a tool.
+ * @param tool The tool to generate a launch post for.
+ * @returns The launch post.
  */
-export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
+export const generateLaunchPost = async (tool: Tool | Jsonify<Tool>) => {
   const model = openai("gpt-4o")
 
   const { object } = await generateObject({
     model,
     schema: z.object({
-      tweet: z.string().max(280).describe("The launch tweet"),
+      post: z.string().max(280).describe("The launch post"),
     }),
     system: `
       You are an expert content creator.
       Use new lines to separate paragraphs.
-      Tweet should do not exceed 240 characters.
+      Post should do not exceed 240 characters.
       Use the following template:
       
       "🚀 Just published — {name} ({twitter handle}): {tagline}
@@ -123,7 +123,7 @@ export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
       "
     `,
     prompt: `
-      Generate a tweet to announce the feature of the following open source software product:
+      Generate a post to announce the feature of the following open source software product:
 
       Name: "${tool.name}"
       Tagline: "${tool.tagline}"

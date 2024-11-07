@@ -1,7 +1,8 @@
-import { generateLaunchTweet } from "~/lib/generate-content"
+import { generateLaunchPost } from "~/lib/generate-content"
+import { sendBlueskyPost } from "~/services/bluesky"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
-import { sendTweet } from "~/services/twitter"
+import { sendTwitterPost } from "~/services/twitter"
 import { DAY_IN_MS } from "~/utils/constants"
 
 export const postOnSocials = inngest.createFunction(
@@ -23,11 +24,12 @@ export const postOnSocials = inngest.createFunction(
     if (tools.length) {
       const promises = tools.map(async tool =>
         step.run(`post-on-socials-${tool.name}`, async () => {
-          logger.info(`Generating tweet about ${tool.name}`)
-          const { tweet } = await generateLaunchTweet(tool)
+          logger.info(`Generating post about ${tool.name}`)
+          const { post } = await generateLaunchPost(tool)
 
-          logger.info(`Sending tweet about ${tool.name}`, { tweet })
-          return sendTweet(tweet)
+          logger.info(`Sending social post about ${tool.name}`, { post })
+
+          return Promise.all([sendTwitterPost(post), sendBlueskyPost(post)])
         }),
       )
 
