@@ -67,7 +67,12 @@ export const HOSTING_SPONSOR: SponsoringOne | null = {
   faviconUrl: "https://easypanel.io/img/favicon.ico",
 }
 
-export const BANNER_SPONSOR: SponsoringOne | null = null
+export const BANNER_SPONSOR: SponsoringOne | null = {
+  name: "DevSuite",
+  description: "🎉 Just Launched! Find the perfect developer tools for your next project",
+  website: "https://devsuite.co",
+  faviconUrl: null,
+}
 
 export const JSON_HEADERS = {
   "Cache-Control": "public, max-age=3600, s-maxage=7200 stale-while-revalidate=3.154e7",

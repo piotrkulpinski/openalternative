@@ -3,14 +3,14 @@ import { type ElementType, type HTMLAttributes, forwardRef, isValidElement } fro
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const headingVariants = cva({
-  base: "font-display bg-gradient-to-b from-foreground to-foreground/75 bg-clip-text text-transparent",
+  base: "font-display font-semibold bg-gradient-to-b from-foreground to-foreground/75 bg-clip-text text-transparent",
 
   variants: {
     size: {
-      h1: "text-3xl font-semibold tracking-tight text-pretty md:text-4xl",
-      h2: "text-2xl font-semibold tracking-tight md:text-3xl",
-      h3: "text-2xl font-semibold tracking-tight",
-      h4: "text-xl font-semibold tracking-tight to-foreground",
+      h1: "text-3xl tracking-tight text-pretty md:text-4xl",
+      h2: "text-2xl tracking-tight md:text-3xl",
+      h3: "text-2xl tracking-tight",
+      h4: "text-xl tracking-tight to-foreground",
       h5: "text-base font-medium tracking-micro to-foreground",
       h6: "text-sm font-medium to-foreground",
     },
