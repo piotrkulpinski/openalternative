@@ -3,6 +3,7 @@ import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { Button } from "~/components/ui/button"
 import { H5 } from "~/components/ui/heading"
+import { BrandBlueskyIcon } from "~/components/ui/icons/brand-bluesky"
 import { BrandFacebookIcon } from "~/components/ui/icons/brand-facebook"
 import { BrandHackerNewsIcon } from "~/components/ui/icons/brand-hackernews"
 import { BrandLinkedInIcon } from "~/components/ui/icons/brand-linkedin"
@@ -31,6 +32,11 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, ...props }) =
       icon: <BrandXIcon />,
     },
     {
+      platform: "Bluesky",
+      url: `https://bsky.app/intent/compose?text=${shareTitle}+${shareUrl}`,
+      icon: <BrandBlueskyIcon />,
+    },
+    {
       platform: "Facebook",
       url: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
       icon: <BrandFacebookIcon />,
@@ -52,7 +58,7 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, ...props }) =
     },
     {
       platform: "WhatsApp",
-      url: `https://api.whatsapp.com/send?text=${`${shareTitle}+${shareUrl}`}`,
+      url: `https://api.whatsapp.com/send?text=${shareTitle}+${shareUrl}`,
       icon: <BrandWhatsAppIcon />,
     },
   ]
