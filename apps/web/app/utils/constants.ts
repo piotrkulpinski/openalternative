@@ -70,8 +70,8 @@ export const HOSTING_SPONSOR: SponsoringOne | null = {
 
 export const BANNER_SPONSOR: SponsoringOne | null = {
   name: "DevSuite",
-  description: "🎉 Just Launched! Find the perfect developer tools for your next project",
-  website: "https://go.devsuite.co/ph",
+  description: "Find the perfect developer tools for your next project",
+  website: "https://devsuite.co",
   faviconUrl: null,
 }
 

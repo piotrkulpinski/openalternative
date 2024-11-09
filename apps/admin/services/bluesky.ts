@@ -19,5 +19,6 @@ export const sendBlueskyPost = async (text: string) => {
     password: env.BLUESKY_PASSWORD,
   })
 
-  await agent.post({ text })
+  // TODO: Enable when I fix the issue with links
+  // await agent.post({ text })
 }
