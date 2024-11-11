@@ -15,7 +15,7 @@ export const NewsletterProof = ({ className, ...props }: HTMLAttributes<HTMLElem
       {Array.from({ length: 5 }).map((_, index) => (
         <img
           key={index}
-          src={`/users/${index + 1}.jpg`}
+          src={`/users/${index + 1}.webp`}
           alt=""
           width="40"
           height="40"
