@@ -74,7 +74,7 @@ export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size" |
     suffix?: ReactNode
   }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const {
     children,
     className,
@@ -123,3 +123,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 })
 
 Button.displayName = "Button"
+
+export { Button, buttonVariants }
