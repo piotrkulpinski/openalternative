@@ -1,13 +1,11 @@
 import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import { Plan } from "~/components/plan"
+import { PlanPayments } from "~/components/plan-payments"
 import { BackButton } from "~/components/ui/back-button"
-import { Badge } from "~/components/ui/badge"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
-import { BrandStripeIcon } from "~/components/ui/icons/brand-stripe"
 import { Intro, IntroTitle } from "~/components/ui/intro"
 import { Prose } from "~/components/ui/prose"
-import { Stack } from "~/components/ui/stack"
 import { type ToolOne, toolOnePayload } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
 import { stripe } from "~/services.server/stripe"
@@ -93,13 +91,7 @@ export default function SubmitPagePackage() {
           <Plan key={plan.id} isFeatured={index === 1} plan={plan} />
         ))}
 
-        <Stack size="xs" className="place-content-center w-full -mt-2">
-          <p className="text-xs text-muted">Payments secured by</p>
-
-          <Badge variant="outline" prefix={<BrandStripeIcon className="rounded-sm" />}>
-            Stripe
-          </Badge>
-        </Stack>
+        <PlanPayments className="-mt-2" />
       </div>
 
       <Intro alignment="center">

@@ -1,13 +1,17 @@
 import type { Sponsoring, SponsoringType } from "@openalternative/db"
 import type { SerializeFrom } from "@remix-run/node"
+import { Link } from "@remix-run/react"
 import { differenceInDays, endOfDay, startOfDay } from "date-fns"
+import { EyeIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { useCallback, useMemo } from "react"
 import type { DateRange } from "react-day-picker"
 import { Price } from "~/components/price"
+import { Button } from "~/components/ui/button"
 import { Calendar } from "~/components/ui/calendar"
 import { H4 } from "~/components/ui/heading"
 import { Stack } from "~/components/ui/stack"
+import { Tooltip } from "~/components/ui/tooltip"
 import type { AdsSelection, useAds } from "~/hooks/use-ads"
 import { getFirstAvailableMonth } from "~/utils/ads"
 import { cx } from "~/utils/cva"
@@ -17,6 +21,7 @@ export type AdsCalendar = {
   type: SponsoringType
   description: string
   price: number
+  preview?: string
 }
 
 type AdsCalendarProps = HTMLAttributes<HTMLDivElement> & {
@@ -78,23 +83,21 @@ export const AdsCalendar = ({
   )
 
   const handleSelect = useCallback(
-    (newDateRange: DateRange | undefined) => {
-      if (!newDateRange?.from || !newDateRange?.to) {
+    (dateRange?: DateRange) => {
+      if (!dateRange?.from || !dateRange?.to) {
         updateSelection(calendar.type, {
-          dateRange: newDateRange,
+          dateRange,
           duration: undefined,
         })
+
         return
       }
 
-      const duration = calculateDuration(newDateRange)
+      const duration = calculateDuration(dateRange)
 
-      updateSelection(calendar.type, {
-        dateRange: newDateRange,
-        duration,
-      })
+      updateSelection(calendar.type, { dateRange, duration })
     },
-    [calendar.type, calculateDuration, updateSelection],
+    [calendar.type],
   )
 
   const discountedPrice = price?.discountPercentage
@@ -102,15 +105,25 @@ export const AdsCalendar = ({
     : calendar.price
 
   return (
-    <div className={cx("flex flex-col w-72 divide-y", className)} {...props}>
-      <Stack className="justify-between py-2 px-4">
-        <H4 as="h3" className="">
-          {calendar.label}
-        </H4>
+    <div className={cx("flex flex-col w-full divide-y", className)} {...props}>
+      <Stack size="sm" direction="column" className="items-stretch py-2 px-4">
+        <Stack>
+          <H4 as="h3">{calendar.label}</H4>
 
-        {price && <Price price={discountedPrice} interval="day" className="text-sm" />}
+          {price && <Price price={discountedPrice} interval="day" className="ml-auto text-sm" />}
+        </Stack>
 
-        <p className="w-full text-muted text-sm text-pretty">{calendar.description}</p>
+        <Stack size="sm">
+          {calendar.preview && (
+            <Tooltip tooltip="Preview this ad">
+              <Button variant="secondary" size="sm" prefix={<EyeIcon />} isAffixOnly asChild>
+                <Link to={calendar.preview} target="_blank" rel="noopener noreferrer nofollow" />
+              </Button>
+            </Tooltip>
+          )}
+
+          <p className="flex-1 text-muted text-sm text-pretty">{calendar.description}</p>
+        </Stack>
       </Stack>
 
       <Calendar

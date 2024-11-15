@@ -87,7 +87,7 @@ export default function AdvertisePage() {
         </IntroDescription>
       </Intro>
 
-      <AdsPicker sponsorings={sponsorings} className="mx-auto" />
+      <AdsPicker sponsorings={sponsorings} className="w-full max-w-2xl mx-auto" />
 
       <Stats className="my-4" />
 
