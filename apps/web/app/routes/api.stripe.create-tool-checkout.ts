@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs, json } from "@remix-run/node"
+import { type ActionFunctionArgs, redirect } from "@remix-run/node"
 import { z } from "zod"
 import { stripe } from "~/services.server/stripe"
 
@@ -32,5 +32,5 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   // Return a success response
-  return json({ url: checkout.url })
+  return redirect(checkout.url)
 }
