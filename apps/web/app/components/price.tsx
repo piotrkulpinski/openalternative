@@ -4,6 +4,14 @@ import type { ComponentProps } from "react"
 import { Badge } from "~/components/ui/badge"
 import { cx } from "~/utils/cva"
 
+const defaultFormat: Format = {
+  style: "currency",
+  currency: "USD",
+  notation: "standard",
+  maximumFractionDigits: 2,
+  trailingZeroDisplay: "stripIfInteger",
+}
+
 type PriceProps = ComponentProps<"div"> & {
   price: number
   fullPrice?: number | null
@@ -30,16 +38,7 @@ export const Price = ({
       <div className="relative -tracking-wide tabular-nums font-display">
         <NumberFlow
           value={price}
-          format={
-            {
-              style: "currency",
-              currency: "USD",
-              notation: "standard",
-              maximumFractionDigits: 2,
-              trailingZeroDisplay: "stripIfInteger",
-              ...format,
-            } as Format
-          }
+          format={{ ...defaultFormat, ...format }}
           locales="en-US"
           className={cx("!flex items-center font-semibold h-[0.9em]", priceClassName)}
           continuous
