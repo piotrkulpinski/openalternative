@@ -17,7 +17,7 @@ import { Button } from "~/components/ui/button"
 import { Stack } from "~/components/ui/stack"
 import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import { useAds } from "~/hooks/use-ads"
-import type { action } from "~/routes/api.stripe.create-checkout"
+import type { action } from "~/routes/api.stripe.create-tool-checkout"
 
 type AdsCalendarProps = HTMLAttributes<HTMLDivElement> & {
   sponsorings: SerializeFrom<Sponsoring>[]
@@ -56,6 +56,35 @@ export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps
     if (data?.url) window.location.href = data.url
   }, [data])
 
+  const handleCheckout = () => {
+    const checkoutData = {
+      selections: selections.map(selection => {
+        const calendar = calendars.find(c => c.type === selection.type)
+        if (!calendar) return null
+
+        const discountedPrice = price?.discountPercentage
+          ? calendar.price * (1 - price.discountPercentage / 100)
+          : calendar.price
+
+        return {
+          type: selection.type,
+          price: discountedPrice,
+          duration: selection.duration ?? 0,
+          metadata: {
+            startDate: selection.dateRange?.from?.getTime() ?? 0,
+            endDate: selection.dateRange?.to?.getTime() ?? 0,
+          },
+        }
+      }),
+    }
+
+    submit(checkoutData, {
+      method: "POST",
+      encType: "application/json",
+      action: "/api/stripe/create-ads-checkout",
+    })
+  }
+
   return (
     <TooltipProvider delayDuration={250} disableHoverableContent>
       <div className={cx("flex flex-wrap justify-center gap-4", className)} {...props}>
@@ -87,7 +116,7 @@ export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps
                 const to = endOfDay(selection.dateRange.to)
 
                 return (
-                  <p key={selection.type} className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <div key={selection.type} className="flex flex-wrap items-center gap-x-4 gap-y-2">
                     <span className="flex items-center gap-2 mr-auto">
                       <Button
                         variant="secondary"
@@ -105,7 +134,7 @@ export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps
                     </span>
 
                     <span>{formatDateRange(from, to)}</span>
-                  </p>
+                  </div>
                 )
               })}
             </div>
@@ -145,7 +174,7 @@ export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps
               disabled={!hasSelections}
               isPending={state === "submitting"}
               className="max-sm:w-full sm:-my-2"
-              // onClick={handleCheckout}
+              onClick={handleCheckout}
             >
               Purchase Now
             </Button>
