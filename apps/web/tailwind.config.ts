@@ -39,6 +39,10 @@ export default {
       scale: {
         flip: "-1",
       },
+      backgroundImage: {
+        cross:
+          "linear-gradient(-45deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0) calc(50% - 0.8px),rgba(0,0,0,0.66) 50%,rgba(0,0,0,0) calc(50% + 0.8px),rgba(0,0,0,0) 100%)",
+      },
       gridColumns: {
         DEFAULT: "16rem",
         xxs: "10rem",

@@ -4,8 +4,8 @@ import type { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 
-export const Sponsors = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
-  const sponsors = [
+export const Advertisers = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
+  const advertisers = [
     {
       name: "Preline UI",
       description:
@@ -62,7 +62,7 @@ export const Sponsors = ({ className, ...props }: HTMLAttributes<HTMLDivElement>
       )}
       {...props}
     >
-      {sponsors.map(sponsor => (
+      {advertisers.map(sponsor => (
         <a
           key={sponsor.name}
           href={updateUrlWithSearchParams(sponsor.websiteUrl, { ref: "openalternative" })}
@@ -73,7 +73,7 @@ export const Sponsors = ({ className, ...props }: HTMLAttributes<HTMLDivElement>
           onClick={() => posthog.capture("sponsoring_clicked", { url: sponsor.websiteUrl })}
         >
           <img
-            src={`/sponsors/${slugify(sponsor.name)}.svg`}
+            src={`/advertisers/${slugify(sponsor.name)}.svg`}
             width="24"
             height="24"
             alt={sponsor.name}
