@@ -41,7 +41,7 @@ export default {
       },
       backgroundImage: {
         cross:
-          "linear-gradient(-45deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0) calc(50% - 0.8px),rgba(0,0,0,0.66) 50%,rgba(0,0,0,0) calc(50% + 0.8px),rgba(0,0,0,0) 100%)",
+          "linear-gradient(-45deg, hsl(var(--color-foreground) /0) 0%, hsl(var(--color-foreground) /0) calc(50% - 0.8px), hsl(var(--color-foreground) /0.66) 50%, hsl(var(--color-foreground) /0) calc(50% + 0.8px), hsl(var(--color-foreground) /0) 100%)",
       },
       gridColumns: {
         DEFAULT: "16rem",
