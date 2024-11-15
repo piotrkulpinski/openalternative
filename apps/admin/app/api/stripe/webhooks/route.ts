@@ -1,4 +1,5 @@
 import type Stripe from "stripe"
+import { z } from "zod"
 import { env } from "~/env"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
@@ -24,19 +25,44 @@ export async function POST(request: Request) {
   try {
     switch (event.type) {
       case "checkout.session.completed": {
-        const checkoutSession = event.data.object
-        const metadata = checkoutSession.metadata
+        const { mode, metadata, custom_fields: fields, customer_details: user } = event.data.object
 
-        if (!metadata?.tool || checkoutSession.mode !== "payment") {
+        if (mode !== "payment") {
           break
         }
 
-        const tool = await prisma.tool.findUniqueOrThrow({
-          where: { slug: metadata.tool },
-        })
+        // Handle tool expedited payment
+        if (metadata?.tool) {
+          const tool = await prisma.tool.findUniqueOrThrow({
+            where: { slug: metadata.tool },
+          })
 
-        // Send an event to the Inngest pipeline
-        await inngest.send({ name: "tool.expedited", data: { slug: tool.slug } })
+          // Send an event to the Inngest pipeline
+          await inngest.send({ name: "tool.expedited", data: { slug: tool.slug } })
+        }
+
+        // Handle sponsoring/ads payment
+        if (metadata?.ads) {
+          const adsSchema = z.array(
+            z.object({
+              startsAt: z.coerce.number().transform(date => new Date(date)),
+              endsAt: z.coerce.number().transform(date => new Date(date)),
+              type: z.enum(["Homepage", "Banner"]),
+            }),
+          )
+
+          for (const ad of adsSchema.parse(JSON.parse(metadata.ads))) {
+            await prisma.sponsoring.create({
+              data: {
+                email: user?.email ?? "",
+                name: fields?.find(({ key }) => key === "name")?.text?.value || "",
+                description: fields?.find(({ key }) => key === "description")?.text?.value ?? "",
+                website: fields?.find(({ key }) => key === "website")?.text?.value || "",
+                ...ad,
+              },
+            })
+          }
+        }
 
         break
       }

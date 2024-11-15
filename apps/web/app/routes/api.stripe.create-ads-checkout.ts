@@ -1,9 +1,9 @@
-import { type ActionFunctionArgs, json } from "@remix-run/node"
+import { type ActionFunctionArgs, redirect } from "@remix-run/node"
 import { z } from "zod"
 import { stripe } from "~/services.server/stripe"
 
 export const stripeAdsCheckoutSchema = z.object({
-  selections: z.array(
+  ads: z.array(
     z.object({
       type: z.enum(["Homepage", "Banner"]),
       price: z.coerce.number(),
@@ -20,7 +20,7 @@ export type StripeAdsCheckoutSchema = z.infer<typeof stripeAdsCheckoutSchema>
 
 export async function action({ request }: ActionFunctionArgs) {
   const data = await request.json()
-  const { selections } = stripeAdsCheckoutSchema.parse(data)
+  const { ads } = stripeAdsCheckoutSchema.parse(data)
   const customer = await stripe.customers.create()
 
   const checkout = await stripe.checkout.sessions.create({
@@ -30,7 +30,7 @@ export async function action({ request }: ActionFunctionArgs) {
       name: "auto",
       address: "auto",
     },
-    line_items: selections.map(({ type, price, duration }) => ({
+    line_items: ads.map(({ type, price, duration }) => ({
       price_data: {
         unit_amount: Math.round(price * 100),
         currency: "usd",
@@ -58,11 +58,11 @@ export async function action({ request }: ActionFunctionArgs) {
       },
     ],
     metadata: {
-      selections: JSON.stringify(
-        selections.map(({ type, metadata }) => ({
+      ads: JSON.stringify(
+        ads.map(({ type, metadata }) => ({
           type,
-          startDate: metadata.startDate,
-          endDate: metadata.endDate,
+          startsAt: metadata.startDate,
+          endsAt: metadata.endDate,
         })),
       ),
     },
@@ -78,5 +78,5 @@ export async function action({ request }: ActionFunctionArgs) {
     throw new Error("Unable to create a new Stripe Checkout Session.")
   }
 
-  return json({ url: checkout.url })
+  return redirect(checkout.url)
 }

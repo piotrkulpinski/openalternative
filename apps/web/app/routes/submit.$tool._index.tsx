@@ -1,7 +1,6 @@
 import { type LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import { Plan } from "~/components/plan"
-import { PlanPayments } from "~/components/plan-payments"
 import { BackButton } from "~/components/ui/back-button"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Intro, IntroTitle } from "~/components/ui/intro"
@@ -90,8 +89,6 @@ export default function SubmitPagePackage() {
         {products.map((plan, index) => (
           <Plan key={plan.id} isFeatured={index === 1} plan={plan} />
         ))}
-
-        <PlanPayments className="-mt-2" />
       </div>
 
       <Intro alignment="center">

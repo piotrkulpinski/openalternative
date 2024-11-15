@@ -100,12 +100,6 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
     }
   }, [pricesFetcher, plan.id])
 
-  useEffect(() => {
-    if (checkoutFetcher.data?.url) {
-      window.open(checkoutFetcher.data.url, "_blank")?.focus()
-    }
-  }, [checkoutFetcher.data])
-
   const onSubmit = () => {
     if (!params.tool) return
 
@@ -191,7 +185,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
         type="button"
         className="mt-auto w-full"
         variant={!price ? "secondary" : "primary"}
-        isPending={checkoutFetcher.state !== "idle" || !pricesFetcher.data}
+        isPending={checkoutFetcher.state === "submitting" || !pricesFetcher.data}
         disabled={!price}
         suffix={<ArrowUpRightIcon />}
         onClick={onSubmit}
