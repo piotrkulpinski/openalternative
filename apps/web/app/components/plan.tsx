@@ -1,4 +1,3 @@
-import NumberFlow from "@number-flow/react"
 import { Slot } from "@radix-ui/react-slot"
 import { useFetcher, useParams } from "@remix-run/react"
 import { ArrowUpRightIcon, CheckIcon, XIcon } from "lucide-react"
@@ -6,7 +5,7 @@ import { posthog } from "posthog-js"
 import { type ComponentProps, type HTMLAttributes, forwardRef, useEffect } from "react"
 import type Stripe from "stripe"
 import { PlanIntervalSwitch } from "~/components/plan-interval-switch"
-import { Badge } from "~/components/ui/badge"
+import { Price } from "~/components/price"
 import { Button } from "~/components/ui/button"
 import { Card } from "~/components/ui/card"
 import { H5 } from "~/components/ui/heading"
@@ -156,37 +155,15 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
         {plan.description && <p className="text-muted text-sm text-pretty">{plan.description}</p>}
       </div>
 
-      <div className="relative flex items-end w-full">
-        <span className="self-start mt-1 mr-1 text-xl/none font-display">$</span>
-
-        <div className="relative font-display -tracking-wide text-4xl/[0.9] sm:text-5xl/[0.9]">
-          <NumberFlow
-            value={price}
-            format={{ notation: "compact" }}
-            locales="en-US"
-            className="!flex items-center h-[0.9em] font-semibold tabular-nums"
-            continuous
-          />
-
-          {!!fullPrice && (
-            <del className="absolute ml-1 left-full -top-3 text-[0.4em] text-muted">
-              <span className="tabular-nums">{Math.round(fullPrice)}</span>
-            </del>
-          )}
-        </div>
-
-        {price > 0 && (
-          <div className="m-1 text-muted text-base/none md:text-lg/none">
-            /{isSubscription ? "month" : "one-time"}
-          </div>
-        )}
-
-        {discount && (
-          <Badge variant="success" className="absolute -top-3.5 right-0">
-            {discount}% off
-          </Badge>
-        )}
-      </div>
+      <Price
+        price={price}
+        fullPrice={fullPrice}
+        interval={isSubscription ? "month" : "one-time"}
+        discount={discount}
+        format={{ style: "decimal", notation: "compact", maximumFractionDigits: 0 }}
+        className="w-full"
+        priceClassName="text-[2em] sm:text-[2.5em]"
+      />
 
       {!!plan.features && (
         <TooltipProvider delayDuration={0} disableHoverableContent>

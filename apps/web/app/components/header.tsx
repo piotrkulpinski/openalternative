@@ -129,8 +129,8 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <NavigationLink to="/advertise">Advertise</NavigationLink>
         </nav>
 
-        <Stack size="sm">
-          <SearchForm className="max-sm:hidden" />
+        <Stack size="sm" className="max-sm:hidden">
+          <SearchForm />
 
           <NavigationLink
             to={BLUESKY_URL}
@@ -158,13 +158,13 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           >
             <BrandGitHubIcon className="size-4" />
           </NavigationLink>
-
-          <Button size="sm" variant="secondary" asChild>
-            <NavLink to="/submit" unstable_viewTransition>
-              Submit
-            </NavLink>
-          </Button>
         </Stack>
+
+        <Button size="sm" variant="secondary" asChild>
+          <NavLink to="/submit" unstable_viewTransition>
+            Submit
+          </NavLink>
+        </Button>
       </div>
 
       <nav

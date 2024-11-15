@@ -1,32 +1,17 @@
-import { formatNumber } from "@curiousleaf/utils"
 import { Slot } from "@radix-ui/react-slot"
 import { type MetaFunction, json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
-import {
-  HandHeartIcon,
-  LightbulbIcon,
-  MegaphoneIcon,
-  SendIcon,
-  SquareAsteriskIcon,
-} from "lucide-react"
-import { Sponsoring } from "~/components/sponsoring"
-import { Sponsors } from "~/components/sponsors"
+import { LightbulbIcon, MegaphoneIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
+import { AdsPicker } from "~/components/ads-picker"
+import { Advertisers } from "~/components/advertisers"
 import { Stats } from "~/components/stats"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
 import { Button } from "~/components/ui/button"
-import { Card } from "~/components/ui/card"
 import { H4 } from "~/components/ui/heading"
-import { BrandGitHubIcon } from "~/components/ui/icons/brand-github"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Stack } from "~/components/ui/stack"
 import { prisma } from "~/services.server/prisma"
-import {
-  ANALYTICS_URL,
-  SITE_EMAIL,
-  SITE_NAME,
-  SITE_STATS,
-  SPONSORING_PREMIUM_TRESHOLD,
-} from "~/utils/constants"
+import { ANALYTICS_URL, SITE_EMAIL, SITE_NAME } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 
 export const handle = {
@@ -87,47 +72,6 @@ export default function AdvertisePage() {
     },
   ]
 
-  const benefits = [
-    {
-      icon: <SquareAsteriskIcon className="size-full" />,
-      title: "Homepage Ad",
-      description: "Get featured on our homepage with a banner ad linking to your website.",
-      stats: {
-        value: SITE_STATS.pageviews,
-        label: "Monthly Pageviews",
-      },
-    },
-    {
-      icon: <HandHeartIcon className="size-full" />,
-      title: "Support OSS",
-      description: "Support the open-source community and help us maintain the directory.",
-      stats: {
-        value: SITE_STATS.tools,
-        label: "Listed Projects",
-      },
-    },
-    {
-      icon: <SendIcon className="size-full" />,
-      title: "Newsletter Mention",
-      description: "Get featured in our monthly newsletter read by OpenSource/tech enthusiasts.",
-      stats: {
-        value: SITE_STATS.subscribers,
-        label: "Subscribers",
-      },
-      exclusive: true,
-    },
-    {
-      icon: <BrandGitHubIcon className="size-full" />,
-      title: "GitHub Logo",
-      description: 'Display your logo in a special "Sponsors" section in our GitHub repository.',
-      stats: {
-        value: SITE_STATS.stars,
-        label: "Stars",
-      },
-      exclusive: true,
-    },
-  ]
-
   return (
     <>
       <Intro alignment="center">
@@ -143,7 +87,7 @@ export default function AdvertisePage() {
         </IntroDescription>
       </Intro>
 
-      <Sponsoring dates={sponsorings} className="w-full max-w-2xl mx-auto" />
+      <AdsPicker sponsorings={sponsorings} className="mx-auto" />
 
       <Stats className="my-4" />
 
@@ -181,58 +125,13 @@ export default function AdvertisePage() {
           Join these companies in advertising their business on {SITE_NAME}
         </p>
 
-        <Sponsors />
-      </div>
-
-      <div className="flex flex-col items-start gap-8 max-w-2xl mt-4">
-        <Intro>
-          <IntroTitle size="h2">What do I get for sponsoring?</IntroTitle>
-
-          <IntroDescription>
-            We offer a variety of benefits to our sponsors. Explore our{" "}
-            <a
-              href="https://go.openalternative.co/analytics"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              real-time analytics
-            </a>{" "}
-            to see what impact sponsoring could have on your business.
-          </IntroDescription>
-        </Intro>
-
-        <div className="grid grid-auto-fill-xl gap-4 w-full">
-          {benefits.map(benefit => (
-            <Card key={benefit.title} hover={false}>
-              <Card.Header>
-                <div className="flex size-9 items-center justify-center shrink-0 rounded-md border bg-background p-1.5">
-                  {benefit.icon}
-                </div>
-
-                <H4 as="strong">
-                  {benefit.title}
-                  {benefit.exclusive && <span className="text-muted">*</span>}
-                </H4>
-              </Card.Header>
-
-              <Card.Description>{benefit.description}</Card.Description>
-              <Card.Footer>
-                ~{formatNumber(benefit.stats.value)} {benefit.stats.label}
-              </Card.Footer>
-            </Card>
-          ))}
-        </div>
-
-        <p className="text-sm text-muted">
-          *Available only for premium sponsors who purchased {SPONSORING_PREMIUM_TRESHOLD} days or
-          more.
-        </p>
+        <Advertisers />
       </div>
 
       <hr />
 
       <Intro alignment="center" className="md:my-4 lg:my-8">
-        <IntroTitle as="h2">Ready to Learn More?</IntroTitle>
+        <IntroTitle as="h2">Interested in Advertising?</IntroTitle>
 
         <IntroDescription className="max-w-lg">
           Tell us more about your company and we will get back to you as soon as possible.

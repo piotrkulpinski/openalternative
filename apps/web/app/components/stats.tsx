@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react"
 import type { ComponentProps, HTMLAttributes } from "react"
 import { Stat } from "~/components/ui/stat"
-import { ANALYTICS_URL, GITHUB_URL, SITE_STATS } from "~/utils/constants"
+import { SITE_STATS } from "~/utils/constants"
 import { cx } from "~/utils/cva"
 
 const StatLink = ({ href, ...props }: ComponentProps<"a">) => {
@@ -18,10 +18,10 @@ const StatLink = ({ href, ...props }: ComponentProps<"a">) => {
 
 export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const stats = [
-    { value: SITE_STATS.pageviews, label: "Monthly Pageviews", link: ANALYTICS_URL },
-    { value: SITE_STATS.tools, label: "Listed Projects", link: "/" },
-    { value: SITE_STATS.subscribers, label: "Newsletter Subscribers", link: "/newsletter" },
-    { value: SITE_STATS.stars, label: "GitHub Stars", link: GITHUB_URL },
+    { value: SITE_STATS.pageviews, label: "Monthly Pageviews" },
+    { value: SITE_STATS.tools, label: "Listed Projects" },
+    { value: SITE_STATS.subscribers, label: "Newsletter Subscribers" },
+    { value: SITE_STATS.stars, label: "GitHub Stars" },
   ]
 
   return (
@@ -29,10 +29,9 @@ export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
       className={cx("flex flex-wrap items-center justify-around gap-x-4 gap-y-8", className)}
       {...props}
     >
-      {stats.map(({ value, label, link }, index) => (
+      {stats.map(({ value, label }, index) => (
         <StatLink
           key={`${index}-${label}`}
-          href={link}
           className="flex flex-col items-center gap-1 basis-[12rem] hover:[&[href]]:opacity-80"
         >
           <Stat
