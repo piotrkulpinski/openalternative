@@ -14,9 +14,9 @@ import { Stack } from "~/components/ui/stack"
 import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import { usePlanPrices } from "~/hooks/use-plan-prices"
 import type {
-  StripeCheckoutSchema,
-  action as createCheckoutAction,
-} from "~/routes/api.stripe.create-checkout"
+  StripeToolCheckoutSchema,
+  action as createToolCheckoutAction,
+} from "~/routes/api.stripe.create-tool-checkout"
 import type {
   StripeGetPricesSchema,
   action as createGetPricesAction,
@@ -80,7 +80,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
   const { className, plan, isFeatured, ...rest } = props
 
   const params = useParams()
-  const checkoutFetcher = useFetcher<typeof createCheckoutAction>()
+  const checkoutFetcher = useFetcher<typeof createToolCheckoutAction>()
   const pricesFetcher = useFetcher<typeof createGetPricesAction>()
 
   const { isSubscription, currentPrice, price, fullPrice, discount, interval, setInterval } =
@@ -109,7 +109,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
   const onSubmit = () => {
     if (!params.tool) return
 
-    const payload: StripeCheckoutSchema = {
+    const payload: StripeToolCheckoutSchema = {
       priceId: currentPrice.id,
       tool: params.tool,
       mode: isSubscription ? "subscription" : "payment",
@@ -118,7 +118,7 @@ export const Plan = forwardRef<HTMLDivElement, PlanProps>((props, ref) => {
     checkoutFetcher.submit(payload, {
       method: "POST",
       encType: "application/json",
-      action: "/api/stripe/create-checkout",
+      action: "/api/stripe/create-tool-checkout",
     })
 
     // Capture the event (assuming posthog is available)

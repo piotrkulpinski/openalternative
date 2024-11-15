@@ -2,17 +2,17 @@ import { type ActionFunctionArgs, json } from "@remix-run/node"
 import { z } from "zod"
 import { stripe } from "~/services.server/stripe"
 
-export const stripeCheckoutSchema = z.object({
+export const stripeToolCheckoutSchema = z.object({
   priceId: z.string(),
   tool: z.string(),
   mode: z.enum(["subscription", "payment"]),
 })
 
-export type StripeCheckoutSchema = z.infer<typeof stripeCheckoutSchema>
+export type StripeToolCheckoutSchema = z.infer<typeof stripeToolCheckoutSchema>
 
 export async function action({ request }: ActionFunctionArgs) {
   const data = await request.json()
-  const { priceId, tool, mode } = stripeCheckoutSchema.parse(data)
+  const { priceId, tool, mode } = stripeToolCheckoutSchema.parse(data)
 
   const checkout = await stripe.checkout.sessions.create({
     mode,
