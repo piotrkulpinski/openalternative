@@ -120,7 +120,7 @@ export default function AdvertisePage() {
         ))}
       </div>
 
-      <div className="flex flex-col items-center text-center gap-6 mt-4" id="sponsors">
+      <div className="flex flex-col items-center text-center gap-6 mt-4" id="advertisers">
         <p className="text-sm text-muted">
           Join these companies in advertising their business on {SITE_NAME}
         </p>

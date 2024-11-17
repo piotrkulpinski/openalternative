@@ -38,11 +38,11 @@ Join us in creating the biggest **directory of open source software**.
 
 ## Sponsors
 
-OpenAlternative is an GPL-3.0-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider [sponsoring OpenAlternative's development](https://openalternative.co/sponsor).
+OpenAlternative is an GPL-3.0-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider [sponsoring OpenAlternative's development](https://openalternative.co/advertise).
 
 <p align="center">
-  <a target="_blank" href="https://openalternative.co/sponsor#sponsors">
-    <img alt="Sponsors" src="https://openalternative.co/sponsors/sponsors.png">
+  <a target="_blank" href="https://openalternative.co/advertise#advertisers">
+    <img alt="Sponsors" src="https://openalternative.co/advertisers/advertisers.webp">
   </a>
 </p>
 

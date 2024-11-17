@@ -8,10 +8,10 @@ export const SITE_DESCRIPTION =
   "A curated collection of the best open source alternatives to everyday SaaS products. Save money with reliable tools hand-picked for you."
 
 export const SITE_STATS = {
-  pageviews: 150000,
+  pageviews: 180000,
   tools: 300,
-  subscribers: 1800,
-  stars: 1800,
+  subscribers: 1900,
+  stars: 2300,
 }
 
 export const ALPHABET = "abcdefghijklmnopqrstuvwxyz"
@@ -68,12 +68,7 @@ export const HOSTING_SPONSOR: SponsoringOne | null = {
   faviconUrl: "https://easypanel.io/img/favicon.ico",
 }
 
-export const BANNER_SPONSOR: SponsoringOne | null = {
-  name: "DevSuite",
-  description: "Find the perfect developer tools for your next project",
-  website: "https://devsuite.co",
-  faviconUrl: null,
-}
+export const BANNER_SPONSOR: SponsoringOne | null = null
 
 export const JSON_HEADERS = {
   "Cache-Control": "public, max-age=3600, s-maxage=7200 stale-while-revalidate=3.154e7",
