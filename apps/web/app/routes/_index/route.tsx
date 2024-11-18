@@ -32,7 +32,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const [sponsoring, newToolsCount, alternatives, serverState] = await Promise.all([
     // Find sponsoring
     prisma.sponsoring.findFirst({
-      where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() } },
+      where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() }, type: "Homepage" },
       select: { name: true, description: true, website: true, faviconUrl: true },
     }),
 

@@ -1,7 +1,7 @@
 import { posthog } from "posthog-js"
 import { Fragment, type HTMLAttributes } from "react"
 import { type UseHitsProps, useHits } from "react-instantsearch"
-import { SponsoringCard } from "~/components/records/sponsoring-card"
+import { AdvertiseCard } from "~/components/records/advertise-card"
 import { ToolRecord } from "~/components/records/tool-record"
 import { Grid } from "~/components/ui/grid"
 import { H5 } from "~/components/ui/heading"
@@ -20,7 +20,7 @@ export const Listing = ({ className, sponsoring, ...props }: ListingProps) => {
       {items.map((item, order) => (
         <Fragment key={item.id}>
           {Math.min(2, items.length - 1) === order && (
-            <SponsoringCard sponsoring={sponsoring} className="sm:order-2" />
+            <AdvertiseCard sponsoring={sponsoring} className="sm:order-2" />
           )}
 
           <ToolRecord

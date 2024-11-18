@@ -1,8 +1,8 @@
 import type { Prisma, Tool } from "@openalternative/db"
+import { differenceInDays, differenceInYears } from "date-fns"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { firstCommitQuery, githubClient, repositoryQuery } from "~/services/github"
 import type { FirstCommitQueryResult, RepositoryQueryResult } from "~/types/github"
-import { DAY_IN_MS } from "~/utils/constants"
 import { getSlug } from "~/utils/helpers"
 
 type Repository = {
@@ -56,12 +56,11 @@ const calculateHealthScore = ({
   firstCommitDate,
   lastCommitDate,
 }: GetToolScoreProps) => {
-  const timeSinceLastCommit = Date.now() - (lastCommitDate?.getTime() || 0)
-  const daysSinceLastCommit = timeSinceLastCommit / DAY_IN_MS
+  const daysSinceLastCommit = lastCommitDate ? differenceInDays(new Date(), lastCommitDate) : 0
   const lastCommitPenalty = Math.min(daysSinceLastCommit, 90) * 0.5
 
-  // Calculate repository age in years using firstCommitDate
-  const ageInYears = (Date.now() - firstCommitDate.getTime()) / (DAY_IN_MS * 365.25)
+  // Calculate repository age in years
+  const ageInYears = differenceInYears(new Date(), firstCommitDate)
 
   // This factor will be between 0.5 (for very old repos) and 1 (for new repos)
   const ageFactor = 0.5 + 0.5 / (1 + ageInYears / 5)

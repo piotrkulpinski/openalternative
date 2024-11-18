@@ -1,5 +1,3 @@
-import type { SponsoringOne } from "~/services.server/api"
-
 export const SITE_URL = import.meta.env.NEXT_PUBLIC_SITE_URL
 export const SITE_EMAIL = import.meta.env.NEXT_PUBLIC_SITE_EMAIL
 export const SITE_NAME = "OpenAlternative"
@@ -35,12 +33,8 @@ export const FEATURED_ALTERNATIVES = [
   "fathom-analytics",
 ]
 
-export const DAY_IN_MS = 1000 * 60 * 60 * 24
 export const TOPICS_PER_PAGE = 150
 export const SUBMISSION_POSTING_RATE = 3
-
-export const SPONSORING_PRICE = 15
-export const SPONSORING_PREMIUM_TRESHOLD = 30
 
 export const FAMILY_LINKS = [
   {
@@ -59,16 +53,6 @@ export const FAMILY_LINKS = [
     description: "Build directory websites in WordPress",
   },
 ]
-
-export const HOSTING_SPONSOR: SponsoringOne | null = {
-  name: "Easypanel",
-  description:
-    "Use an intuitive interface to deploy applications, manage databases, and provision SSL certificates.",
-  website: "https://easypanel.io",
-  faviconUrl: "https://easypanel.io/img/favicon.ico",
-}
-
-export const BANNER_SPONSOR: SponsoringOne | null = null
 
 export const JSON_HEADERS = {
   "Cache-Control": "public, max-age=3600, s-maxage=7200 stale-while-revalidate=3.154e7",

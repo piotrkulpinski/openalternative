@@ -37,7 +37,7 @@ import {
   topicManyPayload,
 } from "~/services.server/api"
 import { prisma } from "~/services.server/prisma"
-import { HOSTING_SPONSOR, JSON_HEADERS, SITE_URL } from "~/utils/constants"
+import { JSON_HEADERS, SITE_URL } from "~/utils/constants"
 import { getMetaTags } from "~/utils/meta"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 
@@ -97,7 +97,7 @@ export const loader = async ({ request, params: { tool: slug } }: LoaderFunction
   let suffix = ""
 
   try {
-    const [tool, alternatives, categories, languages, topics, featuredTools, relatedTools] =
+    const [tool, alternatives, categories, languages, topics, featured, related, sponsoring] =
       await Promise.all([
         prisma.tool.findUniqueOrThrow({
           where: preview ? { id: preview, slug } : { slug, publishedAt: { lte: new Date() } },
@@ -166,6 +166,11 @@ export const loader = async ({ request, params: { tool: slug } }: LoaderFunction
             skip,
           })
         })(),
+
+        prisma.sponsoring.findFirst({
+          where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() }, type: "ToolPage" },
+          select: { name: true, description: true, website: true, faviconUrl: true },
+        }),
       ])
 
     switch (alternatives.length) {
@@ -184,7 +189,7 @@ export const loader = async ({ request, params: { tool: slug } }: LoaderFunction
     }
 
     return json(
-      { meta, tool, alternatives, categories, languages, topics, featuredTools, relatedTools },
+      { meta, tool, alternatives, categories, languages, topics, featured, related, sponsoring },
       { headers: { ...JSON_HEADERS } },
     )
   } catch (error) {
@@ -194,7 +199,7 @@ export const loader = async ({ request, params: { tool: slug } }: LoaderFunction
 }
 
 export default function ToolsPage() {
-  const { meta, tool, alternatives, categories, languages, topics, featuredTools, relatedTools } =
+  const { meta, tool, alternatives, categories, languages, topics, featured, related, sponsoring } =
     useLoaderData<typeof loader>()
 
   const vt = unstable_useViewTransitionState(`/${tool.slug}`)
@@ -295,7 +300,7 @@ export default function ToolsPage() {
                 </Button>
               )}
 
-              {tool.hostingUrl && HOSTING_SPONSOR && (
+              {tool.hostingUrl && sponsoring && (
                 <Button
                   variant="secondary"
                   suffix={<ArrowUpRightIcon />}
@@ -307,7 +312,7 @@ export default function ToolsPage() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Self-host with {HOSTING_SPONSOR.name}
+                    Self-host with {sponsoring.name}
                   </a>
                 </Button>
               )}
@@ -329,7 +334,7 @@ export default function ToolsPage() {
             )}
 
             <Section.Sidebar className="md:hidden">
-              <ToolSidebar tool={tool} languages={languages} />
+              <ToolSidebar tool={tool} languages={languages} sponsoring={sponsoring} />
             </Section.Sidebar>
           </div>
 
@@ -401,29 +406,29 @@ export default function ToolsPage() {
         </Section.Content>
 
         <Section.Sidebar className="max-md:hidden">
-          <ToolSidebar tool={tool} languages={languages} />
+          <ToolSidebar tool={tool} languages={languages} sponsoring={sponsoring} />
         </Section.Sidebar>
       </Section>
 
       {/* Related */}
-      {relatedTools.length > 0 && (
+      {related.length > 0 && (
         <Stack size="lg" direction="column">
           <H4 as="h2">Similar open source alternatives:</H4>
 
           <Grid className="w-full">
-            {relatedTools.map(tool => (
+            {related.map(tool => (
               <ToolRecord key={tool.id} tool={tool} isRelated />
             ))}
           </Grid>
         </Stack>
       )}
 
-      {featuredTools?.length > 0 && (
+      {featured?.length > 0 && (
         <Stack size="lg" direction="column">
-          <H4 as="h2">Featured Tools:</H4>
+          <H4 as="h2">Featured open source tools:</H4>
 
           <Grid className="w-full">
-            {featuredTools.map(tool => (
+            {featured.map(tool => (
               <ToolCard key={tool.id} tool={tool} isRelated />
             ))}
           </Grid>
