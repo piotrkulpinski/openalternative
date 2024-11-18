@@ -28,14 +28,14 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
             {link ? (
               <Link
                 to={link}
-                className="shrink-0 font-medium hover:underline"
+                className="shrink-0 tabular-nums font-medium hover:underline"
                 title={title}
                 unstable_viewTransition
               >
                 {value}
               </Link>
             ) : (
-              <span className="shrink-0 font-medium" title={title}>
+              <span className="shrink-0 tabular-nums font-medium" title={title}>
                 {value}
               </span>
             )}

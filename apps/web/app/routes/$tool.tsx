@@ -10,6 +10,7 @@ import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
 import { posthog } from "posthog-js"
 import { z } from "zod"
 import { ToolBadges } from "~/components/records/tool-badges"
+import { ToolCard } from "~/components/records/tool-card"
 import { ToolRecord } from "~/components/records/tool-record"
 import { ToolSidebar } from "~/components/records/tool-sidebar"
 import { BackButton } from "~/components/ui/back-button"
@@ -96,66 +97,76 @@ export const loader = async ({ request, params: { tool: slug } }: LoaderFunction
   let suffix = ""
 
   try {
-    const [tool, alternatives, categories, languages, topics, relatedTools] = await Promise.all([
-      prisma.tool.findUniqueOrThrow({
-        where: preview ? { id: preview, slug } : { slug, publishedAt: { lte: new Date() } },
-        include: toolOnePayload,
-      }),
+    const [tool, alternatives, categories, languages, topics, featuredTools, relatedTools] =
+      await Promise.all([
+        prisma.tool.findUniqueOrThrow({
+          where: preview ? { id: preview, slug } : { slug, publishedAt: { lte: new Date() } },
+          include: toolOnePayload,
+        }),
 
-      prisma.alternativeToTool.findMany({
-        where: { tool: { slug } },
-        orderBy: [{ alternative: { tools: { _count: "desc" } } }, { alternative: { name: "asc" } }],
-        include: { alternative: { include: alternativeManyPayload } },
-      }),
-
-      prisma.categoryToTools.findMany({
-        where: { tool: { slug } },
-        orderBy: [{ category: { tools: { _count: "desc" } } }, { category: { name: "asc" } }],
-        include: { category: { include: categoryManyPayload } },
-      }),
-
-      prisma.languageToTool.findMany({
-        where: { tool: { slug } },
-        orderBy: [{ language: { tools: { _count: "desc" } } }, { language: { name: "asc" } }],
-        include: { language: { include: languageManyPayload } },
-      }),
-
-      prisma.topicToTool.findMany({
-        where: { tool: { slug } },
-        orderBy: [{ topic: { tools: { _count: "desc" } } }, { topic: { slug: "asc" } }],
-        include: { topic: { include: topicManyPayload } },
-      }),
-
-      // Get related tools
-      (async () => {
-        const relatedWhereClause = {
-          AND: [
-            { publishedAt: { lte: new Date() } },
-            { slug: { not: slug } },
-            { alternatives: { some: { alternative: { tools: { some: { tool: { slug } } } } } } },
+        prisma.alternativeToTool.findMany({
+          where: { tool: { slug } },
+          orderBy: [
+            { alternative: { tools: { _count: "desc" } } },
+            { alternative: { name: "asc" } },
           ],
-        } satisfies Prisma.ToolWhereInput
+          include: { alternative: { include: alternativeManyPayload } },
+        }),
 
-        const take = 3
-        const itemCount = await prisma.tool.count({ where: relatedWhereClause })
-        const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
-        const properties = [
-          "id",
-          "name",
-          "score",
-        ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
-        const orderBy = getRandomElement(properties)
-        const orderDir = getRandomElement(["asc", "desc"] as const)
+        prisma.categoryToTools.findMany({
+          where: { tool: { slug } },
+          orderBy: [{ category: { tools: { _count: "desc" } } }, { category: { name: "asc" } }],
+          include: { category: { include: categoryManyPayload } },
+        }),
 
-        return prisma.tool.findMany({
-          where: relatedWhereClause,
+        prisma.languageToTool.findMany({
+          where: { tool: { slug } },
+          orderBy: [{ language: { tools: { _count: "desc" } } }, { language: { name: "asc" } }],
+          include: { language: { include: languageManyPayload } },
+        }),
+
+        prisma.topicToTool.findMany({
+          where: { tool: { slug } },
+          orderBy: [{ topic: { tools: { _count: "desc" } } }, { topic: { slug: "asc" } }],
+          include: { topic: { include: topicManyPayload } },
+        }),
+
+        prisma.tool.findMany({
+          where: { isFeatured: true, publishedAt: { lte: new Date() } },
           include: toolManyPayload,
-          orderBy: { [orderBy]: orderDir },
-          take,
-          skip,
-        })
-      })(),
-    ])
+          orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
+        }),
+
+        // Get related tools
+        (async () => {
+          const relatedWhereClause = {
+            AND: [
+              { publishedAt: { lte: new Date() } },
+              { slug: { not: slug } },
+              { alternatives: { some: { alternative: { tools: { some: { tool: { slug } } } } } } },
+            ],
+          } satisfies Prisma.ToolWhereInput
+
+          const take = 3
+          const itemCount = await prisma.tool.count({ where: relatedWhereClause })
+          const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
+          const properties = [
+            "id",
+            "name",
+            "score",
+          ] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
+          const orderBy = getRandomElement(properties)
+          const orderDir = getRandomElement(["asc", "desc"] as const)
+
+          return prisma.tool.findMany({
+            where: relatedWhereClause,
+            include: toolManyPayload,
+            orderBy: { [orderBy]: orderDir },
+            take,
+            skip,
+          })
+        })(),
+      ])
 
     switch (alternatives.length) {
       case 0:
@@ -173,7 +184,7 @@ export const loader = async ({ request, params: { tool: slug } }: LoaderFunction
     }
 
     return json(
-      { meta, tool, alternatives, categories, languages, topics, relatedTools },
+      { meta, tool, alternatives, categories, languages, topics, featuredTools, relatedTools },
       { headers: { ...JSON_HEADERS } },
     )
   } catch (error) {
@@ -183,7 +194,7 @@ export const loader = async ({ request, params: { tool: slug } }: LoaderFunction
 }
 
 export default function ToolsPage() {
-  const { meta, tool, alternatives, categories, languages, topics, relatedTools } =
+  const { meta, tool, alternatives, categories, languages, topics, featuredTools, relatedTools } =
     useLoaderData<typeof loader>()
 
   const vt = unstable_useViewTransitionState(`/${tool.slug}`)
@@ -400,8 +411,20 @@ export default function ToolsPage() {
           <H4 as="h2">Similar open source alternatives:</H4>
 
           <Grid className="w-full">
-            {relatedTools.map(relatedTool => (
-              <ToolRecord key={relatedTool.id} tool={relatedTool} isRelated />
+            {relatedTools.map(tool => (
+              <ToolRecord key={tool.id} tool={tool} isRelated />
+            ))}
+          </Grid>
+        </Stack>
+      )}
+
+      {featuredTools?.length > 0 && (
+        <Stack size="lg" direction="column">
+          <H4 as="h2">Featured Tools:</H4>
+
+          <Grid className="w-full">
+            {featuredTools.map(tool => (
+              <ToolCard key={tool.id} tool={tool} isRelated />
             ))}
           </Grid>
         </Stack>
