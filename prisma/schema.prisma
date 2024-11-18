@@ -1,0 +1,162 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters", "postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DATABASE_URL_UNPOOLED")
+  extensions = [citext]
+}
+
+enum SponsoringType {
+  Banner
+  Homepage
+  ToolPage
+  BlogPost
+  All
+}
+
+model Sponsoring {
+  id          String         @id @default(cuid())
+  email       String
+  name        String
+  description String?
+  website     String
+  faviconUrl  String?
+  type        SponsoringType @default(Homepage)
+  startsAt    DateTime
+  endsAt      DateTime
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model Tool {
+  id              String    @id @default(cuid())
+  name            String    @db.Citext
+  slug            String    @unique
+  website         String    @unique
+  repository      String    @unique
+  tagline         String?
+  description     String?
+  content         String?
+  links           Json?
+  twitterHandle   String?
+  stars           Int       @default(0)
+  forks           Int       @default(0)
+  score           Int       @default(0)
+  faviconUrl      String?
+  screenshotUrl   String?
+  isFeatured      Boolean   @default(false)
+  submitterName   String?
+  submitterEmail  String?
+  submitterNote   String?
+  hostingUrl      String?
+  discountCode    String?
+  discountAmount  String?
+  firstCommitDate DateTime?
+  lastCommitDate  DateTime?
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  licenseId    String?
+  license      License?            @relation(fields: [licenseId], references: [id])
+  alternatives AlternativeToTool[]
+  categories   CategoryToTools[]
+  languages    LanguageToTool[]
+  topics       TopicToTool[]
+
+  @@index([id, slug])
+}
+
+model Alternative {
+  id             String              @id @default(cuid())
+  name           String              @db.Citext
+  slug           String              @unique
+  description    String?
+  website        String              @unique
+  faviconUrl     String?
+  isFeatured     Boolean             @default(false)
+  discountCode   String?
+  discountAmount String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  tools          AlternativeToTool[]
+}
+
+model Category {
+  id        String            @id @default(cuid())
+  name      String            @db.Citext
+  slug      String            @unique
+  label     String?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  tools     CategoryToTools[]
+}
+
+model Language {
+  slug      String           @id @unique
+  name      String           @db.Citext
+  color     String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  tools     LanguageToTool[]
+}
+
+model Topic {
+  slug      String        @id @unique
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  tools     TopicToTool[]
+}
+
+model License {
+  id          String   @id @default(cuid())
+  name        String   @unique @db.Citext
+  slug        String   @unique
+  description String?
+  content     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tools       Tool[]
+}
+
+model AlternativeToTool {
+  toolId        String
+  alternativeId String
+  tool          Tool        @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  alternative   Alternative @relation(fields: [alternativeId], references: [id], onDelete: Cascade)
+
+  @@id([toolId, alternativeId])
+}
+
+model CategoryToTools {
+  toolId     String
+  categoryId String
+  tool       Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([toolId, categoryId])
+}
+
+model LanguageToTool {
+  toolId       String
+  languageSlug String
+  percentage   Float?
+  tool         Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  language     Language @relation(fields: [languageSlug], references: [slug], onDelete: Cascade)
+
+  @@id([toolId, languageSlug])
+}
+
+model TopicToTool {
+  toolId    String
+  topicSlug String
+  tool      Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  topic     Topic  @relation(fields: [topicSlug], references: [slug], onDelete: Cascade)
+
+  @@id([toolId, topicSlug])
+}
