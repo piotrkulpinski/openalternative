@@ -1,6 +1,4 @@
 import { addMonths, eachDayOfInterval, endOfMonth, isAfter, isBefore, startOfMonth } from "date-fns"
-import type { DateRange } from "react-day-picker"
-import { DAY_IN_MS } from "./constants"
 
 type PricingItem = {
   price: number
@@ -37,40 +35,6 @@ export const calculateAdsPrice = (selections: PricingItem[], basePrice: number) 
     discountedPrice,
     discountPercentage,
   }
-}
-
-/**
- * Adjust the ads duration based on the excluded date ranges
- * @param duration - The original duration
- * @param startDate - The start date of the ads
- * @param endDate - The end date of the ads
- * @param excludeRange - An array of date ranges to exclude
- * @returns The adjusted duration
- */
-export const adjustAdsDuration = (
-  duration: number,
-  startDate: Date,
-  endDate: Date,
-  excludeRange: DateRange[],
-) => {
-  let adjustedDuration = duration
-
-  for (const { from, to } of excludeRange) {
-    if (!from || !to) continue
-
-    const start = from.getTime()
-    const end = to.getTime()
-
-    for (let d = start; d <= end; d += DAY_IN_MS) {
-      const currentDate = new Date(d)
-
-      if (currentDate >= startDate && currentDate <= endDate) {
-        adjustedDuration--
-      }
-    }
-  }
-
-  return adjustedDuration
 }
 
 /**

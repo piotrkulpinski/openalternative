@@ -1,20 +1,20 @@
 import type { SerializeFrom } from "@remix-run/node"
 import type { PropsWithChildren } from "react"
-import { SponsoringCard } from "~/components/records/sponsoring-card"
+import { AdvertiseCard } from "~/components/records/advertise-card"
 import { RepositoryDetails } from "~/components/ui/repository-details"
-import type { LanguageToToolMany, ToolOne } from "~/services.server/api"
-import { HOSTING_SPONSOR } from "~/utils/constants"
+import type { LanguageToToolMany, SponsoringOne, ToolOne } from "~/services.server/api"
 
 type ToolSidebarProps = PropsWithChildren<{
   tool: SerializeFrom<ToolOne>
   languages: SerializeFrom<LanguageToToolMany[]>
+  sponsoring: SerializeFrom<SponsoringOne> | null
 }>
 
-export const ToolSidebar = ({ children, tool, languages }: ToolSidebarProps) => {
+export const ToolSidebar = ({ children, tool, languages, sponsoring }: ToolSidebarProps) => {
   return (
     <>
       <RepositoryDetails tool={tool} languages={languages} />
-      {HOSTING_SPONSOR && <SponsoringCard sponsoring={HOSTING_SPONSOR} />}
+      <AdvertiseCard sponsoring={sponsoring} />
       {children}
     </>
   )

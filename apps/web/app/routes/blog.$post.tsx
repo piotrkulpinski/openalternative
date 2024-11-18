@@ -7,7 +7,7 @@ import {
   useLoaderData,
 } from "@remix-run/react"
 import { type Post, allPosts } from "content-collections"
-import { SponsoringCard } from "~/components/records/sponsoring-card"
+import { AdvertiseCard } from "~/components/records/advertise-card"
 import { Author } from "~/components/ui/author"
 import { BackButton } from "~/components/ui/back-button"
 import { BreadcrumbsLink } from "~/components/ui/breadcrumbs"
@@ -47,7 +47,7 @@ export const loader = async ({ params: { post: slug } }: LoaderFunctionArgs) => 
 
     if (!post) throw new Error("Not Found")
 
-    const sponsor = await prisma.alternative.findUnique({
+    const ad = await prisma.alternative.findUnique({
       where: { slug: "monday" },
     })
 
@@ -56,7 +56,7 @@ export const loader = async ({ params: { post: slug } }: LoaderFunctionArgs) => 
       description: post.description,
     }
 
-    return json({ post, sponsor, meta })
+    return json({ post, ad, meta })
   } catch (error) {
     console.error(error)
     throw json(null, { status: 404, statusText: "Not Found" })
@@ -64,7 +64,7 @@ export const loader = async ({ params: { post: slug } }: LoaderFunctionArgs) => 
 }
 
 export default function BlogPostPage() {
-  const { post, sponsor } = useLoaderData<typeof loader>()
+  const { post, ad } = useLoaderData<typeof loader>()
   const vt = unstable_useViewTransitionState(`/blog/${post._meta.path}`)
 
   return (
@@ -134,9 +134,9 @@ export default function BlogPostPage() {
 
           {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}
 
-          {sponsor && (
-            <SponsoringCard
-              sponsoring={sponsor}
+          {ad && (
+            <AdvertiseCard
+              sponsoring={ad}
               rel="noopener noreferrer nofollow"
               isRevealed={false}
               className="max-md:hidden"

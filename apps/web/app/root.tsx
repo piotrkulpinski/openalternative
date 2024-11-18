@@ -82,7 +82,12 @@ export const meta: MetaFunction = ({ location }) => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userPrefs = await getUserPrefs(request)
 
-  const [categories, alternatives] = await Promise.all([
+  const [sponsoring, categories, alternatives] = await Promise.all([
+    prisma.sponsoring.findFirst({
+      where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() }, type: "Banner" },
+      select: { name: true, description: true, website: true, faviconUrl: true },
+    }),
+
     prisma.category.findMany({
       orderBy: { tools: { _count: "desc" } },
       include: categoryManyPayload,
@@ -97,7 +102,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     }),
   ])
 
-  return json({ categories, alternatives, ...userPrefs }, { headers: JSON_HEADERS })
+  return json({ sponsoring, categories, alternatives, ...userPrefs }, { headers: JSON_HEADERS })
 }
 
 export function Layout({ children }: PropsWithChildren) {
@@ -159,7 +164,7 @@ export function Layout({ children }: PropsWithChildren) {
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-dvh">
-            <Banner />
+            <Banner sponsoring={data?.sponsoring} />
             <Header />
 
             <Container asChild>

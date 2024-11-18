@@ -11,16 +11,21 @@ import type { SponsoringOne } from "~/services.server/api"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 
-type SponsoringCardProps = CardProps & {
+type AdvertiseCardProps = CardProps & {
   sponsoring: SponsoringOne | null
   rel?: string
 }
 
-export const SponsoringCard = ({ className, sponsoring, rel, ...props }: SponsoringCardProps) => {
+export const AdvertiseCard = ({ className, sponsoring, rel, ...props }: AdvertiseCardProps) => {
   const linkRel = rel ?? (sponsoring?.website ? "noopener noreferrer" : "")
 
   return (
-    <Card className={cx("group/button", className)} isRevealed={false} asChild {...props}>
+    <Card
+      className={cx("group/button", !sponsoring && "overflow-clip", className)}
+      isRevealed={false}
+      asChild
+      {...props}
+    >
       <Link
         to={
           sponsoring?.website

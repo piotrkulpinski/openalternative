@@ -67,6 +67,13 @@
   }
 }
 
+@media (prefers-reduced-motion) {
+  * {
+    view-transition-name: none !important;
+    animation: none !important;
+  }
+}
+
 a,
 button,
 label[for],
