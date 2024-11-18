@@ -7,9 +7,22 @@ node_modules
 .env.test.local
 .env.production.local
 
-# vercel & turborepo
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# vercel
 .vercel
-.turbo
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
 
 # logs
 npm-debug.log*
@@ -19,3 +32,6 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+_admin
+_web
