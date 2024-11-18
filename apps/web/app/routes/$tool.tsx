@@ -411,7 +411,7 @@ export default function ToolsPage() {
       </Section>
 
       {/* Related */}
-      {related.length > 0 && (
+      {related?.length > 0 && (
         <Stack size="lg" direction="column">
           <H4 as="h2">Similar open source alternatives:</H4>
 
