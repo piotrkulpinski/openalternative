@@ -19,7 +19,7 @@ import { useAds } from "~/hooks/use-ads"
 import type { action } from "~/routes/api.stripe.create-tool-checkout"
 
 type AdsCalendarProps = HTMLAttributes<HTMLDivElement> & {
-  sponsorings: SerializeFrom<Sponsoring>[]
+  sponsorings: SerializeFrom<Sponsoring>[] | null
 }
 
 const calendars: AdsCalendar[] = [
@@ -51,6 +51,8 @@ export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps
   const { price, selections, hasSelections, clearSelection, updateSelection } = useAds({
     calendars,
   })
+
+  if (!sponsorings) return null
 
   const handleCheckout = () => {
     const checkoutData = {

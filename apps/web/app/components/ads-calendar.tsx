@@ -46,8 +46,8 @@ export const AdsCalendar = ({
   const bookedDates = useMemo(
     () =>
       sponsorings
-        ?.filter(({ type }) => type === calendar.type || type === "All")
-        ?.map(({ startsAt, endsAt }) => ({
+        .filter(({ type }) => type === calendar.type || type === "All")
+        .map(({ startsAt, endsAt }) => ({
           from: startOfDay(new Date(startsAt)),
           to: startOfDay(new Date(endsAt)),
         })),
