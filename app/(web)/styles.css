@@ -67,6 +67,32 @@
     animation-range-start: cover;
     animation-range-end: 15%;
   }
+
+  .prose [id] {
+    @apply relative;
+  }
+
+  .prose [id] > a {
+    @apply opacity-0;
+    @apply absolute;
+    @apply right-full;
+    @apply no-underline;
+    @apply p-2;
+    @apply -m-2;
+    @apply mr-0;
+  }
+
+  .prose [id] > a:after {
+    @apply content-["#"];
+  }
+
+  .prose [id]:hover > a {
+    @apply opacity-25;
+  }
+
+  .prose [id]:hover > a:hover {
+    @apply opacity-100;
+  }
 }
 
 a,
