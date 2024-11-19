@@ -62,7 +62,7 @@
     "plur": "^5.1.0",
     "posthog-js": "^1.181.0",
     "react": "19.0.0-rc-69d4b800-20241021",
-    "react-day-picker": "8.10.1",
+    "react-day-picker": "^9.0.0",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "react-hook-form": "^7.53.1",
     "react-instantsearch": "^7.13.3",

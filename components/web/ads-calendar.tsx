@@ -123,6 +123,7 @@ export const AdsCalendar = ({
         mode="range"
         selected={selection?.dateRange}
         onSelect={handleSelect}
+        startMonth={new Date(2024, 3)}
         defaultMonth={firstAvailableMonth}
         disabled={[date => date < new Date(), ...bookedDates]}
         modifiers={{ booked: bookedDates }}
