@@ -17,7 +17,7 @@ export default function NotFound() {
         or the page may have moved.
       </IntroDescription>
 
-      <Button className="mt-4" asChild>
+      <Button size="lg" variant="primary" className="mt-4" asChild>
         <Link href="/">Go back home</Link>
       </Button>
     </Intro>

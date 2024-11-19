@@ -1,13 +1,16 @@
 import { siteConfig } from "~/config/site"
 
 export const linksConfig = {
-  feed: `${siteConfig.url}/rss.xml`,
   author: "https://kulpinski.pl",
   twitter: "https://x.com/ossalternative",
   bluesky: "https://bsky.app/profile/openalternative.co",
   linkedin: "https://linkedin.com/company/openalternative",
   github: "https://github.com/piotrkulpinski/openalternative",
   analytics: "https://go.openalternative.co/analytics",
+  feeds: [
+    { title: "Open Source Tools", href: `${siteConfig.url}/rss.xml` },
+    { title: "Proprietary Alternatives", href: `${siteConfig.url}/alternatives/rss.xml` },
+  ],
   family: [
     {
       title: "DevSuite",

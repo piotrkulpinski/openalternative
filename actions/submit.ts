@@ -41,13 +41,14 @@ export const submitTool = createServerAction()
       await subscribeToNewsletter({
         email: data.submitterEmail,
         utm_medium: "submit_form",
+        double_opt_override: "off",
         send_welcome_email: false,
       })
     }
 
     // Check if the tool already exists
     const existingTool = await prisma.tool.findFirst({
-      where: { websiteUrl: data.websiteUrl },
+      where: { OR: [{ repository: data.repository }, { website: data.website }] },
     })
 
     // If the tool exists, redirect to the tool or submit page

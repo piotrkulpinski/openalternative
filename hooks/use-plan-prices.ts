@@ -12,34 +12,46 @@ const getPriceForInterval = (prices: Stripe.Price[], interval?: ProductInterval)
   return selectedPrice ?? prices[0]
 }
 
-const calculatePrices = (prices: Stripe.Price[], interval: ProductInterval) => {
-  const isSubscription = prices.length > 0 && prices.some(p => p.type === "recurring")
-
+const calculatePrices = (
+  prices: Stripe.Price[],
+  interval: ProductInterval,
+  coupon?: Stripe.Coupon | null,
+) => {
+  const isSubscription = prices.some(p => p.type === "recurring")
   const currentPrice = getPriceForInterval(prices, isSubscription ? interval : undefined)
   const currentPriceValue = (currentPrice.unit_amount ?? 0) / 100
   const monthlyPrice = isSubscription ? getPriceForInterval(prices, "month") : currentPrice
   const monthlyPriceValue = (monthlyPrice.unit_amount ?? 0) / 100
 
-  const price = isSubscription
+  const initialPrice = isSubscription
     ? currentPriceValue / (interval === "month" ? 1 : 12)
     : currentPriceValue
 
-  const fullPrice = isSubscription && interval === "year" ? monthlyPriceValue : null
-  const discount =
-    monthlyPriceValue < currentPriceValue ? Math.round((1 - price / monthlyPriceValue) * 100) : null
+  const couponDiscountValue = calculateCouponDiscount(initialPrice, coupon)
 
-  return {
-    isSubscription,
-    currentPrice,
-    price,
-    fullPrice,
-    discount,
-  }
+  const price = Math.max(0, initialPrice - couponDiscountValue)
+  const fullPrice = monthlyPriceValue > price ? monthlyPriceValue : null
+
+  const priceToDiscount = interval === "year" ? monthlyPriceValue : currentPriceValue
+  const discount = calculateDiscount(priceToDiscount, price)
+
+  return { isSubscription, currentPrice, price, fullPrice, discount }
 }
 
-export function usePlanPrices(prices: Stripe.Price[]) {
+const calculateCouponDiscount = (initialPrice: number, coupon?: Stripe.Coupon | null) => {
+  if (!coupon) return 0
+  if (coupon.percent_off) return (initialPrice * coupon.percent_off) / 100
+  if (coupon.amount_off) return coupon.amount_off / 100
+  return 0
+}
+
+const calculateDiscount = (basePrice: number, price: number) => {
+  return basePrice > 0 ? Math.round(((basePrice - price) / basePrice) * 100) : 0
+}
+
+export function usePlanPrices(prices: Stripe.Price[], coupon?: Stripe.Coupon | null) {
   const [interval, setInterval] = useState<ProductInterval>("month")
-  const calculatedPrices = calculatePrices(prices, interval)
+  const calculatedPrices = calculatePrices(prices, interval, coupon)
 
   return {
     ...calculatedPrices,
