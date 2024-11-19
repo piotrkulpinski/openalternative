@@ -1,6 +1,6 @@
 import { MoveLeftIcon } from "lucide-react"
 import type { ComponentProps } from "react"
-import { PaginationLink } from "~/components/web/ui/pagination-link"
+import { PaginationLink } from "~/components/web/pagination-link"
 
 export const BackButton = ({ ...props }: ComponentProps<typeof PaginationLink>) => {
   return (

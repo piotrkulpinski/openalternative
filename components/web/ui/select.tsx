@@ -1,19 +1,15 @@
-import { type SelectHTMLAttributes, forwardRef } from "react"
+import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
-import { inputVariants } from "~/components/ui/forms/input"
+import { inputVariants } from "~/components/web/ui/input"
 import { type VariantProps, cx } from "~/utils/cva"
 
-export type SelectProps = SelectHTMLAttributes<HTMLSelectElement> &
+export type SelectProps = Omit<ComponentProps<"select">, "size"> &
   VariantProps<typeof inputVariants>
 
-export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-  const { className, ...rest } = props
-
+export const Select = ({ className, size, ...props }: SelectProps) => {
   return (
     <Box hover focus>
-      <select ref={ref} className={cx(inputVariants({ hoverable: true, className }))} {...rest} />
+      <select className={cx(inputVariants({ hoverable: true, size, className }))} {...props} />
     </Box>
   )
-})
-
-Select.displayName = "Input"
+}

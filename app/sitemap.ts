@@ -35,40 +35,37 @@ export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
     createEntry("", now, { changeFrequency: "daily", priority: 1 }),
 
     // Static pages
-    ...pages.map(page => createEntry(page, now, { changeFrequency: "monthly" })),
+    ...pages.map(p => createEntry(p, now, { changeFrequency: "monthly" })),
 
     // Posts
     createEntry("/blog", now),
-    ...posts.map(post =>
-      createEntry(`/blog/${post._meta.path}`, new Date(post.updatedAt ?? post.publishedAt)),
-    ),
+    ...posts.map(p => createEntry(`/blog/${p._meta.path}`, new Date(p.updatedAt ?? p.publishedAt))),
 
     // Tools
-    createEntry("/tools", now),
-    ...tools.map(tool => createEntry(`/${tool.slug}`, tool.updatedAt)),
+    ...tools.map(t => createEntry(`/${t.slug}`, t.updatedAt)),
 
     // Categories
     createEntry("/categories", now),
-    ...categories.map(cat => createEntry(`/categories/${cat.slug}`, cat.updatedAt)),
+    ...categories.map(c => createEntry(`/categories/${c.slug}`, c.updatedAt)),
 
     // Alternatives
     createEntry("/alternatives", now),
-    ...alternatives.map(alt => createEntry(`/alternatives/${alt.slug}`, alt.updatedAt)),
+    ...alternatives.map(a => createEntry(`/alternatives/${a.slug}`, a.updatedAt)),
 
     // Languages
     createEntry("/languages", now),
-    ...languages.map(lang => createEntry(`/languages/${lang.slug}`, lang.updatedAt)),
+    ...languages.map(l => createEntry(`/languages/${l.slug}`, l.updatedAt)),
 
     // Topics
     createEntry("/topics", now),
     ...config.site.alphabet.split("").map(letter => createEntry(`/topics/letter/${letter}`, now)),
-    ...topics.map(topic => createEntry(`/topics/${topic.slug}`, topic.updatedAt)),
+    ...topics.map(t => createEntry(`/topics/${t.slug}`, t.updatedAt)),
 
     // Licenses
     createEntry("/licenses", now),
-    ...licenses.flatMap(license => [
-      createEntry(`/licenses/${license.slug}`, license.updatedAt, { changeFrequency: "monthly" }),
-      createEntry(`/licenses/${license.slug}/tools`, license.updatedAt),
+    ...licenses.flatMap(l => [
+      createEntry(`/licenses/${l.slug}`, l.updatedAt, { changeFrequency: "monthly" }),
+      createEntry(`/licenses/${l.slug}/tools`, l.updatedAt),
     ]),
   ]
 }
