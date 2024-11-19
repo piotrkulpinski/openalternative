@@ -8,8 +8,8 @@ export const linksConfig = {
   github: "https://github.com/piotrkulpinski/openalternative",
   analytics: "https://go.openalternative.co/analytics",
   feeds: [
-    { title: "Open Source Tools", href: `${siteConfig.url}/rss.xml` },
-    { title: "Proprietary Alternatives", href: `${siteConfig.url}/alternatives/rss.xml` },
+    { title: "Open Source Tools", url: `${siteConfig.url}/rss/tools.xml` },
+    { title: "Proprietary Alternatives", url: `${siteConfig.url}/rss/alternatives.xml` },
   ],
   family: [
     {

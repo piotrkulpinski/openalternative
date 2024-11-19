@@ -86,6 +86,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
         {/* TODO: Add breadcrumbs */}
         {/* <Breadcrumbs className="mr-auto flex-1" /> */}
+        {/* https://www.openstatus.dev/blog/dynamic-breadcrumb-nextjs */}
         <Logo className="mr-auto" />
 
         <nav className="contents max-lg:hidden">

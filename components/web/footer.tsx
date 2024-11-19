@@ -69,9 +69,9 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
                 </Tooltip>
 
                 <DropdownMenuContent align="start" side="top">
-                  {config.links.feeds.map(({ href, title }) => (
-                    <DropdownMenuItem key={href} asChild>
-                      <Link href={href} target="_blank" rel="nofollow noreferrer">
+                  {config.links.feeds.map(({ url, title }) => (
+                    <DropdownMenuItem key={url} asChild>
+                      <Link href={url} target="_blank" rel="nofollow noreferrer">
                         RSS &raquo; {title}
                       </Link>
                     </DropdownMenuItem>
