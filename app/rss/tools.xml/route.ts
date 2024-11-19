@@ -9,15 +9,22 @@ export async function GET() {
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { lte: new Date() } },
     orderBy: { publishedAt: "desc" },
-    select: { name: true, slug: true, description: true, publishedAt: true, categories: true },
     take: 50,
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      description: true,
+      publishedAt: true,
+      categories: { include: { category: true } },
+    },
   })
 
   const feed = new RSS({
     title: name,
     description: tagline,
     site_url: addUTMTracking(url, { source: "rss" }),
-    feed_url: `${url}/rss.xml`,
+    feed_url: `${url}/rss/tools.xml`,
     copyright: `${new Date().getFullYear()} ${name}`,
     language: "en",
     ttl: 14400,
@@ -26,12 +33,12 @@ export async function GET() {
 
   tools.map(tool => {
     feed.item({
+      guid: tool.id,
       title: tool.name,
-      guid: tool.slug,
-      url: addUTMTracking(`${url}/tools/${tool.slug}`, { source: "rss" }),
-      date: tool.publishedAt ?? new Date(),
+      url: addUTMTracking(`${url}/${tool.slug}`, { source: "rss" }),
+      date: tool.publishedAt?.toUTCString() ?? new Date().toUTCString(),
       description: tool.description ?? "",
-      categories: tool.categories?.map(c => c.name) || [],
+      categories: tool.categories?.map(c => c.category.name) || [],
     })
   })
 

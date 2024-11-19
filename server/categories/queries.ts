@@ -20,7 +20,7 @@ export const findCategorySlugs = async ({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
     where: { tools: { some: { tool: { publishedAt: { lte: new Date() } } } }, ...where },
-    select: { slug: true },
+    select: { slug: true, updatedAt: true },
   })
 }
 

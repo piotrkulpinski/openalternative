@@ -61,7 +61,7 @@ export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFind
     ...args,
     orderBy: orderBy ?? { name: "asc" },
     where: { publishedAt: { lte: new Date() }, ...where },
-    select: { slug: true },
+    select: { slug: true, updatedAt: true },
   })
 }
 
