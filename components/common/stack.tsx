@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
-import type { HTMLAttributes } from "react"
-import { forwardRef, isValidElement } from "react"
+import type { ComponentProps } from "react"
+import { isValidElement } from "react"
 
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -26,7 +26,7 @@ const stackVariants = cva({
   },
 })
 
-type StackProps = HTMLAttributes<HTMLDivElement> &
+type StackProps = ComponentProps<"div"> &
   VariantProps<typeof stackVariants> & {
     /**
      * If stack to `true`, the button will be rendered as a child within the component.
@@ -35,14 +35,11 @@ type StackProps = HTMLAttributes<HTMLDivElement> &
     asChild?: boolean
   }
 
-export const Stack = forwardRef<HTMLDivElement, StackProps>((props, ref) => {
-  const { className, asChild, size, direction, ...rest } = props
+const Stack = ({ className, asChild, size, direction, ...props }: StackProps) => {
   const useAsChild = asChild && isValidElement(props.children)
-  const Component = useAsChild ? Slot : "div"
+  const Comp = useAsChild ? Slot : "div"
 
-  return (
-    <Component ref={ref} className={cx(stackVariants({ size, direction, className }))} {...rest} />
-  )
-})
+  return <Comp className={cx(stackVariants({ size, direction, className }))} {...props} />
+}
 
-Stack.displayName = "Stack"
+export { Stack }

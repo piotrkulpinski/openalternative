@@ -33,6 +33,8 @@ export const env = createEnv({
     GITHUB_TOKEN: z.string().min(1),
     SCREENSHOTONE_ACCESS_KEY: z.string().min(1),
     PLAUSIBLE_API_KEY: z.string().min(1),
+    BEEHIIV_API_KEY: z.string().min(1),
+    BEEHIIV_PUBLICATION_ID: z.string().min(1),
     TWITTER_API_KEY: z.string().optional(),
     TWITTER_API_SECRET: z.string().optional(),
     TWITTER_ACCESS_TOKEN: z.string().optional(),

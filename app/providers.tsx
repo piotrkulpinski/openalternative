@@ -1,5 +1,6 @@
 "use client"
 
+import { ThemeProvider } from "next-themes"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
@@ -19,9 +20,11 @@ if (typeof window !== "undefined") {
 
 export default function Providers({ children }: PropsWithChildren) {
   return (
-    <PostHogProvider client={posthog}>
-      <PosthogPageview />
-      <NuqsAdapter>{children}</NuqsAdapter>
-    </PostHogProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <PostHogProvider client={posthog}>
+        <PosthogPageview />
+        <NuqsAdapter>{children}</NuqsAdapter>
+      </PostHogProvider>
+    </ThemeProvider>
   )
 }

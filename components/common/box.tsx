@@ -1,10 +1,9 @@
 import { Slot } from "@radix-ui/react-slot"
-import type { HTMLAttributes } from "react"
-import { forwardRef } from "react"
+import type { ComponentProps } from "react"
 
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
-export const boxVariants = cva({
+const boxVariants = cva({
   base: "border",
 
   variants: {
@@ -20,18 +19,10 @@ export const boxVariants = cva({
   },
 })
 
-export type BoxProps = HTMLAttributes<HTMLDivElement> & VariantProps<typeof boxVariants>
+type BoxProps = ComponentProps<"div"> & VariantProps<typeof boxVariants>
 
-export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
-  const { hover, focus, focusWithin, className, ...rest } = props
+const Box = ({ hover, focus, focusWithin, className, ...props }: BoxProps) => {
+  return <Slot className={cx(boxVariants({ hover, focus, focusWithin, className }))} {...props} />
+}
 
-  return (
-    <Slot
-      ref={ref}
-      className={cx(boxVariants({ hover, focus, focusWithin, className }))}
-      {...rest}
-    />
-  )
-})
-
-Box.displayName = "Box"
+export { Box, boxVariants, type BoxProps }
