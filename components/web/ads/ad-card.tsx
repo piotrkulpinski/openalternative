@@ -1,6 +1,5 @@
 import { ArrowUpRightIcon } from "lucide-react"
 import Link from "next/link"
-import { posthog } from "posthog-js"
 import { H4 } from "~/components/common/heading"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
@@ -36,7 +35,7 @@ export const AdCard = ({ className, ad: adProp, rel, ...props }: AdCardProps) =>
         }
         target={ad.website ? "_blank" : "_self"}
         rel={linkRel}
-        onClick={() => posthog.capture("click_ad", { url: ad.website, type: ad.type })}
+        // onClick={() => posthog.capture("click_ad", { url: ad.website, type: ad.type })}
       >
         {ad.website && (
           <Card.Badges>
