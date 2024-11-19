@@ -1,3 +1,4 @@
+import Image from "next/image"
 import type { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 
@@ -24,13 +25,13 @@ export const FaviconImage = ({ className, src, title, ...props }: FaviconProps) 
   if (!src) return null
 
   return (
-    <img
-      alt={title ? `Favicon of ${title} website` : undefined}
+    <Image
+      src={src}
+      alt={title ? `Favicon of ${title} website` : ""}
       loading="lazy"
       width="64"
       height="64"
       className={cx("aspect-square size-9 rounded", className)}
-      src={src}
       {...props}
     />
   )

@@ -19,10 +19,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <>
       <div className="flex flex-col min-h-dvh">
-        <Suspense>
-          <AdBanner />
-        </Suspense>
-
+        <AdBanner />
         <Header />
 
         <Container asChild>

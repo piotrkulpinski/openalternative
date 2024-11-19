@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot"
 import { LoaderIcon } from "lucide-react"
-import type { ButtonHTMLAttributes, ReactNode } from "react"
-import { Children, forwardRef, isValidElement } from "react"
+import type { ComponentProps, ReactNode } from "react"
+import { Children, isValidElement } from "react"
 import { Box } from "~/components/common/box"
 import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
@@ -50,7 +50,7 @@ const buttonAffixVariants = cva({
   base: "shrink-0 size-[1.1em]",
 })
 
-export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size" | "prefix"> &
+export type ButtonProps = Omit<ComponentProps<"button">, "size" | "prefix"> &
   VariantProps<typeof buttonVariants> & {
     /**
      * If set to `true`, the button will be rendered as a child within the component.
@@ -74,21 +74,19 @@ export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size" |
     suffix?: ReactNode
   }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const {
-    children,
-    className,
-    disabled,
-    asChild,
-    isPending,
-    prefix,
-    suffix,
-    variant,
-    size,
-    isAffixOnly,
-    ...rest
-  } = props
-
+const Button = ({
+  children,
+  className,
+  disabled,
+  asChild,
+  isPending,
+  prefix,
+  suffix,
+  variant,
+  size,
+  isAffixOnly,
+  ...props
+}: ButtonProps) => {
   const isChildrenEmpty = (children: ReactNode) => {
     return Children.count(children) === 0
   }
@@ -99,10 +97,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   return (
     <Box hover focus>
       <Component
-        ref={ref}
         disabled={disabled ?? isPending}
         className={cx(buttonVariants({ variant, size, isAffixOnly, isPending, className }))}
-        {...rest}
+        {...props}
       >
         <Slottable child={children} asChild={asChild}>
           {child => (
@@ -120,8 +117,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
       </Component>
     </Box>
   )
-})
-
-Button.displayName = "Button"
+}
 
 export { Button, buttonVariants }
