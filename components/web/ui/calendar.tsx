@@ -31,12 +31,11 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
           "relative w-full p-1.5 rounded-md hover:bg-card-dark group-data-[selected]/day:hover:bg-transparent",
         selected: "bg-foreground/15",
         range_start: "rounded-l-md",
-        range_middle: "!bg-foreground/5",
+        range_middle: "bg-foreground/5",
         range_end: "rounded-r-md",
-        today: "bg-primary/75 !text-background font-semibold rounded-md",
-        outside:
-          "outside text-muted opacity-40 aria-selected:bg-card aria-selected:text-muted aria-selected:opacity-25",
-        disabled: "text-muted opacity-40 pointer-events-none",
+        today: "bg-primary/75 text-background font-semibold rounded-md",
+        outside: "opacity-40",
+        disabled: "opacity-40 pointer-events-none",
         hidden: "invisible",
         ...classNames,
       }}
