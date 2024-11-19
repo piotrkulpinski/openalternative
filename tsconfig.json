@@ -14,11 +14,7 @@
     "moduleDetection": "force",
     "moduleResolution": "Bundler",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [{ "name": "next" }],
     "paths": {
       "~/*": ["./*"],
       "content-collections": ["./.content-collections/generated"]

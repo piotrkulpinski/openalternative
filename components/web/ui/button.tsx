@@ -2,8 +2,8 @@ import { Slot } from "@radix-ui/react-slot"
 import { LoaderIcon } from "lucide-react"
 import type { ButtonHTMLAttributes, ReactNode } from "react"
 import { Children, forwardRef, isValidElement } from "react"
+import { Box } from "~/components/common/box"
 import { Slottable } from "~/components/common/slottable"
-import { Box } from "~/components/web/ui/box"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const buttonVariants = cva({

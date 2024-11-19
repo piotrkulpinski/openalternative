@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from "react"
+import type { ComponentProps, ReactNode } from "react"
 import { Heading, type HeadingProps } from "~/components/common/heading"
 import { Prose } from "~/components/common/prose"
 import { type VariantProps, cva, cx } from "~/utils/cva"
@@ -19,7 +19,7 @@ const introVariants = cva({
   },
 })
 
-type IntroProps = Omit<HTMLAttributes<HTMLElement>, "title" | "prefix"> &
+type IntroProps = Omit<ComponentProps<"div">, "title" | "prefix"> &
   VariantProps<typeof introVariants> & {
     title?: ReactNode
     description?: ReactNode
@@ -39,7 +39,7 @@ const IntroTitle = ({ size = "h1", ...props }: HeadingProps) => {
   return <Heading size={size} {...props} />
 }
 
-const IntroDescription = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
+const IntroDescription = ({ children, className, ...props }: ComponentProps<typeof Prose>) => {
   return (
     <Prose className={cx("max-w-2xl", className)} {...props}>
       <h2 className="!text-base !font-normal !tracking-normal !text-foreground/70 md:!text-lg">

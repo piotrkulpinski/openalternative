@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot"
-import { type ElementType, type HTMLAttributes, forwardRef, isValidElement } from "react"
+import { type ElementType, type HTMLAttributes, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const headingVariants = cva({
@@ -36,43 +36,35 @@ export type HeadingProps = Omit<HTMLAttributes<HTMLHeadingElement>, "size"> &
     asChild?: boolean
   }
 
-export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
-  const { className, as, asChild, size, ...rest } = props
-
-  const useAsChild = asChild && isValidElement(rest.children)
+const Heading = ({ className, as, asChild, size, ...props }: HeadingProps) => {
+  const useAsChild = asChild && isValidElement(props.children)
   const Comp = useAsChild ? Slot : (as ?? size ?? "h2")
 
-  return <Comp ref={ref} className={cx(headingVariants({ size, className }))} {...rest} />
-})
+  return <Comp className={cx(headingVariants({ size, className }))} {...props} />
+}
 
-export const H1 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
-  return <Heading ref={ref} size="h1" {...props} />
-})
+const H1 = (props: HeadingProps) => {
+  return <Heading size="h1" {...props} />
+}
 
-export const H2 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
-  return <Heading ref={ref} size="h2" {...props} />
-})
+const H2 = (props: HeadingProps) => {
+  return <Heading size="h2" {...props} />
+}
 
-export const H3 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
-  return <Heading ref={ref} size="h3" {...props} />
-})
+const H3 = (props: HeadingProps) => {
+  return <Heading size="h3" {...props} />
+}
 
-export const H4 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
-  return <Heading ref={ref} size="h4" {...props} />
-})
+const H4 = (props: HeadingProps) => {
+  return <Heading size="h4" {...props} />
+}
 
-export const H5 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
-  return <Heading ref={ref} size="h5" {...props} />
-})
+const H5 = (props: HeadingProps) => {
+  return <Heading size="h5" {...props} />
+}
 
-export const H6 = forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
-  return <Heading ref={ref} size="h6" {...props} />
-})
+const H6 = (props: HeadingProps) => {
+  return <Heading size="h6" {...props} />
+}
 
-Heading.displayName = "Heading"
-H1.displayName = "H1"
-H2.displayName = "H2"
-H3.displayName = "H3"
-H4.displayName = "H4"
-H5.displayName = "H5"
-H6.displayName = "H6"
+export { Heading, H1, H2, H3, H4, H5, H6 }

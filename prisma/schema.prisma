@@ -10,7 +10,7 @@ datasource db {
   extensions = [citext]
 }
 
-enum SponsoringType {
+enum AdType {
   Banner
   Homepage
   ToolPage
@@ -18,18 +18,18 @@ enum SponsoringType {
   All
 }
 
-model Sponsoring {
-  id          String         @id @default(cuid())
+model Ad {
+  id          String   @id @default(cuid())
   email       String
   name        String
   description String?
   website     String
   faviconUrl  String?
-  type        SponsoringType @default(Homepage)
+  type        AdType   @default(Homepage)
   startsAt    DateTime
   endsAt      DateTime
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Tool {

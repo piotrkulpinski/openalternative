@@ -78,10 +78,17 @@ export default {
             transform: "translateY(0) perspective(500px) rotateX(0deg)",
           },
         },
+
+        movingBanner: {
+          to: {
+            backgroundPosition: "100% 0",
+          },
+        },
       },
       animation: {
         shimmer: "shimmer 1.25s cubic-bezier(0.5, 0.25, 0.25, 0.5) infinite",
         reveal: "reveal linear forwards",
+        movingBanner: "movingBanner 25s linear infinite",
       },
     },
   },

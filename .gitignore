@@ -33,5 +33,5 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-_admin
-_web
+# Temporary files
+/_*
