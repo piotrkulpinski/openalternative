@@ -1,57 +1,50 @@
-import type { Sponsoring, SponsoringType } from "@prisma/client"
-import type { SerializeFrom } from "@remix-run/node"
-import { Link } from "@remix-run/react"
+import type { AdType } from "@prisma/client"
 import { differenceInDays, endOfDay, startOfDay } from "date-fns"
 import { EyeIcon } from "lucide-react"
+import Link from "next/link"
 import type { HTMLAttributes } from "react"
 import { useCallback, useMemo } from "react"
 import type { DateRange } from "react-day-picker"
-import { Price } from "~/components/price"
-import { Button } from "~/components/ui/button"
-import { Calendar } from "~/components/ui/calendar"
-import { H4 } from "~/components/ui/heading"
-import { Stack } from "~/components/ui/stack"
-import { Tooltip } from "~/components/ui/tooltip"
+import { H4 } from "~/components/common/heading"
+import { Stack } from "~/components/common/stack"
+import { Price } from "~/components/web/price"
+import { Button } from "~/components/web/ui/button"
+import { Calendar } from "~/components/web/ui/calendar"
+import { Tooltip } from "~/components/web/ui/tooltip"
+import type { AdSpot } from "~/config/ads"
 import type { AdsSelection, useAds } from "~/hooks/use-ads"
+import type { AdMany } from "~/server/ads/payloads"
 import { getFirstAvailableMonth } from "~/utils/ads"
 import { cx } from "~/utils/cva"
 
-export type AdsCalendar = {
-  label: string
-  type: SponsoringType
-  description: string
-  price: number
-  preview?: string
-}
-
 type AdsCalendarProps = HTMLAttributes<HTMLDivElement> & {
-  calendar: AdsCalendar
-  sponsorings: SerializeFrom<Sponsoring>[]
+  adSpot: AdSpot
+  ads: AdMany[]
   price: ReturnType<typeof useAds>["price"]
   selections: AdsSelection[]
-  updateSelection: (type: SponsoringType, selection: Partial<Omit<AdsSelection, "type">>) => void
+  updateSelection: (type: AdType, selection: Partial<Omit<AdsSelection, "type">>) => void
 }
 
 export const AdsCalendar = ({
   className,
-  calendar,
-  sponsorings,
+  adSpot,
+  ads,
   price,
   selections,
   updateSelection,
   ...props
 }: AdsCalendarProps) => {
-  const selection = selections.find(s => s.type === calendar.type)
+  const selection = selections.find(s => s.type === adSpot.type)
 
   const bookedDates = useMemo(
     () =>
-      sponsorings
-        .filter(({ type }) => type === calendar.type || type === "All")
+      ads
+        .filter(({ type }) => type === adSpot.type || type === "All")
         .map(({ startsAt, endsAt }) => ({
-          from: startOfDay(new Date(startsAt)),
-          to: startOfDay(new Date(endsAt)),
+          from: startOfDay(startsAt),
+          to: startOfDay(endsAt),
         })),
-    [sponsorings, calendar.type],
+    [ads, adSpot.type],
   )
 
   const firstAvailableMonth = useMemo(() => getFirstAvailableMonth(bookedDates), [bookedDates])
@@ -85,7 +78,7 @@ export const AdsCalendar = ({
   const handleSelect = useCallback(
     (dateRange?: DateRange) => {
       if (!dateRange?.from || !dateRange?.to) {
-        updateSelection(calendar.type, {
+        updateSelection(adSpot.type, {
           dateRange,
           duration: undefined,
         })
@@ -95,34 +88,34 @@ export const AdsCalendar = ({
 
       const duration = calculateDuration(dateRange)
 
-      updateSelection(calendar.type, { dateRange, duration })
+      updateSelection(adSpot.type, { dateRange, duration })
     },
-    [calendar.type],
+    [adSpot.type],
   )
 
   const discountedPrice = price?.discountPercentage
-    ? calendar.price * (1 - price.discountPercentage / 100)
-    : calendar.price
+    ? adSpot.price * (1 - price.discountPercentage / 100)
+    : adSpot.price
 
   return (
     <div className={cx("flex flex-col w-full divide-y", className)} {...props}>
       <Stack size="sm" direction="column" className="items-stretch py-2 px-4">
         <Stack>
-          <H4 as="h3">{calendar.label}</H4>
+          <H4 as="h3">{adSpot.label}</H4>
 
           {price && <Price price={discountedPrice} interval="day" className="ml-auto text-sm" />}
         </Stack>
 
         <Stack size="sm">
-          {calendar.preview && (
+          {adSpot.preview && (
             <Tooltip tooltip="Preview this ad">
               <Button variant="secondary" size="sm" prefix={<EyeIcon />} isAffixOnly asChild>
-                <Link to={calendar.preview} target="_blank" rel="noopener noreferrer nofollow" />
+                <Link href={adSpot.preview} target="_blank" rel="noopener noreferrer nofollow" />
               </Button>
             </Tooltip>
           )}
 
-          <p className="flex-1 text-muted text-sm text-pretty">{calendar.description}</p>
+          <p className="flex-1 text-muted text-sm text-pretty">{adSpot.description}</p>
         </Stack>
       </Stack>
 
