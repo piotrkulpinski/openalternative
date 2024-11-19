@@ -1,7 +1,8 @@
 import { formatNumber } from "@curiousleaf/utils"
 import NumberFlow, { type Format } from "@number-flow/react"
 import type { ComponentProps } from "react"
-import { Badge } from "~/components/ui/badge"
+import type Stripe from "stripe"
+import { Badge } from "~/components/web/ui/badge"
 import { cx } from "~/utils/cva"
 
 const defaultFormat: Format = {
@@ -17,6 +18,7 @@ type PriceProps = ComponentProps<"div"> & {
   fullPrice?: number | null
   interval?: string
   discount?: number | null
+  coupon?: Stripe.Coupon
   format?: Format
   priceClassName?: string
 }
@@ -27,8 +29,9 @@ export const Price = ({
   fullPrice,
   interval,
   discount,
-  priceClassName,
+  coupon,
   format,
+  priceClassName,
   ...props
 }: PriceProps) => {
   return (
@@ -57,9 +60,17 @@ export const Price = ({
         <div className="m-[0.25em] self-end text-muted text-[0.9em] leading-none">/{interval}</div>
       )}
 
-      {discount && (
+      {!!discount && (
         <Badge variant="success" className="absolute -top-3.5 right-0">
           {discount}% off
+          {coupon?.max_redemptions && (
+            <span className="text-foreground/65">
+              ({coupon.max_redemptions - coupon.times_redeemed}
+              {coupon.max_redemptions > coupon.max_redemptions - coupon.times_redeemed &&
+                `/${coupon.max_redemptions}`}{" "}
+              left)
+            </span>
+          )}
         </Badge>
       )}
     </div>

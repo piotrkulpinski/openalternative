@@ -1,8 +1,8 @@
-import { type InputHTMLAttributes, forwardRef } from "react"
+import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
-export const inputVariants = cva({
+const inputVariants = cva({
   base: "w-full border appearance-none bg-background text-secondary resize-none [field-sizing:content] font-medium transition duration-150 placeholder:text-inherit placeholder:opacity-50 disabled:opacity-50",
 
   variants: {
@@ -21,17 +21,14 @@ export const inputVariants = cva({
   },
 })
 
-export type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size"> &
-  VariantProps<typeof inputVariants>
+type InputProps = Omit<ComponentProps<"input">, "size"> & VariantProps<typeof inputVariants>
 
-export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { className, size, hoverable, ...rest } = props
-
+const Input = ({ className, size, hoverable, ...props }: InputProps) => {
   return (
     <Box focus>
-      <input ref={ref} className={cx(inputVariants({ size, hoverable, className }))} {...rest} />
+      <input className={cx(inputVariants({ size, hoverable, className }))} {...props} />
     </Box>
   )
-})
+}
 
-Input.displayName = "Input"
+export { Input, inputVariants }

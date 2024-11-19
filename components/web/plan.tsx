@@ -1,6 +1,5 @@
 "use client"
 
-import NumberFlow from "@number-flow/react"
 import { Slot } from "@radix-ui/react-slot"
 import { ArrowUpRightIcon, CheckIcon, XIcon } from "lucide-react"
 import type { ComponentProps } from "react"
@@ -12,7 +11,7 @@ import { H5 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
 import { PlanIntervalSwitch } from "~/components/web/plan-interval-switch"
-import { Badge } from "~/components/web/ui/badge"
+import { Price } from "~/components/web/price"
 import { Button } from "~/components/web/ui/button"
 import { Card, type cardVariants } from "~/components/web/ui/card"
 import { Ping } from "~/components/web/ui/ping"
@@ -153,45 +152,15 @@ const Plan = ({
         )}
       </div>
 
-      <div className="relative flex items-end font-display">
-        <span className="self-start mt-1 mr-1 text-xl/none">$</span>
-
-        <div className="relative -tracking-wide text-4xl/[0.9] sm:text-5xl/[0.9]">
-          <NumberFlow
-            value={price}
-            format={{ notation: "compact" }}
-            locales="en-US"
-            className="!flex items-center h-[0.9em] font-semibold tabular-nums"
-            continuous
-          />
-
-          {!!fullPrice && (
-            <del className="absolute ml-1 left-full -top-3 text-[0.4em] text-foreground/50">
-              <span className="tabular-nums">{Math.round(fullPrice)}</span>
-            </del>
-          )}
-        </div>
-
-        {price > 0 && (
-          <div className="m-1 text-foreground/50 text-base/none md:text-lg/none">
-            /{isSubscription ? "month" : "one-time"}
-          </div>
-        )}
-
-        {!!discount && (
-          <Badge variant="success" className="absolute -top-3.5 right-0">
-            {discount}% off
-            {coupon?.max_redemptions && (
-              <span className="text-foreground/65">
-                ({coupon.max_redemptions - coupon.times_redeemed}
-                {coupon.max_redemptions > coupon.max_redemptions - coupon.times_redeemed &&
-                  `/${coupon.max_redemptions}`}{" "}
-                left)
-              </span>
-            )}
-          </Badge>
-        )}
-      </div>
+      <Price
+        price={price}
+        fullPrice={fullPrice}
+        interval={isSubscription ? "month" : "one-time"}
+        discount={discount}
+        format={{ style: "decimal", notation: "compact", maximumFractionDigits: 0 }}
+        className="w-full"
+        priceClassName="text-[2em] sm:text-[2.5em]"
+      />
 
       {!!features && (
         <TooltipProvider delayDuration={0} disableHoverableContent>
@@ -238,7 +207,7 @@ const PlanSkeleton = () => {
   return (
     <Card hover={false} isRevealed={false} className={cx(planVariants())}>
       <div className="space-y-3">
-        <H5 asChild>
+        <H5>
           <Skeleton className="w-24">&nbsp;</Skeleton>
         </H5>
 
@@ -248,10 +217,10 @@ const PlanSkeleton = () => {
         </div>
       </div>
 
-      <Skeleton className="w-1/4 text-4xl/[0.9] sm:text-5xl/[0.9]">&nbsp;</Skeleton>
+      <Skeleton className="w-1/4 h-[0.9em] text-[2em] sm:text-[2.5em]">&nbsp;</Skeleton>
 
       <Stack direction="column" className="items-stretch">
-        {[...Array(6)].map((_, index) => (
+        {[...Array(5)].map((_, index) => (
           <div key={index} className={cx(planFeatureVariants())}>
             <div className={cx(planFeatureCheckVariants({ type: "neutral" }))}>&nbsp;</div>
 

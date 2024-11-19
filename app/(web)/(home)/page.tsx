@@ -1,14 +1,21 @@
 import Link from "next/link"
+import type { SearchParams } from "nuqs"
 import { Suspense } from "react"
 import { CountBadge, CountBadgeSkeleton } from "~/app/(web)/(home)/count-badge"
+import { ToolsListing } from "~/app/(web)/(home)/listing"
 import { Stack } from "~/components/common/stack"
 import { Newsletter } from "~/components/web/newsletter"
 import { NewsletterProof } from "~/components/web/newsletter-proof"
+import { ToolsSkeleton } from "~/components/web/tools/tools"
 import { Button } from "~/components/web/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
 
-export default async function Home() {
+type PageProps = {
+  searchParams: Promise<SearchParams>
+}
+
+export default function Home({ searchParams }: PageProps) {
   const hideNewsletter = false
 
   return (
@@ -46,6 +53,10 @@ export default async function Home() {
           </Newsletter>
         )}
       </section>
+
+      <Suspense fallback={<ToolsSkeleton />}>
+        <ToolsListing searchParams={searchParams} />
+      </Suspense>
     </>
   )
 }

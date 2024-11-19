@@ -1,6 +1,5 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
-import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react"
-import { forwardRef } from "react"
+import type { ComponentProps, ReactNode } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const tooltipVariants = cva({
@@ -26,33 +25,26 @@ const tooltipArrowVariants = cva({
   base: "w-2 h-1 block fill-background",
 })
 
-export type TooltipElement = ElementRef<typeof TooltipPrimitive.Trigger>
-export type TooltipProps = ComponentPropsWithoutRef<typeof TooltipPrimitive.Root> &
-  ComponentPropsWithoutRef<typeof TooltipContent> & {
+type TooltipProps = ComponentProps<typeof TooltipPrimitive.Root> &
+  ComponentProps<typeof TooltipContent> & {
     tooltip: ReactNode
   }
 
-export const TooltipProvider = TooltipPrimitive.Provider
-export const TooltipRoot = TooltipPrimitive.Root
-export const TooltipTrigger = TooltipPrimitive.Trigger
-export const TooltipPortal = TooltipPrimitive.Portal
+const TooltipProvider = TooltipPrimitive.Provider
+const TooltipRoot = TooltipPrimitive.Root
+const TooltipTrigger = TooltipPrimitive.Trigger
+const TooltipPortal = TooltipPrimitive.Portal
 
-export const TooltipContent = forwardRef<
-  ElementRef<typeof TooltipPrimitive.Content>,
-  ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & VariantProps<typeof tooltipVariants>
->((props, ref) => {
-  const {
-    children,
-    className,
-    align = "center",
-    collisionPadding = 5,
-    sideOffset = 4,
-    ...rest
-  } = props
-
+const TooltipContent = ({
+  children,
+  className,
+  align = "center",
+  collisionPadding = 5,
+  sideOffset = 4,
+  ...rest
+}: ComponentProps<typeof TooltipPrimitive.Content> & VariantProps<typeof tooltipVariants>) => {
   return (
     <TooltipPrimitive.Content
-      ref={ref}
       align={align}
       collisionPadding={collisionPadding}
       sideOffset={sideOffset}
@@ -63,32 +55,23 @@ export const TooltipContent = forwardRef<
       <TooltipArrow />
     </TooltipPrimitive.Content>
   )
-})
-TooltipContent.displayName = TooltipPrimitive.Content.displayName
+}
 
-export const TooltipArrow = forwardRef<
-  ElementRef<typeof TooltipPrimitive.Arrow>,
-  ComponentPropsWithoutRef<typeof TooltipPrimitive.Arrow> &
-    VariantProps<typeof tooltipArrowVariants>
->(({ className, ...props }, ref) => (
-  <TooltipPrimitive.Arrow
-    ref={ref}
-    className={cx(tooltipArrowVariants({ className }))}
-    {...props}
-  />
-))
-TooltipArrow.displayName = TooltipPrimitive.Arrow.displayName
+const TooltipArrow = ({
+  className,
+  ...props
+}: ComponentProps<typeof TooltipPrimitive.Arrow> & VariantProps<typeof tooltipArrowVariants>) => {
+  return <TooltipPrimitive.Arrow className={cx(tooltipArrowVariants({ className }))} {...props} />
+}
 
-export const TooltipBase = forwardRef<TooltipElement, TooltipProps>((props, ref) => {
-  const { children, className, delayDuration, tooltip, ...rest } = props
-
+const TooltipBase = ({ children, className, delayDuration, tooltip, ...rest }: TooltipProps) => {
   if (!tooltip) {
     return children
   }
 
   return (
     <TooltipRoot delayDuration={delayDuration}>
-      <TooltipTrigger ref={ref} className={className} asChild>
+      <TooltipTrigger className={className} asChild>
         {children}
       </TooltipTrigger>
 
@@ -97,10 +80,9 @@ export const TooltipBase = forwardRef<TooltipElement, TooltipProps>((props, ref)
       </TooltipPortal>
     </TooltipRoot>
   )
-})
-TooltipBase.displayName = "Tooltip"
+}
 
-export const Tooltip = Object.assign(TooltipBase, {
+const Tooltip = Object.assign(TooltipBase, {
   Provider: TooltipProvider,
   Root: TooltipRoot,
   Trigger: TooltipTrigger,
@@ -108,3 +90,14 @@ export const Tooltip = Object.assign(TooltipBase, {
   Content: TooltipContent,
   Arrow: TooltipArrow,
 })
+
+export {
+  Tooltip,
+  TooltipProvider,
+  TooltipRoot,
+  TooltipTrigger,
+  TooltipPortal,
+  TooltipContent,
+  TooltipArrow,
+  type TooltipProps,
+}
