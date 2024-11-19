@@ -1,3 +1,4 @@
+import { adsConfig } from "~/config/ads"
 import { dataTableConfig } from "~/config/data-table"
 import { linksConfig } from "~/config/links"
 import { siteConfig } from "~/config/site"
@@ -8,6 +9,7 @@ export const config = {
   site: siteConfig,
   stats: statsConfig,
   links: linksConfig,
+  ads: adsConfig,
   submissions: submissionsConfig,
   dataTable: dataTableConfig,
 }

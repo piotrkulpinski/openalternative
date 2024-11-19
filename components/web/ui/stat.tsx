@@ -1,3 +1,5 @@
+"use client"
+
 import NumberFlow, { type Value } from "@number-flow/react"
 import { type ComponentProps, useEffect, useState } from "react"
 

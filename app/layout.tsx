@@ -8,7 +8,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html
       lang="en"
-      className={`${UncutSans.variable} ${GeistSans.variable}`}
+      className={`${UncutSans.variable} ${GeistSans.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <head>
