@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { ComponentProps, HTMLAttributes } from "react"
-import { Stat } from "~/components/ui/stat"
+import { Stat } from "~/components/web/ui/stat"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 

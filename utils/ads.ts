@@ -1,4 +1,12 @@
-import { addMonths, eachDayOfInterval, endOfMonth, isAfter, isBefore, startOfMonth } from "date-fns"
+import {
+  addMonths,
+  eachDayOfInterval,
+  endOfDay,
+  endOfMonth,
+  isAfter,
+  isBefore,
+  startOfMonth,
+} from "date-fns"
 
 type PricingItem = {
   price: number
@@ -43,10 +51,10 @@ export const calculateAdsPrice = (selections: PricingItem[], basePrice: number) 
  * @returns The first available month
  */
 export const getFirstAvailableMonth = (dates: { from: Date; to: Date }[]) => {
-  let today = startOfMonth(new Date())
+  let firstAvailableMonth = startOfMonth(new Date())
 
   function isDateDisabled(date: Date) {
-    if (isBefore(date, today)) return true
+    if (isBefore(date, endOfDay(new Date()))) return true
 
     return dates.some(({ from, to }) => {
       return !isAfter(date, to) && !isBefore(date, from)
@@ -62,9 +70,9 @@ export const getFirstAvailableMonth = (dates: { from: Date; to: Date }[]) => {
     return daysInMonth.some(day => !isDateDisabled(day))
   }
 
-  while (!monthHasAvailableDay(today)) {
-    today = addMonths(today, 1)
+  while (!monthHasAvailableDay(firstAvailableMonth)) {
+    firstAvailableMonth = addMonths(firstAvailableMonth, 1)
   }
 
-  return today
+  return firstAvailableMonth
 }

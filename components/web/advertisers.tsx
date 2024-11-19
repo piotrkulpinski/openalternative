@@ -1,5 +1,4 @@
 import { slugify } from "@curiousleaf/utils"
-import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
@@ -54,6 +53,7 @@ export const Advertisers = ({ className, ...props }: HTMLAttributes<HTMLDivEleme
       logo: "polar.svg",
     },
   ]
+
   return (
     <div
       className={cx(
@@ -70,7 +70,7 @@ export const Advertisers = ({ className, ...props }: HTMLAttributes<HTMLDivEleme
           rel="noopener noreferrer"
           className="flex flex-wrap items-center gap-x-2 font-semibold opacity-85 hover:opacity-100 md:text-lg"
           title={sponsor.description}
-          onClick={() => posthog.capture("sponsoring_clicked", { url: sponsor.websiteUrl })}
+          // onClick={() => posthog.capture("sponsoring_clicked", { url: sponsor.websiteUrl })}
         >
           <img
             src={`/advertisers/${slugify(sponsor.name)}.svg`}

@@ -1,6 +1,14 @@
 import type { Prisma } from "@prisma/client"
-import { adOnePayload } from "~/server/ads/payloads"
+import { adManyPayload, adOnePayload } from "~/server/ads/payloads"
 import { prisma } from "~/services/prisma"
+
+export const findAds = async ({ where, orderBy, ...args }: Prisma.AdFindManyArgs) => {
+  return prisma.ad.findMany({
+    ...args,
+    orderBy: orderBy ?? { startsAt: "desc" },
+    select: adManyPayload,
+  })
+}
 
 export const findFirstAd = async ({ where, orderBy, ...args }: Prisma.AdFindFirstArgs) => {
   return prisma.ad.findFirst({

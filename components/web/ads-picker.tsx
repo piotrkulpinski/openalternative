@@ -1,68 +1,44 @@
+"use client"
+
 import { formatDateRange } from "@curiousleaf/utils"
-import type { Sponsoring } from "@openalternative/db"
-import type { SponsoringType } from "@openalternative/db"
-import type { SerializeFrom } from "@remix-run/node"
-import { useFetcher } from "@remix-run/react"
+import type { AdType } from "@prisma/client"
 import { cx } from "cva"
 import { endOfDay, startOfDay } from "date-fns"
 import { XIcon } from "lucide-react"
 import plur from "plur"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import type { DateRange } from "react-day-picker"
-import { AdsCalendar } from "~/components/ads-calendar"
-import { Price } from "~/components/price"
-import { Badge } from "~/components/ui/badge"
-import { Button } from "~/components/ui/button"
-import { Stack } from "~/components/ui/stack"
-import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
+import { Stack } from "~/components/common/stack"
+import { AdsCalendar } from "~/components/web/ads-calendar"
+import { Price } from "~/components/web/price"
+import { Badge } from "~/components/web/ui/badge"
+import { Button } from "~/components/web/ui/button"
+import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
+import { config } from "~/config"
 import { useAds } from "~/hooks/use-ads"
-import type { action } from "~/routes/api.stripe.create-tool-checkout"
+import type { AdMany } from "~/server/ads/payloads"
 
-type AdsCalendarProps = HTMLAttributes<HTMLDivElement> & {
-  sponsorings: SerializeFrom<Sponsoring>[] | null
+type AdsCalendarProps = ComponentProps<"div"> & {
+  ads: AdMany[]
 }
 
-const calendars: AdsCalendar[] = [
-  {
-    label: "Homepage Ad",
-    type: "Homepage",
-    description: "Visible on the homepage and search",
-    price: 15,
-    preview: "https://share.cleanshot.com/7CFqSw0b",
-  },
-  {
-    label: "Banner Ad",
-    type: "Banner",
-    description: "Visible on every page of the website",
-    price: 25,
-    preview: "https://share.cleanshot.com/SvqTztKT",
-  },
-]
-
 type AdsSelection = {
-  type: SponsoringType
+  type: AdType
   dateRange?: DateRange
   duration?: number
 }
 
-export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps) => {
-  const { state, submit } = useFetcher<typeof action>()
-
-  const { price, selections, hasSelections, clearSelection, updateSelection } = useAds({
-    calendars,
-  })
-
-  if (!sponsorings) return null
+export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
+  const { price, selections, hasSelections, findAdSpot, clearSelection, updateSelection } = useAds()
 
   const handleCheckout = () => {
     const checkoutData = {
       ads: selections.map(selection => {
-        const calendar = calendars.find(c => c.type === selection.type)
-        if (!calendar) return null
+        const adSpot = findAdSpot(selection.type)
 
         const discountedPrice = price?.discountPercentage
-          ? calendar.price * (1 - price.discountPercentage / 100)
-          : calendar.price
+          ? adSpot.price * (1 - price.discountPercentage / 100)
+          : adSpot.price
 
         return {
           type: selection.type,
@@ -76,22 +52,22 @@ export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps
       }),
     }
 
-    submit(checkoutData, {
-      method: "POST",
-      encType: "application/json",
-      action: "/api/stripe/create-ads-checkout",
-    })
+    // submit(checkoutData, {
+    //   method: "POST",
+    //   encType: "application/json",
+    //   action: "/api/stripe/create-ads-checkout",
+    // })
   }
 
   return (
     <TooltipProvider delayDuration={250} disableHoverableContent>
       <div className={cx("flex flex-col w-full border divide-y rounded-md", className)} {...props}>
         <div className="flex flex-col w-full sm:flex-row sm:divide-x max-sm:divide-y">
-          {calendars.map(calendar => (
+          {config.ads.adSpots.map(adSpot => (
             <AdsCalendar
-              key={calendar.type}
-              calendar={calendar}
-              sponsorings={sponsorings}
+              key={adSpot.type}
+              adSpot={adSpot}
+              ads={ads}
               price={price}
               selections={selections}
               updateSelection={updateSelection}
@@ -106,9 +82,7 @@ export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps
                 return null
               }
 
-              const calendar = calendars.find(p => p.type === selection.type)
-              if (!calendar) return null
-
+              const adSpot = findAdSpot(selection.type)
               const from = startOfDay(selection.dateRange.from)
               const to = endOfDay(selection.dateRange.to)
 
@@ -119,13 +93,13 @@ export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps
                       variant="secondary"
                       size="sm"
                       className="p-0.5"
-                      aria-label={`Clear ${calendar.label} selection`}
+                      aria-label={`Clear ${adSpot.label} selection`}
                       prefix={<XIcon />}
                       onClick={() => clearSelection(selection.type)}
                     />
 
                     <div>
-                      <strong className="font-medium text-foreground">{calendar.label}</strong> – (
+                      <strong className="font-medium text-foreground">{adSpot.label}</strong> – (
                       {selection.duration} {plur("day", selection.duration)})
                     </div>
                   </span>
@@ -169,7 +143,7 @@ export const AdsPicker = ({ className, sponsorings, ...props }: AdsCalendarProps
             variant="fancy"
             size="lg"
             disabled={!hasSelections}
-            isPending={state === "submitting"}
+            // isPending={state === "submitting"}
             className="max-sm:w-full sm:-my-2"
             onClick={handleCheckout}
           >
