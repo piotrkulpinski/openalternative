@@ -1,29 +1,33 @@
-import { Link, useLocation } from "@remix-run/react"
-import { posthog } from "posthog-js"
-import type { HTMLAttributes } from "react"
-import { Button } from "~/components/ui/button"
-import { H5 } from "~/components/ui/heading"
-import { Stack } from "~/components/ui/stack"
-import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
-import { SITE_NAME, SITE_URL } from "~/utils/constants"
-import { BrandBlueskyIcon } from "../common/icons/brand-bluesky"
-import { BrandFacebookIcon } from "../common/icons/brand-facebook"
-import { BrandHackerNewsIcon } from "../common/icons/brand-hackernews"
-import { BrandLinkedInIcon } from "../common/icons/brand-linkedin"
-import { BrandRedditIcon } from "../common/icons/brand-reddit"
-import { BrandWhatsAppIcon } from "../common/icons/brand-whatsapp"
-import { BrandXIcon } from "../common/icons/brand-x"
+"use client"
 
-type ShareButtonsProps = Omit<HTMLAttributes<HTMLDivElement>, "title"> & {
+import Link from "next/link"
+import { usePathname, useSearchParams } from "next/navigation"
+import { posthog } from "posthog-js"
+import type { ComponentProps } from "react"
+import { H5 } from "~/components/common/heading"
+import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
+import { BrandFacebookIcon } from "~/components/common/icons/brand-facebook"
+import { BrandHackerNewsIcon } from "~/components/common/icons/brand-hackernews"
+import { BrandLinkedInIcon } from "~/components/common/icons/brand-linkedin"
+import { BrandRedditIcon } from "~/components/common/icons/brand-reddit"
+import { BrandWhatsAppIcon } from "~/components/common/icons/brand-whatsapp"
+import { BrandXIcon } from "~/components/common/icons/brand-x"
+import { Stack } from "~/components/common/stack"
+import { Button } from "~/components/web/ui/button"
+import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
+import { config } from "~/config"
+
+type ShareButtonsProps = Omit<ComponentProps<"div">, "title"> & {
   title: string
 }
 
-export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, ...props }) => {
-  const { pathname, search } = useLocation()
-  const currentUrl = `${SITE_URL}${pathname}${search}`
+export const ShareButtons = ({ title, ...props }: ShareButtonsProps) => {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const currentUrl = `${config.site.url}${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`
 
   const shareUrl = encodeURIComponent(currentUrl)
-  const shareTitle = encodeURIComponent(`${title} — ${SITE_NAME}`)
+  const shareTitle = encodeURIComponent(`${title} — ${config.site.name}`)
 
   const shareOptions = [
     {
@@ -74,12 +78,12 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, ...props }) =
               <Button
                 size="sm"
                 variant="secondary"
-                onClick={() => posthog.capture("share_clicked", { url, platform })}
+                onClick={() => posthog.capture("click_share", { url, platform })}
                 prefix={icon}
                 isAffixOnly
                 asChild
               >
-                <Link to={url} target="_blank" rel="noopener noreferrer nofollow" />
+                <Link href={url} target="_blank" rel="noopener noreferrer nofollow" />
               </Button>
             </Tooltip>
           ))}

@@ -23,7 +23,7 @@ export const Logo = ({ className, ...props }: ComponentProps<typeof Stack>) => {
           />
         </svg>
 
-        <span className="font-display font-medium text-sm">{config.site.name}</span>
+        <span className="font-medium text-sm">{config.site.name}</span>
       </Link>
     </Stack>
   )

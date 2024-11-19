@@ -1,3 +1,4 @@
+import { withContentCollections } from "@content-collections/next"
 import type { NextConfig } from "next"
 import { withPlausibleProxy } from "next-plausible"
 
@@ -36,4 +37,4 @@ const plausibleProxy = withPlausibleProxy({
   subdirectory: "_proxy/plausible",
 })
 
-export default plausibleProxy(nextConfig)
+export default plausibleProxy(withContentCollections(nextConfig))
