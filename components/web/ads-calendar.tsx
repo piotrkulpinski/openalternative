@@ -36,7 +36,7 @@ export const AdsCalendar = ({
 }: AdsCalendarProps) => {
   const selection = selections.find(s => s.type === adSpot.type)
 
-  const bookedDates = useMemo(
+  const booked = useMemo(
     () =>
       ads
         .filter(({ type }) => type === adSpot.type || type === "All")
@@ -47,7 +47,7 @@ export const AdsCalendar = ({
     [ads, adSpot.type],
   )
 
-  const firstAvailableMonth = useMemo(() => getFirstAvailableMonth(bookedDates), [bookedDates])
+  const firstAvailableMonth = useMemo(() => getFirstAvailableMonth(booked), [booked])
 
   const calculateDuration = useCallback(
     (range: DateRange) => {
@@ -57,7 +57,7 @@ export const AdsCalendar = ({
       const to = endOfDay(range.to)
 
       const duration = differenceInDays(to, from) + 1
-      const overlapDays = bookedDates.reduce((acc, { from: bookedFrom, to: bookedTo }) => {
+      const overlapDays = booked.reduce((acc, { from: bookedFrom, to: bookedTo }) => {
         const normalizedBookedFrom = startOfDay(bookedFrom)
         const normalizedBookedTo = endOfDay(bookedTo)
 
@@ -72,7 +72,7 @@ export const AdsCalendar = ({
 
       return Math.max(duration - overlapDays, 0)
     },
-    [bookedDates],
+    [booked],
   )
 
   const handleSelect = useCallback(
@@ -125,8 +125,8 @@ export const AdsCalendar = ({
         onSelect={handleSelect}
         startMonth={new Date(2024, 3)}
         defaultMonth={firstAvailableMonth}
-        disabled={[date => date < new Date(), ...bookedDates]}
-        modifiers={{ booked: bookedDates }}
+        disabled={[date => date < new Date(), ...booked]}
+        modifiers={{ booked }}
         modifiersClassNames={{ booked: "before:absolute before:inset-1 before:bg-cross" }}
         className="w-full p-4"
       />

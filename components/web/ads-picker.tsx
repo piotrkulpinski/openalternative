@@ -8,6 +8,9 @@ import { XIcon } from "lucide-react"
 import plur from "plur"
 import type { ComponentProps } from "react"
 import type { DateRange } from "react-day-picker"
+import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
+import { createStripeAdsCheckout } from "~/actions/stripe"
 import { Stack } from "~/components/common/stack"
 import { AdsCalendar } from "~/components/web/ads-calendar"
 import { Price } from "~/components/web/price"
@@ -31,32 +34,37 @@ type AdsSelection = {
 export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
   const { price, selections, hasSelections, findAdSpot, clearSelection, updateSelection } = useAds()
 
+  const { execute, isPending } = useServerAction(createStripeAdsCheckout, {
+    onSuccess: ({ data }) => {
+      console.log("data", data)
+      window.open(data, "_blank")?.focus()
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
+
   const handleCheckout = () => {
-    const checkoutData = {
-      ads: selections.map(selection => {
-        const adSpot = findAdSpot(selection.type)
+    const checkoutData = selections.map(selection => {
+      const adSpot = findAdSpot(selection.type)
 
-        const discountedPrice = price?.discountPercentage
-          ? adSpot.price * (1 - price.discountPercentage / 100)
-          : adSpot.price
+      const discountedPrice = price?.discountPercentage
+        ? adSpot.price * (1 - price.discountPercentage / 100)
+        : adSpot.price
 
-        return {
-          type: selection.type,
-          price: discountedPrice,
-          duration: selection.duration ?? 0,
-          metadata: {
-            startDate: selection.dateRange?.from?.getTime() ?? 0,
-            endDate: selection.dateRange?.to?.getTime() ?? 0,
-          },
-        }
-      }),
-    }
+      return {
+        type: selection.type,
+        price: discountedPrice,
+        duration: selection.duration ?? 0,
+        metadata: {
+          startDate: selection.dateRange?.from?.getTime() ?? 0,
+          endDate: selection.dateRange?.to?.getTime() ?? 0,
+        },
+      }
+    })
 
-    // submit(checkoutData, {
-    //   method: "POST",
-    //   encType: "application/json",
-    //   action: "/api/stripe/create-ads-checkout",
-    // })
+    execute(checkoutData)
   }
 
   return (
@@ -142,8 +150,8 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
           <Button
             variant="fancy"
             size="lg"
-            disabled={!hasSelections}
-            // isPending={state === "submitting"}
+            disabled={!hasSelections || isPending}
+            isPending={isPending}
             className="max-sm:w-full sm:-my-2"
             onClick={handleCheckout}
           >
