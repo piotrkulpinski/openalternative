@@ -9,7 +9,7 @@ export const parseMetadata = ({
 }: Metadata): Metadata => {
   const title = `${metaTitle} – ${config.site.name}`
 
-  const customMetadata = {
+  const customMetadata: Metadata = {
     title,
     description,
     openGraph: {
@@ -21,12 +21,12 @@ export const parseMetadata = ({
       images: { url: `${config.site.url}/opengraph.png`, width: 1200, height: 630 },
     },
     twitter: {
-      site: "@devsuite",
+      site: "@ossalternatives",
       creator: "@piotrkulpinski",
     },
     alternates: {
       canonical: "/",
-      types: { "application/rss+xml": config.links.feed },
+      types: { "application/rss+xml": config.links.feeds },
     },
     robots: {
       index: true,
