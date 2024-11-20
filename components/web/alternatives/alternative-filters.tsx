@@ -7,24 +7,22 @@ import { Stack } from "~/components/common/stack"
 import { Input } from "~/components/web/ui/input"
 import { Select } from "~/components/web/ui/select"
 import { useDebounce } from "~/hooks/use-debounce"
-import type { CategoryMany } from "~/server/categories/payloads"
-import { toolsSearchParams } from "~/server/tools/search-params"
+import { alternativesSearchParams } from "~/server/alternatives/search-params"
 
-export type ToolsFiltersProps = {
-  categories?: CategoryMany[]
+export type AlternativeFiltersProps = {
   placeholder?: string
 }
 
-export const ToolsFilters = ({ categories, placeholder }: ToolsFiltersProps) => {
+export const AlternativeFilters = ({ placeholder }: AlternativeFiltersProps) => {
   const [isLoading, startTransition] = useTransition()
-  const [filters, setFilters] = useQueryStates(toolsSearchParams, {
+  const [filters, setFilters] = useQueryStates(alternativesSearchParams, {
     shallow: false,
     startTransition,
   })
   const [inputValue, setInputValue] = useState(filters.q || "")
   const q = useDebounce(inputValue, 300)
 
-  const updateFilters = (values: Partial<Values<typeof toolsSearchParams>>) => {
+  const updateFilters = (values: Partial<Values<typeof alternativesSearchParams>>) => {
     setFilters({ ...values, page: null })
   }
 
@@ -58,27 +56,10 @@ export const ToolsFilters = ({ categories, placeholder }: ToolsFiltersProps) => 
           size="lg"
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
-          placeholder={placeholder || "Search tools..."}
+          placeholder={placeholder || "Search alternatives..."}
           className="w-full truncate pl-10"
         />
       </div>
-
-      {categories && (
-        <Select
-          size="lg"
-          className="min-w-40 max-sm:flex-1"
-          value={filters.category}
-          onChange={e => updateFilters({ category: e.target.value })}
-        >
-          <option value="">All categories</option>
-
-          {categories.map(category => (
-            <option key={category.slug} value={category.slug}>
-              {category.name}
-            </option>
-          ))}
-        </Select>
-      )}
 
       <Select
         size="lg"

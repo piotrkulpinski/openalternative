@@ -41,7 +41,6 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
     <Card asChild {...props}>
       <Link
         href={`/${tool.slug}`}
-        prefetch
         onClick={() =>
           tool.isFeatured && posthog.capture("click_tool_featured", { slug: tool.slug })
         }

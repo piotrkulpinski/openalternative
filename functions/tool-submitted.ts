@@ -12,7 +12,7 @@ export const toolSubmitted = inngest.createFunction(
     })
 
     // Wait for 30 minutes for expedited or featured event
-    const [expedited, featured] = await Promise.all([
+    const isPremiumSubmission = await Promise.all([
       step.waitForEvent("wait-for-expedited", {
         event: "tool.expedited",
         timeout: "30m",
@@ -27,7 +27,7 @@ export const toolSubmitted = inngest.createFunction(
     ])
 
     // Send submission email to user if not expedited
-    if (!expedited && !featured && tool.submitterEmail) {
+    if (!isPremiumSubmission && tool.submitterEmail) {
       await step.run("send-submission-email", async () => {
         if (!tool.submitterEmail) return
 

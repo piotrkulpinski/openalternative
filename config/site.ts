@@ -10,16 +10,6 @@ export const siteConfig = {
 
   alphabet: "abcdefghijklmnopqrstuvwxyz",
   toolsPerPage: 35,
+  alternativesPerPage: 54,
   topicsPerPage: 150,
-  featuredAlternatives: [
-    "keap",
-    "monday",
-    "notion",
-    "airtable",
-    "typeform",
-    "teamwork",
-    "todoist",
-    "kissmetrics",
-    "fathom-analytics",
-  ],
 }

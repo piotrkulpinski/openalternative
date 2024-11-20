@@ -12,7 +12,7 @@ import { PlanSkeleton } from "~/components/web/plan"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
 import { isToolPublished } from "~/lib/tools"
-import { findToolSlugs, findUniqueTool } from "~/server/tools/queries"
+import { findUniqueTool } from "~/server/tools/queries"
 import { parseMetadata } from "~/utils/metadata"
 
 type PageProps = {
@@ -63,11 +63,6 @@ const getMetadata = cache((tool: Tool, success: boolean, metadata?: Metadata): M
     description: `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listing to premium features.`,
   }
 })
-
-export const generateStaticParams = async () => {
-  const tools = await findToolSlugs({ where: { publishedAt: undefined } })
-  return tools.map(({ slug }) => ({ slug }))
-}
 
 export const generateMetadata = async ({ params, searchParams }: PageProps): Promise<Metadata> => {
   const { slug } = await params

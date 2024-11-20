@@ -1,22 +1,21 @@
 import Link from "next/link"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import ReactMarkdown, { type Components } from "react-markdown"
-import rehypeSlug from "rehype-slug"
 import { Prose } from "~/components/common/prose"
 
-export const Markdown = ({ children, ...props }: HTMLAttributes<HTMLElement>) => {
+export const Markdown = ({ children, ...props }: ComponentProps<typeof Prose>) => {
   const components: Components = {
-    a: ({ children, href }) => {
+    a: ({ children, href, ...props }) => {
       if (href?.startsWith("/")) {
         return (
-          <Link href={href} prefetch>
+          <Link href={href} {...props}>
             {children}
           </Link>
         )
       }
 
       return (
-        <a href={href} target="_blank" rel="noreferrer nofollow">
+        <a href={href} target="_blank" rel="noreferrer nofollow" {...props}>
           {children}
         </a>
       )
@@ -25,7 +24,7 @@ export const Markdown = ({ children, ...props }: HTMLAttributes<HTMLElement>) =>
 
   return (
     <Prose {...props}>
-      <ReactMarkdown components={components} rehypePlugins={[rehypeSlug]}>
+      <ReactMarkdown components={components}>
         {(children as string)?.replace(/\\n/gi, "  \n")}
       </ReactMarkdown>
     </Prose>
