@@ -6,7 +6,7 @@ import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import type Stripe from "stripe"
 import { useServerAction } from "zsa-react"
-import { createStripeCheckout } from "~/actions/stripe"
+import { createStripeToolCheckout } from "~/actions/stripe"
 import { H5 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
@@ -106,7 +106,7 @@ const Plan = ({
   const { isSubscription, currentPrice, price, fullPrice, discount, interval, setInterval } =
     usePlanPrices(prices ?? [], coupon)
 
-  const { execute, isPending } = useServerAction(createStripeCheckout, {
+  const { execute, isPending } = useServerAction(createStripeToolCheckout, {
     onSuccess: ({ data }) => {
       window.open(data, "_blank")?.focus()
     },

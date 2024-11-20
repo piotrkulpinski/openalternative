@@ -12,7 +12,7 @@ type PostCardProps = HTMLAttributes<HTMLElement> & {
 export const PostCard = ({ className, post, ...props }: PostCardProps) => {
   return (
     <Card asChild>
-      <Link href={`/blog/${post._meta.path}`} prefetch {...props}>
+      <Link href={`/blog/${post._meta.path}`} {...props}>
         {post.image && (
           <img
             src={post.image}

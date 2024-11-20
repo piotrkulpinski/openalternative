@@ -1,4 +1,4 @@
-import { endOfDay, startOfDay, subDays } from "date-fns"
+import { subDays } from "date-fns"
 import { generateLaunchPost } from "~/lib/generate-content"
 import { sendBlueskyPost } from "~/services/bluesky"
 import { inngest } from "~/services/inngest"
@@ -14,8 +14,8 @@ export const postOnSocials = inngest.createFunction(
       return prisma.tool.findMany({
         where: {
           publishedAt: {
-            gte: startOfDay(subDays(new Date(), 1)),
-            lte: endOfDay(new Date()),
+            gte: subDays(new Date(), 1),
+            lte: new Date(),
           },
         },
       })
@@ -23,7 +23,7 @@ export const postOnSocials = inngest.createFunction(
 
     if (tools.length) {
       const promises = tools.map(async tool =>
-        step.run(`post-on-socials-${tool.name}`, async () => {
+        step.run(`post-on-socials-${tool.slug}`, async () => {
           logger.info(`Generating post about ${tool.name}`)
           const { post } = await generateLaunchPost(tool)
 

@@ -1,13 +1,13 @@
+"use client"
+
 import type { ComponentProps } from "react"
-import { Button, type ButtonProps } from "~/components/ui/button"
-import { Stack } from "~/components/ui/stack"
+import { Stack } from "~/components/common/stack"
+import { Button, type ButtonProps } from "~/components/web/ui/button"
 import { type InlineMenuItem, useInlineMenu } from "~/hooks/use-inline-menu"
 import { cx } from "~/utils/cva"
 
-type MenuItem = InlineMenuItem & ButtonProps
-
 type InlineMenuProps = ComponentProps<typeof Stack> & {
-  items: MenuItem[]
+  items: (InlineMenuItem & ButtonProps)[]
 }
 
 export const InlineMenu = ({ children, className, items, ...props }: InlineMenuProps) => {

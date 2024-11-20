@@ -1,26 +1,26 @@
 import type { Prisma } from "@prisma/client"
 import type { SearchParams } from "nuqs/server"
 import type { ComponentProps } from "react"
-import { Tools } from "~/components/web/tools/tools"
+import { ToolList } from "~/components/web/tools/tool-list"
 import { findCategories } from "~/server/categories/queries"
 import { searchTools } from "~/server/tools/queries"
 
-type ToolsListingProps = Omit<
-  ComponentProps<typeof Tools>,
+type ToolListingProps = Omit<
+  ComponentProps<typeof ToolList>,
   "tools" | "categories" | "totalCount"
 > & {
   searchParams: Promise<SearchParams>
   where?: Prisma.ToolWhereInput
 }
 
-export const ToolsListing = async ({ searchParams, where, ...props }: ToolsListingProps) => {
+export const ToolListing = async ({ searchParams, where, ...props }: ToolListingProps) => {
   const [{ tools, totalCount }, categories] = await Promise.all([
     searchTools(await searchParams, { where }),
     findCategories({}),
   ])
 
   return (
-    <Tools
+    <ToolList
       tools={tools}
       totalCount={totalCount}
       categories={where?.categories ? undefined : categories}

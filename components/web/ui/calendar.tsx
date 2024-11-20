@@ -33,7 +33,8 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
         range_start: "rounded-l-md",
         range_middle: "bg-foreground/5",
         range_end: "rounded-r-md",
-        today: "bg-primary/75 text-background font-semibold rounded-md",
+        today:
+          "font-semibold after:absolute after:inset-x-1/2 after:bottom-0.5 after:h-0.5 after:w-5 after:-translate-x-1/2 after:rounded-[2px] after:bg-primary",
         outside: "opacity-40",
         disabled: "opacity-40 pointer-events-none",
         hidden: "invisible",

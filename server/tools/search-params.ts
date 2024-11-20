@@ -1,12 +1,12 @@
 import { createSearchParamsCache, parseAsInteger, parseAsString } from "nuqs/server"
 import { config } from "~/config"
 
-export const searchParams = {
+export const toolsSearchParams = {
   q: parseAsString,
   category: parseAsString.withDefault(""),
   page: parseAsInteger.withDefault(1),
-  sort: parseAsString.withDefault("publishedAt.desc"),
+  sort: parseAsString.withDefault("relevance.desc"),
   perPage: parseAsInteger.withDefault(config.site.toolsPerPage),
 }
 
-export const searchParamsCache = createSearchParamsCache(searchParams)
+export const toolsSearchParamsCache = createSearchParamsCache(toolsSearchParams)

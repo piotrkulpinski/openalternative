@@ -2,11 +2,12 @@ import Link from "next/link"
 import type { SearchParams } from "nuqs"
 import { Suspense } from "react"
 import { CountBadge, CountBadgeSkeleton } from "~/app/(web)/(home)/count-badge"
-import { ToolsListing } from "~/app/(web)/(home)/listing"
+import { ToolListing } from "~/app/(web)/(home)/listing"
 import { Stack } from "~/components/common/stack"
+import { AlternativePreviewList } from "~/components/web/alternatives/alternative-preview-list"
 import { Newsletter } from "~/components/web/newsletter"
 import { NewsletterProof } from "~/components/web/newsletter-proof"
-import { ToolsSkeleton } from "~/components/web/tools/tools"
+import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { Button } from "~/components/web/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
@@ -54,9 +55,11 @@ export default function Home({ searchParams }: PageProps) {
         )}
       </section>
 
-      <Suspense fallback={<ToolsSkeleton />}>
-        <ToolsListing searchParams={searchParams} />
+      <Suspense fallback={<ToolListSkeleton />}>
+        <ToolListing searchParams={searchParams} />
       </Suspense>
+
+      <AlternativePreviewList />
     </>
   )
 }
