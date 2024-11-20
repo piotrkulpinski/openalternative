@@ -2,14 +2,14 @@ import type { Prisma } from "@prisma/client"
 import type { SearchParams } from "nuqs/server"
 import { auth } from "~/lib/auth"
 import { toolManyPayload, toolOnePayload } from "~/server/tools/payloads"
-import { searchParamsCache } from "~/server/tools/search-params"
+import { toolsSearchParamsCache } from "~/server/tools/search-params"
 import { prisma } from "~/services/prisma"
 
 export const searchTools = async (
   searchParams: SearchParams,
   { where, ...args }: Prisma.ToolFindManyArgs,
 ) => {
-  const { q, category, page, sort, perPage } = searchParamsCache.parse(searchParams)
+  const { q, category, page, sort, perPage } = toolsSearchParamsCache.parse(searchParams)
 
   // Values to paginate the results
   const skip = (page - 1) * perPage
@@ -21,6 +21,7 @@ export const searchTools = async (
   const [sortBy, sortOrder] = sort.split(".")
 
   const whereQuery: Prisma.ToolWhereInput = {
+    publishedAt: { lte: new Date() },
     ...(category && { categories: { some: { category: { slug: category } } } }),
     ...(q && {
       OR: [
@@ -33,15 +34,18 @@ export const searchTools = async (
   const [tools, totalCount] = await prisma.$transaction([
     prisma.tool.findMany({
       ...args,
-      orderBy: { [sortBy]: sortOrder },
-      where: { publishedAt: { lte: new Date() }, ...whereQuery, ...where },
+      orderBy:
+        sortBy === "relevance"
+          ? [{ isFeatured: "desc" }, { score: "desc" }]
+          : { [sortBy]: sortOrder },
+      where: { ...whereQuery, ...where },
       include: toolManyPayload,
       take,
       skip,
     }),
 
     prisma.tool.count({
-      where: { publishedAt: { lte: new Date() }, ...whereQuery, ...where },
+      where: { ...whereQuery, ...where },
     }),
   ])
 
@@ -53,6 +57,14 @@ export const findTools = async ({ where, ...args }: Prisma.ToolFindManyArgs) => 
     ...args,
     where: { publishedAt: { lte: new Date() }, ...where },
     include: toolManyPayload,
+  })
+}
+
+export const findToolsWithCategories = async ({ where, ...args }: Prisma.ToolFindManyArgs) => {
+  return prisma.tool.findMany({
+    ...args,
+    where: { publishedAt: { lte: new Date() }, ...where },
+    include: { ...toolManyPayload, categories: { include: { category: true } } },
   })
 }
 

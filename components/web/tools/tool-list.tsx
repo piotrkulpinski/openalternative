@@ -9,16 +9,16 @@ import { ToolsFilters, type ToolsFiltersProps } from "~/components/web/tools/too
 import { Grid } from "~/components/web/ui/grid"
 import type { CategoryMany } from "~/server/categories/payloads"
 import type { ToolMany } from "~/server/tools/payloads"
-import { searchParams } from "~/server/tools/search-params"
+import { toolsSearchParams } from "~/server/tools/search-params"
 
-type ToolsProps = ToolsFiltersProps & {
+type ToolListProps = ToolsFiltersProps & {
   tools: ToolMany[]
   categories?: CategoryMany[]
   totalCount: number
 }
 
-const Tools = ({ tools, totalCount, categories, ...props }: ToolsProps) => {
-  const [{ q, perPage }] = useQueryStates(searchParams)
+const ToolList = ({ tools, totalCount, categories, ...props }: ToolListProps) => {
+  const [{ q, perPage }] = useQueryStates(toolsSearchParams)
 
   return (
     <>
@@ -39,7 +39,7 @@ const Tools = ({ tools, totalCount, categories, ...props }: ToolsProps) => {
   )
 }
 
-const ToolsSkeleton = () => {
+const ToolListSkeleton = () => {
   return (
     <div className="flex flex-col gap-6 lg:gap-8">
       <Box className="px-4 py-2.5 text-sm/normal rounded-lg w-full">
@@ -55,4 +55,4 @@ const ToolsSkeleton = () => {
   )
 }
 
-export { Tools, ToolsSkeleton }
+export { ToolList, ToolListSkeleton }
