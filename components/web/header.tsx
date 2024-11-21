@@ -10,6 +10,7 @@ import {
   TagIcon,
 } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { type HTMLAttributes, useEffect, useState } from "react"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
@@ -30,6 +31,7 @@ import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+  const pathname = usePathname()
   const [isNavOpen, setNavOpen] = useState(false)
 
   // Close the mobile navigation when the user presses the "Escape" key
@@ -41,6 +43,10 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
     document.addEventListener("keydown", onKeyDown)
     return () => document.removeEventListener("keydown", onKeyDown)
   }, [])
+
+  useEffect(() => {
+    setNavOpen(false)
+  }, [pathname])
 
   return (
     <Container
