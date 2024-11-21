@@ -1,5 +1,4 @@
 import { isRedirectError } from "next/dist/client/components/redirect"
-import { toast } from "sonner"
 import { z } from "zod"
 
 export const getErrorMessage = (err: unknown) => {
@@ -22,9 +21,4 @@ export const getErrorMessage = (err: unknown) => {
   }
 
   return unknownError
-}
-
-export const showErrorToast = (err: unknown) => {
-  const errorMessage = getErrorMessage(err)
-  return toast.error(errorMessage)
 }

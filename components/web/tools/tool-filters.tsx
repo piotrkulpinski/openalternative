@@ -10,12 +10,12 @@ import { useDebounce } from "~/hooks/use-debounce"
 import type { CategoryMany } from "~/server/categories/payloads"
 import { toolsSearchParams } from "~/server/tools/search-params"
 
-export type ToolsFiltersProps = {
+export type ToolFiltersProps = {
   categories?: CategoryMany[]
   placeholder?: string
 }
 
-export const ToolsFilters = ({ categories, placeholder }: ToolsFiltersProps) => {
+export const ToolFilters = ({ categories, placeholder }: ToolFiltersProps) => {
   const [isLoading, startTransition] = useTransition()
   const [filters, setFilters] = useQueryStates(toolsSearchParams, {
     shallow: false,

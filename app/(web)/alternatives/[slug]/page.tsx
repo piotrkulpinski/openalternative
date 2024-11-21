@@ -9,6 +9,7 @@ import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Fragment, cache } from "react"
 import { Prose } from "~/components/common/prose"
+import { AlternativeCardExternal } from "~/components/web/alternatives/alternative-card-external"
 import { AlternativePreviewList } from "~/components/web/alternatives/alternative-preview-list"
 import { InlineMenu } from "~/components/web/inline-menu"
 import { ShareButtons } from "~/components/web/share-buttons"
@@ -121,14 +122,6 @@ export default async function AlternativePage({ params }: PageProps) {
         </IntroDescription>
       </Intro>
 
-      {/* <Suspense fallback={<ToolListSkeleton />}>
-        <ToolListing
-          searchParams={searchParams}
-          where={{ alternatives: { some: { alternative: { slug } } } }}
-          placeholder={`Search in "${alternative.name}"`}
-        />
-      </Suspense> */}
-
       {!!tools.length && (
         <Section>
           <Section.Content className="gap-12 md:gap-14 lg:gap-16">
@@ -184,7 +177,7 @@ export default async function AlternativePage({ params }: PageProps) {
           </Section.Content>
 
           <Section.Sidebar className="order-first md:order-last">
-            {/* <AlternativeCard alternative={alternative} /> */}
+            <AlternativeCardExternal alternative={alternative} />
 
             <InlineMenu
               items={tools.map(({ slug, name, faviconUrl }, index) => ({

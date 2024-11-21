@@ -5,13 +5,13 @@ import { Box } from "~/components/common/box"
 import { EmptyList } from "~/components/web/empty-list"
 import { Pagination } from "~/components/web/pagination"
 import { ToolCard, ToolCardSkeleton } from "~/components/web/tools/tool-card"
-import { ToolsFilters, type ToolsFiltersProps } from "~/components/web/tools/tools-filters"
+import { ToolFilters, type ToolFiltersProps } from "~/components/web/tools/tool-filters"
 import { Grid } from "~/components/web/ui/grid"
 import type { CategoryMany } from "~/server/categories/payloads"
 import type { ToolMany } from "~/server/tools/payloads"
 import { toolsSearchParams } from "~/server/tools/search-params"
 
-type ToolListProps = ToolsFiltersProps & {
+type ToolListProps = ToolFiltersProps & {
   tools: ToolMany[]
   categories?: CategoryMany[]
   totalCount: number
@@ -23,7 +23,7 @@ const ToolList = ({ tools, totalCount, categories, ...props }: ToolListProps) =>
   return (
     <>
       <div className="flex flex-col gap-6 lg:gap-8">
-        <ToolsFilters categories={categories} {...props} />
+        <ToolFilters categories={categories} {...props} />
 
         <Grid>
           {tools.map(tool => (
