@@ -17,7 +17,6 @@ import {
 } from "~/components/web/ui/dropdown-menu"
 import { Logo } from "~/components/web/ui/logo"
 import { NavigationLink } from "~/components/web/ui/navigation-link"
-import { ThemeSwitcher } from "~/components/web/ui/theme-switcher"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
@@ -59,8 +58,6 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
 
           <Stack className="text-sm/normal">
             <TooltipProvider delayDuration={500} disableHoverableContent>
-              <ThemeSwitcher />
-
               <DropdownMenu modal={false}>
                 <Tooltip tooltip="RSS Feeds">
                   <DropdownMenuTrigger aria-label="RSS Feeds" {...props}>

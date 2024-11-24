@@ -1,4 +1,3 @@
-import "server-only"
 import wretch from "wretch"
 
 export type Socials = Record<string, Array<Record<string, string> & { url: string }>>

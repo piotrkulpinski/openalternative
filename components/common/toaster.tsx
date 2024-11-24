@@ -1,18 +1,13 @@
 "use client"
 
-import { useTheme } from "next-themes"
 import type { ComponentProps } from "react"
 import { Toaster as Sonner } from "sonner"
+import { cx } from "~/utils/cva"
 
-type ToasterProps = ComponentProps<typeof Sonner>
-
-const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
-
+const Toaster = ({ className, ...props }: ComponentProps<typeof Sonner>) => {
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
-      className="bg-background text-foreground shadow-lg select-none"
+      className={cx("bg-background text-foreground shadow-lg select-none", className)}
       toastOptions={{
         classNames: {
           description: "text-muted-foreground",
