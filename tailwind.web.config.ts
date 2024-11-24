@@ -2,10 +2,8 @@ import typography from "@tailwindcss/typography"
 import type { Config } from "tailwindcss"
 import animate from "tailwindcss-animate"
 import { fontFamily } from "tailwindcss/defaultTheme"
-import plugin from "tailwindcss/plugin"
 
 export default {
-  darkMode: "class",
   content: [
     "./components/common/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/web/**/*.{js,ts,jsx,tsx,mdx}",
@@ -50,15 +48,6 @@ export default {
         cross:
           "linear-gradient(-45deg, hsl(var(--color-foreground) /0) 0%, hsl(var(--color-foreground) /0) calc(50% - 0.8px), hsl(var(--color-foreground) /0.66) 50%, hsl(var(--color-foreground) /0) calc(50% + 0.8px), hsl(var(--color-foreground) /0) 100%)",
       },
-      gridColumns: {
-        DEFAULT: "16rem",
-        xxs: "10rem",
-        xs: "12rem",
-        sm: "14rem",
-        md: "16rem",
-        lg: "18rem",
-        xl: "20rem",
-      },
 
       keyframes: {
         shimmer: {
@@ -92,21 +81,5 @@ export default {
       },
     },
   },
-  plugins: [
-    typography,
-    animate,
-    plugin(({ matchUtilities, theme }) => {
-      matchUtilities(
-        {
-          "grid-auto-fill": value => ({
-            gridTemplateColumns: `repeat(auto-fill, minmax(${value}, 1fr))`,
-          }),
-          "grid-auto-fit": value => ({
-            gridTemplateColumns: `repeat(auto-fit, minmax(${value}, 1fr))`,
-          }),
-        },
-        { values: theme("gridColumns") },
-      )
-    }),
-  ],
+  plugins: [typography, animate],
 } satisfies Config
