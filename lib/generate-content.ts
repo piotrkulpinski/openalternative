@@ -1,4 +1,3 @@
-import "server-only"
 import { createAnthropic } from "@ai-sdk/anthropic"
 import { openai } from "@ai-sdk/openai"
 import { slugify } from "@curiousleaf/utils"

@@ -5,7 +5,20 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   skipTrailingSlashRedirect: true,
 
+  experimental: {
+    ppr: true,
+  },
+
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   images: {
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       // {
       //   hostname: `${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com`,

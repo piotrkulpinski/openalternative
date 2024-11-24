@@ -1,4 +1,3 @@
-import "server-only"
 import { render } from "@react-email/components"
 import type { ReactElement } from "react"
 import { config } from "~/config"

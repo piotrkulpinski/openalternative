@@ -58,7 +58,6 @@
     "next": "^15.0.3",
     "next-auth": "^5.0.0-beta.25",
     "next-plausible": "^3.12.3",
-    "next-themes": "^0.3.0",
     "nuqs": "^2.1.2",
     "plur": "^5.1.0",
     "posthog-js": "^1.181.0",
