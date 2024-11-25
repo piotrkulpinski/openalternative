@@ -57,7 +57,6 @@ export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
     ...languages.map(l => createEntry(`/languages/${l.slug}`, l.updatedAt)),
 
     // Topics
-    createEntry("/topics", now),
     ...config.site.alphabet.split("").map(letter => createEntry(`/topics/letter/${letter}`, now)),
     ...topics.map(t => createEntry(`/topics/${t.slug}`, t.updatedAt)),
 

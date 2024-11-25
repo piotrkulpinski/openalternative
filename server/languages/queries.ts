@@ -5,7 +5,7 @@ import { prisma } from "~/services/prisma"
 export const findLanguages = async ({ where, orderBy, ...args }: Prisma.LanguageFindManyArgs) => {
   return prisma.language.findMany({
     ...args,
-    orderBy: orderBy ?? { tools: { _count: "desc" } },
+    orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { name: "asc" }],
     where: { tools: { some: { tool: { publishedAt: { lte: new Date() } } } }, ...where },
     include: languageManyPayload,
   })
