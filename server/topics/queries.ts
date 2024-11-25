@@ -20,7 +20,7 @@ export const findTopicSlugs = async ({ where, orderBy, ...args }: Prisma.TopicFi
   })
 }
 
-export const findUniqueTopic = async ({ ...args }: Prisma.TopicFindUniqueArgs) => {
+export const findTopic = async ({ ...args }: Prisma.TopicFindUniqueArgs) => {
   return prisma.topic.findUnique({
     ...args,
     include: topicOnePayload,
