@@ -28,4 +28,53 @@ export const linksConfig = {
       description: "Build directory websites in WordPress",
     },
   ],
+  toolsUsed: [
+    {
+      title: "ScreenshotOne",
+      href: "https://kulp.in/screenshotone",
+      description: "The screenshot API for developers",
+    },
+    {
+      title: "Typefully",
+      href: "https://kulp.in/typefully",
+      description: "Twitter scheduling/analytics",
+    },
+    {
+      title: "Beehiiv",
+      href: "https://kulp.in/beehiiv",
+      description: "Newsletter",
+    },
+    {
+      title: "Airtable",
+      href: "https://kulp.in/airtable",
+      description: "Database",
+    },
+    {
+      title: "Screen Studio",
+      href: "https://kulp.in/screenstudio",
+      description: "Screen recording for marketing videos",
+    },
+  ],
+  featured: [
+    {
+      name: "Hacker News",
+      url: "https://news.ycombinator.com/item?id=39639386",
+      icon: "/hackernews.svg",
+    },
+    {
+      name: "Indie Hackers",
+      url: "https://www.indiehackers.com/post/how-i-grew-a-side-project-to-100k-unique-visitors-in-7-days-with-0-audience-15d48ea192",
+      icon: "/indiehackers.svg",
+    },
+    {
+      name: "Product Hunt",
+      url: "https://www.producthunt.com/posts/openalternative",
+      icon: "/producthunt.svg",
+    },
+    {
+      name: "Twitter",
+      url: "https://twitter.com/steventey/status/1765841867017437599",
+      icon: "/twitter.svg",
+    },
+  ],
 }

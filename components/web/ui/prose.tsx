@@ -1,7 +1,7 @@
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { cx } from "~/utils/cva"
 
-export const Prose = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const Prose = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
       className={cx(
@@ -11,8 +11,6 @@ export const Prose = ({ children, className, ...props }: HTMLAttributes<HTMLElem
         className,
       )}
       {...props}
-    >
-      {children}
-    </div>
+    />
   )
 }
