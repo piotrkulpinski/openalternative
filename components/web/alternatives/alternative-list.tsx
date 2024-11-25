@@ -1,7 +1,6 @@
 "use client"
 
 import { useQueryStates } from "nuqs"
-import { Box } from "~/components/common/box"
 import {
   AlternativeCard,
   AlternativeCardSkeleton,
@@ -13,6 +12,7 @@ import {
 import { EmptyList } from "~/components/web/empty-list"
 import { Pagination } from "~/components/web/pagination"
 import { Grid } from "~/components/web/ui/grid"
+import { Input } from "~/components/web/ui/input"
 import type { AlternativeMany } from "~/server/alternatives/payloads"
 import { alternativesSearchParams } from "~/server/alternatives/search-params"
 
@@ -26,7 +26,7 @@ const AlternativeList = ({ alternatives, totalCount, ...props }: AlternativeList
 
   return (
     <>
-      <div className="flex flex-col gap-6 lg:gap-8">
+      <div className="flex flex-col gap-5">
         <AlternativeFilters {...props} />
 
         <Grid>
@@ -47,10 +47,8 @@ const AlternativeList = ({ alternatives, totalCount, ...props }: AlternativeList
 
 const AlternativeListSkeleton = () => {
   return (
-    <div className="flex flex-col gap-6 lg:gap-8">
-      <Box className="px-4 py-2.5 text-sm/normal rounded-lg w-full">
-        <span>&nbsp;</span>
-      </Box>
+    <div className="flex flex-col gap-5">
+      <Input size="lg" disabled />
 
       <Grid>
         {[...Array(6)].map((_, index) => (

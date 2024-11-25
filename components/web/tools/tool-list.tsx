@@ -1,12 +1,12 @@
 "use client"
 
 import { useQueryStates } from "nuqs"
-import { Box } from "~/components/common/box"
 import { EmptyList } from "~/components/web/empty-list"
 import { Pagination } from "~/components/web/pagination"
 import { ToolCard, ToolCardSkeleton } from "~/components/web/tools/tool-card"
 import { ToolFilters, type ToolFiltersProps } from "~/components/web/tools/tool-filters"
 import { Grid } from "~/components/web/ui/grid"
+import { Input } from "~/components/web/ui/input"
 import type { CategoryMany } from "~/server/categories/payloads"
 import type { ToolMany } from "~/server/tools/payloads"
 import { toolsSearchParams } from "~/server/tools/search-params"
@@ -42,9 +42,7 @@ const ToolList = ({ tools, totalCount, categories, ...props }: ToolListProps) =>
 const ToolListSkeleton = () => {
   return (
     <div className="flex flex-col gap-5">
-      <Box className="py-2 text-sm/normal rounded-lg w-full">
-        <span>&nbsp;</span>
-      </Box>
+      <Input size="lg" disabled />
 
       <Grid>
         {[...Array(6)].map((_, index) => (

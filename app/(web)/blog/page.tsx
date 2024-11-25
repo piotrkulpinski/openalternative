@@ -1,6 +1,6 @@
 import { allPosts } from "content-collections"
 import type { Metadata } from "next"
-import { PostCard } from "~/components/web/cards/post-card"
+import { PostCard } from "~/components/web/posts/post-card"
 import { Grid } from "~/components/web/ui/grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { parseMetadata } from "~/utils/metadata"
