@@ -4,7 +4,7 @@ import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const badgeVariants = cva({
-  base: "flex items-center rounded-sm text-secondary whitespace-nowrap",
+  base: "flex items-center rounded-sm text-secondary leading-tight whitespace-nowrap",
 
   variants: {
     variant: {
@@ -16,9 +16,9 @@ const badgeVariants = cva({
       danger: "bg-red-700/90 text-background dark:bg-red-300/90",
     },
     size: {
-      sm: "px-1 py-px gap-1 text-[0.625rem]/tight",
-      md: "px-1.5 py-0.5 gap-1.5 text-xs/tight",
-      lg: "px-2 py-1 gap-2 text-[0.8125rem]/tight rounded-md",
+      sm: "px-1 py-px gap-1 text-[0.625rem]",
+      md: "px-1.5 py-0.5 gap-1.5 text-xs",
+      lg: "px-2 py-1 gap-2 text-[0.8125rem] rounded-md",
     },
   },
 

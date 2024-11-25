@@ -4,15 +4,15 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const inputVariants = cva({
   base: [
-    "appearance-none min-h-0 bg-background text-secondary font-medium break-words truncate transition duration-150 disabled:opacity-50",
+    "appearance-none min-h-0 bg-background text-secondary font-medium text-[0.8125rem] leading-tight break-words truncate transition duration-150 disabled:text-secondary/50",
     "resize-none field-sizing-content",
   ],
 
   variants: {
     size: {
-      sm: "px-2 py-1 text-[0.8125rem]/none font-normal rounded-md",
-      md: "px-3 py-2 text-[0.8125rem]/tight rounded-md",
-      lg: "px-4 py-2.5 text-sm/tight rounded-lg",
+      sm: "px-2 py-1 font-normal leading-none rounded-md",
+      md: "px-3 py-2 rounded-md",
+      lg: "px-4 py-2.5 rounded-lg sm:text-sm",
     },
   },
 

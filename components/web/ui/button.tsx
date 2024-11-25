@@ -8,7 +8,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const buttonVariants = cva({
   base: [
-    "group/button relative inline-flex items-center justify-center border font-medium text-left rounded-md hover:z-10",
+    "group/button relative inline-flex items-center justify-center border font-medium text-[0.8125rem] text-start leading-tight rounded-md hover:z-10",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
@@ -21,9 +21,9 @@ const buttonVariants = cva({
       ghost: "border-transparent! text-foreground hover:bg-card-dark",
     },
     size: {
-      sm: "text-[0.8125rem]/none gap-[0.66ch] py-1 px-2",
-      md: "text-[0.8125rem]/tight gap-[0.75ch] py-1.5 px-3",
-      lg: "text-[0.8125rem]/tight gap-[1ch] py-2 px-4 sm:text-sm/tight",
+      sm: "gap-[0.66ch] py-1 px-2 leading-none",
+      md: "gap-[0.75ch] py-1.5 px-3",
+      lg: "gap-[1ch] py-2 px-4 sm:text-sm",
     },
     isAffixOnly: {
       true: "",
