@@ -26,7 +26,7 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
         weekdays: "flex",
         weekday: "text-muted/50 rounded-md min-w-8 w-full font-normal text-xs",
         week: "group/week flex mt-2",
-        day: "group/day relative w-full text-center text-[0.8125rem] leading-none rounded-md focus-within:z-20",
+        day: "group/day relative w-full text-center text-[0.8125rem] rounded-md focus-within:z-20",
         day_button:
           "relative w-full p-1.5 cursor-pointer rounded-md hover:bg-card-dark hover:group-data-selected/day:bg-transparent",
         selected: "bg-primary text-white",

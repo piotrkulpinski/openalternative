@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
-import { ToolListSkeleton } from "~/components/web/tools/tool-list"
-import { ToolListing } from "~/components/web/tools/tool-listing"
+import { CategoryToolListing } from "~/app/(web)/categories/[slug]/listing"
+import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import type { CategoryOne } from "~/server/categories/payloads"
 import { findCategory, findCategorySlugs } from "~/server/categories/queries"
@@ -64,12 +64,8 @@ export default async function CategoryPage(props: PageProps) {
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>
       </Intro>
 
-      <Suspense fallback={<ToolListSkeleton />}>
-        <ToolListing
-          searchParams={props.searchParams}
-          where={{ categories: { some: { category: { slug: category.slug } } } }}
-          placeholder={`Search ${category.label?.toLowerCase()}...`}
-        />
+      <Suspense fallback={<ToolQuerySkeleton />}>
+        <CategoryToolListing category={category} searchParams={props.searchParams} />
       </Suspense>
     </>
   )

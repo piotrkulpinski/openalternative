@@ -1,55 +1,32 @@
-"use client"
-
-import { useQueryStates } from "nuqs"
+import type { ComponentProps } from "react"
 import { EmptyList } from "~/components/web/empty-list"
-import { Pagination } from "~/components/web/pagination"
 import { ToolCard, ToolCardSkeleton } from "~/components/web/tools/tool-card"
-import { ToolFilters, type ToolFiltersProps } from "~/components/web/tools/tool-filters"
 import { Grid } from "~/components/web/ui/grid"
-import { Input } from "~/components/web/ui/input"
-import type { CategoryMany } from "~/server/categories/payloads"
 import type { ToolMany } from "~/server/tools/payloads"
-import { toolsSearchParams } from "~/server/tools/search-params"
 
-type ToolListProps = ToolFiltersProps & {
+type ToolListProps = ComponentProps<typeof Grid> & {
   tools: ToolMany[]
-  categories?: CategoryMany[]
-  totalCount: number
 }
 
-const ToolList = ({ tools, totalCount, categories, ...props }: ToolListProps) => {
-  const [{ q, perPage }] = useQueryStates(toolsSearchParams)
-
+const ToolList = ({ tools, ...props }: ToolListProps) => {
   return (
-    <>
-      <div className="flex flex-col gap-5">
-        <ToolFilters categories={categories} {...props} />
+    <Grid {...props}>
+      {tools.map(tool => (
+        <ToolCard key={tool.id} tool={tool} />
+      ))}
 
-        <Grid>
-          {tools.map(tool => (
-            <ToolCard key={tool.id} tool={tool} />
-          ))}
-
-          {!tools.length && <EmptyList>No tools found{q ? ` for "${q}"` : ""}.</EmptyList>}
-        </Grid>
-      </div>
-
-      <Pagination pageSize={perPage} totalCount={totalCount} />
-    </>
+      {!tools.length && <EmptyList>No tools found.</EmptyList>}
+    </Grid>
   )
 }
 
-const ToolListSkeleton = () => {
+const ToolListSkeleton = ({ count = 6 }: { count?: number }) => {
   return (
-    <div className="flex flex-col gap-5">
-      <Input size="lg" disabled />
-
-      <Grid>
-        {[...Array(6)].map((_, index) => (
-          <ToolCardSkeleton key={index} />
-        ))}
-      </Grid>
-    </div>
+    <Grid>
+      {[...Array(count)].map((_, index) => (
+        <ToolCardSkeleton key={index} />
+      ))}
+    </Grid>
   )
 }
 

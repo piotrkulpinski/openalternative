@@ -1,5 +1,3 @@
-"use client"
-
 import type { ComponentProps } from "react"
 import { EmptyList } from "~/components/web/empty-list"
 import { LanguageCard, LanguageCardSkeleton } from "~/components/web/languages/language-card"
