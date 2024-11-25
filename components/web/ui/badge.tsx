@@ -62,10 +62,10 @@ const Badge = ({
   ...props
 }: BadgeProps) => {
   const useAsChild = asChild && isValidElement(children)
-  const Component = useAsChild ? Slot : "span"
+  const Comp = useAsChild ? Slot : "span"
 
   return (
-    <Component className={cx(badgeVariants({ variant, size, className }))} {...props}>
+    <Comp className={cx(badgeVariants({ variant, size, className }))} {...props}>
       <Slottable child={children} asChild={asChild}>
         {child => (
           <>
@@ -75,7 +75,7 @@ const Badge = ({
           </>
         )}
       </Slottable>
-    </Component>
+    </Comp>
   )
 }
 

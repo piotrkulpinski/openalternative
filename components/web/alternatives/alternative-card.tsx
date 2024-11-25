@@ -3,7 +3,7 @@ import plur from "plur"
 import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
-import { Card } from "~/components/web/ui/card"
+import { Card, CardDescription, CardFooter, CardHeader } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
 import type { AlternativeMany } from "~/server/alternatives/payloads"
 import { cx } from "~/utils/cva"
@@ -17,7 +17,7 @@ const AlternativeCard = ({ alternative, showCount, ...props }: AlternativeCardPr
   return (
     <Card asChild>
       <Link href={`/alternatives/${alternative.slug}`} {...props}>
-        <Card.Header>
+        <CardHeader>
           <Favicon
             src={
               alternative.faviconUrl ||
@@ -29,18 +29,18 @@ const AlternativeCard = ({ alternative, showCount, ...props }: AlternativeCardPr
           <H4 as="h3" className="truncate">
             {alternative.name}
           </H4>
-        </Card.Header>
+        </CardHeader>
 
         {alternative.description && (
-          <Card.Description className={cx(!showCount && "line-clamp-3")}>
+          <CardDescription className={cx(!showCount && "line-clamp-3")}>
             {alternative.description}
-          </Card.Description>
+          </CardDescription>
         )}
 
         {showCount && (
-          <Card.Footer>
+          <CardFooter>
             {alternative._count.tools} {plur("alternative", alternative._count.tools)}
-          </Card.Footer>
+          </CardFooter>
         )}
       </Link>
     </Card>
@@ -50,22 +50,22 @@ const AlternativeCard = ({ alternative, showCount, ...props }: AlternativeCardPr
 const AlternativeCardSkeleton = () => {
   return (
     <Card hover={false} className="items-stretch select-none">
-      <Card.Header>
+      <CardHeader>
         <Favicon src={null} className="animate-pulse" />
 
         <H4 className="w-2/3">
           <Skeleton>&nbsp;</Skeleton>
         </H4>
-      </Card.Header>
+      </CardHeader>
 
-      <Card.Description className="flex flex-col gap-0.5">
+      <CardDescription className="flex flex-col gap-0.5">
         <Skeleton className="h-5 w-4/5">&nbsp;</Skeleton>
         <Skeleton className="h-5 w-1/2">&nbsp;</Skeleton>
-      </Card.Description>
+      </CardDescription>
 
-      <Card.Footer>
+      <CardFooter>
         <Skeleton className="h-4 w-1/3">&nbsp;</Skeleton>
-      </Card.Footer>
+      </CardFooter>
     </Card>
   )
 }
