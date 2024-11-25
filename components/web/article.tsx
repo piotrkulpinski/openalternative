@@ -1,7 +1,7 @@
 import { MDXContent } from "@content-collections/mdx/react"
 import Link from "next/link"
 import type { ComponentProps } from "react"
-import { Prose } from "~/components/common/prose"
+import { Prose } from "~/components/web/ui/prose"
 import { cx } from "~/utils/cva"
 
 const components = {

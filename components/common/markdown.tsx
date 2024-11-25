@@ -1,7 +1,7 @@
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import ReactMarkdown, { type Components } from "react-markdown"
-import { Prose } from "~/components/common/prose"
+import { Prose } from "~/components/web/ui/prose"
 
 export const Markdown = ({ children, ...props }: ComponentProps<typeof Prose>) => {
   const components: Components = {

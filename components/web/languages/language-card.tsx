@@ -2,35 +2,42 @@ import Link from "next/link"
 import plur from "plur"
 import type { ComponentProps } from "react"
 import { Skeleton } from "~/components/common/skeleton"
+import { Stack } from "~/components/common/stack"
 import {
   CardSimple,
   CardSimpleCaption,
   CardSimpleDivider,
   CardSimpleTitle,
 } from "~/components/web/ui/card-simple"
-import type { CategoryMany } from "~/server/categories/payloads"
+import type { LanguageMany } from "~/server/languages/payloads"
 
-type CategoryCardProps = ComponentProps<typeof CardSimple> & {
-  category: CategoryMany
+type LanguageCardProps = ComponentProps<typeof CardSimple> & {
+  language: LanguageMany
 }
 
-const CategoryCard = ({ category, ...props }: CategoryCardProps) => {
+const LanguageCard = ({ language, ...props }: LanguageCardProps) => {
   return (
     <CardSimple asChild {...props}>
-      <Link href={`/categories/${category.slug}`}>
-        <CardSimpleTitle>{category.name}</CardSimpleTitle>
+      <Link href={`/languages/${language.slug}`}>
+        <Stack size="sm">
+          <span
+            className="size-2 rounded-full"
+            style={{ backgroundColor: language.color ?? undefined }}
+          />
+          <CardSimpleTitle>{language.name}</CardSimpleTitle>
+        </Stack>
 
         <CardSimpleDivider />
 
         <CardSimpleCaption>
-          {`${category._count.tools} ${plur("tool", category._count.tools)}`}
+          {`${language._count.tools} ${plur("tool", language._count.tools)}`}
         </CardSimpleCaption>
       </Link>
     </CardSimple>
   )
 }
 
-const CategoryCardSkeleton = () => {
+const LanguageCardSkeleton = () => {
   return (
     <CardSimple>
       <CardSimpleTitle className="w-1/3">
@@ -46,4 +53,4 @@ const CategoryCardSkeleton = () => {
   )
 }
 
-export { CategoryCard, CategoryCardSkeleton }
+export { LanguageCard, LanguageCardSkeleton }
