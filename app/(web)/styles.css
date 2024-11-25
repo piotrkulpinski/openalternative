@@ -1,9 +1,16 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
 
-@plugin '@tailwindcss/typography';
-@plugin 'tailwindcss-animate';
+@source "../../components/common/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../../components/web/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../../app/*.{js,ts,jsx,tsx,mdx}";
+@source "../../app/(web)/**/*.{js,ts,jsx,tsx,mdx}";
 
 @theme {
+  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
   --header-height: 3.125rem;
   --header-top: 0rem;
 
@@ -21,10 +28,8 @@
 
   --tracking-micro: -0.0125em;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-display: var(--font-uncut-sans), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: var(--font-geist-sans), var(--font-system);
+  --font-display: var(--font-uncut-sans), var(--font-system);
 
   --text-5xl: 2.75rem;
 

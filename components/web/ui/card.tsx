@@ -31,15 +31,20 @@ type CardProps = ComponentProps<"div"> &
     asChild?: boolean
   }
 
-const CardBase = ({ ...props }: CardProps) => {
-  const { className, hover = true, focus = true, asChild, isRevealed, ...rest } = props
-
+const Card = ({
+  className,
+  hover = true,
+  focus = true,
+  asChild,
+  isRevealed,
+  ...props
+}: CardProps) => {
   const useAsChild = asChild && isValidElement(props.children)
-  const Component = useAsChild ? Slot : "div"
+  const Comp = useAsChild ? Slot : "div"
 
   return (
     <Box hover={hover} focus={focus}>
-      <Component className={cx(cardVariants({ isRevealed, className }))} {...rest} />
+      <Comp className={cx(cardVariants({ isRevealed, className }))} {...props} />
     </Box>
   )
 }
@@ -90,17 +95,8 @@ const CardBg = ({ className, ...props }: ComponentProps<"div">) => {
   )
 }
 
-const Card = Object.assign(CardBase, {
-  Header: CardHeader,
-  Footer: CardFooter,
-  Description: CardDescription,
-  Badges: CardBadges,
-  Bg: CardBg,
-})
-
 export {
   Card,
-  CardBase,
   CardBg,
   CardBadges,
   CardDescription,

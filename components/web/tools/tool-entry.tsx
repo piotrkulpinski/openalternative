@@ -7,7 +7,6 @@ import { Stack } from "~/components/common/stack"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
-import { Card } from "~/components/web/ui/card"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import type { ToolMany } from "~/server/tools/payloads"
 import { cx } from "~/utils/cva"
@@ -51,9 +50,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
         </Stack>
 
         {tool.description && (
-          <Card.Description className="mt-2 text-base w-full md:text-lg">
-            {tool.description}
-          </Card.Description>
+          <p className="mt-2 w-full text-secondary text-pretty md:text-lg">{tool.description}</p>
         )}
       </div>
 

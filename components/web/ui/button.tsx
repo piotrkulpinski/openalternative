@@ -92,11 +92,11 @@ const Button = ({
   }
 
   const useAsChild = asChild && isValidElement(children)
-  const Component = useAsChild ? Slot : "button"
+  const Comp = useAsChild ? Slot : "button"
 
   return (
     <Box hover focus>
-      <Component
+      <Comp
         disabled={disabled ?? isPending}
         className={cx(buttonVariants({ variant, size, isAffixOnly, isPending, className }))}
         {...props}
@@ -114,7 +114,7 @@ const Button = ({
             </>
           )}
         </Slottable>
-      </Component>
+      </Comp>
     </Box>
   )
 }

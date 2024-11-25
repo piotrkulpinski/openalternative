@@ -7,7 +7,7 @@ import type { HTMLAttributes } from "react"
 import { H4 } from "~/components/common/heading"
 import { Prose } from "~/components/common/prose"
 import { Button } from "~/components/web/ui/button"
-import { Card } from "~/components/web/ui/card"
+import { Card, CardDescription, CardHeader } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
 import type { AlternativeMany, AlternativeOne } from "~/server/alternatives/payloads"
 import { cx } from "~/utils/cva"
@@ -29,18 +29,18 @@ export const AlternativeCardExternal = ({
         rel="noopener noreferrer nofollow"
         onClick={() => posthog.capture("alternative_clicked", { url: alternative.slug })}
       >
-        <Card.Header>
+        <CardHeader>
           <Favicon src={alternative.faviconUrl} title={alternative.name} />
 
           <H4 as="h3" className="truncate flex-1">
             {alternative.name}
           </H4>
-        </Card.Header>
+        </CardHeader>
 
         {alternative.description && (
-          <Card.Description className="max-w-md line-clamp-4">
+          <CardDescription className="max-w-md line-clamp-4">
             {alternative.description}
-          </Card.Description>
+          </CardDescription>
         )}
 
         {alternative.discountAmount && (

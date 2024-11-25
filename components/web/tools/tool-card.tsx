@@ -8,7 +8,7 @@ import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { Badge } from "~/components/web/ui/badge"
-import { Card } from "~/components/web/ui/card"
+import { Card, CardDescription, CardHeader } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
 import { Insights } from "~/components/web/ui/insights"
 import type { ToolMany } from "~/server/tools/payloads"
@@ -37,7 +37,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
   return (
     <Card asChild {...props}>
       <Link href={`/${tool.slug}`}>
-        <Card.Header>
+        <CardHeader>
           <Favicon src={tool.faviconUrl} title={tool.name} />
 
           <H4 as="h3" className="truncate">
@@ -47,9 +47,9 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
           <ToolBadges tool={tool} size="sm" className="ml-auto text-base">
             {tool.discountAmount && <Badge variant="success">Get {tool.discountAmount}!</Badge>}
           </ToolBadges>
-        </Card.Header>
+        </CardHeader>
 
-        {tool.tagline && <Card.Description>{tool.tagline}</Card.Description>}
+        {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
 
         <Insights insights={insights} className="mt-auto" />
       </Link>
@@ -66,18 +66,18 @@ const ToolCardSkeleton = () => {
 
   return (
     <Card hover={false} className="items-stretch select-none">
-      <Card.Header>
+      <CardHeader>
         <Favicon src={null} className="animate-pulse" />
 
         <H4 className="w-2/3">
           <Skeleton>&nbsp;</Skeleton>
         </H4>
-      </Card.Header>
+      </CardHeader>
 
-      <Card.Description className="flex flex-col gap-0.5">
+      <CardDescription className="flex flex-col gap-0.5">
         <Skeleton className="h-5 w-4/5">&nbsp;</Skeleton>
         <Skeleton className="h-5 w-1/2">&nbsp;</Skeleton>
-      </Card.Description>
+      </CardDescription>
 
       <Stack size="sm">
         <Insights insights={insights} className="mt-auto animate-pulse" />
