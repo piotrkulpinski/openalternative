@@ -1,15 +1,13 @@
-import type { Prisma } from "@prisma/client"
 import type { SearchParams } from "nuqs/server"
-import { AlternativeList } from "~/components/web/alternatives/alternative-list"
+import { AlternativeQuery } from "~/components/web/alternatives/alternative-query"
 import { searchAlternatives } from "~/server/alternatives/queries"
 
-type ToolListingProps = {
+type AlternativeListingProps = {
   searchParams: Promise<SearchParams>
-  where?: Prisma.AlternativeWhereInput
 }
 
-export const AlternativeListing = async ({ searchParams, where }: ToolListingProps) => {
-  const { alternatives, totalCount } = await searchAlternatives(await searchParams, { where })
+export const AlternativeListing = async ({ searchParams }: AlternativeListingProps) => {
+  const { alternatives, totalCount } = await searchAlternatives(await searchParams, {})
 
-  return <AlternativeList alternatives={alternatives} totalCount={totalCount} />
+  return <AlternativeQuery alternatives={alternatives} totalCount={totalCount} />
 }
