@@ -24,8 +24,9 @@ const nextConfig: NextConfig = {
       // {
       //   hostname: `${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com`,
       // },
-      { hostname: "**.amazonaws.com" },
-      { hostname: "**.google.com" },
+      // { hostname: "**.amazonaws.com" },
+      { hostname: "s3.us-east-1.amazonaws.com" },
+      { hostname: "openalternative.s3.amazonaws.com" },
     ],
   },
 
@@ -58,6 +59,26 @@ const nextConfig: NextConfig = {
       },
     ]
   },
+
+  async redirects() {
+    return [
+      {
+        source: "/latest",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/newsletter",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/sponsor",
+        destination: "/advertise",
+        permanent: true,
+      },
+    ]
+  },
 }
 
 const plausibleProxy = withPlausibleProxy({
@@ -65,4 +86,4 @@ const plausibleProxy = withPlausibleProxy({
   subdirectory: "_proxy/plausible",
 })
 
-export default plausibleProxy(withContentCollections(nextConfig))
+export default withContentCollections(plausibleProxy(nextConfig))

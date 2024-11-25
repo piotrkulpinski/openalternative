@@ -3,7 +3,13 @@ import Link from "next/link"
 import { H4 } from "~/components/common/heading"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
-import { Card, type CardProps } from "~/components/web/ui/card"
+import {
+  Card,
+  CardBadges,
+  CardDescription,
+  CardHeader,
+  type CardProps,
+} from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
 import { Logo } from "~/components/web/ui/logo"
 import type { AdOne } from "~/server/ads/payloads"
@@ -38,12 +44,12 @@ export const AdCard = ({ className, ad: adProp, rel, ...props }: AdCardProps) =>
         // onClick={() => posthog.capture("click_ad", { url: ad.website, type: ad.type })}
       >
         {ad.website && (
-          <Card.Badges>
+          <CardBadges>
             <Badge variant="outline">Ad</Badge>
-          </Card.Badges>
+          </CardBadges>
         )}
 
-        <Card.Header>
+        <CardHeader>
           {(ad.faviconUrl || ad.website) && (
             <Favicon
               src={
@@ -57,12 +63,12 @@ export const AdCard = ({ className, ad: adProp, rel, ...props }: AdCardProps) =>
           <H4 as="strong" className="truncate">
             {ad.name || "Advertise with us"}
           </H4>
-        </Card.Header>
+        </CardHeader>
 
-        <Card.Description className="mb-auto line-clamp-4">
+        <CardDescription className="mb-auto line-clamp-4">
           {ad.description ||
             "Reach out to our audience of professional open source/tech enthusiasts to boost your sales."}
-        </Card.Description>
+        </CardDescription>
 
         <Button className="w-full pointer-events-none" suffix={ad && <ArrowUpRightIcon />} asChild>
           <span>{ad ? `Visit ${ad.name}` : "Advertise with us"}</span>

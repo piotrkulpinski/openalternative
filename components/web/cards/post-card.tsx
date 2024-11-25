@@ -3,7 +3,7 @@ import type { Post } from "content-collections"
 import Link from "next/link"
 import type { HTMLAttributes } from "react"
 import { H4 } from "~/components/common/heading"
-import { Card } from "~/components/web/ui/card"
+import { Card, CardDescription, CardFooter, CardHeader } from "~/components/web/ui/card"
 
 type PostCardProps = HTMLAttributes<HTMLElement> & {
   post: Post
@@ -21,20 +21,20 @@ export const PostCard = ({ className, post, ...props }: PostCardProps) => {
           />
         )}
 
-        <Card.Header>
+        <CardHeader>
           <H4 as="h3" className="leading-snug!">
             {post.title}
           </H4>
-        </Card.Header>
+        </CardHeader>
 
-        {post.description && <Card.Description>{post.description}</Card.Description>}
+        {post.description && <CardDescription>{post.description}</CardDescription>}
 
         {post.publishedAt && (
-          <Card.Footer>
+          <CardFooter>
             <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
             <span>&bull;</span>
             <span>{getReadTime(post.content)} min read</span>
-          </Card.Footer>
+          </CardFooter>
         )}
       </Link>
     </Card>
