@@ -6,9 +6,9 @@ const gridVariants = cva({
 
   variants: {
     size: {
-      sm: "grid-auto-fill-sm",
-      md: "grid-auto-fill-md",
-      lg: "grid-auto-fill-lg",
+      sm: "grid-cols-sm",
+      md: "grid-cols-md",
+      lg: "grid-cols-lg",
     },
   },
 

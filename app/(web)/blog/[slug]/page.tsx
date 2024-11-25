@@ -18,47 +18,43 @@ type PageProps = {
   params: Promise<{ slug: string }>
 }
 
-const findPostBySlug = cache((slug: string) => {
-  return allPosts.find(({ _meta }) => _meta.path === slug)
+const findPostBySlug = cache(async ({ params }: PageProps) => {
+  const { slug } = await params
+  const post = allPosts.find(({ _meta }) => _meta.path === slug)
+
+  if (!post) {
+    notFound()
+  }
+
+  return post
 })
 
 export const generateStaticParams = () => {
   return allPosts.map(({ _meta }) => ({ slug: _meta.path }))
 }
 
-const getMetadata = cache((post: Post, metadata?: Metadata): Metadata => {
+const getMetadata = (post: Post) => {
   return {
-    ...metadata,
     title: post.title,
     description: post.description,
-  }
-})
+  } satisfies Metadata
+}
 
-export const generateMetadata = async ({ params }: PageProps) => {
-  const { slug } = await params
-  const post = findPostBySlug(slug)
-  const url = `/blog/${slug}`
-
-  if (!post) {
-    return
-  }
+export const generateMetadata = async (props: PageProps) => {
+  const post = await findPostBySlug(props)
+  const url = `/blog/${post._meta.path}`
 
   return parseMetadata(
-    getMetadata(post, {
+    Object.assign(getMetadata(post), {
       alternates: { canonical: url },
       openGraph: { url },
     }),
   )
 }
 
-export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = await params
-  const post = findPostBySlug(slug)
+export default async function BlogPostPage(props: PageProps) {
+  const post = await findPostBySlug(props)
   const ad = await findFirstAd({ where: { type: "Homepage" } })
-
-  if (!post) {
-    notFound()
-  }
 
   return (
     <div className="flex flex-col gap-8 md:gap-10 lg:gap-12">

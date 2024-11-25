@@ -28,9 +28,9 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
         week: "group/week flex mt-2",
         day: "group/day relative w-full text-center text-[0.8125rem]/none rounded-md focus-within:z-20",
         day_button:
-          "relative w-full p-1.5 cursor-pointer rounded-md hover:bg-card-dark group-data-[selected]/day:hover:bg-transparent",
-        selected: "bg-primary text-primary-foreground",
-        range_middle: "!bg-card-dark !text-foreground rounded-none",
+          "relative w-full p-1.5 cursor-pointer rounded-md hover:bg-card-dark hover:group-data-selected/day:bg-transparent",
+        selected: "bg-primary text-white",
+        range_middle: "bg-card-dark! text-foreground! rounded-none",
         today:
           "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-0.5 after:w-5 after:-translate-x-1/2 after:rounded-[2px] after:bg-current",
         outside: "opacity-40",

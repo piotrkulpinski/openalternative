@@ -22,7 +22,7 @@ export const PostCard = ({ className, post, ...props }: PostCardProps) => {
         )}
 
         <Card.Header>
-          <H4 as="h3" className="!leading-snug">
+          <H4 as="h3" className="leading-snug!">
             {post.title}
           </H4>
         </Card.Header>

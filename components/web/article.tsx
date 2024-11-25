@@ -34,7 +34,7 @@ type ArticleProps = ComponentProps<typeof Prose> & {
 
 export const Article = ({ className, content, ...props }: ArticleProps) => {
   return (
-    <Prose className={cx("!max-w-3xl", className)} {...props}>
+    <Prose className={cx("max-w-3xl!", className)} {...props}>
       <MDXContent code={content} components={components} />
     </Prose>
   )

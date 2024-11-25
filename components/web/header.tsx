@@ -6,7 +6,6 @@ import {
   CodeXmlIcon,
   CopyrightIcon,
   GalleryHorizontalEndIcon,
-  ReplaceIcon,
   TagIcon,
 } from "lucide-react"
 import Link from "next/link"
@@ -60,7 +59,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
       data-state={isNavOpen ? "open" : "close"}
       {...props}
     >
-      <div className="absolute top-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-gradient-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
+      <div className="absolute top-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-linear-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
 
       <div className="relative flex flex-nowrap items-center py-3.5 gap-x-3 text-sm h-[var(--header-height)] isolate duration-300 lg:gap-4">
         <button
@@ -76,15 +75,15 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             aria-label="Toggle navigation icon"
           >
             <path
-              className="fill-none duration-300 stroke-current stroke-[5] [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"
+              className="fill-none duration-300 stroke-current stroke-5 [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"
               d="m 70,33 h -40 c 0,0 -8.5,-0.149796 -8.5,8.5 0,8.649796 8.5,8.5 8.5,8.5 h 20 v -20"
             />
             <path
-              className="fill-none duration-300 stroke-current stroke-[5] [stroke-linecap:round]"
+              className="fill-none duration-300 stroke-current stroke-5 [stroke-linecap:round]"
               d="m 55,50 h -25"
             />
             <path
-              className="fill-none duration-300 stroke-current stroke-[5] [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"
+              className="fill-none duration-300 stroke-current stroke-5 [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"
               d="m 30,67 h 40 c 0,0 8.5,0.149796 8.5,-8.5 0,-8.649796 -8.5,-8.5 -8.5,-8.5 h -20 v 20"
             />
           </svg>
@@ -114,11 +113,6 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink href="/alternatives">
-                  <ReplaceIcon className="shrink-0 size-4 opacity-75" /> Alternatives
-                </NavigationLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
                 <NavigationLink href="/languages">
                   <CodeXmlIcon className="shrink-0 size-4 opacity-75" /> Languages
                 </NavigationLink>
@@ -136,7 +130,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <NavigationLink href="/random">Random Tool</NavigationLink>
+          <NavigationLink href="/alternatives">Alternatives</NavigationLink>
           <NavigationLink href="/advertise">Advertise</NavigationLink>
         </nav>
 

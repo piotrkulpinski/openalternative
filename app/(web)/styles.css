@@ -1,51 +1,128 @@
-@config "../../tailwind.web.config.ts";
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@plugin '@tailwindcss/typography';
+@plugin 'tailwindcss-animate';
+
+@theme {
+  --header-height: 3.125rem;
+  --header-top: 0rem;
+
+  --color-primary: hsl(15 63% 40%);
+  --color-background: hsl(0 0% 100%);
+  --color-muted: hsl(0 0% 40%);
+  --color-secondary: hsl(0 0% 30%);
+  --color-foreground: hsl(0 0% 13%);
+
+  --color-card: hsl(0 0% 99%);
+  --color-card-dark: hsl(0 0% 97%);
+
+  --color-border: hsl(0 0% 88%);
+  --color-border-dark: hsl(0 0% 83%);
+
+  --tracking-micro: -0.0125em;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-display: var(--font-uncut-sans), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --text-5xl: 2.75rem;
+
+  --scale-flip: -1;
+
+  --background-image-cross: linear-gradient(
+    -45deg,
+    hsl(var(--color-foreground) / 0) 0%,
+    hsl(var(--color-foreground) / 0) calc(50% - 0.8px),
+    hsl(var(--color-foreground) / 0.66) 50%,
+    hsl(var(--color-foreground) / 0) calc(50% + 0.8px),
+    hsl(var(--color-foreground) / 0) 100%
+  );
+
+  --grid-template-columns-2xs: repeat(auto-fill, minmax(10rem, 1fr));
+  --grid-template-columns-xs: repeat(auto-fill, minmax(12rem, 1fr));
+  --grid-template-columns-sm: repeat(auto-fill, minmax(14rem, 1fr));
+  --grid-template-columns-md: repeat(auto-fill, minmax(16rem, 1fr));
+  --grid-template-columns-lg: repeat(auto-fill, minmax(18rem, 1fr));
+  --grid-template-columns-xl: repeat(auto-fill, minmax(20rem, 1fr));
+
+  --animate-shimmer: shimmer 1.25s cubic-bezier(0.5, 0.25, 0.25, 0.5) infinite;
+  --animate-reveal: reveal linear forwards;
+  --animate-moving-banner: movingBanner 25s linear infinite;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    @apply border-border;
+  }
+}
+
+@utility animate-reveal {
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 15%;
+}
+
+@utility prose {
+  & [id] {
+    @apply relative;
+  }
+
+  & [id] > a {
+    @apply opacity-0;
+    @apply absolute;
+    @apply right-full;
+    @apply no-underline;
+    @apply p-2;
+    @apply -m-2;
+    @apply mr-0;
+  }
+
+  & [id] > a:after {
+    @apply content-["#"];
+  }
+
+  & [id]:hover > a {
+    @apply opacity-25;
+  }
+
+  & [id]:hover > a:hover {
+    @apply opacity-100;
+  }
+}
 
 @layer base {
-  :root {
-    --header-height: 3.125rem;
-    --header-top: 0rem;
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-primary: hsl(15 63% 50%);
+      --color-background: hsl(0 0% 8%);
+      --color-muted: hsl(0 0% 60%);
+      --color-secondary: hsl(0 0% 70%);
+      --color-foreground: hsl(0 0% 87%);
 
-    --color-primary: 15 63% 40%;
-    --color-background: 0 0% 100%;
+      --color-card: hsl(0 0% 10%);
+      --color-card-dark: hsl(0 0% 12%);
 
-    --color-card: 0 0% 99%;
-    --color-card-dark: 0 0% 97%;
-    --color-border: 0 0% 88%;
-    --color-border-dark: 0 0% 83%;
-
-    --color-muted: 0 0% 40%;
-    --color-secondary: 0 0% 30%;
-    --color-foreground: 0 0% 13%;
-  }
-
-  .dark {
-    --color-primary: 15 63% 50%;
-    --color-background: 0 0% 8%;
-
-    --color-card: 0 0% 10%;
-    --color-card-dark: 0 0% 12%;
-    --color-border: 0 0% 16%;
-    --color-border-dark: 0 0% 19%;
-
-    --color-muted: 0 0% 60%;
-    --color-secondary: 0 0% 70%;
-    --color-foreground: 0 0% 87%;
+      --color-border: hsl(0 0% 16%);
+      --color-border-dark: hsl(0 0% 19%);
+    }
   }
 
   :root {
-    font-feature-settings:
-      "ss01" on,
-      "ss02" off,
-      "ss03" off,
-      "ss04" off,
-      "ss05" off,
-      "ss06" off,
-      "ss07" off,
-      "ss08" on;
+    font-feature-settings: "ss01" on, "ss02" off, "ss03" off, "ss04" off,
+      "ss05" off, "ss06" off, "ss07" off, "ss08" on;
   }
 
   @media (prefers-reduced-motion) {
@@ -61,40 +138,6 @@
   }
 }
 
-@layer utilities {
-  .animate-reveal {
-    animation-timeline: view();
-    animation-range-start: cover;
-    animation-range-end: 15%;
-  }
-
-  .prose [id] {
-    @apply relative;
-  }
-
-  .prose [id] > a {
-    @apply opacity-0;
-    @apply absolute;
-    @apply right-full;
-    @apply no-underline;
-    @apply p-2;
-    @apply -m-2;
-    @apply mr-0;
-  }
-
-  .prose [id] > a:after {
-    @apply content-["#"];
-  }
-
-  .prose [id]:hover > a {
-    @apply opacity-25;
-  }
-
-  .prose [id]:hover > a:hover {
-    @apply opacity-100;
-  }
-}
-
 a,
 button,
 label[for],
@@ -106,11 +149,11 @@ label[for],
 }
 
 svg:not([class*="stroke"]) {
-  @apply !stroke-[1.75];
+  @apply stroke-[1.75]!;
 }
 
 svg:not([class*="size-"]):not([class*="h-"]) {
-  @apply size-[1em];
+  @apply size-[1em]!;
 }
 
 [href] svg[class*="arrow-up-right"],
@@ -139,4 +182,32 @@ select:not([size]) {
   @apply bg-[right_0.75rem_center];
   @apply bg-[length:1.25em_1.25em];
   @apply pr-8;
+}
+
+@keyframes shimmer {
+  from {
+    left: -90%;
+  }
+  to {
+    left: 90%;
+  }
+}
+
+@keyframes reveal {
+  from {
+    scale: 0.9;
+    opacity: 0;
+    transform: translateY(20px) perspective(250px) rotateX(-15deg);
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+    transform: translateY(0) perspective(500px) rotateX(0deg);
+  }
+}
+
+@keyframes movingBanner {
+  to {
+    background-position: 100% 0;
+  }
 }

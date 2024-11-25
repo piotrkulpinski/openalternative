@@ -38,8 +38,8 @@ const DropdownMenuItem = ({
   return (
     <DropdownMenuPrimitive.Item
       className={cx(
-        "rounded !px-2 !py-1.5 !m-0",
-        "focus:outline-none focus:bg-card-dark focus:text-foreground",
+        "rounded-sm px-2! py-1.5! m-0!",
+        "focus:outline-hidden focus:bg-card-dark focus:text-foreground",
         navigationLinkVariants({ className }),
       )}
       {...props}
@@ -56,7 +56,7 @@ const DropdownMenuCheckboxItem = ({
   return (
     <DropdownMenuPrimitive.CheckboxItem
       className={cx(
-        "relative flex select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-card-dark focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex select-none items-center rounded-xs py-1.5 pl-8 pr-2 text-sm outline-hidden transition-colors focus:bg-card-dark focus:text-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
         className,
       )}
       checked={checked}
@@ -80,7 +80,7 @@ const DropdownMenuRadioItem = ({
   return (
     <DropdownMenuPrimitive.RadioItem
       className={cx(
-        "relative flex select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-card-dark focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex select-none items-center rounded-xs py-1.5 pl-8 pr-2 text-sm outline-hidden transition-colors focus:bg-card-dark focus:text-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
         className,
       )}
       {...props}

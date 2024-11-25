@@ -42,7 +42,7 @@ const IntroTitle = ({ size = "h1", ...props }: HeadingProps) => {
 const IntroDescription = ({ children, className, ...props }: ComponentProps<typeof Prose>) => {
   return (
     <Prose className={cx("max-w-2xl", className)} {...props}>
-      <h2 className="!text-base !font-normal !tracking-normal !text-foreground/70 md:!text-lg">
+      <h2 className="text-base! font-normal! tracking-normal! text-foreground/70! md:text-lg!">
         {children}
       </h2>
     </Prose>

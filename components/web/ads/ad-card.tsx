@@ -22,7 +22,7 @@ export const AdCard = ({ className, ad: adProp, rel, ...props }: AdCardProps) =>
 
   return (
     <Card
-      className={cx("group/button", !ad.website && "overflow-clip", className)}
+      className={cx("group/button", !ad.website && "text-clip", className)}
       isRevealed={false}
       asChild
       {...props}

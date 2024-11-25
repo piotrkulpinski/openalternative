@@ -38,7 +38,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
           <Stack className="gap-x-4 text-sm/normal">
             <H6 as="strong">Popular Proprietary Tools:</H6>
 
-            <div className="grid grid-auto-fill-xxs gap-x-4 gap-y-2 w-full sm:grid-auto-fill-xs">
+            <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {alternatives.map(alternative => (
                 <NavigationLink key={alternative.id} href={`/alternatives/${alternative.slug}`}>
                   <span className="truncate">{alternative.name} Alternatives</span>
@@ -54,7 +54,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
           <Stack className="gap-x-4 text-sm/normal md:flex-col md:items-start md:col-span-3">
             <H6 as="strong">Popular Categories:</H6>
 
-            <div className="grid grid-auto-fill-xxs gap-x-4 gap-y-2 w-full sm:grid-auto-fill-xs">
+            <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {categories.map(category => (
                 <NavigationLink key={category.id} href={`/categories/${category.slug}`}>
                   <span className="truncate">{category.label}</span>{" "}

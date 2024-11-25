@@ -4,7 +4,7 @@ import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const badgeVariants = cva({
-  base: "flex items-center rounded text-secondary whitespace-nowrap",
+  base: "flex items-center rounded-sm text-secondary whitespace-nowrap",
 
   variants: {
     variant: {
