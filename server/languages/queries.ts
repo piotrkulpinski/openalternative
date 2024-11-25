@@ -24,7 +24,7 @@ export const findLanguageSlugs = async ({
   })
 }
 
-export const findUniqueLanguage = async ({ ...args }: Prisma.LanguageFindUniqueArgs) => {
+export const findLanguage = async ({ ...args }: Prisma.LanguageFindUniqueArgs) => {
   return prisma.language.findUnique({
     ...args,
     include: languageOnePayload,

@@ -20,7 +20,7 @@ export const findLicenseSlugs = async ({ where, orderBy, ...args }: Prisma.Licen
   })
 }
 
-export const findUniqueLicense = async ({ ...args }: Prisma.LicenseFindUniqueArgs) => {
+export const findLicense = async ({ ...args }: Prisma.LicenseFindUniqueArgs) => {
   return prisma.license.findUnique({
     ...args,
     include: licenseOnePayload,

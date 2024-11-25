@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react"
 import { Heading, type HeadingProps } from "~/components/common/heading"
-import { Prose } from "~/components/common/prose"
+import { Prose } from "~/components/web/ui/prose"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const introVariants = cva({
