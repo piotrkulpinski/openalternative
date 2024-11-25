@@ -22,7 +22,7 @@ const ToolList = ({ tools, totalCount, categories, ...props }: ToolListProps) =>
 
   return (
     <>
-      <div className="flex flex-col gap-6 lg:gap-8">
+      <div className="flex flex-col gap-5">
         <ToolFilters categories={categories} {...props} />
 
         <Grid>
@@ -41,8 +41,8 @@ const ToolList = ({ tools, totalCount, categories, ...props }: ToolListProps) =>
 
 const ToolListSkeleton = () => {
   return (
-    <div className="flex flex-col gap-6 lg:gap-8">
-      <Box className="px-4 py-2.5 text-sm/normal rounded-lg w-full">
+    <div className="flex flex-col gap-5">
+      <Box className="py-2 text-sm/normal rounded-lg w-full">
         <span>&nbsp;</span>
       </Box>
 
