@@ -14,7 +14,7 @@ export const findTopics = async ({ where, orderBy, ...args }: Prisma.TopicFindMa
 export const findTopicSlugs = async ({ where, orderBy, ...args }: Prisma.TopicFindManyArgs) => {
   return prisma.topic.findMany({
     ...args,
-    orderBy: orderBy ?? { tools: { _count: "desc" } },
+    orderBy: orderBy ?? { slug: "asc" },
     where: { tools: { some: { tool: { publishedAt: { lte: new Date() } } } }, ...where },
     select: { slug: true, updatedAt: true },
   })

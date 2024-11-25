@@ -51,9 +51,10 @@ export const searchTools = async (
   return { tools, totalCount }
 }
 
-export const findTools = async ({ where, ...args }: Prisma.ToolFindManyArgs) => {
+export const findTools = async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {
   return prisma.tool.findMany({
     ...args,
+    orderBy: orderBy ?? [{ isFeatured: "desc" }, { score: "desc" }],
     where: { publishedAt: { lte: new Date() }, ...where },
     include: toolManyPayload,
   })

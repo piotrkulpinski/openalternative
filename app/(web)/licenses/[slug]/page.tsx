@@ -5,6 +5,7 @@ import { Suspense, cache } from "react"
 import { LicenseToolListing } from "~/app/(web)/licenses/[slug]/listing"
 import { H2 } from "~/components/common/heading"
 import { Markdown } from "~/components/common/markdown"
+import { Listing } from "~/components/web/listing"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { BackButton } from "~/components/web/ui/back-button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
@@ -66,12 +67,14 @@ export default async function LicensePage(props: PageProps) {
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>
       </Intro>
 
-      <Suspense fallback={<ToolListSkeleton count={3} />}>
-        <LicenseToolListing
-          license={license}
-          where={{ license: { slug: license.slug } }}
-          take={3}
-        />
+      <Suspense
+        fallback={
+          <Listing title={`${license.name} Licensed Software Examples`}>
+            <ToolListSkeleton count={3} />
+          </Listing>
+        }
+      >
+        <LicenseToolListing license={license} />
       </Suspense>
 
       {license.content && (

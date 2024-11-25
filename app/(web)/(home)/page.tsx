@@ -4,7 +4,8 @@ import { Suspense } from "react"
 import { CountBadge, CountBadgeSkeleton } from "~/app/(web)/(home)/count-badge"
 import { HomeToolListing } from "~/app/(web)/(home)/listing"
 import { Stack } from "~/components/common/stack"
-import { AlternativePreviewList } from "~/components/web/alternatives/alternative-preview-list"
+import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
+import { AlternativePreviewSkeleton } from "~/components/web/alternatives/alternative-preview-skeleton"
 import { Newsletter } from "~/components/web/newsletter"
 import { NewsletterProof } from "~/components/web/newsletter-proof"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
@@ -59,7 +60,9 @@ export default function Home({ searchParams }: PageProps) {
         <HomeToolListing searchParams={searchParams} />
       </Suspense>
 
-      <AlternativePreviewList />
+      <Suspense fallback={<AlternativePreviewSkeleton />}>
+        <AlternativePreview />
+      </Suspense>
     </>
   )
 }
