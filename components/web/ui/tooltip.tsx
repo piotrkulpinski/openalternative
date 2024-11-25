@@ -4,7 +4,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const tooltipVariants = cva({
   base: [
-    "z-50 px-2.5 py-1 min-h-6 max-w-[12rem] inline-flex items-center gap-2 rounded-md bg-background text-xs/tight text-pretty font-medium invert pointer-events-none outline-none select-none shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]",
+    "z-50 px-2.5 py-1 min-h-6 max-w-[12rem] inline-flex items-center gap-2 rounded-md bg-background text-xs/tight text-pretty font-medium invert pointer-events-none outline-hidden select-none shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]",
     "animate-in fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
   ],
 

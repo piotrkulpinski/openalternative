@@ -43,7 +43,7 @@ export const Price = ({
           value={price}
           format={{ ...defaultFormat, ...format }}
           locales="en-US"
-          className={cx("!flex items-center font-semibold h-[0.9em]", priceClassName)}
+          className={cx("flex! items-center font-semibold h-[0.9em]", priceClassName)}
           continuous
         />
 

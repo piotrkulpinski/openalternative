@@ -15,10 +15,10 @@ const buttonVariants = cva({
   variants: {
     variant: {
       fancy:
-        "!border-transparent bg-gradient-to-br from-primary to-primary/85 text-white hover:opacity-90",
-      primary: "!border-transparent text-background bg-foreground hover:opacity-90",
+        "border-transparent! bg-linear-to-br from-primary to-primary/85 text-white hover:opacity-90",
+      primary: "border-transparent! text-background bg-foreground hover:opacity-90",
       secondary: "bg-background text-secondary hover:bg-card hover:border-border-dark",
-      ghost: "!border-transparent text-foreground hover:bg-card-dark",
+      ghost: "border-transparent! text-foreground hover:bg-card-dark",
     },
     size: {
       sm: "text-[0.8125rem]/none gap-[0.66ch] py-1 px-2",

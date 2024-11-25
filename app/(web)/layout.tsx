@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { type PropsWithChildren, Suspense } from "react"
+import Providers from "~/app/(web)/providers"
 import { AdBanner } from "~/components/web/ads/ad-banner"
 import { Bottom } from "~/components/web/bottom"
 import { Footer } from "~/components/web/footer"
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <>
+    <Providers>
       <div className="flex flex-col min-h-dvh">
         <AdBanner />
         <Header />
@@ -34,6 +35,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <Suspense>
         <Bottom />
       </Suspense>
-    </>
+    </Providers>
   )
 }

@@ -71,7 +71,7 @@ export const Newsletter = ({
             <Box focusWithin>
               <form
                 onSubmit={form.handleSubmit(data => execute(data))}
-                className="flex rounded-lg overflow-clip"
+                className="flex rounded-lg text-clip"
                 noValidate
               >
                 <input type="hidden" name="utm_medium" value={medium} />
@@ -86,7 +86,7 @@ export const Newsletter = ({
                         placeholder={placeholder}
                         required
                         size={size}
-                        className="flex-1 min-w-0 border-0 outline-0 !ring-0"
+                        className="flex-1 min-w-0 border-0 outline-0 ring-0!"
                         data-1p-ignore
                         {...field}
                       />

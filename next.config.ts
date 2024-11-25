@@ -1,5 +1,6 @@
 import { withContentCollections } from "@content-collections/next"
 import type { NextConfig } from "next"
+import { withPlausibleProxy } from "next-plausible"
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
@@ -30,7 +31,6 @@ const nextConfig: NextConfig = {
 
   async rewrites() {
     const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST
-    const plausibleHost = process.env.NEXT_PUBLIC_PLAUSIBLE_HOST
 
     return [
       // for posthog proxy
@@ -47,16 +47,6 @@ const nextConfig: NextConfig = {
         destination: `${posthogHost}/decide`,
       },
 
-      // for plausible proxy
-      {
-        source: "/_proxy/plausible/script.js",
-        destination: `${plausibleHost}/js/script.js`,
-      },
-      {
-        source: "/_proxy/plausible/event",
-        destination: `${plausibleHost}/api/event`,
-      },
-
       // TODO: RSS rewrites
       {
         source: "/rss.xml",
@@ -70,4 +60,9 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withContentCollections(nextConfig)
+const plausibleProxy = withPlausibleProxy({
+  customDomain: process.env.NEXT_PUBLIC_PLAUSIBLE_HOST,
+  subdirectory: "_proxy/plausible",
+})
+
+export default plausibleProxy(withContentCollections(nextConfig))

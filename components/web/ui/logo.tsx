@@ -15,7 +15,7 @@ export const Logo = ({ className, ...props }: ComponentProps<typeof Stack>) => {
           width="24"
           role="img"
           aria-label="Logo"
-          className="h-5 w-auto !duration-300 !ease-in-out will-change-transform group-hover/logo:rotate-90"
+          className="h-5 w-auto duration-300! ease-in-out! will-change-transform group-hover/logo:rotate-90"
         >
           <path
             fill="currentColor"
