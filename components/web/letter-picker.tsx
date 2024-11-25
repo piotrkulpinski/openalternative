@@ -17,7 +17,7 @@ export const LetterPicker = ({ path, className, ...props }: LetterPickerProps) =
           key={letter}
           to={`${path}/${letter}`}
           className={cx(
-            "px-2 py-1 text-sm font-medium text-center rounded uppercase md:flex-1",
+            "px-2 py-1 text-sm font-medium text-center rounded-sm uppercase md:flex-1",
             pathname === `${path}/${letter}`
               ? "bg-primary text-background"
               : "bg-card-dark text-muted hover:bg-border",

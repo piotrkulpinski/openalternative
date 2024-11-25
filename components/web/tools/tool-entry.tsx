@@ -32,7 +32,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
           <FaviconImage src={tool.faviconUrl} title={tool.name} />
 
           <div className="flex flex-1">
-            <H2 className="!leading-snug">
+            <H2 className="leading-snug!">
               <Link href={href} className="hover:underline">
                 {tool.name}
               </Link>
@@ -75,7 +75,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
         <div className="relative max-h-72 overflow-hidden">
           <Markdown>{tool.content}</Markdown>
 
-          <div className="absolute inset-0 top-auto h-1/5 bg-gradient-to-t from-background pointer-events-none" />
+          <div className="absolute inset-0 top-auto h-1/5 bg-linear-to-t from-background pointer-events-none" />
         </div>
       )}
 

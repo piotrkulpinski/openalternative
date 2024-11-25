@@ -7,7 +7,7 @@ import { navigationLinkVariants } from "~/components/web/ui/navigation-link"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const affixVariants = cva({
-  base: "size-5 duration-150 group-hover:first:-translate-x-0.5 group-hover:last:translate-x-0.5",
+  base: "size-5 duration-150 first:group-hover:-translate-x-0.5 last:group-hover:translate-x-0.5",
 })
 
 type PaginationLinkProps = Omit<ComponentProps<"a"> & ComponentProps<typeof Link>, "prefix"> &
@@ -39,7 +39,7 @@ export const PaginationLink = ({
   return (
     <Link
       className={cx(
-        isActive && "bg-card-dark rounded-sm",
+        isActive && "bg-card-dark rounded-xs",
         navigationLinkVariants({ isActive, className }),
       )}
       {...props}

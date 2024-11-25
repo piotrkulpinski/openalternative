@@ -39,8 +39,6 @@ export const AlternativeFilters = ({ placeholder }: AlternativeFiltersProps) => 
   }, [filters])
 
   const sortOptions = [
-    { value: "publishedAt.desc", label: "Newest" },
-    { value: "publishedAt.asc", label: "Oldest" },
     { value: "name.asc", label: "Name A-Z" },
     { value: "name.desc", label: "Name Z-A" },
   ]

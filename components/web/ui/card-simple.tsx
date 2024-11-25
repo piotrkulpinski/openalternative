@@ -1,19 +1,37 @@
 import Link from "next/link"
 import type { ComponentProps, ReactNode } from "react"
 import { H5 } from "~/components/common/heading"
-import { cx } from "~/utils/cva"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
-type CardSimpleProps = ComponentProps<typeof Link> & {
-  label: ReactNode
-  caption?: ReactNode
-}
+const cardSimpleVariants = cva({
+  base: "fade-in group -my-2 flex min-w-0 items-center gap-4 py-2",
 
-export const CardSimple = ({ className, label, caption, ...props }: CardSimpleProps) => {
+  variants: {
+    isRevealed: {
+      true: "animate-reveal",
+    },
+  },
+
+  defaultVariants: {
+    isRevealed: true,
+  },
+})
+
+type CardSimpleProps = ComponentProps<typeof Link> &
+  VariantProps<typeof cardSimpleVariants> & {
+    label: ReactNode
+    caption?: ReactNode
+  }
+
+export const CardSimple = ({
+  className,
+  label,
+  caption,
+  isRevealed,
+  ...props
+}: CardSimpleProps) => {
   return (
-    <Link
-      className={cx("fade-in group -my-2 flex min-w-0 items-center gap-4 py-2", className)}
-      {...props}
-    >
+    <Link className={cx(cardSimpleVariants({ isRevealed, className }))} {...props}>
       <H5 as="h3" className="truncate group-hover:underline">
         {label}
       </H5>

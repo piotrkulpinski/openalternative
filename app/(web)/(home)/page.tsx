@@ -23,7 +23,7 @@ export default function Home({ searchParams }: PageProps) {
     <>
       <section className="flex flex-col gap-y-6 w-full mb-[2vh]">
         <Intro alignment="center">
-          <IntroTitle className="max-w-[45rem] lg:!text-5xl">
+          <IntroTitle className="max-w-[45rem] lg:text-5xl!">
             Discover {config.site.tagline}
           </IntroTitle>
 

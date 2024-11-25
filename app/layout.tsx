@@ -1,23 +1,24 @@
-import PlausibleProvider from "next-plausible"
+import type { Viewport } from "next"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { PropsWithChildren } from "react"
-import Providers from "~/app/providers"
 import { Toaster } from "~/components/common/toaster"
-import { env } from "~/env"
 import { GeistSans, UncutSans } from "~/lib/fonts"
+
+export const revalidate = 86400 // 24 hours
+
+export const viewport: Viewport = {
+  colorScheme: "dark light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+}
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html
-      lang="en"
-      className={`${UncutSans.variable} ${GeistSans.variable} scroll-smooth`}
-      suppressHydrationWarning
-    >
-      <head>
-        <PlausibleProvider domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} selfHosted />
-      </head>
-
+    <html lang="en" className={`${UncutSans.variable} ${GeistSans.variable} scroll-smooth`}>
       <body className="min-h-dvh flex flex-col bg-background text-foreground font-sans">
-        <Providers>{children}</Providers>
+        <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster />
       </body>
     </html>

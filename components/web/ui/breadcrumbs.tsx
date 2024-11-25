@@ -14,7 +14,7 @@ export const BreadcrumbsLink = ({ children, label, ...props }: BreadcrumbsItemPr
       className={cx([
         "group/link flex items-center gap-2 p-0.5 -m-0.5 text-sm cursor-pointer",
         "text-muted disabled:opacity-50 hover:text-foreground",
-        "group-last:group-[&:not(:only-child)]:line-clamp-1",
+        "group-not-only:group-last:line-clamp-1",
         "group-first:font-medium group-first:text-foreground",
       ])}
       unstable_viewTransition

@@ -57,7 +57,7 @@ export const PlanIntervalSwitch = ({
       {...props}
     >
       <div
-        className="absolute inset-0.5 bg-background rounded will-change-transform transition-all duration-300 ease-in-out"
+        className="absolute inset-0.5 bg-background rounded-sm will-change-transform transition-all duration-300 ease-in-out"
         style={indicatorStyle}
       />
 

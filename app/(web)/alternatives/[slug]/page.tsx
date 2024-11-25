@@ -20,13 +20,36 @@ import { FaviconImage } from "~/components/web/ui/favicon"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import type { AlternativeOne } from "~/server/alternatives/payloads"
-import { findAlternativeSlugs, findUniqueAlternative } from "~/server/alternatives/queries"
+import { findAlternative, findAlternativeSlugs } from "~/server/alternatives/queries"
 import { findToolsWithCategories } from "~/server/tools/queries"
 import { parseMetadata } from "~/utils/metadata"
+
+export const revalidate = 86400 // 24 hours
 
 type PageProps = {
   params: Promise<{ slug: string }>
   searchParams: Promise<SearchParams>
+}
+
+const getAlternative = cache(async ({ params }: PageProps) => {
+  const { slug } = await params
+  const alternative = await findAlternative({ where: { slug } })
+
+  if (!alternative) {
+    notFound()
+  }
+
+  return alternative
+})
+
+const getMetadata = (alternative: AlternativeOne) => {
+  const year = getYear(addMonths(new Date(), 1))
+  const count = alternative._count.tools
+
+  return {
+    title: `${count > 1 ? `${count} ` : ""}Best Open Source ${alternative.name} Alternatives in ${year}`,
+    description: `A curated collection of the best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
+  } satisfies Metadata
 }
 
 export const generateStaticParams = async () => {
@@ -34,54 +57,30 @@ export const generateStaticParams = async () => {
   return alternatives.map(({ slug }) => ({ slug }))
 }
 
-const getMetadata = cache((alternative: AlternativeOne, metadata?: Metadata): Metadata => {
-  const year = getYear(addMonths(new Date(), 1))
-  const count = alternative._count.tools
-
-  return {
-    ...metadata,
-    title: `${count > 1 ? `${count} ` : ""}Best Open Source ${alternative.name} Alternatives in ${year}`,
-    description: `A curated collection of the best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
-  }
-})
-
-export const generateMetadata = async ({ params }: PageProps): Promise<Metadata | undefined> => {
-  const { slug } = await params
-  const alternative = await findUniqueAlternative({ where: { slug } })
-  const url = `/alternatives/${slug}`
-
-  if (!alternative) {
-    return
-  }
+export const generateMetadata = async (props: PageProps) => {
+  const alternative = await getAlternative(props)
+  const url = `/alternatives/${alternative.slug}`
 
   return parseMetadata(
-    getMetadata(alternative, {
+    Object.assign(getMetadata(alternative), {
       alternates: { canonical: url },
       openGraph: { url },
     }),
   )
 }
 
-export default async function AlternativePage({ params }: PageProps) {
-  const { slug } = await params
-
+export default async function AlternativePage(props: PageProps) {
   const [alternative, tools] = await Promise.all([
-    findUniqueAlternative({
-      where: { slug },
-    }),
+    getAlternative(props),
 
     findToolsWithCategories({
-      where: { alternatives: { some: { alternative: { slug } } } },
+      where: { alternatives: { some: { alternative: { slug: (await props.params).slug } } } },
       orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
     }),
   ])
 
-  if (!alternative) {
-    notFound()
-  }
-
-  const { title } = getMetadata(alternative)
   const medalColors = ["text-amber-500", "text-slate-400", "text-orange-700"]
+  const { title } = getMetadata(alternative)
 
   // Sort the categories by count
   const categories = Object.values(
@@ -166,7 +165,7 @@ export default async function AlternativePage({ params }: PageProps) {
                 </p>
               )}
 
-              {title && <ShareButtons title={title.toString()} className="not-prose" />}
+              <ShareButtons title={title} className="not-prose" />
             </Prose>
 
             {tools.map(tool => (
@@ -192,7 +191,7 @@ export default async function AlternativePage({ params }: PageProps) {
                 variant="ghost"
                 prefix={<SmilePlusIcon />}
                 suffix={<ArrowUpRightIcon />}
-                className="font-normal text-muted !ring-0"
+                className="font-normal text-muted ring-0!"
                 asChild
               >
                 <Link href="/submit">Suggest an alternative</Link>
@@ -365,7 +364,7 @@ export default async function AlternativePage({ params }: PageProps) {
 //                  variant="ghost"
 //                  prefix={<SmilePlusIcon />}
 //                  suffix={<ArrowUpRightIcon />}
-//                  className="font-normal text-muted !ring-0"
+//                  className="font-normal text-muted ring-0!"
 //                  asChild
 //                >
 //                  <Link href="/submit">

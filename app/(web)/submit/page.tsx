@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { cache } from "react"
 import { SubmitForm } from "~/app/(web)/submit/form"
 import { Prose } from "~/components/common/prose"
 import { Card } from "~/components/web/ui/card"
@@ -9,29 +8,25 @@ import { Section } from "~/components/web/ui/section"
 import { config } from "~/config"
 import { parseMetadata } from "~/utils/metadata"
 
-const getMetadata = cache(
-  (metadata?: Metadata): Metadata => ({
-    ...metadata,
-    title: "Submit your Open Source Software",
-    description: `Help us grow the list of open source alternatives to proprietary software. Contribute to ${config.site.name} by submitting a new open source alternative.`,
-  }),
-)
+const metadata = {
+  title: "Submit your Open Source Software",
+  description: `Help us grow the list of open source alternatives to proprietary software. Contribute to ${config.site.name} by submitting a new open source alternative.`,
+} satisfies Metadata
 
-export const metadata = parseMetadata(
-  getMetadata({
+export const generateMetadata = () => {
+  return parseMetadata({
+    ...metadata,
     alternates: { canonical: "/submit" },
     openGraph: { url: "/submit" },
-  }),
-)
+  })
+}
 
 export default function SubmitPage() {
-  const { title, description } = getMetadata()
-
   return (
     <>
       <Intro>
-        <IntroTitle>{title?.toString()}</IntroTitle>
-        <IntroDescription>{description}</IntroDescription>
+        <IntroTitle>{metadata.title}</IntroTitle>
+        <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 
       <Section>

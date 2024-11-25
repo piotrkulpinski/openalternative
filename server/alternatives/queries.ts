@@ -73,7 +73,7 @@ export const findAlternativeSlugs = async ({
   })
 }
 
-export const findUniqueAlternative = async ({ ...args }: Prisma.AlternativeFindUniqueArgs) => {
+export const findAlternative = async ({ ...args }: Prisma.AlternativeFindUniqueArgs) => {
   return prisma.alternative.findUnique({
     ...args,
     include: alternativeOnePayload,

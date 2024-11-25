@@ -18,7 +18,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
     <Box>
       <Container
         className={cx(
-          "group/button relative -top-px inset-x-0 z-[60] flex items-center justify-between gap-3 bg-card border-b py-2 hover:bg-card-dark lg:border-x lg:rounded-b-lg",
+          "group/button relative -top-px inset-x-0 z-60 flex items-center justify-between gap-3 bg-card border-b py-2 hover:bg-card-dark lg:border-x lg:rounded-b-lg",
           className,
         )}
         asChild

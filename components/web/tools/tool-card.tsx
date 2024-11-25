@@ -2,7 +2,6 @@ import { formatNumber } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict } from "date-fns"
 import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import Link from "next/link"
-import { posthog } from "posthog-js"
 import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
@@ -24,8 +23,6 @@ type ToolCardProps = ComponentProps<typeof Card> & {
 }
 
 const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
-  const featuredFlag = posthog.getFeatureFlag("featured_badge")?.toString()
-
   const insights = [
     { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: <StarIcon /> },
     { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: <GitForkIcon /> },
@@ -39,24 +36,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
   return (
     <Card asChild {...props}>
-      <Link
-        href={`/${tool.slug}`}
-        onClick={() =>
-          tool.isFeatured && posthog.capture("click_tool_featured", { slug: tool.slug })
-        }
-      >
-        {tool.isFeatured && featuredFlag && (
-          <>
-            {featuredFlag.includes("bg") && <Card.Bg />}
-
-            {featuredFlag.includes("badge") && (
-              <Card.Badges>
-                <Badge variant="outline">Featured</Badge>
-              </Card.Badges>
-            )}
-          </>
-        )}
-
+      <Link href={`/${tool.slug}`}>
         <Card.Header>
           <Favicon src={tool.faviconUrl} title={tool.name} />
 

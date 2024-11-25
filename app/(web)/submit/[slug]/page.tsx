@@ -12,7 +12,7 @@ import { PlanSkeleton } from "~/components/web/plan"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
 import { isToolPublished } from "~/lib/tools"
-import { findUniqueTool } from "~/server/tools/queries"
+import { findTool } from "~/server/tools/queries"
 import { parseMetadata } from "~/utils/metadata"
 
 type PageProps = {
@@ -26,79 +26,69 @@ const searchParamsCache = createSearchParamsCache({
   discount: parseAsString.withDefault(""),
 })
 
-const getTool = cache(async ({ slug, success }: { slug: string; success: boolean }) => {
-  return findUniqueTool({
+const getTool = cache(async ({ params, searchParams }: PageProps) => {
+  const { success } = searchParamsCache.parse(await searchParams)
+  const { slug } = await params
+
+  const tool = await findTool({
     where: { slug, publishedAt: undefined, isFeatured: success ? undefined : false },
   })
+
+  if (!tool) {
+    notFound()
+  }
+
+  return { tool, success }
 })
 
-const getMetadata = cache((tool: Tool, success: boolean, metadata?: Metadata): Metadata => {
+const getMetadata = cache((tool: Tool, success: boolean) => {
   if (success) {
     if (tool.isFeatured) {
       return {
-        ...metadata,
         title: "Thank you for your payment!",
         description: `We've received your payment. ${tool.name} should be featured on ${config.site.name} shortly.`,
-      }
+      } satisfies Metadata
     }
 
     return {
-      ...metadata,
       title: `Thank you for submitting ${tool.name}!`,
       description: `We've received your submission. We'll review it shortly and get back to you.`,
-    }
+    } satisfies Metadata
   }
 
   if (isToolPublished(tool)) {
     return {
-      ...metadata,
       title: `Boost ${tool.name}'s Visibility`,
       description: `You can upgrade ${tool.name}'s listing on ${config.site.name} to benefit from a featured badge, a prominent placement, and a do-follow link.`,
-    }
+    } satisfies Metadata
   }
 
   return {
-    ...metadata,
     title: "Choose a submission package",
     description: `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listing to premium features.`,
-  }
+  } satisfies Metadata
 })
 
-export const generateMetadata = async ({ params, searchParams }: PageProps): Promise<Metadata> => {
-  const { slug } = await params
-  const { success } = searchParamsCache.parse(await searchParams)
-
-  const tool = await getTool({ slug, success })
-  const url = `/submit/${slug}`
-
-  if (!tool) {
-    return {}
-  }
+export const generateMetadata = async (props: PageProps) => {
+  const { tool, success } = await getTool(props)
+  const url = `/submit/${tool.slug}`
 
   return parseMetadata(
-    getMetadata(tool, success, {
+    Object.assign(getMetadata(tool, success), {
       alternates: { canonical: url },
       openGraph: { url },
     }),
   )
 }
 
-export default async function SubmitPackages({ params, searchParams }: PageProps) {
-  const { slug } = await params
-  const { success } = searchParamsCache.parse(await searchParams)
-
-  const tool = await getTool({ slug, success })
-
-  if (!tool) {
-    notFound()
-  }
-
+export default async function SubmitPackages(props: PageProps) {
+  const { tool, success } = await getTool(props)
   const { title, description } = getMetadata(tool, success)
 
   return (
     <>
       <Intro alignment="center">
-        <IntroTitle>{title?.toString()}</IntroTitle>
+        <IntroTitle>{title}</IntroTitle>
         <IntroDescription>{description}</IntroDescription>
       </Intro>
 

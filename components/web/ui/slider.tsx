@@ -7,7 +7,7 @@ const SliderThumb = ({ className, ...props }: ComponentProps<typeof SliderPrimit
     <SliderPrimitive.Thumb
       className={cx(
         "block size-3.5 rounded-full border-2 border-primary bg-background ring-2 ring-background transition-colors cursor-pointer",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inherit focus-visible:ring-offset-2",
+        "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inherit focus-visible:ring-offset-2",
         "disabled:pointer-events-none disabled:opacity-50 disabled:cursor-default",
         className,
       )}

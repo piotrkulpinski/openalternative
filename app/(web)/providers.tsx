@@ -1,6 +1,6 @@
 "use client"
 
-import { NuqsAdapter } from "nuqs/adapters/next/app"
+import PlausibleProvider from "next-plausible"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
 import type { PropsWithChildren } from "react"
@@ -19,9 +19,15 @@ if (typeof window !== "undefined") {
 
 export default function Providers({ children }: PropsWithChildren) {
   return (
-    <PostHogProvider client={posthog}>
-      <PosthogPageview />
-      <NuqsAdapter>{children}</NuqsAdapter>
-    </PostHogProvider>
+    <PlausibleProvider
+      domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+      customDomain={env.NEXT_PUBLIC_PLAUSIBLE_HOST}
+      selfHosted
+    >
+      <PostHogProvider client={posthog}>
+        <PosthogPageview />
+        {children}
+      </PostHogProvider>
+    </PlausibleProvider>
   )
 }
