@@ -24,7 +24,7 @@ export const findCategorySlugs = async ({
   })
 }
 
-export const findUniqueCategory = async ({ ...args }: Prisma.CategoryFindUniqueArgs) => {
+export const findCategory = async ({ ...args }: Prisma.CategoryFindUniqueArgs) => {
   return prisma.category.findUnique({
     ...args,
     include: categoryOnePayload,
