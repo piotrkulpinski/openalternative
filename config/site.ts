@@ -11,5 +11,4 @@ export const siteConfig = {
   alphabet: "abcdefghijklmnopqrstuvwxyz",
   toolsPerPage: 35,
   alternativesPerPage: 54,
-  topicsPerPage: 150,
 }

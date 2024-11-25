@@ -5,7 +5,7 @@ import { prisma } from "~/services/prisma"
 export const findLicenses = async ({ where, orderBy, ...args }: Prisma.LicenseFindManyArgs) => {
   return prisma.license.findMany({
     ...args,
-    orderBy: orderBy ?? { tools: { _count: "desc" } },
+    orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { name: "asc" }],
     where: { tools: { some: { publishedAt: { lte: new Date() } } }, ...where },
     include: licenseManyPayload,
   })

@@ -5,7 +5,7 @@ import { prisma } from "~/services/prisma"
 export const findTopics = async ({ where, orderBy, ...args }: Prisma.TopicFindManyArgs) => {
   return prisma.topic.findMany({
     ...args,
-    orderBy: orderBy ?? { tools: { _count: "desc" } },
+    orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { slug: "asc" }],
     where: { tools: { some: { tool: { publishedAt: { lte: new Date() } } } }, ...where },
     include: topicManyPayload,
   })
