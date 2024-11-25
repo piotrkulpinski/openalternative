@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { AlternativeListing } from "~/app/(web)/alternatives/(alternatives)/listing"
-import { AlternativeListSkeleton } from "~/components/web/alternatives/alternative-list"
+import { AlternativeQuerySkeleton } from "~/components/web/alternatives/alternative-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { parseMetadata } from "~/utils/metadata"
 
@@ -31,7 +31,7 @@ export default function Alternatives({ searchParams }: PageProps) {
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 
-      <Suspense fallback={<AlternativeListSkeleton />}>
+      <Suspense fallback={<AlternativeQuerySkeleton />}>
         <AlternativeListing searchParams={searchParams} />
       </Suspense>
     </>

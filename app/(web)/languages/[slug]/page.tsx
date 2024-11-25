@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
-import { ToolListSkeleton } from "~/components/web/tools/tool-list"
-import { ToolListing } from "~/components/web/tools/tool-listing"
+import { LanguageToolListing } from "~/app/(web)/languages/[slug]/listing"
+import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import type { LanguageOne } from "~/server/languages/payloads"
 import { findLanguage, findLanguageSlugs } from "~/server/languages/queries"
@@ -28,11 +28,9 @@ const getLanguage = cache(async ({ params }: PageProps) => {
 })
 
 const getMetadata = (language: LanguageOne) => {
-  const name = language.label || `${language.name} Tools`
-
   return {
-    title: `Open Source ${name}`,
-    description: `A curated collection of the ${language._count.tools} best open source ${name} for inspiration and reference. Each listing includes a website screenshot along with a detailed review of its features.`,
+    title: `${language.name} Open Source Projects`,
+    description: `A curated collection of the ${language._count.tools} best open source software written in ${language.name}. Find the most popular and trending open source projects to learn from, contribute to, or use in your own projects.`,
   } satisfies Metadata
 }
 
@@ -64,12 +62,8 @@ export default async function LanguagePage(props: PageProps) {
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>
       </Intro>
 
-      <Suspense fallback={<ToolListSkeleton />}>
-        <ToolListing
-          searchParams={props.searchParams}
-          where={{ languages: { some: { language: { slug: language.slug } } } }}
-          placeholder={`Search in ${language.name.toLowerCase()}...`}
-        />
+      <Suspense fallback={<ToolQuerySkeleton />}>
+        <LanguageToolListing language={language} searchParams={props.searchParams} />
       </Suspense>
     </>
   )

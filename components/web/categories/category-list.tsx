@@ -1,5 +1,3 @@
-"use client"
-
 import type { ComponentProps } from "react"
 import { CategoryCard, CategoryCardSkeleton } from "~/components/web/categories/category-card"
 import { EmptyList } from "~/components/web/empty-list"
