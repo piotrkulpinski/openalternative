@@ -69,7 +69,7 @@ const getMetadata = (tool: Tool, success: boolean): Metadata => {
   }
 }
 
-export const generateMetadata = async (props: PageProps) => {
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const { tool, success } = await getTool(props)
   const url = `/submit/${tool.slug}`
 
