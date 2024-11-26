@@ -3,7 +3,7 @@ import { Upload } from "@aws-sdk/lib-storage"
 import { stripURLSubpath } from "@curiousleaf/utils"
 import wretch from "wretch"
 import { env } from "~/env"
-import { s3Client } from "~/services/aws-s3"
+import { s3Client } from "~/services/s3"
 
 /**
  * Uploads a file to S3 and returns the S3 location.

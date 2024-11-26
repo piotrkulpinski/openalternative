@@ -1,7 +1,7 @@
-import { S3Client, type S3ClientConfig } from "@aws-sdk/client-s3"
+import { S3Client } from "@aws-sdk/client-s3"
 import { env } from "~/env"
 
-const cfg: S3ClientConfig = {
+export const s3Client = new S3Client({
   region: env.S3_REGION,
   maxAttempts: 5,
   retryMode: "standard",
@@ -10,6 +10,4 @@ const cfg: S3ClientConfig = {
     secretAccessKey: env.S3_SECRET_ACCESS_KEY,
   },
   forcePathStyle: true,
-}
-
-export const s3Client = new S3Client(cfg)
+})
