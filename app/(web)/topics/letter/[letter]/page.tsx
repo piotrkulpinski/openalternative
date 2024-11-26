@@ -5,7 +5,7 @@ import { LetterPicker } from "~/components/web/letter-picker"
 import { TopicListSkeleton } from "~/components/web/topics/topic-list"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
-import { parseMetadata } from "~/utils/metadata"
+import { metadataConfig } from "~/config/metadata"
 
 export const revalidate = 86400 // 24 hours
 
@@ -13,31 +13,31 @@ type PageProps = {
   params: Promise<{ letter: string }>
 }
 
-const metadata = {
+const metadata: Metadata = {
   title: "Open Source Software Topics",
   description: "Browse top topics to find your best Open Source software options.",
-} satisfies Metadata
+}
 
 export const generateStaticParams = async () => {
   return `${config.site.alphabet}&`.split("").map(letter => ({ letter }))
 }
 
-export const generateMetadata = async ({ params }: PageProps) => {
+export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { letter } = await params
   const url = `/topics/letter/${letter}`
 
-  return parseMetadata({
+  return {
     ...metadata,
-    alternates: { canonical: url },
-    openGraph: { url },
-  })
+    alternates: { ...metadataConfig.alternates, canonical: url },
+    openGraph: { ...metadataConfig.openGraph, url },
+  }
 }
 
 export default function Topics({ params }: PageProps) {
   return (
     <>
       <Intro>
-        <IntroTitle>{metadata.title}</IntroTitle>
+        <IntroTitle>{`${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 

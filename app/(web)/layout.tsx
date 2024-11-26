@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import { type PropsWithChildren, Suspense } from "react"
 import Providers from "~/app/(web)/providers"
 import { AdBanner } from "~/components/web/ads/ad-banner"
@@ -6,15 +5,8 @@ import { Bottom } from "~/components/web/bottom"
 import { Footer } from "~/components/web/footer"
 import { Header } from "~/components/web/header"
 import { Container } from "~/components/web/ui/container"
-import { config } from "~/config"
-import { parseMetadata } from "~/utils/metadata"
 
 import "./styles.css"
-
-export const metadata: Metadata = {
-  metadataBase: new URL(config.site.url),
-  ...parseMetadata({}),
-}
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
