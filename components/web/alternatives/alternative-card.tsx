@@ -18,13 +18,7 @@ const AlternativeCard = ({ alternative, showCount, ...props }: AlternativeCardPr
     <Card asChild>
       <Link href={`/alternatives/${alternative.slug}`} {...props}>
         <CardHeader>
-          <Favicon
-            src={
-              alternative.faviconUrl ||
-              `https://www.google.com/s2/favicons?sz=128&domain_url=${alternative.website}`
-            }
-            title={alternative.name}
-          />
+          <Favicon src={alternative.faviconUrl} title={alternative.name} />
 
           <H4 as="h3" className="truncate">
             {alternative.name}
@@ -51,7 +45,7 @@ const AlternativeCardSkeleton = () => {
   return (
     <Card hover={false} className="items-stretch select-none">
       <CardHeader>
-        <Favicon src={null} className="animate-pulse" />
+        <Favicon src="/favicon.png" className="animate-pulse opacity-50" />
 
         <H4 className="w-2/3">
           <Skeleton>&nbsp;</Skeleton>
