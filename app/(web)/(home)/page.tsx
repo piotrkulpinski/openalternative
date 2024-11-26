@@ -6,7 +6,7 @@ import { HomeToolListing } from "~/app/(web)/(home)/listing"
 import { Stack } from "~/components/common/stack"
 import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
 import { AlternativePreviewSkeleton } from "~/components/web/alternatives/alternative-preview-skeleton"
-import { Newsletter } from "~/components/web/newsletter"
+import { NewsletterForm } from "~/components/web/newsletter-form"
 import { NewsletterProof } from "~/components/web/newsletter-proof"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Button } from "~/components/web/ui/button"
@@ -46,13 +46,13 @@ export default function Home({ searchParams }: PageProps) {
             </Button>
           </Stack>
         ) : (
-          <Newsletter
+          <NewsletterForm
             size="lg"
-            className="w-full mx-auto items-center text-center"
+            className="max-w-sm mx-auto items-center text-center"
             buttonProps={{ children: "Join our community", size: "md", variant: "fancy" }}
           >
             <NewsletterProof />
-          </Newsletter>
+          </NewsletterForm>
         )}
       </section>
 

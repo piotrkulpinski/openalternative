@@ -2,13 +2,13 @@ import { formatNumber } from "@curiousleaf/utils"
 import { AtSignIcon, RssIcon } from "lucide-react"
 import Link from "next/link"
 import type { HTMLAttributes } from "react"
-import { H6 } from "~/components/common/heading"
+import { H5, H6 } from "~/components/common/heading"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandLinkedInIcon } from "~/components/common/icons/brand-linkedin"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Stack } from "~/components/common/stack"
-import { Newsletter } from "~/components/web/newsletter"
+import { NewsletterForm } from "~/components/web/newsletter-form"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,11 +49,18 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               <p className="text-foreground/65 max-w-80">{config.site.description}</p>
             </Stack>
           ) : (
-            <Newsletter
-              title="Subscribe to our newsletter"
-              description={`Join ${formatNumber(config.stats.subscribers, "standard")}+ other members and get updates on new open source tools.`}
-              medium="footer_form"
-            />
+            <Stack size="lg" direction="column" className="min-w-0 max-w-64">
+              <H5 as="strong" className="px-0.5 font-medium">
+                Subscribe to our newsletter
+              </H5>
+
+              <p className="-mt-2 px-0.5 text-sm text-muted first:mt-0">
+                Join {formatNumber(config.stats.subscribers, "standard")}+ other members and get
+                updates on new open source tools.
+              </p>
+
+              <NewsletterForm medium="footer_form" />
+            </Stack>
           )}
 
           <Stack className="text-sm/normal">
