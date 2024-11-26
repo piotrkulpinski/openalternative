@@ -4,27 +4,21 @@ import { Featured } from "~/components/web/featured"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
+import { metadataConfig } from "~/config/metadata"
 import { addUTMTracking } from "~/utils/helpers"
-import { parseMetadata } from "~/utils/metadata"
 
-const metadata = {
+export const metadata: Metadata = {
   title: "About Us",
   description: `${config.site.name} is a community driven list of open source alternatives to proprietary software and applications.`,
-} satisfies Metadata
-
-export const generateMetadata = () => {
-  return parseMetadata({
-    ...metadata,
-    alternates: { canonical: "/about" },
-    openGraph: { url: "/about" },
-  })
+  openGraph: { ...metadataConfig.openGraph, url: "/about" },
+  alternates: { ...metadataConfig.alternates, canonical: "/about" },
 }
 
 export default function AboutPage() {
   return (
     <>
       <Intro alignment="start">
-        <IntroTitle>{metadata.title}</IntroTitle>
+        <IntroTitle>{`${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 

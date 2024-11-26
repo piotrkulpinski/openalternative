@@ -11,8 +11,8 @@ import { ShareButtons } from "~/components/web/share-buttons"
 import { Author } from "~/components/web/ui/author"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
+import { metadataConfig } from "~/config/metadata"
 import { findAd } from "~/server/ads/queries"
-import { parseMetadata } from "~/utils/metadata"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -33,23 +33,22 @@ export const generateStaticParams = () => {
   return allPosts.map(({ _meta }) => ({ slug: _meta.path }))
 }
 
-const getMetadata = (post: Post) => {
+const getMetadata = (post: Post): Metadata => {
   return {
     title: post.title,
     description: post.description,
-  } satisfies Metadata
+  }
 }
 
 export const generateMetadata = async (props: PageProps) => {
   const post = await findPostBySlug(props)
   const url = `/blog/${post._meta.path}`
 
-  return parseMetadata(
-    Object.assign(getMetadata(post), {
-      alternates: { canonical: url },
-      openGraph: { url },
-    }),
-  )
+  return {
+    ...getMetadata(post),
+    alternates: { ...metadataConfig.alternates, canonical: url },
+    openGraph: { ...metadataConfig.openGraph, url },
+  }
 }
 
 export default async function BlogPostPage(props: PageProps) {

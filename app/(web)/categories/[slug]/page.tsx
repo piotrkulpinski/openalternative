@@ -5,9 +5,9 @@ import { Suspense, cache } from "react"
 import { CategoryToolListing } from "~/app/(web)/categories/[slug]/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
+import { metadataConfig } from "~/config/metadata"
 import type { CategoryOne } from "~/server/categories/payloads"
 import { findCategory, findCategorySlugs } from "~/server/categories/queries"
-import { parseMetadata } from "~/utils/metadata"
 
 export const revalidate = 86400 // 24 hours
 
@@ -27,13 +27,13 @@ const getCategory = cache(async ({ params }: PageProps) => {
   return category
 })
 
-const getMetadata = (category: CategoryOne) => {
+const getMetadata = (category: CategoryOne): Metadata => {
   const name = category.label || `${category.name} Tools`
 
   return {
     title: `Open Source ${name}`,
     description: `A curated collection of the ${category._count.tools} best open source ${name} for inspiration and reference. Each listing includes a website screenshot along with a detailed review of its features.`,
-  } satisfies Metadata
+  }
 }
 
 export const generateStaticParams = async () => {
@@ -45,12 +45,11 @@ export const generateMetadata = async (props: PageProps) => {
   const category = await getCategory(props)
   const url = `/categories/${category.slug}`
 
-  return parseMetadata(
-    Object.assign(getMetadata(category), {
-      alternates: { canonical: url },
-      openGraph: { url },
-    }),
-  )
+  return {
+    ...getMetadata(category),
+    alternates: { ...metadataConfig.alternates, canonical: url },
+    openGraph: { ...metadataConfig.openGraph, url },
+  }
 }
 
 export default async function CategoryPage(props: PageProps) {
@@ -60,7 +59,7 @@ export default async function CategoryPage(props: PageProps) {
   return (
     <>
       <Intro>
-        <IntroTitle>{title}</IntroTitle>
+        <IntroTitle>{`${title}`}</IntroTitle>
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>
       </Intro>
 

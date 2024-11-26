@@ -20,10 +20,10 @@ import { FaviconImage } from "~/components/web/ui/favicon"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { Section } from "~/components/web/ui/section"
+import { metadataConfig } from "~/config/metadata"
 import type { AlternativeOne } from "~/server/alternatives/payloads"
 import { findAlternative, findAlternativeSlugs } from "~/server/alternatives/queries"
 import { findToolsWithCategories } from "~/server/tools/queries"
-import { parseMetadata } from "~/utils/metadata"
 
 export const revalidate = 86400 // 24 hours
 
@@ -43,14 +43,14 @@ const getAlternative = cache(async ({ params }: PageProps) => {
   return alternative
 })
 
-const getMetadata = (alternative: AlternativeOne) => {
+const getMetadata = (alternative: AlternativeOne): Metadata => {
   const year = getYear(addMonths(new Date(), 1))
   const count = alternative._count.tools
 
   return {
     title: `${count > 1 ? `${count} ` : ""}Best Open Source ${alternative.name} Alternatives in ${year}`,
     description: `A curated collection of the best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
-  } satisfies Metadata
+  }
 }
 
 export const generateStaticParams = async () => {
@@ -58,16 +58,15 @@ export const generateStaticParams = async () => {
   return alternatives.map(({ slug }) => ({ slug }))
 }
 
-export const generateMetadata = async (props: PageProps) => {
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const alternative = await getAlternative(props)
   const url = `/alternatives/${alternative.slug}`
 
-  return parseMetadata(
-    Object.assign(getMetadata(alternative), {
-      alternates: { canonical: url },
-      openGraph: { url, images: undefined },
-    }),
-  )
+  return {
+    ...getMetadata(alternative),
+    alternates: { ...metadataConfig.alternates, canonical: url },
+    openGraph: { url, type: "website" },
+  }
 }
 
 export default async function AlternativePage(props: PageProps) {
@@ -166,7 +165,7 @@ export default async function AlternativePage(props: PageProps) {
                 </p>
               )}
 
-              <ShareButtons title={title} className="not-prose" />
+              <ShareButtons title={`${title}`} className="not-prose" />
             </Prose>
 
             {tools.map(tool => (

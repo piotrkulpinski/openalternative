@@ -6,26 +6,20 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { Section } from "~/components/web/ui/section"
 import { config } from "~/config"
-import { parseMetadata } from "~/utils/metadata"
+import { metadataConfig } from "~/config/metadata"
 
-const metadata = {
+export const metadata: Metadata = {
   title: "Submit your Open Source Software",
   description: `Help us grow the list of open source alternatives to proprietary software. Contribute to ${config.site.name} by submitting a new open source alternative.`,
-} satisfies Metadata
-
-export const generateMetadata = () => {
-  return parseMetadata({
-    ...metadata,
-    alternates: { canonical: "/submit" },
-    openGraph: { url: "/submit" },
-  })
+  openGraph: { ...metadataConfig.openGraph, url: "/submit" },
+  alternates: { ...metadataConfig.alternates, canonical: "/submit" },
 }
 
 export default function SubmitPage() {
   return (
     <>
       <Intro>
-        <IntroTitle>{metadata.title}</IntroTitle>
+        <IntroTitle>{`${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 

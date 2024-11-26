@@ -1,5 +1,6 @@
 import { joinAsSentence } from "@curiousleaf/utils"
 import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
@@ -22,10 +23,10 @@ import { IntroDescription } from "~/components/web/ui/intro"
 import { NavigationLink } from "~/components/web/ui/navigation-link"
 import { Section } from "~/components/web/ui/section"
 import { Tag } from "~/components/web/ui/tag"
+import { metadataConfig } from "~/config/metadata"
 import { findAd } from "~/server/ads/queries"
 import type { ToolOne } from "~/server/tools/payloads"
 import { findTool, findToolSlugs } from "~/server/tools/queries"
-import { parseMetadata } from "~/utils/metadata"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 export const revalidate = 43200 // 12 hours
@@ -50,7 +51,7 @@ const getTool = cache(async ({ params, searchParams }: PageProps) => {
   return tool
 })
 
-const getMetadata = (tool: ToolOne) => {
+const getMetadata = (tool: ToolOne): Metadata => {
   let suffix = ""
 
   switch (tool.alternatives.length) {
@@ -66,7 +67,7 @@ const getMetadata = (tool: ToolOne) => {
 
   return {
     title: `${tool.name}: ${suffix}`,
-    description: tool.description || "",
+    description: tool.description,
   }
 }
 
@@ -75,19 +76,15 @@ export const generateStaticParams = async () => {
   return tools.map(({ slug }) => ({ slug }))
 }
 
-export const generateMetadata = async (props: PageProps) => {
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const tool = await getTool(props)
   const url = `/${tool.slug}`
 
-  const meta = parseMetadata({
+  return {
     ...getMetadata(tool),
-    alternates: { canonical: url },
-    openGraph: { url },
-  })
-
-  console.log(meta)
-
-  return meta
+    alternates: { ...metadataConfig.alternates, canonical: url },
+    openGraph: { url, type: "website" },
+  }
 }
 
 export default async function ToolPage(props: PageProps) {
@@ -260,7 +257,7 @@ export default async function ToolPage(props: PageProps) {
             </Stack>
           )}
 
-          <ShareButtons title={title} />
+          <ShareButtons title={`${title}`} />
         </Section.Content>
 
         <Section.Sidebar className="max-md:contents">

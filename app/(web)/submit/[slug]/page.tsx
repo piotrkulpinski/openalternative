@@ -11,9 +11,9 @@ import { PlanSkeleton } from "~/components/web/plan"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
+import { metadataConfig } from "~/config/metadata"
 import { isToolPublished } from "~/lib/tools"
 import { findTool } from "~/server/tools/queries"
-import { parseMetadata } from "~/utils/metadata"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -41,44 +41,43 @@ const getTool = cache(async ({ params, searchParams }: PageProps) => {
   return { tool, success }
 })
 
-const getMetadata = (tool: Tool, success: boolean) => {
+const getMetadata = (tool: Tool, success: boolean): Metadata => {
   if (success) {
     if (tool.isFeatured) {
       return {
         title: "Thank you for your payment!",
         description: `We've received your payment. ${tool.name} should be featured on ${config.site.name} shortly.`,
-      } satisfies Metadata
+      }
     }
 
     return {
       title: `Thank you for submitting ${tool.name}!`,
       description: `We've received your submission. We'll review it shortly and get back to you.`,
-    } satisfies Metadata
+    }
   }
 
   if (isToolPublished(tool)) {
     return {
       title: `Boost ${tool.name}'s Visibility`,
       description: `You can upgrade ${tool.name}'s listing on ${config.site.name} to benefit from a featured badge, a prominent placement, and a do-follow link.`,
-    } satisfies Metadata
+    }
   }
 
   return {
     title: "Choose a submission package",
     description: `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listing to premium features.`,
-  } satisfies Metadata
+  }
 }
 
 export const generateMetadata = async (props: PageProps) => {
   const { tool, success } = await getTool(props)
   const url = `/submit/${tool.slug}`
 
-  return parseMetadata(
-    Object.assign(getMetadata(tool, success), {
-      alternates: { canonical: url },
-      openGraph: { url },
-    }),
-  )
+  return {
+    ...getMetadata(tool, success),
+    alternates: { ...metadataConfig.alternates, canonical: url },
+    openGraph: { ...metadataConfig.openGraph, url },
+  }
 }
 
 export default async function SubmitPackages(props: PageProps) {
@@ -88,7 +87,7 @@ export default async function SubmitPackages(props: PageProps) {
   return (
     <>
       <Intro alignment="center">
-        <IntroTitle>{title}</IntroTitle>
+        <IntroTitle>{`${title}`}</IntroTitle>
         <IntroDescription>{description}</IntroDescription>
       </Intro>
 
