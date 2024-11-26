@@ -1,36 +1,54 @@
+"use client"
+
 import { SearchIcon } from "lucide-react"
-import { type HTMLAttributes, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
+import { parseAsString, useQueryState } from "nuqs"
+import { type FormEvent, type HTMLAttributes, useEffect, useRef, useState } from "react"
 import { Input } from "~/components/web/ui/input"
 import { cx } from "~/utils/cva"
 
 export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormElement>) => {
+  const router = useRouter()
+  const [searchQuery] = useQueryState("q", parseAsString.withDefault(""))
+  const [query, setQuery] = useState(searchQuery)
   const [isExpanded, setIsExpanded] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleExpand = () => {
     setIsExpanded(true)
-    inputRef.current?.focus()
+    inputRef.current?.select()
   }
 
   const handleCollapse = () => {
     setIsExpanded(false)
+    inputRef.current?.blur()
   }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    router.push(`/?q=${query}`)
+  }
+
+  useEffect(() => {
+    setQuery(searchQuery || "")
+  }, [searchQuery])
 
   return (
     <form
-      method="get"
-      action="/"
+      onSubmit={handleSubmit}
       className={cx("flex items-center shrink-0", className)}
+      noValidate
       {...props}
     >
       <div className="relative flex">
         <Input
-          ref={inputRef}
-          name="openalternative[query]"
           size="sm"
+          ref={inputRef}
+          value={query}
+          onChange={e => setQuery(e.target.value)}
           placeholder="Search tools..."
           className={cx(
-            "transition-[width,opacity,transform] duration-200 ease-in-out",
+            "transition-[width,opacity,transform] duration-200 ease-in-out max-sm:max-w-24",
             isExpanded ? "w-28 opacity-100" : "w-0 opacity-0",
           )}
           onFocus={handleExpand}

@@ -29,7 +29,7 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
         day: "group/day relative w-full text-center text-[0.8125rem] rounded-md focus-within:z-20",
         day_button:
           "relative w-full p-1.5 cursor-pointer rounded-md hover:bg-card-dark hover:group-data-selected/day:bg-transparent",
-        selected: "bg-primary text-white",
+        selected: "bg-foreground text-background",
         range_middle: "bg-card-dark! text-foreground! rounded-none",
         today:
           "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-0.5 after:w-5 after:-translate-x-1/2 after:rounded-[2px] after:bg-current",
