@@ -11,7 +11,8 @@ import {
   type CardProps,
 } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
-import { Logo } from "~/components/web/ui/logo"
+import { LogoSymbol } from "~/components/web/ui/logo-symbol"
+import { config } from "~/config"
 import type { AdOne } from "~/server/ads/payloads"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
@@ -22,60 +23,44 @@ type AdCardProps = CardProps & {
 }
 
 export const AdCard = ({ className, ad: adProp, rel, ...props }: AdCardProps) => {
-  // TODO: fix this
-  const ad = adProp ?? ({ website: "/advertise" } as AdOne)
-  const linkRel = rel ?? (ad.website ? "noopener noreferrer" : "")
+  const ad = adProp ?? config.ads.defaultAd
+  const isDefault = !ad.website.startsWith("http")
 
   return (
     <Card
-      className={cx("group/button", !ad.website && "text-clip", className)}
+      className={cx("group/button", isDefault && "overflow-clip", className)}
       isRevealed={false}
       asChild
       {...props}
     >
       <Link
-        href={
-          ad.website
-            ? updateUrlWithSearchParams(ad.website, { ref: "openalternative" })
-            : "/advertise"
-        }
-        target={ad.website ? "_blank" : "_self"}
-        rel={linkRel}
+        href={updateUrlWithSearchParams(ad.website, isDefault ? {} : { ref: "openalternative" })}
+        target={isDefault ? "_self" : "_blank"}
+        rel={isDefault ? "" : (rel ?? "noopener noreferrer")}
         // onClick={() => posthog.capture("click_ad", { url: ad.website, type: ad.type })}
       >
-        {ad.website && (
+        {!isDefault && (
           <CardBadges>
             <Badge variant="outline">Ad</Badge>
           </CardBadges>
         )}
 
         <CardHeader>
-          {(ad.faviconUrl || ad.website) && (
-            <Favicon
-              src={
-                ad.faviconUrl ||
-                `https://www.google.com/s2/favicons?sz=128&domain_url=${ad.website}`
-              }
-              title={ad.name}
-            />
-          )}
+          <Favicon src={ad.faviconUrl} title={ad.name} />
 
           <H4 as="strong" className="truncate">
-            {ad.name || "Advertise with us"}
+            {ad.name}
           </H4>
         </CardHeader>
 
-        <CardDescription className="mb-auto line-clamp-4">
-          {ad.description ||
-            "Reach out to our audience of professional open source/tech enthusiasts to boost your sales."}
-        </CardDescription>
+        <CardDescription className="mb-auto line-clamp-4">{ad.description}</CardDescription>
 
-        <Button className="w-full pointer-events-none" suffix={ad && <ArrowUpRightIcon />} asChild>
-          <span>{ad ? `Visit ${ad.name}` : "Advertise with us"}</span>
+        <Button className="w-full pointer-events-none" suffix={<ArrowUpRightIcon />} asChild>
+          <span>{isDefault ? "Advertise" : `Visit ${ad.name}`}</span>
         </Button>
 
-        {!ad && (
-          <Logo className="absolute -bottom-1/4 -right-1/4 -z-10 size-64 opacity-[3.5%] rotate-45 pointer-events-none transition group-hover/button:rotate-[60deg]" />
+        {isDefault && (
+          <LogoSymbol className="absolute -bottom-2/5 -right-1/4 -z-10 size-64 opacity-[3.5%] rotate-45 pointer-events-none transition group-hover/button:rotate-[60deg]" />
         )}
       </Link>
     </Card>

@@ -9,7 +9,7 @@ export const parseMetadata = ({
 }: Metadata): Metadata => {
   const title = `${metaTitle} – ${config.site.name}`
 
-  const customMetadata: Metadata = {
+  const defaultMetadata: Metadata = {
     title,
     description,
     openGraph: {
@@ -17,7 +17,6 @@ export const parseMetadata = ({
       siteName: config.site.name,
       locale: "en_US",
       type: "website",
-      // Remove this once we have a custom tool images
       images: { url: `${config.site.url}/opengraph.png`, width: 1200, height: 630 },
     },
     twitter: {
@@ -41,5 +40,5 @@ export const parseMetadata = ({
     },
   }
 
-  return merge(customMetadata, metadata, { arrayMerge: (_, sourceArray) => sourceArray })
+  return merge(defaultMetadata, metadata, { arrayMerge: (_, sourceArray) => sourceArray })
 }

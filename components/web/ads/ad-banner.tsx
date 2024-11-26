@@ -4,11 +4,11 @@ import { Box } from "~/components/common/box"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import { Container } from "~/components/web/ui/container"
-import { findFirstAd } from "~/server/ads/queries"
+import { findAd } from "~/server/ads/queries"
 import { cx } from "~/utils/cva"
 
 export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Container>) => {
-  const ad = await findFirstAd({ where: { type: "Banner" } })
+  const ad = await findAd({ where: { type: "Banner" } })
 
   if (!ad) {
     return null

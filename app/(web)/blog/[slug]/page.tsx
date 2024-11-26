@@ -11,7 +11,7 @@ import { ShareButtons } from "~/components/web/share-buttons"
 import { Author } from "~/components/web/ui/author"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
-import { findFirstAd } from "~/server/ads/queries"
+import { findAd } from "~/server/ads/queries"
 import { parseMetadata } from "~/utils/metadata"
 
 type PageProps = {
@@ -54,7 +54,7 @@ export const generateMetadata = async (props: PageProps) => {
 
 export default async function BlogPostPage(props: PageProps) {
   const post = await findPostBySlug(props)
-  const ad = await findFirstAd({ where: { type: "Homepage" } })
+  const ad = await findAd({ where: { type: "Homepage" } })
 
   return (
     <div className="flex flex-col gap-8 md:gap-10 lg:gap-12">

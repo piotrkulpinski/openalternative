@@ -9,6 +9,9 @@ export const updateUrlWithSearchParams = (
   url: string,
   params: { [key: string]: string },
 ): string => {
+  // If the URL is not a full URL, return it as is
+  if (!url.startsWith("http")) return url
+
   // Create a URL object
   const urlObj = new URL(url)
 
@@ -47,16 +50,4 @@ export const updateQueryString = (
 
   // Return the updated search string
   return searchParams.toString()
-}
-
-/**
- * Extracts and formats a search query from a given string.
- *
- * @param str The string to be formatted into a search query.
- * @returns The formatted search query string.
- */
-export const getSearchQuery = (str: string | undefined | null) => {
-  if (!str) return undefined
-
-  return str.trim().replace(/\s+/g, " & ")
 }
