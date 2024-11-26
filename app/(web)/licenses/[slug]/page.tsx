@@ -10,9 +10,9 @@ import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { BackButton } from "~/components/web/ui/back-button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
+import { metadataConfig } from "~/config/metadata"
 import type { LicenseOne } from "~/server/licenses/payloads"
 import { findLicense, findLicenseSlugs } from "~/server/licenses/queries"
-import { parseMetadata } from "~/utils/metadata"
 
 export const revalidate = 86400 // 24 hours
 
@@ -32,11 +32,11 @@ const getLicense = cache(async ({ params }: PageProps) => {
   return license
 })
 
-const getMetadata = (license: LicenseOne) => {
+const getMetadata = (license: LicenseOne): Metadata => {
   return {
     title: `The ${license.name} License Explained: Pros, Cons, and Use Cases`,
     description: license.description,
-  } satisfies Metadata
+  }
 }
 
 export const generateStaticParams = async () => {
@@ -44,16 +44,15 @@ export const generateStaticParams = async () => {
   return licenses.map(({ slug }) => ({ slug }))
 }
 
-export const generateMetadata = async (props: PageProps) => {
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const license = await getLicense(props)
   const url = `/licenses/${license.slug}`
 
-  return parseMetadata(
-    Object.assign(getMetadata(license), {
-      alternates: { canonical: url },
-      openGraph: { url },
-    }),
-  )
+  return {
+    ...getMetadata(license),
+    alternates: { ...metadataConfig.alternates, canonical: url },
+    openGraph: { ...metadataConfig.openGraph, url },
+  }
 }
 
 export default async function LicensePage(props: PageProps) {
@@ -63,7 +62,7 @@ export default async function LicensePage(props: PageProps) {
   return (
     <>
       <Intro>
-        <IntroTitle>{title}</IntroTitle>
+        <IntroTitle>{`${title}`}</IntroTitle>
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>
       </Intro>
 

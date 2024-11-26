@@ -4,30 +4,24 @@ import { Suspense } from "react"
 import { AlternativeListing } from "~/app/(web)/alternatives/(alternatives)/listing"
 import { AlternativeQuerySkeleton } from "~/components/web/alternatives/alternative-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
-import { parseMetadata } from "~/utils/metadata"
+import { metadataConfig } from "~/config/metadata"
 
 type PageProps = {
   searchParams: Promise<SearchParams>
 }
 
-const metadata = {
+export const metadata: Metadata = {
   title: "Popular Open Source Software Alternatives",
   description: "Browse top proprietary software to find your best Open Source software tools.",
-} satisfies Metadata
-
-export const generateMetadata = () => {
-  return parseMetadata({
-    ...metadata,
-    alternates: { canonical: "/alternatives" },
-    openGraph: { url: "/alternatives" },
-  })
+  openGraph: { ...metadataConfig.openGraph, url: "/alternatives" },
+  alternates: { ...metadataConfig.alternates, canonical: "/alternatives" },
 }
 
 export default function Alternatives({ searchParams }: PageProps) {
   return (
     <>
       <Intro>
-        <IntroTitle>{metadata.title}</IntroTitle>
+        <IntroTitle>{`${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 

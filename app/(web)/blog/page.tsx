@@ -3,20 +3,14 @@ import type { Metadata } from "next"
 import { PostCard } from "~/components/web/posts/post-card"
 import { Grid } from "~/components/web/ui/grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
-import { parseMetadata } from "~/utils/metadata"
+import { metadataConfig } from "~/config/metadata"
 
-const metadata = {
+export const metadata: Metadata = {
   title: "Blog",
   description:
     "A collection of useful articles for developers and open source enthusiasts. Learn about the latest trends and technologies in the open source community.",
-} satisfies Metadata
-
-export const generateMetadata = () => {
-  return parseMetadata({
-    ...metadata,
-    alternates: { canonical: "/blog" },
-    openGraph: { url: "/blog" },
-  })
+  openGraph: { ...metadataConfig.openGraph, url: "/blog" },
+  alternates: { ...metadataConfig.alternates, canonical: "/blog" },
 }
 
 export default function BlogPage() {
@@ -25,7 +19,7 @@ export default function BlogPage() {
   return (
     <>
       <Intro>
-        <IntroTitle>{metadata.title}</IntroTitle>
+        <IntroTitle>{`${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 

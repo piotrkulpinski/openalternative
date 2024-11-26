@@ -10,20 +10,14 @@ import { Stats } from "~/components/web/stats"
 import { Button } from "~/components/web/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
+import { metadataConfig } from "~/config/metadata"
 import { findAds } from "~/server/ads/queries"
-import { parseMetadata } from "~/utils/metadata"
 
-const metadata = {
+export const metadata: Metadata = {
   title: `Advertise on ${config.site.name}`,
   description: `Promote your business or software on ${config.site.name} and reach a wide audience of open source enthusiasts.`,
-} satisfies Metadata
-
-export const generateMetadata = () => {
-  return parseMetadata({
-    ...metadata,
-    alternates: { canonical: "/advertise" },
-    openGraph: { url: "/advertise" },
-  })
+  openGraph: { ...metadataConfig.openGraph, url: "/advertise" },
+  alternates: { ...metadataConfig.alternates, canonical: "/advertise" },
 }
 
 export default async function AdvertisePage() {
@@ -59,7 +53,7 @@ export default async function AdvertisePage() {
   return (
     <>
       <Intro alignment="center">
-        <IntroTitle>{metadata.title}</IntroTitle>
+        <IntroTitle>{`${metadata.title}`}</IntroTitle>
 
         <IntroDescription className="max-w-3xl">
           Promote your business or software and reach a wide audience of open source enthusiasts.

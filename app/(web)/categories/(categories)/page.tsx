@@ -3,26 +3,20 @@ import { Suspense } from "react"
 import { CategoryListing } from "~/app/(web)/categories/(categories)/listing"
 import { CategoryListSkeleton } from "~/components/web/categories/category-list"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
-import { parseMetadata } from "~/utils/metadata"
+import { metadataConfig } from "~/config/metadata"
 
-const metadata = {
+export const metadata: Metadata = {
   title: "Open Source Software Categories",
   description: "Browse top categories to find your best Open Source software options.",
-} satisfies Metadata
-
-export const generateMetadata = () => {
-  return parseMetadata({
-    ...metadata,
-    alternates: { canonical: "/categories" },
-    openGraph: { url: "/categories" },
-  })
+  openGraph: { ...metadataConfig.openGraph, url: "/categories" },
+  alternates: { ...metadataConfig.alternates, canonical: "/categories" },
 }
 
 export default function Categories() {
   return (
     <>
       <Intro>
-        <IntroTitle>{metadata.title}</IntroTitle>
+        <IntroTitle>{`${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 
