@@ -2,8 +2,8 @@ import type { Tool } from "@prisma/client"
 import { Text } from "@react-email/components"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
-import { EmailButton } from "~/emails/_components/button"
-import { EmailWrapper, type EmailWrapperProps } from "~/emails/_components/wrapper"
+import { EmailButton } from "~/emails/components/button"
+import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 export type EmailAdminNewSubmissionProps = EmailWrapperProps & {
   tool?: Tool | Jsonify<Tool>

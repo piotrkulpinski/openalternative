@@ -153,7 +153,6 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           <NavigationLink href="/advertise">Advertise with Us</NavigationLink>
           <NavigationLink href="/submit">Add a Free Listing</NavigationLink>
           <NavigationLink href="/about">About Us</NavigationLink>
-          <NavigationLink href="/newsletter">Newsletter</NavigationLink>
           <NavigationLink href="/blog">Blog</NavigationLink>
         </Stack>
 

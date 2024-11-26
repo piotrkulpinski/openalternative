@@ -5,6 +5,7 @@ import { generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { getSocialsFromUrl } from "~/lib/socials"
+import { firecrawlClient } from "~/services/firecrawl"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 
@@ -12,15 +13,28 @@ export const toolScheduled = inngest.createFunction(
   { id: "tool.scheduled", concurrency: { limit: 2 } },
   { event: "tool.scheduled" },
 
-  async ({ event, step }) => {
+  async ({ event, step, logger }) => {
     const tool = await step.run("find-tool", async () => {
       return prisma.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
+    })
+
+    // Scrape website
+    const scrapedData = await step.run("scrape-website", async () => {
+      const data = await firecrawlClient.scrapeUrl(tool.website, { formats: ["markdown"] })
+
+      if (!data.success) {
+        throw new Error(data.error)
+      }
+
+      logger.info(`Scraped website for ${tool.name}`, { data })
+
+      return data
     })
 
     // Run steps in parallel
     await Promise.all([
       step.run("generate-content", async () => {
-        const { categories, alternatives, ...content } = await generateContent(tool)
+        const { categories, alternatives, ...content } = await generateContent(scrapedData)
 
         return prisma.tool.update({
           where: { id: tool.id },
