@@ -4,6 +4,7 @@ import wretch from "wretch"
 import { createServerAction } from "zsa"
 import { env } from "~/env"
 import { newsletterSchema } from "~/server/schemas"
+import { isRealEmail } from "~/utils/helpers"
 
 /**
  * Subscribe to the newsletter
@@ -13,6 +14,12 @@ import { newsletterSchema } from "~/server/schemas"
 export const subscribeToNewsletter = createServerAction()
   .input(newsletterSchema)
   .handler(async ({ input: json }) => {
+    const isValidEmail = await isRealEmail(json.email)
+
+    if (!isValidEmail) {
+      throw new Error("Invalid email address, please use a real one")
+    }
+
     const url = `https://api.beehiiv.com/v2/publications/${env.BEEHIIV_PUBLICATION_ID}/subscriptions`
 
     const { data } = await wretch(url)

@@ -24,10 +24,7 @@ export const submitToolSchema = z.object({
 })
 
 export const newsletterSchema = z.object({
-  email: z
-    .string()
-    .email("Please enter a valid email address")
-    .refine(isRealEmail, "Invalid email address, please use a real one"),
+  email: z.string().email("Please enter a valid email address"),
   referring_site: z.string().optional().default(config.site.url),
   utm_source: z.string().optional().default(config.site.name),
   utm_medium: z.string().optional().default("subscribe_form"),
