@@ -41,7 +41,7 @@ const getTool = cache(async ({ params, searchParams }: PageProps) => {
   return { tool, success }
 })
 
-const getMetadata = cache((tool: Tool, success: boolean) => {
+const getMetadata = (tool: Tool, success: boolean) => {
   if (success) {
     if (tool.isFeatured) {
       return {
@@ -67,7 +67,7 @@ const getMetadata = cache((tool: Tool, success: boolean) => {
     title: "Choose a submission package",
     description: `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listing to premium features.`,
   } satisfies Metadata
-})
+}
 
 export const generateMetadata = async (props: PageProps) => {
   const { tool, success } = await getTool(props)

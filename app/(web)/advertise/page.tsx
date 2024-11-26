@@ -2,7 +2,6 @@ import { Slot } from "@radix-ui/react-slot"
 import { LightbulbIcon, MegaphoneIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
-import { cache } from "react"
 import { H4 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { AdsPicker } from "~/components/web/ads-picker"
@@ -14,24 +13,21 @@ import { config } from "~/config"
 import { findAds } from "~/server/ads/queries"
 import { parseMetadata } from "~/utils/metadata"
 
-const getMetadata = cache(
-  (metadata?: Metadata): Metadata => ({
-    ...metadata,
-    title: `Advertise on ${config.site.name}`,
-    description: `Promote your business or software on ${config.site.name} and reach a wide audience of open source enthusiasts.`,
-  }),
-)
+const metadata = {
+  title: `Advertise on ${config.site.name}`,
+  description: `Promote your business or software on ${config.site.name} and reach a wide audience of open source enthusiasts.`,
+} satisfies Metadata
 
-export const metadata = parseMetadata(
-  getMetadata({
+export const generateMetadata = () => {
+  return parseMetadata({
+    ...metadata,
     alternates: { canonical: "/advertise" },
     openGraph: { url: "/advertise" },
-  }),
-)
+  })
+}
 
 export default async function AdvertisePage() {
   const ads = await findAds({})
-  const { title } = getMetadata()
 
   const options = [
     {
@@ -63,7 +59,7 @@ export default async function AdvertisePage() {
   return (
     <>
       <Intro alignment="center">
-        <IntroTitle>{title?.toString()}</IntroTitle>
+        <IntroTitle>{metadata.title}</IntroTitle>
 
         <IntroDescription className="max-w-3xl">
           Promote your business or software and reach a wide audience of open source enthusiasts.

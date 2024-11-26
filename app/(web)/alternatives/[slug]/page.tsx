@@ -65,7 +65,7 @@ export const generateMetadata = async (props: PageProps) => {
   return parseMetadata(
     Object.assign(getMetadata(alternative), {
       alternates: { canonical: url },
-      openGraph: { url },
+      openGraph: { url, images: undefined },
     }),
   )
 }
@@ -176,7 +176,7 @@ export default async function AlternativePage(props: PageProps) {
             <BackButton href="/alternatives" />
           </Section.Content>
 
-          <Section.Sidebar className="order-first md:order-last">
+          <Section.Sidebar className="order-first md:order-last md:max-h-[calc(100vh-5rem)]">
             <AlternativeCardExternal alternative={alternative} />
 
             <InlineMenu

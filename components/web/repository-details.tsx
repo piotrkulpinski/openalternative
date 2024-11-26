@@ -1,39 +1,31 @@
 import { formatNumber } from "@curiousleaf/utils"
-import type { SerializeFrom } from "@remix-run/node"
 import { formatDistanceToNowStrict } from "date-fns"
 import { CopyrightIcon, GitForkIcon, HistoryIcon, StarIcon, TimerIcon } from "lucide-react"
-import { posthog } from "posthog-js"
-import type { HTMLAttributes } from "react"
-import { Button } from "~/components/ui/button"
-import { H5 } from "~/components/ui/heading"
-import { Insights } from "~/components/ui/insights"
-import { NavigationLink } from "~/components/ui/navigation-link"
-import { Stack } from "~/components/ui/stack"
-import type { LanguageToToolMany, ToolOne } from "~/services.server/api"
+import type { ComponentProps } from "react"
+import { H5 } from "~/components/common/heading"
+import { Stack } from "~/components/common/stack"
+import { Button } from "~/components/web/ui/button"
+import { Insights } from "~/components/web/ui/insights"
+import { NavigationLink } from "~/components/web/ui/navigation-link"
+import type { ToolOne } from "~/server/tools/payloads"
 import { cx } from "~/utils/cva"
 import { BrandGitHubIcon } from "../common/icons/brand-github"
 
-type RepositoryDetailsProps = HTMLAttributes<HTMLElement> & {
-  tool: SerializeFrom<ToolOne>
-  languages: SerializeFrom<LanguageToToolMany[]>
+type RepositoryDetailsProps = ComponentProps<"div"> & {
+  tool: ToolOne
 }
 
-export const RepositoryDetails = ({
-  className,
-  tool,
-  languages,
-  ...props
-}: RepositoryDetailsProps) => {
+export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetailsProps) => {
   const insights = [
-    { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: StarIcon },
-    { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: GitForkIcon },
+    { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: <StarIcon /> },
+    { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: <GitForkIcon /> },
     ...(tool.lastCommitDate
       ? [
           {
             label: "Last commit",
             value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
-            title: tool.lastCommitDate,
-            icon: TimerIcon,
+            title: tool.lastCommitDate.toISOString(),
+            icon: <TimerIcon />,
           },
         ]
       : []),
@@ -42,8 +34,8 @@ export const RepositoryDetails = ({
           {
             label: "Repository age",
             value: formatDistanceToNowStrict(tool.firstCommitDate),
-            title: tool.firstCommitDate,
-            icon: HistoryIcon,
+            title: tool.firstCommitDate.toISOString(),
+            icon: <HistoryIcon />,
           },
         ]
       : []),
@@ -53,7 +45,7 @@ export const RepositoryDetails = ({
             label: "License",
             value: tool.license.name,
             link: `/licenses/${tool.license.slug}`,
-            icon: CopyrightIcon,
+            icon: <CopyrightIcon />,
           },
         ]
       : []),
@@ -66,12 +58,12 @@ export const RepositoryDetails = ({
         <Insights insights={insights} className="text-sm" />
       </Stack>
 
-      {!!languages.length && (
+      {!!tool.languages.length && (
         <Stack direction="column">
           <H5 as="strong">Written in:</H5>
 
           <Stack>
-            {languages?.map(({ percentage, language }) => (
+            {tool.languages?.map(({ percentage, language }) => (
               <NavigationLink
                 key={language.slug}
                 href={`/languages/${language.slug}`}
@@ -93,7 +85,7 @@ export const RepositoryDetails = ({
           size="md"
           variant="secondary"
           prefix={<BrandGitHubIcon />}
-          onClick={() => posthog.capture("repository_clicked", { url: tool.repository })}
+          // onClick={() => posthog.capture("repository_clicked", { url: tool.repository })}
           className="mt-1 self-start"
           asChild
         >

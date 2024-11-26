@@ -71,7 +71,7 @@ export const Newsletter = ({
             <Box focusWithin>
               <form
                 onSubmit={form.handleSubmit(data => execute(data))}
-                className="flex rounded-lg text-clip"
+                className="flex rounded-lg overflow-clip"
                 noValidate
               >
                 <input type="hidden" name="utm_medium" value={medium} />
