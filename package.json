@@ -19,6 +19,7 @@
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.56",
     "@ai-sdk/openai": "^0.0.72",
+    "@atproto/api": "^0.13.18",
     "@aws-sdk/client-s3": "^3.685.0",
     "@aws-sdk/lib-storage": "^3.685.0",
     "@content-collections/mdx": "^0.2.0",
@@ -26,6 +27,7 @@
     "@hookform/resolvers": "^3.9.1",
     "@mendable/firecrawl-js": "^1.7.2",
     "@number-flow/react": "^0.3.1",
+    "@octokit/graphql": "^8.1.1",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.2",

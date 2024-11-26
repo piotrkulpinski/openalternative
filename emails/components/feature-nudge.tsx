@@ -2,7 +2,7 @@ import type { Tool } from "@prisma/client"
 import { Hr, Link, Text } from "@react-email/components"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
-import { EmailButton } from "~/emails/_components/button"
+import { EmailButton } from "~/emails/components/button"
 
 type EmailFeatureNudgeProps = {
   tool?: Tool | Jsonify<Tool>

@@ -1,4 +1,4 @@
-import { AtpAgent } from "@atproto/api"
+import { AtpAgent, RichText } from "@atproto/api"
 import { env, isProd } from "~/env"
 
 /**
@@ -19,6 +19,11 @@ export const sendBlueskyPost = async (text: string) => {
     password: env.BLUESKY_PASSWORD,
   })
 
-  // TODO: Enable when I fix the issue with links
-  // await agent.post({ text })
+  const rt = new RichText({ text })
+  await rt.detectFacets(agent)
+
+  await agent.post({
+    text: rt.text,
+    facets: rt.facets,
+  })
 }
