@@ -10,7 +10,7 @@ export const findAds = async ({ where, orderBy, ...args }: Prisma.AdFindManyArgs
   })
 }
 
-export const findFirstAd = async ({ where, orderBy, ...args }: Prisma.AdFindFirstArgs) => {
+export const findAd = async ({ where, orderBy, ...args }: Prisma.AdFindFirstArgs) => {
   return prisma.ad.findFirst({
     ...args,
     orderBy: orderBy ?? { startsAt: "desc" },

@@ -1,3 +1,4 @@
+import { getRandomElement } from "@curiousleaf/utils"
 import type { Prisma } from "@prisma/client"
 import type { SearchParams } from "nuqs/server"
 import { toolManyPayload, toolOnePayload } from "~/server/tools/payloads"
@@ -49,6 +50,37 @@ export const searchTools = async (
   ])
 
   return { tools, totalCount }
+}
+
+export const findRelatedTools = async ({
+  where,
+  slug,
+  take = 3,
+  ...args
+}: Prisma.ToolFindManyArgs & { slug: string; take?: number }) => {
+  const relatedWhereClause = {
+    ...where,
+    AND: [
+      { publishedAt: { lte: new Date() } },
+      { slug: { not: slug } },
+      { alternatives: { some: { alternative: { tools: { some: { tool: { slug } } } } } } },
+    ],
+  } satisfies Prisma.ToolWhereInput
+
+  const itemCount = await prisma.tool.count({ where: relatedWhereClause })
+  const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
+  const properties = ["id", "name", "score"] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
+  const orderBy = getRandomElement(properties)
+  const orderDir = getRandomElement(["asc", "desc"] as const)
+
+  return prisma.tool.findMany({
+    ...args,
+    where: relatedWhereClause,
+    include: toolManyPayload,
+    orderBy: { [orderBy]: orderDir },
+    take,
+    skip,
+  })
 }
 
 export const findTools = async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {

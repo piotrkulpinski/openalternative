@@ -1,6 +1,5 @@
 import type { ComponentProps, ReactNode } from "react"
 import { Heading, type HeadingProps } from "~/components/common/heading"
-import { Prose } from "~/components/web/ui/prose"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const introVariants = cva({
@@ -39,14 +38,8 @@ const IntroTitle = ({ size = "h1", ...props }: HeadingProps) => {
   return <Heading size={size} {...props} />
 }
 
-const IntroDescription = ({ children, className, ...props }: ComponentProps<typeof Prose>) => {
-  return (
-    <Prose className={cx("max-w-2xl", className)} {...props}>
-      <h2 className="text-base! font-normal! tracking-normal! text-foreground/70! md:text-lg!">
-        {children}
-      </h2>
-    </Prose>
-  )
+const IntroDescription = ({ className, ...props }: ComponentProps<"h2">) => {
+  return <h2 className={cx("max-w-2xl text-secondary md:text-lg", className)} {...props} />
 }
 
 export { Intro, IntroTitle, IntroDescription }

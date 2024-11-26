@@ -22,11 +22,7 @@ export const SectionContent = ({ className, ...props }: HTMLAttributes<HTMLEleme
 export const SectionSidebar = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <div
-      className={cx(
-        "flex flex-col gap-6 w-full md:sticky md:top-16 md:z-10 md:max-h-[calc(100vh-5rem)]",
-        className,
-      )}
-      style={{ viewTransitionName: "sidebar" }}
+      className={cx("flex flex-col gap-6 w-full md:sticky md:top-16 md:z-10", className)}
       {...props}
     />
   )

@@ -1,9 +1,9 @@
 import { Slot } from "@radix-ui/react-slot"
-import { Link, type LinkProps } from "@remix-run/react"
-import type { ReactNode } from "react"
+import Link from "next/link"
+import type { ComponentProps, ReactNode } from "react"
 import { cx } from "~/utils/cva"
 
-type TagProps = Omit<LinkProps, "prefix"> & {
+type TagProps = Omit<ComponentProps<typeof Link>, "prefix"> & {
   /**
    * The slot to be rendered before the label.
    */
@@ -22,7 +22,6 @@ export const Tag = ({ children, className, prefix, suffix, ...props }: TagProps)
         "flex items-center gap-0.5 text-secondary text-sm hover:text-foreground",
         className,
       )}
-      unstable_viewTransition
       {...props}
     >
       {prefix && <Slot className="opacity-30 mr-0.5">{prefix}</Slot>}

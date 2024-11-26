@@ -8,6 +8,8 @@ type FaviconProps = HTMLAttributes<HTMLDivElement> & {
 }
 
 export const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
+  if (!src) return null
+
   return (
     <div
       className={cx(
@@ -27,7 +29,7 @@ export const FaviconImage = ({ className, src, title, ...props }: FaviconProps) 
   return (
     <Image
       src={src}
-      alt={title ? `Favicon of ${title} website` : ""}
+      alt={title ? `A favicon of ${title}` : ""}
       loading="lazy"
       width="64"
       height="64"
