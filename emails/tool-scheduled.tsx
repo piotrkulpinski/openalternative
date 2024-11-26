@@ -3,9 +3,9 @@ import { Text } from "@react-email/components"
 import { addHours, differenceInDays, format, formatDistanceToNowStrict } from "date-fns"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
-import { EmailButton } from "~/emails/_components/button"
-import { EmailFeatureNudge } from "~/emails/_components/feature-nudge"
-import { EmailWrapper, type EmailWrapperProps } from "~/emails/_components/wrapper"
+import { EmailButton } from "~/emails/components/button"
+import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
+import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 export type EmailToolScheduledProps = EmailWrapperProps & {
   tool?: Tool | Jsonify<Tool>

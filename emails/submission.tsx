@@ -4,9 +4,9 @@ import { differenceInWeeks, subDays } from "date-fns"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import plur from "plur"
 import { config } from "~/config"
-import { EmailButton } from "~/emails/_components/button"
-import { EmailFeatureNudge } from "~/emails/_components/feature-nudge"
-import { EmailWrapper, type EmailWrapperProps } from "~/emails/_components/wrapper"
+import { EmailButton } from "~/emails/components/button"
+import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
+import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 export type EmailSubmissionProps = EmailWrapperProps & {
   tool?: Tool | Jsonify<Tool>

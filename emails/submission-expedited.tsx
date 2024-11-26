@@ -1,8 +1,8 @@
 import type { Tool } from "@prisma/client"
 import { Text } from "@react-email/components"
 import type { Jsonify } from "inngest/helpers/jsonify"
-import { EmailFeatureNudge } from "~/emails/_components/feature-nudge"
-import { EmailWrapper, type EmailWrapperProps } from "~/emails/_components/wrapper"
+import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
+import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 export type EmailSubmissionExpeditedProps = EmailWrapperProps & {
   tool?: Tool | Jsonify<Tool>
