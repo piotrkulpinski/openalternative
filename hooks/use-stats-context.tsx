@@ -1,3 +1,5 @@
+"use client"
+
 import { createContext, useContext } from "react"
 
 type Stats = [number, number, number, number, number, number]

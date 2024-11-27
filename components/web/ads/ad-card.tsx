@@ -22,8 +22,8 @@ type AdCardProps = CardProps & {
   rel?: string
 }
 
-export const AdCard = ({ className, ad: adProp, rel, ...props }: AdCardProps) => {
-  const ad = adProp ?? config.ads.defaultAd
+export const AdCard = ({ className, ad, rel, ...props }: AdCardProps) => {
+  ad ??= config.ads.defaultAd
   const isDefault = !ad.website.startsWith("http")
 
   return (

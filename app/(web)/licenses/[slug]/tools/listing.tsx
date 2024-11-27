@@ -9,7 +9,7 @@ type LicenseToolListingProps = {
 }
 
 export const LicenseToolListing = async ({ license, searchParams }: LicenseToolListingProps) => {
-  const { tools, totalCount } = await searchTools(await searchParams, {
+  const { tools, totalCount } = await searchTools(searchParams, {
     where: { license: { slug: license.slug } },
   })
 
