@@ -33,5 +33,5 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# Temporary files
-/_*
+# Content Collections
+.content-collections
