@@ -3,6 +3,7 @@ import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense, cache } from "react"
+import type { ImageObject } from "schema-dts"
 import { z } from "zod"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
@@ -84,11 +85,34 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
 export default async function ToolPage(props: PageProps) {
   const [tool, ad] = await Promise.all([getTool(props), findAd({ where: { type: "Banner" } })])
   const { title } = getMetadata(tool)
+  const jsonLd: ImageObject[] = []
 
   const links = z
     .array(z.object({ name: z.string(), url: z.string().url() }))
     .nullable()
     .parse(tool.links)
+
+  if (tool.screenshotUrl) {
+    jsonLd.push({
+      "@type": "ImageObject",
+      url: tool.screenshotUrl,
+      contentUrl: tool.screenshotUrl,
+      width: "1280",
+      height: "720",
+      caption: `A screenshot of ${tool.name}`,
+    })
+  }
+
+  if (tool.faviconUrl) {
+    jsonLd.push({
+      "@type": "ImageObject",
+      url: tool.faviconUrl,
+      contentUrl: tool.faviconUrl,
+      width: "144",
+      height: "144",
+      caption: `A favicon of ${tool.name}`,
+    })
+  }
 
   return (
     <div className="flex flex-col gap-12">
@@ -279,26 +303,7 @@ export default async function ToolPage(props: PageProps) {
       {/* JSON-LD */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
-            {
-              "@type": "ImageObject",
-              url: tool.screenshotUrl,
-              contentUrl: tool.screenshotUrl,
-              width: 1280,
-              height: 720,
-              caption: `A screenshot of ${tool.name}`,
-            },
-            {
-              "@type": "ImageObject",
-              url: tool.faviconUrl,
-              contentUrl: tool.faviconUrl,
-              width: 144,
-              height: 144,
-              caption: `A favicon of ${tool.name}`,
-            },
-          ]),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </div>
   )
