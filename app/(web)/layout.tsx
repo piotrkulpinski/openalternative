@@ -1,4 +1,5 @@
 import { type PropsWithChildren, Suspense } from "react"
+import type { Graph } from "schema-dts"
 import Providers from "~/app/(web)/providers"
 import { AdBanner } from "~/components/web/ads/ad-banner"
 import { Bottom } from "~/components/web/bottom"
@@ -7,8 +8,59 @@ import { Header } from "~/components/web/header"
 import { Container } from "~/components/web/ui/container"
 
 import "./styles.css"
+import { config } from "~/config"
 
 export default function RootLayout({ children }: PropsWithChildren) {
+  const url = config.site.url
+  const jsonLd: Graph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${url}/#/schema/organization/1`,
+        name: config.site.name,
+        url: `${url}/`,
+        sameAs: [
+          config.links.twitter,
+          config.links.bluesky,
+          config.links.linkedin,
+          config.links.github,
+        ],
+        logo: {
+          "@type": "ImageObject",
+          "@id": `${url}/#/schema/image/1`,
+          url: `${url}/favicon.png`,
+          width: "480",
+          height: "480",
+          caption: `${config.site.name} Logo`,
+        },
+      },
+      {
+        "@type": "Person",
+        "@id": `${url}/#/schema/person/1`,
+        name: "Piotr Kulpinski",
+        sameAs: [config.links.author],
+      },
+      {
+        "@type": "WebSite",
+        url: config.site.url,
+        name: config.site.name,
+        description: config.site.description,
+        inLanguage: "en-US",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${url}/?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        } as any,
+        isPartOf: { "@id": `${url}#/schema/website/1` },
+        about: { "@id": `${url}#/schema/organization/1` },
+      },
+    ],
+  }
+
   return (
     <Providers>
       <div className="flex flex-col min-h-dvh">
@@ -27,6 +79,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <Suspense>
         <Bottom />
       </Suspense>
+
+      {/* JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Providers>
   )
 }
