@@ -1,3 +1,5 @@
+import { siteConfig } from "~/config/site"
+
 /**
  * Updates the URL with the specified search parameters.
  *
@@ -10,7 +12,7 @@ export const updateUrlWithSearchParams = (
   params: { [key: string]: string },
 ): string => {
   // If the URL is not a full URL, return it as is
-  if (!url.startsWith("http")) return url
+  if (!url.startsWith("http") || url.startsWith(siteConfig.affiliateUrl)) return url
 
   // Create a URL object
   const urlObj = new URL(url)

@@ -58,13 +58,7 @@ export const AlternativeCardExternal = ({
           </Prose>
         )}
 
-        <Button
-          variant={alternative.website.startsWith("https://go") ? "fancy" : "primary"}
-          size="lg"
-          className="pointer-events-none md:w-full"
-          suffix={<ArrowUpRightIcon />}
-          asChild
-        >
+        <Button className="pointer-events-none md:w-full" suffix={<ArrowUpRightIcon />} asChild>
           <span>Visit {alternative.name}</span>
         </Button>
       </Link>
