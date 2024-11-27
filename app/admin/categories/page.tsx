@@ -1,7 +1,6 @@
 import type { SearchParams } from "nuqs"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
-import { requireAuthentication } from "~/utils/auth"
 import { CategoriesTable } from "./_components/categories-table"
 import { getCategories } from "./_lib/queries"
 
@@ -10,7 +9,6 @@ export interface CategoriesPageProps {
 }
 
 export default async function CategoriesPage({ searchParams }: CategoriesPageProps) {
-  await requireAuthentication()
   const categoriesPromise = getCategories(searchParams)
 
   return (
