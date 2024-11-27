@@ -4,8 +4,8 @@
 
 @source "../../components/common/**/*.{js,ts,jsx,tsx,mdx}";
 @source "../../components/web/**/*.{js,ts,jsx,tsx,mdx}";
-@source "../../app/*.{js,ts,jsx,tsx,mdx}";
-@source "../../app/(web)/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../*.{js,ts,jsx,tsx,mdx}";
+@source "../(web)/**/*.{js,ts,jsx,tsx,mdx}";
 
 @theme {
   --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",

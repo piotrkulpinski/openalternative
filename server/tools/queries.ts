@@ -6,10 +6,10 @@ import { toolsSearchParamsCache } from "~/server/tools/search-params"
 import { prisma } from "~/services/prisma"
 
 export const searchTools = async (
-  searchParams: SearchParams,
+  searchParams: Promise<SearchParams>,
   { where, ...args }: Prisma.ToolFindManyArgs,
 ) => {
-  const { q, category, page, sort, perPage } = toolsSearchParamsCache.parse(searchParams)
+  const { q, category, page, sort, perPage } = toolsSearchParamsCache.parse(await searchParams)
 
   // Values to paginate the results
   const skip = (page - 1) * perPage

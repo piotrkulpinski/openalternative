@@ -9,7 +9,7 @@ type CategoryToolListingProps = {
 }
 
 export const CategoryToolListing = async ({ category, searchParams }: CategoryToolListingProps) => {
-  const { tools, totalCount } = await searchTools(await searchParams, {
+  const { tools, totalCount } = await searchTools(searchParams, {
     where: { categories: { some: { category: { slug: category.slug } } } },
   })
 

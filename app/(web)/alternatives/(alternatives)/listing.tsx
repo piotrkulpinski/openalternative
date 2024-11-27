@@ -7,7 +7,7 @@ type AlternativeListingProps = {
 }
 
 export const AlternativeListing = async ({ searchParams }: AlternativeListingProps) => {
-  const { alternatives, totalCount } = await searchAlternatives(await searchParams, {})
+  const { alternatives, totalCount } = await searchAlternatives(searchParams, {})
 
   return <AlternativeQuery alternatives={alternatives} totalCount={totalCount} />
 }
