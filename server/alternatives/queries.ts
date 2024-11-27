@@ -5,10 +5,10 @@ import { alternativesSearchParamsCache } from "~/server/alternatives/search-para
 import { prisma } from "~/services/prisma"
 
 export const searchAlternatives = async (
-  searchParams: SearchParams,
+  searchParams: Promise<SearchParams>,
   { where, ...args }: Prisma.AlternativeFindManyArgs,
 ) => {
-  const { q, page, sort, perPage } = alternativesSearchParamsCache.parse(searchParams)
+  const { q, page, sort, perPage } = alternativesSearchParamsCache.parse(await searchParams)
 
   // Values to paginate the results
   const skip = (page - 1) * perPage

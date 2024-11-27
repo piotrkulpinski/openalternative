@@ -1,4 +1,6 @@
+import { redirect } from "next/navigation"
 import { env } from "~/env"
+import { auth } from "~/services/auth"
 
 /**
  * Check if the email is allowed to access the admin panel
@@ -17,4 +19,17 @@ export const isAllowedEmail = (email?: string | null): boolean => {
 
   // Allow specified domains or emails
   return allowedEmails.some(e => (e.includes("@") ? email === e : email.endsWith(e)))
+}
+
+/**
+ * Require authentication and redirect to login if not authenticated
+ */
+export const requireAuthentication = async () => {
+  const session = await auth()
+
+  if (!session?.user) {
+    redirect("/login")
+  }
+
+  return
 }

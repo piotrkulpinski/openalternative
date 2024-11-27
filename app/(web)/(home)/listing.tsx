@@ -9,7 +9,7 @@ type HomeToolListingProps = {
 
 export const HomeToolListing = async ({ searchParams }: HomeToolListingProps) => {
   const [{ tools, totalCount }, categories] = await Promise.all([
-    searchTools(await searchParams, {}),
+    searchTools(searchParams, {}),
     findCategories({}),
   ])
 

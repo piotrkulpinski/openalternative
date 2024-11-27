@@ -10,7 +10,7 @@ const Checkbox = ({ className, ...props }: ComponentProps<typeof CheckboxPrimiti
   <Box hover focusWithin>
     <CheckboxPrimitive.Root
       className={cx(
-        "peer size-4 shrink-0 rounded-sm disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-card data-[state=checked]:text-foreground",
+        "peer size-4 shrink-0 rounded-sm disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:text-foreground",
         className,
       )}
       {...props}

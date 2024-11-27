@@ -1,0 +1,199 @@
+@import "tailwindcss" source(none);
+@plugin "tailwindcss-animate";
+
+@source "../../components/common/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../../components/admin/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../*.{js,ts,jsx,tsx,mdx}";
+@source "../admin/**/*.{js,ts,jsx,tsx,mdx}";
+
+@theme {
+  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(0 0% 3.9%);
+  --color-border: hsl(0 0% 89.8%);
+  --color-input: hsl(0 0% 89.8%);
+  --color-ring: hsl(0 0% 75.9%);
+
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(0 0% 3.9%);
+
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(0 0% 3.9%);
+
+  --color-primary: hsl(0 0% 9%);
+  --color-primary-foreground: hsl(0 0% 98%);
+
+  --color-secondary: hsl(0 0% 96.1%);
+  --color-secondary-foreground: hsl(0 0% 9%);
+
+  --color-muted: hsl(0 0% 96.1%);
+  --color-muted-foreground: hsl(0 0% 45.1%);
+
+  --color-accent: hsl(0 0% 96.1%);
+  --color-accent-foreground: hsl(0 0% 9%);
+
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+
+  --color-chart-1: hsl(12 76% 61%);
+  --color-chart-2: hsl(173 58% 39%);
+  --color-chart-3: hsl(197 37% 24%);
+  --color-chart-4: hsl(43 74% 66%);
+  --color-chart-5: hsl(27 87% 67%);
+
+  --font-sans: var(--font-geist-sans), var(--font-system);
+  --font-display: var(--font-uncut-sans), var(--font-system);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+@layer base {
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background: hsl(0 0% 3.9%);
+      --color-foreground: hsl(0 0% 98%);
+      --color-card: hsl(0 0% 3.9%);
+      --color-card-foreground: hsl(0 0% 98%);
+      --color-popover: hsl(0 0% 3.9%);
+      --color-popover-foreground: hsl(0 0% 98%);
+      --color-primary: hsl(0 0% 98%);
+      --color-primary-foreground: hsl(0 0% 9%);
+      --color-secondary: hsl(0 0% 14.9%);
+      --color-secondary-foreground: hsl(0 0% 98%);
+      --color-muted: hsl(0 0% 14.9%);
+      --color-muted-foreground: hsl(0 0% 63.9%);
+      --color-accent: hsl(0 0% 14.9%);
+      --color-accent-foreground: hsl(0 0% 98%);
+      --color-destructive: hsl(0 62.8% 30.6%);
+      --color-destructive-foreground: hsl(0 0% 98%);
+      --color-border: hsl(0 0% 14.9%);
+      --color-input: hsl(0 0% 14.9%);
+      --color-ring: hsl(0 0% 25.1%);
+
+      --color-chart-1: hsl(220 70% 50%);
+      --color-chart-2: hsl(160 60% 45%);
+      --color-chart-3: hsl(30 80% 55%);
+      --color-chart-4: hsl(43 74% 66%);
+      --color-chart-5: hsl(340 75% 55%);
+    }
+  }
+}
+
+@layer base {
+  input,
+  textarea,
+  select,
+  button {
+    border: 0px solid;
+    border-radius: 0;
+    padding: 0;
+    color: inherit;
+    background-color: transparent;
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop {
+    border-color: var(--color-input, currentColor);
+  }
+
+  .font-sans {
+    font-feature-settings: "ss01" on, "ss02" off, "ss03" off, "ss04" off,
+      "ss05" off, "ss06" off, "ss07" off, "ss08" on;
+  }
+
+  .font-display {
+    font-feature-settings: "ss01" on, /* Alternate R */ "ss02" on,
+      /* Alternate Y and y */ "ss03" on, /* Alernative Q, Ø, and ø */ "ss04" off,
+      /* Alernative a */ "ss05" on, /* Alernative 1, 2, and 4 */ "ss06" on,
+      /* Alternate !, ?, and * */ "ss07" on, /* Round punctuation */ "ss08" off; /* Alternate arrows */
+  }
+
+  * {
+    @apply border-input;
+    @apply break-words;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  a,
+  button,
+  label[for],
+  [href] [class*="group-hover"],
+  button [class*="group-hover"] {
+    @apply duration-0;
+    @apply cursor-pointer;
+  }
+
+  strong {
+    @apply font-medium;
+  }
+
+  select:not([size]) {
+    @apply bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9JyNmZmYnIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJyBjbGFzcz0nbHVjaWRlIGx1Y2lkZS1jaGV2cm9uLWRvd24nPjxwYXRoIGQ9J202IDkgNiA2IDYtNicvPjwvc3ZnPg==')];
+    @apply bg-no-repeat;
+    @apply bg-[right_0.75rem_center];
+    @apply bg-[length:1.25em_1.25em];
+    @apply pr-10;
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Firefox */
+  input[type="search"]::-moz-search-cancel-button {
+    display: none;
+  }
+
+  /* Microsoft Edge */
+  input[type="search"]::-ms-clear {
+    display: none;
+  }
+}
+
+svg.lucide:not([class*="stroke"]) {
+  @apply stroke-[1.75]!;
+}
+
+svg.lucide:not([class*="size-"]):not([class*="h-"]) {
+  @apply size-[1em];
+}
+
+[href] svg[class*="arrow-up-right"]:last-child,
+[type] svg[class*="arrow-up-right"]:last-child {
+  @apply will-change-transform;
+  @apply duration-150;
+}
+
+[href]:hover svg[class*="arrow-up-right"]:last-child,
+[type]:hover svg[class*="arrow-up-right"]:last-child {
+  @apply translate-x-[0.15em];
+  @apply rotate-12;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
