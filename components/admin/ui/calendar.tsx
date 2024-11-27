@@ -33,7 +33,7 @@ export const Calendar = ({ className, classNames, ...props }: ComponentProps<typ
         selected: "bg-foreground text-background",
         range_middle: "bg-muted! text-foreground! rounded-none",
         today:
-          "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-px after:w-5 after:-translate-x-1/2 after:rounded-[2px] after:bg-current",
+          "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-px after:w-1/2 after:-translate-x-1/2 after:rounded-[2px] after:bg-current",
         outside: "opacity-40",
         disabled: "opacity-40 pointer-events-none",
         hidden: "invisible",

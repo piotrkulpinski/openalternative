@@ -62,14 +62,15 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
         {average && (
           <ReferenceLine
             y={average}
-            className="stroke-muted-foreground"
+            stroke="var(--color-muted-foreground)"
             strokeDasharray="3 3"
             strokeWidth={1}
           >
             <Label
               position="insideTopLeft"
               value={average.toLocaleString()}
-              className="text-lg fill-foreground"
+              className="text-lg"
+              fill="var(--color-foreground)"
               offset={10}
               startOffset={100}
             />

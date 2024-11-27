@@ -5,7 +5,7 @@ import { cx } from "~/utils/cva"
 const Card = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
-      className={cx("rounded-lg border bg-card text-card-foreground shadow-sm", className)}
+      className={cx("rounded-lg border bg-card text-card-foreground shadow-xs", className)}
       {...props}
     />
   )

@@ -17,7 +17,7 @@ export default function Error({ error, reset }: ErrorProps) {
 
   return (
     <div className="flex flex-col items-start gap-2 max-w-lg">
-      <H3 as="h1">Something went wrong!</H3>
+      <H3>Something went wrong!</H3>
 
       <p className="text-sm text-muted-foreground">
         Please try again. If the problem persists, contact support.

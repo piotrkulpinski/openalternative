@@ -1,6 +1,6 @@
+import type { SearchParams } from "nuqs"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
-import type { SearchParams } from "~/types"
 import { requireAuthentication } from "~/utils/auth"
 import { LicensesTable } from "./_components/licenses-table"
 import { getLicenses } from "./_lib/queries"

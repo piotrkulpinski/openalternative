@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/admin/ui/card"
+import { Skeleton } from "~/components/common/skeleton"
 import { env } from "~/env"
 import { cache } from "~/lib/cache"
 
@@ -40,7 +41,7 @@ const getAnalytics = cache(
   { revalidate: 60 * 60 },
 )
 
-export const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
+const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const { results, totalVisitors, averageVisitors } = await getAnalytics()
 
   return (
@@ -56,3 +57,20 @@ export const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) =
     </Card>
   )
 }
+
+const AnalyticsCardSkeleton = ({ ...props }: ComponentProps<typeof Card>) => {
+  return (
+    <Card {...props}>
+      <CardHeader>
+        <Skeleton className="h-5 w-12" />
+        <Skeleton className="text-3xl w-24">&nbsp;</Skeleton>
+      </CardHeader>
+
+      <CardContent>
+        <Skeleton className="h-56 w-full" />
+      </CardContent>
+    </Card>
+  )
+}
+
+export { AnalyticsCard, AnalyticsCardSkeleton }

@@ -5,7 +5,6 @@ import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { indexSearch } from "~/actions/algolia"
 import { searchItems, sendOutSocialPost } from "~/actions/search"
 import {
   CommandDialog,
@@ -77,11 +76,6 @@ export const CommandMenu = () => {
     setSearchQuery(value)
   }
 
-  const handleIndexSearch = async () => {
-    await indexSearch()
-    toast.success("Search index updated")
-  }
-
   const handleSendSocialPost = async () => {
     await sendOutSocialPost()
     toast.success("Social post sent")
@@ -122,7 +116,6 @@ export const CommandMenu = () => {
         </CommandGroup>
 
         <CommandGroup heading="Quick Commands">
-          <CommandItem onSelect={handleIndexSearch}>Index Search</CommandItem>
           <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
         </CommandGroup>
 

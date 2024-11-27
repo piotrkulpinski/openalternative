@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client"
 import { endOfDay, startOfDay } from "date-fns"
+import type { SearchParams } from "nuqs"
 import { prisma } from "~/services/prisma"
-import type { SearchParams } from "~/types"
 import { searchParamsSchema } from "./validations"
 
 export const getAlternatives = async (searchParams: Promise<SearchParams>) => {

@@ -1,4 +1,4 @@
-import type { SearchParams } from "nuqs/server"
+import type { SearchParams } from "nuqs"
 import { AlternativeQuery } from "~/components/web/alternatives/alternative-query"
 import { searchAlternatives } from "~/server/alternatives/queries"
 
