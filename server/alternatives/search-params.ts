@@ -4,7 +4,7 @@ import { config } from "~/config"
 export const alternativesSearchParams = {
   q: parseAsString,
   page: parseAsInteger.withDefault(1),
-  sort: parseAsString.withDefault("name.asc"),
+  sort: parseAsString.withDefault("popularity.desc"),
   perPage: parseAsInteger.withDefault(config.site.alternativesPerPage),
 }
 
