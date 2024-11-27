@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import type { SearchParams } from "nuqs/server"
+import type { SearchParams } from "nuqs"
 import { Suspense, cache } from "react"
 import { LanguageToolListing } from "~/app/(web)/languages/[slug]/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"

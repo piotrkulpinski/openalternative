@@ -1,6 +1,6 @@
 import type { Prisma } from "@prisma/client"
-import type { SearchParams } from "algoliasearch"
 import { endOfDay, startOfDay } from "date-fns"
+import type { SearchParams } from "nuqs"
 import { prisma } from "~/services/prisma"
 import { searchParamsSchema } from "./validations"
 

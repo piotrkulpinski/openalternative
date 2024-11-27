@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import type { SearchParams } from "nuqs/server"
+import type { SearchParams } from "nuqs"
 import { Suspense, cache } from "react"
 import { LicenseToolListing } from "~/app/(web)/licenses/[slug]/listing"
 import { H2 } from "~/components/common/heading"

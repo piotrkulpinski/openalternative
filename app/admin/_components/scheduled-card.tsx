@@ -12,10 +12,10 @@ import { ScrollArea } from "~/components/admin/ui/scroll-area"
 import { Skeleton } from "~/components/common/skeleton"
 import { prisma } from "~/services/prisma"
 
-export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
+const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { gt: new Date() } },
-    select: { id: true, name: true, publishedAt: true },
+    select: { slug: true, name: true, publishedAt: true },
     orderBy: { publishedAt: "asc" },
   })
 
@@ -31,7 +31,7 @@ export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Car
           <ScrollArea className="px-4 -mx-4 lg:h-56">
             {tools.map(tool => (
               <Link
-                key={tool.id}
+                key={tool.slug}
                 href={`/admin/tools/${tool.slug}`}
                 className="group flex items-center gap-3 py-1"
               >
@@ -54,7 +54,7 @@ export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Car
   )
 }
 
-export const ScheduledToolsCardSkeleton = ({ ...props }: ComponentProps<typeof Card>) => {
+const ScheduledCardSkeleton = ({ ...props }: ComponentProps<typeof Card>) => {
   return (
     <Card {...props}>
       <CardHeader>
@@ -68,3 +68,5 @@ export const ScheduledToolsCardSkeleton = ({ ...props }: ComponentProps<typeof C
     </Card>
   )
 }
+
+export { ScheduledCard, ScheduledCardSkeleton }
