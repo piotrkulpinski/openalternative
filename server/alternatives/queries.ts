@@ -32,7 +32,7 @@ export const searchAlternatives = async (
   const [alternatives, totalCount] = await prisma.$transaction([
     prisma.alternative.findMany({
       ...args,
-      orderBy: [{ isFeatured: "desc" }, { [sortBy]: sortOrder }],
+      orderBy: sortBy === "popularity" ? [{ tools: { _count: "desc" } }] : { [sortBy]: sortOrder },
       where: { ...whereQuery, ...where },
       include: alternativeManyPayload,
       take,

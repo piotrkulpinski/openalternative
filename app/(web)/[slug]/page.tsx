@@ -169,7 +169,6 @@ export default async function ToolPage(props: PageProps) {
             <Stack size="sm">
               {tool.website && (
                 <Button
-                  variant={tool.website.startsWith("https://go") ? "fancy" : "primary"}
                   suffix={<ArrowUpRightIcon />}
                   // onClick={() => posthog.capture("website_clicked", { url: tool.website })}
                   asChild
@@ -194,7 +193,7 @@ export default async function ToolPage(props: PageProps) {
                   <a
                     href={updateUrlWithSearchParams(tool.hostingUrl, { ref: "openalternative" })}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noreferrer noopener"
                   >
                     Self-host with {ad.name}
                   </a>

@@ -39,6 +39,7 @@ export const AlternativeFilters = ({ placeholder }: AlternativeFiltersProps) => 
   }, [filters])
 
   const sortOptions = [
+    { value: "popularity.desc", label: "Popularity" },
     { value: "name.asc", label: "Name A-Z" },
     { value: "name.desc", label: "Name Z-A" },
   ]

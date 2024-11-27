@@ -3,6 +3,7 @@ import { H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { Container } from "~/components/web/ui/container"
 import { NavigationLink } from "~/components/web/ui/navigation-link"
+import { siteConfig } from "~/config/site"
 import { findAlternatives } from "~/server/alternatives/queries"
 import { findCategories } from "~/server/categories/queries"
 import { cx } from "~/utils/cva"
@@ -15,7 +16,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
     }),
 
     findAlternatives({
-      where: { website: { startsWith: "https://go" } },
+      where: { website: { startsWith: siteConfig.affiliateUrl } },
       orderBy: { tools: { _count: "desc" } },
       take: 12,
     }),
