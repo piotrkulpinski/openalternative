@@ -123,10 +123,9 @@ export const countUpcomingTools = async ({ where, ...args }: Prisma.ToolCountArg
   })
 }
 
-export const findTool = async ({ where, ...args }: Prisma.ToolFindFirstArgs) => {
+export const findTool = async ({ ...args }: Prisma.ToolFindFirstArgs) => {
   return prisma.tool.findFirst({
     ...args,
-    where: { publishedAt: { lte: new Date() }, ...where },
     include: toolOnePayload,
   })
 }

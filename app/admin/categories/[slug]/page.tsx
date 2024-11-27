@@ -4,15 +4,12 @@ import { CategoryForm } from "~/app/admin/categories/_components/category-form"
 import { getCategoryBySlug, getTools } from "~/app/admin/categories/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
-import { requireAuthentication } from "~/utils/auth"
 
 type PageProps = {
   params: Promise<{ slug: string }>
 }
 
 export default async function UpdateCategoryPage({ params }: PageProps) {
-  await requireAuthentication()
-
   const { slug } = await params
   const [category, tools] = await Promise.all([getCategoryBySlug(slug), getTools()])
 

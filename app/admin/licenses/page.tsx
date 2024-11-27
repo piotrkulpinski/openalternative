@@ -1,7 +1,6 @@
 import type { SearchParams } from "nuqs"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
-import { requireAuthentication } from "~/utils/auth"
 import { LicensesTable } from "./_components/licenses-table"
 import { getLicenses } from "./_lib/queries"
 
@@ -10,7 +9,6 @@ export interface LicensesPageProps {
 }
 
 export default async function LicensesPage({ searchParams }: LicensesPageProps) {
-  await requireAuthentication()
   const licensesPromise = getLicenses(searchParams)
 
   return (

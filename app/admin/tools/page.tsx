@@ -1,7 +1,6 @@
 import type { SearchParams } from "nuqs"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
-import { requireAuthentication } from "~/utils/auth"
 import { ToolsTable } from "./_components/tools-table"
 import { getTools } from "./_lib/queries"
 
@@ -10,7 +9,6 @@ export interface ToolsPageProps {
 }
 
 export default async function ToolsPage({ searchParams }: ToolsPageProps) {
-  await requireAuthentication()
   const toolsPromise = getTools(searchParams)
 
   return (
