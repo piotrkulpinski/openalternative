@@ -4,15 +4,12 @@ import { AlternativeForm } from "~/app/admin/alternatives/_components/alternativ
 import { getAlternativeBySlug, getTools } from "~/app/admin/alternatives/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
-import { requireAuthentication } from "~/utils/auth"
 
 type PageProps = {
   params: Promise<{ slug: string }>
 }
 
 export default async function UpdateAlternativePage({ params }: PageProps) {
-  await requireAuthentication()
-
   const { slug } = await params
   const [alternative, tools] = await Promise.all([getAlternativeBySlug(slug), getTools()])
 

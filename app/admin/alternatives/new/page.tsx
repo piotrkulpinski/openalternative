@@ -2,10 +2,8 @@ import { AlternativeForm } from "~/app/admin/alternatives/_components/alternativ
 import { getTools } from "~/app/admin/alternatives/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
-import { requireAuthentication } from "~/utils/auth"
 
 export default async function CreateAlternativePage() {
-  await requireAuthentication()
   const tools = await getTools()
 
   return (

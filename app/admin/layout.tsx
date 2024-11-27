@@ -5,7 +5,6 @@ import { CommandMenu } from "~/components/admin/command-menu"
 import { Shell } from "~/components/admin/shell"
 import { Toaster } from "~/components/common/toaster"
 import { prisma } from "~/services/prisma"
-import { requireAuthentication } from "~/utils/auth"
 import { Providers } from "./providers"
 
 import "./styles.css"
@@ -15,7 +14,6 @@ export const metadata: Metadata = {
 }
 
 export default async function DashboardLayout({ children }: PropsWithChildren) {
-  await requireAuthentication()
   const cookieStore = await cookies()
 
   const statsPromise = prisma.$transaction([

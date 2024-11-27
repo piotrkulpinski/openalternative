@@ -1,7 +1,6 @@
 import type { SearchParams } from "nuqs"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
-import { requireAuthentication } from "~/utils/auth"
 import { AlternativesTable } from "./_components/alternatives-table"
 import { getAlternatives } from "./_lib/queries"
 
@@ -10,7 +9,6 @@ export interface AlternativesPageProps {
 }
 
 export default async function AlternativesPage({ searchParams }: AlternativesPageProps) {
-  await requireAuthentication()
   const alternativesPromise = getAlternatives(searchParams)
 
   return (

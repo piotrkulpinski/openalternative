@@ -2,7 +2,6 @@ import { joinAsSentence } from "@curiousleaf/utils"
 import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import type { SearchParams } from "nuqs"
 import { Suspense, cache } from "react"
 import { z } from "zod"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
@@ -33,16 +32,11 @@ export const revalidate = 43200 // 12 hours
 
 type PageProps = {
   params: Promise<{ slug: string }>
-  searchParams: Promise<SearchParams>
 }
 
-const getTool = cache(async ({ params, searchParams }: PageProps) => {
-  const { preview } = await searchParams
+const getTool = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-
-  const tool = await findTool({
-    where: preview ? { slug, id: preview as string, publishedAt: undefined } : { slug },
-  })
+  const tool = await findTool({ where: { slug } })
 
   if (!tool) {
     notFound()

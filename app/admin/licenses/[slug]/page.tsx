@@ -4,15 +4,12 @@ import { LicenseForm } from "~/app/admin/licenses/_components/license-form"
 import { getLicenseBySlug } from "~/app/admin/licenses/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
-import { requireAuthentication } from "~/utils/auth"
 
 type PageProps = {
   params: Promise<{ slug: string }>
 }
 
 export default async function UpdateLicensePage({ params }: PageProps) {
-  await requireAuthentication()
-
   const { slug } = await params
   const license = await getLicenseBySlug(slug)
 
