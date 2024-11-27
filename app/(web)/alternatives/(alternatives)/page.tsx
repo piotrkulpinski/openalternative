@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import type { SearchParams } from "nuqs/server"
+import type { SearchParams } from "nuqs"
 import { Suspense } from "react"
 import { AlternativeListing } from "~/app/(web)/alternatives/(alternatives)/listing"
 import { AlternativeQuerySkeleton } from "~/components/web/alternatives/alternative-query"

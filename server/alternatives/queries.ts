@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client"
-import type { SearchParams } from "nuqs/server"
+import type { SearchParams } from "nuqs"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/alternatives/payloads"
 import { alternativesSearchParamsCache } from "~/server/alternatives/search-params"
 import { prisma } from "~/services/prisma"

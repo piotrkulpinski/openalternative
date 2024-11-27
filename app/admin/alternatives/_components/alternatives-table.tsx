@@ -1,11 +1,9 @@
 "use client"
 
-import * as React from "react"
-import type { DataTableFilterField } from "~/types"
-
 import type { Alternative } from "@prisma/client"
 import { PlusIcon } from "lucide-react"
 import Link from "next/link"
+import * as React from "react"
 import { DataTable } from "~/components/admin/data-table/data-table"
 import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
 import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
@@ -13,6 +11,7 @@ import { DataTableViewOptions } from "~/components/admin/data-table/data-table-v
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/admin/ui/button"
 import { useDataTable } from "~/hooks/use-data-table"
+import type { DataTableFilterField } from "~/types"
 import type { getAlternatives } from "../_lib/queries"
 import { getColumns } from "./alternatives-table-columns"
 import { AlternativesTableToolbarActions } from "./alternatives-table-toolbar-actions"

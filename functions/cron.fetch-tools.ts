@@ -1,4 +1,3 @@
-import { indexSearch } from "~/actions/algolia"
 import { getMilestoneReached, sendMilestonePost } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { generateSocialPost } from "~/lib/socials"
@@ -50,11 +49,6 @@ export const fetchToolData = inngest.createFunction(
         await sendTwitterPost(post)
         await sendBlueskyPost(post)
       }
-    })
-
-    // Index search for Algolia
-    await step.run("index-search", async () => {
-      return indexSearch()
     })
 
     // Disconnect from DB
