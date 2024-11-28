@@ -13,7 +13,7 @@ import { Stack } from "~/components/common/stack"
 import { PlanIntervalSwitch } from "~/components/web/plan-interval-switch"
 import { Price } from "~/components/web/price"
 import { Button } from "~/components/web/ui/button"
-import { Card, type cardVariants } from "~/components/web/ui/card"
+import { Card, CardBg, type cardVariants } from "~/components/web/ui/card"
 import { Ping } from "~/components/web/ui/ping"
 import { Tooltip } from "~/components/web/ui/tooltip"
 import { TooltipProvider } from "~/components/web/ui/tooltip"
@@ -128,7 +128,7 @@ const Plan = ({
 
   return (
     <Card hover={false} isRevealed={false} className={cx(planVariants({ className }))} {...props}>
-      {isFeatured && <Card.Bg />}
+      {isFeatured && <CardBg />}
 
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-2">
