@@ -1,4 +1,4 @@
-import type { SearchParams } from "nuqs"
+import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
 import { AlternativesTable } from "./_components/alternatives-table"

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import type { SearchParams } from "nuqs"
+import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { CountBadge, CountBadgeSkeleton } from "~/app/(web)/(home)/count-badge"
 import { HomeToolListing } from "~/app/(web)/(home)/listing"
