@@ -35,7 +35,7 @@ const AlternativeQuery = ({ alternatives, totalCount, placeholder }: Alternative
 const AlternativeQuerySkeleton = () => {
   return (
     <div className="flex flex-col gap-5">
-      <Input size="lg" disabled />
+      <Input size="lg" placeholder="Loading..." disabled />
       <AlternativeListSkeleton />
     </div>
   )

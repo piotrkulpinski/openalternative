@@ -11,7 +11,7 @@ type PostCardProps = HTMLAttributes<HTMLElement> & {
 
 export const PostCard = ({ className, post, ...props }: PostCardProps) => {
   return (
-    <Card asChild>
+    <Card className="overflow-clip" asChild>
       <Link href={`/blog/${post._meta.path}`} {...props}>
         {post.image && (
           <img

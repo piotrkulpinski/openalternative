@@ -127,7 +127,7 @@ export const AdsCalendar = ({
         defaultMonth={firstAvailableMonth}
         disabled={[date => date < new Date(), ...booked]}
         modifiers={{ booked }}
-        modifiersClassNames={{ booked: "before:absolute before:inset-1 before:bg-cross" }}
+        modifiersClassNames={{ booked: "before:absolute before:inset-2 before:bg-cross" }}
         className="w-full p-4"
       />
     </div>
