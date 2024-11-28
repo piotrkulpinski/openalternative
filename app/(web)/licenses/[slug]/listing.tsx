@@ -16,7 +16,7 @@ export const LicenseToolListing = async ({ license }: LicenseToolListingProps) =
       title={`${license.name} Licensed Software Examples`}
       button={<Link href={`/licenses/${license.slug}/tools`}>View All Tools</Link>}
     >
-      <ToolList tools={tools} />
+      <ToolList tools={tools} showAd={false} />
     </Listing>
   )
 }
