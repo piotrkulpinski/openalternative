@@ -41,10 +41,12 @@ export const ToolFilters = ({ categories, placeholder }: ToolFiltersProps) => {
   }, [filters])
 
   const sortOptions = [
-    { value: "publishedAt.desc", label: "Newest" },
-    { value: "publishedAt.asc", label: "Oldest" },
+    { value: "publishedAt.desc", label: "Latest" },
     { value: "name.asc", label: "Name A-Z" },
     { value: "name.desc", label: "Name Z-A" },
+    { value: "stars.desc", label: "Stars" },
+    { value: "forks.desc", label: "Forks" },
+    { value: "lastCommitDate.desc", label: "Last Commit" },
   ]
 
   return (
@@ -86,9 +88,7 @@ export const ToolFilters = ({ categories, placeholder }: ToolFiltersProps) => {
         value={filters.sort}
         onChange={e => updateFilters({ sort: e.target.value })}
       >
-        <option value="" disabled>
-          Order by
-        </option>
+        <option value="">Order by</option>
 
         {sortOptions.map(option => (
           <option key={option.value} value={option.value}>
