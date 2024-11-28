@@ -1,5 +1,6 @@
 import type { SearchParams } from "nuqs"
 import { ToolQuery } from "~/components/web/tools/tool-query"
+import { findAd } from "~/server/ads/queries"
 import { searchTools } from "~/server/tools/queries"
 import type { TopicOne } from "~/server/topics/payloads"
 
@@ -9,11 +10,19 @@ type TopicToolListingProps = {
 }
 
 export const TopicToolListing = async ({ topic, searchParams }: TopicToolListingProps) => {
-  const { tools, totalCount } = await searchTools(searchParams, {
-    where: { topics: { some: { topic: { slug: topic.slug } } } },
-  })
+  const [{ tools, totalCount }, ad] = await Promise.all([
+    searchTools(searchParams, {
+      where: { topics: { some: { topic: { slug: topic.slug } } } },
+    }),
+    findAd({ where: { type: "Homepage" } }),
+  ])
 
   return (
-    <ToolQuery tools={tools} totalCount={totalCount} placeholder={`Search in "${topic.slug}"...`} />
+    <ToolQuery
+      tools={tools}
+      totalCount={totalCount}
+      ad={ad}
+      placeholder={`Search in "${topic.slug}"...`}
+    />
   )
 }
