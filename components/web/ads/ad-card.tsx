@@ -1,6 +1,8 @@
+"use client"
+
 import { ArrowUpRightIcon } from "lucide-react"
-import Link from "next/link"
 import { H4 } from "~/components/common/heading"
+import { ExternalLink } from "~/components/web/external-link"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import {
@@ -22,7 +24,7 @@ type AdCardProps = CardProps & {
   rel?: string
 }
 
-export const AdCard = ({ className, ad, rel, ...props }: AdCardProps) => {
+export const AdCard = ({ className, ad, ...props }: AdCardProps) => {
   ad ??= config.ads.defaultAd
   const isDefault = !ad.website.startsWith("http")
 
@@ -33,11 +35,12 @@ export const AdCard = ({ className, ad, rel, ...props }: AdCardProps) => {
       asChild
       {...props}
     >
-      <Link
-        href={updateUrlWithSearchParams(ad.website, isDefault ? {} : { ref: "openalternative" })}
-        target={isDefault ? "_self" : "_blank"}
-        rel={isDefault ? "" : (rel ?? "noopener noreferrer")}
-        // onClick={() => posthog.capture("click_ad", { url: ad.website, type: ad.type })}
+      <ExternalLink
+        href={updateUrlWithSearchParams(ad.website, { ref: "openalternative" })}
+        target={isDefault ? "_self" : undefined}
+        rel={!isDefault ? "noopener noreferrer nofollow" : undefined}
+        eventName="click_ad"
+        eventProps={{ url: ad.website, type: ad.type }}
       >
         {!isDefault && (
           <CardBadges>
@@ -62,7 +65,7 @@ export const AdCard = ({ className, ad, rel, ...props }: AdCardProps) => {
         {isDefault && (
           <LogoSymbol className="absolute -bottom-2/5 -right-1/4 -z-10 size-64 opacity-[3.5%] rotate-45 pointer-events-none transition group-hover/button:rotate-[60deg]" />
         )}
-      </Link>
+      </ExternalLink>
     </Card>
   )
 }
