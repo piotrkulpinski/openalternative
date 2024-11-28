@@ -34,10 +34,7 @@ export const searchTools = async (
   const [tools, totalCount] = await prisma.$transaction([
     prisma.tool.findMany({
       ...args,
-      orderBy:
-        sortBy === "relevance"
-          ? [{ isFeatured: "desc" }, { score: "desc" }]
-          : { [sortBy]: sortOrder },
+      orderBy: sortBy ? { [sortBy]: sortOrder } : [{ isFeatured: "desc" }, { score: "desc" }],
       where: { ...whereQuery, ...where },
       include: toolManyPayload,
       take,
@@ -106,13 +103,6 @@ export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFind
     orderBy: orderBy ?? { name: "asc" },
     where: { publishedAt: { lte: new Date() }, ...where },
     select: { slug: true, updatedAt: true },
-  })
-}
-
-export const countTools = async ({ where, ...args }: Prisma.ToolCountArgs) => {
-  return prisma.tool.count({
-    ...args,
-    where: { publishedAt: { lte: new Date() }, ...where },
   })
 }
 

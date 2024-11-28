@@ -67,7 +67,7 @@ export const ToolScheduleDialog = ({
         </DialogHeader>
 
         <Calendar
-          initialFocus
+          autoFocus
           mode="single"
           selected={publishedAt}
           onSelect={setPublishedAt}
@@ -80,7 +80,6 @@ export const ToolScheduleDialog = ({
           modifiersClassNames={{
             schedulable: "bg-yellow-500/15",
           }}
-          showOutsideDays={false}
           className="px-0"
         />
 

@@ -65,7 +65,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/latest",
-        destination: "/",
+        destination: "/?sort=publishedAt.desc",
         permanent: true,
       },
       {
