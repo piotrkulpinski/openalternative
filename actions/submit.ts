@@ -6,6 +6,7 @@ import { subscribeToNewsletter } from "~/actions/subscribe"
 import { submitToolSchema } from "~/server/schemas"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
+import { isRealEmail } from "~/utils/helpers"
 
 /**
  * Generates a unique slug by adding a numeric suffix if needed
@@ -36,6 +37,11 @@ export const submitTool = createServerAction()
   .input(submitToolSchema)
   .handler(async ({ input }) => {
     const { newsletterOptIn, ...data } = input
+    const isValidEmail = await isRealEmail(data.submitterEmail)
+
+    if (!isValidEmail) {
+      throw new Error("Invalid email address, please use a real one")
+    }
 
     if (newsletterOptIn) {
       await subscribeToNewsletter({

@@ -16,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Hint } from "~/components/common/hint"
 import { FeatureNudge } from "~/components/web/feature-nudge"
 import { Button } from "~/components/web/ui/button"
 import { Input } from "~/components/web/ui/input"
@@ -38,7 +39,7 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
     },
   })
 
-  const { execute, isPending } = useServerAction(submitTool, {
+  const { error, execute, isPending } = useServerAction(submitTool, {
     onSuccess: ({ data }) => {
       form.reset()
 
@@ -55,10 +56,6 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
         toast.success(`${data.name} has been submitted.`)
         router.push(`/submit/${data.slug}`)
       }
-    },
-
-    onError: ({ err }) => {
-      toast.error(err.message)
     },
   })
 
@@ -194,6 +191,8 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
             Submit
           </Button>
         </div>
+
+        {error && <Hint className="col-span-full">{error.message}</Hint>}
       </form>
     </Form>
   )

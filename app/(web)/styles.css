@@ -153,11 +153,11 @@ label[for],
   @apply cursor-pointer;
 }
 
-svg:not([class*="stroke"]) {
+svg.lucide:not([class*="stroke"]) {
   @apply stroke-[1.75]!;
 }
 
-svg:not([class*="size-"]):not([class*="h-"]) {
+svg.lucide:not([class*="size-"]):not([class*="h-"]) {
   @apply size-[1em]!;
 }
 

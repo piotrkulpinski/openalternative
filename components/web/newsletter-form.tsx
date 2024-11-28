@@ -79,8 +79,9 @@ export const NewsletterForm = ({
           </div>
         </Box>
 
-        {form.formState.errors.email && <Hint>{form.formState.errors.email.message}</Hint>}
-        {error && <Hint className="-mt-1">{error?.message}</Hint>}
+        {(error || form.formState.errors.email) && (
+          <Hint className="-mt-1">{(error || form.formState.errors.email)?.message}</Hint>
+        )}
 
         {data && <p className="text-sm text-green-600">{data}</p>}
 
