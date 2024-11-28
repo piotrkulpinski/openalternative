@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from "react"
+import type { ComponentProps } from "react"
 import { Heading, type HeadingProps } from "~/components/common/heading"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -18,20 +18,10 @@ const introVariants = cva({
   },
 })
 
-type IntroProps = Omit<ComponentProps<"div">, "title" | "prefix"> &
-  VariantProps<typeof introVariants> & {
-    title?: ReactNode
-    description?: ReactNode
-  }
+type IntroProps = ComponentProps<"div"> & VariantProps<typeof introVariants>
 
-const Intro = ({ children, className, alignment, title, description, ...props }: IntroProps) => {
-  return (
-    <div className={cx(introVariants({ alignment, className }))} {...props}>
-      {title && <IntroTitle>{title}</IntroTitle>}
-      {description && <IntroDescription>{description}</IntroDescription>}
-      {children}
-    </div>
-  )
+const Intro = ({ className, alignment, ...props }: IntroProps) => {
+  return <div className={cx(introVariants({ alignment, className }))} {...props} />
 }
 
 const IntroTitle = ({ size = "h1", ...props }: HeadingProps) => {
