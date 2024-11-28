@@ -6,9 +6,9 @@ import { Bottom } from "~/components/web/bottom"
 import { Footer } from "~/components/web/footer"
 import { Header } from "~/components/web/header"
 import { Container } from "~/components/web/ui/container"
+import { config } from "~/config"
 
 import "./styles.css"
-import { config } from "~/config"
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const url = config.site.url
