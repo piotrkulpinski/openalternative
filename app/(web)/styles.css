@@ -37,11 +37,11 @@
 
   --background-image-cross: linear-gradient(
     -45deg,
-    hsl(var(--color-foreground) / 0) 0%,
-    hsl(var(--color-foreground) / 0) calc(50% - 0.8px),
-    hsl(var(--color-foreground) / 0.66) 50%,
-    hsl(var(--color-foreground) / 0) calc(50% + 0.8px),
-    hsl(var(--color-foreground) / 0) 100%
+    color-mix(in hsl, var(--color-foreground) 0%, transparent) 0%,
+    color-mix(in hsl, var(--color-foreground) 0%, transparent) calc(50% - 0.8px),
+    color-mix(in hsl, var(--color-foreground) 66%, transparent) 50%,
+    color-mix(in hsl, var(--color-foreground) 0%, transparent) calc(50% + 0.8px),
+    color-mix(in hsl, var(--color-foreground) 0%, transparent) 100%
   );
 
   --grid-template-columns-2xs: repeat(auto-fill, minmax(10rem, 1fr));
@@ -133,7 +133,7 @@
   @media (prefers-reduced-motion) {
     * {
       view-transition-name: none !important;
-      /* animation: none !important; */
+      animation: none !important;
     }
   }
 

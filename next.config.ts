@@ -21,13 +21,7 @@ const nextConfig: NextConfig = {
   images: {
     minimumCacheTTL: 31536000,
     remotePatterns: [
-      // {
-      //   hostname: `${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com`,
-      // },
-      // { hostname: "**.amazonaws.com" },
-      { hostname: "s3.us-east-1.amazonaws.com" },
-      { hostname: "openalternative.s3.*.amazonaws.com" },
-      { hostname: "openalternative.s3.amazonaws.com" },
+      { hostname: `${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com` },
     ],
   },
 
