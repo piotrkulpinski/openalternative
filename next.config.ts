@@ -32,31 +32,32 @@ const nextConfig: NextConfig = {
   },
 
   async rewrites() {
-    const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+    const posthogUrl = process.env.NEXT_PUBLIC_POSTHOG_HOST
 
     return [
-      // for posthog proxy
-      {
-        source: "/_proxy/posthog/ingest/static/:path*",
-        destination: `${posthogHost?.replace("us", "us-assets")}/static/:path*`,
-      },
-      {
-        source: "/_proxy/posthog/ingest/:path*",
-        destination: `${posthogHost}/:path*`,
-      },
-      {
-        source: "/_proxy/posthog/ingest/decide",
-        destination: `${posthogHost}/decide`,
-      },
-
-      // TODO: RSS rewrites
+      // RSS rewrites
       {
         source: "/rss.xml",
-        destination: "/rss/tools.xml",
+        destination: `${siteUrl}/rss/tools.xml`,
       },
       {
         source: "/alternatives/rss.xml",
-        destination: "/rss/alternatives.xml",
+        destination: `${siteUrl}/rss/alternatives.xml`,
+      },
+
+      // for posthog proxy
+      {
+        source: "/_proxy/posthog/ingest/static/:path*",
+        destination: `${posthogUrl?.replace("us", "us-assets")}/static/:path*`,
+      },
+      {
+        source: "/_proxy/posthog/ingest/:path*",
+        destination: `${posthogUrl}/:path*`,
+      },
+      {
+        source: "/_proxy/posthog/ingest/decide",
+        destination: `${posthogUrl}/decide`,
       },
     ]
   },
