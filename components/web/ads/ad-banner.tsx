@@ -1,6 +1,6 @@
-import Link from "next/link"
 import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
+import { ExternalLink } from "~/components/web/external-link"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import { Container } from "~/components/web/ui/container"
@@ -24,17 +24,16 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
         asChild
         {...props}
       >
-        <Link
+        <ExternalLink
           href={ad.website}
-          target="_blank"
-          rel="noopener noreferrer"
-          // onClick={() => posthog.capture("click_ad", { type: ad.type, url: ad.website })}
+          eventName="click_ad"
+          eventProps={{ url: ad.website, type: ad.type }}
         >
           <Badge variant="outline" className="max-sm:order-last">
             Ad
           </Badge>
 
-          <div className="text-xs/tight text-secondary mr-auto md:text-sm/tight">
+          <div className="text-xs leading-tight text-secondary mr-auto md:text-sm">
             {ad.faviconUrl && (
               <img
                 src={ad.faviconUrl}
@@ -55,7 +54,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
           >
             <span>Learn More</span>
           </Button>
-        </Link>
+        </ExternalLink>
       </Container>
     </Box>
   )

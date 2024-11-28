@@ -1,9 +1,12 @@
+"use client"
+
 import { formatNumber } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict } from "date-fns"
 import { CopyrightIcon, GitForkIcon, HistoryIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { H5 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
+import { ExternalLink } from "~/components/web/external-link"
 import { Button } from "~/components/web/ui/button"
 import { Insights } from "~/components/web/ui/insights"
 import { NavigationLink } from "~/components/web/ui/navigation-link"
@@ -85,13 +88,16 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
           size="md"
           variant="secondary"
           prefix={<BrandGitHubIcon />}
-          // onClick={() => posthog.capture("repository_clicked", { url: tool.repository })}
           className="mt-1 self-start"
           asChild
         >
-          <a href={tool.repository} target="_blank" rel="noreferrer nofollow">
+          <ExternalLink
+            href={tool.repository}
+            eventName="click_repository"
+            eventProps={{ url: tool.repository }}
+          >
             View Repository
-          </a>
+          </ExternalLink>
         </Button>
       )}
     </div>

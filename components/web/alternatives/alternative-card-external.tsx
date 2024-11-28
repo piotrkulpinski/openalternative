@@ -1,10 +1,9 @@
 "use client"
 
 import { ArrowUpRightIcon } from "lucide-react"
-import Link from "next/link"
-import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { H4 } from "~/components/common/heading"
+import { ExternalLink } from "~/components/web/external-link"
 import { Button } from "~/components/web/ui/button"
 import { Card, CardDescription, CardHeader } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
@@ -23,11 +22,10 @@ export const AlternativeCardExternal = ({
 }: AlternativeCardExternalProps) => {
   return (
     <Card className={cx("group/button", className)} isRevealed={false} {...props} asChild>
-      <Link
+      <ExternalLink
         href={alternative.website}
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        onClick={() => posthog.capture("alternative_clicked", { url: alternative.slug })}
+        eventName="click_alternative"
+        eventProps={{ url: alternative.website }}
       >
         <CardHeader>
           <Favicon src={alternative.faviconUrl} title={alternative.name} />
@@ -61,7 +59,7 @@ export const AlternativeCardExternal = ({
         <Button className="pointer-events-none md:w-full" suffix={<ArrowUpRightIcon />} asChild>
           <span>Visit {alternative.name}</span>
         </Button>
-      </Link>
+      </ExternalLink>
     </Card>
   )
 }

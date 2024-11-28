@@ -53,7 +53,7 @@ export const generateMetadata = async (props: PageProps) => {
 
 export default async function BlogPostPage(props: PageProps) {
   const post = await findPostBySlug(props)
-  const ad = await findAd({ where: { type: "Homepage" } })
+  const ad = await findAd({ where: { type: "BlogPost" } })
 
   return (
     <div className="flex flex-col gap-8 md:gap-10 lg:gap-12">
@@ -106,14 +106,7 @@ export default async function BlogPostPage(props: PageProps) {
 
           {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}
 
-          {ad && (
-            <AdCard
-              ad={ad}
-              rel="noopener noreferrer nofollow"
-              isRevealed={false}
-              className="max-md:hidden"
-            />
-          )}
+          {ad && <AdCard ad={ad} isRevealed={false} className="max-md:hidden" />}
         </Section.Sidebar>
       </Section>
     </div>

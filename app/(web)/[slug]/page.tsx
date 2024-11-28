@@ -11,6 +11,7 @@ import { H1, H5 } from "~/components/common/heading"
 import { Markdown } from "~/components/common/markdown"
 import { Stack } from "~/components/common/stack"
 import { AdCard } from "~/components/web/ads/ad-card"
+import { ExternalLink } from "~/components/web/external-link"
 import { Listing } from "~/components/web/listing"
 import { RepositoryDetails } from "~/components/web/repository-details"
 import { ShareButtons } from "~/components/web/share-buttons"
@@ -27,7 +28,6 @@ import { metadataConfig } from "~/config/metadata"
 import { findAd } from "~/server/ads/queries"
 import type { ToolOne } from "~/server/tools/payloads"
 import { findTool, findToolSlugs } from "~/server/tools/queries"
-import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 export const revalidate = 43200 // 12 hours
 
@@ -83,7 +83,7 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
 }
 
 export default async function ToolPage(props: PageProps) {
-  const [tool, ad] = await Promise.all([getTool(props), findAd({ where: { type: "Banner" } })])
+  const [tool, ad] = await Promise.all([getTool(props), findAd({ where: { type: "ToolPage" } })])
   const { title } = getMetadata(tool)
   const jsonLd: ImageObject[] = []
 
@@ -168,35 +168,27 @@ export default async function ToolPage(props: PageProps) {
 
             <Stack size="sm">
               {tool.website && (
-                <Button
-                  suffix={<ArrowUpRightIcon />}
-                  // onClick={() => posthog.capture("website_clicked", { url: tool.website })}
-                  asChild
-                >
-                  <a
-                    href={updateUrlWithSearchParams(tool.website, { ref: "openalternative" })}
-                    target="_blank"
-                    rel={`noreferrer noopener ${tool.isFeatured ? "" : "nofollow"}`}
+                <Button suffix={<ArrowUpRightIcon />} asChild>
+                  <ExternalLink
+                    href={tool.website}
+                    rel={tool.isFeatured ? "noopener noreferrer" : undefined}
+                    eventName="click_website"
+                    eventProps={{ url: tool.website }}
                   >
                     Visit {tool.name}
-                  </a>
+                  </ExternalLink>
                 </Button>
               )}
 
               {tool.hostingUrl && ad && (
-                <Button
-                  variant="secondary"
-                  suffix={<ArrowUpRightIcon />}
-                  // onClick={() => posthog.capture("sponsoring_clicked", { url: tool.hostingUrl })}
-                  asChild
-                >
-                  <a
-                    href={updateUrlWithSearchParams(tool.hostingUrl, { ref: "openalternative" })}
-                    target="_blank"
-                    rel="noreferrer noopener"
+                <Button variant="secondary" suffix={<ArrowUpRightIcon />} asChild>
+                  <ExternalLink
+                    href={tool.hostingUrl}
+                    eventName="click_ad"
+                    eventProps={{ url: ad.website, type: ad.type }}
                   >
                     Self-host with {ad.name}
-                  </a>
+                  </ExternalLink>
                 </Button>
               )}
             </Stack>
