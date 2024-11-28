@@ -1,8 +1,6 @@
 "use client"
 
-import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
-import { posthog } from "posthog-js"
 import type { ComponentProps } from "react"
 import { H5 } from "~/components/common/heading"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
@@ -13,6 +11,7 @@ import { BrandRedditIcon } from "~/components/common/icons/brand-reddit"
 import { BrandWhatsAppIcon } from "~/components/common/icons/brand-whatsapp"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Stack } from "~/components/common/stack"
+import { ExternalLink } from "~/components/web/external-link"
 import { Button } from "~/components/web/ui/button"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
 import { config } from "~/config"
@@ -75,15 +74,8 @@ export const ShareButtons = ({ title, ...props }: ShareButtonsProps) => {
         <TooltipProvider delayDuration={500} disableHoverableContent>
           {shareOptions.map(({ platform, url, icon }) => (
             <Tooltip key={platform} tooltip={platform}>
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() => posthog.capture("click_share", { url, platform })}
-                prefix={icon}
-                isAffixOnly
-                asChild
-              >
-                <Link href={url} target="_blank" rel="noopener noreferrer nofollow" />
+              <Button size="sm" variant="secondary" prefix={icon} isAffixOnly asChild>
+                <ExternalLink href={url} eventName="click_share" eventProps={{ url, platform }} />
               </Button>
             </Tooltip>
           ))}
