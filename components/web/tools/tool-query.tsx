@@ -1,6 +1,7 @@
 "use client"
 
 import { useQueryStates } from "nuqs"
+import { Suspense } from "react"
 import { Pagination } from "~/components/web/pagination"
 import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { ToolList } from "~/components/web/tools/tool-list"
@@ -29,7 +30,9 @@ const ToolQuery = ({ tools, totalCount, ad, categories, placeholder }: ToolQuery
         <ToolList tools={tools} ad={ad} />
       </div>
 
-      <Pagination pageSize={perPage} totalCount={totalCount} />
+      <Suspense>
+        <Pagination pageSize={perPage} totalCount={totalCount} />
+      </Suspense>
     </>
   )
 }

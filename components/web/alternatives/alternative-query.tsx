@@ -1,6 +1,7 @@
 "use client"
 
 import { useQueryStates } from "nuqs"
+import { Suspense } from "react"
 import { AlternativeFilters } from "~/components/web/alternatives/alternative-filters"
 import {
   AlternativeList,
@@ -27,7 +28,9 @@ const AlternativeQuery = ({ alternatives, totalCount, placeholder }: Alternative
         <AlternativeList alternatives={alternatives} />
       </div>
 
-      <Pagination pageSize={perPage} totalCount={totalCount} />
+      <Suspense>
+        <Pagination pageSize={perPage} totalCount={totalCount} />
+      </Suspense>
     </>
   )
 }
