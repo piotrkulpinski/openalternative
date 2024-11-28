@@ -37,7 +37,7 @@ const ToolQuery = ({ tools, totalCount, ad, categories, placeholder }: ToolQuery
 const ToolQuerySkeleton = () => {
   return (
     <div className="flex flex-col gap-5">
-      <Input size="lg" disabled />
+      <Input size="lg" placeholder="Loading..." disabled />
       <ToolListSkeleton />
     </div>
   )

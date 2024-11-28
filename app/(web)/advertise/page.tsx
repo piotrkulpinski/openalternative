@@ -70,7 +70,7 @@ export default async function AdvertisePage() {
       <Stats className="my-4" />
 
       <Intro alignment="center" className="mt-8">
-        <IntroTitle size="h2" as="h2">
+        <IntroTitle size="h2" as="h3">
           Advertising Options
         </IntroTitle>
 
@@ -109,13 +109,15 @@ export default async function AdvertisePage() {
       <hr />
 
       <Intro alignment="center" className="md:my-4 lg:my-8">
-        <IntroTitle as="h2">Interested in Advertising?</IntroTitle>
+        <IntroTitle size="h2" as="h3">
+          Interested in Advertising?
+        </IntroTitle>
 
         <IntroDescription className="max-w-lg">
           Tell us more about your company and we will get back to you as soon as possible.
         </IntroDescription>
 
-        <Button variant="fancy" className="mt-4 min-w-40 text-base!" asChild>
+        <Button variant="fancy" className="mt-4 min-w-40" asChild>
           <Link href={`mailto:${config.site.email}`} target="_blank" rel="noopener noreferrer">
             Contact us
           </Link>
