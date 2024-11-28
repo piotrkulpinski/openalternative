@@ -1,6 +1,6 @@
 import { getRandomElement } from "@curiousleaf/utils"
 import type { Prisma } from "@prisma/client"
-import type { SearchParams } from "nuqs"
+import type { SearchParams } from "nuqs/server"
 import { toolManyPayload, toolOnePayload } from "~/server/tools/payloads"
 import { toolsSearchParamsCache } from "~/server/tools/search-params"
 import { prisma } from "~/services/prisma"

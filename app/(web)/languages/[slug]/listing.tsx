@@ -1,4 +1,4 @@
-import type { SearchParams } from "nuqs"
+import type { SearchParams } from "nuqs/server"
 import { ToolQuery } from "~/components/web/tools/tool-query"
 import { findAd } from "~/server/ads/queries"
 import type { LanguageOne } from "~/server/languages/payloads"
