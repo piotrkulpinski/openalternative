@@ -20,7 +20,7 @@ import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 type AdCardProps = CardProps & {
-  ad: AdOne | null
+  ad?: AdOne | null
   rel?: string
 }
 
