@@ -103,7 +103,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
-                <NavigationLink href="/latest">
+                <NavigationLink href="/?sort=publishedAt.desc">
                   <CalendarDaysIcon className="shrink-0 size-4 opacity-75" /> Latest tools
                 </NavigationLink>
               </DropdownMenuItem>
@@ -176,7 +176,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none",
         )}
       >
-        <NavigationLink href="/latest" className="text-base">
+        <NavigationLink href="/?sort=publishedAt.desc" className="text-base">
           Latest
         </NavigationLink>
         <NavigationLink href="/categories" className="text-base">

@@ -4,17 +4,17 @@ import Link from "next/link"
 import plur from "plur"
 import { Badge } from "~/components/web/ui/badge"
 import { Ping } from "~/components/web/ui/ping"
-import { countTools } from "~/server/tools/queries"
+import { prisma } from "~/services/prisma"
 
 const CountBadge = async () => {
-  const [toolsCount, newToolsCount] = await Promise.all([
-    countTools({ where: { publishedAt: { lte: new Date() } } }),
-    countTools({ where: { publishedAt: { lte: new Date(), gte: subDays(new Date(), 7) } } }),
+  const [toolsCount, newToolsCount] = await prisma.$transaction([
+    prisma.tool.count({ where: { publishedAt: { lte: new Date() } } }),
+    prisma.tool.count({ where: { publishedAt: { lte: new Date(), gte: subDays(new Date(), 7) } } }),
   ])
 
   return (
-    <Badge size="lg" prefix={<Ping />} className="order-first" asChild>
-      <Link href="/latest">
+    <Badge prefix={<Ping />} className="order-first" asChild>
+      <Link href="/?sort=publishedAt.desc">
         {newToolsCount
           ? `${formatNumber(newToolsCount)} new ${plur("tool", newToolsCount)} added`
           : `${formatNumber(toolsCount)}+ open source tools`}
@@ -25,11 +25,7 @@ const CountBadge = async () => {
 
 const CountBadgeSkeleton = () => {
   return (
-    <Badge
-      size="lg"
-      prefix={<Ping />}
-      className="min-w-20 order-first pointer-events-none animate-pulse"
-    >
+    <Badge prefix={<Ping />} className="min-w-20 order-first pointer-events-none animate-pulse">
       &nbsp;
     </Badge>
   )

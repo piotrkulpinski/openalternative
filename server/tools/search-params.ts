@@ -5,7 +5,7 @@ export const toolsSearchParams = {
   q: parseAsString,
   category: parseAsString.withDefault(""),
   page: parseAsInteger.withDefault(1),
-  sort: parseAsString.withDefault("relevance.desc"),
+  sort: parseAsString.withDefault(""),
   perPage: parseAsInteger.withDefault(config.site.toolsPerPage),
 }
 

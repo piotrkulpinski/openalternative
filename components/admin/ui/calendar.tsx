@@ -29,11 +29,11 @@ export const Calendar = ({ className, classNames, ...props }: ComponentProps<typ
         week: "group/week flex mt-2",
         day: "group/day relative w-full text-center text-[0.8125rem] rounded-md focus-within:z-20",
         day_button:
-          "relative w-full p-1 cursor-pointer rounded-md hover:bg-muted hover:group-data-selected/day:bg-transparent",
-        selected: "bg-foreground text-background",
+          "relative w-full px-1 py-[10%] cursor-pointer rounded-md hover:bg-muted hover:group-data-selected/day:bg-transparent",
+        selected: "bg-foreground! text-background!",
         range_middle: "bg-muted! text-foreground! rounded-none",
         today:
-          "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-px after:w-1/2 after:-translate-x-1/2 after:rounded-[2px] after:bg-current",
+          "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-px after:w-4 after:-translate-x-1/2 after:rounded-[2px] after:bg-current",
         outside: "opacity-40",
         disabled: "opacity-40 pointer-events-none",
         hidden: "invisible",

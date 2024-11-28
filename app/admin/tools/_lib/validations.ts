@@ -4,7 +4,7 @@ export const searchParamsSchema = z.object({
   name: z.string().optional(),
   publishedAt: z.string().optional().default(""),
   page: z.coerce.number().default(1),
-  per_page: z.coerce.number().default(25),
+  per_page: z.coerce.number().default(50),
   sort: z.string().optional(),
   from: z.string().optional(),
   to: z.string().optional(),
