@@ -6,11 +6,12 @@ import {
   CodeXmlIcon,
   CopyrightIcon,
   GalleryHorizontalEndIcon,
+  SearchIcon,
   TagIcon,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { type HTMLAttributes, useEffect, useState } from "react"
+import { type HTMLAttributes, Suspense, useEffect, useState } from "react"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
@@ -135,7 +136,9 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         </nav>
 
         <Stack size="sm" className="max-sm:hidden">
-          <SearchForm />
+          <Suspense fallback={<SearchIcon className="size-4" />}>
+            <SearchForm />
+          </Suspense>
 
           <NavigationLink
             href={config.links.bluesky}
@@ -201,7 +204,9 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           About
         </NavigationLink>
 
-        <SearchForm className="sm:hidden" />
+        <Suspense fallback={<SearchIcon className="size-4 sm:hidden" />}>
+          <SearchForm className="sm:hidden" />
+        </Suspense>
       </nav>
     </Container>
   )
