@@ -35,15 +35,6 @@
 
   --scale-flip: -1;
 
-  --background-image-cross: linear-gradient(
-    -45deg,
-    color-mix(in hsl, var(--color-foreground) 0%, transparent) 0%,
-    color-mix(in hsl, var(--color-foreground) 0%, transparent) calc(50% - 0.8px),
-    color-mix(in hsl, var(--color-foreground) 66%, transparent) 50%,
-    color-mix(in hsl, var(--color-foreground) 0%, transparent) calc(50% + 0.8px),
-    color-mix(in hsl, var(--color-foreground) 0%, transparent) 100%
-  );
-
   --grid-template-columns-2xs: repeat(auto-fill, minmax(10rem, 1fr));
   --grid-template-columns-xs: repeat(auto-fill, minmax(12rem, 1fr));
   --grid-template-columns-sm: repeat(auto-fill, minmax(14rem, 1fr));
@@ -53,7 +44,28 @@
 
   --animate-shimmer: shimmer 1.25s cubic-bezier(0.5, 0.25, 0.25, 0.5) infinite;
   --animate-reveal: reveal linear forwards;
-  --animate-moving-banner: movingBanner 25s linear infinite;
+
+  @keyframes shimmer {
+    from {
+      left: -90%;
+    }
+    to {
+      left: 90%;
+    }
+  }
+
+  @keyframes reveal {
+    from {
+      scale: 0.9;
+      opacity: 0;
+      transform: translateY(20px) perspective(250px) rotateX(-15deg);
+    }
+    to {
+      scale: 1;
+      opacity: 1;
+      transform: translateY(0) perspective(500px) rotateX(0deg);
+    }
+  }
 }
 
 /*
@@ -187,32 +199,4 @@ select:not([size]) {
   @apply bg-[right_0.75rem_center];
   @apply bg-[length:1.25em_1.25em];
   @apply pr-8;
-}
-
-@keyframes shimmer {
-  from {
-    left: -90%;
-  }
-  to {
-    left: 90%;
-  }
-}
-
-@keyframes reveal {
-  from {
-    scale: 0.9;
-    opacity: 0;
-    transform: translateY(20px) perspective(250px) rotateX(-15deg);
-  }
-  to {
-    scale: 1;
-    opacity: 1;
-    transform: translateY(0) perspective(500px) rotateX(0deg);
-  }
-}
-
-@keyframes movingBanner {
-  to {
-    background-position: 100% 0;
-  }
 }
