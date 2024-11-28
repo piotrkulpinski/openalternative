@@ -1,6 +1,5 @@
 import { z } from "zod"
 import { config } from "~/config"
-import { isRealEmail } from "~/utils/helpers"
 
 export const submitToolSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -17,8 +16,7 @@ export const submitToolSchema = z.object({
   submitterEmail: z
     .string()
     .min(1, "Your email is required")
-    .email("Invalid email address, please use a correct format.")
-    .refine(isRealEmail, "Invalid email address, please use a real one."),
+    .email("Invalid email address, please use a correct format."),
   submitterNote: z.string().max(200),
   newsletterOptIn: z.boolean().optional().default(true),
 })
