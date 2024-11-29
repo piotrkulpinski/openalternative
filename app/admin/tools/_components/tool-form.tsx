@@ -10,7 +10,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { createTool, updateTool } from "~/app/admin/tools/_lib/actions"
-import type { getAlternatives, getCategories, getToolById } from "~/app/admin/tools/_lib/queries"
+import type { getAlternatives, getCategories, getToolBySlug } from "~/app/admin/tools/_lib/queries"
 import { type ToolSchema, toolSchema } from "~/app/admin/tools/_lib/validations"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/admin/ui/button"
@@ -29,7 +29,7 @@ import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type ToolFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  tool?: Awaited<ReturnType<typeof getToolById>>
+  tool?: Awaited<ReturnType<typeof getToolBySlug>>
   alternatives: Awaited<ReturnType<typeof getAlternatives>>
   categories: Awaited<ReturnType<typeof getCategories>>
 }
