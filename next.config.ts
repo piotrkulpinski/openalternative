@@ -1,6 +1,5 @@
 import { withContentCollections } from "@content-collections/next"
 import type { NextConfig } from "next"
-import { withPlausibleProxy } from "next-plausible"
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
@@ -82,9 +81,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-const plausibleProxy = withPlausibleProxy({
-  customDomain: process.env.NEXT_PUBLIC_PLAUSIBLE_HOST,
-  subdirectory: "_proxy/plausible",
-})
-
-export default withContentCollections(plausibleProxy(nextConfig))
+export default withContentCollections(nextConfig)
