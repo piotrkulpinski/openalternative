@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { createAlternative, updateAlternative } from "~/app/admin/alternatives/_lib/actions"
-import type { getAlternativeById, getTools } from "~/app/admin/alternatives/_lib/queries"
+import type { getAlternativeBySlug, getTools } from "~/app/admin/alternatives/_lib/queries"
 import {
   type AlternativeSchema,
   alternativeSchema,
@@ -30,7 +30,7 @@ import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type AlternativeFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  alternative?: Awaited<ReturnType<typeof getAlternativeById>>
+  alternative?: Awaited<ReturnType<typeof getAlternativeBySlug>>
   tools: Awaited<ReturnType<typeof getTools>>
 }
 
