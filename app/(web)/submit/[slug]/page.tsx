@@ -1,6 +1,5 @@
 import type { Tool } from "@prisma/client"
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
@@ -92,7 +91,7 @@ export default async function SubmitPackages(props: PageProps) {
       </Intro>
 
       {success ? (
-        <Image
+        <img
           src={"/3d-heart.webp"}
           alt=""
           className="max-w-64 w-2/3 h-auto mx-auto"
