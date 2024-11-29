@@ -84,7 +84,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href={`/${tool.slug}?preview=${tool.id}`} target="_blank">
+            <Link href={`/${tool.slug}`} target="_blank">
               View
             </Link>
           </DropdownMenuItem>

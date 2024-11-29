@@ -10,7 +10,7 @@ type HomeToolListingProps = {
 
 export const HomeToolListing = async ({ searchParams }: HomeToolListingProps) => {
   const [{ tools, totalCount }, ad, categories] = await Promise.all([
-    searchTools(searchParams, {}),
+    searchTools(await searchParams, {}),
     findAd({ where: { type: "Homepage" } }),
     findCategories({}),
   ])
