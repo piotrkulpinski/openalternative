@@ -8,15 +8,15 @@ import { Favicon } from "~/components/web/ui/favicon"
 import type { AlternativeMany } from "~/server/alternatives/payloads"
 import { cx } from "~/utils/cva"
 
-type AlternativeCardProps = Omit<ComponentProps<typeof Link>, "href"> & {
+type AlternativeCardProps = Omit<ComponentProps<typeof Card>, "href"> & {
   alternative: AlternativeMany
   showCount?: boolean
 }
 
 const AlternativeCard = ({ alternative, showCount, ...props }: AlternativeCardProps) => {
   return (
-    <Card asChild>
-      <Link href={`/alternatives/${alternative.slug}`} {...props}>
+    <Card asChild {...props}>
+      <Link href={`/alternatives/${alternative.slug}`} prefetch={false}>
         <CardHeader>
           <Favicon src={alternative.faviconUrl} title={alternative.name} />
 
