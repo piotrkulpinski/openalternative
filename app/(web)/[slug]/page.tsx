@@ -266,7 +266,7 @@ export default async function ToolPage(props: PageProps) {
             </Stack>
           )}
 
-          <ShareButtons title={`${title}`} />
+          <ShareButtons title={`${title}`} className="max-md:order-8" />
         </Section.Content>
 
         <Section.Sidebar className="max-md:contents">
@@ -275,7 +275,7 @@ export default async function ToolPage(props: PageProps) {
 
           {/* Featured */}
           <Suspense>
-            <FeaturedTools />
+            <FeaturedTools className="max-md:order-9" />
           </Suspense>
         </Section.Sidebar>
       </Section>
