@@ -1,13 +1,14 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { StarIcon } from "lucide-react"
 import Link from "next/link"
+import type { ComponentProps } from "react"
 import { H5, H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { Card } from "~/components/web/ui/card"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { findTools } from "~/server/tools/queries"
 
-export const FeaturedTools = async () => {
+export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await findTools({ where: { isFeatured: true } })
 
   if (!tools.length) {
@@ -15,7 +16,7 @@ export const FeaturedTools = async () => {
   }
 
   return (
-    <Card hover={false} focus={false} isRevealed={false}>
+    <Card hover={false} focus={false} isRevealed={false} {...props}>
       <H5 as="strong">Featured open source alternatives:</H5>
 
       <div className="w-full divide-y -my-1.5">
