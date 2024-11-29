@@ -18,7 +18,7 @@ type LanguageCardProps = ComponentProps<typeof CardSimple> & {
 const LanguageCard = ({ language, ...props }: LanguageCardProps) => {
   return (
     <CardSimple asChild {...props}>
-      <Link href={`/languages/${language.slug}`}>
+      <Link href={`/languages/${language.slug}`} prefetch={false}>
         <Stack size="sm">
           <span
             className="size-2 rounded-full"
