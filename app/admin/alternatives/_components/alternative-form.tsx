@@ -55,7 +55,7 @@ export function AlternativeForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Alternative successfully created")
-        redirect(`/alternatives/${data.id}`)
+        redirect(`/admin/alternatives/${data.slug}`)
       },
 
       onError: ({ err }) => {
@@ -70,7 +70,7 @@ export function AlternativeForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Alternative successfully updated")
-        redirect(`/alternatives/${data.id}`)
+        redirect(`/admin/alternatives/${data.slug}`)
       },
 
       onError: ({ err }) => {

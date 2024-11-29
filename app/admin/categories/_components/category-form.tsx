@@ -50,7 +50,7 @@ export function CategoryForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Category successfully created")
-        redirect(`/categories/${data.id}`)
+        redirect(`/admin/categories/${data.slug}`)
       },
 
       onError: ({ err }) => {
@@ -65,7 +65,7 @@ export function CategoryForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Category successfully updated")
-        redirect(`/categories/${data.id}`)
+        redirect(`/admin/categories/${data.slug}`)
       },
 
       onError: ({ err }) => {

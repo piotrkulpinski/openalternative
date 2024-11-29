@@ -40,7 +40,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
     {
       onSuccess: ({ data }) => {
         toast.success("License successfully created")
-        redirect(`/licenses/${data.id}`)
+        redirect(`/admin/licenses/${data.slug}`)
       },
 
       onError: ({ err }) => {
@@ -55,7 +55,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
     {
       onSuccess: ({ data }) => {
         toast.success("License successfully updated")
-        redirect(`/licenses/${data.id}`)
+        redirect(`/admin/licenses/${data.slug}`)
       },
 
       onError: ({ err }) => {

@@ -61,7 +61,7 @@ export function ToolForm({
   const { execute: createToolAction, isPending: isCreatingTool } = useServerAction(createTool, {
     onSuccess: ({ data }) => {
       toast.success("Tool successfully created")
-      redirect(`/tools/${data.id}`)
+      redirect(`/admin/tools/${data.slug}`)
     },
 
     onError: ({ err }) => {
@@ -73,7 +73,7 @@ export function ToolForm({
   const { execute: updateToolAction, isPending: isUpdatingTool } = useServerAction(updateTool, {
     onSuccess: ({ data }) => {
       toast.success("Tool successfully updated")
-      redirect(`/tools/${data.id}`)
+      redirect(`/admin/tools/${data.slug}`)
     },
 
     onError: ({ err }) => {
