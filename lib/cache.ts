@@ -6,4 +6,9 @@ export const cache = <Inputs extends unknown[], Output>(
   callback: (...args: Inputs) => Promise<Output>,
   key?: string[],
   options?: { revalidate: number },
-) => react_cache(next_cache(callback, key, options))
+) => {
+  // Set this to true to bypass all caching
+  const DISABLE_CACHE = true
+
+  return DISABLE_CACHE ? callback : react_cache(next_cache(callback, key, options))
+}
