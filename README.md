@@ -48,10 +48,13 @@ OpenAlternative is an GPL-3.0-licensed open source project with its ongoing deve
 
 ## Project Structure
 
-OpenAlternative is a monorepo project with two main applications:
+OpenAlternative is a Next.js application using the App Router architecture. The project follows a standard Next.js file structure:
 
-1. Web application (Remix) - located in `apps/web`
-2. Admin panel (Next.js) - located in `apps/admin`
+- `app/` - Application routes and layouts
+- `components/` - Reusable React components
+- `lib/` - Core utilities and business logic
+- `public/` - Static assets
+- `utils/` - Helper functions and utilities
 
 ## Development
 
@@ -60,59 +63,39 @@ This project uses [Bun](https://bun.sh/) as the package manager and runtime. Mak
 To set up the project for development:
 
 1. Clone the repository
-2. Run `bun install` in the root directory to install all dependencies
+2. Run `bun install` to install all dependencies
 3. Set up the required environment variables (see below)
 4. Run `bun run db:push` to push the Prisma schema to the database
-5. Create symlinks for the .env file (see Environment Variables section)
-6. Run `bun run dev` to start both the web and admin applications in development mode
+5. Run `bun run dev` to start the application in development mode
 
 ### Environment Variables
 
 Refer to the `.env.example` file for a complete list of required variables.
 
-To manage environment variables across the monorepo, you have two options:
+Copy the `.env.example` file to `.env` and update the variables as needed:
 
-1. Create symlinks to the root .env file:
-   - For Unix-based systems (macOS, Linux):
-     ```
-     ln -s ../../.env apps/web/.env
-     ln -s ../../.env apps/admin/.env
-     ln -s ../.env packages/database/.env
-     ```
-   - For Windows (run in Command Prompt as Administrator):
-     ```
-     mklink apps\web\.env ..\..\\.env
-     mklink apps\admin\.env ..\..\\.env
-     mklink packages\database\.env ..\.\.env
-     ```
-
-2. Create separate .env files for each app and package:
-   - Copy the `.env.example` file to each app and package directory
-   - Rename it to `.env`
-   - Update the variables as needed for each app or package
-
-Choose the method that best fits your development workflow and security requirements.
+```bash
+cp .env.example .env
+```
 
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
-| Command           | Action                                                    |
-| :---------------- | :-------------------------------------------------------- |
-| `bun install`     | Installs dependencies                                     |
-| `bun run dev`     | Starts both web and admin apps in development mode        |
-| `bun run web dev` | Starts web app at `localhost:5173`                        |
-| `bun run admin dev` | Starts admin app at `localhost:5174`                    |
-| `bun run build`   | Build both apps for production                            |
-| `bun run start`   | Preview production build locally                          |
-| `bun run lint`    | Run linter                                                |
-| `bun run format`  | Format code                                               |
-| `bun run typecheck` | Run TypeScript type checking 
-| `bun run db:generate` | Generate Prisma client
-| `bun run db:studio` | Start Prisma Studio
-| `bun run db:push` | Push Prisma schema to database
-| `bun run db:pull` | Pull Prisma schema from database
-| `bun run db:reset` | Reset Prisma schema
+| Command           | Action                                           |
+| :---------------- | :----------------------------------------------- |
+| `bun install`     | Installs dependencies                            |
+| `bun run dev`     | Starts local dev server at `localhost:5173`      |
+| `bun run build`   | Build production application                     |
+| `bun run start`   | Preview production build locally                 |
+| `bun run lint`    | Run linter                                       |
+| `bun run format`  | Format code                                      |
+| `bun run typecheck` | Run TypeScript type checking                   |
+| `bun run db:generate` | Generate Prisma client                       |
+| `bun run db:studio` | Start Prisma Studio                           |
+| `bun run db:push` | Push Prisma schema to database                  |
+| `bun run db:pull` | Pull Prisma schema from database                |
+| `bun run db:reset` | Reset Prisma schema                            |
 
 ## Third-Party Services
 
@@ -130,13 +113,10 @@ Make sure to set up accounts with these services and add the necessary environme
 
 ## Deployment
 
-The project is set up for deployment on Vercel. Each app (web and admin) can be deployed separately.
-
-To deploy manually:
+The project is set up for deployment on Vercel. To deploy manually:
 
 1. Build the project: `bun run build`
-2. For the web app: `bun run web start`
-3. For the admin app: `bun run admin start`
+2. Start the production server: `bun run start`
 
 Ensure all environment variables are properly set in your production environment.
 
