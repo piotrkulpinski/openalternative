@@ -11,7 +11,7 @@ type CategoryToolListingProps = {
 
 export const CategoryToolListing = async ({ category, searchParams }: CategoryToolListingProps) => {
   const [{ tools, totalCount }, ad] = await Promise.all([
-    searchTools(searchParams, {
+    searchTools(await searchParams, {
       where: { categories: { some: { category: { slug: category.slug } } } },
     }),
     findAd({ where: { type: "Homepage" } }),

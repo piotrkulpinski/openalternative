@@ -11,7 +11,7 @@ type LicenseToolListingProps = {
 
 export const LicenseToolListing = async ({ license, searchParams }: LicenseToolListingProps) => {
   const [{ tools, totalCount }, ad] = await Promise.all([
-    searchTools(searchParams, {
+    searchTools(await searchParams, {
       where: { license: { slug: license.slug } },
     }),
     findAd({ where: { type: "Homepage" } }),
