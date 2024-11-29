@@ -8,17 +8,17 @@ const badgeVariants = cva({
 
   variants: {
     variant: {
-      primary: "bg-primary text-background hover:[&[href]]:bg-primary/75",
+      primary: "bg-primary border-transparent text-background hover:[&[href]]:bg-primary/75",
       soft: "bg-border/50 border-transparent hover:[&[href]]:bg-border/75",
       outline: "bg-background hover:[&[href]]:bg-card-dark",
-      success: "bg-green-700/90 text-background dark:bg-green-300/90",
-      warning: "bg-yellow-700/90 text-background dark:bg-yellow-300/90",
-      danger: "bg-red-700/90 text-background dark:bg-red-300/90",
+      success: "bg-green-700/90 border-transparent text-background dark:bg-green-300/90",
+      warning: "bg-yellow-700/90 border-transparent text-background dark:bg-yellow-300/90",
+      danger: "bg-red-700/90 border-transparent text-background dark:bg-red-300/90",
     },
     size: {
       sm: "px-1 py-px gap-1 text-[0.625rem]",
       md: "px-1.5 py-0.5 gap-1.5 text-xs",
-      lg: "px-2 py-1 gap-2 text-[0.8125rem] rounded-md",
+      lg: "px-2 py-1 gap-2 text-sm rounded-md",
     },
   },
 
