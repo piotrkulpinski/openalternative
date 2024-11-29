@@ -137,8 +137,8 @@ export const reuploadToolAssets = authedProcedure
     const tool = await prisma.tool.findUniqueOrThrow({ where: { id } })
 
     const [faviconUrl, screenshotUrl] = await Promise.all([
-      uploadFavicon(tool.website, `${tool.slug}/favicon`),
-      uploadScreenshot(tool.website, `${tool.slug}/screenshot`),
+      uploadFavicon(tool.website, `tools/${tool.slug}/favicon`),
+      uploadScreenshot(tool.website, `tools/${tool.slug}/screenshot`),
     ])
 
     await prisma.tool.update({
