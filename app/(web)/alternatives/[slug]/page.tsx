@@ -97,14 +97,14 @@ export default async function AlternativePage(props: PageProps) {
 
   // Pick the top 5 tools
   const bestTools = tools.slice(0, 5).map(tool => (
-    <Link key={tool.id} href={`/${tool.slug}`}>
+    <Link key={tool.id} href={`/${tool.slug}`} prefetch={false}>
       {tool.name}
     </Link>
   ))
 
   // Pick the top categories
   const bestCategories = categories.slice(0, 3).map(({ category }) => (
-    <Link key={category.id} href={`/categories/${category.slug}`}>
+    <Link key={category.id} href={`/categories/${category.slug}`} prefetch={false}>
       {category.label || category.name}
     </Link>
   ))

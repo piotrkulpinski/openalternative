@@ -1,18 +1,18 @@
 import { formatDate, getReadTime } from "@curiousleaf/utils"
 import type { Post } from "content-collections"
 import Link from "next/link"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
 import { Card, CardDescription, CardFooter, CardHeader } from "~/components/web/ui/card"
 
-type PostCardProps = HTMLAttributes<HTMLElement> & {
+type PostCardProps = ComponentProps<typeof Card> & {
   post: Post
 }
 
 export const PostCard = ({ className, post, ...props }: PostCardProps) => {
   return (
-    <Card className="overflow-clip" asChild>
-      <Link href={`/blog/${post._meta.path}`} {...props}>
+    <Card className="overflow-clip" asChild {...props}>
+      <Link href={`/blog/${post._meta.path}`} prefetch={false}>
         {post.image && (
           <img
             src={post.image}
