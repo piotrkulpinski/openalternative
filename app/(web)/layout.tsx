@@ -1,3 +1,4 @@
+import Script from "next/script"
 import { type PropsWithChildren, Suspense } from "react"
 import type { Graph } from "schema-dts"
 import Providers from "~/app/(web)/providers"
@@ -7,6 +8,7 @@ import { Footer } from "~/components/web/footer"
 import { Header } from "~/components/web/header"
 import { Container } from "~/components/web/ui/container"
 import { config } from "~/config"
+import { env } from "~/env"
 
 import "./styles.css"
 
@@ -81,9 +83,15 @@ export default function RootLayout({ children }: PropsWithChildren) {
       </Suspense>
 
       {/* JSON-LD */}
-      <script
+      <Script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <Script
+        data-domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+        data-api={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/api/event`}
+        src={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
       />
     </Providers>
   )
