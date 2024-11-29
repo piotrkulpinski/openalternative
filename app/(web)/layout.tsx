@@ -88,7 +88,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
+      {/* Plausible */}
       <Script
+        defer
         data-domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
         data-api={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/api/event`}
         src={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
