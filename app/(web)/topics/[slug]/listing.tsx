@@ -11,7 +11,7 @@ type TopicToolListingProps = {
 
 export const TopicToolListing = async ({ topic, searchParams }: TopicToolListingProps) => {
   const [{ tools, totalCount }, ad] = await Promise.all([
-    searchTools(searchParams, {
+    searchTools(await searchParams, {
       where: { topics: { some: { topic: { slug: topic.slug } } } },
     }),
     findAd({ where: { type: "Homepage" } }),

@@ -11,7 +11,7 @@ type LanguageToolListingProps = {
 
 export const LanguageToolListing = async ({ language, searchParams }: LanguageToolListingProps) => {
   const [{ tools, totalCount }, ad] = await Promise.all([
-    searchTools(searchParams, {
+    searchTools(await searchParams, {
       where: { languages: { some: { language: { slug: language.slug } } } },
     }),
     findAd({ where: { type: "Homepage" } }),
