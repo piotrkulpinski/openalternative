@@ -4,8 +4,8 @@ import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
 import { LicenseToolListing } from "~/app/(web)/licenses/[slug]/listing"
 import { H2 } from "~/components/common/heading"
-import { Markdown } from "~/components/common/markdown"
 import { Listing } from "~/components/web/listing"
+import { Markdown } from "~/components/web/markdown"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { BackButton } from "~/components/web/ui/back-button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
@@ -80,7 +80,7 @@ export default async function LicensePage(props: PageProps) {
         <Section>
           <Section.Content>
             <H2>What is {license.name} License?</H2>
-            <Markdown>{license.content}</Markdown>
+            <Markdown code={license.content} />
           </Section.Content>
         </Section>
       )}

@@ -8,11 +8,11 @@ import { z } from "zod"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
 import { H1, H5 } from "~/components/common/heading"
-import { Markdown } from "~/components/common/markdown"
 import { Stack } from "~/components/common/stack"
 import { AdCard } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
 import { Listing } from "~/components/web/listing"
+import { Markdown } from "~/components/web/markdown"
 import { RepositoryDetails } from "~/components/web/repository-details"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
@@ -206,7 +206,7 @@ export default async function ToolPage(props: PageProps) {
             />
           )}
 
-          {tool.content && <Markdown className="max-md:order-5">{tool.content}</Markdown>}
+          {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
 
           {(!!links?.length || !!tool.categories.length) && (
             <div className="grid grid-cols-sm gap-x-6 gap-y-10 w-full max-md:order-6">
