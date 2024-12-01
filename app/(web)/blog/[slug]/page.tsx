@@ -6,7 +6,7 @@ import { cache } from "react"
 import { H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { AdCard } from "~/components/web/ads/ad-card"
-import { Article } from "~/components/web/article"
+import { MDX } from "~/components/web/mdx"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { Author } from "~/components/web/ui/author"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
@@ -86,7 +86,7 @@ export default async function BlogPostPage(props: PageProps) {
             />
           )}
 
-          <Article content={post.content} />
+          <MDX code={post.content} />
 
           <ShareButtons title={post.title} />
         </Section.Content>
