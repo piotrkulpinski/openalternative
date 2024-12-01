@@ -25,8 +25,6 @@ import type { AlternativeOne } from "~/server/alternatives/payloads"
 import { findAlternative, findAlternativeSlugs } from "~/server/alternatives/queries"
 import { findToolsWithCategories } from "~/server/tools/queries"
 
-export const revalidate = 86400 // 24 hours
-
 type PageProps = {
   params: Promise<{ slug: string }>
   searchParams: Promise<SearchParams>

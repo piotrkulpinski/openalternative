@@ -7,8 +7,6 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 
-export const revalidate = 86400 // 24 hours
-
 type PageProps = {
   params: Promise<{ letter: string }>
 }
