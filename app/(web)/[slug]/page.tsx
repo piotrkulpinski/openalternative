@@ -29,8 +29,6 @@ import { findAd } from "~/server/ads/queries"
 import type { ToolOne } from "~/server/tools/payloads"
 import { findTool, findToolSlugs } from "~/server/tools/queries"
 
-export const revalidate = 43200 // 12 hours
-
 type PageProps = {
   params: Promise<{ slug: string }>
 }

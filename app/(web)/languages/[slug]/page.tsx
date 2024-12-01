@@ -9,8 +9,6 @@ import { metadataConfig } from "~/config/metadata"
 import type { LanguageOne } from "~/server/languages/payloads"
 import { findLanguage, findLanguageSlugs } from "~/server/languages/queries"
 
-export const revalidate = 86400 // 24 hours
-
 type PageProps = {
   params: Promise<{ slug: string }>
   searchParams: Promise<SearchParams>

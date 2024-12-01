@@ -5,8 +5,6 @@ import { Toaster } from "~/components/common/toaster"
 import { config } from "~/config"
 import { GeistSans, UncutSans } from "~/lib/fonts"
 
-export const revalidate = 86400 // 24 hours
-
 export const metadata: Metadata = {
   metadataBase: new URL(config.site.url),
   title: {

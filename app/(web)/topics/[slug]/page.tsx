@@ -10,8 +10,6 @@ import { metadataConfig } from "~/config/metadata"
 import type { TopicOne } from "~/server/topics/payloads"
 import { findTopic, findTopicSlugs } from "~/server/topics/queries"
 
-export const revalidate = 86400 // 24 hours
-
 type PageProps = {
   params: Promise<{ slug: string }>
   searchParams: Promise<SearchParams>

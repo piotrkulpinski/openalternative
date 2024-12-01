@@ -14,8 +14,6 @@ import { metadataConfig } from "~/config/metadata"
 import type { LicenseOne } from "~/server/licenses/payloads"
 import { findLicense, findLicenseSlugs } from "~/server/licenses/queries"
 
-export const revalidate = 86400 // 24 hours
-
 type PageProps = {
   params: Promise<{ slug: string }>
   searchParams: Promise<SearchParams>

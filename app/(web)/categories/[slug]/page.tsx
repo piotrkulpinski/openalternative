@@ -9,8 +9,6 @@ import { metadataConfig } from "~/config/metadata"
 import type { CategoryOne } from "~/server/categories/payloads"
 import { findCategory, findCategorySlugs } from "~/server/categories/queries"
 
-export const revalidate = 86400 // 24 hours
-
 type PageProps = {
   params: Promise<{ slug: string }>
   searchParams: Promise<SearchParams>
