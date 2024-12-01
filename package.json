@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "email": "cp .env ./node_modules/react-email/dist/preview && email dev",
-    "dev": "next dev --turbopack -p 5173",
+    "dev": "next dev --turbo -p 5173",
     "start": "next start -p 5173",
     "build": "next build",
     "lint": "bun biome lint --apply .",
@@ -54,7 +54,7 @@
     "date-fns": "^4.1.0",
     "inngest": "^3.25.0",
     "lucide-react": "^0.460.0",
-    "next": "^15.0.4-canary.31",
+    "next": "14",
     "next-auth": "^5.0.0-beta.25",
     "nuqs": "^2.1.2",
     "plur": "^5.1.0",

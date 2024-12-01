@@ -1,13 +1,9 @@
 import { withContentCollections } from "@content-collections/next"
-import type { NextConfig } from "next"
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: false,
   skipTrailingSlashRedirect: true,
-
-  experimental: {
-    ppr: true,
-  },
 
   typescript: {
     ignoreBuildErrors: true,
