@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
 import { type ComponentProps, isValidElement } from "react"
-import { H5 } from "~/components/common/heading"
+import { H5, type Heading } from "~/components/common/heading"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const cardSimpleVariants = cva({
@@ -33,7 +33,7 @@ const CardSimple = ({ className, isRevealed, asChild, ...props }: CardSimpleProp
   return <Comp className={cx(cardSimpleVariants({ isRevealed, className }))} {...props} />
 }
 
-const CardSimpleTitle = ({ className, ...props }: ComponentProps<"h1">) => {
+const CardSimpleTitle = ({ className, ...props }: ComponentProps<typeof Heading>) => {
   return <H5 className={cx("truncate", className)} {...props} />
 }
 

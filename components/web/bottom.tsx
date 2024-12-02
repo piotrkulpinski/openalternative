@@ -1,6 +1,7 @@
 import type { ComponentProps } from "react"
 import { H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
+import { CardSimple, CardSimpleCaption, CardSimpleDivider } from "~/components/web/ui/card-simple"
 import { Container } from "~/components/web/ui/container"
 import { NavigationLink } from "~/components/web/ui/navigation-link"
 import { siteConfig } from "~/config/site"
@@ -41,11 +42,17 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {alternatives.map(alternative => (
-                <NavigationLink key={alternative.id} href={`/alternatives/${alternative.slug}`}>
-                  <span className="truncate">{alternative.name} Alternatives</span>
-                  <hr className="min-w-2 flex-1" />
-                  <span className="shrink-0 text-xs max-sm:hidden">{alternative._count.tools}</span>
-                </NavigationLink>
+                <CardSimple key={alternative.id} className="gap-2" asChild>
+                  <NavigationLink href={`/alternatives/${alternative.slug}`}>
+                    <span className="truncate">{alternative.name} Alternatives</span>
+
+                    <CardSimpleDivider />
+
+                    <CardSimpleCaption className="max-sm:hidden">
+                      {alternative._count.tools}
+                    </CardSimpleCaption>
+                  </NavigationLink>
+                </CardSimple>
               ))}
             </div>
           </Stack>
@@ -57,11 +64,17 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {categories.map(category => (
-                <NavigationLink key={category.id} href={`/categories/${category.slug}`}>
-                  <span className="truncate">{category.label}</span>{" "}
-                  <hr className="min-w-2 flex-1" />
-                  <span className="shrink-0 text-xs max-sm:hidden">{category._count.tools}</span>
-                </NavigationLink>
+                <CardSimple key={category.id} className="gap-2" asChild>
+                  <NavigationLink href={`/categories/${category.slug}`}>
+                    <span className="truncate">{category.label}</span>
+
+                    <CardSimpleDivider />
+
+                    <CardSimpleCaption className="max-sm:hidden">
+                      {category._count.tools}
+                    </CardSimpleCaption>
+                  </NavigationLink>
+                </CardSimple>
               ))}
             </div>
           </Stack>
