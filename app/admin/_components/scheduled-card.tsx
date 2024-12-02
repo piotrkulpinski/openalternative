@@ -1,4 +1,5 @@
-import { formatDistanceToNowStrict } from "date-fns"
+import { formatDate } from "@curiousleaf/utils"
+import { unstable_cacheLife as cacheLife } from "next/cache"
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import {
@@ -9,10 +10,12 @@ import {
   CardTitle,
 } from "~/components/admin/ui/card"
 import { ScrollArea } from "~/components/admin/ui/scroll-area"
-import { Skeleton } from "~/components/common/skeleton"
 import { prisma } from "~/services/prisma"
 
 const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
+  "use cache"
+  cacheLife("hours")
+
   const tools = await prisma.tool.findMany({
     where: { status: "Scheduled" },
     select: { slug: true, name: true, publishedAt: true },
@@ -40,7 +43,7 @@ const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
 
                 {tool.publishedAt && (
                   <span className="shrink-0 text-muted-foreground group-hover:text-foreground">
-                    {formatDistanceToNowStrict(tool.publishedAt, { addSuffix: true })}
+                    {formatDate(tool.publishedAt)}
                   </span>
                 )}
               </Link>
@@ -54,19 +57,4 @@ const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   )
 }
 
-const ScheduledCardSkeleton = ({ ...props }: ComponentProps<typeof Card>) => {
-  return (
-    <Card {...props}>
-      <CardHeader>
-        <Skeleton className="h-5 w-12" />
-        <Skeleton className="text-3xl w-24">&nbsp;</Skeleton>
-      </CardHeader>
-
-      <CardContent>
-        <Skeleton className="h-56 w-full" />
-      </CardContent>
-    </Card>
-  )
-}
-
-export { ScheduledCard, ScheduledCardSkeleton }
+export { ScheduledCard }

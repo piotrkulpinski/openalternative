@@ -1,10 +1,17 @@
-"use client"
-
 import { Card, CardDescription, CardHeader, CardTitle } from "~/components/admin/ui/card"
-import { useStats } from "~/hooks/use-stats-context"
+import { prisma } from "~/services/prisma"
 
-export const StatsCard = () => {
-  const stats = useStats()
+export const StatsCard = async () => {
+  "use cache"
+
+  const stats = await prisma.$transaction([
+    prisma.tool.count(),
+    prisma.alternative.count(),
+    prisma.category.count(),
+    prisma.language.count(),
+    prisma.topic.count(),
+    prisma.license.count(),
+  ])
 
   const statsLabels = {
     0: "Tools",
