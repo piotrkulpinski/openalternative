@@ -1,6 +1,7 @@
 import { isTruthy } from "@curiousleaf/utils"
 import type { Prisma } from "@prisma/client"
 import { endOfDay, startOfDay } from "date-fns"
+import { unstable_cacheTag as cacheTag } from "next/cache"
 import type { SearchParams } from "nuqs/server"
 import { prisma } from "~/services/prisma"
 import { searchParamsSchema } from "./validations"
@@ -43,11 +44,7 @@ export const getTools = async (searchParams: Promise<SearchParams>) => {
       : undefined,
 
     // Filter by createdAt
-    fromDate || toDate
-      ? {
-          createdAt: { gte: fromDate, lte: toDate },
-        }
-      : undefined,
+    fromDate || toDate ? { createdAt: { gte: fromDate, lte: toDate } } : undefined,
   ]
 
   const where: Prisma.ToolWhereInput = {
@@ -73,6 +70,9 @@ export const getTools = async (searchParams: Promise<SearchParams>) => {
 }
 
 export const getAlternatives = async () => {
+  "use cache"
+  cacheTag("alternatives")
+
   return prisma.alternative.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
@@ -80,6 +80,9 @@ export const getAlternatives = async () => {
 }
 
 export const getCategories = async () => {
+  "use cache"
+  cacheTag("categories")
+
   return prisma.category.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
@@ -87,6 +90,8 @@ export const getCategories = async () => {
 }
 
 export const getToolCountByStatus = async () => {
+  "use cache"
+
   return prisma.tool.groupBy({
     by: ["publishedAt"],
     _count: {
@@ -96,6 +101,9 @@ export const getToolCountByStatus = async () => {
 }
 
 export const getToolBySlug = async (slug: string) => {
+  "use cache"
+  cacheTag(`tool-${slug}`)
+
   return prisma.tool.findUnique({
     where: { slug },
     include: {
