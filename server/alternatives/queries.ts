@@ -1,16 +1,14 @@
 import type { Prisma } from "@prisma/client"
-import type { SearchParams } from "nuqs/server"
+import type { inferParserType } from "nuqs/server"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/alternatives/payloads"
-import { alternativesSearchParamsCache } from "~/server/alternatives/search-params"
+import type { alternativesSearchParams } from "~/server/alternatives/search-params"
 import { prisma } from "~/services/prisma"
 
 export const searchAlternatives = async (
-  searchParams: SearchParams,
+  { q, page, sort, perPage }: inferParserType<typeof alternativesSearchParams>,
   { where, ...args }: Prisma.AlternativeFindManyArgs,
 ) => {
   "use cache"
-
-  const { q, page, sort, perPage } = alternativesSearchParamsCache.parse(searchParams)
 
   // Values to paginate the results
   const skip = (page - 1) * perPage

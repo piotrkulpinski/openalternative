@@ -10,12 +10,12 @@ import type { ToolMany } from "~/server/tools/payloads"
 type ToolQueryProps = {
   tools: ToolMany[]
   categories?: CategoryMany[]
-  totalCount: number
   perPage: number
+  totalCount: number
   placeholder?: string
 }
 
-const ToolQuery = ({ tools, totalCount, categories, placeholder, perPage }: ToolQueryProps) => {
+const ToolQuery = ({ tools, perPage, totalCount, categories, placeholder }: ToolQueryProps) => {
   return (
     <>
       <div className="flex flex-col gap-5">
