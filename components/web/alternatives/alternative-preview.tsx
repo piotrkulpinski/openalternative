@@ -8,6 +8,8 @@ import { alternativeManyPayload } from "~/server/alternatives/payloads"
 import { findAlternatives } from "~/server/alternatives/queries"
 
 const AlternativePreview = async () => {
+  "use cache"
+
   const list = [
     "monday",
     "notion",

@@ -27,7 +27,7 @@ export const toolSubmitted = inngest.createFunction(
     ])
 
     // Send submission email to user if not expedited
-    if (!isPremiumSubmission && tool.submitterEmail) {
+    if (!isPremiumSubmission) {
       await step.run("send-submission-email", async () => {
         if (!tool.submitterEmail) return
 

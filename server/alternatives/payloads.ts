@@ -1,11 +1,11 @@
 import { Prisma } from "@prisma/client"
 
 export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeInclude>()({
-  _count: { select: { tools: { where: { tool: { publishedAt: { lte: new Date() } } } } } },
+  _count: { select: { tools: { where: { tool: { status: "Published" } } } } },
 })
 
 export const alternativeManyPayload = Prisma.validator<Prisma.AlternativeInclude>()({
-  _count: { select: { tools: { where: { tool: { publishedAt: { lte: new Date() } } } } } },
+  _count: { select: { tools: { where: { tool: { status: "Published" } } } } },
 })
 
 export type AlternativeOne = Prisma.AlternativeGetPayload<{ include: typeof alternativeOnePayload }>

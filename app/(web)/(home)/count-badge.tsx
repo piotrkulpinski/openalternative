@@ -1,15 +1,23 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { subDays } from "date-fns"
 import Link from "next/link"
+import { connection } from "next/server"
 import plur from "plur"
 import { Badge } from "~/components/web/ui/badge"
 import { Ping } from "~/components/web/ui/ping"
 import { prisma } from "~/services/prisma"
 
 const CountBadge = async () => {
+  await connection()
+
   const [toolsCount, newToolsCount] = await prisma.$transaction([
-    prisma.tool.count({ where: { publishedAt: { lte: new Date() } } }),
-    prisma.tool.count({ where: { publishedAt: { lte: new Date(), gte: subDays(new Date(), 7) } } }),
+    prisma.tool.count({
+      where: { status: "Published" },
+    }),
+
+    prisma.tool.count({
+      where: { status: "Published", publishedAt: { gte: subDays(new Date(), 7) } },
+    }),
   ])
 
   return (

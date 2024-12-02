@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
 
   experimental: {
     ppr: true,
-    // dynamicIO: true,
+    dynamicIO: true,
   },
 
   typescript: {

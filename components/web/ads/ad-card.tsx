@@ -1,7 +1,8 @@
-"use client"
-
+import type { AdType } from "@prisma/client"
 import { ArrowUpRightIcon } from "lucide-react"
+import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
+import { Skeleton } from "~/components/common/skeleton"
 import { ExternalLink } from "~/components/web/external-link"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
@@ -15,17 +16,17 @@ import {
 import { Favicon } from "~/components/web/ui/favicon"
 import { LogoSymbol } from "~/components/web/ui/logo-symbol"
 import { config } from "~/config"
-import type { AdOne } from "~/server/ads/payloads"
+import { findAd } from "~/server/ads/queries"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 type AdCardProps = CardProps & {
-  ad?: AdOne | null
   rel?: string
+  type?: AdType
 }
 
-export const AdCard = ({ className, ad, ...props }: AdCardProps) => {
-  ad ??= config.ads.defaultAd
+const AdCard = async ({ className, type, ...props }: AdCardProps) => {
+  const ad = (await findAd({ where: { type } })) ?? config.ads.defaultAd
   const isDefault = !ad.website.startsWith("http")
 
   return (
@@ -69,3 +70,32 @@ export const AdCard = ({ className, ad, ...props }: AdCardProps) => {
     </Card>
   )
 }
+
+const AdCardSkeleton = ({ className }: ComponentProps<typeof Card>) => {
+  return (
+    <Card hover={false} className={cx("items-stretch select-none", className)}>
+      <CardBadges>
+        <Badge variant="outline">Ad</Badge>
+      </CardBadges>
+
+      <CardHeader>
+        <Favicon src="/favicon.png" className="animate-pulse opacity-50" />
+
+        <H4 className="w-2/3">
+          <Skeleton>&nbsp;</Skeleton>
+        </H4>
+      </CardHeader>
+
+      <CardDescription className="flex flex-col gap-0.5 mb-auto">
+        <Skeleton className="h-5 w-4/5">&nbsp;</Skeleton>
+        <Skeleton className="h-5 w-1/2">&nbsp;</Skeleton>
+      </CardDescription>
+
+      <Button className="w-full pointer-events-none" suffix={<ArrowUpRightIcon />} asChild>
+        <span>&nbsp;</span>
+      </Button>
+    </Card>
+  )
+}
+
+export { AdCard, AdCardSkeleton }
