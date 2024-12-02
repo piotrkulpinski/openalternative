@@ -53,6 +53,8 @@ export const getLicenses = async (searchParams: Promise<SearchParams>) => {
 }
 
 export const getTools = async () => {
+  "use cache"
+
   return prisma.tool.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
@@ -60,6 +62,8 @@ export const getTools = async () => {
 }
 
 export const getLicenseBySlug = async (slug: string) => {
+  "use cache"
+
   return prisma.license.findUnique({
     where: { slug },
   })
