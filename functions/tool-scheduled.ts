@@ -111,17 +111,17 @@ export const toolScheduled = inngest.createFunction(
     })
 
     // Send email
-    if (tool.submitterEmail) {
-      await step.run("send-email", async () => {
-        const to = tool.submitterEmail as string
-        const subject = `Great news! ${tool.name} is scheduled for publication on ${config.site.name} 🎉`
+    await step.run("send-email", async () => {
+      if (!tool.submitterEmail) return
 
-        return sendEmails({
-          to,
-          subject,
-          react: EmailToolScheduled({ to, subject, tool }),
-        })
+      const to = tool.submitterEmail
+      const subject = `Great news! ${tool.name} is scheduled for publication on ${config.site.name} 🎉`
+
+      return sendEmails({
+        to,
+        subject,
+        react: EmailToolScheduled({ to, subject, tool }),
       })
-    }
+    })
   },
 )

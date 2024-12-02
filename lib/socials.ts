@@ -20,13 +20,12 @@ export const getSocialsFromUrl = async (url: string) => {
 }
 
 export const generateSocialPost = async () => {
-  const where = { publishedAt: { not: null, lte: new Date() } }
-  const count = await prisma.tool.count({ where })
+  const count = await prisma.tool.count({ where: { status: "Published" } })
   const skip = Math.floor(Math.random() * count)
   const tool = await prisma.tool.findFirst({
-    where,
-    skip,
+    where: { status: "Published" },
     include: { alternatives: { include: { alternative: { select: { name: true } } } } },
+    skip,
   })
 
   if (tool) {

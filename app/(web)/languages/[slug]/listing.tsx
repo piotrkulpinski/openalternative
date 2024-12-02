@@ -1,8 +1,8 @@
 import type { SearchParams } from "nuqs/server"
 import { ToolQuery } from "~/components/web/tools/tool-query"
-import { findAd } from "~/server/ads/queries"
 import type { LanguageOne } from "~/server/languages/payloads"
 import { searchTools } from "~/server/tools/queries"
+import { toolsSearchParamsCache } from "~/server/tools/search-params"
 
 type LanguageToolListingProps = {
   language: LanguageOne
@@ -10,18 +10,17 @@ type LanguageToolListingProps = {
 }
 
 export const LanguageToolListing = async ({ language, searchParams }: LanguageToolListingProps) => {
-  const [{ tools, totalCount }, ad] = await Promise.all([
-    searchTools(await searchParams, {
-      where: { languages: { some: { language: { slug: language.slug } } } },
-    }),
-    findAd({ where: { type: "Homepage" } }),
-  ])
+  const parsedParams = toolsSearchParamsCache.parse(await searchParams)
+
+  const { tools, totalCount } = await searchTools(parsedParams, {
+    where: { languages: { some: { language: { slug: language.slug } } } },
+  })
 
   return (
     <ToolQuery
       tools={tools}
       totalCount={totalCount}
-      ad={ad}
+      perPage={parsedParams.perPage}
       placeholder={`Search in ${language.name} tools...`}
     />
   )

@@ -1,7 +1,6 @@
 import Script from "next/script"
 import { type PropsWithChildren, Suspense } from "react"
 import type { Graph } from "schema-dts"
-import Providers from "~/app/(web)/providers"
 import { AdBanner } from "~/components/web/ads/ad-banner"
 import { Bottom } from "~/components/web/bottom"
 import { Footer } from "~/components/web/footer"
@@ -64,9 +63,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
   }
 
   return (
-    <Providers>
+    <>
       <div className="flex flex-col min-h-dvh">
-        <AdBanner />
+        <Suspense>
+          <AdBanner />
+        </Suspense>
+
         <Header />
 
         <Container asChild>
@@ -78,9 +80,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         </Container>
       </div>
 
-      <Suspense>
-        <Bottom />
-      </Suspense>
+      <Bottom />
 
       {/* JSON-LD */}
       <Script
@@ -95,6 +95,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
         data-api={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/api/event`}
         src={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
       />
-    </Providers>
+    </>
   )
 }

@@ -1,33 +1,38 @@
 import type { Prisma } from "@prisma/client"
-import { cache } from "~/lib/cache"
 import { categoryManyPayload, categoryOnePayload } from "~/server/categories/payloads"
 import { prisma } from "~/services/prisma"
 
-export const findCategories = cache(
-  async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {
-    return prisma.category.findMany({
-      ...args,
-      orderBy: orderBy ?? { name: "asc" },
-      where: { tools: { some: { tool: { publishedAt: { lte: new Date() } } } }, ...where },
-      include: categoryManyPayload,
-    })
-  },
-)
+export const findCategories = async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {
+  "use cache"
 
-export const findCategorySlugs = cache(
-  async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {
-    return prisma.category.findMany({
-      ...args,
-      orderBy: orderBy ?? { name: "asc" },
-      where: { tools: { some: { tool: { publishedAt: { lte: new Date() } } } }, ...where },
-      select: { slug: true, updatedAt: true },
-    })
-  },
-)
+  return prisma.category.findMany({
+    ...args,
+    orderBy: orderBy ?? { name: "asc" },
+    where: { tools: { some: { tool: { status: "Published" } } }, ...where },
+    include: categoryManyPayload,
+  })
+}
 
-export const findCategory = cache(async ({ ...args }: Prisma.CategoryFindUniqueArgs) => {
+export const findCategorySlugs = async ({
+  where,
+  orderBy,
+  ...args
+}: Prisma.CategoryFindManyArgs) => {
+  "use cache"
+
+  return prisma.category.findMany({
+    ...args,
+    orderBy: orderBy ?? { name: "asc" },
+    where: { tools: { some: { tool: { status: "Published" } } }, ...where },
+    select: { slug: true, updatedAt: true },
+  })
+}
+
+export const findCategory = async ({ ...args }: Prisma.CategoryFindUniqueArgs) => {
+  "use cache"
+
   return prisma.category.findUnique({
     ...args,
     include: categoryOnePayload,
   })
-})
+}
