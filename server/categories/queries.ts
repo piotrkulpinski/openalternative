@@ -18,8 +18,6 @@ export const findCategorySlugs = async ({
   orderBy,
   ...args
 }: Prisma.CategoryFindManyArgs) => {
-  "use cache"
-
   return prisma.category.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },

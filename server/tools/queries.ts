@@ -102,8 +102,6 @@ export const findToolsWithCategories = async ({ where, ...args }: Prisma.ToolFin
 }
 
 export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {
-  "use cache"
-
   return prisma.tool.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },

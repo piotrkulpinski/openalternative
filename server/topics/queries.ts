@@ -14,8 +14,6 @@ export const findTopics = async ({ where, orderBy, ...args }: Prisma.TopicFindMa
 }
 
 export const findTopicSlugs = async ({ where, orderBy, ...args }: Prisma.TopicFindManyArgs) => {
-  "use cache"
-
   return prisma.topic.findMany({
     ...args,
     orderBy: orderBy ?? { slug: "asc" },

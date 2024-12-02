@@ -9,7 +9,7 @@ import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
 import { H1, H5 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
-import { AdCard } from "~/components/web/ads/ad-card"
+import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
 import { Listing } from "~/components/web/listing"
 import { Markdown } from "~/components/web/markdown"
@@ -25,7 +25,6 @@ import { NavigationLink } from "~/components/web/ui/navigation-link"
 import { Section } from "~/components/web/ui/section"
 import { Tag } from "~/components/web/ui/tag"
 import { metadataConfig } from "~/config/metadata"
-import { findAd } from "~/server/ads/queries"
 import type { ToolOne } from "~/server/tools/payloads"
 import { findTool, findToolSlugs } from "~/server/tools/queries"
 
@@ -81,7 +80,7 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
 }
 
 export default async function ToolPage(props: PageProps) {
-  const [tool, ad] = await Promise.all([getTool(props), findAd({ where: { type: "ToolPage" } })])
+  const tool = await getTool(props)
   const { title } = getMetadata(tool)
   const jsonLd: ImageObject[] = []
 
@@ -178,14 +177,14 @@ export default async function ToolPage(props: PageProps) {
                 </Button>
               )}
 
-              {tool.hostingUrl && ad && (
+              {tool.hostingUrl && (
                 <Button variant="secondary" suffix={<ArrowUpRightIcon />} asChild>
                   <ExternalLink
                     href={tool.hostingUrl}
                     eventName="click_ad"
-                    eventProps={{ url: ad.website, type: ad.type }}
+                    eventProps={{ url: tool.hostingUrl, type: "ToolPage" }}
                   >
-                    Self-host with {ad.name}
+                    Self-host with Easypanel
                   </ExternalLink>
                 </Button>
               )}
@@ -269,7 +268,11 @@ export default async function ToolPage(props: PageProps) {
 
         <Section.Sidebar className="max-md:contents">
           <RepositoryDetails tool={tool} className="max-md:order-3" />
-          <AdCard ad={ad} className="max-md:order-4" />
+
+          {/* Advertisement */}
+          <Suspense fallback={<AdCardSkeleton className="max-md:order-4" />}>
+            <AdCard type="ToolPage" className="max-md:order-4" />
+          </Suspense>
 
           {/* Featured */}
           <Suspense>
