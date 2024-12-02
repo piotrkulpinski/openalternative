@@ -14,7 +14,7 @@ import { prisma } from "~/services/prisma"
 
 const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await prisma.tool.findMany({
-    where: { publishedAt: { gt: new Date() } },
+    where: { status: "Scheduled" },
     select: { slug: true, name: true, publishedAt: true },
     orderBy: { publishedAt: "asc" },
   })

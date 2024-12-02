@@ -7,7 +7,7 @@ export async function GET() {
   const { url, name, tagline } = config.site
 
   const tools = await prisma.tool.findMany({
-    where: { publishedAt: { lte: new Date() } },
+    where: { status: "Published" },
     orderBy: { publishedAt: "desc" },
     take: 50,
     select: {

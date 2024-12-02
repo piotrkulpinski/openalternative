@@ -18,6 +18,13 @@ enum AdType {
   All
 }
 
+enum ToolStatus {
+  Draft
+  Scheduled
+  Published
+  Deleted
+}
+
 model Ad {
   id          String   @id @default(cuid())
   email       String
@@ -33,22 +40,22 @@ model Ad {
 }
 
 model Tool {
-  id              String    @id @default(cuid())
-  name            String    @db.Citext
-  slug            String    @unique
-  website         String    @unique
-  repository      String    @unique
+  id              String     @id @default(cuid())
+  name            String     @db.Citext
+  slug            String     @unique
+  website         String     @unique
+  repository      String     @unique
   tagline         String?
   description     String?
   content         String?
   links           Json?
   twitterHandle   String?
-  stars           Int       @default(0)
-  forks           Int       @default(0)
-  score           Int       @default(0)
+  stars           Int        @default(0)
+  forks           Int        @default(0)
+  score           Int        @default(0)
   faviconUrl      String?
   screenshotUrl   String?
-  isFeatured      Boolean   @default(false)
+  isFeatured      Boolean    @default(false)
   submitterName   String?
   submitterEmail  String?
   submitterNote   String?
@@ -57,9 +64,10 @@ model Tool {
   discountAmount  String?
   firstCommitDate DateTime?
   lastCommitDate  DateTime?
+  status          ToolStatus @default(Draft)
   publishedAt     DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 
   // Relations
   licenseId    String?

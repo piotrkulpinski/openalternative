@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   alternates: { ...metadataConfig.alternates, canonical: "/submit" },
 }
 
-export default function SubmitPage() {
+export default async function SubmitPage() {
   return (
     <>
       <Intro>

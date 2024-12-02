@@ -7,14 +7,14 @@ import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 import { sendTwitterPost } from "~/services/twitter"
 
-export const fetchToolData = inngest.createFunction(
-  { id: "fetch-tool-data" },
+export const fetchTools = inngest.createFunction(
+  { id: "fetch-tools" },
   { cron: "TZ=Europe/Warsaw 0 0 * * *" },
 
   async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return prisma.tool.findMany({
-        where: { publishedAt: { not: null } },
+        where: { status: { in: ["Published", "Scheduled"] } },
       })
     })
 

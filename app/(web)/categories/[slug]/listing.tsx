@@ -1,8 +1,8 @@
 import type { SearchParams } from "nuqs/server"
 import { ToolQuery } from "~/components/web/tools/tool-query"
-import { findAd } from "~/server/ads/queries"
 import type { CategoryOne } from "~/server/categories/payloads"
 import { searchTools } from "~/server/tools/queries"
+import { toolsSearchParamsCache } from "~/server/tools/search-params"
 
 type CategoryToolListingProps = {
   category: CategoryOne
@@ -10,18 +10,17 @@ type CategoryToolListingProps = {
 }
 
 export const CategoryToolListing = async ({ category, searchParams }: CategoryToolListingProps) => {
-  const [{ tools, totalCount }, ad] = await Promise.all([
-    searchTools(await searchParams, {
-      where: { categories: { some: { category: { slug: category.slug } } } },
-    }),
-    findAd({ where: { type: "Homepage" } }),
-  ])
+  const parsedParams = toolsSearchParamsCache.parse(await searchParams)
+
+  const { tools, totalCount } = await searchTools(parsedParams, {
+    where: { categories: { some: { category: { slug: category.slug } } } },
+  })
 
   return (
     <ToolQuery
       tools={tools}
       totalCount={totalCount}
-      ad={ad}
+      perPage={parsedParams.perPage}
       placeholder={`Search in ${category.label?.toLowerCase()}...`}
     />
   )
