@@ -9,8 +9,6 @@ type HomeToolListingProps = {
 }
 
 export const HomeToolListing = async ({ searchParams }: HomeToolListingProps) => {
-  "use cache"
-
   const parsedParams = toolsSearchParamsCache.parse(await searchParams)
 
   const [{ tools, totalCount }, categories] = await Promise.all([

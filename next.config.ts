@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
 
   experimental: {
-    ppr: true,
+    // ppr: true,
     dynamicIO: true,
   },
 
