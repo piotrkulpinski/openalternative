@@ -1,18 +1,18 @@
 import { Slot } from "@radix-ui/react-slot"
-import { type ElementType, type HTMLAttributes, isValidElement } from "react"
+import { type ElementType, type HTMLProps, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const headingVariants = cva({
-  base: "font-display font-semibold bg-linear-to-b from-foreground to-foreground/75 bg-clip-text text-transparent",
+  base: "font-display font-semibold",
 
   variants: {
     size: {
-      h1: "text-3xl tracking-tight text-pretty md:text-4xl",
+      h1: "text-3xl tracking-tight text-pretty bg-linear-to-b from-foreground to-foreground/75 bg-clip-text text-transparent md:text-4xl",
       h2: "text-2xl tracking-tight md:text-3xl",
       h3: "text-2xl tracking-tight",
-      h4: "text-xl tracking-tight to-foreground",
-      h5: "text-base font-medium tracking-micro to-foreground",
-      h6: "text-sm font-medium to-foreground",
+      h4: "text-xl tracking-tight",
+      h5: "text-base font-medium tracking-micro",
+      h6: "text-sm font-medium",
     },
   },
 
@@ -21,7 +21,7 @@ const headingVariants = cva({
   },
 })
 
-export type HeadingProps = Omit<HTMLAttributes<HTMLHeadingElement>, "size"> &
+export type HeadingProps = Omit<HTMLProps<HTMLHeadingElement>, "size"> &
   VariantProps<typeof headingVariants> & {
     /**
      * If set to `true`, the button will be rendered as a child within the component.
