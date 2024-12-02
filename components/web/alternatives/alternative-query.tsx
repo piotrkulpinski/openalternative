@@ -1,6 +1,3 @@
-"use client"
-
-import { useQueryStates } from "nuqs"
 import { Suspense } from "react"
 import { AlternativeFilters } from "~/components/web/alternatives/alternative-filters"
 import {
@@ -10,17 +7,20 @@ import {
 import { Pagination } from "~/components/web/pagination"
 import { Input } from "~/components/web/ui/input"
 import type { AlternativeMany } from "~/server/alternatives/payloads"
-import { alternativesSearchParams } from "~/server/alternatives/search-params"
 
 type AlternativeQueryProps = {
   alternatives: AlternativeMany[]
+  perPage: number
   totalCount: number
   placeholder?: string
 }
 
-const AlternativeQuery = ({ alternatives, totalCount, placeholder }: AlternativeQueryProps) => {
-  const [{ perPage }] = useQueryStates(alternativesSearchParams)
-
+const AlternativeQuery = ({
+  alternatives,
+  perPage,
+  totalCount,
+  placeholder,
+}: AlternativeQueryProps) => {
   return (
     <>
       <div className="flex flex-col gap-5">
