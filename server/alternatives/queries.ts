@@ -69,8 +69,6 @@ export const findAlternativeSlugs = async ({
   orderBy,
   ...args
 }: Prisma.AlternativeFindManyArgs) => {
-  "use cache"
-
   return prisma.alternative.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
