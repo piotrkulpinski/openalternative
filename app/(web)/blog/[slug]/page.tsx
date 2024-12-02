@@ -5,18 +5,14 @@ import { notFound } from "next/navigation"
 import { Suspense, cache } from "react"
 import { H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
-import { AdCard } from "~/components/web/ads/ad-card"
-import {
-  AlternativePreview,
-  AlternativePreviewSkeleton,
-} from "~/components/web/alternatives/alternative-preview"
+import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
+import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
 import { MDX } from "~/components/web/mdx"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { Author } from "~/components/web/ui/author"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
-import { findAd } from "~/server/ads/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -57,7 +53,6 @@ export const generateMetadata = async (props: PageProps) => {
 
 export default async function BlogPostPage(props: PageProps) {
   const post = await findPostBySlug(props)
-  const ad = await findAd({ where: { type: "BlogPost" } })
 
   return (
     <>
@@ -111,14 +106,14 @@ export default async function BlogPostPage(props: PageProps) {
 
             {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}
 
-            {ad && <AdCard ad={ad} isRevealed={false} className="max-md:hidden" />}
+            <Suspense fallback={<AdCardSkeleton className="max-md:hidden" />}>
+              <AdCard type="BlogPost" isRevealed={false} className="max-md:hidden" />
+            </Suspense>
           </Section.Sidebar>
         </Section>
       </div>
 
-      <Suspense fallback={<AlternativePreviewSkeleton />}>
-        <AlternativePreview />
-      </Suspense>
+      <AlternativePreview />
     </>
   )
 }
