@@ -1,19 +1,10 @@
 "use client"
 
-import { type PropsWithChildren, use } from "react"
+import type { PropsWithChildren } from "react"
 import { TooltipProvider } from "~/components/admin/ui/tooltip"
-import { StatsContext } from "~/hooks/use-stats-context"
 
-type ProviderProps = PropsWithChildren<{
-  statsPromise: Promise<[number, number, number, number, number, number]>
-}>
+type ProviderProps = PropsWithChildren
 
-export function Providers({ children, statsPromise }: ProviderProps) {
-  const stats = use(statsPromise)
-
-  return (
-    <StatsContext.Provider value={stats}>
-      <TooltipProvider delayDuration={250}>{children}</TooltipProvider>
-    </StatsContext.Provider>
-  )
+export function Providers({ children }: ProviderProps) {
+  return <TooltipProvider delayDuration={250}>{children}</TooltipProvider>
 }
