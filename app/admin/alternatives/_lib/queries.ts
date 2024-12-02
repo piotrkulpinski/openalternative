@@ -53,6 +53,8 @@ export const getAlternatives = async (searchParams: Promise<SearchParams>) => {
 }
 
 export const getTools = async () => {
+  "use cache"
+
   return prisma.tool.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
@@ -60,6 +62,8 @@ export const getTools = async () => {
 }
 
 export const getAlternativeBySlug = async (slug: string) => {
+  "use cache"
+
   return prisma.alternative.findUnique({
     where: { slug },
     include: { tools: { include: { tool: true } } },
