@@ -14,8 +14,6 @@ export const findLicenses = async ({ where, orderBy, ...args }: Prisma.LicenseFi
 }
 
 export const findLicenseSlugs = async ({ where, orderBy, ...args }: Prisma.LicenseFindManyArgs) => {
-  "use cache"
-
   return prisma.license.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },

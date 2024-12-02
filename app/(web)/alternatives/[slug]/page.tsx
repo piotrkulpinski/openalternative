@@ -1,5 +1,4 @@
 import type { Category } from "@prisma/client"
-import { addMonths, getYear } from "date-fns"
 import { AwardIcon } from "lucide-react"
 import { ArrowUpRightIcon } from "lucide-react"
 import { SmilePlusIcon } from "lucide-react"
@@ -44,7 +43,7 @@ const getAlternative = cache(async ({ params }: PageProps) => {
 })
 
 const getMetadata = (alternative: AlternativeOne): Metadata => {
-  const year = getYear(addMonths(new Date(), 1))
+  const year = 2025
   const count = alternative._count.tools
 
   return {

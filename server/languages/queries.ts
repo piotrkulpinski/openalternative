@@ -18,8 +18,6 @@ export const findLanguageSlugs = async ({
   orderBy,
   ...args
 }: Prisma.LanguageFindManyArgs) => {
-  "use cache"
-
   return prisma.language.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },

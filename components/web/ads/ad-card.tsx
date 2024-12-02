@@ -87,8 +87,9 @@ const AdCardSkeleton = ({ className }: ComponentProps<typeof Card>) => {
       </CardHeader>
 
       <CardDescription className="flex flex-col gap-0.5 mb-auto">
-        <Skeleton className="h-5 w-4/5">&nbsp;</Skeleton>
-        <Skeleton className="h-5 w-1/2">&nbsp;</Skeleton>
+        <Skeleton className="h-5 w-full">&nbsp;</Skeleton>
+        <Skeleton className="h-5 w-full">&nbsp;</Skeleton>
+        <Skeleton className="h-5 w-2/3">&nbsp;</Skeleton>
       </CardDescription>
 
       <Button className="w-full pointer-events-none" suffix={<ArrowUpRightIcon />} asChild>
