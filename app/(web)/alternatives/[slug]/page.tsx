@@ -22,9 +22,9 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
-import type { AlternativeOne } from "~/server/alternatives/payloads"
-import { findAlternative, findAlternativeSlugs } from "~/server/alternatives/queries"
-import { findToolsWithCategories } from "~/server/tools/queries"
+import type { AlternativeOne } from "~/server/web/alternatives/payloads"
+import { findAlternative, findAlternativeSlugs } from "~/server/web/alternatives/queries"
+import { findToolsWithCategories } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>

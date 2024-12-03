@@ -2,8 +2,8 @@ import { Plan } from "~/components/web/plan"
 import { config } from "~/config"
 import { getProductFeatures, getProducts } from "~/lib/products"
 import { isToolPublished } from "~/lib/tools"
-import type { ToolOne } from "~/server/tools/payloads"
-import { countUpcomingTools } from "~/server/tools/queries"
+import type { ToolOne } from "~/server/web/tools/payloads"
+import { countUpcomingTools } from "~/server/web/tools/queries"
 import { stripe } from "~/services/stripe"
 
 type SubmitProductsProps = {

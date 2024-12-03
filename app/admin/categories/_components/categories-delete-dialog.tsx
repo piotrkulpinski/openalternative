@@ -16,7 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/admin/ui/dialog"
-import { deleteCategories } from "../_lib/actions"
+import { deleteCategories } from "~/server/admin/categories/actions"
 
 interface CategoriesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   categories: Row<Category>["original"][]

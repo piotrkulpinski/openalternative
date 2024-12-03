@@ -13,7 +13,7 @@ import { Calendar } from "~/components/web/ui/calendar"
 import { Tooltip } from "~/components/web/ui/tooltip"
 import type { AdSpot } from "~/config/ads"
 import type { AdsSelection, useAds } from "~/hooks/use-ads"
-import type { AdMany } from "~/server/ads/payloads"
+import type { AdMany } from "~/server/web/ads/payloads"
 import { getFirstAvailableMonth } from "~/utils/ads"
 import { cx } from "~/utils/cva"
 

@@ -9,7 +9,7 @@ import {
   CardSimpleDivider,
   CardSimpleTitle,
 } from "~/components/web/ui/card-simple"
-import type { LanguageMany } from "~/server/languages/payloads"
+import type { LanguageMany } from "~/server/web/languages/payloads"
 
 type LanguageCardProps = ComponentProps<typeof CardSimple> & {
   language: LanguageMany

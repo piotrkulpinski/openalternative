@@ -7,12 +7,6 @@ import type React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { createAlternative, updateAlternative } from "~/app/admin/alternatives/_lib/actions"
-import type { getAlternativeBySlug, getTools } from "~/app/admin/alternatives/_lib/queries"
-import {
-  type AlternativeSchema,
-  alternativeSchema,
-} from "~/app/admin/alternatives/_lib/validations"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/admin/ui/button"
 import { Input } from "~/components/admin/ui/input"
@@ -26,12 +20,16 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { createAlternative, updateAlternative } from "~/server/admin/alternatives/actions"
+import type { findAlternativeBySlug } from "~/server/admin/alternatives/queries"
+import { type AlternativeSchema, alternativeSchema } from "~/server/admin/alternatives/validations"
+import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type AlternativeFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  alternative?: Awaited<ReturnType<typeof getAlternativeBySlug>>
-  tools: Awaited<ReturnType<typeof getTools>>
+  alternative?: Awaited<ReturnType<typeof findAlternativeBySlug>>
+  tools: ReturnType<typeof findToolList>
 }
 
 export function AlternativeForm({
@@ -219,7 +217,7 @@ export function AlternativeForm({
             <FormItem className="col-span-full">
               <FormLabel>Tools</FormLabel>
               <RelationSelector
-                relations={tools}
+                promise={tools}
                 selectedIds={field.value ?? []}
                 onChange={field.onChange}
               />

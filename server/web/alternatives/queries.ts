@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client"
 import type { inferParserType } from "nuqs/server"
-import { alternativeManyPayload, alternativeOnePayload } from "~/server/alternatives/payloads"
-import type { alternativesSearchParams } from "~/server/alternatives/search-params"
+import { alternativeManyPayload, alternativeOnePayload } from "~/server/web/alternatives/payloads"
+import type { alternativesSearchParams } from "~/server/web/alternatives/search-params"
 import { prisma } from "~/services/prisma"
 
 export const searchAlternatives = async (

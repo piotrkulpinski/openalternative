@@ -5,8 +5,8 @@ import { CardSimple, CardSimpleCaption, CardSimpleDivider } from "~/components/w
 import { Container } from "~/components/web/ui/container"
 import { NavigationLink } from "~/components/web/ui/navigation-link"
 import { siteConfig } from "~/config/site"
-import { findAlternatives } from "~/server/alternatives/queries"
-import { findCategories } from "~/server/categories/queries"
+import { findAlternatives } from "~/server/web/alternatives/queries"
+import { findCategories } from "~/server/web/categories/queries"
 import { cx } from "~/utils/cva"
 
 export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => {

@@ -3,8 +3,8 @@
 import { slugify } from "@curiousleaf/utils"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
-import { licenseSchema } from "~/app/admin/licenses/_lib/validations"
 import { authedProcedure } from "~/lib/safe-actions"
+import { licenseSchema } from "~/server/admin/licenses/validations"
 import { prisma } from "~/services/prisma"
 
 export const createLicense = authedProcedure

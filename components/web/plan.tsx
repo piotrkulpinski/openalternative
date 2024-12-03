@@ -19,7 +19,7 @@ import { Tooltip } from "~/components/web/ui/tooltip"
 import { TooltipProvider } from "~/components/web/ui/tooltip"
 import { usePlanPrices } from "~/hooks/use-plan-prices"
 import { isToolPublished } from "~/lib/tools"
-import type { ToolOne } from "~/server/tools/payloads"
+import type { ToolOne } from "~/server/web/tools/payloads"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const planVariants = cva({

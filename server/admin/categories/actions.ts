@@ -3,8 +3,8 @@
 import { slugify } from "@curiousleaf/utils"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
-import { categorySchema } from "~/app/admin/categories/_lib/validations"
 import { authedProcedure } from "~/lib/safe-actions"
+import { categorySchema } from "~/server/admin/categories/validations"
 import { prisma } from "~/services/prisma"
 
 export const createCategory = authedProcedure

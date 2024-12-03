@@ -8,7 +8,7 @@ import {
   CardSimpleDivider,
   CardSimpleTitle,
 } from "~/components/web/ui/card-simple"
-import type { CategoryMany } from "~/server/categories/payloads"
+import type { CategoryMany } from "~/server/web/categories/payloads"
 
 type CategoryCardProps = ComponentProps<typeof CardSimple> & {
   category: CategoryMany

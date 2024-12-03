@@ -4,8 +4,8 @@ import {
   AlternativeListSkeleton,
 } from "~/components/web/alternatives/alternative-list"
 import { Listing } from "~/components/web/listing"
-import { alternativeManyPayload } from "~/server/alternatives/payloads"
-import { findAlternatives } from "~/server/alternatives/queries"
+import { alternativeManyPayload } from "~/server/web/alternatives/payloads"
+import { findAlternatives } from "~/server/web/alternatives/queries"
 
 const AlternativePreview = async () => {
   "use cache"

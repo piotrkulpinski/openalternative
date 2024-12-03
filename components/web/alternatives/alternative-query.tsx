@@ -6,7 +6,7 @@ import {
 } from "~/components/web/alternatives/alternative-list"
 import { Pagination } from "~/components/web/pagination"
 import { Input } from "~/components/web/ui/input"
-import type { AlternativeMany } from "~/server/alternatives/payloads"
+import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type AlternativeQueryProps = {
   alternatives: AlternativeMany[]

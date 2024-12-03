@@ -8,7 +8,7 @@ import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
-import type { ToolMany } from "~/server/tools/payloads"
+import type { ToolMany } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
 type ToolEntryProps = HTMLAttributes<HTMLElement> & {

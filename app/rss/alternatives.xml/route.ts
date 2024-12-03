@@ -1,6 +1,6 @@
 import RSS from "rss"
 import { config } from "~/config"
-import { findAlternatives } from "~/server/alternatives/queries"
+import { findAlternatives } from "~/server/web/alternatives/queries"
 import { addUTMTracking } from "~/utils/helpers"
 
 export async function GET() {

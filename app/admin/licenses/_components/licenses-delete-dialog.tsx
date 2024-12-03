@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/admin/ui/dialog"
-import { deleteLicenses } from "../_lib/actions"
+import { deleteLicenses } from "~/server/admin/licenses/actions"
 
 interface LicensesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   licenses: Row<License>["original"][]

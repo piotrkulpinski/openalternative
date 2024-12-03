@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { ImageResponse } from "next/og"
 import { OgBase } from "~/components/web/og/og-base"
 import { loadGoogleFont } from "~/lib/fonts"
-import { findAlternative } from "~/server/alternatives/queries"
+import { findAlternative } from "~/server/web/alternatives/queries"
 
 type PageProps = {
   params: { slug: string }

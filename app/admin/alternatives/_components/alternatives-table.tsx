@@ -11,13 +11,13 @@ import { DataTableViewOptions } from "~/components/admin/data-table/data-table-v
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/admin/ui/button"
 import { useDataTable } from "~/hooks/use-data-table"
+import type { findAlternatives } from "~/server/admin/alternatives/queries"
 import type { DataTableFilterField } from "~/types"
-import type { getAlternatives } from "../_lib/queries"
 import { getColumns } from "./alternatives-table-columns"
 import { AlternativesTableToolbarActions } from "./alternatives-table-toolbar-actions"
 
 interface AlternativesTableProps {
-  alternativesPromise: ReturnType<typeof getAlternatives>
+  alternativesPromise: ReturnType<typeof findAlternatives>
 }
 
 export function AlternativesTable({ alternativesPromise }: AlternativesTableProps) {

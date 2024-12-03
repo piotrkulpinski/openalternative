@@ -8,7 +8,7 @@ import { Button } from "~/components/web/ui/button"
 import { Card, CardDescription, CardHeader } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
 import { Prose } from "~/components/web/ui/prose"
-import type { AlternativeMany, AlternativeOne } from "~/server/alternatives/payloads"
+import type { AlternativeMany, AlternativeOne } from "~/server/web/alternatives/payloads"
 import { cx } from "~/utils/cva"
 
 type AlternativeCardExternalProps = HTMLAttributes<HTMLElement> & {

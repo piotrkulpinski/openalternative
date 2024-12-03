@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client"
-import { licenseManyPayload, licenseOnePayload } from "~/server/licenses/payloads"
+import { licenseManyPayload, licenseOnePayload } from "~/server/web/licenses/payloads"
 import { prisma } from "~/services/prisma"
 
 export const findLicenses = async ({ where, orderBy, ...args }: Prisma.LicenseFindManyArgs) => {

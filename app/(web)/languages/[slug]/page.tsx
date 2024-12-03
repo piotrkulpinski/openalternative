@@ -6,8 +6,8 @@ import { LanguageToolListing } from "~/app/(web)/languages/[slug]/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
-import type { LanguageOne } from "~/server/languages/payloads"
-import { findLanguage, findLanguageSlugs } from "~/server/languages/queries"
+import type { LanguageOne } from "~/server/web/languages/payloads"
+import { findLanguage, findLanguageSlugs } from "~/server/web/languages/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>

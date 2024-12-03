@@ -11,7 +11,7 @@ import { Button } from "~/components/web/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
-import { findAds } from "~/server/ads/queries"
+import { findAds } from "~/server/web/ads/queries"
 
 export const metadata: Metadata = {
   title: `Advertise on ${config.site.name}`,

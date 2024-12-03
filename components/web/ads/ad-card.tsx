@@ -16,7 +16,7 @@ import {
 import { Favicon } from "~/components/web/ui/favicon"
 import { LogoSymbol } from "~/components/web/ui/logo-symbol"
 import { config } from "~/config"
-import { findAd } from "~/server/ads/queries"
+import { findAd } from "~/server/web/ads/queries"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 

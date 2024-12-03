@@ -8,7 +8,7 @@ import {
   CardSimpleDivider,
   CardSimpleTitle,
 } from "~/components/web/ui/card-simple"
-import type { LicenseMany } from "~/server/licenses/payloads"
+import type { LicenseMany } from "~/server/web/licenses/payloads"
 
 type LicenseCardProps = ComponentProps<typeof CardSimple> & {
   license: LicenseMany
