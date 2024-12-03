@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client"
 import { endOfDay, startOfDay } from "date-fns"
+import { unstable_cacheTag as cacheTag } from "next/cache"
 import type { SearchParams } from "nuqs/server"
 import { prisma } from "~/services/prisma"
 import { searchParamsSchema } from "./validations"
@@ -54,7 +55,7 @@ export const findAlternatives = async (searchParams: Promise<SearchParams>) => {
 
 export const findAlternativeList = async () => {
   "use cache"
-
+  cacheTag("alternatives")
   return prisma.alternative.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
@@ -63,6 +64,7 @@ export const findAlternativeList = async () => {
 
 export const findAlternativeBySlug = async (slug: string) => {
   "use cache"
+  cacheTag("alternative", `alternative-${slug}`)
 
   return prisma.alternative.findUnique({
     where: { slug },

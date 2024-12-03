@@ -60,7 +60,7 @@ export const findTools = async (searchParams: Promise<SearchParams>) => {
 
 export const findScheduledTools = async () => {
   "use cache"
-  cacheTag("scheduled-tools")
+  cacheTag("schedule")
 
   return prisma.tool.findMany({
     where: { status: ToolStatus.Scheduled },
@@ -69,19 +69,9 @@ export const findScheduledTools = async () => {
   })
 }
 
-export const findToolCountByStatus = async () => {
-  "use cache"
-
-  return prisma.tool.groupBy({
-    by: ["publishedAt"],
-    _count: {
-      publishedAt: true,
-    },
-  })
-}
-
 export const findToolList = async () => {
   "use cache"
+  cacheTag("tools")
 
   return prisma.tool.findMany({
     select: { id: true, name: true },
@@ -91,7 +81,7 @@ export const findToolList = async () => {
 
 export const findToolBySlug = async (slug: string) => {
   "use cache"
-  cacheTag(`tool-${slug}`)
+  cacheTag("tool", `tool-${slug}`)
 
   return prisma.tool.findUnique({
     where: { slug },

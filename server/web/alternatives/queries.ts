@@ -85,7 +85,7 @@ export const findAlternativeBySlug = async (
   { where, ...args }: Prisma.AlternativeFindFirstArgs,
 ) => {
   "use cache"
-  cacheTag(`alternative-${slug}`)
+  cacheTag("alternative", `alternative-${slug}`)
 
   return prisma.alternative.findFirst({
     ...args,

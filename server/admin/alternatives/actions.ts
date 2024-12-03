@@ -1,7 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
-import { revalidatePath } from "next/cache"
+import { unstable_expireTag as expireTag } from "next/cache"
 import { z } from "zod"
 import { uploadFavicon } from "~/lib/media"
 import { authedProcedure } from "~/lib/safe-actions"
@@ -26,7 +26,7 @@ export const createAlternative = authedProcedure
       },
     })
 
-    revalidatePath("/admin/alternatives")
+    expireTag("alternatives")
 
     await inngest.send({ name: "alternative.created", data: { slug: alternative.slug } })
 
@@ -52,8 +52,7 @@ export const updateAlternative = authedProcedure
       },
     })
 
-    revalidatePath("/admin/alternatives")
-    revalidatePath(`/alternatives/${alternative.slug}`)
+    expireTag("alternatives", `alternative-${alternative.slug}`)
 
     return alternative
   })
@@ -67,7 +66,7 @@ export const updateAlternatives = authedProcedure
       data,
     })
 
-    revalidatePath("/admin/alternatives")
+    expireTag("alternatives", "alternative")
 
     return true
   })
@@ -85,7 +84,7 @@ export const deleteAlternatives = authedProcedure
       where: { id: { in: ids } },
     })
 
-    revalidatePath("/admin/alternatives")
+    expireTag("alternatives")
 
     for (const alternative of alternatives) {
       await inngest.send({ name: "alternative.deleted", data: { slug: alternative.slug } })
@@ -111,6 +110,8 @@ export const reuploadAlternativeAssets = authedProcedure
       where: { id: alternative.id },
       data: { faviconUrl },
     })
+
+    expireTag("alternatives", `alternative-${alternative.slug}`)
 
     return true
   })
