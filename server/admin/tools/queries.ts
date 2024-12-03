@@ -1,5 +1,5 @@
 import { isTruthy } from "@curiousleaf/utils"
-import type { Prisma } from "@prisma/client"
+import { type Prisma, ToolStatus } from "@prisma/client"
 import { endOfDay, startOfDay } from "date-fns"
 import { unstable_cacheTag as cacheTag } from "next/cache"
 import type { SearchParams } from "nuqs/server"
@@ -8,7 +8,7 @@ import { searchParamsSchema } from "./validations"
 
 export const findTools = async (searchParams: Promise<SearchParams>) => {
   const search = searchParamsSchema.parse(await searchParams)
-  const { page, per_page, sort, name, publishedAt, operator, from, to } = search
+  const { page, per_page, sort, name, status, operator, from, to } = search
 
   // Offset to paginate the results
   const offset = (page - 1) * per_page
@@ -26,22 +26,11 @@ export const findTools = async (searchParams: Promise<SearchParams>) => {
   const toDate = to ? endOfDay(new Date(to)) : undefined
 
   const expressions: (Prisma.ToolWhereInput | undefined)[] = [
-    name
-      ? {
-          name: { contains: name, mode: "insensitive" },
-        }
-      : undefined,
+    // Filter by name
+    name ? { name: { contains: name, mode: "insensitive" } } : undefined,
 
     // Filter tasks by status
-    publishedAt
-      ? {
-          publishedAt: publishedAt.includes("draft")
-            ? null
-            : publishedAt.includes("scheduled")
-              ? { gt: new Date() }
-              : { lte: new Date() },
-        }
-      : undefined,
+    status ? { status: { in: status.split(".") as ToolStatus[] } } : undefined,
 
     // Filter by createdAt
     fromDate || toDate ? { createdAt: { gte: fromDate, lte: toDate } } : undefined,
@@ -67,6 +56,17 @@ export const findTools = async (searchParams: Promise<SearchParams>) => {
 
   const pageCount = Math.ceil(toolsTotal / per_page)
   return { tools, toolsTotal, pageCount }
+}
+
+export const findScheduledTools = async () => {
+  "use cache"
+  cacheTag("scheduled-tools")
+
+  return prisma.tool.findMany({
+    where: { status: ToolStatus.Scheduled },
+    select: { slug: true, name: true, publishedAt: true },
+    orderBy: { publishedAt: "asc" },
+  })
 }
 
 export const findToolCountByStatus = async () => {
