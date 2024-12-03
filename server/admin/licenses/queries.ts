@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client"
 import { endOfDay, startOfDay } from "date-fns"
+import { unstable_cacheTag as cacheTag } from "next/cache"
 import type { SearchParams } from "nuqs/server"
 import { prisma } from "~/services/prisma"
 import { searchParamsSchema } from "./validations"
@@ -54,6 +55,7 @@ export const findLicenses = async (searchParams: Promise<SearchParams>) => {
 
 export const findLicenseBySlug = async (slug: string) => {
   "use cache"
+  cacheTag("license", `license-${slug}`)
 
   return prisma.license.findUnique({
     where: { slug },

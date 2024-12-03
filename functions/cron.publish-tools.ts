@@ -1,3 +1,4 @@
+import { unstable_expireTag as expireTag } from "next/cache"
 import { config } from "~/config"
 import EmailToolPublished from "~/emails/tool-published"
 import { sendEmails } from "~/lib/email"
@@ -56,8 +57,14 @@ export const publishTools = inngest.createFunction(
       }
     }
 
+    // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
       return prisma.$disconnect()
+    })
+
+    // Expire cache
+    await step.run("expire-tags", async () => {
+      expireTag("tools", ...tools.map(tool => `tool-${tool.slug}`))
     })
   },
 )

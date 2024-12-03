@@ -33,7 +33,7 @@ export const findLanguageBySlug = async (
   { where, ...args }: Prisma.LanguageFindFirstArgs,
 ) => {
   "use cache"
-  cacheTag(`language-${slug}`)
+  cacheTag("language", `language-${slug}`)
 
   return prisma.language.findFirst({
     ...args,

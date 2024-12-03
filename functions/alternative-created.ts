@@ -1,3 +1,4 @@
+import { unstable_expireTag as expireTag } from "next/cache"
 import { uploadFavicon } from "~/lib/media"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
@@ -20,6 +21,10 @@ export const alternativeCreated = inngest.createFunction(
         where: { id: alternative.id },
         data: { faviconUrl },
       })
+    })
+
+    await step.run("expire-tags", async () => {
+      expireTag(`alternative-${alternative.slug}`)
     })
   },
 )

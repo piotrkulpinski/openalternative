@@ -116,6 +116,7 @@ export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFind
 
 export const countUpcomingTools = async ({ where, ...args }: Prisma.ToolCountArgs) => {
   "use cache"
+  cacheTag("schedule")
   cacheLife("hours")
 
   return prisma.tool.count({
@@ -129,7 +130,7 @@ export const findToolBySlug = async (
   { where, ...args }: Prisma.ToolFindFirstArgs,
 ) => {
   "use cache"
-  cacheTag(`tool-${slug}`)
+  cacheTag("tool", `tool-${slug}`)
 
   return prisma.tool.findFirst({
     ...args,

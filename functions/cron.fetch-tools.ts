@@ -1,3 +1,4 @@
+import { unstable_expireTag as expireTag } from "next/cache"
 import { getMilestoneReached, sendMilestonePost } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { generateSocialPost } from "~/lib/socials"
@@ -54,6 +55,11 @@ export const fetchTools = inngest.createFunction(
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
       return prisma.$disconnect()
+    })
+
+    // Expire cache
+    await step.run("expire-tags", async () => {
+      expireTag("tools", "tool")
     })
   },
 )

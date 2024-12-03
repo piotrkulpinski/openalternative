@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client"
 import { endOfDay, startOfDay } from "date-fns"
+import { unstable_cacheTag as cacheTag } from "next/cache"
 import type { SearchParams } from "nuqs/server"
 import { prisma } from "~/services/prisma"
 import { searchParamsSchema } from "./validations"
@@ -54,6 +55,7 @@ export const findCategories = async (searchParams: Promise<SearchParams>) => {
 
 export const findCategoryList = async () => {
   "use cache"
+  cacheTag("categories")
 
   return prisma.category.findMany({
     select: { id: true, name: true },
@@ -63,6 +65,7 @@ export const findCategoryList = async () => {
 
 export const findCategoryBySlug = async (slug: string) => {
   "use cache"
+  cacheTag("category", `category-${slug}`)
 
   return prisma.category.findUnique({
     where: { slug },

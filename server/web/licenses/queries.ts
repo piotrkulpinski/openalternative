@@ -29,7 +29,7 @@ export const findLicenseBySlug = async (
   { where, ...args }: Prisma.LicenseFindFirstArgs,
 ) => {
   "use cache"
-  cacheTag(`license-${slug}`)
+  cacheTag("license", `license-${slug}`)
 
   return prisma.license.findFirst({
     ...args,
