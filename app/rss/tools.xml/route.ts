@@ -1,3 +1,4 @@
+import { ToolStatus } from "@prisma/client"
 import RSS from "rss"
 import { config } from "~/config"
 import { prisma } from "~/services/prisma"
@@ -7,7 +8,7 @@ export async function GET() {
   const { url, name, tagline } = config.site
 
   const tools = await prisma.tool.findMany({
-    where: { status: "Published" },
+    where: { status: ToolStatus.Published },
     orderBy: { publishedAt: "desc" },
     take: 50,
     select: {
