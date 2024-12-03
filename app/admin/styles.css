@@ -87,7 +87,7 @@
   textarea,
   select,
   button {
-    border: 0px solid;
+    border: 0px solid var(--color-ring, currentColor);
     border-radius: 0;
     padding: 0;
     color: inherit;
@@ -98,7 +98,7 @@
   ::after,
   ::before,
   ::backdrop {
-    border-color: var(--color-input, currentColor);
+    border-color: var(--color-border, currentColor);
   }
 
   .font-sans {
