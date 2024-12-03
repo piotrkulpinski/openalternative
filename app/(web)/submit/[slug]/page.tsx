@@ -12,7 +12,7 @@ import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import { isToolPublished } from "~/lib/tools"
-import { findTool } from "~/server/web/tools/queries"
+import { findToolBySlug } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -29,8 +29,8 @@ const getTool = cache(async ({ params, searchParams }: PageProps) => {
   const { success } = searchParamsCache.parse(await searchParams)
   const { slug } = await params
 
-  const tool = await findTool({
-    where: { slug, isFeatured: success ? undefined : false },
+  const tool = await findToolBySlug(slug, {
+    where: { isFeatured: success ? undefined : false },
   })
 
   if (!tool) {
