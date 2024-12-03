@@ -6,8 +6,8 @@ import { CategoryToolListing } from "~/app/(web)/categories/[slug]/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
-import type { CategoryOne } from "~/server/categories/payloads"
-import { findCategory, findCategorySlugs } from "~/server/categories/queries"
+import type { CategoryOne } from "~/server/web/categories/payloads"
+import { findCategory, findCategorySlugs } from "~/server/web/categories/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>

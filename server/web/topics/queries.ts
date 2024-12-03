@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client"
-import { topicManyPayload, topicOnePayload } from "~/server/topics/payloads"
+import { topicManyPayload, topicOnePayload } from "~/server/web/topics/payloads"
 import { prisma } from "~/services/prisma"
 
 export const findTopics = async ({ where, orderBy, ...args }: Prisma.TopicFindManyArgs) => {

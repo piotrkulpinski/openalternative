@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { EmptyList } from "~/components/web/empty-list"
 import { LicenseCard, LicenseCardSkeleton } from "~/components/web/licenses/license-card"
 import { Grid } from "~/components/web/ui/grid"
-import type { LicenseMany } from "~/server/licenses/payloads"
+import type { LicenseMany } from "~/server/web/licenses/payloads"
 import { cx } from "~/utils/cva"
 
 type LicenseListProps = ComponentProps<typeof Grid> & {

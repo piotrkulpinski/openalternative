@@ -10,7 +10,7 @@ import { ExternalLink } from "~/components/web/external-link"
 import { Button } from "~/components/web/ui/button"
 import { Insights } from "~/components/web/ui/insights"
 import { NavigationLink } from "~/components/web/ui/navigation-link"
-import type { ToolOne } from "~/server/tools/payloads"
+import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 import { BrandGitHubIcon } from "../common/icons/brand-github"
 

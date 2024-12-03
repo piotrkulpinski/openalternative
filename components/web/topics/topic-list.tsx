@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { EmptyList } from "~/components/web/empty-list"
 import { TopicCard, TopicCardSkeleton } from "~/components/web/topics/topic-card"
 import { Grid } from "~/components/web/ui/grid"
-import type { TopicMany } from "~/server/topics/payloads"
+import type { TopicMany } from "~/server/web/topics/payloads"
 import { cx } from "~/utils/cva"
 
 type TopicListProps = ComponentProps<typeof Grid> & {

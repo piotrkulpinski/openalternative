@@ -1,15 +1,15 @@
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
+import { findTools } from "~/server/admin/tools/queries"
 import { ToolsTable } from "./_components/tools-table"
-import { getTools } from "./_lib/queries"
 
 export interface ToolsPageProps {
   searchParams: Promise<SearchParams>
 }
 
 export default async function ToolsPage({ searchParams }: ToolsPageProps) {
-  const toolsPromise = getTools(searchParams)
+  const toolsPromise = findTools(searchParams)
 
   return (
     <Suspense

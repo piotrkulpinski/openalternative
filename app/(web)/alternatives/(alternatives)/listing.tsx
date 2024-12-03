@@ -1,7 +1,7 @@
 import type { SearchParams } from "nuqs/server"
 import { AlternativeQuery } from "~/components/web/alternatives/alternative-query"
-import { searchAlternatives } from "~/server/alternatives/queries"
-import { alternativesSearchParamsCache } from "~/server/alternatives/search-params"
+import { searchAlternatives } from "~/server/web/alternatives/queries"
+import { alternativesSearchParamsCache } from "~/server/web/alternatives/search-params"
 
 type AlternativeListingProps = {
   searchParams: Promise<SearchParams>

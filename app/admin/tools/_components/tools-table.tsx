@@ -11,13 +11,13 @@ import { DataTableViewOptions } from "~/components/admin/data-table/data-table-v
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/admin/ui/button"
 import { useDataTable } from "~/hooks/use-data-table"
+import type { findTools } from "~/server/admin/tools/queries"
 import type { DataTableFilterField } from "~/types"
-import type { getTools } from "../_lib/queries"
 import { getColumns } from "./tools-table-columns"
 import { ToolsTableToolbarActions } from "./tools-table-toolbar-actions"
 
 interface ToolsTableProps {
-  toolsPromise: ReturnType<typeof getTools>
+  toolsPromise: ReturnType<typeof findTools>
 }
 
 export function ToolsTable({ toolsPromise }: ToolsTableProps) {

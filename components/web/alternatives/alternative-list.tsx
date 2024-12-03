@@ -5,7 +5,7 @@ import {
 } from "~/components/web/alternatives/alternative-card"
 import { EmptyList } from "~/components/web/empty-list"
 import { Grid } from "~/components/web/ui/grid"
-import type { AlternativeMany } from "~/server/alternatives/payloads"
+import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type AlternativeListProps = ComponentProps<typeof Grid> & {
   alternatives: AlternativeMany[]

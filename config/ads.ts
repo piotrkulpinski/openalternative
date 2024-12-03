@@ -1,5 +1,5 @@
 import type { AdType } from "@prisma/client"
-import type { AdOne } from "~/server/ads/payloads"
+import type { AdOne } from "~/server/web/ads/payloads"
 
 export type AdSpot = {
   label: string

@@ -1,9 +1,14 @@
+"use cache"
+
 import { notFound } from "next/navigation"
+import { Suspense } from "react"
 import { ToolActions } from "~/app/admin/tools/_components/tool-actions"
 import { ToolForm } from "~/app/admin/tools/_components/tool-form"
-import { getAlternatives, getCategories, getToolBySlug } from "~/app/admin/tools/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
+import { findAlternativeList } from "~/server/admin/alternatives/queries"
+import { findCategoryList } from "~/server/admin/categories/queries"
+import { findToolBySlug } from "~/server/admin/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -11,11 +16,7 @@ type PageProps = {
 
 export default async function UpdateToolPage({ params }: PageProps) {
   const { slug } = await params
-  const [tool, alternatives, categories] = await Promise.all([
-    getToolBySlug(slug),
-    getAlternatives(),
-    getCategories(),
-  ])
+  const tool = await findToolBySlug(slug)
 
   if (!tool) {
     return notFound()
@@ -26,10 +27,18 @@ export default async function UpdateToolPage({ params }: PageProps) {
       <div className="flex items-center justify-between gap-4">
         <H3>Update tool</H3>
 
-        <ToolActions tool={tool} />
+        <Suspense>
+          <ToolActions tool={tool} />
+        </Suspense>
       </div>
 
-      <ToolForm tool={tool} alternatives={alternatives} categories={categories} />
+      <Suspense>
+        <ToolForm
+          tool={tool}
+          alternatives={findAlternativeList()}
+          categories={findCategoryList()}
+        />
+      </Suspense>
     </Wrapper>
   )
 }

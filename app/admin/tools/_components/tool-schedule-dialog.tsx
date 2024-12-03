@@ -22,7 +22,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/admin/ui/dialog"
-import { scheduleTool } from "../_lib/actions"
+import { scheduleTool } from "~/server/admin/tools/actions"
 
 interface ToolScheduleDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   tool: Row<Tool>["original"]

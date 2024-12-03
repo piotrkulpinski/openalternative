@@ -1,15 +1,15 @@
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
+import { findAlternatives } from "~/server/admin/alternatives/queries"
 import { AlternativesTable } from "./_components/alternatives-table"
-import { getAlternatives } from "./_lib/queries"
 
 export interface AlternativesPageProps {
   searchParams: Promise<SearchParams>
 }
 
 export default async function AlternativesPage({ searchParams }: AlternativesPageProps) {
-  const alternativesPromise = getAlternatives(searchParams)
+  const alternativesPromise = findAlternatives(searchParams)
 
   return (
     <Suspense

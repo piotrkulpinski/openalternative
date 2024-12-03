@@ -11,13 +11,13 @@ import { DataTableViewOptions } from "~/components/admin/data-table/data-table-v
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/admin/ui/button"
 import { useDataTable } from "~/hooks/use-data-table"
+import type { findLicenses } from "~/server/admin/licenses/queries"
 import type { DataTableFilterField } from "~/types"
-import type { getLicenses } from "../_lib/queries"
 import { getColumns } from "./licenses-table-columns"
 import { LicensesTableToolbarActions } from "./licenses-table-toolbar-actions"
 
 interface LicensesTableProps {
-  licensesPromise: ReturnType<typeof getLicenses>
+  licensesPromise: ReturnType<typeof findLicenses>
 }
 
 export function LicensesTable({ licensesPromise }: LicensesTableProps) {

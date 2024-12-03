@@ -11,13 +11,13 @@ import { DataTableViewOptions } from "~/components/admin/data-table/data-table-v
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/admin/ui/button"
 import { useDataTable } from "~/hooks/use-data-table"
+import type { findCategories } from "~/server/admin/categories/queries"
 import type { DataTableFilterField } from "~/types"
-import type { getCategories } from "../_lib/queries"
 import { getColumns } from "./categories-table-columns"
 import { CategoriesTableToolbarActions } from "./categories-table-toolbar-actions"
 
 interface CategoriesTableProps {
-  categoriesPromise: ReturnType<typeof getCategories>
+  categoriesPromise: ReturnType<typeof findCategories>
 }
 
 export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {

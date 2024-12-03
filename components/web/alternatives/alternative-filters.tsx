@@ -7,7 +7,7 @@ import { Stack } from "~/components/common/stack"
 import { Input } from "~/components/web/ui/input"
 import { Select } from "~/components/web/ui/select"
 import { useDebounce } from "~/hooks/use-debounce"
-import { alternativesSearchParams } from "~/server/alternatives/search-params"
+import { alternativesSearchParams } from "~/server/web/alternatives/search-params"
 
 export type AlternativeFiltersProps = {
   placeholder?: string

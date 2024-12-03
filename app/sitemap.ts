@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next"
 import { allPosts as posts } from "~/.content-collections/generated"
 import { config } from "~/config"
-import { findAlternativeSlugs } from "~/server/alternatives/queries"
-import { findCategorySlugs } from "~/server/categories/queries"
-import { findLanguageSlugs } from "~/server/languages/queries"
-import { findLicenseSlugs } from "~/server/licenses/queries"
-import { findToolSlugs } from "~/server/tools/queries"
-import { findTopicSlugs } from "~/server/topics/queries"
+import { findAlternativeSlugs } from "~/server/web/alternatives/queries"
+import { findCategorySlugs } from "~/server/web/categories/queries"
+import { findLanguageSlugs } from "~/server/web/languages/queries"
+import { findLicenseSlugs } from "~/server/web/licenses/queries"
+import { findToolSlugs } from "~/server/web/tools/queries"
+import { findTopicSlugs } from "~/server/web/topics/queries"
 
 type Entry = MetadataRoute.Sitemap[number]
 

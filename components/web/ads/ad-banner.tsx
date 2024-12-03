@@ -4,7 +4,7 @@ import { ExternalLink } from "~/components/web/external-link"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import { Container } from "~/components/web/ui/container"
-import { findAd } from "~/server/ads/queries"
+import { findAd } from "~/server/web/ads/queries"
 import { cx } from "~/utils/cva"
 
 export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Container>) => {

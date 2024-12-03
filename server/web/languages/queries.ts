@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client"
-import { languageManyPayload, languageOnePayload } from "~/server/languages/payloads"
+import { languageManyPayload, languageOnePayload } from "~/server/web/languages/payloads"
 import { prisma } from "~/services/prisma"
 
 export const findLanguages = async ({ where, orderBy, ...args }: Prisma.LanguageFindManyArgs) => {

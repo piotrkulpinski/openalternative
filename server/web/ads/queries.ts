@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client"
 import { unstable_cacheTag as cacheTag } from "next/cache"
 import { connection } from "next/server"
-import { adManyPayload, adOnePayload } from "~/server/ads/payloads"
+import { adManyPayload, adOnePayload } from "~/server/web/ads/payloads"
 import { prisma } from "~/services/prisma"
 
 export const findAds = async ({ where, orderBy, ...args }: Prisma.AdFindManyArgs) => {

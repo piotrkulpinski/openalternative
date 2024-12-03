@@ -1,11 +1,11 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
-import { revalidatePath } from "next/cache"
+import { unstable_expireTag as expireTag } from "next/cache"
 import { z } from "zod"
-import { toolSchema } from "~/app/admin/tools/_lib/validations"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { authedProcedure } from "~/lib/safe-actions"
+import { toolSchema } from "~/server/admin/tools/validations"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 
@@ -32,7 +32,7 @@ export const createTool = authedProcedure
       },
     })
 
-    revalidatePath("/admin/tools")
+    expireTag("/admin/tools")
 
     // Send an event to the Inngest pipeline
     if (tool.publishedAt) {
@@ -69,8 +69,7 @@ export const updateTool = authedProcedure
       },
     })
 
-    revalidatePath("/admin/tools")
-    revalidatePath(`/tools/${tool.slug}`)
+    expireTag("tools", `tool-${tool.slug}`)
 
     return tool
   })
@@ -84,7 +83,7 @@ export const updateTools = authedProcedure
       data,
     })
 
-    revalidatePath("/admin/tools")
+    expireTag("/admin/tools")
 
     return true
   })
@@ -102,7 +101,7 @@ export const deleteTools = authedProcedure
       where: { id: { in: ids } },
     })
 
-    revalidatePath("/admin/tools")
+    expireTag("/admin/tools")
 
     // Send an event to the Inngest pipeline
     for (const tool of tools) {
@@ -121,8 +120,8 @@ export const scheduleTool = authedProcedure
       data: { publishedAt },
     })
 
-    revalidatePath("/admin/tools")
-    revalidatePath(`/tools/${tool.slug}`)
+    expireTag("/admin/tools")
+    expireTag(`/tools/${tool.slug}`)
 
     // Send an event to the Inngest pipeline
     await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } })

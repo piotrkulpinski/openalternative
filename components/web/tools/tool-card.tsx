@@ -11,7 +11,7 @@ import { Badge } from "~/components/web/ui/badge"
 import { Card, CardDescription, CardHeader } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
 import { Insights } from "~/components/web/ui/insights"
-import type { ToolMany } from "~/server/tools/payloads"
+import type { ToolMany } from "~/server/web/tools/payloads"
 
 type ToolCardProps = ComponentProps<typeof Card> & {
   tool: ToolMany

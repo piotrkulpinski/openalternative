@@ -6,8 +6,8 @@ import { LicenseToolListing } from "~/app/(web)/licenses/[slug]/tools/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
-import type { LicenseOne } from "~/server/licenses/payloads"
-import { findLicense, findLicenseSlugs } from "~/server/licenses/queries"
+import type { LicenseOne } from "~/server/web/licenses/payloads"
+import { findLicense, findLicenseSlugs } from "~/server/web/licenses/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>

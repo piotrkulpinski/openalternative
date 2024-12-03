@@ -1,9 +1,12 @@
+"use cache"
+
 import { notFound } from "next/navigation"
+import { Suspense } from "react"
 import { LicenseActions } from "~/app/admin/licenses/_components/license-actions"
 import { LicenseForm } from "~/app/admin/licenses/_components/license-form"
-import { getLicenseBySlug } from "~/app/admin/licenses/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
+import { findLicenseBySlug } from "~/server/admin/licenses/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -11,7 +14,7 @@ type PageProps = {
 
 export default async function UpdateLicensePage({ params }: PageProps) {
   const { slug } = await params
-  const license = await getLicenseBySlug(slug)
+  const license = await findLicenseBySlug(slug)
 
   if (!license) {
     return notFound()
@@ -22,10 +25,14 @@ export default async function UpdateLicensePage({ params }: PageProps) {
       <div className="flex items-center justify-between gap-4">
         <H3>Update license</H3>
 
-        <LicenseActions license={license} />
+        <Suspense>
+          <LicenseActions license={license} />
+        </Suspense>
       </div>
 
-      <LicenseForm license={license} />
+      <Suspense>
+        <LicenseForm license={license} />
+      </Suspense>
     </Wrapper>
   )
 }

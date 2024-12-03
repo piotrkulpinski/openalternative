@@ -25,8 +25,8 @@ import { NavigationLink } from "~/components/web/ui/navigation-link"
 import { Section } from "~/components/web/ui/section"
 import { Tag } from "~/components/web/ui/tag"
 import { metadataConfig } from "~/config/metadata"
-import type { ToolOne } from "~/server/tools/payloads"
-import { findTool, findToolSlugs } from "~/server/tools/queries"
+import type { ToolOne } from "~/server/web/tools/payloads"
+import { findTool, findToolSlugs } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>

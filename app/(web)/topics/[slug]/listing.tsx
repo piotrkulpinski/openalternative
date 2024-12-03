@@ -1,8 +1,8 @@
 import type { SearchParams } from "nuqs/server"
 import { ToolQuery } from "~/components/web/tools/tool-query"
-import { searchTools } from "~/server/tools/queries"
-import { toolsSearchParamsCache } from "~/server/tools/search-params"
-import type { TopicOne } from "~/server/topics/payloads"
+import { searchTools } from "~/server/web/tools/queries"
+import { toolsSearchParamsCache } from "~/server/web/tools/search-params"
+import type { TopicOne } from "~/server/web/topics/payloads"
 
 type TopicToolListingProps = {
   topic: TopicOne

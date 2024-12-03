@@ -1,4 +1,5 @@
 import { MousePointerClickIcon } from "lucide-react"
+import { use } from "react"
 import { Badge } from "~/components/admin/ui/badge"
 import { Button } from "~/components/admin/ui/button"
 import {
@@ -19,14 +20,15 @@ type Relation = {
 }
 
 type RelationSelectorProps = {
-  relations: Relation[]
+  promise: Promise<Relation[]>
   selectedIds: string[]
   maxSelected?: number
   onChange: (selectedIds: string[]) => void
 }
 
-export const RelationSelector = ({ relations, selectedIds, onChange }: RelationSelectorProps) => {
-  const selectedRelations = relations.filter(rel => selectedIds.includes(rel.id))
+export const RelationSelector = ({ promise, selectedIds, onChange }: RelationSelectorProps) => {
+  const relations = use(promise)
+  const selectedRelations = relations?.filter(rel => selectedIds.includes(rel.id))
 
   return (
     <Popover>
