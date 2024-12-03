@@ -1,11 +1,11 @@
-import { Prisma } from "@prisma/client"
+import { Prisma, ToolStatus } from "@prisma/client"
 
 export const categoryOnePayload = Prisma.validator<Prisma.CategoryInclude>()({
-  _count: { select: { tools: { where: { tool: { status: "Published" } } } } },
+  _count: { select: { tools: { where: { tool: { status: ToolStatus.Published } } } } },
 })
 
 export const categoryManyPayload = Prisma.validator<Prisma.CategoryInclude>()({
-  _count: { select: { tools: { where: { tool: { status: "Published" } } } } },
+  _count: { select: { tools: { where: { tool: { status: ToolStatus.Published } } } } },
 })
 
 export type CategoryOne = Prisma.CategoryGetPayload<{ include: typeof categoryOnePayload }>

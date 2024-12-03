@@ -1,3 +1,4 @@
+import { ToolStatus } from "@prisma/client"
 import { unstable_expireTag as expireTag } from "next/cache"
 import { config } from "~/config"
 import EmailToolPublished from "~/emails/tool-published"
@@ -15,7 +16,7 @@ export const publishTools = inngest.createFunction(
     const tools = await step.run("fetch-tools", async () => {
       return prisma.tool.findMany({
         where: {
-          status: "Scheduled",
+          status: ToolStatus.Scheduled,
           publishedAt: { lte: new Date() },
         },
       })
@@ -37,7 +38,7 @@ export const publishTools = inngest.createFunction(
         await step.run(`update-tool-status-${tool.slug}`, async () => {
           return prisma.tool.update({
             where: { id: tool.id },
-            data: { status: "Published" },
+            data: { status: ToolStatus.Published },
           })
         })
 
