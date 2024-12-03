@@ -10,7 +10,6 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { AlternativesDeleteDialog } from "~/app/admin/alternatives/_components/alternatives-delete-dialog"
-import { reuploadAlternativeAssets } from "~/app/admin/alternatives/_lib/actions"
 import { Button } from "~/components/admin/ui/button"
 import {
   DropdownMenu,
@@ -19,6 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/admin/ui/dropdown-menu"
+import { reuploadAlternativeAssets } from "~/server/admin/alternatives/actions"
 import { cx } from "~/utils/cva"
 
 interface AlternativeActionsProps extends React.ComponentPropsWithoutRef<typeof Button> {

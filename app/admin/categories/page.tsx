@@ -1,15 +1,15 @@
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
+import { findCategories } from "~/server/admin/categories/queries"
 import { CategoriesTable } from "./_components/categories-table"
-import { getCategories } from "./_lib/queries"
 
 export interface CategoriesPageProps {
   searchParams: Promise<SearchParams>
 }
 
 export default async function CategoriesPage({ searchParams }: CategoriesPageProps) {
-  const categoriesPromise = getCategories(searchParams)
+  const categoriesPromise = findCategories(searchParams)
 
   return (
     <Suspense

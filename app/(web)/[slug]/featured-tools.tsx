@@ -6,7 +6,7 @@ import { H5, H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { Card } from "~/components/web/ui/card"
 import { FaviconImage } from "~/components/web/ui/favicon"
-import { findTools } from "~/server/tools/queries"
+import { findTools } from "~/server/web/tools/queries"
 
 export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await findTools({ where: { isFeatured: true } })

@@ -4,8 +4,8 @@ import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { ToolList } from "~/components/web/tools/tool-list"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { Input } from "~/components/web/ui/input"
-import type { CategoryMany } from "~/server/categories/payloads"
-import type { ToolMany } from "~/server/tools/payloads"
+import type { CategoryMany } from "~/server/web/categories/payloads"
+import type { ToolMany } from "~/server/web/tools/payloads"
 
 type ToolQueryProps = {
   tools: ToolMany[]

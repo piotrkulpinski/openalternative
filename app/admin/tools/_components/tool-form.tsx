@@ -9,9 +9,6 @@ import type React from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { createTool, updateTool } from "~/app/admin/tools/_lib/actions"
-import type { getAlternatives, getCategories, getToolBySlug } from "~/app/admin/tools/_lib/queries"
-import { type ToolSchema, toolSchema } from "~/app/admin/tools/_lib/validations"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/admin/ui/button"
 import { Input } from "~/components/admin/ui/input"
@@ -25,13 +22,18 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import type { findAlternativeList } from "~/server/admin/alternatives/queries"
+import type { findCategoryList } from "~/server/admin/categories/queries"
+import { createTool, updateTool } from "~/server/admin/tools/actions"
+import type { findToolBySlug } from "~/server/admin/tools/queries"
+import { type ToolSchema, toolSchema } from "~/server/admin/tools/validations"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type ToolFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  tool?: Awaited<ReturnType<typeof getToolBySlug>>
-  alternatives: Awaited<ReturnType<typeof getAlternatives>>
-  categories: Awaited<ReturnType<typeof getCategories>>
+  tool?: Awaited<ReturnType<typeof findToolBySlug>>
+  alternatives: ReturnType<typeof findAlternativeList>
+  categories: ReturnType<typeof findCategoryList>
 }
 
 export function ToolForm({
@@ -365,7 +367,7 @@ export function ToolForm({
           render={() => (
             <FormItem className="col-span-full">
               <FormLabel>Links</FormLabel>
-              <div className="space-y-2">
+              <div className="w-full space-y-2">
                 {linkFields.map((field, index) => (
                   <div key={field.id} className="flex flex-wrap items-center gap-2 md:gap-4">
                     <FormField
@@ -424,7 +426,7 @@ export function ToolForm({
             <FormItem>
               <FormLabel>Alternatives</FormLabel>
               <RelationSelector
-                relations={alternatives}
+                promise={alternatives}
                 selectedIds={field.value ?? []}
                 onChange={field.onChange}
               />
@@ -439,7 +441,7 @@ export function ToolForm({
             <FormItem>
               <FormLabel>Categories</FormLabel>
               <RelationSelector
-                relations={categories}
+                promise={categories}
                 selectedIds={field.value ?? []}
                 onChange={field.onChange}
               />

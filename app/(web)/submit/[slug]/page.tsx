@@ -12,7 +12,7 @@ import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import { isToolPublished } from "~/lib/tools"
-import { findTool } from "~/server/tools/queries"
+import { findTool } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>

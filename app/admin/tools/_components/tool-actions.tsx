@@ -11,8 +11,8 @@ import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { ToolScheduleDialog } from "~/app/admin/tools/_components/tool-schedule-dialog"
 import { ToolsDeleteDialog } from "~/app/admin/tools/_components/tools-delete-dialog"
-import { reuploadToolAssets } from "~/app/admin/tools/_lib/actions"
 import { Button } from "~/components/admin/ui/button"
+import { reuploadToolAssets } from "~/server/admin/tools/actions"
 
 import {
   DropdownMenu,

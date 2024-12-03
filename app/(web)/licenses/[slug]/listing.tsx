@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { Listing } from "~/components/web/listing"
 import { ToolList } from "~/components/web/tools/tool-list"
-import type { LicenseOne } from "~/server/licenses/payloads"
-import { findTools } from "~/server/tools/queries"
+import type { LicenseOne } from "~/server/web/licenses/payloads"
+import { findTools } from "~/server/web/tools/queries"
 
 type LicenseToolListingProps = {
   license: LicenseOne

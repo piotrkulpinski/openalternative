@@ -6,7 +6,7 @@ import type { SearchParams } from "nuqs/server"
 import { prisma } from "~/services/prisma"
 import { searchParamsSchema } from "./validations"
 
-export const getTools = async (searchParams: Promise<SearchParams>) => {
+export const findTools = async (searchParams: Promise<SearchParams>) => {
   const search = searchParamsSchema.parse(await searchParams)
   const { page, per_page, sort, name, publishedAt, operator, from, to } = search
 
@@ -69,27 +69,7 @@ export const getTools = async (searchParams: Promise<SearchParams>) => {
   return { tools, toolsTotal, pageCount }
 }
 
-export const getAlternatives = async () => {
-  "use cache"
-  cacheTag("alternatives")
-
-  return prisma.alternative.findMany({
-    select: { id: true, name: true },
-    orderBy: { name: "asc" },
-  })
-}
-
-export const getCategories = async () => {
-  "use cache"
-  cacheTag("categories")
-
-  return prisma.category.findMany({
-    select: { id: true, name: true },
-    orderBy: { name: "asc" },
-  })
-}
-
-export const getToolCountByStatus = async () => {
+export const findToolCountByStatus = async () => {
   "use cache"
 
   return prisma.tool.groupBy({
@@ -100,7 +80,16 @@ export const getToolCountByStatus = async () => {
   })
 }
 
-export const getToolBySlug = async (slug: string) => {
+export const findToolList = async () => {
+  "use cache"
+
+  return prisma.tool.findMany({
+    select: { id: true, name: true },
+    orderBy: { name: "asc" },
+  })
+}
+
+export const findToolBySlug = async (slug: string) => {
   "use cache"
   cacheTag(`tool-${slug}`)
 

@@ -1,8 +1,8 @@
 import { getRandomElement } from "@curiousleaf/utils"
 import type { Prisma } from "@prisma/client"
 import type { inferParserType } from "nuqs/server"
-import { toolManyPayload, toolOnePayload } from "~/server/tools/payloads"
-import type { toolsSearchParams } from "~/server/tools/search-params"
+import { toolManyPayload, toolOnePayload } from "~/server/web/tools/payloads"
+import type { toolsSearchParams } from "~/server/web/tools/search-params"
 import { prisma } from "~/services/prisma"
 
 export const searchTools = async (

@@ -3,9 +3,9 @@
 import { slugify } from "@curiousleaf/utils"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
-import { alternativeSchema } from "~/app/admin/alternatives/_lib/validations"
 import { uploadFavicon } from "~/lib/media"
 import { authedProcedure } from "~/lib/safe-actions"
+import { alternativeSchema } from "~/server/admin/alternatives/validations"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 

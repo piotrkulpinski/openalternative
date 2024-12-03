@@ -1,16 +1,17 @@
+import { Suspense } from "react"
 import { AlternativeForm } from "~/app/admin/alternatives/_components/alternative-form"
-import { getTools } from "~/app/admin/alternatives/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
+import { findToolList } from "~/server/admin/tools/queries"
 
-export default async function CreateAlternativePage() {
-  const tools = await getTools()
-
+export default function CreateAlternativePage() {
   return (
     <Wrapper size="md">
       <H3>Create alternative</H3>
 
-      <AlternativeForm tools={tools} />
+      <Suspense>
+        <AlternativeForm tools={findToolList()} />
+      </Suspense>
     </Wrapper>
   )
 }

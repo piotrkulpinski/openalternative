@@ -19,7 +19,7 @@ import { Button } from "~/components/web/ui/button"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
 import { config } from "~/config"
 import { useAds } from "~/hooks/use-ads"
-import type { AdMany } from "~/server/ads/payloads"
+import type { AdMany } from "~/server/web/ads/payloads"
 
 type AdsCalendarProps = ComponentProps<"div"> & {
   ads: AdMany[]

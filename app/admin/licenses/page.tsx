@@ -1,15 +1,15 @@
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
+import { findLicenses } from "~/server/admin/licenses/queries"
 import { LicensesTable } from "./_components/licenses-table"
-import { getLicenses } from "./_lib/queries"
 
 export interface LicensesPageProps {
   searchParams: Promise<SearchParams>
 }
 
 export default async function LicensesPage({ searchParams }: LicensesPageProps) {
-  const licensesPromise = getLicenses(searchParams)
+  const licensesPromise = findLicenses(searchParams)
 
   return (
     <Suspense

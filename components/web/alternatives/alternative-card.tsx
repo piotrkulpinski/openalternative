@@ -5,7 +5,7 @@ import { H4 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
 import { Card, CardDescription, CardFooter, CardHeader } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
-import type { AlternativeMany } from "~/server/alternatives/payloads"
+import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 import { cx } from "~/utils/cva"
 
 type AlternativeCardProps = Omit<ComponentProps<typeof Card>, "href"> & {

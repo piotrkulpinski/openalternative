@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/admin/ui/dialog"
-import { deleteAlternatives } from "../_lib/actions"
+import { deleteAlternatives } from "~/server/admin/alternatives/actions"
 
 interface AlternativesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   alternatives: Row<Alternative>["original"][]

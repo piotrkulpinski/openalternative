@@ -11,8 +11,8 @@ import { BackButton } from "~/components/web/ui/back-button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
-import type { LicenseOne } from "~/server/licenses/payloads"
-import { findLicense, findLicenseSlugs } from "~/server/licenses/queries"
+import type { LicenseOne } from "~/server/web/licenses/payloads"
+import { findLicense, findLicenseSlugs } from "~/server/web/licenses/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>

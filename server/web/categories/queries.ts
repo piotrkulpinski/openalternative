@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client"
-import { categoryManyPayload, categoryOnePayload } from "~/server/categories/payloads"
+import { categoryManyPayload, categoryOnePayload } from "~/server/web/categories/payloads"
 import { prisma } from "~/services/prisma"
 
 export const findCategories = async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {

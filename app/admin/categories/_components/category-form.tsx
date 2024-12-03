@@ -7,9 +7,6 @@ import type React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { createCategory, updateCategory } from "~/app/admin/categories/_lib/actions"
-import type { getCategoryBySlug, getTools } from "~/app/admin/categories/_lib/queries"
-import { type CategorySchema, categorySchema } from "~/app/admin/categories/_lib/validations"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/admin/ui/button"
 import { Input } from "~/components/admin/ui/input"
@@ -21,12 +18,16 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { createCategory, updateCategory } from "~/server/admin/categories/actions"
+import type { findCategoryBySlug } from "~/server/admin/categories/queries"
+import { type CategorySchema, categorySchema } from "~/server/admin/categories/validations"
+import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type CategoryFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  category?: Awaited<ReturnType<typeof getCategoryBySlug>>
-  tools: Awaited<ReturnType<typeof getTools>>
+  category?: Awaited<ReturnType<typeof findCategoryBySlug>>
+  tools: ReturnType<typeof findToolList>
 }
 
 export function CategoryForm({
@@ -139,7 +140,7 @@ export function CategoryForm({
             <FormItem className="col-span-full">
               <FormLabel>Tools</FormLabel>
               <RelationSelector
-                relations={tools}
+                promise={tools}
                 selectedIds={field.value ?? []}
                 onChange={field.onChange}
               />

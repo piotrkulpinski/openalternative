@@ -8,7 +8,7 @@ import {
   CardSimpleDivider,
   CardSimpleTitle,
 } from "~/components/web/ui/card-simple"
-import type { TopicMany } from "~/server/topics/payloads"
+import type { TopicMany } from "~/server/web/topics/payloads"
 
 type TopicCardProps = ComponentProps<typeof CardSimple> & {
   topic: TopicMany

@@ -7,9 +7,6 @@ import type React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { createLicense, updateLicense } from "~/app/admin/licenses/_lib/actions"
-import type { getLicenseBySlug } from "~/app/admin/licenses/_lib/queries"
-import { type LicenseSchema, licenseSchema } from "~/app/admin/licenses/_lib/validations"
 import { Button } from "~/components/admin/ui/button"
 import { Input } from "~/components/admin/ui/input"
 import { Textarea } from "~/components/admin/ui/textarea"
@@ -21,11 +18,14 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { createLicense, updateLicense } from "~/server/admin/licenses/actions"
+import type { findLicenseBySlug } from "~/server/admin/licenses/queries"
+import { type LicenseSchema, licenseSchema } from "~/server/admin/licenses/validations"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type LicenseFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  license?: Awaited<ReturnType<typeof getLicenseBySlug>>
+  license?: Awaited<ReturnType<typeof findLicenseBySlug>>
 }
 
 export function LicenseForm({ children, className, license, ...props }: LicenseFormProps) {

@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { EmptyList } from "~/components/web/empty-list"
 import { LanguageCard, LanguageCardSkeleton } from "~/components/web/languages/language-card"
 import { Grid } from "~/components/web/ui/grid"
-import type { LanguageMany } from "~/server/languages/payloads"
+import type { LanguageMany } from "~/server/web/languages/payloads"
 import { cx } from "~/utils/cva"
 
 type LanguageListProps = ComponentProps<typeof Grid> & {

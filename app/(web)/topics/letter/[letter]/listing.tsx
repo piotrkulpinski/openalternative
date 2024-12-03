@@ -1,6 +1,6 @@
 import { TopicList } from "~/components/web/topics/topic-list"
 import { config } from "~/config"
-import { findTopics } from "~/server/topics/queries"
+import { findTopics } from "~/server/web/topics/queries"
 
 type PageProps = {
   params: Promise<{ letter: string }>

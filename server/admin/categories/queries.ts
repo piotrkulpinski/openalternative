@@ -4,7 +4,7 @@ import type { SearchParams } from "nuqs/server"
 import { prisma } from "~/services/prisma"
 import { searchParamsSchema } from "./validations"
 
-export const getCategories = async (searchParams: Promise<SearchParams>) => {
+export const findCategories = async (searchParams: Promise<SearchParams>) => {
   const search = searchParamsSchema.parse(await searchParams)
   const { page, per_page, sort, name, operator, from, to } = search
 
@@ -52,16 +52,16 @@ export const getCategories = async (searchParams: Promise<SearchParams>) => {
   return { categories, categoriesTotal, pageCount }
 }
 
-export const getTools = async () => {
+export const findCategoryList = async () => {
   "use cache"
 
-  return prisma.tool.findMany({
+  return prisma.category.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
   })
 }
 
-export const getCategoryBySlug = async (slug: string) => {
+export const findCategoryBySlug = async (slug: string) => {
   "use cache"
 
   return prisma.category.findUnique({

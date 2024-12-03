@@ -3,7 +3,7 @@ import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { EmptyList } from "~/components/web/empty-list"
 import { ToolCard, ToolCardSkeleton } from "~/components/web/tools/tool-card"
 import { Grid } from "~/components/web/ui/grid"
-import type { ToolMany } from "~/server/tools/payloads"
+import type { ToolMany } from "~/server/web/tools/payloads"
 
 type ToolListProps = ComponentProps<typeof Grid> & {
   tools: ToolMany[]
