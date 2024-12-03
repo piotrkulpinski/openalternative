@@ -29,7 +29,7 @@ export const findTopicBySlug = async (
   { where, ...args }: Prisma.TopicFindFirstArgs,
 ) => {
   "use cache"
-  cacheTag(`topic-${slug}`)
+  cacheTag("topic", `topic-${slug}`)
 
   return prisma.topic.findFirst({
     ...args,

@@ -33,7 +33,7 @@ export const findCategoryBySlug = async (
   { where, ...args }: Prisma.CategoryFindFirstArgs,
 ) => {
   "use cache"
-  cacheTag(`category-${slug}`)
+  cacheTag("category", `category-${slug}`)
 
   return prisma.category.findFirst({
     ...args,
