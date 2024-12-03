@@ -1,6 +1,6 @@
 "use client"
 
-import type { Tool } from "@prisma/client"
+import { type Tool, ToolStatus } from "@prisma/client"
 import { CircleDashedIcon, CircleDotDashedIcon, CircleIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
@@ -45,21 +45,21 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     },
     {
       label: "Status",
-      value: "publishedAt",
+      value: "status",
       options: [
         {
           label: "Published",
-          value: "published",
+          value: ToolStatus.Published,
           icon: <CircleIcon className="!text-lime-600" />,
         },
         {
           label: "Scheduled",
-          value: "scheduled",
+          value: ToolStatus.Scheduled,
           icon: <CircleDotDashedIcon className="!text-yellow-600" />,
         },
         {
           label: "Draft",
-          value: "draft",
+          value: ToolStatus.Draft,
           icon: <CircleDashedIcon className="!text-gray-400" />,
         },
       ],
@@ -76,6 +76,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
       sorting: [{ id: "createdAt", desc: true }],
       columnPinning: { right: ["actions"] },
       columnVisibility: {
+        status: false,
         submitterEmail: false,
       },
     },

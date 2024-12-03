@@ -1,6 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
+import { ToolStatus } from "@prisma/client"
 import { unstable_expireTag as expireTag } from "next/cache"
 import { z } from "zod"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
@@ -117,7 +118,7 @@ export const scheduleTool = authedProcedure
   .handler(async ({ input: { id, publishedAt } }) => {
     const tool = await prisma.tool.update({
       where: { id },
-      data: { publishedAt },
+      data: { status: ToolStatus.Scheduled, publishedAt },
     })
 
     expireTag("/admin/tools")

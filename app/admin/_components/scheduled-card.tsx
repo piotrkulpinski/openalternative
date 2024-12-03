@@ -1,5 +1,4 @@
 import { formatDate } from "@curiousleaf/utils"
-import { unstable_cacheLife as cacheLife } from "next/cache"
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import {
@@ -10,17 +9,10 @@ import {
   CardTitle,
 } from "~/components/admin/ui/card"
 import { ScrollArea } from "~/components/admin/ui/scroll-area"
-import { prisma } from "~/services/prisma"
+import { findScheduledTools } from "~/server/admin/tools/queries"
 
 const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
-  "use cache"
-  cacheLife("hours")
-
-  const tools = await prisma.tool.findMany({
-    where: { status: "Scheduled" },
-    select: { slug: true, name: true, publishedAt: true },
-    orderBy: { publishedAt: "asc" },
-  })
+  const tools = await findScheduledTools()
 
   return (
     <Card {...props}>
