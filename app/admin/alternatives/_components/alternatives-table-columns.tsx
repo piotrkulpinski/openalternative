@@ -22,7 +22,7 @@ export function getColumns(): ColumnDef<Alternative>[] {
             }
             onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
             aria-label="Select all"
-            className="block my-auto mx-1.5"
+            className="my-auto mx-1.5"
           />
 
           <DataTableColumnHeader column={column} title="Name" />
@@ -34,7 +34,7 @@ export function getColumns(): ColumnDef<Alternative>[] {
             checked={row.getIsSelected()}
             onCheckedChange={value => row.toggleSelected(!!value)}
             aria-label="Select row"
-            className="block my-auto mx-1.5"
+            className="my-auto mx-1.5"
           />
 
           <DataTableLink href={`/admin/alternatives/${row.original.slug}`}>
