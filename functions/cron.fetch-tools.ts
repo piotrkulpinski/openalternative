@@ -1,3 +1,4 @@
+import { ToolStatus } from "@prisma/client"
 import { unstable_expireTag as expireTag } from "next/cache"
 import { getMilestoneReached, sendMilestonePost } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
@@ -15,7 +16,7 @@ export const fetchTools = inngest.createFunction(
   async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return prisma.tool.findMany({
-        where: { status: { in: ["Published", "Scheduled"] } },
+        where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
       })
     })
 
