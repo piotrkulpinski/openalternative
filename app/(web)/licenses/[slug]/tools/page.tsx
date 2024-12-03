@@ -7,7 +7,7 @@ import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { LicenseOne } from "~/server/web/licenses/payloads"
-import { findLicense, findLicenseSlugs } from "~/server/web/licenses/queries"
+import { findLicenseBySlug, findLicenseSlugs } from "~/server/web/licenses/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -16,7 +16,7 @@ type PageProps = {
 
 const getLicense = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const license = await findLicense({ where: { slug } })
+  const license = await findLicenseBySlug(slug, {})
 
   if (!license) {
     notFound()

@@ -1,9 +1,11 @@
 import type { Prisma } from "@prisma/client"
+import { unstable_cacheTag as cacheTag } from "next/cache"
 import { categoryManyPayload, categoryOnePayload } from "~/server/web/categories/payloads"
 import { prisma } from "~/services/prisma"
 
 export const findCategories = async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {
   "use cache"
+  cacheTag("categories")
 
   return prisma.category.findMany({
     ...args,
@@ -26,11 +28,16 @@ export const findCategorySlugs = async ({
   })
 }
 
-export const findCategory = async ({ ...args }: Prisma.CategoryFindUniqueArgs) => {
+export const findCategoryBySlug = async (
+  slug: string,
+  { where, ...args }: Prisma.CategoryFindFirstArgs,
+) => {
   "use cache"
+  cacheTag(`category-${slug}`)
 
-  return prisma.category.findUnique({
+  return prisma.category.findFirst({
     ...args,
+    where: { slug, ...where },
     include: categoryOnePayload,
   })
 }

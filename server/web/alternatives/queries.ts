@@ -1,4 +1,5 @@
-import type { Prisma } from "@prisma/client"
+import { type Prisma, ToolStatus } from "@prisma/client"
+import { unstable_cacheTag as cacheTag } from "next/cache"
 import type { inferParserType } from "nuqs/server"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/web/alternatives/payloads"
 import type { alternativesSearchParams } from "~/server/web/alternatives/search-params"
@@ -9,6 +10,7 @@ export const searchAlternatives = async (
   { where, ...args }: Prisma.AlternativeFindManyArgs,
 ) => {
   "use cache"
+  cacheTag("alternatives")
 
   // Values to paginate the results
   const skip = (page - 1) * perPage
@@ -20,7 +22,7 @@ export const searchAlternatives = async (
   const [sortBy, sortOrder] = sort.split(".")
 
   const whereQuery: Prisma.AlternativeWhereInput = {
-    tools: { some: { tool: { status: "Published" } } },
+    tools: { some: { tool: { status: ToolStatus.Published } } },
     ...(q && {
       OR: [
         { name: { contains: q, mode: "insensitive" } },
@@ -55,11 +57,12 @@ export const findAlternatives = async ({
   ...args
 }: Prisma.AlternativeFindManyArgs) => {
   "use cache"
+  cacheTag("alternatives")
 
   return prisma.alternative.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
-    where: { tools: { some: { tool: { status: "Published" } } }, ...where },
+    where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
     include: alternativeManyPayload,
   })
 }
@@ -72,16 +75,21 @@ export const findAlternativeSlugs = async ({
   return prisma.alternative.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
-    where: { tools: { some: { tool: { status: "Published" } } }, ...where },
+    where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
     select: { slug: true, updatedAt: true },
   })
 }
 
-export const findAlternative = async ({ ...args }: Prisma.AlternativeFindUniqueArgs) => {
+export const findAlternativeBySlug = async (
+  slug: string,
+  { where, ...args }: Prisma.AlternativeFindFirstArgs,
+) => {
   "use cache"
+  cacheTag(`alternative-${slug}`)
 
-  return prisma.alternative.findUnique({
+  return prisma.alternative.findFirst({
     ...args,
+    where: { slug, ...where },
     include: alternativeOnePayload,
   })
 }

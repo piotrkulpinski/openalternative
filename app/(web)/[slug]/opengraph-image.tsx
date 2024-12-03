@@ -2,22 +2,20 @@ import { notFound } from "next/navigation"
 import { ImageResponse } from "next/og"
 import { OgBase } from "~/components/web/og/og-base"
 import { loadGoogleFont } from "~/lib/fonts"
-import { findTool } from "~/server/web/tools/queries"
+import { findToolBySlug } from "~/server/web/tools/queries"
 
 type PageProps = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // Image metadata
 export const contentType = "image/png"
-export const alt = "OpenGraph image"
-export const size = {
-  width: 1200,
-  height: 630,
-}
+export const alt = "Open Source Tool OpenGraph image"
+export const size = { width: 1200, height: 630 }
 
 export default async function Image({ params }: PageProps) {
-  const tool = await findTool({ where: { slug: params.slug } })
+  const { slug } = await params
+  const tool = await findToolBySlug(slug, {})
 
   if (!tool) {
     notFound()

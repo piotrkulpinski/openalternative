@@ -1,5 +1,6 @@
 import { getRandomElement } from "@curiousleaf/utils"
-import type { Prisma } from "@prisma/client"
+import { type Prisma, ToolStatus } from "@prisma/client"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import type { inferParserType } from "nuqs/server"
 import { toolManyPayload, toolOnePayload } from "~/server/web/tools/payloads"
 import type { toolsSearchParams } from "~/server/web/tools/search-params"
@@ -10,6 +11,7 @@ export const searchTools = async (
   { where, ...args }: Prisma.ToolFindManyArgs,
 ) => {
   "use cache"
+  cacheTag("tools")
 
   // Values to paginate the results
   const skip = (page - 1) * perPage
@@ -21,7 +23,7 @@ export const searchTools = async (
   const [sortBy, sortOrder] = sort.split(".")
 
   const whereQuery: Prisma.ToolWhereInput = {
-    status: "Published",
+    status: ToolStatus.Published,
     ...(category && { categories: { some: { category: { slug: category } } } }),
     ...(q && {
       OR: [
@@ -57,7 +59,7 @@ export const findRelatedTools = async ({
   const relatedWhereClause = {
     ...where,
     AND: [
-      { status: "Published" },
+      { status: ToolStatus.Published },
       { slug: { not: slug } },
       { alternatives: { some: { alternative: { tools: { some: { tool: { slug } } } } } } },
     ],
@@ -82,21 +84,23 @@ export const findRelatedTools = async ({
 
 export const findTools = async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {
   "use cache"
+  cacheTag("tools")
 
   return prisma.tool.findMany({
     ...args,
     orderBy: orderBy ?? [{ isFeatured: "desc" }, { score: "desc" }],
-    where: { status: "Published", ...where },
+    where: { status: ToolStatus.Published, ...where },
     include: toolManyPayload,
   })
 }
 
 export const findToolsWithCategories = async ({ where, ...args }: Prisma.ToolFindManyArgs) => {
   "use cache"
+  cacheTag("tools")
 
   return prisma.tool.findMany({
     ...args,
-    where: { status: "Published", ...where },
+    where: { status: ToolStatus.Published, ...where },
     include: { ...toolManyPayload, categories: { include: { category: true } } },
   })
 }
@@ -105,25 +109,31 @@ export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFind
   return prisma.tool.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
-    where: { status: "Published", ...where },
+    where: { status: ToolStatus.Published, ...where },
     select: { slug: true, updatedAt: true },
   })
 }
 
 export const countUpcomingTools = async ({ where, ...args }: Prisma.ToolCountArgs) => {
   "use cache"
+  cacheLife("hours")
 
   return prisma.tool.count({
     ...args,
-    where: { status: { in: ["Scheduled", "Draft"] }, ...where },
+    where: { status: { in: [ToolStatus.Scheduled, ToolStatus.Draft] }, ...where },
   })
 }
 
-export const findTool = async ({ ...args }: Prisma.ToolFindFirstArgs) => {
+export const findToolBySlug = async (
+  slug: string,
+  { where, ...args }: Prisma.ToolFindFirstArgs,
+) => {
   "use cache"
+  cacheTag(`tool-${slug}`)
 
   return prisma.tool.findFirst({
     ...args,
+    where: { slug, ...where },
     include: toolOnePayload,
   })
 }

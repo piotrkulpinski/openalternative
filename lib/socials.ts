@@ -1,7 +1,10 @@
-import { formatNumber, joinAsSentence } from "@curiousleaf/utils"
+import { formatNumber } from "@curiousleaf/utils"
+import { ToolStatus } from "@prisma/client"
 import { formatDistanceToNowStrict } from "date-fns"
 import wretch from "wretch"
 import { config } from "~/config"
+import { getToolSuffix } from "~/lib/tools"
+import { toolOnePayload } from "~/server/web/tools/payloads"
 import { prisma } from "~/services/prisma"
 
 export type Socials = Record<string, Array<Record<string, string> & { url: string }>>
@@ -20,28 +23,17 @@ export const getSocialsFromUrl = async (url: string) => {
 }
 
 export const generateSocialPost = async () => {
-  const count = await prisma.tool.count({ where: { status: "Published" } })
+  const count = await prisma.tool.count({ where: { status: ToolStatus.Published } })
   const skip = Math.floor(Math.random() * count)
+
   const tool = await prisma.tool.findFirst({
-    where: { status: "Published" },
-    include: { alternatives: { include: { alternative: { select: { name: true } } } } },
+    where: { status: ToolStatus.Published },
+    include: toolOnePayload,
     skip,
   })
 
   if (tool) {
-    let suffix = ""
     const name = `${tool.name} ${tool.twitterHandle ? `(@${tool.twitterHandle})` : ""}`
-
-    switch (tool.alternatives.length) {
-      case 0:
-        suffix = `${tool.tagline}`
-        break
-      case 1:
-        suffix = `Open Source ${tool.alternatives[0]?.alternative.name} Alternative`
-        break
-      default:
-        suffix = `Open Source Alternative to ${joinAsSentence(tool.alternatives.map(({ alternative }) => alternative?.name))}`
-    }
 
     const insights = [
       { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: "⭐" },
@@ -58,7 +50,7 @@ export const generateSocialPost = async () => {
       },
     ]
 
-    return `${name} – ${suffix}
+    return `${name} – ${getToolSuffix(tool)}
 
 ${insights.map(({ label, value, icon }) => `${icon} ${label}: ${value}`).join("\n")}
 

@@ -2,22 +2,20 @@ import { notFound } from "next/navigation"
 import { ImageResponse } from "next/og"
 import { OgBase } from "~/components/web/og/og-base"
 import { loadGoogleFont } from "~/lib/fonts"
-import { findAlternative } from "~/server/web/alternatives/queries"
+import { findAlternativeBySlug } from "~/server/web/alternatives/queries"
 
 type PageProps = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // Image metadata
 export const contentType = "image/png"
-export const alt = "OpenGraph image"
-export const size = {
-  width: 1200,
-  height: 630,
-}
+export const alt = "Open Source Alternative OpenGraph image"
+export const size = { width: 1200, height: 630 }
 
 export default async function Image({ params }: PageProps) {
-  const alternative = await findAlternative({ where: { slug: params.slug } })
+  const { slug } = await params
+  const alternative = await findAlternativeBySlug(slug, {})
 
   if (!alternative) {
     notFound()

@@ -25,8 +25,9 @@ import { NavigationLink } from "~/components/web/ui/navigation-link"
 import { Section } from "~/components/web/ui/section"
 import { Tag } from "~/components/web/ui/tag"
 import { metadataConfig } from "~/config/metadata"
+import { getToolSuffix } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
-import { findTool, findToolSlugs } from "~/server/web/tools/queries"
+import { findToolBySlug, findToolSlugs } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -34,7 +35,7 @@ type PageProps = {
 
 const getTool = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const tool = await findTool({ where: { slug } })
+  const tool = await findToolBySlug(slug, {})
 
   if (!tool) {
     notFound()
@@ -44,21 +45,8 @@ const getTool = cache(async ({ params }: PageProps) => {
 })
 
 const getMetadata = (tool: ToolOne): Metadata => {
-  let suffix = ""
-
-  switch (tool.alternatives.length) {
-    case 0:
-      suffix = `${tool.tagline}`
-      break
-    case 1:
-      suffix = `Open Source ${tool.alternatives[0].alternative.name} Alternative`
-      break
-    default:
-      suffix = `Open Source Alternative to ${joinAsSentence(tool.alternatives.map(({ alternative }) => alternative?.name))}`
-  }
-
   return {
-    title: `${tool.name}: ${suffix}`,
+    title: `${tool.name}: ${getToolSuffix(tool)}`,
     description: tool.description,
   }
 }
