@@ -54,9 +54,6 @@ export const findCategories = async (searchParams: Promise<SearchParams>) => {
 }
 
 export const findCategoryList = async () => {
-  "use cache"
-  cacheTag("categories")
-
   return prisma.category.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },

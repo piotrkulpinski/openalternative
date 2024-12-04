@@ -70,9 +70,6 @@ export const findScheduledTools = async () => {
 }
 
 export const findToolList = async () => {
-  "use cache"
-  cacheTag("tools")
-
   return prisma.tool.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
