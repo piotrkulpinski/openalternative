@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { redirect } from "next/navigation"
+import { connection } from "next/server"
 import { Button } from "~/components/web/ui/button"
 import { Intro, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 }
 
 export default async function LoginPage() {
+  await connection()
   const session = await auth()
 
   if (session?.user) {
