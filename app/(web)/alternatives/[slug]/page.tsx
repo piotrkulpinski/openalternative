@@ -9,8 +9,10 @@ import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Fragment, Suspense, cache } from "react"
 import { AlternativeCardExternal } from "~/components/web/alternatives/alternative-card-external"
-import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
-import { AlternativePreviewSkeleton } from "~/components/web/alternatives/alternative-preview-skeleton"
+import {
+  AlternativePreview,
+  AlternativePreviewSkeleton,
+} from "~/components/web/alternatives/alternative-preview"
 import { InlineMenu } from "~/components/web/inline-menu"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { ToolEntry } from "~/components/web/tools/tool-entry"

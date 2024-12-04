@@ -97,7 +97,7 @@
     @apply relative;
   }
 
-  & [id] > a {
+  & [id] > a[tabindex="-1"] {
     @apply opacity-0;
     @apply absolute;
     @apply right-full;
@@ -107,15 +107,15 @@
     @apply mr-0;
   }
 
-  & [id] > a:after {
+  & [id] > a[tabindex="-1"]:after {
     @apply content-["#"];
   }
 
-  & [id]:hover > a {
+  & [id]:hover > a[tabindex="-1"] {
     @apply opacity-25;
   }
 
-  & [id]:hover > a:hover {
+  & [id]:hover > a[tabindex="-1"]:hover {
     @apply opacity-100;
   }
 }
