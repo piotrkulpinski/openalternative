@@ -37,7 +37,7 @@ Many big companies are satisfied customers of Posthog.
 
 **Project Link:** [Posthog](/posthog)
 
-## 2. [Sentry](/sentry)
+## 2. Sentry
 
 ![Sentry Hero Page](/content/top-5-open-source-projects-for-developers/sentry.webp)
 
@@ -97,4 +97,4 @@ It’s the best alternative for [**Mixpanel**](/alternatives/mixpanel)**,** [**G
 
 I hope you find these open-source projects helpful. If they don’t fit your needs or if you’re looking for more projects, you can explore [**OpenAlternative**](/). It includes a variety of open-source alternative tools to paid software.
 
-Thanks for Reading
+Thanks for reading!
