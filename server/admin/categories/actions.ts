@@ -1,7 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
-import { unstable_expireTag as expireTag } from "next/cache"
+import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { authedProcedure } from "~/lib/safe-actions"
 import { categorySchema } from "~/server/admin/categories/validations"
@@ -24,7 +24,7 @@ export const createCategory = authedProcedure
       },
     })
 
-    expireTag("categories")
+    revalidateTag("categories")
 
     return category
   })
@@ -49,7 +49,8 @@ export const updateCategory = authedProcedure
       },
     })
 
-    expireTag("categories", `category-${category.slug}`)
+    revalidateTag("categories")
+    revalidateTag(`category-${category.slug}`)
 
     return category
   })
@@ -63,7 +64,8 @@ export const updateCategories = authedProcedure
       data,
     })
 
-    expireTag("categories", "category")
+    revalidateTag("categories")
+    revalidateTag("category")
 
     return true
   })
@@ -76,7 +78,7 @@ export const deleteCategories = authedProcedure
       where: { id: { in: ids } },
     })
 
-    expireTag("categories")
+    revalidateTag("categories")
 
     return true
   })

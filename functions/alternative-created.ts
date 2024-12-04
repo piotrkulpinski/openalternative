@@ -1,4 +1,4 @@
-import { unstable_expireTag as expireTag } from "next/cache"
+import { revalidateTag } from "next/cache"
 import { uploadFavicon } from "~/lib/media"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
@@ -23,8 +23,8 @@ export const alternativeCreated = inngest.createFunction(
       })
     })
 
-    await step.run("expire-tags", async () => {
-      expireTag(`alternative-${alternative.slug}`)
+    await step.run("revalidate-tags", async () => {
+      revalidateTag(`alternative-${alternative.slug}`)
     })
   },
 )

@@ -1,5 +1,3 @@
-"use cache"
-
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { ToolActions } from "~/app/admin/tools/_components/tool-actions"

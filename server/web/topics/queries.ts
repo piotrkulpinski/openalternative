@@ -1,19 +1,19 @@
 import { type Prisma, ToolStatus } from "@prisma/client"
-import { unstable_cacheTag as cacheTag } from "next/cache"
+import { cache } from "~/lib/cache"
 import { topicManyPayload, topicOnePayload } from "~/server/web/topics/payloads"
 import { prisma } from "~/services/prisma"
 
-export const findTopics = async ({ where, orderBy, ...args }: Prisma.TopicFindManyArgs) => {
-  "use cache"
-  cacheTag("topics")
-
-  return prisma.topic.findMany({
-    ...args,
-    orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { slug: "asc" }],
-    where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
-    include: topicManyPayload,
-  })
-}
+export const findTopics = cache(
+  async ({ where, orderBy, ...args }: Prisma.TopicFindManyArgs) => {
+    return prisma.topic.findMany({
+      ...args,
+      orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { slug: "asc" }],
+      where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
+      include: topicManyPayload,
+    })
+  },
+  ["topics"],
+)
 
 export const findTopicSlugs = async ({ where, orderBy, ...args }: Prisma.TopicFindManyArgs) => {
   return prisma.topic.findMany({
@@ -24,16 +24,13 @@ export const findTopicSlugs = async ({ where, orderBy, ...args }: Prisma.TopicFi
   })
 }
 
-export const findTopicBySlug = async (
-  slug: string,
-  { where, ...args }: Prisma.TopicFindFirstArgs,
-) => {
-  "use cache"
-  cacheTag("topic", `topic-${slug}`)
-
-  return prisma.topic.findFirst({
-    ...args,
-    where: { slug, ...where },
-    include: topicOnePayload,
-  })
-}
+export const findTopicBySlug = (slug: string) =>
+  cache(
+    async (slug: string) => {
+      return prisma.topic.findFirst({
+        where: { slug },
+        include: topicOnePayload,
+      })
+    },
+    ["topic", `topic-${slug}`],
+  )(slug)

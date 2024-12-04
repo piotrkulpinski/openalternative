@@ -1,5 +1,5 @@
 import { ToolStatus } from "@prisma/client"
-import { unstable_expireTag as expireTag } from "next/cache"
+import { revalidateTag } from "next/cache"
 import { getMilestoneReached, sendMilestonePost } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { generateSocialPost } from "~/lib/socials"
@@ -58,9 +58,10 @@ export const fetchTools = inngest.createFunction(
       return prisma.$disconnect()
     })
 
-    // Expire cache
-    await step.run("expire-tags", async () => {
-      expireTag("tools", "tool")
+    // Revalidate cache
+    await step.run("revalidate-tags", async () => {
+      revalidateTag("tools")
+      revalidateTag("tool")
     })
   },
 )

@@ -1,4 +1,4 @@
-import { unstable_expireTag as expireTag } from "next/cache"
+import { revalidateTag } from "next/cache"
 import { config } from "~/config"
 import EmailToolScheduled from "~/emails/tool-scheduled"
 import { sendEmails } from "~/lib/email"
@@ -111,9 +111,9 @@ export const toolScheduled = inngest.createFunction(
       return prisma.$disconnect()
     })
 
-    // Expire cache
-    await step.run("expire-tags", async () => {
-      expireTag(`tool-${tool.slug}`)
+    // Revalidate cache
+    await step.run("revalidate-tags", async () => {
+      revalidateTag(`tool-${tool.slug}`)
     })
 
     // Send email
