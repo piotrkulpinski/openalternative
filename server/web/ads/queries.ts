@@ -14,11 +14,15 @@ export const findAds = cache(
   ["ads"],
 )
 
-export const findAd = async ({ where, orderBy, ...args }: Prisma.AdFindFirstArgs) => {
-  return prisma.ad.findFirst({
-    ...args,
-    orderBy: orderBy ?? { startsAt: "desc" },
-    where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() }, ...where },
-    select: adOnePayload,
-  })
-}
+export const findAd = cache(
+  async ({ where, orderBy, ...args }: Prisma.AdFindFirstArgs) => {
+    return prisma.ad.findFirst({
+      ...args,
+      orderBy: orderBy ?? { startsAt: "desc" },
+      where: { startsAt: { lte: new Date() }, endsAt: { gt: new Date() }, ...where },
+      select: adOnePayload,
+    })
+  },
+  ["ad"],
+  { revalidate: 60 * 60 },
+)

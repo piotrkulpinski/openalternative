@@ -5,10 +5,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   skipTrailingSlashRedirect: true,
 
-  experimental: {
-    // dynamicIO: true,
-  },
-
   typescript: {
     ignoreBuildErrors: true,
   },

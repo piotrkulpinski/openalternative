@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { ImageResponse } from "next/og"
 import { OgBase } from "~/components/web/og/og-base"
 import { loadGoogleFont } from "~/lib/fonts"
-import { prisma } from "~/services/prisma"
+import { findToolBySlug } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -15,7 +15,7 @@ export const size = { width: 1200, height: 630 }
 
 export default async function Image({ params }: PageProps) {
   const { slug } = await params
-  const tool = await prisma.tool.findFirst({ where: { slug } })
+  const tool = await findToolBySlug(slug)
 
   if (!tool) {
     notFound()

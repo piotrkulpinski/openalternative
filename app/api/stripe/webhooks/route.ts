@@ -1,4 +1,5 @@
 import { AdType } from "@prisma/client"
+import { revalidateTag } from "next/cache"
 import type Stripe from "stripe"
 import { z } from "zod"
 import { env } from "~/env"
@@ -62,6 +63,9 @@ export async function POST(request: Request) {
                 ...ad,
               },
             })
+
+            // Revalidate the ads
+            revalidateTag("ads")
           }
         }
 

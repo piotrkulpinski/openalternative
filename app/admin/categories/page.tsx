@@ -9,7 +9,7 @@ export interface CategoriesPageProps {
 }
 
 export default async function CategoriesPage({ searchParams }: CategoriesPageProps) {
-  const categoriesPromise = findCategories(searchParams)
+  const categoriesPromise = findCategories(await searchParams)
 
   return (
     <Suspense

@@ -9,7 +9,7 @@ export interface LicensesPageProps {
 }
 
 export default async function LicensesPage({ searchParams }: LicensesPageProps) {
-  const licensesPromise = findLicenses(searchParams)
+  const licensesPromise = findLicenses(await searchParams)
 
   return (
     <Suspense
