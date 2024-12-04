@@ -9,7 +9,7 @@ export interface ToolsPageProps {
 }
 
 export default async function ToolsPage({ searchParams }: ToolsPageProps) {
-  const toolsPromise = findTools(searchParams)
+  const toolsPromise = findTools(await searchParams)
 
   return (
     <Suspense
