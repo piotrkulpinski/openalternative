@@ -54,8 +54,6 @@ export const findAlternatives = async (searchParams: Promise<SearchParams>) => {
 }
 
 export const findAlternativeList = async () => {
-  "use cache"
-  cacheTag("alternatives")
   return prisma.alternative.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },

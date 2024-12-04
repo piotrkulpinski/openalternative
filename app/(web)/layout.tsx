@@ -10,7 +10,6 @@ import { config } from "~/config"
 import { env } from "~/env"
 
 import "./styles.css"
-import Providers from "~/app/(web)/providers"
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const url = config.site.url
@@ -64,7 +63,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   }
 
   return (
-    <Providers>
+    <>
       <div className="flex flex-col min-h-dvh">
         <Suspense>
           <AdBanner />
@@ -96,6 +95,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
         data-api={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/api/event`}
         src={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
       />
-    </Providers>
+    </>
   )
 }

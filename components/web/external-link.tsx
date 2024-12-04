@@ -1,14 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { type Properties, posthog } from "posthog-js"
 import type { ComponentProps } from "react"
+import { captureEvent } from "~/services/posthog"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 type ExternalLinkProps = ComponentProps<typeof Link> &
   ComponentProps<"a"> & {
     eventName?: string
-    eventProps?: Properties
+    eventProps?: Record<string | number, any>
   }
 
 export const ExternalLink = ({
@@ -24,7 +24,7 @@ export const ExternalLink = ({
       href={updateUrlWithSearchParams(href, { ref: "openalternative" })}
       target={target}
       rel={rel}
-      onClick={() => eventName && posthog.capture(eventName, eventProps)}
+      onClick={() => eventName && captureEvent(eventName, eventProps)}
       {...props}
     />
   )
