@@ -6,12 +6,9 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
-import { Fragment, Suspense, cache } from "react"
+import { Fragment, cache } from "react"
 import { AlternativeCardExternal } from "~/components/web/alternatives/alternative-card-external"
-import {
-  AlternativePreview,
-  AlternativePreviewSkeleton,
-} from "~/components/web/alternatives/alternative-preview"
+import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
 import { InlineMenu } from "~/components/web/inline-menu"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { ToolEntry } from "~/components/web/tools/tool-entry"
@@ -200,9 +197,7 @@ export default async function AlternativePage(props: PageProps) {
         </Section>
       )}
 
-      <Suspense fallback={<AlternativePreviewSkeleton />}>
-        <AlternativePreview />
-      </Suspense>
+      <AlternativePreview />
     </>
   )
 }
