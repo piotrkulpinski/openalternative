@@ -7,8 +7,8 @@ import { prisma } from "~/services/prisma"
 import { searchParamsSchema } from "./validations"
 
 export const findTools = cache(
-  async (searchParams: Promise<SearchParams>) => {
-    const search = searchParamsSchema.parse(await searchParams)
+  async (searchParams: SearchParams) => {
+    const search = searchParamsSchema.parse(searchParams)
     const { page, per_page, sort, name, status, operator, from, to } = search
 
     // Offset to paginate the results

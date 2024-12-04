@@ -9,7 +9,7 @@ export interface AlternativesPageProps {
 }
 
 export default async function AlternativesPage({ searchParams }: AlternativesPageProps) {
-  const alternativesPromise = findAlternatives(searchParams)
+  const alternativesPromise = findAlternatives(await searchParams)
 
   return (
     <Suspense
