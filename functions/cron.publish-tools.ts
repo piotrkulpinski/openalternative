@@ -1,5 +1,5 @@
 import { ToolStatus } from "@prisma/client"
-import { unstable_expireTag as expireTag } from "next/cache"
+import { revalidateTag } from "next/cache"
 import { config } from "~/config"
 import EmailToolPublished from "~/emails/tool-published"
 import { sendEmails } from "~/lib/email"
@@ -63,9 +63,13 @@ export const publishTools = inngest.createFunction(
       return prisma.$disconnect()
     })
 
-    // Expire cache
-    await step.run("expire-tags", async () => {
-      expireTag("tools", ...tools.map(tool => `tool-${tool.slug}`))
+    // Revalidate cache
+    await step.run("revalidate-tags", async () => {
+      revalidateTag("tools")
+
+      for (const tool of tools) {
+        revalidateTag(`tool-${tool.slug}`)
+      }
     })
   },
 )

@@ -1,5 +1,3 @@
-"use cache"
-
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { LicenseActions } from "~/app/admin/licenses/_components/license-actions"

@@ -1,5 +1,3 @@
-"use cache"
-
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { CategoryActions } from "~/app/admin/categories/_components/category-actions"

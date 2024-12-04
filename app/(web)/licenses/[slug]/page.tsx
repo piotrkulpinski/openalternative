@@ -21,7 +21,7 @@ type PageProps = {
 
 const getLicense = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const license = await findLicenseBySlug(slug, {})
+  const license = await findLicenseBySlug(slug)
 
   if (!license) {
     notFound()

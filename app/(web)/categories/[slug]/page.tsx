@@ -16,7 +16,7 @@ type PageProps = {
 
 const getCategory = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const category = await findCategoryBySlug(slug, {})
+  const category = await findCategoryBySlug(slug)
 
   if (!category) {
     notFound()
