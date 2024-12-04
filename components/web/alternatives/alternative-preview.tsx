@@ -1,8 +1,5 @@
 import Link from "next/link"
-import {
-  AlternativeList,
-  AlternativeListSkeleton,
-} from "~/components/web/alternatives/alternative-list"
+import { AlternativeList } from "~/components/web/alternatives/alternative-list"
 import { Listing } from "~/components/web/listing"
 import { alternativeManyPayload } from "~/server/web/alternatives/payloads"
 import { findAlternatives } from "~/server/web/alternatives/queries"
@@ -42,12 +39,4 @@ const AlternativePreview = async () => {
   )
 }
 
-const AlternativePreviewSkeleton = () => {
-  return (
-    <Listing title="Discover Open Source alternatives to:" separated>
-      <AlternativeListSkeleton />
-    </Listing>
-  )
-}
-
-export { AlternativePreview, AlternativePreviewSkeleton }
+export { AlternativePreview }
