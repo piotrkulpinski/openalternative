@@ -12,9 +12,13 @@ type ToolBadgesProps = HTMLAttributes<HTMLElement> & {
 }
 
 export const ToolBadges = ({ tool, size, children, className, ...props }: ToolBadgesProps) => {
-  const today = new Date()
-  const isNew = !!tool.firstCommitDate && differenceInDays(today, tool.firstCommitDate) <= 365
-  const isFresh = !!tool.publishedAt && differenceInDays(today, tool.publishedAt) <= 30
+  const { firstCommitDate, publishedAt, updatedAt } = tool
+
+  const commitDifference = firstCommitDate ? differenceInDays(updatedAt, firstCommitDate) : null
+  const publishedDifference = publishedAt ? differenceInDays(updatedAt, publishedAt) : null
+
+  const isNew = !!commitDifference && commitDifference <= 365
+  const isFresh = !!publishedDifference && publishedDifference <= 30 && publishedDifference >= 0
 
   return (
     <TooltipProvider delayDuration={500} disableHoverableContent>
