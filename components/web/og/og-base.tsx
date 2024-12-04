@@ -76,7 +76,6 @@ export const OgBase = ({ faviconUrl, name, description, children }: OgBaseProps)
             alignItems: "center",
             gap: "12",
             fontSize: "2rem",
-            letterSpacing: "-0.025em",
           }}
         >
           <LogoSymbol style={{ height: "2.5rem", width: "2.5rem" }} />
