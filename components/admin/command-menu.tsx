@@ -107,12 +107,16 @@ export const CommandMenu = () => {
         <CommandEmpty>No results found.</CommandEmpty>
 
         <CommandGroup heading="Create">
-          <CommandItem onSelect={() => handleSelect("/tools/new")}>New Tool</CommandItem>
-          <CommandItem onSelect={() => handleSelect("/alternatives/new")}>
+          <CommandItem onSelect={() => handleSelect("/admin/tools/new")}>New Tool</CommandItem>
+          <CommandItem onSelect={() => handleSelect("/admin/alternatives/new")}>
             New Alternative
           </CommandItem>
-          <CommandItem onSelect={() => handleSelect("/categories/new")}>New Category</CommandItem>
-          <CommandItem onSelect={() => handleSelect("/licenses/new")}>New License</CommandItem>
+          <CommandItem onSelect={() => handleSelect("/admin/categories/new")}>
+            New Category
+          </CommandItem>
+          <CommandItem onSelect={() => handleSelect("/admin/licenses/new")}>
+            New License
+          </CommandItem>
         </CommandGroup>
 
         <CommandGroup heading="Quick Commands">
@@ -125,7 +129,7 @@ export const CommandMenu = () => {
               <CommandItem
                 key={tool.id}
                 value={`tool:${tool.name}`}
-                onSelect={() => handleSelect(`/tools/${tool.id}`)}
+                onSelect={() => handleSelect(`/admin/tools/${tool.slug}`)}
               >
                 {tool.name}
               </CommandItem>
@@ -139,7 +143,7 @@ export const CommandMenu = () => {
               <CommandItem
                 key={alternative.id}
                 value={`alternative:${alternative.name}`}
-                onSelect={() => handleSelect(`/alternatives/${alternative.id}`)}
+                onSelect={() => handleSelect(`/admin/alternatives/${alternative.slug}`)}
               >
                 {alternative.name}
               </CommandItem>
@@ -152,7 +156,7 @@ export const CommandMenu = () => {
             {searchResults.categories.map(category => (
               <CommandItem
                 key={category.id}
-                onSelect={() => handleSelect(`/categories/${category.id}`)}
+                onSelect={() => handleSelect(`/admin/categories/${category.slug}`)}
               >
                 {category.name}
               </CommandItem>
@@ -165,7 +169,7 @@ export const CommandMenu = () => {
             {searchResults.licenses.map(license => (
               <CommandItem
                 key={license.id}
-                onSelect={() => handleSelect(`/licenses/${license.id}`)}
+                onSelect={() => handleSelect(`/admin/licenses/${license.slug}`)}
               >
                 {license.name}
               </CommandItem>

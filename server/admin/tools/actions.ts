@@ -33,7 +33,7 @@ export const createTool = authedProcedure
       },
     })
 
-    expireTag("tools")
+    expireTag("admin/tools")
 
     // Send an event to the Inngest pipeline
     if (tool.publishedAt) {
