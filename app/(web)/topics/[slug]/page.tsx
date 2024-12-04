@@ -17,7 +17,7 @@ type PageProps = {
 
 const getTopic = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const topic = await findTopicBySlug(slug, {})
+  const topic = await findTopicBySlug(slug)
 
   if (!topic) {
     notFound()

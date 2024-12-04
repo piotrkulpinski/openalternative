@@ -35,7 +35,7 @@ type PageProps = {
 
 const getTool = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const tool = await findToolBySlug(slug, {})
+  const tool = await findToolBySlug(slug)
 
   if (!tool) {
     notFound()

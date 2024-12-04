@@ -16,7 +16,7 @@ type PageProps = {
 
 const getLanguage = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const language = await findLanguageBySlug(slug, {})
+  const language = await findLanguageBySlug(slug)
 
   if (!language) {
     notFound()

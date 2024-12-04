@@ -30,7 +30,7 @@ type PageProps = {
 
 const getAlternative = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const alternative = await findAlternativeBySlug(slug, {})
+  const alternative = await findAlternativeBySlug(slug)
 
   if (!alternative) {
     notFound()

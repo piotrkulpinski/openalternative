@@ -1,7 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
-import { unstable_expireTag as expireTag } from "next/cache"
+import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { authedProcedure } from "~/lib/safe-actions"
 import { licenseSchema } from "~/server/admin/licenses/validations"
@@ -18,7 +18,7 @@ export const createLicense = authedProcedure
       },
     })
 
-    expireTag("licenses")
+    revalidateTag("licenses")
 
     return license
   })
@@ -32,7 +32,8 @@ export const updateLicense = authedProcedure
       data: input,
     })
 
-    expireTag("licenses", `license-${license.slug}`)
+    revalidateTag("licenses")
+    revalidateTag(`license-${license.slug}`)
 
     return license
   })
@@ -46,7 +47,8 @@ export const updateLicenses = authedProcedure
       data,
     })
 
-    expireTag("licenses", "license")
+    revalidateTag("licenses")
+    revalidateTag("license")
 
     return true
   })
@@ -59,7 +61,7 @@ export const deleteLicenses = authedProcedure
       where: { id: { in: ids } },
     })
 
-    expireTag("licenses")
+    revalidateTag("licenses")
 
     return true
   })

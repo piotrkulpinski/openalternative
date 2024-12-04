@@ -1,19 +1,19 @@
 import { type Prisma, ToolStatus } from "@prisma/client"
-import { unstable_cacheTag as cacheTag } from "next/cache"
+import { cache } from "~/lib/cache"
 import { categoryManyPayload, categoryOnePayload } from "~/server/web/categories/payloads"
 import { prisma } from "~/services/prisma"
 
-export const findCategories = async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {
-  "use cache"
-  cacheTag("categories")
-
-  return prisma.category.findMany({
-    ...args,
-    orderBy: orderBy ?? { name: "asc" },
-    where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
-    include: categoryManyPayload,
-  })
-}
+export const findCategories = cache(
+  async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {
+    return prisma.category.findMany({
+      ...args,
+      orderBy: orderBy ?? { name: "asc" },
+      where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
+      include: categoryManyPayload,
+    })
+  },
+  ["categories"],
+)
 
 export const findCategorySlugs = async ({
   where,
@@ -28,16 +28,13 @@ export const findCategorySlugs = async ({
   })
 }
 
-export const findCategoryBySlug = async (
-  slug: string,
-  { where, ...args }: Prisma.CategoryFindFirstArgs,
-) => {
-  "use cache"
-  cacheTag("category", `category-${slug}`)
-
-  return prisma.category.findFirst({
-    ...args,
-    where: { slug, ...where },
-    include: categoryOnePayload,
-  })
-}
+export const findCategoryBySlug = (slug: string) =>
+  cache(
+    async (slug: string) => {
+      return prisma.category.findFirst({
+        where: { slug },
+        include: categoryOnePayload,
+      })
+    },
+    ["category", `category-${slug}`],
+  )(slug)
