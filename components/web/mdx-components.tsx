@@ -8,7 +8,7 @@ const a = ({ href, ...props }: HTMLProps<HTMLAnchorElement>) => {
     throw new TypeError("href is required")
   }
 
-  if (href.startsWith("/")) {
+  if (href.startsWith("/") || href.startsWith("#")) {
     return <Link href={href} {...props} />
   }
 
@@ -27,6 +27,7 @@ const img = ({ className, ...props }: HTMLProps<HTMLImageElement>) => {
       width={1240}
       height={698}
       unoptimized
+      loading="lazy"
       className={cx("w-full rounded-lg", className)}
     />
   )

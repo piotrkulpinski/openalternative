@@ -4,8 +4,10 @@ import { Suspense } from "react"
 import { CountBadge, CountBadgeSkeleton } from "~/app/(web)/(home)/count-badge"
 import { HomeToolListing } from "~/app/(web)/(home)/listing"
 import { Stack } from "~/components/common/stack"
-import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
-import { AlternativePreviewSkeleton } from "~/components/web/alternatives/alternative-preview-skeleton"
+import {
+  AlternativePreview,
+  AlternativePreviewSkeleton,
+} from "~/components/web/alternatives/alternative-preview"
 import { NewsletterForm } from "~/components/web/newsletter-form"
 import { NewsletterProof } from "~/components/web/newsletter-proof"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
