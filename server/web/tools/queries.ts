@@ -1,6 +1,7 @@
 import { getRandomElement } from "@curiousleaf/utils"
 import { type Prisma, ToolStatus } from "@prisma/client"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
+import { connection } from "next/server"
 import type { inferParserType } from "nuqs/server"
 import { toolManyPayload, toolOnePayload } from "~/server/web/tools/payloads"
 import type { toolsSearchParams } from "~/server/web/tools/search-params"
@@ -56,6 +57,8 @@ export const findRelatedTools = async ({
   slug,
   ...args
 }: Prisma.ToolFindManyArgs & { slug: string }) => {
+  await connection()
+
   const relatedWhereClause = {
     ...where,
     AND: [
