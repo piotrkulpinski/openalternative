@@ -107,7 +107,7 @@ export default async function BlogPostPage(props: PageProps) {
             {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}
 
             <Suspense fallback={<AdCardSkeleton className="max-md:hidden" />}>
-              <AdCard type="BlogPost" isRevealed={false} className="max-md:hidden" />
+              <AdCard type="BlogPost" className="max-md:hidden" />
             </Suspense>
           </Section.Sidebar>
         </Section>

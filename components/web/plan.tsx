@@ -127,7 +127,7 @@ const Plan = ({
   }
 
   return (
-    <Card hover={false} isRevealed={false} className={cx(planVariants({ className }))} {...props}>
+    <Card hover={false} className={cx(planVariants({ className }))} {...props}>
       {isFeatured && <CardBg />}
 
       <div className="space-y-3">
@@ -205,7 +205,7 @@ const Plan = ({
 
 const PlanSkeleton = () => {
   return (
-    <Card hover={false} isRevealed={false} className={cx(planVariants())}>
+    <Card hover={false} className={cx(planVariants())}>
       <div className="space-y-3">
         <H5>
           <Skeleton className="w-24">&nbsp;</Skeleton>

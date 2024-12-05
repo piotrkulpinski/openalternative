@@ -5,16 +5,6 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const cardSimpleVariants = cva({
   base: "group flex justify-between items-center gap-4 min-w-0 -my-2 py-2",
-
-  variants: {
-    isRevealed: {
-      true: "animate-reveal",
-    },
-  },
-
-  defaultVariants: {
-    isRevealed: true,
-  },
 })
 
 type CardSimpleProps = ComponentProps<"div"> &
@@ -26,11 +16,11 @@ type CardSimpleProps = ComponentProps<"div"> &
     asChild?: boolean
   }
 
-const CardSimple = ({ className, isRevealed, asChild, ...props }: CardSimpleProps) => {
+const CardSimple = ({ className, asChild, ...props }: CardSimpleProps) => {
   const useAsChild = asChild && isValidElement(props.children)
   const Comp = useAsChild ? Slot : "div"
 
-  return <Comp className={cx(cardSimpleVariants({ isRevealed, className }))} {...props} />
+  return <Comp className={cx(cardSimpleVariants({ className }))} {...props} />
 }
 
 const CardSimpleTitle = ({ className, ...props }: ComponentProps<typeof Heading>) => {
