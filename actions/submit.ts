@@ -1,6 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
+import { revalidateTag } from "next/cache"
 import { createServerAction } from "zsa"
 import { subscribeToNewsletter } from "~/actions/subscribe"
 import { submitToolSchema } from "~/server/schemas"
@@ -72,6 +73,9 @@ export const submitTool = createServerAction()
 
     // Send an event to the Inngest pipeline
     await inngest.send({ name: "tool.submitted", data: { slug } })
+
+    // Revalidate cache
+    revalidateTag("admin-tools")
 
     return tool
   })

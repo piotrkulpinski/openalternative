@@ -53,7 +53,7 @@ export const findCategories = cache(
     const pageCount = Math.ceil(categoriesTotal / per_page)
     return { categories, categoriesTotal, pageCount }
   },
-  ["categories"],
+  ["admin-categories", "categories"],
 )
 
 export const findCategoryList = cache(async () => {
@@ -61,7 +61,7 @@ export const findCategoryList = cache(async () => {
     select: { id: true, name: true },
     orderBy: { name: "asc" },
   })
-}, ["categories"])
+}, ["admin-categories", "categories"])
 
 export const findCategoryBySlug = (slug: string) =>
   cache(
