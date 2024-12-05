@@ -9,7 +9,7 @@ export const findTopics = cache(
       ...args,
       orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { slug: "asc" }],
       where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
-      include: topicManyPayload,
+      select: topicManyPayload,
     })
   },
   ["topics"],
@@ -24,12 +24,13 @@ export const findTopicSlugs = async ({ where, orderBy, ...args }: Prisma.TopicFi
   })
 }
 
-export const findTopicBySlug = (slug: string) =>
+export const findTopicBySlug = (slug: string, { where, ...args }: Prisma.TopicFindFirstArgs = {}) =>
   cache(
     async (slug: string) => {
       return prisma.topic.findFirst({
-        where: { slug },
-        include: topicOnePayload,
+        ...args,
+        where: { slug, ...where },
+        select: topicOnePayload,
       })
     },
     ["topic", `topic-${slug}`],

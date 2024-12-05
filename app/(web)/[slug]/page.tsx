@@ -137,7 +137,10 @@ export default async function ToolPage(props: PageProps) {
                   <span className="text-sm">Open Source Alternative to:</span>
 
                   {tool.alternatives.map(({ alternative }) => (
-                    <NavigationLink key={alternative.id} href={`/alternatives/${alternative.slug}`}>
+                    <NavigationLink
+                      key={alternative.slug}
+                      href={`/alternatives/${alternative.slug}`}
+                    >
                       {alternative.name}
 
                       <FaviconImage

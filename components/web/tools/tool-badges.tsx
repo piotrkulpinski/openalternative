@@ -3,11 +3,11 @@ import { BellPlusIcon, SparklesIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Stack } from "~/components/common/stack"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
-import type { ToolMany } from "~/server/web/tools/payloads"
+import type { ToolMany, ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
 type ToolBadgesProps = HTMLAttributes<HTMLElement> & {
-  tool: ToolMany
+  tool: ToolMany | ToolManyExtended
   size?: "sm" | "md"
 }
 

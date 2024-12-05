@@ -2,7 +2,6 @@ import Link from "next/link"
 import { AlternativeList } from "~/components/web/alternatives/alternative-list"
 import { Listing } from "~/components/web/listing"
 import { cache } from "~/lib/cache"
-import { alternativeManyPayload } from "~/server/web/alternatives/payloads"
 import { findAlternatives } from "~/server/web/alternatives/queries"
 
 const getAlternatives = cache(async () => {
@@ -19,7 +18,6 @@ const getAlternatives = cache(async () => {
 
   return await findAlternatives({
     where: { slug: { in: list } },
-    include: alternativeManyPayload,
     take: 6,
   })
 }, ["alternatives"])
