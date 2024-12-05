@@ -1,4 +1,3 @@
-import type { Tool } from "@prisma/client"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -12,6 +11,7 @@ import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import { isToolPublished } from "~/lib/tools"
+import type { ToolOne } from "~/server/web/tools/payloads"
 import { findToolBySlug } from "~/server/web/tools/queries"
 
 type PageProps = {
@@ -40,7 +40,7 @@ const getTool = cache(async ({ params, searchParams }: PageProps) => {
   return { tool, success }
 })
 
-const getMetadata = (tool: Tool, success: boolean): Metadata => {
+const getMetadata = (tool: ToolOne, success: boolean): Metadata => {
   if (success) {
     if (tool.isFeatured) {
       return {

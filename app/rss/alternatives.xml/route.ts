@@ -1,14 +1,23 @@
+import { ToolStatus } from "@prisma/client"
 import RSS from "rss"
 import { config } from "~/config"
-import { findAlternatives } from "~/server/web/alternatives/queries"
+import { prisma } from "~/services/prisma"
 import { addUTMTracking } from "~/utils/helpers"
 
 export async function GET() {
   const { url, name, tagline } = config.site
 
-  const alternatives = await findAlternatives({
+  const alternatives = await prisma.alternative.findMany({
+    where: { tools: { some: { tool: { status: ToolStatus.Published } } } },
     orderBy: { createdAt: "desc" },
     take: 50,
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      description: true,
+      createdAt: true,
+    },
   })
 
   const feed = new RSS({
