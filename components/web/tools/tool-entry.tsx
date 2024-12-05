@@ -8,11 +8,11 @@ import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
-import type { ToolMany } from "~/server/web/tools/payloads"
+import type { ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
 type ToolEntryProps = HTMLAttributes<HTMLElement> & {
-  tool: ToolMany
+  tool: ToolManyExtended
 }
 
 const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {

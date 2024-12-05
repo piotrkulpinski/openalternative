@@ -1,12 +1,18 @@
 import { Prisma, ToolStatus } from "@prisma/client"
 
-export const licenseOnePayload = Prisma.validator<Prisma.LicenseInclude>()({
+export const licenseOnePayload = Prisma.validator<Prisma.LicenseSelect>()({
+  name: true,
+  slug: true,
+  description: true,
+  content: true,
   _count: { select: { tools: { where: { status: ToolStatus.Published } } } },
 })
 
-export const licenseManyPayload = Prisma.validator<Prisma.LicenseInclude>()({
+export const licenseManyPayload = Prisma.validator<Prisma.LicenseSelect>()({
+  slug: true,
+  name: true,
   _count: { select: { tools: { where: { status: ToolStatus.Published } } } },
 })
 
-export type LicenseOne = Prisma.LicenseGetPayload<{ include: typeof licenseOnePayload }>
-export type LicenseMany = Prisma.LicenseGetPayload<{ include: typeof licenseManyPayload }>
+export type LicenseOne = Prisma.LicenseGetPayload<{ select: typeof licenseOnePayload }>
+export type LicenseMany = Prisma.LicenseGetPayload<{ select: typeof licenseManyPayload }>
