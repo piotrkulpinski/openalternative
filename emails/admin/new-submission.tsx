@@ -19,7 +19,7 @@ const EmailAdminNewSubmission = ({ tool, ...props }: EmailAdminNewSubmissionProp
         review and approve it as soon as possible.
       </Text>
 
-      <EmailButton href={`${config.site.url}/tools/${tool?.slug}`}>
+      <EmailButton href={`${config.site.url}/admin/tools/${tool?.slug}`}>
         Review {tool?.name}'s submission
       </EmailButton>
     </EmailWrapper>

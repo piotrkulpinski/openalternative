@@ -53,7 +53,7 @@ export const findAlternatives = cache(
     const pageCount = Math.ceil(alternativesTotal / per_page)
     return { alternatives, alternativesTotal, pageCount }
   },
-  ["alternatives"],
+  ["admin-alternatives", "alternatives"],
 )
 
 export const findAlternativeList = cache(async () => {
@@ -61,7 +61,7 @@ export const findAlternativeList = cache(async () => {
     select: { id: true, name: true },
     orderBy: { name: "asc" },
   })
-}, ["alternatives"])
+}, ["admin-alternatives", "alternatives"])
 
 export const findAlternativeBySlug = (slug: string) =>
   cache(
