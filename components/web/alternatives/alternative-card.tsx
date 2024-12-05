@@ -16,7 +16,7 @@ type AlternativeCardProps = Omit<ComponentProps<typeof Card>, "href"> & {
 const AlternativeCard = ({ alternative, showCount, ...props }: AlternativeCardProps) => {
   return (
     <Card asChild {...props}>
-      <Link href={`/alternatives/${alternative.slug}`} prefetch={false}>
+      <Link href={`/alternatives/${alternative.slug}`}>
         <CardHeader>
           <Favicon src={alternative.faviconUrl} title={alternative.name} />
 
