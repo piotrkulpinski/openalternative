@@ -22,7 +22,6 @@ export const Tag = ({ children, className, prefix, suffix, ...props }: TagProps)
         "flex items-center gap-0.5 text-secondary text-sm hover:text-foreground",
         className,
       )}
-      prefetch={false}
       {...props}
     >
       {prefix && <Slot className="opacity-30 mr-0.5">{prefix}</Slot>}

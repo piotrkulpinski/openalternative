@@ -17,7 +17,7 @@ type TopicCardProps = ComponentProps<typeof CardSimple> & {
 const TopicCard = ({ topic, ...props }: TopicCardProps) => {
   return (
     <CardSimple asChild {...props}>
-      <Link href={`/topics/${topic.slug}`} prefetch={false}>
+      <Link href={`/topics/${topic.slug}`}>
         <CardSimpleTitle>{topic.slug}</CardSimpleTitle>
 
         <CardSimpleDivider />
