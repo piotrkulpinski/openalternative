@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   skipTrailingSlashRedirect: true,
 
+  experimental: {
+    ppr: true,
+  },
+
   typescript: {
     ignoreBuildErrors: true,
   },

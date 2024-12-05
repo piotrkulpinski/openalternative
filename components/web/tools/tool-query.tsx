@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { Pagination } from "~/components/web/pagination"
 import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { ToolList } from "~/components/web/tools/tool-list"
@@ -23,9 +22,7 @@ const ToolQuery = ({ tools, perPage, totalCount, categories, placeholder }: Tool
         <ToolList tools={tools} />
       </div>
 
-      <Suspense>
-        <Pagination pageSize={perPage} totalCount={totalCount} />
-      </Suspense>
+      <Pagination pageSize={perPage} totalCount={totalCount} />
     </>
   )
 }
