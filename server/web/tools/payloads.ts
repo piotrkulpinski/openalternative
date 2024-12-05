@@ -8,7 +8,6 @@ export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   tagline: true,
   description: true,
   content: true,
-  links: true,
   stars: true,
   forks: true,
   faviconUrl: true,

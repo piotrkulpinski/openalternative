@@ -1,10 +1,9 @@
 import { joinAsSentence } from "@curiousleaf/utils"
-import { ArrowUpRightIcon, HashIcon, Link2Icon, ShapesIcon } from "lucide-react"
+import { ArrowUpRightIcon, HashIcon, ShapesIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense, cache } from "react"
 import type { ImageObject } from "schema-dts"
-import { z } from "zod"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
 import { H1, H5 } from "~/components/common/heading"
@@ -71,11 +70,6 @@ export default async function ToolPage(props: PageProps) {
   const tool = await getTool(props)
   const { title } = getMetadata(tool)
   const jsonLd: ImageObject[] = []
-
-  const links = z
-    .array(z.object({ name: z.string(), url: z.string().url() }))
-    .nullable()
-    .parse(tool.links)
 
   if (tool.screenshotUrl) {
     jsonLd.push({
@@ -196,47 +190,23 @@ export default async function ToolPage(props: PageProps) {
 
           {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
 
-          {(!!links?.length || !!tool.categories.length) && (
-            <div className="grid grid-cols-sm gap-x-6 gap-y-10 w-full max-md:order-6">
-              {!!links?.length && (
-                <Stack size="lg" direction="column">
-                  <H5 as="strong">Links:</H5>
+          {/* Categories */}
+          {!!tool.categories.length && (
+            <Stack size="lg" direction="column" className="w-full max-md:order-6">
+              <H5 as="strong">Categories:</H5>
 
-                  <Stack direction="column">
-                    {links.map(({ name, url }) => (
-                      <Tag
-                        key={url}
-                        href={url}
-                        target="_blank"
-                        rel="nofollow noreferrer"
-                        prefix={<Link2Icon />}
-                        suffix={<ArrowUpRightIcon />}
-                      >
-                        {name}
-                      </Tag>
-                    ))}
-                  </Stack>
-                </Stack>
-              )}
-
-              {!!tool.categories.length && (
-                <Stack direction="column" className="w-full">
-                  <H5 as="strong">Categories:</H5>
-
-                  <Stack direction="column">
-                    {tool.categories?.map(({ category }) => (
-                      <Tag
-                        key={category.id}
-                        href={`/categories/${category.slug}`}
-                        prefix={<ShapesIcon />}
-                      >
-                        {category.name}
-                      </Tag>
-                    ))}
-                  </Stack>
-                </Stack>
-              )}
-            </div>
+              <Stack>
+                {tool.categories?.map(({ category }) => (
+                  <Tag
+                    key={category.id}
+                    href={`/categories/${category.slug}`}
+                    prefix={<ShapesIcon />}
+                  >
+                    {category.name}
+                  </Tag>
+                ))}
+              </Stack>
+            </Stack>
           )}
 
           {/* Topics */}
