@@ -32,7 +32,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
 
           <div className="flex flex-1">
             <H2 className="leading-snug!">
-              <Link href={href} prefetch={false} className="hover:underline">
+              <Link href={href} className="hover:underline">
                 {tool.name}
               </Link>
             </H2>
@@ -55,7 +55,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       </div>
 
       {tool.screenshotUrl && (
-        <Link href={href} prefetch={false} className="group">
+        <Link href={href} className="group">
           <img
             key={tool.screenshotUrl}
             src={tool.screenshotUrl}
@@ -77,9 +77,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       )}
 
       <Button suffix={<ArrowRightIcon />} className="self-start" asChild>
-        <Link href={href} prefetch={false}>
-          Read more
-        </Link>
+        <Link href={href}>Read more</Link>
       </Button>
     </div>
   )

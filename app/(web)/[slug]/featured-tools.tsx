@@ -22,7 +22,7 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
       <div className="w-full divide-y -my-1.5">
         {tools.map(tool => (
           <Stack key={tool.id} size="sm" className="group py-1.5 justify-between w-full" asChild>
-            <Link href={`/${tool.slug}`} prefetch={false}>
+            <Link href={`/${tool.slug}`}>
               <Stack size="sm" className="flex-nowrap">
                 <FaviconImage src={tool.faviconUrl} title={tool.name} className="size-4" />
 

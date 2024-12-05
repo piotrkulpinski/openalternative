@@ -17,7 +17,7 @@ type CategoryCardProps = ComponentProps<typeof CardSimple> & {
 const CategoryCard = ({ category, ...props }: CategoryCardProps) => {
   return (
     <CardSimple asChild {...props}>
-      <Link href={`/categories/${category.slug}`} prefetch={false}>
+      <Link href={`/categories/${category.slug}`}>
         <CardSimpleTitle>{category.name}</CardSimpleTitle>
 
         <CardSimpleDivider />
