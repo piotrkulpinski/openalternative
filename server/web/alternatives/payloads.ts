@@ -6,6 +6,8 @@ export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeSelect>(
   description: true,
   website: true,
   faviconUrl: true,
+  discountCode: true,
+  discountAmount: true,
   _count: { select: { tools: { where: { tool: { status: ToolStatus.Published } } } } },
 })
 
