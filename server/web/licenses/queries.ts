@@ -9,7 +9,7 @@ export const findLicenses = cache(
       ...args,
       orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { name: "asc" }],
       where: { tools: { some: { status: ToolStatus.Published } }, ...where },
-      include: licenseManyPayload,
+      select: licenseManyPayload,
     })
   },
   ["licenses"],
@@ -24,12 +24,16 @@ export const findLicenseSlugs = async ({ where, orderBy, ...args }: Prisma.Licen
   })
 }
 
-export const findLicenseBySlug = (slug: string) =>
+export const findLicenseBySlug = (
+  slug: string,
+  { where, ...args }: Prisma.LicenseFindFirstArgs = {},
+) =>
   cache(
     async (slug: string) => {
       return prisma.license.findFirst({
-        where: { slug },
-        include: licenseOnePayload,
+        ...args,
+        where: { slug, ...where },
+        select: licenseOnePayload,
       })
     },
     ["license", `license-${slug}`],

@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters", "postgresqlExtensions"]
+  previewFeatures = ["omitApi", "driverAdapters", "postgresqlExtensions"]
 }
 
 datasource db {
@@ -106,8 +106,8 @@ model Category {
 }
 
 model Language {
-  slug      String           @id @unique
   name      String           @db.Citext
+  slug      String           @id @unique
   color     String?
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt

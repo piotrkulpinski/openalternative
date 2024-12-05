@@ -36,7 +36,7 @@ export const searchAlternatives = cache(
           ? { [sortBy]: sortOrder }
           : [{ tools: { _count: "desc" } }, { isFeatured: "desc" }],
         where: { ...whereQuery, ...where },
-        include: alternativeManyPayload,
+        select: alternativeManyPayload,
         take,
         skip,
       }),
@@ -57,7 +57,7 @@ export const findAlternatives = cache(
       ...args,
       orderBy: orderBy ?? { name: "asc" },
       where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
-      include: alternativeManyPayload,
+      select: alternativeManyPayload,
     })
   },
   ["alternatives"],
@@ -76,12 +76,16 @@ export const findAlternativeSlugs = async ({
   })
 }
 
-export const findAlternativeBySlug = (slug: string) =>
+export const findAlternativeBySlug = (
+  slug: string,
+  { where, ...args }: Prisma.AlternativeFindFirstArgs = {},
+) =>
   cache(
     async (slug: string) => {
       return prisma.alternative.findFirst({
-        where: { slug },
-        include: alternativeOnePayload,
+        ...args,
+        where: { slug, ...where },
+        select: alternativeOnePayload,
       })
     },
     ["alternative", `alternative-${slug}`],

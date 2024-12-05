@@ -42,7 +42,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {alternatives.map(alternative => (
-                <CardSimple key={alternative.id} className="gap-2" asChild>
+                <CardSimple key={alternative.slug} className="gap-2" asChild>
                   <NavigationLink href={`/alternatives/${alternative.slug}`}>
                     <span className="truncate">{alternative.name} Alternatives</span>
 
@@ -64,7 +64,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {categories.map(category => (
-                <CardSimple key={category.id} className="gap-2" asChild>
+                <CardSimple key={category.slug} className="gap-2" asChild>
                   <NavigationLink href={`/categories/${category.slug}`}>
                     <span className="truncate">{category.label}</span>
 

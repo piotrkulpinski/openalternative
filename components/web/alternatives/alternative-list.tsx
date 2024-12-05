@@ -15,7 +15,7 @@ const AlternativeList = ({ alternatives, ...props }: AlternativeListProps) => {
   return (
     <Grid {...props}>
       {alternatives.map(alternative => (
-        <AlternativeCard key={alternative.id} alternative={alternative} showCount />
+        <AlternativeCard key={alternative.slug} alternative={alternative} showCount />
       ))}
 
       {!alternatives.length && <EmptyList>No alternatives found.</EmptyList>}

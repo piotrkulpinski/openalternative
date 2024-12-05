@@ -9,7 +9,7 @@ export const findLanguages = cache(
       ...args,
       orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { name: "asc" }],
       where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
-      include: languageManyPayload,
+      select: languageManyPayload,
     })
   },
   ["languages"],
@@ -28,12 +28,16 @@ export const findLanguageSlugs = async ({
   })
 }
 
-export const findLanguageBySlug = (slug: string) =>
+export const findLanguageBySlug = (
+  slug: string,
+  { where, ...args }: Prisma.LanguageFindFirstArgs = {},
+) =>
   cache(
     async (slug: string) => {
       return prisma.language.findFirst({
-        where: { slug },
-        include: languageOnePayload,
+        ...args,
+        where: { slug, ...where },
+        select: languageOnePayload,
       })
     },
     ["language", `language-${slug}`],

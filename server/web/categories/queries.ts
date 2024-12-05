@@ -9,7 +9,7 @@ export const findCategories = cache(
       ...args,
       orderBy: orderBy ?? { name: "asc" },
       where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
-      include: categoryManyPayload,
+      select: categoryManyPayload,
     })
   },
   ["categories"],
@@ -28,12 +28,16 @@ export const findCategorySlugs = async ({
   })
 }
 
-export const findCategoryBySlug = (slug: string) =>
+export const findCategoryBySlug = (
+  slug: string,
+  { where, ...args }: Prisma.CategoryFindFirstArgs = {},
+) =>
   cache(
     async (slug: string) => {
       return prisma.category.findFirst({
-        where: { slug },
-        include: categoryOnePayload,
+        ...args,
+        where: { slug, ...where },
+        select: categoryOnePayload,
       })
     },
     ["category", `category-${slug}`],

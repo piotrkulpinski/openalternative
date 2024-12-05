@@ -1,12 +1,18 @@
 import { Prisma, ToolStatus } from "@prisma/client"
 
-export const languageOnePayload = Prisma.validator<Prisma.LanguageInclude>()({
+export const languageOnePayload = Prisma.validator<Prisma.LanguageSelect>()({
+  name: true,
+  slug: true,
+  color: true,
   _count: { select: { tools: { where: { tool: { status: ToolStatus.Published } } } } },
 })
 
-export const languageManyPayload = Prisma.validator<Prisma.LanguageInclude>()({
+export const languageManyPayload = Prisma.validator<Prisma.LanguageSelect>()({
+  name: true,
+  slug: true,
+  color: true,
   _count: { select: { tools: { where: { tool: { status: ToolStatus.Published } } } } },
 })
 
-export type LanguageOne = Prisma.LanguageGetPayload<{ include: typeof languageOnePayload }>
-export type LanguageMany = Prisma.LanguageGetPayload<{ include: typeof languageManyPayload }>
+export type LanguageOne = Prisma.LanguageGetPayload<{ select: typeof languageOnePayload }>
+export type LanguageMany = Prisma.LanguageGetPayload<{ select: typeof languageManyPayload }>

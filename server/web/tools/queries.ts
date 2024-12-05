@@ -2,7 +2,11 @@ import { getRandomElement } from "@curiousleaf/utils"
 import { type Prisma, ToolStatus } from "@prisma/client"
 import type { inferParserType } from "nuqs/server"
 import { cache } from "~/lib/cache"
-import { toolManyPayload, toolOnePayload } from "~/server/web/tools/payloads"
+import {
+  toolManyExtendedPayload,
+  toolManyPayload,
+  toolOnePayload,
+} from "~/server/web/tools/payloads"
 import type { toolsSearchParams } from "~/server/web/tools/search-params"
 import { prisma } from "~/services/prisma"
 
@@ -36,7 +40,7 @@ export const searchTools = cache(
         ...args,
         orderBy: sortBy ? { [sortBy]: sortOrder } : [{ isFeatured: "desc" }, { score: "desc" }],
         where: { ...whereQuery, ...where },
-        include: toolManyPayload,
+        select: toolManyPayload,
         take,
         skip,
       }),
@@ -75,7 +79,7 @@ export const findRelatedTools = async ({
   return prisma.tool.findMany({
     ...args,
     where: relatedWhereClause,
-    include: toolManyPayload,
+    select: toolManyPayload,
     orderBy: { [orderBy]: orderDir },
     take,
     skip,
@@ -86,9 +90,9 @@ export const findTools = cache(
   async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {
     return prisma.tool.findMany({
       ...args,
-      orderBy: orderBy ?? [{ isFeatured: "desc" }, { score: "desc" }],
       where: { status: ToolStatus.Published, ...where },
-      include: toolManyPayload,
+      orderBy: orderBy ?? [{ isFeatured: "desc" }, { score: "desc" }],
+      select: toolManyPayload,
     })
   },
   ["tools"],
@@ -99,7 +103,7 @@ export const findToolsWithCategories = cache(
     return prisma.tool.findMany({
       ...args,
       where: { status: ToolStatus.Published, ...where },
-      include: { ...toolManyPayload, categories: { include: { category: true } } },
+      select: toolManyExtendedPayload,
     })
   },
   ["tools"],
@@ -124,12 +128,13 @@ export const countUpcomingTools = cache(
   ["schedule"],
 )
 
-export const findToolBySlug = (slug: string) =>
+export const findToolBySlug = (slug: string, { where, ...args }: Prisma.ToolFindFirstArgs = {}) =>
   cache(
     async (slug: string) => {
       return prisma.tool.findFirst({
-        where: { slug },
-        include: toolOnePayload,
+        ...args,
+        where: { slug, ...where },
+        select: toolOnePayload,
       })
     },
     ["tool", `tool-${slug}`],
