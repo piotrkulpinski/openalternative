@@ -3,7 +3,7 @@ import type { Tool } from "@prisma/client"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import type { ToolOne } from "~/server/web/tools/payloads"
 
-export const isToolPublished = (tool: Tool | Jsonify<Tool>) => {
+export const isToolPublished = (tool: Pick<Tool | Jsonify<Tool>, "publishedAt">) => {
   return !!tool.publishedAt && tool.publishedAt <= new Date()
 }
 
