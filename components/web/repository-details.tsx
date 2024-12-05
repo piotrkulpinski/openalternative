@@ -27,7 +27,7 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
           {
             label: "Last commit",
             value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
-            title: tool.lastCommitDate.toISOString(),
+            title: tool.lastCommitDate.toString(),
             icon: <TimerIcon />,
           },
         ]
@@ -37,7 +37,7 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
           {
             label: "Repository age",
             value: formatDistanceToNowStrict(tool.firstCommitDate),
-            title: tool.firstCommitDate.toISOString(),
+            title: tool.firstCommitDate.toString(),
             icon: <HistoryIcon />,
           },
         ]
