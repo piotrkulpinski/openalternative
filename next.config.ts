@@ -26,7 +26,6 @@ const nextConfig: NextConfig = {
 
   async rewrites() {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-    const posthogUrl = process.env.NEXT_PUBLIC_POSTHOG_HOST
 
     return [
       // RSS rewrites
@@ -37,20 +36,6 @@ const nextConfig: NextConfig = {
       {
         source: "/alternatives/rss.xml",
         destination: `${siteUrl}/rss/alternatives.xml`,
-      },
-
-      // for posthog proxy
-      {
-        source: "/_proxy/posthog/ingest/static/:path*",
-        destination: `${posthogUrl?.replace("us", "us-assets")}/static/:path*`,
-      },
-      {
-        source: "/_proxy/posthog/ingest/:path*",
-        destination: `${posthogUrl}/:path*`,
-      },
-      {
-        source: "/_proxy/posthog/ingest/decide",
-        destination: `${posthogUrl}/decide`,
       },
     ]
   },

@@ -10,7 +10,6 @@ import { config } from "~/config"
 import { env } from "~/env"
 
 import "./styles.css"
-import Providers from "~/app/(web)/providers"
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const url = config.site.url
@@ -65,25 +64,23 @@ export default function RootLayout({ children }: PropsWithChildren) {
 
   return (
     <>
-      <Providers>
-        <div className="flex flex-col min-h-dvh">
-          <Suspense>
-            <AdBanner />
-          </Suspense>
+      <div className="flex flex-col min-h-dvh">
+        <Suspense>
+          <AdBanner />
+        </Suspense>
 
-          <Header />
+        <Header />
 
-          <Container asChild>
-            <main className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
-              {children}
+        <Container asChild>
+          <main className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
+            {children}
 
-              <Footer />
-            </main>
-          </Container>
-        </div>
+            <Footer />
+          </main>
+        </Container>
+      </div>
 
-        <Bottom />
-      </Providers>
+      <Bottom />
 
       {/* JSON-LD */}
       <Script
