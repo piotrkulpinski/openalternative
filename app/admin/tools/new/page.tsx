@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { ToolForm } from "~/app/admin/tools/_components/tool-form"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
@@ -10,9 +9,7 @@ export default function CreateToolPage() {
     <Wrapper size="md">
       <H3>Create tool</H3>
 
-      <Suspense>
-        <ToolForm alternatives={findAlternativeList()} categories={findCategoryList()} />
-      </Suspense>
+      <ToolForm alternatives={findAlternativeList()} categories={findCategoryList()} />
     </Wrapper>
   )
 }
