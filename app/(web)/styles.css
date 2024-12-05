@@ -43,7 +43,6 @@
   --grid-template-columns-xl: repeat(auto-fill, minmax(20rem, 1fr));
 
   --animate-shimmer: shimmer 1.25s cubic-bezier(0.5, 0.25, 0.25, 0.5) infinite;
-  /* --animate-reveal: reveal linear forwards; */
 
   @keyframes shimmer {
     from {
@@ -53,19 +52,6 @@
       left: 90%;
     }
   }
-
-  /* @keyframes reveal {
-    from {
-      scale: 0.9;
-      opacity: 0;
-      transform: translateY(20px) perspective(250px) rotateX(-15deg);
-    }
-    to {
-      scale: 1;
-      opacity: 1;
-      transform: translateY(0) perspective(500px) rotateX(0deg);
-    }
-  } */
 }
 
 /*
@@ -85,12 +71,6 @@
     @apply border-border;
   }
 }
-
-/* @utility animate-reveal {
-  animation-timeline: view();
-  animation-range-start: cover;
-  animation-range-end: 15%;
-} */
 
 @utility prose {
   & [id] {

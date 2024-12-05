@@ -32,7 +32,6 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
   return (
     <Card
       className={cx("group/button", isDefault && "overflow-clip", className)}
-      isRevealed={false}
       asChild
       {...props}
     >

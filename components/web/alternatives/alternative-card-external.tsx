@@ -7,7 +7,6 @@ import { ExternalLink } from "~/components/web/external-link"
 import { Button } from "~/components/web/ui/button"
 import { Card, CardDescription, CardHeader } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
-import { Prose } from "~/components/web/ui/prose"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
 import { cx } from "~/utils/cva"
 
@@ -21,7 +20,7 @@ export const AlternativeCardExternal = ({
   ...props
 }: AlternativeCardExternalProps) => {
   return (
-    <Card className={cx("group/button", className)} isRevealed={false} {...props} asChild>
+    <Card className={cx("group/button", className)} {...props} asChild>
       <ExternalLink
         href={alternative.website}
         eventName="click_alternative"
@@ -42,7 +41,7 @@ export const AlternativeCardExternal = ({
         )}
 
         {alternative.discountAmount && (
-          <Prose className="prose-strong:underline text-balance text-sm text-green-600 dark:text-green-400">
+          <p className="*:underline *:font-semibold text-pretty text-sm text-green-600 dark:text-green-400">
             {alternative.discountCode ? (
               <>
                 Use code <strong>{alternative.discountCode}</strong> to get{" "}
@@ -53,7 +52,7 @@ export const AlternativeCardExternal = ({
                 Get <strong>{alternative.discountAmount}</strong> with this link
               </>
             )}
-          </Prose>
+          </p>
         )}
 
         <Button className="pointer-events-none md:w-full" suffix={<ArrowUpRightIcon />} asChild>
