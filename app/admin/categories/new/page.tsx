@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { CategoryForm } from "~/app/admin/categories/_components/category-form"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
@@ -9,9 +8,7 @@ export default function CreateCategoryPage() {
     <Wrapper size="md">
       <H3>Create category</H3>
 
-      <Suspense>
-        <CategoryForm tools={findToolList()} />
-      </Suspense>
+      <CategoryForm tools={findToolList()} />
     </Wrapper>
   )
 }

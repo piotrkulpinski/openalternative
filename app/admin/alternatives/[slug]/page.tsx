@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation"
-import { Suspense } from "react"
 import { AlternativeActions } from "~/app/admin/alternatives/_components/alternative-actions"
 import { AlternativeForm } from "~/app/admin/alternatives/_components/alternative-form"
 import { Wrapper } from "~/components/admin/ui/wrapper"
@@ -24,14 +23,10 @@ export default async function UpdateAlternativePage({ params }: PageProps) {
       <div className="flex items-center justify-between gap-4">
         <H3>Update alternative</H3>
 
-        <Suspense>
-          <AlternativeActions alternative={alternative} />
-        </Suspense>
+        <AlternativeActions alternative={alternative} />
       </div>
 
-      <Suspense>
-        <AlternativeForm alternative={alternative} tools={findToolList()} />
-      </Suspense>
+      <AlternativeForm alternative={alternative} tools={findToolList()} />
     </Wrapper>
   )
 }

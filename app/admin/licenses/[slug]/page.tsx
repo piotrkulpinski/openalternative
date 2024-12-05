@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation"
-import { Suspense } from "react"
 import { LicenseActions } from "~/app/admin/licenses/_components/license-actions"
 import { LicenseForm } from "~/app/admin/licenses/_components/license-form"
 import { Wrapper } from "~/components/admin/ui/wrapper"
@@ -23,14 +22,10 @@ export default async function UpdateLicensePage({ params }: PageProps) {
       <div className="flex items-center justify-between gap-4">
         <H3>Update license</H3>
 
-        <Suspense>
-          <LicenseActions license={license} />
-        </Suspense>
+        <LicenseActions license={license} />
       </div>
 
-      <Suspense>
-        <LicenseForm license={license} />
-      </Suspense>
+      <LicenseForm license={license} />
     </Wrapper>
   )
 }

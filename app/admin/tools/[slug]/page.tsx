@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation"
-import { Suspense } from "react"
 import { ToolActions } from "~/app/admin/tools/_components/tool-actions"
 import { ToolForm } from "~/app/admin/tools/_components/tool-form"
 import { Wrapper } from "~/components/admin/ui/wrapper"
@@ -25,18 +24,10 @@ export default async function UpdateToolPage({ params }: PageProps) {
       <div className="flex items-center justify-between gap-4">
         <H3>Update tool</H3>
 
-        <Suspense>
-          <ToolActions tool={tool} />
-        </Suspense>
+        <ToolActions tool={tool} />
       </div>
 
-      <Suspense>
-        <ToolForm
-          tool={tool}
-          alternatives={findAlternativeList()}
-          categories={findCategoryList()}
-        />
-      </Suspense>
+      <ToolForm tool={tool} alternatives={findAlternativeList()} categories={findCategoryList()} />
     </Wrapper>
   )
 }

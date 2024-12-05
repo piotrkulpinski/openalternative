@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation"
-import { Suspense } from "react"
 import { CategoryActions } from "~/app/admin/categories/_components/category-actions"
 import { CategoryForm } from "~/app/admin/categories/_components/category-form"
 import { Wrapper } from "~/components/admin/ui/wrapper"
@@ -24,14 +23,10 @@ export default async function UpdateCategoryPage({ params }: PageProps) {
       <div className="flex items-center justify-between gap-4">
         <H3>Update category</H3>
 
-        <Suspense>
-          <CategoryActions category={category} />
-        </Suspense>
+        <CategoryActions category={category} />
       </div>
 
-      <Suspense>
-        <CategoryForm category={category} tools={findToolList()} />
-      </Suspense>
+      <CategoryForm category={category} tools={findToolList()} />
     </Wrapper>
   )
 }
