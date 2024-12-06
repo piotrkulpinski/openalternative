@@ -1,5 +1,5 @@
 import { joinAsSentence } from "@curiousleaf/utils"
-import { ArrowUpRightIcon, HashIcon, ShapesIcon } from "lucide-react"
+import { ArrowUpRightIcon, HashIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense, cache } from "react"
@@ -200,7 +200,7 @@ export default async function ToolPage(props: PageProps) {
                   <Tag
                     key={category.id}
                     href={`/categories/${category.slug}`}
-                    prefix={<ShapesIcon />}
+                    prefix={<HashIcon />}
                   >
                     {category.name}
                   </Tag>
