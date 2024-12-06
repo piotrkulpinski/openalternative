@@ -112,7 +112,7 @@ export const toolScheduled = inngest.createFunction(
     })
 
     // Revalidate cache
-    await step.run("revalidate-tags", async () => {
+    await step.run("revalidate-cache", async () => {
       revalidateTag("admin-tools")
       revalidateTag(`tool-${tool.slug}`)
     })

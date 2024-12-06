@@ -36,10 +36,13 @@ export const publishTools = inngest.createFunction(
 
         // Update tool status
         await step.run(`update-tool-status-${tool.slug}`, async () => {
-          return prisma.tool.update({
+          await prisma.tool.update({
             where: { id: tool.id },
             data: { status: ToolStatus.Published },
           })
+
+          // Revalidate cache
+          revalidateTag(`tool-${tool.slug}`)
         })
 
         // Send email
@@ -55,21 +58,17 @@ export const publishTools = inngest.createFunction(
             react: EmailToolPublished({ tool, to, subject }),
           })
         })
+
+        // Revalidate cache
+        await step.run("revalidate-cache", async () => {
+          revalidateTag("tools")
+        })
       }
     }
 
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
       return prisma.$disconnect()
-    })
-
-    // Revalidate cache
-    await step.run("revalidate-tags", async () => {
-      revalidateTag("tools")
-
-      for (const tool of tools) {
-        revalidateTag(`tool-${tool.slug}`)
-      }
     })
   },
 )

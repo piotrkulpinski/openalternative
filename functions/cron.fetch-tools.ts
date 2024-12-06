@@ -59,7 +59,7 @@ export const fetchTools = inngest.createFunction(
     })
 
     // Revalidate cache
-    await step.run("revalidate-tags", async () => {
+    await step.run("revalidate-cache", async () => {
       revalidateTag("tools")
       revalidateTag("tool")
     })

@@ -1,5 +1,25 @@
 import { Prisma } from "@prisma/client"
 
+export const toolAlternativesPayload = Prisma.validator<Prisma.Tool$alternativesArgs>()({
+  include: { alternative: true },
+  orderBy: [{ alternative: { tools: { _count: "desc" } } }, { alternative: { name: "asc" } }],
+})
+
+export const toolCategoriesPayload = Prisma.validator<Prisma.Tool$categoriesArgs>()({
+  include: { category: true },
+  orderBy: { category: { name: "asc" } },
+})
+
+export const toolLanguagesPayload = Prisma.validator<Prisma.Tool$languagesArgs>()({
+  include: { language: true },
+  orderBy: [{ percentage: "desc" }],
+})
+
+export const toolTopicsPayload = Prisma.validator<Prisma.Tool$topicsArgs>()({
+  include: { topic: true },
+  orderBy: { topic: { slug: "asc" } },
+})
+
 export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   name: true,
   slug: true,
@@ -21,22 +41,10 @@ export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   publishedAt: true,
   updatedAt: true,
   license: true,
-  alternatives: {
-    include: { alternative: true },
-    orderBy: [{ alternative: { tools: { _count: "desc" } } }, { alternative: { name: "asc" } }],
-  },
-  categories: {
-    include: { category: true },
-    orderBy: { category: { name: "asc" } },
-  },
-  languages: {
-    include: { language: true },
-    orderBy: [{ percentage: "desc" }],
-  },
-  topics: {
-    include: { topic: true },
-    orderBy: { topic: { slug: "asc" } },
-  },
+  alternatives: toolAlternativesPayload,
+  categories: toolCategoriesPayload,
+  languages: toolLanguagesPayload,
+  topics: toolTopicsPayload,
 })
 
 export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({

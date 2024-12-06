@@ -4,7 +4,7 @@ import { formatDistanceToNowStrict } from "date-fns"
 import wretch from "wretch"
 import { config } from "~/config"
 import { getToolSuffix } from "~/lib/tools"
-import { toolOnePayload } from "~/server/web/tools/payloads"
+import { toolAlternativesPayload } from "~/server/web/tools/payloads"
 import { prisma } from "~/services/prisma"
 
 export type Socials = Record<string, Array<Record<string, string> & { url: string }>>
@@ -28,7 +28,7 @@ export const generateSocialPost = async () => {
 
   const tool = await prisma.tool.findFirst({
     where: { status: ToolStatus.Published },
-    include: toolOnePayload,
+    include: { alternatives: toolAlternativesPayload },
     skip,
   })
 
