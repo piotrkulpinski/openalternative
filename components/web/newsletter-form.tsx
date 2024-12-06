@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { posthog } from "posthog-js"
 import type { ComponentProps, HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
 import { useServerAction } from "zsa-react"
@@ -38,7 +39,11 @@ export const NewsletterForm = ({
   })
 
   const { data, error, isPending, execute } = useServerAction(subscribeToNewsletter, {
-    onSuccess: () => form.reset(),
+    onSuccess: () => {
+      posthog.capture("subscribe_newsletter", { email: form.getValues("email") })
+      form.reset()
+    },
+
     onError: () => form.reset(),
   })
 
