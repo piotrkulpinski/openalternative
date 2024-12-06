@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
+import { posthog } from "posthog-js"
 import type { HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -42,6 +43,9 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
   const { error, execute, isPending } = useServerAction(submitTool, {
     onSuccess: ({ data }) => {
       form.reset()
+
+      // Capture event
+      posthog.capture("submit_tool", { slug: data.slug })
 
       if (data.publishedAt && data.publishedAt <= new Date()) {
         if (data.isFeatured) {

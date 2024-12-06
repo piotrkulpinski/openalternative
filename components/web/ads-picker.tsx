@@ -6,6 +6,7 @@ import { cx } from "cva"
 import { endOfDay, startOfDay } from "date-fns"
 import { XIcon } from "lucide-react"
 import plur from "plur"
+import posthog from "posthog-js"
 import type { ComponentProps } from "react"
 import type { DateRange } from "react-day-picker"
 import { toast } from "sonner"
@@ -36,7 +37,8 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
 
   const { execute, isPending } = useServerAction(createStripeAdsCheckout, {
     onSuccess: ({ data }) => {
-      console.log("data", data)
+      posthog.capture("stripe_checkout_ad", { ...price })
+
       window.open(data, "_blank")?.focus()
     },
 

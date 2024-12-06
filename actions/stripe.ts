@@ -3,7 +3,6 @@
 import { AdType } from "@prisma/client"
 import { z } from "zod"
 import { createServerAction } from "zsa"
-import { captureEvent } from "~/actions/events"
 import { env } from "~/env"
 import { stripe } from "~/services/stripe"
 
@@ -34,9 +33,6 @@ export const createStripeToolCheckout = createServerAction()
     if (!checkout.url) {
       throw new Error("Unable to create a new Stripe Checkout Session.")
     }
-
-    // Capture event
-    captureEvent("stripe_checkout_tool")
 
     // Return the checkout session url
     return checkout.url
@@ -109,9 +105,6 @@ export const createStripeAdsCheckout = createServerAction()
     if (!checkout.url) {
       throw new Error("Unable to create a new Stripe Checkout Session.")
     }
-
-    // Capture event
-    captureEvent("stripe_checkout_ad")
 
     // Return the checkout session url
     return checkout.url

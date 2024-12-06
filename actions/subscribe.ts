@@ -2,7 +2,6 @@
 
 import wretch from "wretch"
 import { createServerAction } from "zsa"
-import { captureEvent } from "~/actions/events"
 import { env } from "~/env"
 import { newsletterSchema } from "~/server/schemas"
 import { isRealEmail } from "~/utils/helpers"
@@ -31,9 +30,6 @@ export const subscribeToNewsletter = createServerAction()
     if (data?.status !== "active") {
       throw new Error("Failed to subscribe to newsletter")
     }
-
-    // Capture event
-    captureEvent("subscribe_newsletter", { email: json.email })
 
     return "You've been subscribed to the newsletter!"
   })

@@ -3,7 +3,6 @@
 import { slugify } from "@curiousleaf/utils"
 import { revalidateTag } from "next/cache"
 import { createServerAction } from "zsa"
-import { captureEvent } from "~/actions/events"
 import { subscribeToNewsletter } from "~/actions/subscribe"
 import { submitToolSchema } from "~/server/schemas"
 import { inngest } from "~/services/inngest"
@@ -71,9 +70,6 @@ export const submitTool = createServerAction()
     const tool = await prisma.tool.create({
       data: { ...data, slug },
     })
-
-    // Capture event
-    captureEvent("submit_tool", { slug })
 
     // Send an event to the Inngest pipeline
     await inngest.send({ name: "tool.submitted", data: { slug } })

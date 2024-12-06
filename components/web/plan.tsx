@@ -2,6 +2,7 @@
 
 import { Slot } from "@radix-ui/react-slot"
 import { ArrowUpRightIcon, CheckIcon, XIcon } from "lucide-react"
+import { posthog } from "posthog-js"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import type Stripe from "stripe"
@@ -108,6 +109,11 @@ const Plan = ({
 
   const { execute, isPending } = useServerAction(createStripeToolCheckout, {
     onSuccess: ({ data }) => {
+      posthog.capture("stripe_checkout_tool", {
+        tool: tool.slug,
+        mode: isSubscription ? "featured" : "expedited",
+      })
+
       window.open(data, "_blank")?.focus()
     },
 
