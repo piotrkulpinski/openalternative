@@ -133,7 +133,7 @@ export const findToolBySlug = (slug: string, { where, ...args }: Prisma.ToolFind
     async (slug: string) => {
       return prisma.tool.findFirst({
         ...args,
-        where: { slug, ...where },
+        where: { slug, status: { not: ToolStatus.Draft }, ...where },
         select: toolOnePayload,
       })
     },

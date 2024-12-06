@@ -1,5 +1,6 @@
+import { formatDate } from "@curiousleaf/utils"
 import { differenceInDays } from "date-fns"
-import { BellPlusIcon, SparklesIcon } from "lucide-react"
+import { BellPlusIcon, ClockIcon, SparklesIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Stack } from "~/components/common/stack"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
@@ -19,6 +20,7 @@ export const ToolBadges = ({ tool, size, children, className, ...props }: ToolBa
 
   const isNew = !!commitDifference && commitDifference <= 365
   const isFresh = !!publishedDifference && publishedDifference <= 30 && publishedDifference >= 0
+  const isScheduled = !!publishedAt && publishedAt > updatedAt
 
   return (
     <TooltipProvider delayDuration={500} disableHoverableContent>
@@ -32,6 +34,12 @@ export const ToolBadges = ({ tool, size, children, className, ...props }: ToolBa
         {isFresh && (
           <Tooltip tooltip="Published in the last 30 days">
             <BellPlusIcon className="text-green-500" />
+          </Tooltip>
+        )}
+
+        {isScheduled && (
+          <Tooltip tooltip={`Scheduled for ${formatDate(publishedAt)}`}>
+            <ClockIcon className="text-yellow-500" />
           </Tooltip>
         )}
 
