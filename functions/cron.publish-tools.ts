@@ -62,6 +62,7 @@ export const publishTools = inngest.createFunction(
         // Revalidate cache
         await step.run("revalidate-cache", async () => {
           revalidateTag("tools")
+          revalidateTag("schedule")
         })
       }
     }

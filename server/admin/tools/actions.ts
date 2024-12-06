@@ -123,8 +123,8 @@ export const scheduleTool = authedProcedure
       data: { status: ToolStatus.Scheduled, publishedAt },
     })
 
+    revalidateTag("admin-tools")
     revalidateTag("schedule")
-    revalidateTag("tools")
     revalidateTag(`tool-${tool.slug}`)
 
     // Send an event to the Inngest pipeline
