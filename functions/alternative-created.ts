@@ -23,7 +23,7 @@ export const alternativeCreated = inngest.createFunction(
       })
     })
 
-    await step.run("revalidate-tags", async () => {
+    await step.run("revalidate-cache", async () => {
       revalidateTag(`alternative-${alternative.slug}`)
     })
   },
