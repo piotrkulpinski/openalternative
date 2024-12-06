@@ -1,4 +1,5 @@
 import { formatNumber } from "@curiousleaf/utils"
+import Image from "next/image"
 import type { HTMLAttributes } from "react"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
@@ -13,12 +14,14 @@ export const NewsletterProof = ({ className, ...props }: HTMLAttributes<HTMLElem
       {...props}
     >
       {Array.from({ length: 5 }).map((_, index) => (
-        <img
+        <Image
           key={index}
           src={`/users/${index + 1}.webp`}
           alt=""
-          width="40"
-          height="40"
+          width={56}
+          height={56}
+          unoptimized
+          loading="lazy"
           className="size-7 border-2 border-card rounded-full"
         />
       ))}
