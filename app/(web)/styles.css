@@ -20,8 +20,8 @@
   --color-secondary: hsl(0 0% 30%);
   --color-foreground: hsl(0 0% 13%);
 
-  --color-card: hsl(0 0% 99%);
-  --color-card-dark: hsl(0 0% 97%);
+  --color-card: hsl(0 0% 98%);
+  --color-card-dark: hsl(0 0% 96%);
 
   --color-border: hsl(0 0% 88%);
   --color-border-dark: hsl(0 0% 83%);
@@ -109,11 +109,11 @@
       --color-secondary: hsl(0 0% 70%);
       --color-foreground: hsl(0 0% 87%);
 
-      --color-card: hsl(0 0% 10%);
-      --color-card-dark: hsl(0 0% 12%);
+      --color-card: hsl(0 0% 11%);
+      --color-card-dark: hsl(0 0% 13%);
 
-      --color-border: hsl(0 0% 16%);
-      --color-border-dark: hsl(0 0% 19%);
+      --color-border: hsl(0 0% 18%);
+      --color-border-dark: hsl(0 0% 20%);
     }
   }
 

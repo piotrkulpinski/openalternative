@@ -36,7 +36,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
   return (
     <Card asChild {...props}>
-      <Link href={`/${tool.slug}`}>
+      <Link href={`/${tool.slug}`} prefetch={false}>
         <CardHeader>
           <Favicon src={tool.faviconUrl} title={tool.name} />
 

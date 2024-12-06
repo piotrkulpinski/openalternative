@@ -25,6 +25,7 @@ export const ExternalLink = ({
       target={target}
       rel={rel}
       onClick={() => eventName && captureEvent(eventName, eventProps)}
+      prefetch={false}
       {...props}
     />
   )

@@ -1,20 +1,8 @@
-import Link from "next/link"
-import type { ComponentProps, HTMLAttributes } from "react"
+import type { HTMLAttributes } from "react"
+import { MDXComponents } from "~/components/web/mdx-components"
 import { Stat } from "~/components/web/ui/stat"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
-
-const StatLink = ({ href, ...props }: ComponentProps<"a">) => {
-  if (!href) {
-    return <div {...(props as HTMLAttributes<HTMLDivElement>)} />
-  }
-
-  if (href.startsWith("/")) {
-    return <Link href={href} {...props} />
-  }
-
-  return <a href={href} target="_blank" rel="noopener noreferrer nofollow" {...props} />
-}
 
 export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const stats = [
@@ -30,7 +18,7 @@ export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
       {...props}
     >
       {stats.map(({ value, label }, index) => (
-        <StatLink
+        <MDXComponents.a
           key={`${index}-${label}`}
           className="flex flex-col items-center gap-1 basis-[12rem] hover:[&[href]]:opacity-80"
         >
@@ -43,7 +31,7 @@ export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
             className="text-5xl font-semibold tabular-nums"
           />
           <p className="text-muted">{label}</p>
-        </StatLink>
+        </MDXComponents.a>
       ))}
     </div>
   )

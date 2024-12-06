@@ -5,11 +5,11 @@ import { cx } from "~/utils/cva"
 
 const a = ({ href, ...props }: HTMLProps<HTMLAnchorElement>) => {
   if (typeof href !== "string") {
-    throw new TypeError("href is required")
+    return <div {...(props as HTMLProps<HTMLDivElement>)} />
   }
 
   if (href.startsWith("/") || href.startsWith("#")) {
-    return <Link href={href} {...props} />
+    return <Link href={href} prefetch={false} {...props} />
   }
 
   return <a {...props} href={href} target="_blank" rel="noopener noreferrer nofollow" />

@@ -18,6 +18,7 @@ type TagProps = Omit<ComponentProps<typeof Link>, "prefix"> & {
 export const Tag = ({ children, className, prefix, suffix, ...props }: TagProps) => {
   return (
     <Link
+      prefetch={false}
       className={cx(
         "flex items-center gap-0.5 text-secondary text-sm hover:text-foreground",
         className,

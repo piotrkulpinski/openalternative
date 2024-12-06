@@ -17,7 +17,7 @@ type LicenseCardProps = ComponentProps<typeof CardSimple> & {
 const LicenseCard = ({ license, ...props }: LicenseCardProps) => {
   return (
     <CardSimple asChild {...props}>
-      <Link href={`/licenses/${license.slug}`}>
+      <Link href={`/licenses/${license.slug}`} prefetch={false}>
         <CardSimpleTitle>{license.name}</CardSimpleTitle>
 
         <CardSimpleDivider />
