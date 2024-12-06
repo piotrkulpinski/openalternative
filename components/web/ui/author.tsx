@@ -16,6 +16,7 @@ export const Author = ({ className, name, image, twitterHandle, ...props }: Auth
         href={`https://x.com/${twitterHandle}`}
         target="_blank"
         rel="noopener noreferrer nofollow"
+        prefetch={false}
       >
         <img
           src={image}

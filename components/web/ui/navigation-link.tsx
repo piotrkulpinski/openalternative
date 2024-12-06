@@ -31,9 +31,14 @@ const NavigationLink = ({
 }: ComponentProps<"a"> & ComponentProps<typeof Link>) => {
   const pathname = usePathname()
   const isActive = isItemActive(props.href, pathname)
-  const Comp = props.href.startsWith("http") ? "a" : Link
 
-  return <Comp className={cx(navigationLinkVariants({ isActive, className }))} {...props} />
+  return (
+    <Link
+      prefetch={false}
+      className={cx(navigationLinkVariants({ isActive, className }))}
+      {...props}
+    />
+  )
 }
 
 export { NavigationLink, navigationLinkVariants }

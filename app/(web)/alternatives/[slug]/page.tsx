@@ -93,14 +93,14 @@ export default async function AlternativePage(props: PageProps) {
 
   // Pick the top 5 tools
   const bestTools = tools.slice(0, 5).map(tool => (
-    <Link key={tool.slug} href={`/${tool.slug}`}>
+    <Link key={tool.slug} href={`/${tool.slug}`} prefetch={false}>
       {tool.name}
     </Link>
   ))
 
   // Pick the top categories
   const bestCategories = categories.slice(0, 3).map(({ category }) => (
-    <Link key={category.slug} href={`/categories/${category.slug}`}>
+    <Link key={category.slug} href={`/categories/${category.slug}`} prefetch={false}>
       {category.label || category.name}
     </Link>
   ))
@@ -190,7 +190,9 @@ export default async function AlternativePage(props: PageProps) {
                 className="font-normal text-muted ring-0!"
                 asChild
               >
-                <Link href="/submit">Suggest an alternative</Link>
+                <Link href="/submit" prefetch={false}>
+                  Suggest an alternative
+                </Link>
               </Button>
             </InlineMenu>
           </Section.Sidebar>
