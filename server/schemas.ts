@@ -3,11 +3,12 @@ import { config } from "~/config"
 
 export const submitToolSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  website: z.string().min(1, "Website is required").url("Invalid URL"),
+  website: z.string().min(1, "Website is required").url("Invalid URL").trim(),
   repository: z
     .string()
     .min(1, "Repository is required")
     .url("Invalid URL")
+    .trim()
     .refine(
       url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
       "The repository must be a valid GitHub URL with owner and repo name.",
