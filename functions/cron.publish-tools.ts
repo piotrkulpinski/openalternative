@@ -12,7 +12,7 @@ import { sendTwitterPost } from "~/services/twitter"
 export const publishTools = inngest.createFunction(
   { id: "publish-tools" },
   { cron: "TZ=Europe/Warsaw */30 * * * *" },
-  async ({ step }) => {
+  async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return prisma.tool.findMany({
         where: {
@@ -23,10 +23,14 @@ export const publishTools = inngest.createFunction(
     })
 
     if (tools.length) {
+      logger.info(`Publishing ${tools.length} tools`, { tools })
+
       for (const tool of tools) {
         const { post } = await step.run(`generate-post-${tool.slug}`, async () => {
           return generateLaunchPost(tool)
         })
+
+        logger.info(`Generated post for ${tool.slug}`, { post })
 
         // Post on socials
         await Promise.all([

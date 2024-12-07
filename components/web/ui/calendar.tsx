@@ -32,7 +32,7 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
         selected: "bg-foreground text-background",
         range_middle: "bg-card-dark! text-foreground! rounded-none",
         today:
-          "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-0.5 after:w-5 after:-translate-x-1/2 after:rounded-[2px] after:bg-current",
+          "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-0.5 after:w-5 after:-translate-x-1/2 after:rounded-[2px] after:bg-current after:pointer-events-none",
         outside: "opacity-40",
         disabled: "opacity-40 pointer-events-none",
         hidden: "invisible",
