@@ -20,7 +20,7 @@ import { NavigationLink } from "~/components/web/ui/navigation-link"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
-import { addUTMTracking } from "~/utils/helpers"
+import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 type FooterProps = HTMLAttributes<HTMLElement> & {
   hideNewsletter?: boolean
@@ -162,7 +162,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           {config.links.family.map(({ href, title, description }) => (
             <NavigationLink
               key={href}
-              href={addUTMTracking(href, { source: config.site.name.toLowerCase() })}
+              href={updateUrlWithSearchParams(href, { ref: config.site.name.toLowerCase() })}
               target="_blank"
               rel="noreferrer noopener"
               title={description}
@@ -178,7 +178,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           href={config.links.author}
           className="text-xs"
           target="_blank"
-          rel="noopener noreferrer nofollow"
+          rel="noopener noreferrer"
         >
           <img
             src="/authors/piotrkulpinski.webp"
