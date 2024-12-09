@@ -6,6 +6,7 @@ import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import { addUTMTracking } from "~/utils/helpers"
+import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -162,7 +163,7 @@ export default function AboutPage() {
           {config.links.family.map(link => (
             <li key={link.title}>
               <a
-                href={addUTMTracking(link.href, { source: config.site.name.toLowerCase() })}
+                href={updateUrlWithSearchParams(link.href, { ref: config.site.name.toLowerCase() })}
                 title={link.description}
                 target="_blank"
                 rel="noreferrer"
