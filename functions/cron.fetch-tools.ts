@@ -11,7 +11,7 @@ import { sendTwitterPost } from "~/services/twitter"
 
 export const fetchTools = inngest.createFunction(
   { id: "fetch-tools" },
-  { cron: "TZ=Europe/Warsaw 0 0 * * *" },
+  { cron: "TZ=Europe/Warsaw 0 0 * * *" }, // Every day at midnight
 
   async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
