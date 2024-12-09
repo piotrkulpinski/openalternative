@@ -1,5 +1,5 @@
 import crypto from "node:crypto"
-import { env, isProd } from "~/env"
+import { env } from "~/env"
 
 /**
  * Generate a Base64-encoded HMAC-SHA1 signature for OAuth 1.0a
@@ -119,10 +119,6 @@ export async function makeOAuthRequest(
  * @param text - The text of the post
  */
 export const sendTwitterPost = async (text: string) => {
-  if (!isProd) {
-    return
-  }
-
   const httpMethod = "POST"
   const baseUrl = "https://api.twitter.com/2/tweets"
 
