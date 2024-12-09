@@ -11,7 +11,7 @@ import { sendTwitterPost } from "~/services/twitter"
 
 export const publishTools = inngest.createFunction(
   { id: "publish-tools" },
-  { cron: "TZ=Europe/Warsaw */30 * * * *" },
+  { cron: "TZ=Europe/Warsaw 5 * * * *" }, // Every hour at minute 5
   async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return prisma.tool.findMany({
