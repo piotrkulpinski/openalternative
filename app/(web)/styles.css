@@ -129,6 +129,10 @@
     }
   }
 
+  * {
+    @apply underline-offset-2;
+  }
+
   hr {
     @apply border-foreground;
     @apply opacity-15;
