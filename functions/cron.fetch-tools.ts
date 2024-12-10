@@ -32,8 +32,6 @@ export const fetchTools = inngest.createFunction(
 
           if (isToolPublished(tool) && updatedTool.stars > tool.stars) {
             const milestone = getMilestoneReached(tool.stars, updatedTool.stars)
-            logger.info(`Milestone reached for ${tool.name}`, { milestone })
-
             milestone && (await sendMilestonePost(milestone, tool))
           }
 
@@ -49,11 +47,8 @@ export const fetchTools = inngest.createFunction(
     await step.run("post-on-socials", async () => {
       const post = await generateSocialPost()
 
-      logger.info("Generated post for socials", { post })
-
       if (post) {
-        await sendTwitterPost(post)
-        await sendBlueskyPost(post)
+        await Promise.all([sendTwitterPost(post), sendBlueskyPost(post)])
       }
     })
 

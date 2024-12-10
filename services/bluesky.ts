@@ -1,12 +1,12 @@
 import { AtpAgent, RichText } from "@atproto/api"
-import { env } from "~/env"
+import { env, isProd } from "~/env"
 
 /**
  * Send a post to Bluesky
  * @param text - The text of the post
  */
 export const sendBlueskyPost = async (text: string) => {
-  if (!env.BLUESKY_USERNAME || !env.BLUESKY_PASSWORD) {
+  if (!isProd || !env.BLUESKY_USERNAME || !env.BLUESKY_PASSWORD) {
     return
   }
 
