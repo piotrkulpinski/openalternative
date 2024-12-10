@@ -30,13 +30,10 @@ export const publishTools = inngest.createFunction(
           return generateLaunchPost(tool)
         })
 
-        logger.info(`Generated post for ${tool.slug}`, { post })
-
-        // Post on socials
-        await Promise.all([
-          step.run(`post-to-twitter-${tool.slug}`, () => sendTwitterPost(post)),
-          step.run(`post-to-bluesky-${tool.slug}`, () => sendBlueskyPost(post)),
-        ])
+        // Post on Socials about a the published tool
+        await step.run(`post-on-socials-${tool.slug}`, async () => {
+          return Promise.all([sendTwitterPost(post), sendBlueskyPost(post)])
+        })
 
         // Update tool status
         await step.run(`update-tool-status-${tool.slug}`, async () => {
