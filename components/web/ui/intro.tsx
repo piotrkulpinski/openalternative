@@ -29,7 +29,15 @@ const IntroTitle = ({ size = "h1", ...props }: HeadingProps) => {
 }
 
 const IntroDescription = ({ className, ...props }: ComponentProps<"h2">) => {
-  return <h2 className={cx("max-w-2xl text-secondary md:text-lg", className)} {...props} />
+  return (
+    <h2
+      className={cx(
+        "max-w-2xl text-secondary md:text-lg *:[&[href]]:underline *:[&[href]]:hover:text-primary",
+        className,
+      )}
+      {...props}
+    />
+  )
 }
 
 export { Intro, IntroTitle, IntroDescription }
