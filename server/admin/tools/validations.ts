@@ -1,3 +1,4 @@
+import { ToolStatus } from "@prisma/client"
 import * as z from "zod"
 
 export const searchParamsSchema = z.object({
@@ -18,11 +19,6 @@ export const getToolsSchema = searchParamsSchema
 
 export type GetToolsSchema = z.infer<typeof getToolsSchema>
 
-export const linkSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  url: z.string().url("Must be a valid URL"),
-})
-
 export const toolSchema = z.object({
   name: z.string().min(1, "Name is required"),
   slug: z.string().optional(),
@@ -30,15 +26,14 @@ export const toolSchema = z.object({
   repository: z
     .string()
     .min(1, "Repository is required")
-    .url()
+    .url("Invalid URL")
     .refine(
       url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
-      "The repository must be a valid GitHub URL",
+      "The repository must be a valid GitHub URL with owner and repo name.",
     ),
   tagline: z.string().optional(),
   description: z.string().optional(),
   content: z.string().optional(),
-  links: z.array(linkSchema).optional(),
   faviconUrl: z.string().optional(),
   screenshotUrl: z.string().optional(),
   isFeatured: z.boolean().default(false),
@@ -48,8 +43,8 @@ export const toolSchema = z.object({
   hostingUrl: z.string().url().optional().or(z.literal("")),
   discountCode: z.string().optional(),
   discountAmount: z.string().optional(),
-  twitterHandle: z.string().optional(),
   publishedAt: z.date().nullish(),
+  status: z.nativeEnum(ToolStatus).default("Draft"),
   alternatives: z.array(z.string()).optional(),
   categories: z.array(z.string()).optional(),
 })

@@ -3,11 +3,9 @@ import { revalidateTag } from "next/cache"
 import { config } from "~/config"
 import EmailToolPublished from "~/emails/tool-published"
 import { sendEmails } from "~/lib/email"
-import { generateLaunchPost } from "~/lib/generate-content"
-import { sendBlueskyPost } from "~/services/bluesky"
+import { getPostLaunchTemplate, sendSocialPost } from "~/lib/socials"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
-import { sendTwitterPost } from "~/services/twitter"
 
 export const publishTools = inngest.createFunction(
   { id: "publish-tools" },
@@ -26,13 +24,9 @@ export const publishTools = inngest.createFunction(
       logger.info(`Publishing ${tools.length} tools`, { tools })
 
       for (const tool of tools) {
-        const { post } = await step.run(`generate-post-${tool.slug}`, async () => {
-          return generateLaunchPost(tool)
-        })
-
-        // Post on Socials about a the published tool
         await step.run(`post-on-socials-${tool.slug}`, async () => {
-          return Promise.all([sendTwitterPost(post), sendBlueskyPost(post)])
+          const template = getPostLaunchTemplate(tool)
+          return sendSocialPost(template, tool)
         })
 
         // Update tool status

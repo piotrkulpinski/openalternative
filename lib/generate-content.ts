@@ -1,12 +1,8 @@
 import { createAnthropic } from "@ai-sdk/anthropic"
-import { openai } from "@ai-sdk/openai"
 import { isTruthy } from "@curiousleaf/utils"
 import type { ScrapeResponse } from "@mendable/firecrawl-js"
-import type { Tool } from "@prisma/client"
 import { generateObject } from "ai"
-import type { Jsonify } from "inngest/helpers/jsonify"
 import { z } from "zod"
-import { config } from "~/config"
 import { getErrorMessage } from "~/lib/handle-error"
 import { prisma } from "~/services/prisma"
 
@@ -85,44 +81,4 @@ export const generateContent = async (scrapedData: Omit<ScrapeResponse, "actions
   } catch (error) {
     throw new Error(getErrorMessage(error))
   }
-}
-
-/**
- * Generates a launch post for a tool.
- * @param tool The tool to generate a launch post for.
- * @returns The launch post.
- */
-export const generateLaunchPost = async (tool: Tool | Jsonify<Tool>) => {
-  const model = openai("gpt-4o")
-
-  const { object } = await generateObject({
-    model,
-    schema: z.object({
-      post: z.string().max(280).describe("The launch post"),
-    }),
-    system: `
-      You are an expert content creator.
-      Use new lines to separate paragraphs.
-      Post should do not exceed 240 characters.
-      Use the following template:
-      
-      "🚀 Just published — {name} ({twitter handle}): {tagline}
-
-      {description}
-
-      {links}
-      "
-    `,
-    prompt: `
-      Generate a post to announce the feature of the following open source software product:
-
-      Name: "${tool.name}"
-      Tagline: "${tool.tagline}"
-      Description: "${tool.description}"
-      Twitter Handle: "${tool.twitterHandle}"
-      Link: "${config.site.url}/${tool.slug}"
-    `,
-  })
-
-  return object
 }

@@ -1,13 +1,12 @@
 import { ToolStatus } from "@prisma/client"
 import { revalidateTag } from "next/cache"
-import { getMilestoneReached, sendMilestonePost } from "~/lib/milestones"
+import { getMilestoneReached } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
-import { generateSocialPost } from "~/lib/socials"
+import { getPostMilestoneTemplate, getPostTemplate, sendSocialPost } from "~/lib/socials"
 import { isToolPublished } from "~/lib/tools"
-import { sendBlueskyPost } from "~/services/bluesky"
+import { findRandomTool } from "~/server/web/tools/queries"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
-import { sendTwitterPost } from "~/services/twitter"
 
 export const fetchTools = inngest.createFunction(
   { id: "fetch-tools" },
@@ -32,7 +31,11 @@ export const fetchTools = inngest.createFunction(
 
           if (isToolPublished(tool) && updatedTool.stars > tool.stars) {
             const milestone = getMilestoneReached(tool.stars, updatedTool.stars)
-            milestone && (await sendMilestonePost(milestone, tool))
+
+            if (milestone) {
+              const template = getPostMilestoneTemplate(tool, milestone)
+              await sendSocialPost(template, tool)
+            }
           }
 
           return prisma.tool.update({
@@ -45,10 +48,11 @@ export const fetchTools = inngest.createFunction(
 
     // Post on Socials about a random tool
     await step.run("post-on-socials", async () => {
-      const post = await generateSocialPost()
+      const tool = await findRandomTool()
 
-      if (post) {
-        await Promise.all([sendTwitterPost(post), sendBlueskyPost(post)])
+      if (tool) {
+        const template = await getPostTemplate(tool)
+        return sendSocialPost(template, tool)
       }
     })
 

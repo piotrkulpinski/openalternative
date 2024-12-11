@@ -119,7 +119,10 @@ export async function makeOAuthRequest(
  * @param text - The text of the post
  */
 export const sendTwitterPost = async (text: string) => {
-  if (!isProd) return
+  if (!isProd) {
+    console.log(text)
+    return
+  }
 
   const httpMethod = "POST"
   const baseUrl = "https://api.twitter.com/2/tweets"

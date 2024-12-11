@@ -1,17 +1,24 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { ToolStatus } from "@prisma/client"
 import { formatDate } from "date-fns"
-import { PlusIcon, TrashIcon } from "lucide-react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import type React from "react"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/admin/ui/button"
 import { Input } from "~/components/admin/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/admin/ui/select"
 import { Switch } from "~/components/admin/ui/switch"
 import { Textarea } from "~/components/admin/ui/textarea"
 import {
@@ -52,12 +59,6 @@ export function ToolForm({
       categories: tool?.categories?.map(({ category }) => category.id),
     },
   })
-
-  const {
-    fields: linkFields,
-    append: appendLink,
-    remove: removeLink,
-  } = useFieldArray({ control: form.control, name: "links" })
 
   // Create tool
   const { execute: createToolAction, isPending: isCreatingTool } = useServerAction(createTool, {
@@ -200,19 +201,47 @@ export function ToolForm({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="isFeatured"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Featured</FormLabel>
-              <FormControl>
-                <Switch onCheckedChange={field.onChange} checked={field.value} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex flex-row gap-4 max-sm:contents">
+          <FormField
+            control={form.control}
+            name="isFeatured"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Featured</FormLabel>
+                <FormControl>
+                  <Switch onCheckedChange={field.onChange} checked={field.value} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Status</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="h-8 w-full tabular-nums">
+                      <SelectValue />
+                    </SelectTrigger>
+
+                    <SelectContent side="top" className="tabular-nums">
+                      {Object.values(ToolStatus).map(status => (
+                        <SelectItem key={status} value={status}>
+                          {status}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
@@ -233,42 +262,12 @@ export function ToolForm({
           )}
         />
 
-        <div className="flex flex-row gap-4 max-sm:contents">
-          <FormField
-            control={form.control}
-            name="submitterName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Submitter Name</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="submitterEmail"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Submitter Email</FormLabel>
-                <FormControl>
-                  <Input type="email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
         <FormField
           control={form.control}
-          name="submitterNote"
+          name="submitterName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Submitter Note</FormLabel>
+              <FormLabel>Submitter Name</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -279,10 +278,24 @@ export function ToolForm({
 
         <FormField
           control={form.control}
-          name="twitterHandle"
+          name="submitterEmail"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Twitter Handle</FormLabel>
+              <FormLabel>Submitter Email</FormLabel>
+              <FormControl>
+                <Input type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="submitterNote"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Submitter Note</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -357,64 +370,6 @@ export function ToolForm({
                 <Input {...field} />
               </FormControl>
               <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="links"
-          render={() => (
-            <FormItem className="col-span-full">
-              <FormLabel>Links</FormLabel>
-              <div className="w-full space-y-2">
-                {linkFields.map((field, index) => (
-                  <div key={field.id} className="flex flex-wrap items-center gap-2 md:gap-4">
-                    <FormField
-                      control={form.control}
-                      name={`links.${index}.name`}
-                      render={({ field }) => (
-                        <FormItem className="flex-grow">
-                          <FormControl>
-                            <Input placeholder="Name" {...field} />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name={`links.${index}.url`}
-                      render={({ field }) => (
-                        <FormItem className="flex-grow">
-                          <FormControl>
-                            <Input placeholder="URL" {...field} />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      prefix={<TrashIcon />}
-                      onClick={() => removeLink(index)}
-                      className="text-destructive"
-                    />
-                  </div>
-                ))}
-
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  prefix={<PlusIcon />}
-                  onClick={() => appendLink({ name: "", url: "" })}
-                >
-                  Add Link
-                </Button>
-              </div>
             </FormItem>
           )}
         />

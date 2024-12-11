@@ -4,6 +4,8 @@ import type { Alternative, Category, License, Tool } from "@prisma/client"
 import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
+import { testSocialPosts } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -75,10 +77,10 @@ export const CommandMenu = () => {
     setSearchQuery(value)
   }
 
-  // const handleSendSocialPost = async () => {
-  //   await sendOutSocialPost()
-  //   toast.success("Social post sent")
-  // }
+  const handleSendSocialPost = async () => {
+    await testSocialPosts()
+    toast.success("Social post sent")
+  }
 
   const handleSelect = (url: string) => {
     handleOpenChange(false)
@@ -118,9 +120,9 @@ export const CommandMenu = () => {
           </CommandItem>
         </CommandGroup>
 
-        {/* <CommandGroup heading="Quick Commands">
+        <CommandGroup heading="Quick Commands">
           <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
-        </CommandGroup> */}
+        </CommandGroup>
 
         {!!searchResults?.tools.length && (
           <CommandGroup heading="Tools">

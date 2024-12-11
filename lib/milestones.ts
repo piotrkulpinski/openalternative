@@ -1,9 +1,3 @@
-import type { Tool } from "@prisma/client"
-import type { Jsonify } from "inngest/helpers/jsonify"
-import { config } from "~/config"
-import { sendBlueskyPost } from "~/services/bluesky"
-import { sendTwitterPost } from "~/services/twitter"
-
 /**
  * Check if a tool has reached a milestone
  * @param prevStars - The number of stars the tool had before the current update
@@ -20,23 +14,4 @@ export const getMilestoneReached = (prevStars: number, newStars: number) => {
   const reachedMilestones = unreachedMilestones.filter(m => newStars >= m)
 
   return reachedMilestones.length ? Math.max(...reachedMilestones) : null
-}
-
-/**
- * Send a post congratulating a tool for reaching a milestone
- * @param milestone - The milestone reached
- * @param tool - The tool object
- */
-export const sendMilestonePost = async (milestone: number, tool: Tool | Jsonify<Tool>) => {
-  const post = `⭐ ${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub! Huge congrats to the${tool.twitterHandle ? ` @${tool.twitterHandle}` : ""} team! 🎉
-
-${config.site.url}/${tool.slug}`
-
-  try {
-    await sendTwitterPost(post)
-    await sendBlueskyPost(post)
-    console.log(`Social posts sent for ${tool.name}`)
-  } catch (error) {
-    console.error(`Error sending social posts for ${tool.name}:`, error)
-  }
 }

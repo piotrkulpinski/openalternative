@@ -1,5 +1,5 @@
 import { getRandomElement } from "@curiousleaf/utils"
-import { type Prisma, ToolStatus } from "@prisma/client"
+import { type Prisma, type Tool, ToolStatus } from "@prisma/client"
 import type { inferParserType } from "nuqs/server"
 import { cache } from "~/lib/cache"
 import {
@@ -139,3 +139,16 @@ export const findToolBySlug = (slug: string, { where, ...args }: Prisma.ToolFind
     },
     ["tool", `tool-${slug}`],
   )(slug)
+
+export const findRandomTool = async () => {
+  const tools = await prisma.$queryRaw<Array<Tool>>`
+    SELECT *
+    FROM "Tool"
+    WHERE status = 'Published'
+    GROUP BY id
+    ORDER BY RANDOM()
+    LIMIT 1
+  `
+
+  return tools[0]
+}
