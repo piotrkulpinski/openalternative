@@ -5,7 +5,6 @@ import { sendEmails } from "~/lib/email"
 import { generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
-import { getSocialsFromUrl } from "~/lib/socials"
 import { firecrawlClient } from "~/services/firecrawl"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
@@ -87,21 +86,6 @@ export const toolScheduled = inngest.createFunction(
         return prisma.tool.update({
           where: { id },
           data: { screenshotUrl },
-        })
-      }),
-
-      step.run("get-socials", async () => {
-        const socials = await getSocialsFromUrl(tool.website)
-
-        const links = Object.entries(socials)
-          .filter(([name]) => name !== "GitHub")
-          .map(([name, links]) => ({ name, url: links[0]?.url }))
-
-        const twitterHandle = socials.X?.[0]?.user
-
-        return prisma.tool.update({
-          where: { id: tool.id },
-          data: { twitterHandle, links },
         })
       }),
     ])
