@@ -1,12 +1,7 @@
 import { AtpAgent, RichText } from "@atproto/api"
 import wretch from "wretch"
 import { env, isProd } from "~/env"
-
-type Metadata = {
-  title: string
-  description: string
-  image: string
-}
+import { getUrlMetadata } from "~/utils/helpers"
 
 /**
  * Get the Bluesky embed card
@@ -14,27 +9,29 @@ type Metadata = {
  * @param agent - The Bluesky agent
  * @returns The embed card
  */
-export const getBlueskyEmbedCard = async (url: string | undefined, agent: AtpAgent) => {
+const getBlueskyEmbedCard = async (url: string | undefined, agent: AtpAgent) => {
   if (!url) return
 
   try {
-    const json = await wretch(`https://api.dub.co/metatags?url=${url}`).get().json<Metadata>()
-    const blob = await wretch(json.image).get().blob()
+    const metadata = await getUrlMetadata(url)
 
+    if (!metadata) return
+
+    const blob = await wretch(metadata.image).get().blob()
     const { data } = await agent.uploadBlob(blob, { encoding: "image/jpeg" })
 
     return {
       $type: "app.bsky.embed.external",
       external: {
         uri: url,
-        title: json.title,
-        description: json.description,
+        title: metadata.title,
+        description: metadata.description,
         thumb: data.blob,
       },
     }
   } catch (error) {
-    console.error("Error fetching socials:", error)
-    return undefined
+    console.error("Error fetching embed card:", error)
+    return
   }
 }
 
@@ -44,7 +41,6 @@ export const getBlueskyEmbedCard = async (url: string | undefined, agent: AtpAge
  */
 export const sendBlueskyPost = async (text: string, url?: string) => {
   if (!isProd || !env.BLUESKY_USERNAME || !env.BLUESKY_PASSWORD) {
-    console.log(text)
     return
   }
 

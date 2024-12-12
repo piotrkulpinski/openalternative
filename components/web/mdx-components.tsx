@@ -1,3 +1,4 @@
+import { ArrowUpRightIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import type { HTMLProps } from "react"
@@ -12,7 +13,18 @@ const a = ({ href, ...props }: HTMLProps<HTMLAnchorElement>) => {
     return <Link href={href} prefetch={false} {...props} />
   }
 
-  return <a {...props} href={href} target="_blank" rel="noopener noreferrer nofollow" />
+  return (
+    <a
+      {...props}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      // className="inline-flex items-center gap-px"
+    >
+      {props.children}
+      <ArrowUpRightIcon className="inline-block ml-0.5 mb-0.5 size-3.5 stroke-2" />
+    </a>
+  )
 }
 
 const img = ({ className, ...props }: HTMLProps<HTMLImageElement>) => {

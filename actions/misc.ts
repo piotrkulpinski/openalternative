@@ -1,10 +1,10 @@
 "use server"
 
 import { getPostTemplate, sendSocialPost } from "~/lib/socials"
-import { findRandomTool } from "~/server/web/tools/queries"
+import { prisma } from "~/services/prisma"
 
 export const testSocialPosts = async () => {
-  const tool = await findRandomTool()
+  const tool = await prisma.tool.findFirst({ where: { slug: "dub" } })
 
   if (tool) {
     const template = await getPostTemplate(tool)

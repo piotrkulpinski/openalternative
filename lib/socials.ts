@@ -3,6 +3,7 @@ import type { Tool } from "@prisma/client"
 import { formatDistanceToNowStrict } from "date-fns"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import wretch from "wretch"
+import { config } from "~/config"
 import { sendBlueskyPost } from "~/services/bluesky"
 import { sendTwitterPost } from "~/services/twitter"
 
@@ -37,7 +38,7 @@ export const sendSocialPost = async (template: string, tool: Tool | Jsonify<Tool
   const socials = await getSocialsFromUrl(tool.website)
   const twitterHandle = socials.X?.[0]?.user
   const blueskyHandle = socials.Bluesky?.[0]?.user
-  const url = `https://openalternative.co/${tool.slug}`
+  const url = `${config.site.url}/${tool.slug}`
 
   return await Promise.all([
     sendTwitterPost(`${updatePostTemplate(template, twitterHandle, url)}`),
