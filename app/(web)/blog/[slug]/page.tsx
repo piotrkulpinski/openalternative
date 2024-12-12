@@ -97,11 +97,18 @@ export default async function BlogPostPage(props: PageProps) {
                 Written by
               </H6>
 
-              <Author
-                name={post.author.name}
-                image={post.author.image}
-                twitterHandle={post.author.twitterHandle}
-              />
+              <a
+                href={`https://twitter.com/${post.author.twitterHandle}`}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                className="group"
+              >
+                <Author
+                  name={post.author.name}
+                  image={post.author.image}
+                  title={`@${post.author.twitterHandle}`}
+                />
+              </a>
             </Stack>
 
             {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}
