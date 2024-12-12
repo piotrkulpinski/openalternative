@@ -35,7 +35,7 @@ It’s the best alternative for [**Fathom Analytics**](/alternatives/fathom-anal
 
 Many big companies are satisfied customers of Posthog.
 
-**Project Link:** [Posthog](/posthog)
+Project Link: [**Posthog**](/posthog)
 
 ## 2. Sentry
 
@@ -49,7 +49,7 @@ It’s like having an expert programmer for your coding. You won’t need to gue
 
 It’s the best alternative for [**Datadog**](/alternatives/datadog), [**BetterStack**](/alternatives/betterstack) and [**LogRocket**](/alternatives/logrocket)
 
-**Project Link**: [Sentry](/sentry)
+Project Link: [**Sentry**](/sentry)
 
 ## 3. Airbyte
 
@@ -63,7 +63,7 @@ Whether you’re a data wizard or just starting out, this makes managing and usi
 
 It’s the best alternative for [**Fivetran**](/alternatives/fivetran), [**Matillion**](/alternatives/matillion), and [**Supermetrics**](/alternatives/supermetrics)
 
-**Project Link:** [Airbyte](/airbyte)
+Project Link: [**Airbyte**](/airbyte)
 
 ## 4. OpenReplay
 
@@ -77,7 +77,7 @@ Honestly, it’s like having a perfect tool to make your app the best.
 
 It’s the best alternative for [**Mixpanel**](/alternatives/mixpanel)**,** [**New Relic**](/alternatives/new-relic)**,** [**BetterStack**](/alternatives/betterstack)**,** [**Kissmetrics**](/alternatives/kissmetrics)**,** [**Amplitude**](/alternatives/amplitude)**,** [**June**](/alternatives/june)**,** [**LogRocket**](/alternatives/logrocket)**,** and [**FullStory**](/alternatives/fullstory)
 
-**Project Link:** [OpenReplay](/openreplay)
+Project Link: [**OpenReplay**](/openreplay)
 
 ## 5. Plausible
 
@@ -91,7 +91,7 @@ If you care about privacy and want clean, no-fuss data, Plausible is your perfec
 
 It’s the best alternative for [**Mixpanel**](/alternatives/mixpanel)**,** [**Google Analytics**](/alternatives/google-analytics)**,** [**Kissmetrics**](/alternatives/kissmetrics)**,** [**Fathom Analytics**](/alternatives/fathom-analytics) and [**Google Workspace**](/alternatives/google-workspace)
 
-**Project Link:** [Plausible](/plausible)
+Project Link: [**Plausible**](/plausible)
 
 ---
 

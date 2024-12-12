@@ -1,5 +1,11 @@
 import wretch from "wretch"
 
+type Metadata = {
+  title: string
+  description: string
+  image: string
+}
+
 /**
  * Checks if an email is a real email by checking if the domain is not in the disposable domains list
  * @param email
@@ -13,6 +19,23 @@ export const isRealEmail = async (email: string) => {
   const domain = email.split("@")[1]
 
   return !disposableDomains.includes(domain)
+}
+
+/**
+ * Get the URL metadata
+ * @param url - The URL to get the metadata for
+ * @returns The metadata
+ */
+export const getUrlMetadata = async (url: string) => {
+  try {
+    const api = wretch(`https://api.dub.co/metatags?url=${url}`)
+    const metadata = await api.get().json<Metadata>()
+
+    return metadata
+  } catch (error) {
+    console.error("Error fetching metadata:", error)
+    return
+  }
 }
 
 /**
