@@ -1,5 +1,5 @@
+import { allPosts as posts } from "content-collections"
 import type { MetadataRoute } from "next"
-import { allPosts as posts } from "~/.content-collections/generated"
 import { config } from "~/config"
 import { findAlternativeSlugs } from "~/server/web/alternatives/queries"
 import { findCategorySlugs } from "~/server/web/categories/queries"

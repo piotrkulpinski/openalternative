@@ -36,6 +36,18 @@ export const adsConfig = {
     faviconUrl: null,
   } satisfies AdOne,
 
+  testimonials: [
+    {
+      quote:
+        "OpenAlternative has been a solid traffic source for our website since we partnered up with them. Their homepage ad, in particular, delivered great results, giving us a noticeable **10–20% traffic boost**. Piotr has done an excellent job with OpenAlternative and it’s clear from the platform’s traffic, engagement, and audience quality. Highly recommended!",
+      author: {
+        name: "Abdullah Atta",
+        title: "Founder of Notesnook",
+        image: "/authors/abdullahatta.webp",
+      },
+    },
+  ],
+
   advertisers: [
     {
       name: "Preline UI",

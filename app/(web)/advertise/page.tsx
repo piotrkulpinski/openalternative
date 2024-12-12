@@ -1,12 +1,9 @@
-import { Slot } from "@radix-ui/react-slot"
-import { LightbulbIcon, MegaphoneIcon, SendIcon, SquareAsteriskIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
-import { H4 } from "~/components/common/heading"
-import { Stack } from "~/components/common/stack"
 import { AdsPicker } from "~/components/web/ads-picker"
 import { Advertisers } from "~/components/web/advertisers"
 import { Stats } from "~/components/web/stats"
+import { Testimonial } from "~/components/web/testimonial"
 import { Button } from "~/components/web/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
@@ -22,33 +19,6 @@ export const metadata: Metadata = {
 
 export default async function AdvertisePage() {
   const ads = await findAds({})
-
-  const options = [
-    {
-      icon: <SquareAsteriskIcon />,
-      title: "Featured Listings",
-      description:
-        "Get a prominent listing on our homepage, alternative rankings and categories. Available only for open source projects listed on our site.",
-    },
-    {
-      icon: <MegaphoneIcon />,
-      title: "Advertising Banners",
-      description:
-        "We offer a variety of banner ads that you can display on your website to reach our audience. You can choose where to display them.",
-    },
-    {
-      icon: <SendIcon />,
-      title: "Newsletter Sponsorship",
-      description:
-        "Get featured in our monthly newsletter read by tech enthusiasts. Include a personalized message to our audience with your link.",
-    },
-    {
-      icon: <LightbulbIcon />,
-      title: "Custom Marketing Plan",
-      description:
-        "If none of the options discussed align with your marketing strategies, please send us an email so we can discuss your specific needs.",
-    },
-  ]
 
   return (
     <>
@@ -69,34 +39,9 @@ export default async function AdvertisePage() {
 
       <Stats className="my-4" />
 
-      <Intro alignment="center" className="mt-8">
-        <IntroTitle size="h2" as="h3">
-          Advertising Options
-        </IntroTitle>
-
-        <IntroDescription className="mt-2">
-          We only accept advertisements promoting services and products that are relevant to open
-          source. They should cover informational topics or provide incentives that benefit our
-          visitors.
-        </IntroDescription>
-      </Intro>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-        {options.map(option => (
-          <div
-            key={option.title}
-            className="flex flex-col items-center gap-4 border rounded-xl px-4 py-6 text-center"
-          >
-            <Stack size="sm">
-              <Slot className="size-6 stroke-[1.5] text-muted">{option.icon}</Slot>
-
-              <H4 as="strong">{option.title}</H4>
-            </Stack>
-
-            <p className="max-w-sm text-secondary">{option.description}</p>
-          </div>
-        ))}
-      </div>
+      {config.ads.testimonials.map(testimonial => (
+        <Testimonial key={testimonial.quote} {...testimonial} className="my-4" />
+      ))}
 
       <div className="flex flex-col items-center text-center gap-6 mt-4" id="advertisers">
         <p className="text-sm text-muted">
