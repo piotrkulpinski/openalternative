@@ -55,7 +55,7 @@ export default async function AdvertisePage() {
 
       <Intro alignment="center" className="md:my-4 lg:my-8">
         <IntroTitle size="h2" as="h3">
-          Interested in Advertising?
+          Need a custom partnership?
         </IntroTitle>
 
         <IntroDescription className="max-w-lg">
