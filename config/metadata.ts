@@ -13,6 +13,7 @@ export const metadataConfig: Metadata = {
   twitter: {
     site: "@ossalternatives",
     creator: "@piotrkulpinski",
+    card: "summary_large_image",
   },
   alternates: {
     canonical: "/",
