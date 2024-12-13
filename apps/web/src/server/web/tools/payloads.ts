@@ -1,23 +1,33 @@
 import { Prisma } from "@openalternative/db/client"
+import { alternativeManyPayload } from "~/server/web/alternatives/payloads"
+import { categoryManyPayload } from "~/server/web/categories/payloads"
+import { languageManyPayload } from "~/server/web/languages/payloads"
+import { stackManyPayload } from "~/server/web/stacks/payloads"
+import { topicManyPayload } from "~/server/web/topics/payloads"
 
 export const toolAlternativesPayload = Prisma.validator<Prisma.Tool$alternativesArgs>()({
-  include: { alternative: true },
+  include: { alternative: { select: alternativeManyPayload } },
   orderBy: [{ alternative: { tools: { _count: "desc" } } }, { alternative: { name: "asc" } }],
 })
 
 export const toolCategoriesPayload = Prisma.validator<Prisma.Tool$categoriesArgs>()({
-  include: { category: true },
+  include: { category: { select: categoryManyPayload } },
   orderBy: { category: { name: "asc" } },
 })
 
 export const toolLanguagesPayload = Prisma.validator<Prisma.Tool$languagesArgs>()({
-  include: { language: true },
+  include: { language: { select: languageManyPayload } },
   orderBy: [{ percentage: "desc" }],
 })
 
 export const toolTopicsPayload = Prisma.validator<Prisma.Tool$topicsArgs>()({
-  include: { topic: true },
+  include: { topic: { select: topicManyPayload } },
   orderBy: { topic: { slug: "asc" } },
+})
+
+export const toolStackPayload = Prisma.validator<Prisma.Tool$stacksArgs>()({
+  select: stackManyPayload,
+  orderBy: [{ tools: { _count: "desc" } }, { slug: "asc" }],
 })
 
 export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
@@ -45,6 +55,7 @@ export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   categories: toolCategoriesPayload,
   languages: toolLanguagesPayload,
   topics: toolTopicsPayload,
+  stacks: toolStackPayload,
 })
 
 export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({

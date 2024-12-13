@@ -6,8 +6,6 @@ import { StackAnalyzer } from "./analyzer"
 const app = new Hono()
 
 app.get("/", async c => {
-  const analyzer = new StackAnalyzer()
-
   const tools = await prisma.tool.findMany({
     where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
     select: { id: true, repository: true },
@@ -16,7 +14,9 @@ app.get("/", async c => {
 
   try {
     for (const tool of tools) {
-      const result = await analyzer.processRepository(tool.repository)
+      const analyzer = new StackAnalyzer(tool.repository)
+
+      const result = await analyzer.processRepository()
 
       if (result) {
         // console.log(result)

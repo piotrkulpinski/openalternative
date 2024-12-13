@@ -4,16 +4,16 @@ import { Box, type BoxProps } from "~/components/common/box"
 import { Stack } from "~/components/common/stack"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
-const cardVariants = cva({
+const cardSmallVariants = cva({
   base: [
-    "relative flex flex-col items-start gap-4 w-full border bg-card p-5 rounded-lg transform-gpu",
+    "relative flex flex-col items-start gap-3 w-full border bg-card p-3 rounded-lg transform-gpu",
     "hover:[&[href]]:bg-card-dark",
   ],
 })
 
-type CardProps = ComponentProps<"div"> &
+type CardSmallProps = ComponentProps<"div"> &
   BoxProps &
-  VariantProps<typeof cardVariants> & {
+  VariantProps<typeof cardSmallVariants> & {
     /**
      * If set to `true`, the button will be rendered as a child within the component.
      * This child component must be a valid React component.
@@ -21,35 +21,41 @@ type CardProps = ComponentProps<"div"> &
     asChild?: boolean
   }
 
-const Card = ({ className, hover = true, focus = true, asChild, ...props }: CardProps) => {
+const CardSmall = ({
+  className,
+  hover = true,
+  focus = true,
+  asChild,
+  ...props
+}: CardSmallProps) => {
   const useAsChild = asChild && isValidElement(props.children)
   const Comp = useAsChild ? Slot : "div"
 
   return (
     <Box hover={hover} focus={focus}>
-      <Comp className={cx(cardVariants({ className }))} {...props} />
+      <Comp className={cx(cardSmallVariants({ className }))} {...props} />
     </Box>
   )
 }
 
-const CardHeader = ({ className, ...props }: ComponentProps<typeof Stack>) => {
-  return <Stack className={cx("w-full", className)} {...props} />
+const CardSmallHeader = ({ className, ...props }: ComponentProps<typeof Stack>) => {
+  return <Stack size="sm" className={cx("w-full", className)} {...props} />
 }
 
-const CardFooter = ({ className, ...props }: ComponentProps<typeof Stack>) => {
+const CardSmallFooter = ({ className, ...props }: ComponentProps<typeof Stack>) => {
   return <Stack size="sm" className={cx("text-xs text-muted", className)} {...props} />
 }
 
-const CardDescription = ({ className, ...props }: ComponentProps<"p">) => {
+const CardSmallDescription = ({ className, ...props }: ComponentProps<"p">) => {
   return (
     <p
-      className={cx("line-clamp-2 text-sm/normal text-secondary text-pretty", className)}
+      className={cx("line-clamp-2 text-xs/normal text-secondary text-pretty", className)}
       {...props}
     />
   )
 }
 
-const CardBadges = ({ className, size = "sm", ...props }: ComponentProps<typeof Stack>) => {
+const CardSmallBadges = ({ className, size = "sm", ...props }: ComponentProps<typeof Stack>) => {
   return (
     <Stack
       size={size}
@@ -59,7 +65,7 @@ const CardBadges = ({ className, size = "sm", ...props }: ComponentProps<typeof 
   )
 }
 
-const CardBg = ({ className, ...props }: ComponentProps<"div">) => {
+const CardSmallBg = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
       className={cx(
@@ -74,12 +80,12 @@ const CardBg = ({ className, ...props }: ComponentProps<"div">) => {
 }
 
 export {
-  Card,
-  CardBg,
-  CardBadges,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  cardVariants,
-  type CardProps,
+  CardSmall,
+  CardSmallBg,
+  CardSmallBadges,
+  CardSmallDescription,
+  CardSmallFooter,
+  CardSmallHeader,
+  cardSmallVariants,
+  type CardSmallProps,
 }

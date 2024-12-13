@@ -6,7 +6,7 @@ import { Suspense, cache } from "react"
 import type { ImageObject } from "schema-dts"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
-import { H1, H5 } from "~/components/common/heading"
+import { H1, H4, H5 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
@@ -14,6 +14,7 @@ import { Listing } from "~/components/web/listing"
 import { Markdown } from "~/components/web/markdown"
 import { RepositoryDetails } from "~/components/web/repository-details"
 import { ShareButtons } from "~/components/web/share-buttons"
+import { StackList } from "~/components/web/stacks/stack-list"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { Badge } from "~/components/web/ui/badge"
@@ -198,7 +199,7 @@ export default async function ToolPage(props: PageProps) {
               <Stack>
                 {tool.categories?.map(({ category }) => (
                   <Tag
-                    key={category.id}
+                    key={category.slug}
                     href={`/categories/${category.slug}`}
                     prefix={<HashIcon />}
                   >
@@ -224,7 +225,16 @@ export default async function ToolPage(props: PageProps) {
             </Stack>
           )}
 
-          <ShareButtons title={`${title}`} className="max-md:order-8" />
+          {/* Stacks */}
+          {!!tool.stacks.length && (
+            <Stack size="lg" direction="column">
+              <H4 as="strong">Technical Stack:</H4>
+
+              <StackList stacks={tool.stacks} className="w-full max-md:order-8" />
+            </Stack>
+          )}
+
+          <ShareButtons title={`${title}`} className="max-md:order-9" />
         </Section.Content>
 
         <Section.Sidebar className="max-md:contents">
@@ -237,7 +247,7 @@ export default async function ToolPage(props: PageProps) {
 
           {/* Featured */}
           <Suspense>
-            <FeaturedTools className="max-md:order-9" />
+            <FeaturedTools className="max-md:order-10" />
           </Suspense>
         </Section.Sidebar>
       </Section>

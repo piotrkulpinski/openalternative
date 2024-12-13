@@ -13,53 +13,53 @@ interface StackInfo {
 }
 
 export class StackAnalyzer {
-  private workingDir: string
+  private repoDir: string
+  private repoUrl: string
 
-  constructor() {
-    this.workingDir = path.join(process.cwd(), ".repositories")
-
-    // Ensure working directory exists
-    fs.ensureDirSync(this.workingDir)
-  }
-
-  public async processRepository(repository: string) {
+  constructor(repository: string) {
     const repo = getRepoOwnerAndName(repository)
 
-    if (!repo) return null
+    if (!repo) throw new Error("Invalid repository")
 
-    const repoPath = path.join(this.workingDir, repo.owner, repo.name)
+    this.repoDir = path.join(process.cwd(), ".repositories", repo.owner, repo.name)
+    this.repoUrl = `${repo.owner}/${repo.name}`
 
+    // Ensure working directory exists
+    fs.ensureDirSync(this.repoDir)
+  }
+
+  public async processRepository() {
     try {
       // Clone repository
-      await this.cloneRepository(`${repo.owner}/${repo.name}`, repoPath)
+      await this.cloneRepository()
 
       // Analyze stack
-      const result = await this.analyzeStack(repoPath)
+      const result = await this.analyzeStack()
 
       // Clean up
-      await this.cleanupDirectory(this.workingDir)
+      await this.cleanupDirectory()
 
       return result
     } catch (error) {
-      console.error(`Error processing ${repository}:`, error)
+      console.error(`Error processing ${this.repoUrl}:`, error)
     }
   }
 
-  private async cloneRepository(repository: string, path: string) {
+  private async cloneRepository() {
     console.time("Clone repository")
 
     try {
-      const emitter = tiged(repository, { cache: false, force: true, verbose: true })
+      const emitter = tiged(this.repoUrl, { cache: false, force: true, verbose: true })
 
-      await emitter.clone(path)
+      await emitter.clone(this.repoDir)
 
       console.timeEnd("Clone repository")
     } catch (error) {
-      console.error(`Error cloning ${repository}:`, error)
+      console.error(`Error cloning ${this.repoUrl}:`, error)
     }
   }
 
-  private async analyzeStack(path: string) {
+  private async analyzeStack() {
     console.time("Analyze stack")
 
     try {
@@ -67,7 +67,7 @@ export class StackAnalyzer {
       rules.loadAll()
 
       // Create a provider for the repository
-      const provider = new FSProvider({ path })
+      const provider = new FSProvider({ path: this.repoDir })
 
       // Analyze a folder
       const result = await analyser({ provider })
@@ -82,19 +82,19 @@ export class StackAnalyzer {
 
       return flat.toJson()
     } catch (error) {
-      console.error(`Error analyzing stack for ${path}:`, error)
+      console.error(`Error analyzing stack for ${this.repoUrl}:`, error)
     }
   }
 
-  private async cleanupDirectory(path: string) {
+  private async cleanupDirectory() {
     console.time("Cleanup directory")
 
     try {
-      await fs.remove(path)
+      await fs.remove(this.repoDir)
 
       console.timeEnd("Cleanup directory")
     } catch (error) {
-      console.error(`Cleanup error for ${path}:`, error)
+      console.error(`Cleanup error for ${this.repoUrl}:`, error)
     }
   }
 }

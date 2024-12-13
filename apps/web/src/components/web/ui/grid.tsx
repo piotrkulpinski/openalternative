@@ -2,13 +2,16 @@ import type { ComponentProps } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const gridVariants = cva({
-  base: "grid place-content-start gap-5",
+  base: "w-full grid place-content-start gap-5",
 
   variants: {
     size: {
+      "2xs": "grid-cols-2xs",
+      xs: "grid-cols-xs",
       sm: "grid-cols-sm",
       md: "grid-cols-md",
       lg: "grid-cols-lg",
+      xl: "grid-cols-xl",
     },
   },
 

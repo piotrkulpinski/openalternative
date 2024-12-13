@@ -156,7 +156,7 @@ model Stack {
   slug        String    @unique
   type        StackType @default(Language)
   description String?
-  website     String
+  website     String?
   faviconUrl  String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
