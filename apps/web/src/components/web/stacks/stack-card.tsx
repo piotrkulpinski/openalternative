@@ -1,44 +1,20 @@
-import Link from "next/link"
-import plur from "plur"
 import type { ComponentProps } from "react"
-import { H6 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
-import { Stack } from "~/components/common/stack"
-import {
-  CardSimple,
-  CardSimpleCaption,
-  CardSimpleDivider,
-  CardSimpleTitle,
-} from "~/components/web/ui/card-simple"
-import { CardSmall, CardSmallHeader } from "~/components/web/ui/card-small"
+import { CardSimple, CardSimpleCaption, CardSimpleTitle } from "~/components/web/ui/card-simple"
 import { Favicon } from "~/components/web/ui/favicon"
+import { NavigationLink } from "~/components/web/ui/navigation-link"
 import type { StackMany } from "~/server/web/stacks/payloads"
 
-type StackCardProps = ComponentProps<typeof CardSimple> & {
+type StackCardProps = Omit<ComponentProps<typeof NavigationLink>, "href"> & {
   stack: StackMany
 }
 
 const StackCard = ({ stack, ...props }: StackCardProps) => {
   return (
-    <CardSmallHeader asChild {...props}>
-      <CardSmall asChild>
-        <Link href={`/stacks/${stack.slug}`} prefetch={false}>
-          <Stack size="sm">
-            <Favicon src={stack.faviconUrl} title={stack.name} className="size-6 p-[3px]" />
-
-            <H6 as="h4" className="truncate">
-              {stack.name}
-            </H6>
-          </Stack>
-
-          <CardSimpleDivider />
-
-          <CardSimpleCaption>
-            {`${stack._count.tools} ${plur("tool", stack._count.tools)}`}
-          </CardSimpleCaption>
-        </Link>
-      </CardSmall>
-    </CardSmallHeader>
+    <NavigationLink href={`/stacks/${stack.slug}`} prefetch={false} {...props}>
+      <Favicon src={stack.faviconUrl} title={stack.name} className="size-6 p-[3px]" />
+      <strong className="font-medium ">{stack.name}</strong>
+    </NavigationLink>
   )
 }
 

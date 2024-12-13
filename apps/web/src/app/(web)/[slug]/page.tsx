@@ -1,4 +1,5 @@
 import { joinAsSentence } from "@curiousleaf/utils"
+import { StackType } from "@openalternative/db/client"
 import { ArrowUpRightIcon, HashIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
@@ -6,7 +7,7 @@ import { Suspense, cache } from "react"
 import type { ImageObject } from "schema-dts"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
-import { H1, H4, H5 } from "~/components/common/heading"
+import { H1, H5 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
@@ -18,10 +19,10 @@ import { StackList } from "~/components/web/stacks/stack-list"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { Badge } from "~/components/web/ui/badge"
+import { BrandLink } from "~/components/web/ui/brand-link"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { IntroDescription } from "~/components/web/ui/intro"
-import { NavigationLink } from "~/components/web/ui/navigation-link"
 import { Section } from "~/components/web/ui/section"
 import { Tag } from "~/components/web/ui/tag"
 import { metadataConfig } from "~/config/metadata"
@@ -132,18 +133,12 @@ export default async function ToolPage(props: PageProps) {
                   <span className="text-sm">Open Source Alternative to:</span>
 
                   {tool.alternatives.map(({ alternative }) => (
-                    <NavigationLink
+                    <BrandLink
                       key={alternative.slug}
                       href={`/alternatives/${alternative.slug}`}
-                    >
-                      {alternative.name}
-
-                      <FaviconImage
-                        src={alternative.faviconUrl}
-                        title={alternative.name}
-                        className="size-4 order-first"
-                      />
-                    </NavigationLink>
+                      name={alternative.name}
+                      faviconUrl={alternative.faviconUrl}
+                    />
                   ))}
                 </Stack>
               </>
@@ -191,9 +186,22 @@ export default async function ToolPage(props: PageProps) {
 
           {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
 
+          {/* Stacks */}
+          {!!tool.stacks.length && (
+            <Stack size="lg" direction="column" className="w-full max-md:order-6 md:gap-y-6">
+              <H5 as="strong">Technical Stack:</H5>
+
+              <StackList
+                stacks={tool.stacks}
+                omitTypes={[StackType.Language]}
+                className="w-full max-md:order-8"
+              />
+            </Stack>
+          )}
+
           {/* Categories */}
           {!!tool.categories.length && (
-            <Stack size="lg" direction="column" className="w-full max-md:order-6">
+            <Stack size="lg" direction="column" className="w-full max-md:order-7">
               <H5 as="strong">Categories:</H5>
 
               <Stack>
@@ -212,7 +220,7 @@ export default async function ToolPage(props: PageProps) {
 
           {/* Topics */}
           {!!tool.topics.length && (
-            <Stack size="lg" direction="column" className="w-full max-md:order-7">
+            <Stack size="lg" direction="column" className="w-full max-md:order-8">
               <H5 as="strong">Related topics:</H5>
 
               <Stack>
@@ -222,15 +230,6 @@ export default async function ToolPage(props: PageProps) {
                   </Tag>
                 ))}
               </Stack>
-            </Stack>
-          )}
-
-          {/* Stacks */}
-          {!!tool.stacks.length && (
-            <Stack size="lg" direction="column">
-              <H4 as="strong">Technical Stack:</H4>
-
-              <StackList stacks={tool.stacks} className="w-full max-md:order-8" />
             </Stack>
           )}
 

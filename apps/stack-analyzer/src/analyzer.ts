@@ -1,5 +1,6 @@
+import { execSync } from "node:child_process"
 import path from "node:path"
-import { FSProvider, analyser, flatten, rules } from "@specfy/stack-analyser"
+import type { AnalyserJson } from "@specfy/stack-analyser"
 import fs from "fs-extra"
 import tiged from "tiged"
 import { getRepoOwnerAndName } from "./utils"
@@ -63,24 +64,34 @@ export class StackAnalyzer {
     console.time("Analyze stack")
 
     try {
-      // Load default rules
-      rules.loadAll()
+      execSync(`bun x @specfy/stack-analyser ${this.repoDir} --flat --output ./output.json`)
+      // const provider = new FSProvider({ path: this.repoDir, ignorePaths: [] })
+      // const pl = new Payload({ name: "main", folderPath: "/" })
+      // await pl.recurse(provider, provider.basePath)
+      // const output = flatten(pl)
+      // console.log(output)
+      // const file = path.join(process.cwd(), "output.json")
+      // await fs.writeFile(file, JSON.stringify(output.toJson(this.repoDir), undefined, 2))
+      // // Load default rules
+      // rules.loadAll()
 
-      // Create a provider for the repository
-      const provider = new FSProvider({ path: this.repoDir })
+      // // Create a provider for the repository
+      // const provider = new FSProvider({ path: this.repoDir })
 
-      // Analyze a folder
-      const result = await analyser({ provider })
+      // // Analyze a folder
+      // const result = await analyser({ provider })
 
-      // Output to JSON
-      // const json = result.toJson()
+      // // Output to JSON
+      // // const json = result.toJson()
 
-      // De-nest the output and deduplicate childs
-      const flat = flatten(result)
+      // // De-nest the output and deduplicate childs
+      // const flat = flatten(result)
+
+      const output = fs.readFileSync(path.join(process.cwd(), "output.json"), "utf-8")
 
       console.timeEnd("Analyze stack")
 
-      return flat.toJson()
+      return JSON.parse(output) as AnalyserJson
     } catch (error) {
       console.error(`Error analyzing stack for ${this.repoUrl}:`, error)
     }

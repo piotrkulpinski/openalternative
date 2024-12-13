@@ -1,18 +1,40 @@
-import type { StackType } from "@openalternative/db/client"
-import type { ComponentProps } from "react"
-import { H5 } from "~/components/common/heading"
+import { StackType } from "@openalternative/db/client"
+import { type ComponentProps, Fragment } from "react"
+import { H6 } from "~/components/common/heading"
+import { Stack } from "~/components/common/stack"
 import { EmptyList } from "~/components/web/empty-list"
-import { StackCard, StackCardSkeleton } from "~/components/web/stacks/stack-card"
+import { StackCardSkeleton } from "~/components/web/stacks/stack-card"
+import { BrandLink } from "~/components/web/ui/brand-link"
 import { Grid } from "~/components/web/ui/grid"
 import type { StackMany } from "~/server/web/stacks/payloads"
 import { cx } from "~/utils/cva"
 
 type StackListProps = ComponentProps<typeof Grid> & {
   stacks: StackMany[]
+  omitTypes?: StackType[]
 }
 
-const StackList = ({ stacks, className, ...props }: StackListProps) => {
-  // Group stacks by type in typesafe way
+const stackTypeOrder = [
+  StackType.Language,
+  StackType.Framework,
+  StackType.Tool,
+  StackType.SaaS,
+  StackType.Analytics,
+  StackType.Monitoring,
+  StackType.Cloud,
+  StackType.ETL,
+  StackType.DB,
+  StackType.CI,
+  StackType.Hosting,
+  StackType.API,
+  StackType.Storage,
+  StackType.Messaging,
+  StackType.App,
+  StackType.Network,
+] as const
+
+const StackList = ({ stacks, omitTypes, className, ...props }: StackListProps) => {
+  // Group stacks by type
   const groupedStacks = stacks.reduce<Record<StackType, StackMany[]>>(
     (acc, stack) => {
       const type = stack.type as StackType
@@ -23,24 +45,40 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
     {} as Record<StackType, StackMany[]>,
   )
 
-  return (
-    <Grid className={cx("grid-cols-1", className)} {...props}>
-      {Object.entries(groupedStacks).map(([type, stackList]) => (
-        <div key={type} className="flex flex-wrap gap-4">
-          <H5 as="strong" className="w-28 mt-3">
-            {type}:
-          </H5>
+  // Filter and sort stacks
+  const sortedStacks = (Object.entries(groupedStacks) as [StackType, StackMany[]][])
+    .filter(([type]) => !omitTypes?.includes(type))
+    .sort(([a], [b]) => stackTypeOrder.indexOf(a) - stackTypeOrder.indexOf(b))
 
-          <Grid size="2xs" className="flex-1 gap-4">
-            {stackList.map(stack => (
-              <StackCard key={stack.slug} stack={stack} />
-            ))}
-          </Grid>
-        </div>
+  return (
+    <div
+      className={cx("flex flex-col divide-y overflow-clip -my-3 md:-my-4", className)}
+      {...props}
+    >
+      {sortedStacks.map(([type, stackList]) => (
+        <Fragment key={type}>
+          <div className="flex flex-wrap gap-3 py-3 overflow-clip md:gap-4 md:py-4">
+            <H6 as="strong" className="relative w-24 mt-0.5 text-muted md:w-28">
+              {type}
+              <hr className="absolute -inset-y-5 right-0 z-10 h-auto w-px border-r" />
+            </H6>
+
+            <Stack size="lg" className="flex-1">
+              {stackList.map(stack => (
+                <BrandLink
+                  key={stack.slug}
+                  href={`/stacks/${stack.slug}`}
+                  name={stack.name}
+                  faviconUrl={stack.faviconUrl}
+                />
+              ))}
+            </Stack>
+          </div>
+        </Fragment>
       ))}
 
-      {!Object.entries(groupedStacks).length && <EmptyList>No stacks found.</EmptyList>}
-    </Grid>
+      {!sortedStacks.length && <EmptyList>No stacks found.</EmptyList>}
+    </div>
   )
 }
 
