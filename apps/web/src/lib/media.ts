@@ -89,7 +89,7 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string>
     return s3Location
   } catch (error) {
     console.error("Error fetching or uploading favicon:", error)
-    throw error
+    return ""
   }
 }
 

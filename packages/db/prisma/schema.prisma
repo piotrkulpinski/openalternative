@@ -98,18 +98,6 @@ model Tool {
   @@index([id, slug])
 }
 
-model Stack {
-  id          String    @id @default(cuid())
-  name        String    @db.Citext
-  slug        String    @unique
-  type        StackType @default(Language)
-  description String?
-  faviconUrl  String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  tools       Tool[]
-}
-
 model Alternative {
   id             String              @id @default(cuid())
   name           String              @db.Citext
@@ -159,6 +147,19 @@ model License {
   content     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  tools       Tool[]
+}
+
+model Stack {
+  id          String    @id @default(cuid())
+  name        String    @db.Citext
+  slug        String    @unique
+  type        StackType @default(Language)
+  description String?
+  website     String
+  faviconUrl  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   tools       Tool[]
 }
 

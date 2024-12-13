@@ -1,0 +1,21 @@
+{
+  "name": "@openalternative/stack-analyzer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.0.2",
+    "@openalternative/db": "workspace:*",
+    "@specfy/stack-analyser": "^1.8.5",
+    "fs-extra": "^11.2.0",
+    "hono": "^4.6.13",
+    "tiged": "^3.0.0-rc.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}
