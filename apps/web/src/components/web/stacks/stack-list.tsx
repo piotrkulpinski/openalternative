@@ -11,7 +11,6 @@ import { cx } from "~/utils/cva"
 
 type StackListProps = ComponentProps<typeof Grid> & {
   stacks: StackMany[]
-  omitTypes?: StackType[]
 }
 
 const stackTypeOrder = [
@@ -33,7 +32,7 @@ const stackTypeOrder = [
   StackType.Network,
 ] as const
 
-const StackList = ({ stacks, omitTypes, className, ...props }: StackListProps) => {
+const StackList = ({ stacks, className, ...props }: StackListProps) => {
   // Group stacks by type
   const groupedStacks = stacks.reduce<Record<StackType, StackMany[]>>(
     (acc, stack) => {
@@ -45,13 +44,19 @@ const StackList = ({ stacks, omitTypes, className, ...props }: StackListProps) =
     {} as Record<StackType, StackMany[]>,
   )
 
-  // Filter and sort stacks
-  const sortedStacks = (Object.entries(groupedStacks) as [StackType, StackMany[]][])
-    .filter(([type]) => !omitTypes?.includes(type))
-    .sort(([a], [b]) => stackTypeOrder.indexOf(a) - stackTypeOrder.indexOf(b))
+  // Sort stacks
+  const sortedStacks = (Object.entries(groupedStacks) as [StackType, StackMany[]][]).sort(
+    ([a], [b]) => stackTypeOrder.indexOf(a) - stackTypeOrder.indexOf(b),
+  )
 
   return (
-    <div className={cx("flex flex-col divide-y overflow-clip border-y", className)} {...props}>
+    <div
+      className={cx(
+        "flex flex-col divide-y divide-foreground/10 overflow-clip border-y border-foreground/10",
+        className,
+      )}
+      {...props}
+    >
       {sortedStacks.map(([type, stackList]) => (
         <Fragment key={type}>
           <div className="flex flex-wrap gap-3 py-3 overflow-clip md:gap-4 md:py-4">

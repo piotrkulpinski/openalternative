@@ -135,7 +135,7 @@
 
   hr {
     @apply border-foreground;
-    @apply opacity-15;
+    @apply opacity-10;
   }
 }
 

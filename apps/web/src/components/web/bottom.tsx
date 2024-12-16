@@ -31,7 +31,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
     <Container>
       <div
         className={cx(
-          "flex flex-col gap-y-6 py-8 border-t border-muted/15 md:py-10 lg:py-12",
+          "flex flex-col gap-y-6 py-8 border-t border-foreground/10 md:py-10 lg:py-12",
           className,
         )}
         {...props}
