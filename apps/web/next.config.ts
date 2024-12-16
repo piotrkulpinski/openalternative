@@ -68,6 +68,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/languages",
+        destination: "/stacks",
+        permanent: true,
+      },
+      {
+        source: "/languages/:slug",
+        destination: "/stacks/:slug",
+        permanent: true,
+      },
+      {
         source: "/newsletter",
         destination: "/",
         permanent: true,
