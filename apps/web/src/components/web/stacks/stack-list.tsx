@@ -51,14 +51,11 @@ const StackList = ({ stacks, omitTypes, className, ...props }: StackListProps) =
     .sort(([a], [b]) => stackTypeOrder.indexOf(a) - stackTypeOrder.indexOf(b))
 
   return (
-    <div
-      className={cx("flex flex-col divide-y overflow-clip -my-3 md:-my-4", className)}
-      {...props}
-    >
+    <div className={cx("flex flex-col divide-y overflow-clip border-y", className)} {...props}>
       {sortedStacks.map(([type, stackList]) => (
         <Fragment key={type}>
           <div className="flex flex-wrap gap-3 py-3 overflow-clip md:gap-4 md:py-4">
-            <H6 as="strong" className="relative w-24 mt-0.5 text-muted md:w-28">
+            <H6 as="strong" className="relative w-24 mt-0.5 text-foreground md:w-28">
               {type}
               <hr className="absolute -inset-y-5 right-0 z-10 h-auto w-px border-r" />
             </H6>

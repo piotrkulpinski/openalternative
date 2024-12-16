@@ -7,7 +7,7 @@ import { Suspense, cache } from "react"
 import type { ImageObject } from "schema-dts"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
-import { H1, H5 } from "~/components/common/heading"
+import { H1, H4, H5 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
@@ -189,7 +189,7 @@ export default async function ToolPage(props: PageProps) {
           {/* Stacks */}
           {!!tool.stacks.length && (
             <Stack size="lg" direction="column" className="w-full max-md:order-6 md:gap-y-6">
-              <H5 as="strong">Technical Stack:</H5>
+              <H4 as="strong">Technical Stack:</H4>
 
               <StackList
                 stacks={tool.stacks}

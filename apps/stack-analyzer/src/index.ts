@@ -10,7 +10,7 @@ app.get("/", async c => {
   const results: AllowedKeys[][] = []
 
   const tools = await prisma.tool.findMany({
-    where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] }, slug: "notesnook" },
+    where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] }, slug: "novu" },
     select: { id: true, repository: true },
     take: 2,
   })

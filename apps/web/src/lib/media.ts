@@ -68,7 +68,7 @@ export const removeS3Directory = async (directory: string) => {
  * @param s3Key - The S3 key to upload the favicon to.
  * @returns The S3 location of the uploaded favicon.
  */
-export const uploadFavicon = async (url: string, s3Key: string): Promise<string> => {
+export const uploadFavicon = async (url: string, s3Key: string): Promise<string | null> => {
   const cleanedUrl = encodeURIComponent(stripURLSubpath(url) ?? "")
   const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain_url=${cleanedUrl}`
 
@@ -89,7 +89,7 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string>
     return s3Location
   } catch (error) {
     console.error("Error fetching or uploading favicon:", error)
-    return ""
+    return null
   }
 }
 

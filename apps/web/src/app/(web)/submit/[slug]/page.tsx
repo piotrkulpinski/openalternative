@@ -30,7 +30,7 @@ const getTool = cache(async ({ params, searchParams }: PageProps) => {
   const { slug } = await params
 
   const tool = await findToolBySlug(slug, {
-    where: { isFeatured: success ? undefined : false },
+    where: { isFeatured: success ? undefined : false, status: undefined },
   })
 
   if (!tool) {
