@@ -57,6 +57,7 @@ app.post(
         })
       }
     } catch (error) {
+      console.error("Error processing tools:", error)
       return c.json({ error: "Failed to process tools" }, 500)
     }
 

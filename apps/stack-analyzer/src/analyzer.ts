@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process"
+import { execFileSync } from "node:child_process"
 import path from "node:path"
 import type { AnalyserJson } from "@specfy/stack-analyser"
 import fs from "fs-extra"
@@ -18,7 +18,7 @@ const cloneRepository = async (repoUrl: string, repoDir: string) => {
   console.time("Clone repository")
   try {
     fs.ensureDirSync(repoDir)
-    execSync(`bun x degit ${repoUrl} ${repoDir} -f`)
+    execFileSync("bun", ["x", "degit", repoUrl, repoDir, "-f"])
     console.timeEnd("Clone repository")
   } catch (error) {
     console.error(`Error cloning ${repoUrl}:`, error)
@@ -29,8 +29,9 @@ const cloneRepository = async (repoUrl: string, repoDir: string) => {
 const analyzeStack = async (repoUrl: string, repoDir: string) => {
   console.time("Analyze stack")
   try {
-    execSync(`bun x @specfy/stack-analyser ${repoDir} --flat --output ./output.json`)
-    const output = fs.readFileSync(path.join(process.cwd(), "output.json"), "utf-8")
+    const outputFile = path.join(repoDir, "output.json")
+    execFileSync("bun", ["x", "@specfy/stack-analyser", repoDir, "--flat", "-o", outputFile])
+    const output = fs.readFileSync(outputFile, "utf-8")
     console.timeEnd("Analyze stack")
     return JSON.parse(output) as AnalyserJson
   } catch (error) {

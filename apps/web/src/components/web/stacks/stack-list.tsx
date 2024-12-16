@@ -87,7 +87,7 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
 const StackListSkeleton = () => {
   return (
     <div className="flex flex-col divide-y divide-foreground/10 overflow-clip border-y border-foreground/10">
-      {[...Array(Math.floor(Math.random() * 5) + 5)].map((_, index) => (
+      {[...Array(8)].map((_, index) => (
         <div key={index} className="flex flex-wrap gap-3 py-3 overflow-clip md:gap-4 md:py-4">
           <H6 as="strong" className="relative w-24 mt-0.5 text-foreground md:w-28">
             <Skeleton className="h-6 w-20" />
@@ -95,7 +95,7 @@ const StackListSkeleton = () => {
           </H6>
 
           <Stack size="lg" className="flex-1">
-            {[...Array(Math.floor(Math.random() * 5) + 1)].map((_, index) => (
+            {[...Array(4)].map((_, index) => (
               <Skeleton key={index} className="h-6 w-32" />
             ))}
           </Stack>
