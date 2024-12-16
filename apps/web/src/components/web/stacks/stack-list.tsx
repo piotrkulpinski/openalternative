@@ -1,4 +1,5 @@
 import { StackType } from "@openalternative/db/client"
+import { useMemo } from "react"
 import { type ComponentProps, Fragment } from "react"
 import { H6 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
@@ -33,21 +34,21 @@ const stackTypeOrder = [
 ] as const
 
 const StackList = ({ stacks, className, ...props }: StackListProps) => {
-  // Group stacks by type
-  const groupedStacks = stacks.reduce<Record<StackType, StackMany[]>>(
-    (acc, stack) => {
-      const type = stack.type as StackType
-      acc[type] = acc[type] || []
-      acc[type].push(stack)
-      return acc
-    },
-    {} as Record<StackType, StackMany[]>,
-  )
-
-  // Sort stacks
-  const sortedStacks = (Object.entries(groupedStacks) as [StackType, StackMany[]][]).sort(
-    ([a], [b]) => stackTypeOrder.indexOf(a) - stackTypeOrder.indexOf(b),
-  )
+  const groupedStacks = useMemo(() => {
+    return (
+      Object.entries(
+        stacks.reduce<Record<StackType, StackMany[]>>(
+          (acc, stack) => {
+            const type = stack.type as StackType
+            acc[type] = acc[type] || []
+            acc[type].push(stack)
+            return acc
+          },
+          {} as Record<StackType, StackMany[]>,
+        ),
+      ) as [StackType, StackMany[]][]
+    ).sort(([a], [b]) => stackTypeOrder.indexOf(a) - stackTypeOrder.indexOf(b))
+  }, [stacks])
 
   return (
     <div
@@ -57,7 +58,7 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
       )}
       {...props}
     >
-      {sortedStacks.map(([type, stackList]) => (
+      {groupedStacks.map(([type, stackList]) => (
         <Fragment key={type}>
           <div className="flex flex-wrap gap-3 py-3 overflow-clip md:gap-4 md:py-4">
             <H6 as="strong" className="relative w-24 mt-0.5 text-foreground md:w-28">
@@ -79,7 +80,7 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
         </Fragment>
       ))}
 
-      {!sortedStacks.length && <EmptyList>No stacks found.</EmptyList>}
+      {!stacks.length && <EmptyList>No stacks found.</EmptyList>}
     </div>
   )
 }
