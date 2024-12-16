@@ -1,9 +1,9 @@
 "use client"
 
 import {
+  BlocksIcon,
   CalendarDaysIcon,
   ChevronDownIcon,
-  CodeXmlIcon,
   CopyrightIcon,
   GalleryHorizontalEndIcon,
   SearchIcon,
@@ -114,8 +114,8 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink href="/languages">
-                  <CodeXmlIcon className="shrink-0 size-4 opacity-75" /> Languages
+                <NavigationLink href="/stacks">
+                  <BlocksIcon className="shrink-0 size-4 opacity-75" /> Tech Stacks
                 </NavigationLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
@@ -190,8 +190,8 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         <NavigationLink href="/alternatives" className="text-base">
           Alternatives
         </NavigationLink>
-        <NavigationLink href="/languages" className="text-base">
-          Languages
+        <NavigationLink href="/stacks" className="text-base">
+          Tech Stacks
         </NavigationLink>
         <NavigationLink href="/topics" className="text-base">
           Topics

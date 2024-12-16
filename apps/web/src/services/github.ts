@@ -26,16 +26,6 @@ export const repositoryQuery = `
           }
         }
       }
-      languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
-        totalSize
-        edges {
-          size
-          node {
-            name
-            color
-          }
-        }
-      }
       defaultBranchRef {
         target {
           ... on Commit {

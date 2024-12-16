@@ -18,16 +18,6 @@ export type RepositoryQueryResult = {
         }
       }>
     }
-    languages: {
-      totalSize: number
-      edges: Array<{
-        size: number
-        node: {
-          name: string
-          color: string
-        }
-      }>
-    }
     defaultBranchRef: {
       target: {
         history: {

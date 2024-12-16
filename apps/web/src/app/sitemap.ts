@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next"
 import { config } from "~/config"
 import { findAlternativeSlugs } from "~/server/web/alternatives/queries"
 import { findCategorySlugs } from "~/server/web/categories/queries"
-import { findLanguageSlugs } from "~/server/web/languages/queries"
 import { findLicenseSlugs } from "~/server/web/licenses/queries"
+import { findStackSlugs } from "~/server/web/stacks/queries"
 import { findToolSlugs } from "~/server/web/tools/queries"
 import { findTopicSlugs } from "~/server/web/topics/queries"
 
@@ -18,11 +18,11 @@ const createEntry = (path: string, lastModified: Date, options?: Partial<Entry>)
 })
 
 export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [tools, categories, alternatives, languages, topics, licenses] = await Promise.all([
+  const [tools, categories, alternatives, stacks, topics, licenses] = await Promise.all([
     findToolSlugs({}),
     findCategorySlugs({}),
     findAlternativeSlugs({}),
-    findLanguageSlugs({}),
+    findStackSlugs({}),
     findTopicSlugs({}),
     findLicenseSlugs({}),
   ])
@@ -52,9 +52,9 @@ export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
     createEntry("/alternatives", now),
     ...alternatives.map(a => createEntry(`/alternatives/${a.slug}`, a.updatedAt)),
 
-    // Languages
-    createEntry("/languages", now),
-    ...languages.map(l => createEntry(`/languages/${l.slug}`, l.updatedAt)),
+    // Stacks
+    createEntry("/stacks", now),
+    ...stacks.map(l => createEntry(`/stacks/${l.slug}`, l.updatedAt)),
 
     // Topics
     ...config.site.alphabet.split("").map(letter => createEntry(`/topics/letter/${letter}`, now)),

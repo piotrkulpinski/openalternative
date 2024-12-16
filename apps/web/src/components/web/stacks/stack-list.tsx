@@ -1,11 +1,11 @@
 import { StackType } from "@openalternative/db/client"
 import { type ComponentProps, Fragment } from "react"
 import { H6 } from "~/components/common/heading"
+import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
 import { EmptyList } from "~/components/web/empty-list"
-import { StackCardSkeleton } from "~/components/web/stacks/stack-card"
 import { BrandLink } from "~/components/web/ui/brand-link"
-import { Grid } from "~/components/web/ui/grid"
+import type { Grid } from "~/components/web/ui/grid"
 import type { StackMany } from "~/server/web/stacks/payloads"
 import { cx } from "~/utils/cva"
 
@@ -86,11 +86,22 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
 
 const StackListSkeleton = () => {
   return (
-    <Grid className="grid-cols-1">
-      {[...Array(24)].map((_, index) => (
-        <StackCardSkeleton key={index} />
+    <div className="flex flex-col divide-y divide-foreground/10 overflow-clip border-y border-foreground/10">
+      {[...Array(Math.floor(Math.random() * 5) + 5)].map((_, index) => (
+        <div key={index} className="flex flex-wrap gap-3 py-3 overflow-clip md:gap-4 md:py-4">
+          <H6 as="strong" className="relative w-24 mt-0.5 text-foreground md:w-28">
+            <Skeleton className="h-6 w-20" />
+            <hr className="absolute -inset-y-5 right-0 z-10 h-auto w-px border-r" />
+          </H6>
+
+          <Stack size="lg" className="flex-1">
+            {[...Array(Math.floor(Math.random() * 5) + 1)].map((_, index) => (
+              <Skeleton key={index} className="h-6 w-32" />
+            ))}
+          </Stack>
+        </div>
       ))}
-    </Grid>
+    </div>
   )
 }
 

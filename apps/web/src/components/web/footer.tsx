@@ -142,7 +142,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
 
           <NavigationLink href="/alternatives">Alternatives</NavigationLink>
           <NavigationLink href="/categories">Categories</NavigationLink>
-          <NavigationLink href="/languages">Languages</NavigationLink>
+          <NavigationLink href="/stacks">Tech Stacks</NavigationLink>
           <NavigationLink href="/topics">Topics</NavigationLink>
           <NavigationLink href="/licenses">Licenses</NavigationLink>
         </Stack>

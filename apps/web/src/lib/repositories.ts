@@ -115,7 +115,6 @@ export const fetchToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
     watchers,
     licenseInfo,
     repositoryTopics,
-    languages: repositoryLanguages,
     defaultBranchRef,
   } = queryResult
 
@@ -152,16 +151,6 @@ export const fetchToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
     slug: slugify(topic.name),
   }))
 
-  // Prepare languages data
-  const languages = repositoryLanguages.edges
-    .map(({ size, node }) => ({
-      percentage: Math.round((size / repositoryLanguages.totalSize) * 100),
-      name: node.name,
-      slug: slugify(node.name),
-      color: node.color,
-    }))
-    .filter(({ percentage }) => percentage > 17.5)
-
   // Return the extracted data
   return {
     stars,
@@ -171,7 +160,6 @@ export const fetchToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
     score,
     license,
     topics,
-    languages,
   }
 }
 
@@ -189,7 +177,7 @@ export const getToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
     return null
   }
 
-  const { stars, forks, firstCommitDate, lastCommitDate, score, license, topics, languages } = repo
+  const { stars, forks, firstCommitDate, lastCommitDate, score, license, topics } = repo
 
   return {
     stars,
@@ -225,27 +213,6 @@ export const getToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
             connectOrCreate: {
               where: { slug },
               create: { slug },
-            },
-          },
-        },
-      })),
-    },
-
-    // Languages
-    languages: {
-      connectOrCreate: languages.map(({ percentage, name, slug, color }) => ({
-        where: {
-          toolId_languageSlug: {
-            toolId: tool.id,
-            languageSlug: slug,
-          },
-        },
-        create: {
-          percentage,
-          language: {
-            connectOrCreate: {
-              where: { slug },
-              create: { name, slug, color },
             },
           },
         },
