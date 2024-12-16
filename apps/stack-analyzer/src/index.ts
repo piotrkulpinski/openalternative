@@ -32,11 +32,12 @@ app.post(
     z.object({
       slug: z.string().optional(),
       take: z.number().optional(),
+      batchSize: z.number().optional().default(5),
     }),
   ),
 
   async c => {
-    const { slug, take } = c.req.valid("json")
+    const { slug, take, batchSize } = c.req.valid("json")
 
     const tools = await prisma.tool.findMany({
       where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] }, slug },
@@ -45,16 +46,22 @@ app.post(
     })
 
     try {
-      for (const [index, tool] of tools.entries()) {
-        console.log(`Processing tool ${index + 1} of ${tools.length}`)
+      for (let i = 0; i < tools.length; i += batchSize) {
+        const batch = tools.slice(i, i + batchSize)
 
-        const result = await processRepository(tool.repository)
-        const stack = await getTechStack(result)
+        const promises = batch.map(async (tool, index) => {
+          console.log(`Processing batch ${Math.floor(i / batchSize) + 1}, tool ${index + 1}`)
 
-        await prisma.tool.update({
-          where: { id: tool.id },
-          data: { stacks: { set: stack.map(slug => ({ slug })) } },
+          const result = await processRepository(tool.repository)
+          const stack = await getTechStack(result)
+
+          await prisma.tool.update({
+            where: { id: tool.id },
+            data: { stacks: { set: stack.map(slug => ({ slug })) } },
+          })
         })
+
+        await Promise.all(promises)
       }
     } catch (error) {
       console.error("Error processing tools:", error)
