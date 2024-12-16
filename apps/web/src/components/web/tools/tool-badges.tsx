@@ -14,14 +14,14 @@ type ToolBadgesProps = HTMLAttributes<HTMLElement> & {
 
 export const ToolBadges = ({ tool, size, children, className, ...props }: ToolBadgesProps) => {
   const { firstCommitDate, publishedAt } = tool
-  const now = new Date()
+  const now = new Date().toISOString()
 
-  const commitDiff = firstCommitDate ? differenceInDays(now, firstCommitDate) : null
-  const publishedDiff = publishedAt ? differenceInDays(now, publishedAt) : null
+  const commitDiff = firstCommitDate ? differenceInDays(new Date(now), firstCommitDate) : null
+  const publishedDiff = publishedAt ? differenceInDays(new Date(now), publishedAt) : null
 
   const isNew = commitDiff !== null && commitDiff <= 365
   const isFresh = publishedDiff !== null && publishedDiff <= 30 && publishedDiff >= 0
-  const isScheduled = publishedAt !== null && publishedAt > now
+  const isScheduled = publishedAt !== null && publishedAt > new Date(now)
 
   return (
     <TooltipProvider delayDuration={500} disableHoverableContent>

@@ -190,7 +190,7 @@ export default async function ToolPage(props: PageProps) {
             <Stack size="lg" direction="column" className="w-full max-md:order-6 md:gap-y-6">
               <H4 as="strong">Technical Stack:</H4>
 
-              <StackList stacks={tool.stacks} className="w-full max-md:order-8" />
+              <StackList stacks={tool.stacks} />
             </Stack>
           )}
 
