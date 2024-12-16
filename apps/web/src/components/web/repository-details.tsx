@@ -9,7 +9,6 @@ import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
 import { Button } from "~/components/web/ui/button"
 import { Insights } from "~/components/web/ui/insights"
-import { NavigationLink } from "~/components/web/ui/navigation-link"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 import { BrandGitHubIcon } from "../common/icons/brand-github"
@@ -61,28 +60,6 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
         <Insights insights={insights} className="text-sm" />
       </Stack>
 
-      {!!tool.languages.length && (
-        <Stack direction="column">
-          <H5 as="strong">Written in:</H5>
-
-          <Stack>
-            {tool.languages?.map(({ percentage, language }) => (
-              <NavigationLink
-                key={language.slug}
-                href={`/languages/${language.slug}`}
-                className="gap-1"
-              >
-                <span
-                  className="size-2 rounded-full"
-                  style={{ backgroundColor: language.color ?? undefined }}
-                />
-                {language.name} <span className="opacity-50">({percentage}%)</span>
-              </NavigationLink>
-            ))}
-          </Stack>
-        </Stack>
-      )}
-
       {tool.repository && (
         <Button
           size="md"
@@ -100,6 +77,14 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
           </ExternalLink>
         </Button>
       )}
+
+      <p className="text-muted/75 text-[11px]">
+        Fetched automatically from GitHub{" "}
+        <strong className="font-medium text-muted">
+          {formatDistanceToNowStrict(tool.updatedAt, { addSuffix: true })}
+        </strong>
+        .
+      </p>
     </div>
   )
 }

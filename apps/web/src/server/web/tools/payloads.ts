@@ -1,7 +1,6 @@
 import { Prisma } from "@openalternative/db/client"
 import { alternativeManyPayload } from "~/server/web/alternatives/payloads"
 import { categoryManyPayload } from "~/server/web/categories/payloads"
-import { languageManyPayload } from "~/server/web/languages/payloads"
 import { stackManyPayload } from "~/server/web/stacks/payloads"
 import { topicManyPayload } from "~/server/web/topics/payloads"
 
@@ -13,11 +12,6 @@ export const toolAlternativesPayload = Prisma.validator<Prisma.Tool$alternatives
 export const toolCategoriesPayload = Prisma.validator<Prisma.Tool$categoriesArgs>()({
   include: { category: { select: categoryManyPayload } },
   orderBy: { category: { name: "asc" } },
-})
-
-export const toolLanguagesPayload = Prisma.validator<Prisma.Tool$languagesArgs>()({
-  include: { language: { select: languageManyPayload } },
-  orderBy: [{ percentage: "desc" }],
 })
 
 export const toolTopicsPayload = Prisma.validator<Prisma.Tool$topicsArgs>()({
@@ -53,7 +47,6 @@ export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   license: true,
   alternatives: toolAlternativesPayload,
   categories: toolCategoriesPayload,
-  languages: toolLanguagesPayload,
   topics: toolTopicsPayload,
   stacks: toolStackPayload,
 })
