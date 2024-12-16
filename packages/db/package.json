@@ -1,0 +1,27 @@
+{
+  "name": "@openalternative/db",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./index.ts",
+    "./client": "./client.ts"
+  },
+  "scripts": {
+    "db:generate": "prisma generate --no-hints",
+    "db:studio": "prisma studio",
+    "db:push": "prisma db push --skip-generate",
+    "db:reset": "prisma migrate reset"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "prisma": "^6.0.1",
+    "typescript": "5.7.2"
+  },
+  "trustedDependencies": [
+    "@prisma/client",
+    "@prisma/engines",
+    "prisma"
+  ]
+}
