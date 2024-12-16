@@ -10,12 +10,11 @@ export type Repository = {
  * @returns An object containing the repository owner and name, or null if the URL is invalid.
  */
 export const getRepoOwnerAndName = (url: string | null): Repository | null => {
-  const regex = /github\.com\/(?<owner>[^/]+)\/(?<name>[^/]+)(\/|$)/
-  const match = url?.match(regex)
+  if (!url) return null
 
-  if (match?.groups?.name) {
-    return match.groups as Repository
-  }
+  const match = url.match(
+    /^(?:(?:https?:\/\/)?github\.com\/)?(?<owner>[^/]+)\/(?<name>[^/]+?)(?:\/|$)/,
+  )
 
-  return null
+  return match?.groups as Repository | null
 }

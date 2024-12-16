@@ -1,22 +1,16 @@
+import { zValidator } from "@hono/zod-validator"
 import { prisma } from "@openalternative/db"
-import { type Tool, ToolStatus } from "@openalternative/db/client"
+import { ToolStatus } from "@openalternative/db/client"
+import type { AnalyserJson } from "@specfy/stack-analyser"
 import { Hono } from "hono"
+import { z } from "zod"
 import { processRepository } from "./analyzer"
 
 const app = new Hono()
 
-const processTool = async (tool: Pick<Tool, "id" | "repository">) => {
-  const result = await processRepository(tool.repository)
-
-  if (result) {
-    const techs = result.childs.flatMap(tech => tech.techs)
-    const uniqueTechs = [...new Set(techs)]
-
-    await prisma.tool.update({
-      where: { id: tool.id },
-      data: { stacks: { set: uniqueTechs.map(tech => ({ slug: tech })) } },
-    })
-  }
+const getTechStack = async (json: AnalyserJson) => {
+  const techs = json.childs.flatMap(tech => tech.techs)
+  return [...new Set(techs)]
 }
 
 // Auth middleware
@@ -30,39 +24,53 @@ app.use("*", async (c, next) => {
   await next()
 })
 
-app.post("/", async c => {
-  const tools = await prisma.tool.findMany({
-    where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
-    select: { id: true, repository: true },
-  })
+app.post(
+  "/",
 
-  try {
-    for (const [index, tool] of tools.entries()) {
-      console.log(`Processing tool ${index + 1} of ${tools.length}`)
+  zValidator(
+    "json",
+    z.object({
+      slug: z.string().optional(),
+      take: z.number().optional(),
+    }),
+  ),
 
-      await processTool(tool)
+  async c => {
+    const { slug, take } = c.req.valid("json")
+
+    const tools = await prisma.tool.findMany({
+      where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] }, slug },
+      select: { id: true, repository: true },
+      take,
+    })
+
+    try {
+      for (const [index, tool] of tools.entries()) {
+        console.log(`Processing tool ${index + 1} of ${tools.length}`)
+
+        const result = await processRepository(tool.repository)
+        const stack = await getTechStack(result)
+
+        await prisma.tool.update({
+          where: { id: tool.id },
+          data: { stacks: { set: stack.map(slug => ({ slug })) } },
+        })
+      }
+    } catch (error) {
+      return c.json({ error: "Failed to process tools" }, 500)
     }
-  } catch (error) {
-    return c.json({ error: "Failed to process tools" }, 500)
-  }
 
-  return c.json({ success: true })
-})
+    return c.json({ success: true })
+  },
+)
 
-app.post("/:slug", async c => {
-  const slug = c.req.param("slug")
+app.post("/:repository", async c => {
+  const repository = c.req.param("repository")
 
-  const tool = await prisma.tool.findUnique({
-    where: { slug, status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
-    select: { id: true, repository: true },
-  })
+  const result = await processRepository(repository)
+  const stack = await getTechStack(result)
 
-  if (!tool) {
-    return c.json({ error: "Tool not found" }, 404)
-  }
-
-  await processTool(tool)
-  return c.json({ success: true })
+  return c.json({ stack })
 })
 
 export default app
