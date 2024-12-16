@@ -2,7 +2,6 @@ import { execSync } from "node:child_process"
 import path from "node:path"
 import type { AnalyserJson } from "@specfy/stack-analyser"
 import fs from "fs-extra"
-import tiged from "tiged"
 import { getRepoOwnerAndName } from "./utils"
 
 interface StackInfo {
@@ -50,9 +49,7 @@ export class StackAnalyzer {
     console.time("Clone repository")
 
     try {
-      const emitter = tiged(this.repoUrl, { cache: false, force: true, verbose: true })
-
-      await emitter.clone(this.repoDir)
+      execSync(`bun x degit ${this.repoUrl} ${this.repoDir} -f`)
 
       console.timeEnd("Clone repository")
     } catch (error) {
@@ -65,27 +62,6 @@ export class StackAnalyzer {
 
     try {
       execSync(`bun x @specfy/stack-analyser ${this.repoDir} --flat --output ./output.json`)
-      // const provider = new FSProvider({ path: this.repoDir, ignorePaths: [] })
-      // const pl = new Payload({ name: "main", folderPath: "/" })
-      // await pl.recurse(provider, provider.basePath)
-      // const output = flatten(pl)
-      // console.log(output)
-      // const file = path.join(process.cwd(), "output.json")
-      // await fs.writeFile(file, JSON.stringify(output.toJson(this.repoDir), undefined, 2))
-      // // Load default rules
-      // rules.loadAll()
-
-      // // Create a provider for the repository
-      // const provider = new FSProvider({ path: this.repoDir })
-
-      // // Analyze a folder
-      // const result = await analyser({ provider })
-
-      // // Output to JSON
-      // // const json = result.toJson()
-
-      // // De-nest the output and deduplicate childs
-      // const flat = flatten(result)
 
       const output = fs.readFileSync(path.join(process.cwd(), "output.json"), "utf-8")
 
