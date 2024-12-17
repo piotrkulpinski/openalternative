@@ -8,6 +8,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "start": "turbo start",
+    "astro": "bun --cwd apps/astro astro --config=astro.config.mjs",
     "lint": "bun biome lint --apply .",
     "check": "bun biome check --apply .",
     "format": "bun biome format --organize-imports-enabled --write .",

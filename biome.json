@@ -3,6 +3,9 @@
   "organizeImports": {
     "enabled": true
   },
+  "files": {
+    "ignore": ["**/*.astro"]
+  },
   "formatter": {
     "enabled": true,
     "lineWidth": 100,

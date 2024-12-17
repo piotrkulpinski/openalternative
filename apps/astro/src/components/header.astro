@@ -1,0 +1,187 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import {
+  Blocks,
+  CalendarDays,
+  ChevronDown,
+  Copyright,
+  GalleryHorizontalEnd,
+  Tag,
+} from "lucide-astro"
+import BrandBlueskyIcon from "~/components/common/icons/brand-bluesky.astro"
+import BrandGitHubIcon from "~/components/common/icons/brand-github.astro"
+import BrandXIcon from "~/components/common/icons/brand-x.astro"
+import SearchForm from "~/components/search-form.astro"
+import Button from "~/components/ui/button.astro"
+import Logo from "~/components/ui/logo.astro"
+import NavLink from "~/components/ui/nav-link.astro"
+import Stack from "~/components/ui/stack.astro"
+import { config } from "~/config"
+import { containerVariants } from "~/styles/container"
+import { cx } from "~/utils/cva"
+
+type Props = HTMLAttributes<"header">
+
+const { class: className, ...props } = Astro.props
+---
+
+<!-- <script>
+  class Header extends HTMLElement {
+    constructor() {
+      super()
+
+      const button = this.querySelector("[data-menu-button]")
+      const menu = this.querySelector("[data-menu]")
+      let isOpen = false
+
+      button?.addEventListener("click", () => {
+        isOpen = !isOpen
+        this.dataset.state = isOpen ? "open" : "close"
+      })
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && isOpen) {
+          isOpen = false
+          this.dataset.state = "close"
+        }
+      })
+    }
+  }
+
+  customElements.define("site-header", Header)
+</script> -->
+<header
+  class={containerVariants({
+    className: cx(
+      "group/menu sticky top-[var(--header-top)] inset-x-0 z-50 duration-300",
+      "max-lg:data-[state=open]:bg-background/90",
+      className
+    ),
+  })}
+  id="header"
+  role="banner"
+  data-state="close"
+  {...props}
+>
+  <div
+    class="absolute top-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-linear-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]"
+  >
+  </div>
+
+  <div
+    class="relative flex flex-nowrap items-center py-3.5 gap-x-3 text-sm h-[var(--header-height)] isolate duration-300 lg:gap-4"
+  >
+    <button
+      type="button"
+      data-menu-button
+      class="block -m-1 lg:hidden"
+      aria-label="Toggle navigation"
+    >
+      <svg
+        class="size-7 duration-300 select-none will-change-transform group-data-[state=open]/menu:rotate-45"
+        viewBox="0 0 100 100"
+        role="img"
+        aria-label="Toggle navigation icon"
+      >
+        <path
+          class="fill-none duration-300 stroke-current stroke-5 [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"
+          d="m 70,33 h -40 c 0,0 -8.5,-0.149796 -8.5,8.5 0,8.649796 8.5,8.5 8.5,8.5 h 20 v -20"
+        ></path>
+        <path
+          class="fill-none duration-300 stroke-current stroke-5 [stroke-linecap:round]"
+          d="m 55,50 h -25"></path>
+        <path
+          class="fill-none duration-300 stroke-current stroke-5 [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"
+          d="m 30,67 h 40 c 0,0 8.5,0.149796 8.5,-8.5 0,-8.649796 -8.5,-8.5 -8.5,-8.5 h -20 v 20"
+        ></path>
+      </svg>
+    </button>
+
+    <Logo class="mr-auto" />
+
+    <nav class="contents max-lg:hidden">
+      <!-- <div class="relative group">
+        <button class="flex items-center gap-1 -mx-3 px-3 py-2 rounded-md hover:bg-accent">
+          Browse <ChevronDown class="group-hover:-rotate-180 duration-200" />
+        </button>
+
+        <div
+          class="absolute left-0 top-full mt-1 w-48 p-1 bg-popover rounded-md shadow-md hidden group-hover:block"
+        >
+          <NavLink href="/?sort=publishedAt.desc">
+            <CalendarDays class="shrink-0 size-4 opacity-75" /> Latest tools
+          </NavLink>
+          <NavLink href="/categories">
+            <GalleryHorizontalEnd class="shrink-0 size-4 opacity-75" /> Categories
+          </NavLink>
+          <NavLink href="/stacks">
+            <Blocks class="shrink-0 size-4 opacity-75" /> Tech Stacks
+          </NavLink>
+          <NavLink href="/topics">
+            <Tag class="shrink-0 size-4 opacity-75" /> Topics
+          </NavLink>
+          <NavLink href="/licenses">
+            <Copyright class="shrink-0 size-4 opacity-75" /> Licenses
+          </NavLink>
+        </div>
+      </div> -->
+
+      <NavLink href="/alternatives">Alternatives</NavLink>
+      <NavLink href="/advertise">Advertise</NavLink>
+    </nav>
+
+    <Stack size="sm" class="max-sm:hidden">
+      <!-- <SearchForm /> -->
+
+      <NavLink
+        href={config.links.bluesky}
+        target="_blank"
+        rel="nofollow noreferrer"
+        title="Follow us on Bluesky"
+      >
+        <BrandBlueskyIcon className="size-4" />
+      </NavLink>
+
+      <NavLink
+        href={config.links.twitter}
+        target="_blank"
+        rel="nofollow noreferrer"
+        title="Follow us on X"
+      >
+        <BrandXIcon className="size-4" />
+      </NavLink>
+
+      <NavLink
+        href={config.links.github}
+        target="_blank"
+        rel="nofollow noreferrer"
+        title="View source code"
+      >
+        <BrandGitHubIcon className="size-4" />
+      </NavLink>
+    </Stack>
+
+    <a href="/submit">
+      <Button size="sm" variant="secondary"> Submit </Button>
+    </a>
+  </div>
+
+  <nav
+    data-menu
+    class:list={[
+      "absolute top-full inset-x-0 h-[calc(100dvh-var(--header-top)-var(--header-height))] -mt-px py-4 px-6 grid grid-cols-2 place-items-start place-content-start gap-x-4 gap-y-6 bg-background/90 backdrop-blur-lg transition-opacity lg:hidden",
+      "group-data-[state=open]/menu:opacity-100 group-data-[state=close]/menu:opacity-0 group-data-[state=close]/menu:pointer-events-none",
+    ]}
+  >
+    <NavLink href="/?sort=publishedAt.desc" class="text-base">Latest</NavLink>
+    <NavLink href="/categories" class="text-base">Categories</NavLink>
+    <NavLink href="/alternatives" class="text-base">Alternatives</NavLink>
+    <NavLink href="/stacks" class="text-base">Tech Stacks</NavLink>
+    <NavLink href="/topics" class="text-base">Topics</NavLink>
+    <NavLink href="/submit" class="text-base">Submit</NavLink>
+    <NavLink href="/advertise" class="text-base">Advertise</NavLink>
+    <NavLink href="/about" class="text-base">About</NavLink>
+
+    <!-- <SearchForm class="sm:hidden" /> -->
+  </nav>
+</header>

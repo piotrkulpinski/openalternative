@@ -1,0 +1,79 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import CardSimple from "~/components/ui/card-simple.astro"
+import Container from "~/components/ui/container.astro"
+import NavLink from "~/components/ui/nav-link.astro"
+import Stack from "~/components/ui/stack.astro"
+import { siteConfig } from "~/config/site"
+import { findAlternatives } from "~/server/alternatives/queries"
+import { findCategories } from "~/server/categories/queries"
+import { containerVariants } from "~/styles/container"
+import { cx } from "~/utils/cva"
+
+type Props = HTMLAttributes<"div">
+
+const { class: className, ...props } = Astro.props
+
+const [categories, alternatives] = await Promise.all([
+  findCategories({
+    orderBy: { tools: { _count: "desc" } },
+    take: 12,
+  }),
+
+  findAlternatives({
+    where: { website: { startsWith: siteConfig.affiliateUrl } },
+    orderBy: { tools: { _count: "desc" } },
+    take: 12,
+  }),
+])
+
+if (!categories?.length && !alternatives?.length) return null
+---
+
+<div
+  class={containerVariants({
+    className: cx("flex flex-col gap-y-6 py-8 md:py-10 lg:py-12", className),
+  })}
+  {...props}
+>
+  <hr class="absolute top-0 left-1/2 -translate-x-1/2 w-screen" />
+
+  {
+    !!alternatives?.length && (
+      <Stack direction="column">
+        <strong class="text-sm">Popular Proprietary Tools:</strong>
+
+        <div class="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
+          {alternatives.map((alternative) => (
+            <NavLink href={`/alternatives/${alternative.slug}`}>
+              <CardSimple>
+                <Fragment slot="title">{alternative.name} Alternatives</Fragment>
+                <Fragment slot="caption">{alternative._count.tools}</Fragment>
+              </CardSimple>
+            </NavLink>
+          ))}
+        </div>
+      </Stack>
+    )
+  }
+
+  {
+    !!categories?.length && (
+      <Stack direction="column">
+        <strong class="text-sm">Popular Categories:</strong>
+
+        <div class="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
+          {categories.map((category) => (
+            <NavLink href={`/categories/${category.slug}`}>
+              <CardSimple>
+                <Fragment slot="title">{category.label}</Fragment>
+                <Fragment slot="caption">{category._count.tools}</Fragment>
+              </CardSimple>
+            </NavLink>
+          ))}
+        </div>
+      </Stack>
+    )
+  }
+</div>
+<!-- </Container> -->

@@ -1,0 +1,83 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { SearchIcon } from "lucide-astro"
+import Input from "./ui/input.astro"
+
+type Props = HTMLAttributes<"div">
+
+const { class: className, ...props } = Astro.props
+---
+
+<script>
+  class SearchForm extends HTMLElement {
+    constructor() {
+      super()
+
+      const form = this.querySelector("form")
+      const input = this.querySelector("input")
+      const button = this.querySelector("button")
+      let isExpanded = false
+
+      const handleExpand = () => {
+        isExpanded = true
+        this.dataset.expanded = "true"
+        input?.select()
+      }
+
+      const handleCollapse = () => {
+        isExpanded = false
+        this.dataset.expanded = "false"
+        input?.blur()
+      }
+
+      button?.addEventListener("click", handleExpand)
+      input?.addEventListener("focus", handleExpand)
+      input?.addEventListener("blur", handleCollapse)
+
+      form?.addEventListener("submit", (e) => {
+        e.preventDefault()
+        const query = input?.value || ""
+        window.location.href = `/?q=${encodeURIComponent(query)}`
+      })
+
+      // Initialize from URL query
+      const url = new URL(window.location.href)
+      const searchQuery = url.searchParams.get("q")
+      if (input && searchQuery) {
+        input.value = searchQuery
+      }
+    }
+  }
+
+  customElements.define("search-form", SearchForm)
+</script>
+
+<search-form class={className} data-expanded="false" {...props}>
+  <form class="flex items-center shrink-0" novalidate>
+    <div class="relative flex">
+      <Input
+        size="sm"
+        name="q"
+        placeholder="Search tools..."
+        class:list={[
+          "transition-[width,opacity,transform] duration-200 ease-in-out max-sm:max-w-24",
+          "[data-expanded=true]_&:w-28 [data-expanded=true]_&:opacity-100",
+          "[data-expanded=false]_&:w-0 [data-expanded=false]_&:opacity-0",
+        ]}
+      />
+
+      <button
+        type="button"
+        class:list={[
+          "p-0.5 -m-0.5 text-muted hover:text-foreground duration-200 ease-in-out will-change-transform absolute inset-y-0 right-0",
+          "[data-expanded=true]_&:opacity-0 [data-expanded=true]_&:translate-x-1 [data-expanded=true]_&:pointer-events-none",
+          "[data-expanded=false]_&:opacity-100",
+        ]}
+        tabindex={-1}
+        aria-label="Search"
+      >
+        <SearchIcon class="size-4" />
+      </button>
+    </div>
+  </form>
+</search-form>

@@ -1,0 +1,20 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { config } from "~/config"
+import { stackVariants } from "~/styles/stack"
+import { cx } from "~/utils/cva"
+import LogoSymbol from "./logo-symbol.astro"
+
+type Props = HTMLAttributes<"a">
+
+const { class: className, ...props } = Astro.props
+---
+
+<a
+  href="/"
+  class={cx(stackVariants({ size: "sm" }), "group/logo text-foreground", className)}
+  {...props}
+>
+  <LogoSymbol class="duration-300! ease-in-out! will-change-transform group-hover/logo:rotate-90" />
+  <span class="font-medium text-sm">{config.site.name}</span>
+</a>

@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { findAd } from "~/server/ads/queries"
+import { cx } from "~/utils/cva"
+
+type Props = HTMLAttributes<"div">
+
+const { class: className, ...props } = Astro.props
+
+const ad = await findAd({ where: { type: "Banner" } })
+
+if (!ad) return null
+---
+
+<div class="box" {...props}>
+  <a
+    href={ad.website}
+    data-event="click_ad"
+    data-event-props={JSON.stringify({ url: ad.website, type: ad.type })}
+    class={cx(
+      "group/button relative -top-px inset-x-0 z-60 flex items-center justify-between gap-3 bg-card border-b py-2 hover:bg-card-dark lg:border-x lg:rounded-b-lg container",
+      className
+    )}
+  >
+    <span
+      class="inline-flex items-center justify-center h-5 px-2.5 text-xs font-medium rounded-full border border-input bg-background max-sm:order-last"
+    >
+      Ad
+    </span>
+
+    <div class="text-xs leading-tight text-secondary mr-auto md:text-sm">
+      {
+        ad.faviconUrl && (
+          <img
+            src={ad.faviconUrl}
+            alt={ad.name}
+            width={32}
+            height={32}
+            class="inline-flex align-text-top mr-1 size-3.5 md:size-4"
+          />
+        )
+      }
+      <strong class="font-medium text-foreground">{ad.name}</strong> — {ad.description}
+    </div>
+
+    <span
+      class="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded-md bg-secondary hover:bg-secondary/80 shrink-0 pointer-events-none max-sm:hidden"
+    >
+      Learn More
+    </span>
+  </a>
+</div>

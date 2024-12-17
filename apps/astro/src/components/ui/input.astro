@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { boxVariants } from "~/styles/box"
+import { inputVariants } from "~/styles/input"
+import { type VariantProps, cva, cx } from "~/utils/cva"
+
+type Props = HTMLAttributes<"input"> & VariantProps<typeof inputVariants>;
+
+const { class: className, size, ...props } = Astro.props;
+---
+
+<input
+  class={cx(boxVariants({ focus: true, className }), inputVariants({ size }))}
+  {...props}
+/>

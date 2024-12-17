@@ -1,0 +1,21 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { navLinkVariants } from "~/styles/nav-link"
+import { cx } from "~/utils/cva"
+
+type Props = HTMLAttributes<"a">
+
+const { href, class: className, ...props } = Astro.props
+
+const isActive = (() => {
+  if (href && href !== "/") {
+    return Astro.url.pathname.includes(href.toString())
+  }
+
+  return false
+})()
+---
+
+<a href={href} class={cx(navLinkVariants({ isActive, className }))} {...props}>
+  <slot />
+</a>

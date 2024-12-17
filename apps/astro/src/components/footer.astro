@@ -1,0 +1,128 @@
+---
+import {Image} from "astro:assets"
+import { formatNumber } from "@curiousleaf/utils"
+import type { HTMLAttributes } from "astro/types"
+import { AtSign, Rss } from "lucide-astro"
+import Heading from "~/components/ui/heading.astro"
+import NavLink from "~/components/ui/nav-link.astro"
+import { config } from "~/config"
+import { stackVariants } from "~/styles/stack"
+import { cx } from "~/utils/cva"
+import { updateUrlWithSearchParams } from "~/utils/queryString"
+
+type Props = HTMLAttributes<"footer"> & {
+  hideNewsletter?: boolean
+}
+
+const { hideNewsletter = false, class: className } = Astro.props
+---
+
+<footer class={cx("relative flex flex-col gap-y-8 pt-8 md:pt-10 lg:pt-12", className)}>
+  <hr class="absolute top-0 left-1/2 -translate-x-1/2 w-screen" />
+
+  <div class={cx(
+    "grid grid-cols-3 gap-y-8 gap-x-4 md:gap-x-6 md:grid-cols-[repeat(16,minmax(0,1fr))]",
+    className
+  )}>
+    <div class="flex flex-col items-start gap-4 col-span-full md:col-span-6">
+      {hideNewsletter ? (
+        <div class="flex flex-col text-sm/normal">
+          <a href="/" class="flex items-center gap-2 group/link">
+            <img src="/logo.svg" alt="Logo" class="size-5 shrink-0" />
+            <span class="font-display font-medium text-sm">{config.site.name}</span>
+          </a>
+          <p class="text-foreground/65 max-w-80">{config.site.description}</p>
+        </div>
+      ) : (
+        <div class="flex flex-col gap-4 min-w-0 max-w-64">
+          <strong class="text-lg font-medium px-0.5">Subscribe to our newsletter</strong>
+          <p class="-mt-2 px-0.5 text-sm text-muted first:mt-0">
+            Join {formatNumber(config.stats.subscribers, "standard")}+ other members and get
+            updates on new open source tools.
+          </p>
+          <!-- Replace with Astro NewsletterForm component -->
+          <slot name="newsletter-form" />
+        </div>
+      )}
+
+      <div class="flex gap-4 text-sm/normal">
+        <!-- Social Links -->
+        <div class="dropdown">
+          <button aria-label="RSS Feeds" class="text-muted hover:text-foreground">
+            <!-- <Rss className="size-[1.44em] stroke-[1.25]" /> -->
+          </button>
+          <div class="dropdown-content">
+            {config.links.feeds.map(({ url, title }) => (
+              <a href={url} target="_blank" rel="nofollow noreferrer">{`RSS » ${title}`}</a>
+            ))}
+          </div>
+        </div>
+
+        <a href={`mailto:${config.site.email}`} class="text-muted hover:text-foreground" aria-label="Contact us">
+          <!-- <AtSign className="size-[1.44em] stroke-[1.25]" /> -->
+        </a>
+
+        <!-- Add other social links similarly -->
+        <!-- You'll need to create/import icon components for each social network -->
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class={stackVariants({direction:"column",className: "md:col-span-3 md:col-start-8"})}>
+      <strong class="text-sm">Browse:</strong>
+      <NavLink href="/alternatives">Alternatives</NavLink>
+      <NavLink href="/categories">Categories</NavLink>
+      <NavLink href="/stacks">Tech Stacks</NavLink>
+      <NavLink href="/topics">Topics</NavLink>
+      <NavLink href="/licenses">Licenses</NavLink>
+    </div>
+
+    <div class={stackVariants({direction:"column",className: "md:col-span-3"})}>
+      <strong class="text-sm">Quick Links:</strong>
+      <NavLink href="/advertise">Advertise with Us</NavLink>
+      <NavLink href="/submit">Add a Free Listing</NavLink>
+      <NavLink href="/about">About Us</NavLink>
+      <NavLink href="/blog">Blog</NavLink>
+    </div>
+
+    <div class={stackVariants({direction:"column",className: "md:col-span-3"})}>
+      <Heading size="h6"><strong>Other Products:</strong></Heading>
+      
+      {config.links.family.map(({ href, title, description }) => (
+        <NavLink
+          href={updateUrlWithSearchParams(href, { ref: config.site.name.toLowerCase() })}
+          target="_blank"
+          rel="noreferrer noopener"
+          title={description}
+        >
+          {title}
+        </NavLink>
+      ))}
+    </div>
+  </div>
+
+  <div class="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
+    <a
+      href={config.links.author}
+      class="text-xs flex items-center gap-2"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Image
+        src="/authors/piotrkulpinski.webp"
+        alt="Piotr Kulpinski"
+        class="max-sm:hidden size-4 rounded-full"
+        width={16}
+        height={16}
+        loading="lazy"
+        fit="cover"
+        layout="responsive"
+      />
+      Made by Piotr Kulpinski
+    </a>
+
+    <p class="text-xs text-muted">This website may contain affiliate links</p>
+  </div>
+
+  <slot />
+</footer>

@@ -1,0 +1,32 @@
+{
+  "name": "@openalternative/astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@openalternative/db": "workspace:*",
+    "@curiousleaf/utils": "^1.0.40",
+    "astro": "^5.0.8",
+    "lucide-astro": "^0.468.0"
+  },
+  "devDependencies": {
+    "@astrojs/cloudflare": "^12.1.0",
+    "@tailwindcss/postcss": "^4.0.0-beta.7",
+    "@tailwindcss/typography": "^0.5.15",
+    "postcss": "^8",
+    "tailwindcss": "^4.0.0-beta.7",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.7.2"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": false,
+    "trailingComma": "es5",
+    "printWidth": 100
+  }
+}
