@@ -1,10 +1,12 @@
 import Link from "next/link"
-import { AlternativeList } from "~/components/web/alternatives/alternative-list"
+import {
+  AlternativeList,
+  AlternativeListSkeleton,
+} from "~/components/web/alternatives/alternative-list"
 import { Listing } from "~/components/web/listing"
-import { cache } from "~/lib/cache"
 import { findAlternatives } from "~/server/web/alternatives/queries"
 
-const getAlternatives = cache(async () => {
+const AlternativePreview = async () => {
   const list = [
     "monday",
     "notion",
@@ -16,14 +18,10 @@ const getAlternatives = cache(async () => {
     "fathom-analytics",
   ]
 
-  return await findAlternatives({
+  const alternatives = await findAlternatives({
     where: { slug: { in: list } },
     take: 6,
   })
-}, ["alternatives"])
-
-const AlternativePreview = async () => {
-  const alternatives = await getAlternatives()
 
   if (!alternatives.length) {
     return null
@@ -44,4 +42,12 @@ const AlternativePreview = async () => {
   )
 }
 
-export { AlternativePreview }
+const AlternativePreviewSkeleton = () => {
+  return (
+    <Listing title="Discover Open Source alternatives to:">
+      <AlternativeListSkeleton />
+    </Listing>
+  )
+}
+
+export { AlternativePreview, AlternativePreviewSkeleton }

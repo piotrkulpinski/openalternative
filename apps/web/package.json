@@ -45,7 +45,7 @@
     "date-fns": "^4.1.0",
     "inngest": "^3.28.0",
     "lucide-react": "^0.460.0",
-    "next": "^15.1.1-canary.0",
+    "next": "latest",
     "next-auth": "^5.0.0-beta.25",
     "nuqs": "^2.2.3",
     "plur": "^5.1.0",

@@ -17,7 +17,7 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
 
   return (
     <Card hover={false} focus={false} {...props}>
-      <H5 as="strong">Featured open source alternatives:</H5>
+      <H5 as="strong">Featured open source projects:</H5>
 
       <div className="w-full divide-y -my-1.5">
         {tools.map(tool => (

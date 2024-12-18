@@ -6,7 +6,10 @@ import { Suspense, cache } from "react"
 import { H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
-import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
+import {
+  AlternativePreview,
+  AlternativePreviewSkeleton,
+} from "~/components/web/alternatives/alternative-preview"
 import { MDX } from "~/components/web/mdx"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { Author } from "~/components/web/ui/author"
@@ -120,7 +123,9 @@ export default async function BlogPostPage(props: PageProps) {
         </Section>
       </div>
 
-      <AlternativePreview />
+      <Suspense fallback={<AlternativePreviewSkeleton />}>
+        <AlternativePreview />
+      </Suspense>
     </>
   )
 }
