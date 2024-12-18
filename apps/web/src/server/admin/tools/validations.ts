@@ -43,7 +43,7 @@ export const toolSchema = z.object({
   hostingUrl: z.string().url().optional().or(z.literal("")),
   discountCode: z.string().optional(),
   discountAmount: z.string().optional(),
-  publishedAt: z.date().nullish(),
+  publishedAt: z.coerce.date().nullish(),
   status: z.nativeEnum(ToolStatus).default("Draft"),
   alternatives: z.array(z.string()).optional(),
   categories: z.array(z.string()).optional(),

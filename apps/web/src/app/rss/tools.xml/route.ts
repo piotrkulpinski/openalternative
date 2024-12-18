@@ -17,7 +17,7 @@ export async function GET() {
       slug: true,
       description: true,
       publishedAt: true,
-      categories: { include: { category: true } },
+      categories: true,
     },
   })
 
@@ -39,7 +39,7 @@ export async function GET() {
       url: addUTMTracking(`${url}/${tool.slug}`, { source: "rss" }),
       date: tool.publishedAt?.toUTCString() ?? new Date().toUTCString(),
       description: tool.description ?? "",
-      categories: tool.categories?.map(c => c.category.name) || [],
+      categories: tool.categories?.map(({ name }) => name) || [],
     })
   })
 

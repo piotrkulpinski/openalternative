@@ -125,18 +125,18 @@ export default async function ToolPage(props: PageProps) {
               <>
                 <h3 className="sr-only">
                   Open Source Alternative to{" "}
-                  {joinAsSentence(tool.alternatives.map(({ alternative }) => alternative?.name))}
+                  {joinAsSentence(tool.alternatives.map(({ name }) => name))}
                 </h3>
 
                 <Stack>
                   <span className="text-sm">Open Source Alternative to:</span>
 
-                  {tool.alternatives.map(({ alternative }) => (
+                  {tool.alternatives.map(({ slug, name, faviconUrl }) => (
                     <BrandLink
-                      key={alternative.slug}
-                      href={`/alternatives/${alternative.slug}`}
-                      name={alternative.name}
-                      faviconUrl={alternative.faviconUrl}
+                      key={slug}
+                      href={`/alternatives/${slug}`}
+                      name={name}
+                      faviconUrl={faviconUrl}
                     />
                   ))}
                 </Stack>
@@ -200,13 +200,9 @@ export default async function ToolPage(props: PageProps) {
               <H5 as="strong">Categories:</H5>
 
               <Stack>
-                {tool.categories?.map(({ category }) => (
-                  <Tag
-                    key={category.slug}
-                    href={`/categories/${category.slug}`}
-                    prefix={<HashIcon />}
-                  >
-                    {category.name}
+                {tool.categories?.map(({ slug, name }) => (
+                  <Tag key={slug} href={`/categories/${slug}`} prefix={<HashIcon />}>
+                    {name}
                   </Tag>
                 ))}
               </Stack>
@@ -219,9 +215,9 @@ export default async function ToolPage(props: PageProps) {
               <H5 as="strong">Related topics:</H5>
 
               <Stack>
-                {tool.topics.map(({ topic }) => (
-                  <Tag key={topic.slug} href={`/topics/${topic.slug}`} prefix={<HashIcon />}>
-                    {topic.slug}
+                {tool.topics.map(({ slug }) => (
+                  <Tag key={slug} href={`/topics/${slug}`} prefix={<HashIcon />}>
+                    {slug}
                   </Tag>
                 ))}
               </Stack>

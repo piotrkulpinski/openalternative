@@ -68,7 +68,7 @@ export const findCategoryBySlug = (slug: string) =>
     async (slug: string) => {
       return prisma.category.findUnique({
         where: { slug },
-        include: { tools: { include: { tool: true } } },
+        include: { tools: true },
       })
     },
     [`category-${slug}`],

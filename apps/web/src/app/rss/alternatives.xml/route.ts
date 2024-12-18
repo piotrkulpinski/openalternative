@@ -8,7 +8,7 @@ export async function GET() {
   const { url, name, tagline } = config.site
 
   const alternatives = await prisma.alternative.findMany({
-    where: { tools: { some: { tool: { status: ToolStatus.Published } } } },
+    where: { tools: { some: { status: ToolStatus.Published } } },
     orderBy: { createdAt: "desc" },
     take: 50,
     select: {

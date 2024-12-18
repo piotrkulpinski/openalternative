@@ -13,7 +13,7 @@ export const CategoryToolListing = async ({ category, searchParams }: CategoryTo
   const parsedParams = toolsSearchParamsCache.parse(await searchParams)
 
   const { tools, totalCount } = await searchTools(parsedParams, {
-    where: { categories: { some: { category: { slug: category.slug } } } },
+    where: { categories: { some: { slug: category.slug } } },
   })
 
   return (

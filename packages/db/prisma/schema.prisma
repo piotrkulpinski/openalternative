@@ -87,13 +87,12 @@ model Tool {
   updatedAt       DateTime   @updatedAt
 
   // Relations
-  licenseId    String?
-  license      License?            @relation(fields: [licenseId], references: [id])
+  alternatives Alternative[]
+  categories   Category[]
+  topics       Topic[]
   stacks       Stack[]
-  alternatives AlternativeToTool[]
-  categories   CategoryToTools[]
-  languages    LanguageToTool[]
-  topics       TopicToTool[]
+  license      License?      @relation(fields: [licenseId], references: [id])
+  licenseId    String?
 
   @@index([id, slug])
 }
@@ -111,8 +110,8 @@ model Alternative {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  // Relations
-  tools AlternativeToTool[]
+  // Implicit relation
+  tools Tool[]
 
   // Indexes
   @@index([slug])
@@ -126,22 +125,8 @@ model Category {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
-  tools CategoryToTools[]
-
-  // Indexes
-  @@index([slug])
-}
-
-model Language {
-  name      String   @db.Citext
-  slug      String   @id @unique
-  color     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  tools LanguageToTool[]
+  // Implicit relation  
+  tools Tool[]
 
   // Indexes
   @@index([slug])
@@ -152,8 +137,8 @@ model Topic {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
-  tools TopicToTool[]
+  // Implicit relation
+  tools Tool[]
 
   // Indexes
   @@index([slug])
@@ -196,8 +181,6 @@ model Stack {
 model AlternativeToTool {
   toolId        String
   alternativeId String
-  tool          Tool        @relation(fields: [toolId], references: [id], onDelete: Cascade)
-  alternative   Alternative @relation(fields: [alternativeId], references: [id], onDelete: Cascade)
 
   @@id([toolId, alternativeId])
 }
@@ -205,27 +188,13 @@ model AlternativeToTool {
 model CategoryToTools {
   toolId     String
   categoryId String
-  tool       Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@id([toolId, categoryId])
-}
-
-model LanguageToTool {
-  toolId       String
-  languageSlug String
-  percentage   Float?
-  tool         Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
-  language     Language @relation(fields: [languageSlug], references: [slug], onDelete: Cascade)
-
-  @@id([toolId, languageSlug])
 }
 
 model TopicToTool {
   toolId    String
   topicSlug String
-  tool      Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
-  topic     Topic  @relation(fields: [topicSlug], references: [slug], onDelete: Cascade)
 
   @@id([toolId, topicSlug])
 }

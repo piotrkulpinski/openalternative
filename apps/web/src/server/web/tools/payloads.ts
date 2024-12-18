@@ -5,18 +5,18 @@ import { stackManyPayload } from "~/server/web/stacks/payloads"
 import { topicManyPayload } from "~/server/web/topics/payloads"
 
 export const toolAlternativesPayload = Prisma.validator<Prisma.Tool$alternativesArgs>()({
-  include: { alternative: { select: alternativeManyPayload } },
-  orderBy: [{ alternative: { tools: { _count: "desc" } } }, { alternative: { name: "asc" } }],
+  select: alternativeManyPayload,
+  orderBy: [{ tools: { _count: "desc" } }, { name: "asc" }],
 })
 
 export const toolCategoriesPayload = Prisma.validator<Prisma.Tool$categoriesArgs>()({
-  include: { category: { select: categoryManyPayload } },
-  orderBy: { category: { name: "asc" } },
+  select: categoryManyPayload,
+  orderBy: { name: "asc" },
 })
 
 export const toolTopicsPayload = Prisma.validator<Prisma.Tool$topicsArgs>()({
-  include: { topic: { select: topicManyPayload } },
-  orderBy: { topic: { slug: "asc" } },
+  select: topicManyPayload,
+  orderBy: { slug: "asc" },
 })
 
 export const toolStackPayload = Prisma.validator<Prisma.Tool$stacksArgs>()({
@@ -77,7 +77,7 @@ export const toolManyExtendedPayload = Prisma.validator<Prisma.ToolSelect>()({
   firstCommitDate: true,
   publishedAt: true,
   updatedAt: true,
-  categories: { include: { category: true } },
+  categories: true,
 })
 
 export type ToolOne = Prisma.ToolGetPayload<{ select: typeof toolOnePayload }>

@@ -15,12 +15,7 @@ export const createCategory = authedProcedure
       data: {
         ...input,
         slug: input.slug || slugify(input.name),
-
-        tools: {
-          create: tools?.map(id => ({
-            tool: { connect: { id } },
-          })),
-        },
+        tools: { connect: tools?.map(id => ({ id })) },
       },
     })
 
@@ -38,14 +33,7 @@ export const updateCategory = authedProcedure
       data: {
         ...input,
         slug: input.slug || slugify(input.name),
-
-        tools: {
-          deleteMany: { categoryId: id },
-
-          create: tools?.map(id => ({
-            tool: { connect: { id } },
-          })),
-        },
+        tools: { set: tools?.map(id => ({ id })) },
       },
     })
 

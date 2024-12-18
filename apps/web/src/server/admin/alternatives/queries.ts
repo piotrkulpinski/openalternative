@@ -68,7 +68,7 @@ export const findAlternativeBySlug = (slug: string) =>
     async (slug: string) => {
       return prisma.alternative.findUnique({
         where: { slug },
-        include: { tools: { include: { tool: true } } },
+        include: { tools: true },
       })
     },
     [`alternative-${slug}`],

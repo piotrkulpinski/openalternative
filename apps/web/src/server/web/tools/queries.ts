@@ -26,7 +26,7 @@ export const searchTools = cache(
 
     const whereQuery: Prisma.ToolWhereInput = {
       status: ToolStatus.Published,
-      ...(category && { categories: { some: { category: { slug: category } } } }),
+      ...(category && { categories: { some: { slug: category } } }),
       ...(q && {
         OR: [
           { name: { contains: q, mode: "insensitive" } },
@@ -65,7 +65,7 @@ export const findRelatedTools = async ({
     AND: [
       { status: ToolStatus.Published },
       { slug: { not: slug } },
-      { alternatives: { some: { alternative: { tools: { some: { tool: { slug } } } } } } },
+      { alternatives: { some: { tools: { some: { slug } } } } },
     ],
   } satisfies Prisma.ToolWhereInput
 

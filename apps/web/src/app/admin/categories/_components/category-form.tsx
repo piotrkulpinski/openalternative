@@ -41,7 +41,7 @@ export function CategoryForm({
     resolver: zodResolver(categorySchema),
     defaultValues: {
       ...nullsToUndefined(category),
-      tools: category?.tools.map(({ tool }) => tool.id),
+      tools: category?.tools.map(({ id }) => id),
     },
   })
 

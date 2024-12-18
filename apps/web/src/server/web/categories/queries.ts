@@ -8,7 +8,7 @@ export const findCategories = cache(
     return prisma.category.findMany({
       ...args,
       orderBy: orderBy ?? { name: "asc" },
-      where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
+      where: { tools: { some: { status: ToolStatus.Published } }, ...where },
       select: categoryManyPayload,
     })
   },
@@ -23,7 +23,7 @@ export const findCategorySlugs = async ({
   return prisma.category.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
-    where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
+    where: { tools: { some: { status: ToolStatus.Published } }, ...where },
     select: { slug: true, updatedAt: true },
   })
 }

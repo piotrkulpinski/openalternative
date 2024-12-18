@@ -82,8 +82,8 @@ export const findToolBySlug = (slug: string) =>
       return prisma.tool.findUnique({
         where: { slug },
         include: {
-          alternatives: { include: { alternative: true } },
-          categories: { include: { category: true } },
+          alternatives: true,
+          categories: true,
         },
       })
     },

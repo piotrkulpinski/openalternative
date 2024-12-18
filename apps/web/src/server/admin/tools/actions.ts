@@ -18,18 +18,8 @@ export const createTool = authedProcedure
       data: {
         ...input,
         slug: input.slug || slugify(input.name),
-
-        alternatives: {
-          create: alternatives?.map(id => ({
-            alternative: { connect: { id } },
-          })),
-        },
-
-        categories: {
-          create: categories?.map(id => ({
-            category: { connect: { id } },
-          })),
-        },
+        alternatives: { connect: alternatives?.map(id => ({ id })) },
+        categories: { connect: categories?.map(id => ({ id })) },
       },
     })
 
@@ -51,22 +41,8 @@ export const updateTool = authedProcedure
       where: { id },
       data: {
         ...input,
-
-        alternatives: {
-          deleteMany: { toolId: id },
-
-          create: alternatives?.map(id => ({
-            alternative: { connect: { id } },
-          })),
-        },
-
-        categories: {
-          deleteMany: { toolId: id },
-
-          create: categories?.map(id => ({
-            category: { connect: { id } },
-          })),
-        },
+        alternatives: { set: alternatives?.map(id => ({ id })) },
+        categories: { set: categories?.map(id => ({ id })) },
       },
     })
 
@@ -116,7 +92,7 @@ export const deleteTools = authedProcedure
 
 export const scheduleTool = authedProcedure
   .createServerAction()
-  .input(z.object({ id: z.string(), publishedAt: z.date() }))
+  .input(z.object({ id: z.string(), publishedAt: z.coerce.date() }))
   .handler(async ({ input: { id, publishedAt } }) => {
     const tool = await prisma.tool.update({
       where: { id },

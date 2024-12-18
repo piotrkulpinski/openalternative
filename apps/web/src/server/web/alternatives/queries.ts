@@ -20,7 +20,7 @@ export const searchAlternatives = cache(
     const [sortBy, sortOrder] = sort.split(".")
 
     const whereQuery: Prisma.AlternativeWhereInput = {
-      tools: { some: { tool: { status: ToolStatus.Published } } },
+      tools: { some: { status: ToolStatus.Published } },
       ...(q && {
         OR: [
           { name: { contains: q, mode: "insensitive" } },
@@ -57,7 +57,7 @@ export const findAlternatives = cache(
     return prisma.alternative.findMany({
       ...args,
       orderBy: orderBy ?? { name: "asc" },
-      where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
+      where: { tools: { some: { status: ToolStatus.Published } }, ...where },
       select: alternativeManyPayload,
     })
   },
@@ -72,7 +72,7 @@ export const findAlternativeSlugs = async ({
   return prisma.alternative.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
-    where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
+    where: { tools: { some: { status: ToolStatus.Published } }, ...where },
     select: { slug: true, updatedAt: true },
   })
 }

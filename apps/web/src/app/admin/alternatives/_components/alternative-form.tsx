@@ -43,7 +43,7 @@ export function AlternativeForm({
     resolver: zodResolver(alternativeSchema),
     defaultValues: {
       ...nullsToUndefined(alternative),
-      tools: alternative?.tools.map(({ tool }) => tool.id),
+      tools: alternative?.tools.map(({ id }) => id),
     },
   })
 

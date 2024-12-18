@@ -73,7 +73,7 @@ export default async function AlternativePage(props: PageProps) {
     getAlternative(props),
 
     findToolsWithCategories({
-      where: { alternatives: { some: { alternative: { slug: (await props.params).slug } } } },
+      where: { alternatives: { some: { slug: (await props.params).slug } } },
       orderBy: [{ isFeatured: "desc" }, { score: "desc" }],
     }),
   ])
@@ -84,7 +84,7 @@ export default async function AlternativePage(props: PageProps) {
   // Sort the categories by count
   const categories = Object.values(
     tools.reduce<Record<string, { count: number; category: Category }>>((acc, { categories }) => {
-      for (const { category } of categories) {
+      for (const category of categories) {
         if (!acc[category.name]) {
           acc[category.name] = { count: 0, category }
         }

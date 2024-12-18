@@ -13,7 +13,7 @@ export const TopicToolListing = async ({ topic, searchParams }: TopicToolListing
   const parsedParams = toolsSearchParamsCache.parse(await searchParams)
 
   const { tools, totalCount } = await searchTools(parsedParams, {
-    where: { topics: { some: { topic: { slug: topic.slug } } } },
+    where: { topics: { some: { slug: topic.slug } } },
   })
 
   return (

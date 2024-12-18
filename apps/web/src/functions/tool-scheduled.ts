@@ -40,20 +40,8 @@ export const toolScheduled = inngest.createFunction(
           where: { id: tool.id },
           data: {
             ...content,
-
-            categories: {
-              connectOrCreate: categories.map(({ id }) => ({
-                where: { toolId_categoryId: { toolId: tool.id, categoryId: id } },
-                create: { category: { connect: { id } } },
-              })),
-            },
-
-            alternatives: {
-              connectOrCreate: alternatives.map(({ id }) => ({
-                where: { toolId_alternativeId: { toolId: tool.id, alternativeId: id } },
-                create: { alternative: { connect: { id } } },
-              })),
-            },
+            categories: { connect: categories.map(({ id }) => ({ id })) },
+            alternatives: { connect: alternatives.map(({ id }) => ({ id })) },
           },
         })
       }),

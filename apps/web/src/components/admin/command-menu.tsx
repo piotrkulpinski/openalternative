@@ -5,7 +5,7 @@ import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { testSocialPosts } from "~/actions/misc"
+import { convertExplicitToImplicit, testSocialPosts } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -82,6 +82,11 @@ export const CommandMenu = () => {
     toast.success("Social post sent")
   }
 
+  const handleConvertExplicitToImplicit = async () => {
+    await convertExplicitToImplicit()
+    toast.success("Relations converted")
+  }
+
   const handleSelect = (url: string) => {
     handleOpenChange(false)
     router.push(url)
@@ -122,6 +127,7 @@ export const CommandMenu = () => {
 
         <CommandGroup heading="Quick Commands">
           <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
+          <CommandItem onSelect={handleConvertExplicitToImplicit}>Convert Relations</CommandItem>
         </CommandGroup>
 
         {!!searchResults?.tools.length && (

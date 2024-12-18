@@ -8,7 +8,7 @@ export const findTopics = cache(
     return prisma.topic.findMany({
       ...args,
       orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { slug: "asc" }],
-      where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
+      where: { tools: { some: { status: ToolStatus.Published } }, ...where },
       select: topicManyPayload,
     })
   },
@@ -19,7 +19,7 @@ export const findTopicSlugs = async ({ where, orderBy, ...args }: Prisma.TopicFi
   return prisma.topic.findMany({
     ...args,
     orderBy: orderBy ?? { slug: "asc" },
-    where: { tools: { some: { tool: { status: ToolStatus.Published } } }, ...where },
+    where: { tools: { some: { status: ToolStatus.Published } }, ...where },
     select: { slug: true, updatedAt: true },
   })
 }

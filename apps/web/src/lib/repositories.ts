@@ -202,20 +202,8 @@ export const getToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
     // Topics
     topics: {
       connectOrCreate: topics.map(({ slug }) => ({
-        where: {
-          toolId_topicSlug: {
-            toolId: tool.id,
-            topicSlug: slug,
-          },
-        },
-        create: {
-          topic: {
-            connectOrCreate: {
-              where: { slug },
-              create: { slug },
-            },
-          },
-        },
+        where: { slug },
+        create: { slug },
       })),
     },
   } satisfies Prisma.ToolUpdateInput

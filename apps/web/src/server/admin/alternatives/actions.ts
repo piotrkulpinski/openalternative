@@ -17,12 +17,7 @@ export const createAlternative = authedProcedure
       data: {
         ...input,
         slug: input.slug || slugify(input.name),
-
-        tools: {
-          create: tools?.map(id => ({
-            tool: { connect: { id } },
-          })),
-        },
+        tools: { connect: tools?.map(id => ({ id })) },
       },
     })
 
@@ -41,14 +36,7 @@ export const updateAlternative = authedProcedure
       where: { id },
       data: {
         ...input,
-
-        tools: {
-          deleteMany: { alternativeId: id },
-
-          create: tools?.map(id => ({
-            tool: { connect: { id } },
-          })),
-        },
+        tools: { set: tools?.map(id => ({ id })) },
       },
     })
 

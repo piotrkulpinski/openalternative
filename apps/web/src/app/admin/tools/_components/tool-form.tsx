@@ -55,8 +55,8 @@ export function ToolForm({
     resolver: zodResolver(toolSchema),
     defaultValues: {
       ...nullsToUndefined(tool),
-      alternatives: tool?.alternatives?.map(({ alternative }) => alternative.id),
-      categories: tool?.categories?.map(({ category }) => category.id),
+      alternatives: tool?.alternatives.map(({ id }) => id),
+      categories: tool?.categories.map(({ id }) => id),
     },
   })
 

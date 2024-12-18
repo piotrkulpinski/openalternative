@@ -43,8 +43,8 @@
   --color-chart-4: hsl(43 74% 66%);
   --color-chart-5: hsl(27 87% 67%);
 
-  --font-sans: var(--font-geist-sans), var(--font-system);
-  --font-display: var(--font-uncut-sans), var(--font-system);
+  --font-sans: var(--font-geist), var(--font-system);
+  --font-display: var(--font-geist), var(--font-system);
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -99,18 +99,6 @@
   ::before,
   ::backdrop {
     border-color: var(--color-border, currentColor);
-  }
-
-  .font-sans {
-    font-feature-settings: "ss01" on, "ss02" off, "ss03" off, "ss04" off,
-      "ss05" off, "ss06" off, "ss07" off, "ss08" on;
-  }
-
-  .font-display {
-    font-feature-settings: "ss01" on, /* Alternate R */ "ss02" on,
-      /* Alternate Y and y */ "ss03" on, /* Alernative Q, Ø, and ø */ "ss04" off,
-      /* Alernative a */ "ss05" on, /* Alernative 1, 2, and 4 */ "ss06" on,
-      /* Alternate !, ?, and * */ "ss07" on, /* Round punctuation */ "ss08" off; /* Alternate arrows */
   }
 
   * {
