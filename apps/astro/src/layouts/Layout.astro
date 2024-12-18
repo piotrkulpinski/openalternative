@@ -1,0 +1,48 @@
+---
+import { PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_PLAUSIBLE_HOST } from "astro:env/client"
+import AdBanner from "~/components/ads/ad-banner.astro"
+import Bottom from "~/components/bottom.astro"
+import Footer from "~/components/footer.astro"
+import Header from "~/components/header.astro"
+import { containerVariants } from "~/styles/container"
+
+import "~/styles.css"
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>OpenAlternative – Astro</title>
+  </head>
+
+  <body class="min-h-dvh flex flex-col bg-background text-foreground font-sans">
+    <div class="flex flex-col min-h-dvh">
+      <AdBanner />
+      <Header />
+
+      <main
+        class={containerVariants({
+          className: "flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12",
+        })}
+      >
+        <slot />
+
+        <Footer class="mt-auto" />
+      </main>
+    </div>
+
+    <Bottom />
+
+    {/* Plausible */}
+    <script
+      defer
+      is:inline
+      data-domain={PUBLIC_PLAUSIBLE_DOMAIN}
+      data-api={`${PUBLIC_PLAUSIBLE_HOST}/api/event`}
+      src={`${PUBLIC_PLAUSIBLE_HOST}/js/script.js`}></script>
+  </body>
+</html>

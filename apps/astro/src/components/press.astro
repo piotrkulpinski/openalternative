@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets"
+import type { HTMLAttributes } from "astro/types"
+import { getCollection } from "astro:content"
+import { cx } from "~/utils/cva"
+import { stackVariants } from "~/styles/stack"
+import Stack from "~/components/ui/stack.astro"
+
+type Props = HTMLAttributes<"div">
+
+const { ...props } = Astro.props
+
+const press = await getCollection("press")
+---
+
+<Stack direction="column" {...props}>
+  <h4 class="text-[0.625rem] tracking-wide uppercase text-muted">As featured on</h4>
+
+  <Stack size="lg" class="sm:justify-start md:gap-x-6">
+    {
+      press.map(({ data: { name, url, logo } }) => (
+        <a
+          href={url}
+          target="_blank"
+          rel="nofollow noreferrer"
+          class={cx(
+            stackVariants({ size: "sm" }),
+            "text-sm font-medium opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+          )}
+        >
+          {logo && (
+            <div class="size-6">
+              <Image
+                src={logo}
+                alt={name}
+                width={24}
+                height={24}
+                class="size-6 rounded-full"
+                loading="lazy"
+                fit="contain"
+                layout="responsive"
+              />
+            </div>
+          )}
+          <span class="max-sm:hidden">{name}</span>
+        </a>
+      ))
+    }
+  </Stack>
+</Stack>

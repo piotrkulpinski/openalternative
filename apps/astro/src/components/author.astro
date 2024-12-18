@@ -1,0 +1,34 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { Image } from "astro:assets"
+import type { InferEntrySchema } from "astro:content"
+import Stack from "~/components/ui/stack.astro"
+
+type Props = HTMLAttributes<"div"> & InferEntrySchema<"testimonials">["author"]
+
+const { name, image, title, ...props } = Astro.props
+---
+
+<Stack size="sm" {...props}>
+  {
+    image && (
+      <div class="size-12">
+        <Image
+          src={image}
+          alt={`${name}'s profile`}
+          width={48}
+          height={48}
+          class="rounded-full group-hover:brightness-90"
+          loading="lazy"
+          fit="cover"
+          layout="responsive"
+        />
+      </div>
+    )
+  }
+
+  <div>
+    <strong class="font-medium text-base truncate">{name}</strong>
+    {title && <div class="text-muted text-sm/tight">{title}</div>}
+  </div>
+</Stack>

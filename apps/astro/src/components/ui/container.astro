@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { containerVariants } from "~/styles/container"
+import type { VariantProps } from "~/utils/cva"
+
+type Props = HTMLAttributes<"div"> & VariantProps<typeof containerVariants>
+
+const { class: className, ...props } = Astro.props
+---
+
+<div class={containerVariants({ className })} {...props}>
+  <slot />
+</div>

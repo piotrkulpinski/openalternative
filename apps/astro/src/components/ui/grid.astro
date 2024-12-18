@@ -1,0 +1,27 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { type VariantProps, cva, cx } from "~/utils/cva"
+
+const gridVariants = cva({
+  base: "w-full grid place-content-start gap-5",
+
+  variants: {
+    size: {
+      "2xs": "grid-cols-2xs",
+      xs: "grid-cols-xs",
+      sm: "grid-cols-sm",
+      md: "grid-cols-md",
+      lg: "grid-cols-lg",
+      xl: "grid-cols-xl",
+    },
+  },
+})
+
+type Props = Omit<HTMLAttributes<"div">, "size"> & VariantProps<typeof gridVariants>
+
+const { class: className, size = "md", ...props } = Astro.props
+---
+
+<div class={cx(gridVariants({ size, className }))} {...props}>
+  <slot />
+</div>

@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { type VariantProps, cva, cx } from "~/utils/cva"
+
+const cardSimpleVariants = cva({
+  base: "group flex justify-between items-center gap-4 min-w-0 -my-1 py-1",
+})
+
+type Props = HTMLAttributes<"div"> & VariantProps<typeof cardSimpleVariants>
+
+const { class: className, ...props } = Astro.props
+
+const slots = Astro.slots
+const hasTitle = slots.has("title")
+const hasCaption = slots.has("caption")
+---
+
+<Fragment className={cx(cardSimpleVariants({ className }))} {...props}>
+  {
+    hasTitle && (
+      <h5 class="truncate">
+        <slot name="title" />
+      </h5>
+    )
+  }
+
+  <hr class="min-w-2 flex-1 group-hover:opacity-35" />
+
+  {
+    hasCaption && (
+      <span class="shrink-0 text-xs text-secondary">
+        <slot name="caption" />
+      </span>
+    )
+  }
+</Fragment>

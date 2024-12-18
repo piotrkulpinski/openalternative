@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { stackVariants } from "~/styles/stack"
+import { type VariantProps, cx } from "~/utils/cva"
+
+type Props = HTMLAttributes<"div"> & VariantProps<typeof stackVariants>
+
+const { size = "md", direction = "row", class: className, ...props } = Astro.props
+---
+
+<div class={cx(stackVariants({ size, direction, className }))} {...props}>
+  <slot />
+</div>
