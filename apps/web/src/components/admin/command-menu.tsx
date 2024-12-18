@@ -5,7 +5,12 @@ import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { convertExplicitToImplicit, testSocialPosts } from "~/actions/misc"
+import {
+  convertAlternativeRelations,
+  convertCategoryRelations,
+  convertTopicRelations,
+  testSocialPosts,
+} from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -82,8 +87,18 @@ export const CommandMenu = () => {
     toast.success("Social post sent")
   }
 
-  const handleConvertExplicitToImplicit = async () => {
-    await convertExplicitToImplicit()
+  const handleAlternativeRelations = async () => {
+    await convertAlternativeRelations()
+    toast.success("Relations converted")
+  }
+
+  const handleCategoryRelations = async () => {
+    await convertCategoryRelations()
+    toast.success("Relations converted")
+  }
+
+  const handleTopicRelations = async () => {
+    await convertTopicRelations()
     toast.success("Relations converted")
   }
 
@@ -127,7 +142,11 @@ export const CommandMenu = () => {
 
         <CommandGroup heading="Quick Commands">
           <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
-          <CommandItem onSelect={handleConvertExplicitToImplicit}>Convert Relations</CommandItem>
+          <CommandItem onSelect={handleAlternativeRelations}>
+            Convert Alternative Relations
+          </CommandItem>
+          <CommandItem onSelect={handleCategoryRelations}>Convert Category Relations</CommandItem>
+          <CommandItem onSelect={handleTopicRelations}>Convert Topic Relations</CommandItem>
         </CommandGroup>
 
         {!!searchResults?.tools.length && (

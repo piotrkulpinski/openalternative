@@ -12,8 +12,7 @@ export const testSocialPosts = async () => {
   }
 }
 
-export const convertExplicitToImplicit = async () => {
-  // Convert AlternativeToTool relations
+export const convertAlternativeRelations = async () => {
   const alternativeRelations = await prisma.alternativeToTool.findMany()
 
   await Promise.allSettled(
@@ -24,8 +23,9 @@ export const convertExplicitToImplicit = async () => {
       }),
     ),
   )
+}
 
-  // Convert CategoryToTools relations
+export const convertCategoryRelations = async () => {
   const categoryRelations = await prisma.categoryToTools.findMany()
   await Promise.allSettled(
     categoryRelations.map(({ toolId, categoryId }) =>
@@ -35,8 +35,9 @@ export const convertExplicitToImplicit = async () => {
       }),
     ),
   )
+}
 
-  // Convert TopicToTool relations
+export const convertTopicRelations = async () => {
   const topicRelations = await prisma.topicToTool.findMany()
   await Promise.allSettled(
     topicRelations.map(({ toolId, topicSlug }) =>
@@ -46,6 +47,4 @@ export const convertExplicitToImplicit = async () => {
       }),
     ),
   )
-
-  return { success: true }
 }
