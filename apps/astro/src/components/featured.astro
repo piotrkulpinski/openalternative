@@ -1,0 +1,34 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { config } from "~/config"
+import { cx } from "~/utils/cva"
+import { stackVariants } from "~/styles/stack"
+import Stack from "~/components/ui/stack.astro"
+
+type Props = HTMLAttributes<"div">
+
+const { ...props } = Astro.props
+---
+
+<Stack direction="column" {...props}>
+  <h4 class="text-[0.625rem] tracking-wide uppercase text-muted">As featured on</h4>
+
+  <Stack size="lg" class="sm:justify-start md:gap-x-6">
+    {
+      config.links.featured.map((link) => (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="nofollow noreferrer"
+          class={cx(
+            stackVariants({ size: "sm" }),
+            "text-sm font-medium opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+          )}
+        >
+          <link.icon class="size-6 rounded-full" />
+          <span class="max-sm:hidden">{link.name}</span>
+        </a>
+      ))
+    }
+  </Stack>
+</Stack>

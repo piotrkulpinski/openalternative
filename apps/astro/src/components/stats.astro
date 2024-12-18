@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { Stat } from "~/components/client/stat"
+import Stack from "~/components/ui/stack.astro"
+import { config } from "~/config"
+import { cx } from "~/utils/cva"
+
+type Props = HTMLAttributes<"div">
+
+const { class: className, ...props } = Astro.props
+
+const stats = [
+  { value: config.stats.pageviews, label: "Monthly Pageviews" },
+  { value: config.stats.tools, label: "Listed Projects" },
+  { value: config.stats.subscribers, label: "Newsletter Subscribers" },
+  { value: config.stats.stars, label: "GitHub Stars" },
+]
+---
+
+<div class={cx("flex flex-wrap items-center justify-around gap-x-4 gap-y-8", className)} {...props}>
+  {
+    stats.map(({ value, label }) => (
+      <Stack direction="column" class="flex flex-col items-center gap-1 basis-[12rem]">
+        <Stat
+          client:visible
+          value={value}
+          format={{ notation: "compact" }}
+          locales="en-US"
+          className="text-5xl font-semibold tabular-nums"
+        />
+        <p class="text-muted">{label}</p>
+      </Stack>
+    ))
+  }
+</div>

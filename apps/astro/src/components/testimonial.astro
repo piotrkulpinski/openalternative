@@ -1,0 +1,21 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import type { CollectionEntry } from "astro:content"
+import Author from "~/components/author.astro"
+import { cx } from "~/utils/cva"
+import Prose from "./ui/prose.astro"
+
+type Props = HTMLAttributes<"blockquote"> & {
+  testimonial: CollectionEntry<"testimonials">
+}
+
+const { testimonial, class: className, ...props } = Astro.props
+---
+
+<blockquote class={cx("flex flex-col items-center gap-4 max-w-2xl mx-auto", className)} {...props}>
+  <Prose class="text-center text-lg/relaxed">
+    <p>{testimonial.data.quote}</p>
+  </Prose>
+
+  <Author {...testimonial.data.author} />
+</blockquote>

@@ -1,0 +1,50 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { headingVariants } from "~/styles/heading"
+import { cva, cx, type VariantProps } from "~/utils/cva"
+
+const introVariants = cva({
+  base: "flex w-full flex-col gap-y-2",
+
+  variants: {
+    alignment: {
+      start: "items-start text-start",
+      center: "items-center text-center",
+      end: "items-end text-end",
+    },
+  },
+})
+
+type Props = HTMLAttributes<"div"> & VariantProps<typeof introVariants>
+
+const { class: className, alignment = "start", ...props } = Astro.props
+
+const slots = Astro.slots
+const hasTitle = slots.has("title")
+const hasDescription = slots.has("description")
+---
+
+<div class={cx(introVariants({ alignment, className }))} {...props}>
+  {
+    hasTitle && (
+      <h1 class={headingVariants({ size: "h1" })}>
+        <slot name="title" />
+      </h1>
+    )
+  }
+
+  {
+    hasDescription && (
+      <h2
+        class={cx(
+          "max-w-2xl text-pretty text-secondary md:text-lg *:[&[href]]:underline *:[&[href]]:hover:text-primary",
+          className
+        )}
+      >
+        <slot name="description" />
+      </h2>
+    )
+  }
+
+  <slot />
+</div>

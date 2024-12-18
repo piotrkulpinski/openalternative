@@ -1,4 +1,8 @@
 import { siteConfig } from "~/config/site"
+import HackerNewsLogo from '~/assets/press/hackernews.svg';
+import IndieHackersLogo from '~/assets/press/indiehackers.svg';
+import ProductHuntLogo from '~/assets/press/producthunt.svg';
+import TwitterLogo from '~/assets/press/twitter.svg';
 
 export const linksConfig = {
   author: "https://kulpinski.pl",
@@ -59,22 +63,22 @@ export const linksConfig = {
     {
       name: "Hacker News",
       url: "https://news.ycombinator.com/item?id=39639386",
-      icon: "/hackernews.svg",
+      icon: HackerNewsLogo,
     },
     {
       name: "Indie Hackers",
       url: "https://www.indiehackers.com/post/how-i-grew-a-side-project-to-100k-unique-visitors-in-7-days-with-0-audience-15d48ea192",
-      icon: "/indiehackers.svg",
+      icon: IndieHackersLogo,
     },
     {
       name: "Product Hunt",
       url: "https://www.producthunt.com/posts/openalternative",
-      icon: "/producthunt.svg",
+      icon: ProductHuntLogo,
     },
     {
       name: "Twitter",
       url: "https://twitter.com/steventey/status/1765841867017437599",
-      icon: "/twitter.svg",
+      icon: TwitterLogo,
     },
   ],
 }

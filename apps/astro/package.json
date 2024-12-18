@@ -9,8 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@openalternative/db": "workspace:*",
+    "@astrojs/react": "^4.1.1",
     "@curiousleaf/utils": "^1.0.40",
+    "@number-flow/react": "^0.4.4",
+    "@openalternative/db": "workspace:*",
     "astro": "^5.0.8",
     "lucide-astro": "^0.468.0"
   },
@@ -19,6 +21,8 @@
     "@tailwindcss/postcss": "^4.0.0-beta.7",
     "@tailwindcss/typography": "^0.5.15",
     "postcss": "^8",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1",
     "tailwindcss": "^4.0.0-beta.7",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.7.2"

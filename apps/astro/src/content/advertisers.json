@@ -1,0 +1,51 @@
+[
+  {
+    "slug": "preline",
+    "name": "Preline UI",
+    "description": "Open source set of prebuilt UI components based on the utility-first Tailwind CSS framework.",
+    "websiteUrl": "https://preline.co",
+    "logo": "../assets/advertisers/preline.svg"
+  },
+  {
+    "slug": "efficient",
+    "name": "Efficient App",
+    "description": "Not all Open Source alternatives are equal — Narrow down the best, without the bullsh*t",
+    "websiteUrl": "https://efficient.link/ea/openalternative",
+    "logo": "../assets/advertisers/efficient.svg"
+  },
+  {
+    "slug": "screenshotone",
+    "name": "ScreenshotOne",
+    "description": "The screenshot API for developers. Render screenshots in one simple API call.",
+    "websiteUrl": "https://screenshotone.com/",
+    "logo": "../assets/advertisers/screenshotone.svg"
+  },
+  {
+    "slug": "apitoolkit",
+    "name": "APItoolkit",
+    "description": "An API first observability platform to Observe, Debug & Test backend systems or any third party APIs.",
+    "websiteUrl": "https://apitoolkit.io",
+    "logo": "../assets/advertisers/apitoolkit.svg"
+  },
+  {
+    "slug": "notesnook",
+    "name": "Notesnook",
+    "description": "End-to-end encrypted note-taking app with cross-platform sync, rich text editing, and offline support for ultimate privacy and productivity.",
+    "websiteUrl": "https://notesnook.com",
+    "logo": "../assets/advertisers/notesnook.svg"
+  },
+  {
+    "slug": "easypanel",
+    "name": "Easypanel",
+    "description": "Use an intuitive interface to deploy applications, manage databases, and provision SSL certificates.",
+    "websiteUrl": "https://easypanel.io",
+    "logo": "../assets/advertisers/easypanel.svg"
+  },
+  {
+    "slug": "polar",
+    "name": "Polar",
+    "description": "An open source Lemon Squeezy alternative with 20% lower fees",
+    "websiteUrl": "https://polar.sh",
+    "logo": "../assets/advertisers/polar.svg"
+  }
+]

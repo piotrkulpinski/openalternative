@@ -1,6 +1,7 @@
 ---
-import Layout from "~/layouts/Layout.astro";
-import { searchTools } from "~/server/tools/queries";
+import { metadataConfig } from "~/config/metadata"
+import Layout from "~/layouts/Layout.astro"
+import { searchTools } from "~/server/tools/queries"
 
 const tools = await searchTools(
   {
@@ -11,7 +12,15 @@ const tools = await searchTools(
     perPage: 35,
   },
   {}
-);
+)
+
+export const metadata = {
+  title: "OpenSource Alternatives",
+  description:
+    "A community driven list of open source alternatives to proprietary software and applications.",
+  openGraph: { ...metadataConfig.openGraph, url: "/about" },
+  alternates: { ...metadataConfig.alternates, canonical: "/about" },
+}
 ---
 
 <Layout>
@@ -22,9 +31,7 @@ const tools = await searchTools(
   <div class="container">
     <h2>Tools ({tools.totalCount})</h2>
 
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-    >
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {
         tools.tools.map((tool) => (
           <div class="card">

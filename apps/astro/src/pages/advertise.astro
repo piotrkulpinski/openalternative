@@ -1,0 +1,68 @@
+---
+import type { Metadata } from "next"
+import Link from "next/link"
+import Advertisers from "~/components/advertisers.astro"
+import Stats from "~/components/stats.astro"
+import Testimonial from "~/components/testimonial.astro"
+import Button from "~/components/ui/button.astro"
+import Intro from "~/components/ui/intro.astro"
+import { config } from "~/config"
+import { metadataConfig } from "~/config/metadata"
+import { findAds } from "~/server/ads/queries"
+import Layout from "~/layouts/Layout.astro"
+import { getCollection } from "astro:content"
+
+export const metadata: Metadata = {
+  title: `Advertise on ${config.site.name}`,
+  description: `Promote your business or software on ${config.site.name} and reach a wide audience of open source enthusiasts.`,
+  openGraph: { ...metadataConfig.openGraph, url: "/advertise" },
+  alternates: { ...metadataConfig.alternates, canonical: "/advertise" },
+}
+
+// const ads = await findAds({})
+const testimonials = await getCollection("testimonials")
+---
+
+<Layout>
+  <Intro alignment="center">
+    <Fragment slot="title">{metadata.title}</Fragment>
+    <Fragment slot="description" class="max-w-3xl">
+      Promote your business or software and reach a wide audience of open source enthusiasts. Check
+      our{" "}
+      <a href={config.links.analytics} target="_blank" rel="noopener noreferrer nofollow">
+        real-time analytics
+      </a>{" "}
+      to see what impact it could have on your business.</Fragment
+    >
+  </Intro>
+
+  <!-- <AdsPicker ads={ads} class="w-full max-w-2xl mx-auto" /> -->
+
+  <Stats class="my-4" />
+
+  {testimonials.map((testimonial) => <Testimonial testimonial={testimonial} class="my-4" />)}
+
+  <div class="flex flex-col items-center text-center gap-6 mt-4" id="advertisers">
+    <p class="text-sm text-muted">
+      Join these companies in advertising their business on {config.site.name}
+    </p>
+
+    <Advertisers />
+  </div>
+
+  <hr />
+
+  <Intro alignment="center" class="md:my-4 lg:my-8">
+    <Fragment slot="title">Need a custom partnership?</Fragment>
+
+    <Fragment slot="description" class="max-w-lg">
+      Tell us more about your company and we will get back to you as soon as possible.
+    </Fragment>
+
+    <Button variant="fancy" class="mt-4 min-w-40">
+      <a href={`mailto:${config.site.email}`} target="_blank" rel="noopener noreferrer">
+        Contact us
+      </a>
+    </Button>
+  </Intro>
+</Layout>

@@ -1,0 +1,30 @@
+---
+import { type HTMLAttributes } from "astro/types"
+import { type Properties, posthog } from "posthog-js"
+import { updateUrlWithSearchParams } from "~/utils/queryString"
+
+type Props = HTMLAttributes<"a"> & {
+  eventName?: string
+  eventProps?: Properties
+}
+
+const {
+  href,
+  target = "_blank",
+  rel = "noopener noreferrer nofollow",
+  eventName,
+  eventProps,
+  ...props
+} = Astro.props
+---
+
+<a
+  href={updateUrlWithSearchParams(href, { ref: "openalternative" })}
+  target={target}
+  rel={rel}
+  onClick={() => eventName && posthog.capture(eventName, eventProps)}
+  prefetch={false}
+  {...props}
+>
+  <slot />
+</a>

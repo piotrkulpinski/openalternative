@@ -15,10 +15,6 @@ const headingVariants = cva({
       h6: "text-sm font-medium",
     },
   },
-
-  defaultVariants: {
-    size: "h3",
-  },
 })
 
 type Props = Omit<HTMLAttributes<"h1">, "size"> & VariantProps<typeof headingVariants>

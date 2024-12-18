@@ -1,5 +1,6 @@
 // @ts-check
 import cloudflare from "@astrojs/cloudflare"
+import react from "@astrojs/react"
 import { defineConfig, envField } from "astro/config"
 
 export default defineConfig({
@@ -27,5 +28,5 @@ export default defineConfig({
       STRIPE_PRODUCT_IDS: envField.string({ context: "server", access: "secret" }),
     },
   },
-  integrations: [],
+  integrations: [react()],
 })
