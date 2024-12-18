@@ -1,28 +1,11 @@
-import localFont from "next/font/local"
+import { Geist } from "next/font/google"
 import type { FontWeight } from "satori"
 
-export const UncutSans = localFont({
-  variable: "--font-uncut-sans",
+export const geist = Geist({
+  variable: "--font-geist",
   display: "swap",
-  src: [
-    {
-      path: "../../public/fonts/UncutSans-Variable.woff2",
-      weight: "400 900",
-      style: "normal",
-    },
-  ],
-})
-
-export const GeistSans = localFont({
-  variable: "--font-geist-sans",
-  display: "swap",
-  src: [
-    {
-      path: "../../public/fonts/GeistSans-Variable.woff2",
-      weight: "400 900",
-      style: "normal",
-    },
-  ],
+  subsets: ["latin"],
+  weight: "variable",
 })
 
 export const loadGoogleFont = async (font: string, weight: FontWeight) => {

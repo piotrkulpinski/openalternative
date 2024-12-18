@@ -28,8 +28,8 @@
 
   --tracking-micro: -0.0125em;
 
-  --font-sans: var(--font-geist-sans), var(--font-system);
-  --font-display: var(--font-uncut-sans), var(--font-system);
+  --font-sans: var(--font-geist), var(--font-system);
+  --font-display: var(--font-geist), var(--font-system);
 
   --text-5xl: 2.75rem;
 
@@ -115,11 +115,6 @@
       --color-border: hsl(0 0% 18%);
       --color-border-dark: hsl(0 0% 20%);
     }
-  }
-
-  :root {
-    font-feature-settings: "ss01" on, "ss02" off, "ss03" off, "ss04" off,
-      "ss05" off, "ss06" off, "ss07" off, "ss08" on;
   }
 
   @media (prefers-reduced-motion) {

@@ -3,7 +3,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { PropsWithChildren } from "react"
 import { Toaster } from "~/components/common/toaster"
 import { config } from "~/config"
-import { GeistSans, UncutSans } from "~/lib/fonts"
+import { geist } from "~/lib/fonts"
 
 export const metadata: Metadata = {
   metadataBase: new URL(config.site.url),
@@ -36,7 +36,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en" className={`${UncutSans.variable} ${GeistSans.variable} scroll-smooth`}>
+    <html lang="en" className={`${geist.variable} scroll-smooth`}>
       <body className="min-h-dvh flex flex-col bg-background text-foreground font-sans">
         <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster />
