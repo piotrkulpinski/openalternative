@@ -177,24 +177,3 @@ model Stack {
   // Indexes
   @@index([slug])
 }
-
-model AlternativeToTool {
-  toolId        String
-  alternativeId String
-
-  @@id([toolId, alternativeId])
-}
-
-model CategoryToTools {
-  toolId     String
-  categoryId String
-
-  @@id([toolId, categoryId])
-}
-
-model TopicToTool {
-  toolId    String
-  topicSlug String
-
-  @@id([toolId, topicSlug])
-}

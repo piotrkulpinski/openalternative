@@ -5,12 +5,7 @@ import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import {
-  convertAlternativeRelations,
-  convertCategoryRelations,
-  convertTopicRelations,
-  testSocialPosts,
-} from "~/actions/misc"
+import { testSocialPosts } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -87,21 +82,6 @@ export const CommandMenu = () => {
     toast.success("Social post sent")
   }
 
-  const handleAlternativeRelations = async () => {
-    await convertAlternativeRelations()
-    toast.success("Relations converted")
-  }
-
-  const handleCategoryRelations = async () => {
-    await convertCategoryRelations()
-    toast.success("Relations converted")
-  }
-
-  const handleTopicRelations = async () => {
-    await convertTopicRelations()
-    toast.success("Relations converted")
-  }
-
   const handleSelect = (url: string) => {
     handleOpenChange(false)
     router.push(url)
@@ -142,11 +122,6 @@ export const CommandMenu = () => {
 
         <CommandGroup heading="Quick Commands">
           <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
-          <CommandItem onSelect={handleAlternativeRelations}>
-            Convert Alternative Relations
-          </CommandItem>
-          <CommandItem onSelect={handleCategoryRelations}>Convert Category Relations</CommandItem>
-          <CommandItem onSelect={handleTopicRelations}>Convert Topic Relations</CommandItem>
         </CommandGroup>
 
         {!!searchResults?.tools.length && (
