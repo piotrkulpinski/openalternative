@@ -4,9 +4,7 @@
     "enabled": true
   },
   "files": {
-    "ignore": [
-      "**/*.astro"
-    ]
+    "ignore": ["**/*.astro", "**/*.css", "**/.next/**", "**/dist/**", "**/node_modules/**"]
   },
   "formatter": {
     "enabled": true,

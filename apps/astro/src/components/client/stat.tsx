@@ -8,10 +8,12 @@ export const Stat = ({ value, ...props }: ComponentProps<typeof NumberFlow>) => 
 
   useEffect(() => setState(value), [value])
 
-  return <NumberFlow
-    {...props}
-    value={state}
-    style={{ "--number-flow-char-height": "0.75em" }}
-    continuous
-  />
+  return (
+    <NumberFlow
+      {...props}
+      value={state}
+      style={{ "--number-flow-char-height": "0.75em" }}
+      continuous
+    />
+  )
 }

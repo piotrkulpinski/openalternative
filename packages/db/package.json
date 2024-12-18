@@ -19,9 +19,5 @@
     "prisma": "^6.0.1",
     "typescript": "5.7.2"
   },
-  "trustedDependencies": [
-    "@prisma/client",
-    "@prisma/engines",
-    "prisma"
-  ]
+  "trustedDependencies": ["@prisma/client", "@prisma/engines", "prisma"]
 }

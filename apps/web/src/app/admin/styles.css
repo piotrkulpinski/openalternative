@@ -7,8 +7,8 @@
 @source "../admin/**/*.{js,ts,jsx,tsx,mdx}";
 
 @theme {
-  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(0 0% 3.9%);
@@ -102,14 +102,13 @@
   }
 
   .font-sans {
-    font-feature-settings: "ss01" on, "ss02" off, "ss03" off, "ss04" off,
-      "ss05" off, "ss06" off, "ss07" off, "ss08" on;
+    font-feature-settings: "ss01" on, "ss02" off, "ss03" off, "ss04" off, "ss05" off, "ss06" off,
+      "ss07" off, "ss08" on;
   }
 
   .font-display {
-    font-feature-settings: "ss01" on, /* Alternate R */ "ss02" on,
-      /* Alternate Y and y */ "ss03" on, /* Alernative Q, Ø, and ø */ "ss04" off,
-      /* Alernative a */ "ss05" on, /* Alernative 1, 2, and 4 */ "ss06" on,
+    font-feature-settings: "ss01" on, /* Alternate R */ "ss02" on, /* Alternate Y and y */ "ss03" on, /* Alernative Q, Ø, and ø */
+      "ss04" off, /* Alernative a */ "ss05" on, /* Alernative 1, 2, and 4 */ "ss06" on,
       /* Alternate !, ?, and * */ "ss07" on, /* Round punctuation */ "ss08" off; /* Alternate arrows */
   }
 

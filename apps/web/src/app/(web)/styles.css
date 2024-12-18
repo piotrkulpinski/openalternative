@@ -8,8 +8,8 @@
 @source "../(web)/**/*.{js,ts,jsx,tsx,mdx}";
 
 @theme {
-  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 
   --header-height: 3.125rem;
   --header-top: 0rem;
@@ -118,8 +118,8 @@
   }
 
   :root {
-    font-feature-settings: "ss01" on, "ss02" off, "ss03" off, "ss04" off,
-      "ss05" off, "ss06" off, "ss07" off, "ss08" on;
+    font-feature-settings: "ss01" on, "ss02" off, "ss03" off, "ss04" off, "ss05" off, "ss06" off,
+      "ss07" off, "ss08" on;
   }
 
   @media (prefers-reduced-motion) {

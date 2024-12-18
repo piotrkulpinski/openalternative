@@ -1,7 +1,7 @@
 ---
 import Intro from "~/components/ui/intro.astro"
 import Prose from "~/components/ui/prose.astro"
-import Featured from "~/components/featured.astro"
+import Press from "~/components/press.astro"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import Layout from "~/layouts/Layout.astro"
@@ -22,7 +22,7 @@ export const metadata = {
     <Fragment slot="description">{metadata.description}</Fragment>
   </Intro>
 
-  <Featured />
+  <Press />
 
   <Prose>
     <h2>What is {config.site.name}?</h2>

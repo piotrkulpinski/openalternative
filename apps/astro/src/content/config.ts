@@ -17,28 +17,41 @@ const postsCollection = defineCollection({
 
 const advertisersCollection = defineCollection({
   loader: file("src/content/advertisers.json"),
-  schema: ({ image }) => z.object({
-    name: z.string(),
-    description: z.string().optional(),
-    websiteUrl: z.string().url().optional(),
-    logo: image().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      description: z.string().optional(),
+      websiteUrl: z.string().url().optional(),
+      logo: image().optional(),
+    }),
 })
 
 const testimonialsCollection = defineCollection({
   loader: file("src/content/testimonials.json"),
-  schema: ({ image }) => z.object({
-    quote: z.string(),
-    author: z.object({
-      name: z.string(),
-      title: z.string(),
-      image: image().optional(),
+  schema: ({ image }) =>
+    z.object({
+      quote: z.string(),
+      author: z.object({
+        name: z.string(),
+        title: z.string(),
+        image: image().optional(),
+      }),
     }),
-  }),
+})
+
+const pressCollection = defineCollection({
+  loader: file("src/content/press.json"),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      url: z.string().url().optional(),
+      logo: image().optional(),
+    }),
 })
 
 export const collections = {
   posts: postsCollection,
   advertisers: advertisersCollection,
   testimonials: testimonialsCollection,
+  press: pressCollection,
 }
