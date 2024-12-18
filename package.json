@@ -21,9 +21,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "turbo": "^2.1.3",
+    "turbo": "^2.3.3",
     "typescript": "^5.7.2"
   },
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "packageManager": "bun@1.1.0"
 }

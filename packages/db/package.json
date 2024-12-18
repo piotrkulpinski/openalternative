@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "exports": {
     ".": "./index.ts",
-    "./client": "./client.ts"
+    "./client": "./client.ts",
+    "./edge": "./edge.ts"
   },
   "scripts": {
     "db:generate": "prisma generate --no-hints",
@@ -12,12 +13,21 @@
     "db:reset": "prisma migrate reset"
   },
   "dependencies": {
-    "@prisma/client": "^6.0.1"
+    "@neondatabase/serverless": "^0.10.4",
+    "@prisma/adapter-neon": "^6.1.0",
+    "@prisma/client": "^6.1.0",
+    "@prisma/extension-accelerate": "^1.2.1",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "prisma": "^6.0.1",
+    "@types/ws": "^8.5.13",
+    "prisma": "^6.1.0",
     "typescript": "5.7.2"
   },
-  "trustedDependencies": ["@prisma/client", "@prisma/engines", "prisma"]
+  "trustedDependencies": [
+    "@prisma/client",
+    "@prisma/engines",
+    "prisma"
+  ]
 }

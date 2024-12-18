@@ -1,10 +1,8 @@
 ---
-import type { Metadata } from "next"
-import Link from "next/link"
 import Advertisers from "~/components/advertisers.astro"
 import Stats from "~/components/stats.astro"
 import Testimonial from "~/components/testimonial.astro"
-import Button from "~/components/ui/button.astro"
+import { Button } from "~/components/dynamic/button"
 import Intro from "~/components/ui/intro.astro"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
@@ -12,7 +10,7 @@ import { findAds } from "~/server/ads/queries"
 import Layout from "~/layouts/Layout.astro"
 import { getCollection } from "astro:content"
 
-export const metadata: Metadata = {
+export const metadata = {
   title: `Advertise on ${config.site.name}`,
   description: `Promote your business or software on ${config.site.name} and reach a wide audience of open source enthusiasts.`,
   openGraph: { ...metadataConfig.openGraph, url: "/advertise" },
@@ -59,7 +57,7 @@ const testimonials = await getCollection("testimonials")
       Tell us more about your company and we will get back to you as soon as possible.
     </Fragment>
 
-    <Button variant="fancy" class="mt-4 min-w-40">
+    <Button variant="fancy" className="mt-4 min-w-40" asChild>
       <a href={`mailto:${config.site.email}`} target="_blank" rel="noopener noreferrer">
         Contact us
       </a>

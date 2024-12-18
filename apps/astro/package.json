@@ -13,7 +13,7 @@
     "@curiousleaf/utils": "^1.0.40",
     "@number-flow/react": "^0.4.4",
     "@openalternative/db": "workspace:*",
-    "astro": "^5.0.8",
+    "astro": "^5.0.9",
     "lucide-astro": "^0.468.0"
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
     "postcss": "^8",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
-    "tailwindcss": "^4.0.0-beta.7",
+    "tailwindcss": "^4.0.0-beta.8",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.7.2"
   },

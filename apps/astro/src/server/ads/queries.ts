@@ -1,4 +1,4 @@
-import { prisma } from "@openalternative/db"
+import { prisma } from "~/lib/prisma"
 import type { Prisma } from "@openalternative/db/client"
 import { adManyPayload, adOnePayload } from "~/server/ads/payloads"
 

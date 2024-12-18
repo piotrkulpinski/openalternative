@@ -1,4 +1,4 @@
-import { prisma } from "@openalternative/db"
+import { prisma } from "~/lib/prisma"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { topicManyPayload, topicOnePayload } from "~/server/topics/payloads"
 

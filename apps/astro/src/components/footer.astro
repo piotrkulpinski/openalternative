@@ -9,6 +9,7 @@ import { config } from "~/config"
 import { stackVariants } from "~/styles/stack"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
+import AuthorImage from "~/assets/authors/piotrkulpinski.webp"
 
 type Props = HTMLAttributes<"footer"> & {
   hideNewsletter?: boolean
@@ -87,7 +88,7 @@ const { hideNewsletter = false, class: className } = Astro.props
 
     <div class={stackVariants({direction:"column",className: "md:col-span-3"})}>
       <Heading size="h6"><strong>Other Products:</strong></Heading>
-      
+
       {config.links.family.map(({ href, title, description }) => (
         <NavLink
           href={updateUrlWithSearchParams(href, { ref: config.site.name.toLowerCase() })}
@@ -108,16 +109,18 @@ const { hideNewsletter = false, class: className } = Astro.props
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Image
-        src="/authors/piotrkulpinski.webp"
-        alt="Piotr Kulpinski"
-        class="max-sm:hidden size-4 rounded-full"
-        width={16}
-        height={16}
-        loading="lazy"
-        fit="cover"
-        layout="responsive"
-      />
+      <div class="size-4">
+        <Image
+          src={AuthorImage}
+          alt="Piotr Kulpinski"
+          class="max-sm:hidden size-4 rounded-full"
+          width={16}
+          height={16}
+          loading="lazy"
+          fit="cover"
+          layout="responsive"
+        />
+      </div>
       Made by Piotr Kulpinski
     </a>
 

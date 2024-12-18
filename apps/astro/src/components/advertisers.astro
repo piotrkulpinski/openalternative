@@ -5,7 +5,7 @@ import { getCollection } from "astro:content"
 import ExternalLink from "~/components/external-link.astro"
 import { stackVariants } from "~/styles/stack"
 import { cx } from "~/utils/cva"
-import Stack from "./ui/stack.astro"
+import Stack from "~/components/ui/stack.astro"
 
 type Props = HTMLAttributes<"div">
 
@@ -28,17 +28,11 @@ const advertisers = await getCollection("advertisers")
         )}
       >
         {logo && (
-          <Image
-            src={logo}
-            alt={name}
-            width={24}
-            height={24}
-            class="size-6"
-            loading="lazy"
-            fit="contain"
-            layout="responsive"
-          />
+          <div class="size-6">
+            <Image src={logo} alt={name} width={24} height={24} loading="lazy" fit="contain" />
+          </div>
         )}
+
         {name}
       </ExternalLink>
     ))

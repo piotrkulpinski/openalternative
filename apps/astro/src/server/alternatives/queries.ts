@@ -1,4 +1,4 @@
-import { prisma } from "@openalternative/db"
+import { prisma } from "~/lib/prisma"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import type { inferParserType } from "nuqs/server"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/alternatives/payloads"

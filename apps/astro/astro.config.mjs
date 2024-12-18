@@ -10,7 +10,7 @@ export default defineConfig({
     svg: true,
   },
   compressHTML: true,
-  adapter: cloudflare(),
+  // adapter: cloudflare(),
   env: {
     schema: {
       PUBLIC_SITE_URL: envField.string({ context: "client", access: "public" }),
@@ -29,4 +29,12 @@ export default defineConfig({
     },
   },
   integrations: [react()],
+  vite: {
+    resolve: {
+      alias: {
+        ".prisma/client/default": "../../node_modules/.prisma/client/default.js",
+        ".prisma/client/edge": "../../node_modules/.prisma/client/edge.js",
+      }
+    }
+  }
 })

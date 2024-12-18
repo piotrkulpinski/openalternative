@@ -1,0 +1,53 @@
+---
+import { PostCard } from "~/components/posts/post-card"
+import Grid from "~/components/ui/grid.astro"
+import { Image } from "astro:assets"
+import { Intro, IntroTitle, IntroDescription } from "~/components/ui/intro"
+import { metadataConfig } from "~/config/metadata"
+import Layout from "~/layouts/Layout.astro"
+import { getCollection } from "astro:content"
+
+export const metadata = {
+  title: "Blog",
+  description:
+    "A collection of useful articles for developers and open source enthusiasts. Learn about the latest trends and technologies in the open source community.",
+  openGraph: { ...metadataConfig.openGraph, url: "/blog" },
+  alternates: { ...metadataConfig.alternates, canonical: "/blog" },
+}
+
+const posts = (await getCollection("posts")).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+)
+---
+
+<Layout>
+  <Intro>
+    <IntroTitle>{metadata.title}</IntroTitle>
+    <IntroDescription>{metadata.description}</IntroDescription>
+  </Intro>
+
+  {
+    posts.length ? (
+      <Grid size="lg">
+        {posts.map((post) => (
+          <PostCard post={post}>
+            {post.data.image && (
+              <Image
+                src={post.data.image}
+                alt={post.data.title}
+                class="-m-5 mb-0 w-[calc(100%+2.5rem)]! max-w-none"
+                width={1280}
+                height={720}
+                loading="lazy"
+                fit="cover"
+                layout="responsive"
+              />
+            )}
+          </PostCard>
+        ))}
+      </Grid>
+    ) : (
+      <p>No posts found.</p>
+    )
+  }
+</Layout>

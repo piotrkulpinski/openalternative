@@ -8,6 +8,7 @@ import { siteConfig } from "~/config/site"
 import { findAlternatives } from "~/server/alternatives/queries"
 import { findCategories } from "~/server/categories/queries"
 import { containerVariants } from "~/styles/container"
+import { navLinkVariants } from "~/styles/nav-link"
 import { cx } from "~/utils/cva"
 
 type Props = HTMLAttributes<"div">
@@ -45,12 +46,12 @@ if (!categories?.length && !alternatives?.length) return null
 
         <div class="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
           {alternatives.map((alternative) => (
-            <NavLink href={`/alternatives/${alternative.slug}`}>
-              <CardSimple>
+            <CardSimple class={cx(navLinkVariants())}>
+              <a href={`/alternatives/${alternative.slug}`}>
                 <Fragment slot="title">{alternative.name} Alternatives</Fragment>
                 <Fragment slot="caption">{alternative._count.tools}</Fragment>
-              </CardSimple>
-            </NavLink>
+              </a>
+            </CardSimple>
           ))}
         </div>
       </Stack>
