@@ -1,6 +1,5 @@
 import { slugify } from "@curiousleaf/utils"
 import type { Prisma } from "@openalternative/db/client"
-import { calculateHealthScore, getRepoOwnerAndName } from "@openalternative/github"
 import { githubClient } from "~/services/github"
 
 /**
@@ -10,58 +9,10 @@ import { githubClient } from "~/services/github"
  * @param repository - The repository to fetch the data for.
  * @returns The repository data for the tool.
  */
-export const fetchToolRepositoryData = async (repository: string) => {
-  const repo = getRepoOwnerAndName(repository)
-  const queryResult = await githubClient.queryRepository(repo)
-
-  if (!queryResult) return null
-
-  // Extract and transform the necessary metrics
-  const metrics = {
-    stars: queryResult.stargazerCount,
-    forks: queryResult.forkCount,
-    contributors: queryResult.mentionableUsers.totalCount,
-    watchers: queryResult.watchers.totalCount,
-    createdAt: queryResult.createdAt,
-    pushedAt: queryResult.pushedAt,
-  }
-
-  const score = calculateHealthScore(metrics)
-  const license =
-    !queryResult.licenseInfo || queryResult.licenseInfo.spdxId === "NOASSERTION"
-      ? null
-      : queryResult.licenseInfo.spdxId
-
-  // Prepare topics data
-  const topics = queryResult.repositoryTopics.nodes.map(({ topic }) => ({
-    slug: slugify(topic.name),
-  }))
-
-  // Return the extracted data
-  return {
-    stars: metrics.stars,
-    forks: metrics.forks,
-    pushedAt: metrics.pushedAt,
-    createdAt: metrics.createdAt,
-    score,
-    license,
-    topics,
-  }
-}
-
-/**
- * Fetches the repository data for a tool and returns the data
- * in a format that can be used to update the tool.
- *
- * @param repository - The repository to fetch the data for.
- * @returns The repository data for the tool.
- */
 export const getToolRepositoryData = async (repository: string) => {
-  const repo = await fetchToolRepositoryData(repository)
+  const repo = await githubClient.queryRepository(repository)
 
-  if (!repo) {
-    return null
-  }
+  if (!repo) return null
 
   return {
     stars: repo.stars,
@@ -85,9 +36,9 @@ export const getToolRepositoryData = async (repository: string) => {
 
     // Topics
     topics: {
-      connectOrCreate: repo.topics.map(({ slug }) => ({
-        where: { slug },
-        create: { slug },
+      connectOrCreate: repo.topics.map(slug => ({
+        where: { slug: slugify(slug) },
+        create: { slug: slugify(slug) },
       })),
     },
   } satisfies Prisma.ToolUpdateInput

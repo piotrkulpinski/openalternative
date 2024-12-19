@@ -1,5 +1,5 @@
 import { differenceInDays, differenceInYears } from "date-fns"
-import type { Repository } from "./types"
+import type { Repository, RepositoryData, RepositoryQueryResult } from "./types"
 
 /**
  * Extracts the repository owner and name from a GitHub URL.
@@ -11,7 +11,7 @@ export const getRepoOwnerAndName = (url: string | null): Repository | null => {
   if (!url) return null
 
   const match = url.match(
-    /^(?:(?:https?:\/\/)?github\.com\/)?(?<owner>[^/]+)\/(?<name>[^/]+?)(?:\/|$)/,
+    /^(?:(?:https?:\/\/)?github\.com\/)?(?<owner>[^/]+)\/(?<name>[a-zA-Z0-9._-]+?)(?:[/?#]|$)/,
   )
 
   return match?.groups as Repository | null
@@ -60,4 +60,50 @@ export const calculateHealthScore = ({
   const contributorsScore = contributors * 0.5 * ageFactor
 
   return Math.round(starsScore + forksScore + contributorsScore + watchersScore - lastCommitPenalty)
+}
+
+/**
+ * Prepares the repository data for a tool and returns the data
+ * in a format that can be used to update the tool.
+ *
+ * @param repository - The repository to prepare the data for.
+ * @returns The prepared repository data for the tool.
+ */
+export const prepareRepositoryData = async (
+  repository: RepositoryQueryResult,
+): Promise<RepositoryData> => {
+  const metrics = {
+    stars: repository.stargazerCount,
+    forks: repository.forkCount,
+    contributors: repository.mentionableUsers.totalCount,
+    watchers: repository.watchers.totalCount,
+    createdAt: repository.createdAt,
+    pushedAt: repository.pushedAt,
+  }
+
+  const score = calculateHealthScore(metrics)
+  const license =
+    !repository.licenseInfo || repository.licenseInfo.spdxId === "NOASSERTION"
+      ? null
+      : repository.licenseInfo.spdxId
+
+  // Prepare topics data
+  const topics = repository.repositoryTopics.nodes.map(node => node.topic.name)
+
+  // Return the extracted data
+  return {
+    name: repository.name,
+    description: repository.description,
+    url: repository.url,
+    homepageUrl: repository.homepageUrl,
+    stars: metrics.stars,
+    forks: metrics.forks,
+    contributors: metrics.contributors,
+    watchers: metrics.watchers,
+    pushedAt: metrics.pushedAt,
+    createdAt: metrics.createdAt,
+    score,
+    license,
+    topics,
+  }
 }

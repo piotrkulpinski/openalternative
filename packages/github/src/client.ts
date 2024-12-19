@@ -1,6 +1,7 @@
 import { graphql } from "@octokit/graphql"
 import { repositoryQuery } from "./queries"
-import type { Repository, RepositoryQueryResult } from "./types"
+import type { RepositoryData, RepositoryQueryResult } from "./types"
+import { getRepoOwnerAndName, prepareRepositoryData } from "./utils"
 
 export const createGithubClient = (token: string) => {
   const client = graphql.defaults({
@@ -8,17 +9,18 @@ export const createGithubClient = (token: string) => {
   })
 
   return {
-    async queryRepository(repo: Repository | null) {
+    async queryRepository(repository: string): Promise<RepositoryData | null> {
+      const repo = getRepoOwnerAndName(repository)
+
       if (!repo) return null
 
       try {
-        const response = await client<RepositoryQueryResult>(repositoryQuery, repo)
+        const { repository } = await client<{ repository: RepositoryQueryResult }>(
+          repositoryQuery,
+          repo,
+        )
 
-        if (!response?.repository) {
-          return null
-        }
-
-        return response.repository
+        return prepareRepositoryData(repository)
       } catch (error) {
         console.error(`Failed to fetch repository ${repo.name}:`, error)
         return null

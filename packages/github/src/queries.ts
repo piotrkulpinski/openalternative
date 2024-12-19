@@ -3,6 +3,7 @@ export const repositoryQuery = `
     repository(owner: $owner, name: $name) {
       name
       description
+      url
       homepageUrl
       createdAt
       updatedAt

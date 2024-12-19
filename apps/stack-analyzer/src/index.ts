@@ -28,9 +28,9 @@ api.use("*", async (c, next) => {
 api.post("/analyze", zValidator("json", z.object({ repository: z.string() })), async c => {
   const { repository } = c.req.valid("json")
 
-  const stack = await analyzeRepositoryStack(repository)
+  const result = await analyzeRepositoryStack(repository)
 
-  return c.json(stack)
+  return c.json(result)
 })
 
 app.route("/api", api)

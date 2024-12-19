@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function GitHubStackAnalyzerPage() {
   return (
     <>
-      <Intro alignment="center">
+      <Intro>
         <IntroTitle>{`${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>

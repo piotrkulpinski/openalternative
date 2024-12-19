@@ -1,17 +1,15 @@
-"use client"
-
 import { formatNumber } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict } from "date-fns"
 import { CopyrightIcon, GitForkIcon, HistoryIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { H5 } from "~/components/common/heading"
+import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
 import { Button } from "~/components/web/ui/button"
 import { Insights } from "~/components/web/ui/insights"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
-import { BrandGitHubIcon } from "../common/icons/brand-github"
 
 type RepositoryDetailsProps = ComponentProps<"div"> & {
   tool: ToolOne

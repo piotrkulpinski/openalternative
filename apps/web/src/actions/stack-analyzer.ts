@@ -1,13 +1,14 @@
 "use server"
 
 import { prisma } from "@openalternative/db"
-import type { AllowedKeys } from "@specfy/stack-analyser"
 import { headers } from "next/headers"
 import { createServerAction } from "zsa"
-import { analyzerApi } from "~/lib/apis"
+import { isProd } from "~/env"
+import { type AnalyzerAPIResult, analyzerApi } from "~/lib/apis"
 import { isRateLimited } from "~/lib/rate-limiter"
 import { stackAnalyzerSchema } from "~/server/schemas"
 import { stackManyPayload } from "~/server/web/stacks/payloads"
+import { toolOnePayload } from "~/server/web/tools/payloads"
 import { redis } from "~/services/redis"
 
 /**
@@ -31,10 +32,10 @@ const getIP = async () => {
  * @param repoUrl - The repository URL
  * @returns The cached analysis or null if there's an error
  */
-const getCachedAnalysis = async (repoUrl: string): Promise<AllowedKeys[] | null> => {
+const getCachedAnalysis = async (repoUrl: string): Promise<AnalyzerAPIResult | null> => {
   try {
     const key = `analysis:${repoUrl}`
-    const cached = await redis.get<AllowedKeys[]>(key)
+    const cached = await redis.get<AnalyzerAPIResult>(key)
     return cached
   } catch (error) {
     console.error("Cache get error:", error)
@@ -47,7 +48,9 @@ const getCachedAnalysis = async (repoUrl: string): Promise<AllowedKeys[] | null>
  * @param repoUrl - The repository URL
  * @param data - The analysis data
  */
-const cacheAnalysis = async (repoUrl: string, data: AllowedKeys[]): Promise<void> => {
+const cacheAnalysis = async (repoUrl: string, data: AnalyzerAPIResult): Promise<void> => {
+  if (!isProd) return
+
   try {
     const key = `analysis:${repoUrl}`
     await redis.set(key, data, { ex: 60 * 60 * 24 * 30 }) // Cache for 30 days
@@ -67,8 +70,8 @@ export const analyzeStack = createServerAction()
         throw new Error("Too many requests. Please try again in a minute.")
       }
 
-      // Get tech stack keys from cache or API
-      const techKeys =
+      // Get tech analysis from cache or API
+      const analysis =
         (await getCachedAnalysis(input.repository)) ??
         (await analyzerApi
           .url("/analyze")
@@ -79,15 +82,29 @@ export const analyzeStack = createServerAction()
           }))
 
       // Return empty array if no tech keys found
-      if (!techKeys?.length) {
-        return []
+      if (!analysis) {
+        return
       }
 
+      const [stacks, tool] = await Promise.all([
+        prisma.stack.findMany({
+          where: { slug: { in: analysis.stack } },
+          orderBy: [{ tools: { _count: "desc" } }, { name: "asc" }],
+          select: stackManyPayload,
+        }),
+
+        prisma.tool.findUnique({
+          where: { repository: analysis.repository.url },
+          select: toolOnePayload,
+        }),
+      ])
+
       // Get stack details from database
-      return await prisma.stack.findMany({
-        where: { slug: { in: techKeys } },
-        select: stackManyPayload,
-      })
+      return {
+        stacks,
+        tool,
+        repository: analysis.repository,
+      }
     } catch (error) {
       console.error("Stack analysis error:", error)
       throw new Error("Stack analysis error. Please try again later.")
