@@ -31,12 +31,12 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
     <footer className="flex flex-col gap-y-8 mt-auto pt-8 border-t border-foreground/10 md:pt-10 lg:pt-12">
       <div
         className={cx(
-          "grid grid-cols-3 gap-y-8 gap-x-4 md:gap-x-6 md:grid-cols-[repeat(16,minmax(0,1fr))]",
+          "grid grid-cols-3 gap-y-8 gap-x-4 md:gap-x-6 md:grid-cols-[repeat(12,minmax(0,1fr))]",
           className,
         )}
         {...props}
       >
-        <div className="flex flex-col items-start gap-4 col-span-full md:col-span-6">
+        <div className="flex flex-col items-start gap-4 col-span-full md:col-span-4">
           {hideNewsletter ? (
             <Stack direction="column" className="text-sm/normal">
               <Stack size="sm" className="group/link" asChild>
@@ -137,7 +137,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           </Stack>
         </div>
 
-        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3 md:col-start-8">
+        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-2">
           <H6 as="strong">Browse:</H6>
 
           <NavigationLink href="/alternatives">Alternatives</NavigationLink>
@@ -147,7 +147,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           <NavigationLink href="/licenses">Licenses</NavigationLink>
         </Stack>
 
-        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
+        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-2">
           <H6 as="strong">Quick Links:</H6>
 
           <NavigationLink href="/advertise">Advertise with Us</NavigationLink>
@@ -156,7 +156,14 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           <NavigationLink href="/blog">Blog</NavigationLink>
         </Stack>
 
-        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
+        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-2">
+          <H6 as="strong">Tools:</H6>
+
+          <NavigationLink href="/tools/github-stack-analyzer">Tech Stack Analyzer</NavigationLink>
+          <NavigationLink href="/tools/stack-analyzer">Repo Health Check</NavigationLink>
+        </Stack>
+
+        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-2">
           <H6 as="strong">Other Products:</H6>
 
           {config.links.family.map(({ href, title, description }) => (

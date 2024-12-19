@@ -9,7 +9,10 @@ export type SelectProps = Omit<ComponentProps<"select">, "size"> &
 export const Select = ({ className, size, ...props }: SelectProps) => {
   return (
     <Box hover focus>
-      <select className={cx(inputVariants({ size, className }))} {...props} />
+      <select
+        className={cx("field-sizing-content", inputVariants({ size, className }))}
+        {...props}
+      />
     </Box>
   )
 }
