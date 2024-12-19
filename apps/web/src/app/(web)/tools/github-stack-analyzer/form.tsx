@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "~/components/common/form"
 import { Hint } from "~/components/common/hint"
+import { Stack } from "~/components/common/stack"
 import { StackList } from "~/components/web/stacks/stack-list"
 import { Button } from "~/components/web/ui/button"
 import { Card } from "~/components/web/ui/card"
@@ -49,7 +50,7 @@ export function StackAnalyzerForm() {
 
   return (
     <>
-      <Card hover={false} focus={false}>
+      <Card hover={false} focus={false} className="w-full max-w-2xl mx-auto">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(data => execute(data))}
@@ -59,32 +60,39 @@ export function StackAnalyzerForm() {
               control={form.control}
               name="repository"
               render={({ field }) => (
-                <FormItem className="self-stretch items-center text-center">
-                  <FormLabel>GitHub Repository URL:</FormLabel>
+                <FormItem className="self-stretch">
+                  <Stack className="w-full justify-between">
+                    <FormLabel>GitHub Repository URL:</FormLabel>
+                    <Hint className="text-muted">*Must be a public GitHub repository.</Hint>
+                  </Stack>
+
                   <FormControl>
-                    <Input
-                      size="lg"
-                      placeholder="https://github.com/username/repository"
-                      disabled={isPending}
-                      className="w-full text-center"
-                      {...field}
-                    />
+                    <Stack size="sm" className="w-full">
+                      <Input
+                        size="lg"
+                        placeholder="https://github.com/owner/name"
+                        disabled={isPending}
+                        className="flex-1"
+                        data-1p-ignore
+                        {...field}
+                      />
+
+                      <Button type="submit" size="lg" disabled={isPending}>
+                        {isPending ? "Analyzing..." : "Analyze Repository"}
+                      </Button>
+                    </Stack>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button type="submit" disabled={isPending}>
-              {isPending ? "Analyzing..." : "Analyze Repository"}
-            </Button>
-
             {error && <Hint className="col-span-full">{error.message}</Hint>}
           </form>
         </Form>
       </Card>
 
-      {stack.length > 0 && <StackList stacks={stack} />}
+      {stack.length > 0 && <StackList stacks={stack} className="w-full max-w-2xl mx-auto" />}
     </>
   )
 }

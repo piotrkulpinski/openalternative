@@ -45,6 +45,7 @@ export const env = createEnv({
     OPENAI_API_KEY: z.string().min(1),
     ANTHROPIC_API_KEY: z.string().min(1),
     FIRECRAWL_API_KEY: z.string().min(1),
+    STACK_ANALYZER_API_URL: z.string().min(1).url(),
     STACK_ANALYZER_API_KEY: z.string().min(1),
   },
 
