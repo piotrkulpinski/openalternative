@@ -25,7 +25,7 @@ export const analyzeTools = inngest.createFunction(
         const promises = batch.map(async (tool, index) => {
           logger.info(`Processing batch ${Math.floor(i / batchSize) + 1}, tool ${index + 1}`)
 
-          const stack = await analyzerApi.url("/analyze").post(tool)
+          const { stack } = await analyzerApi.url("/analyze").post(tool)
 
           await prisma.tool.update({
             where: { id: tool.id },
