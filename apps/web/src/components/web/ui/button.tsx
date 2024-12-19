@@ -22,7 +22,7 @@ const buttonVariants = cva({
     size: {
       sm: "gap-[0.66ch] py-1 px-2 leading-none",
       md: "gap-[0.75ch] py-1.5 px-3",
-      lg: "gap-[1ch] py-2 px-4 sm:text-sm",
+      lg: "gap-[1ch] py-2.5 px-4 rounded-lg sm:text-sm",
     },
     isAffixOnly: {
       true: "",

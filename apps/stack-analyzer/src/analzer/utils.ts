@@ -1,3 +1,5 @@
+import type { AnalyserJson } from "@specfy/stack-analyser"
+
 export type Repository = {
   owner: string
   name: string
@@ -17,4 +19,15 @@ export const getRepoOwnerAndName = (url: string | null): Repository | null => {
   )
 
   return match?.groups as Repository | null
+}
+
+/**
+ * Extracts the technology stack from a stack analysis JSON object.
+ *
+ * @param json The stack analysis JSON object.
+ * @returns An array of unique technology names.
+ */
+export const getTechStack = async (json: AnalyserJson) => {
+  const techs = json.childs.flatMap(tech => tech.techs)
+  return [...new Set(techs)]
 }

@@ -9,7 +9,13 @@ export type TextAreaProps = Omit<ComponentProps<"textarea">, "size"> &
 export const TextArea = ({ className, size, ...props }: TextAreaProps) => {
   return (
     <Box focus>
-      <textarea className={cx("leading-normal!", inputVariants({ size, className }))} {...props} />
+      <textarea
+        className={cx(
+          "leading-normal! resize-none field-sizing-content",
+          inputVariants({ size, className }),
+        )}
+        {...props}
+      />
     </Box>
   )
 }

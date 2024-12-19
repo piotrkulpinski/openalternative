@@ -1,5 +1,6 @@
 import { ToolStatus } from "@openalternative/db/client"
 import * as z from "zod"
+import { repositorySchema } from "~/server/schemas"
 
 export const searchParamsSchema = z.object({
   name: z.string().optional(),
@@ -23,14 +24,7 @@ export const toolSchema = z.object({
   name: z.string().min(1, "Name is required"),
   slug: z.string().optional(),
   website: z.string().min(1, "Website is required").url(),
-  repository: z
-    .string()
-    .min(1, "Repository is required")
-    .url("Invalid URL")
-    .refine(
-      url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
-      "The repository must be a valid GitHub URL with owner and repo name.",
-    ),
+  repository: repositorySchema,
   tagline: z.string().optional(),
   description: z.string().optional(),
   content: z.string().optional(),

@@ -1,162 +1,48 @@
 import { slugify } from "@curiousleaf/utils"
-import type { Prisma, Tool } from "@openalternative/db/client"
-import { differenceInDays, differenceInYears } from "date-fns"
-import type { Jsonify } from "inngest/helpers/jsonify"
-import { firstCommitQuery, githubClient, repositoryQuery } from "~/services/github"
-import type { FirstCommitQueryResult, RepositoryQueryResult } from "~/types/github"
-
-type Repository = {
-  owner: string
-  name: string
-}
+import type { Prisma } from "@openalternative/db/client"
+import { calculateHealthScore, getRepoOwnerAndName } from "@openalternative/github"
+import { githubClient } from "~/services/github"
 
 /**
- * Extracts the repository owner and name from a GitHub URL.
+ * Fetches the repository data for a tool and returns the data
+ * in a format that can be used to update the tool.
  *
- * @param url The GitHub URL from which to extract the owner and name.
- * @returns An object containing the repository owner and name, or null if the URL is invalid.
+ * @param repository - The repository to fetch the data for.
+ * @returns The repository data for the tool.
  */
-export const getRepoOwnerAndName = (url: string | null): Repository | null => {
-  const regex = /github\.com\/(?<owner>[^/]+)\/(?<name>[^/]+)(\/|$)/
-  const match = url?.match(regex)
-
-  if (match?.groups?.name) {
-    return match.groups as Repository
-  }
-
-  return null
-}
-
-type GetToolScoreProps = {
-  stars: number
-  forks: number
-  contributors: number
-  watchers: number
-  lastCommitDate: Date | null
-  firstCommitDate: Date
-}
-
-/**
- * Calculates a score for a tool based on its GitHub statistics.
- *
- * @param stars - The number of stars the tool has on GitHub.
- * @param forks - The number of forks the tool has on GitHub.
- * @param contributors - The number of contributors to the tool's repository.
- * @param watchers - The number of watchers the tool has on GitHub.
- * @param firstCommitDate - The date of the first commit to the tool's repository.
- * @param lastCommitDate - The date of the last commit to the tool's repository.
- * @param createdAt - The date the repository was created.
- * @returns The calculated score for the tool.
- */
-const calculateHealthScore = ({
-  stars,
-  forks,
-  contributors,
-  watchers,
-  firstCommitDate,
-  lastCommitDate,
-}: GetToolScoreProps) => {
-  const daysSinceLastCommit = lastCommitDate ? differenceInDays(new Date(), lastCommitDate) : 0
-  const lastCommitPenalty = Math.min(daysSinceLastCommit, 90) * 0.5
-
-  // Calculate repository age in years
-  const ageInYears = differenceInYears(new Date(), firstCommitDate)
-
-  // This factor will be between 0.5 (for very old repos) and 1 (for new repos)
-  const ageFactor = 0.5 + 0.5 / (1 + ageInYears / 5)
-
-  const starsScore = stars * 0.25 * ageFactor
-  const forksScore = forks * 0.25 * ageFactor
-  const watchersScore = watchers * 0.25 * ageFactor
-  const contributorsScore = contributors * 0.5 * ageFactor
-
-  return Math.round(starsScore + forksScore + contributorsScore + watchersScore - lastCommitPenalty)
-}
-
-const queryRepository = async (repo: Repository) => {
-  try {
-    const response = await githubClient<RepositoryQueryResult>(repositoryQuery, repo)
-
-    if (!response?.repository) {
-      return null
-    }
-
-    return response.repository
-  } catch (error) {
-    console.error(`Failed to fetch repository ${repo.name}: ${error}`)
-  }
-}
-
-const queryFirstCommit = async (repo: Repository, after: string) => {
-  try {
-    const response = await githubClient<FirstCommitQueryResult>(firstCommitQuery, {
-      ...repo,
-      after,
-    })
-
-    return response.repository.defaultBranchRef.target.history.nodes[0]?.committedDate
-  } catch {}
-}
-
-export const fetchToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
-  const repo = getRepoOwnerAndName(tool.repository)
-  let firstCommitDate = null
-
-  if (!repo) return null
-
-  const queryResult = await queryRepository(repo)
+export const fetchToolRepositoryData = async (repository: string) => {
+  const repo = getRepoOwnerAndName(repository)
+  const queryResult = await githubClient.queryRepository(repo)
 
   if (!queryResult) return null
 
-  const {
-    stargazerCount,
-    forkCount,
-    mentionableUsers,
-    watchers,
-    licenseInfo,
-    repositoryTopics,
-    defaultBranchRef,
-  } = queryResult
-
-  const lastCommit = defaultBranchRef.target.history
-
-  if (tool.firstCommitDate) {
-    firstCommitDate = new Date(tool.firstCommitDate)
-  } else {
-    const totalCommits = lastCommit.totalCount
-    const startCursor = lastCommit.pageInfo.startCursor
-    const after = startCursor.replace(/\b0+\b/g, (totalCommits - 2).toString())
-    firstCommitDate = new Date((await queryFirstCommit(repo, after)) || "1970-01-01")
-  }
-
-  const lastCommitDate = new Date(lastCommit.nodes[0]?.committedDate || "1970-01-01")
-
   // Extract and transform the necessary metrics
   const metrics = {
-    stars: stargazerCount,
-    forks: forkCount,
-    contributors: mentionableUsers.totalCount,
-    watchers: watchers.totalCount,
-    firstCommitDate,
-    lastCommitDate,
+    stars: queryResult.stargazerCount,
+    forks: queryResult.forkCount,
+    contributors: queryResult.mentionableUsers.totalCount,
+    watchers: queryResult.watchers.totalCount,
+    createdAt: queryResult.createdAt,
+    pushedAt: queryResult.pushedAt,
   }
 
   const score = calculateHealthScore(metrics)
-  const stars = metrics.stars
-  const forks = metrics.forks
-  const license = !licenseInfo || licenseInfo.spdxId === "NOASSERTION" ? null : licenseInfo.spdxId
+  const license =
+    !queryResult.licenseInfo || queryResult.licenseInfo.spdxId === "NOASSERTION"
+      ? null
+      : queryResult.licenseInfo.spdxId
 
   // Prepare topics data
-  const topics = repositoryTopics.nodes.map(({ topic }) => ({
+  const topics = queryResult.repositoryTopics.nodes.map(({ topic }) => ({
     slug: slugify(topic.name),
   }))
 
   // Return the extracted data
   return {
-    stars,
-    forks,
-    firstCommitDate,
-    lastCommitDate,
+    stars: metrics.stars,
+    forks: metrics.forks,
+    pushedAt: metrics.pushedAt,
+    createdAt: metrics.createdAt,
     score,
     license,
     topics,
@@ -167,33 +53,31 @@ export const fetchToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
  * Fetches the repository data for a tool and returns the data
  * in a format that can be used to update the tool.
  *
- * @param tool - The tool to fetch the repository data for.
+ * @param repository - The repository to fetch the data for.
  * @returns The repository data for the tool.
  */
-export const getToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
-  const repo = await fetchToolRepositoryData(tool)
+export const getToolRepositoryData = async (repository: string) => {
+  const repo = await fetchToolRepositoryData(repository)
 
   if (!repo) {
     return null
   }
 
-  const { stars, forks, firstCommitDate, lastCommitDate, score, license, topics } = repo
-
   return {
-    stars,
-    forks,
-    score,
-    firstCommitDate,
-    lastCommitDate,
+    stars: repo.stars,
+    forks: repo.forks,
+    score: repo.score,
+    firstCommitDate: repo.createdAt,
+    lastCommitDate: repo.pushedAt,
 
     // License
-    license: license
+    license: repo.license
       ? ({
           connectOrCreate: {
-            where: { name: license },
+            where: { name: repo.license },
             create: {
-              name: license,
-              slug: slugify(license).replace(/-0$/, ""),
+              name: repo.license,
+              slug: slugify(repo.license).replace(/-0$/, ""),
             },
           },
         } satisfies Prisma.ToolUpdateInput["license"])
@@ -201,7 +85,7 @@ export const getToolRepositoryData = async (tool: Tool | Jsonify<Tool>) => {
 
     // Topics
     topics: {
-      connectOrCreate: topics.map(({ slug }) => ({
+      connectOrCreate: repo.topics.map(({ slug }) => ({
         where: { slug },
         create: { slug },
       })),

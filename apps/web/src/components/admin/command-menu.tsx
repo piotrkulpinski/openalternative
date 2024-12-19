@@ -5,7 +5,7 @@ import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { testSocialPosts } from "~/actions/misc"
+import { fetchRepository, testSocialPosts } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -55,8 +55,8 @@ export const CommandMenu = () => {
     const performSearch = async () => {
       if (searchQuery.length > 1) {
         setIsSearching(true)
-        const results = await searchItems(searchQuery)
-        setSearchResults(results)
+        const results = await searchItems({ query: searchQuery })
+        results && setSearchResults(results[0])
         setIsSearching(false)
       } else {
         setSearchResults(null)
@@ -78,8 +78,14 @@ export const CommandMenu = () => {
   }
 
   const handleSendSocialPost = async () => {
-    await testSocialPosts()
+    await testSocialPosts({ slug: "dub" })
     toast.success("Social post sent")
+  }
+
+  const handleFetchRepository = async () => {
+    const result = await fetchRepository({ repository: "https://github.com/dubinc/dub" })
+    toast.success("Repository fetched")
+    console.log(result)
   }
 
   const handleSelect = (url: string) => {
@@ -122,6 +128,7 @@ export const CommandMenu = () => {
 
         <CommandGroup heading="Quick Commands">
           <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
+          <CommandItem onSelect={handleFetchRepository}>Fetch Repository</CommandItem>
         </CommandGroup>
 
         {!!searchResults?.tools.length && (
