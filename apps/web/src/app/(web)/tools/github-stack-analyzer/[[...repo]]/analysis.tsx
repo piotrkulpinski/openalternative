@@ -89,9 +89,9 @@ export const StackAnalysis = ({ analysis }: StackAnalysisProps) => {
         </SectionContent>
 
         <SectionSidebar>
-          <Card hover={false} focus={false} className="items-stretch">
+          <Card hover={false} focus={false} className="items-stretch bg-transparent">
             <Stack direction="column">
-              <H5 as="strong">Repository details</H5>
+              <H5 as="strong">Repository details:</H5>
 
               {analysis.repository.description && (
                 <p className="text-sm text-muted">

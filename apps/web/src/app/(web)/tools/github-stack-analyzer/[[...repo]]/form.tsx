@@ -1,14 +1,12 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import type { RepositoryData } from "@openalternative/github"
+import { useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { analyzeStack } from "~/actions/stack-analyzer"
-import { StackAnalysis } from "~/app/(web)/tools/github-stack-analyzer/analysis"
 import {
   Form,
   FormControl,
@@ -24,15 +22,14 @@ import { Card } from "~/components/web/ui/card"
 import { Input } from "~/components/web/ui/input"
 import { Section, SectionContent } from "~/components/web/ui/section"
 import { type StackAnalyzerSchema, stackAnalyzerSchema } from "~/server/schemas"
-import type { StackMany } from "~/server/web/stacks/payloads"
-import type { ToolOne } from "~/server/web/tools/payloads"
 
 export function StackAnalyzerForm() {
-  const [analysis, setAnalysis] = useState<{
-    stacks: StackMany[]
-    tool: ToolOne | null
-    repository: RepositoryData
-  }>()
+  const router = useRouter()
+  // const [analysis, setAnalysis] = useState<{
+  //   stacks: StackMany[]
+  //   tool: ToolOne | null
+  //   repository: RepositoryData
+  // }>()
 
   const form = useForm<StackAnalyzerSchema>({
     resolver: zodResolver(stackAnalyzerSchema),
@@ -42,16 +39,16 @@ export function StackAnalyzerForm() {
   const { error, execute, isPending } = useServerAction(analyzeStack, {
     onSuccess: ({ data }) => {
       // Capture event
-      posthog.capture("analyze_stack", form.getValues())
-
-      // Reset form
-      form.reset()
+      posthog.capture("analyze_stack", { repository: data })
 
       // Show success toast
       toast.success("Stack analysis complete")
 
       // Show the results in a component below the form
-      setAnalysis(data)
+      router.push(`/tools/github-stack-analyzer/${data}`)
+
+      // Reset form
+      form.reset()
     },
   })
 
@@ -103,7 +100,7 @@ export function StackAnalyzerForm() {
         </SectionContent>
       </Section>
 
-      <StackAnalysis analysis={analysis} />
+      {/* <StackAnalysis analysis={analysis} /> */}
     </>
   )
 }
