@@ -2,13 +2,12 @@ import { formatNumber } from "@curiousleaf/utils"
 import type { Tool } from "@openalternative/db/client"
 import { formatDistanceToNowStrict } from "date-fns"
 import type { Jsonify } from "inngest/helpers/jsonify"
-import wretch from "wretch"
 import { config } from "~/config"
+import { brandLinkApi } from "~/lib/apis"
 import { sendBlueskyPost } from "~/services/bluesky"
 import { sendTwitterPost } from "~/services/twitter"
 
 const socialHandle = "{social handle}"
-export type Socials = Record<string, Array<Record<string, string> & { url: string }>>
 
 /**
  * Fetches social media links for a given URL using the BrandLink API
@@ -16,10 +15,6 @@ export type Socials = Record<string, Array<Record<string, string> & { url: strin
  * @returns Object containing social media handles and URLs, or empty object on error
  */
 export const getSocialsFromUrl = async (url: string) => {
-  const brandLinkApi = wretch("https://brandlink.piotr-f64.workers.dev/api")
-    .errorType("json")
-    .resolve(r => r.json<Socials>())
-
   try {
     return await brandLinkApi.get(`/links?url=${url}`)
   } catch (error) {
