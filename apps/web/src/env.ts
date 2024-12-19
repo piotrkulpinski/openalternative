@@ -22,6 +22,8 @@ export const env = createEnv({
     AUTH_ALLOWED_EMAILS: z.string().optional(),
     AUTH_GOOGLE_ID: z.string().min(1),
     AUTH_GOOGLE_SECRET: z.string().min(1),
+    UPSTASH_REDIS_REST_URL: z.string().min(1),
+    UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
     S3_BUCKET: z.string().min(1),
     S3_REGION: z.string().min(1),
@@ -43,6 +45,7 @@ export const env = createEnv({
     OPENAI_API_KEY: z.string().min(1),
     ANTHROPIC_API_KEY: z.string().min(1),
     FIRECRAWL_API_KEY: z.string().min(1),
+    STACK_ANALYZER_API_KEY: z.string().min(1),
   },
 
   /**

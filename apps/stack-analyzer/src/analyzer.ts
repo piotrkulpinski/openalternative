@@ -10,8 +10,9 @@ const getRepoInfo = (repository: string) => {
 
   const repoDir = path.join(process.cwd(), ".repositories", repo.owner, repo.name)
   const repoUrl = `${repo.owner}/${repo.name}`
+  const outputFile = path.join(`output-${repo.owner}-${repo.name}.json`)
 
-  return { repoDir, repoUrl }
+  return { repoDir, repoUrl, outputFile }
 }
 
 const cloneRepository = async (repoUrl: string, repoDir: string) => {
@@ -22,14 +23,13 @@ const cloneRepository = async (repoUrl: string, repoDir: string) => {
     console.timeEnd("Clone repository")
   } catch (error) {
     console.error(`Error cloning ${repoUrl}:`, error)
-    throw error
+    throw new Error(`Error cloning ${repoUrl}`)
   }
 }
 
-const analyzeStack = async (repoUrl: string, repoDir: string) => {
+const analyzeStack = async (repoUrl: string, repoDir: string, outputFile: string) => {
   console.time("Analyze stack")
   try {
-    const outputFile = path.join(repoDir, "output.json")
     execFileSync("bun", ["x", "@specfy/stack-analyser", repoDir, "--flat", "-o", outputFile])
     const output = fs.readFileSync(outputFile, "utf-8")
     console.timeEnd("Analyze stack")
@@ -40,10 +40,11 @@ const analyzeStack = async (repoUrl: string, repoDir: string) => {
   }
 }
 
-const cleanupDirectory = async (repoUrl: string, repoDir: string) => {
+const cleanupDirectories = async (repoUrl: string, repoDir: string, outputFile: string) => {
   console.time("Cleanup directory")
   try {
     await fs.remove(repoDir)
+    await fs.remove(outputFile)
     console.timeEnd("Cleanup directory")
   } catch (error) {
     console.error(`Cleanup error for ${repoUrl}:`, error)
@@ -52,15 +53,12 @@ const cleanupDirectory = async (repoUrl: string, repoDir: string) => {
 }
 
 export const processRepository = async (repository: string) => {
-  const { repoDir, repoUrl } = getRepoInfo(repository)
+  const { repoDir, repoUrl, outputFile } = getRepoInfo(repository)
 
   try {
     await cloneRepository(repoUrl, repoDir)
-    return await analyzeStack(repoUrl, repoDir)
-  } catch (error) {
-    console.error(`Error processing ${repoUrl}:`, error)
-    throw error
+    return await analyzeStack(repoUrl, repoDir, outputFile)
   } finally {
-    await cleanupDirectory(repoUrl, repoDir).catch(() => {})
+    await cleanupDirectories(repoUrl, repoDir, outputFile).catch(() => {})
   }
 }

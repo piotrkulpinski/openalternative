@@ -33,5 +33,16 @@ export const newsletterSchema = z.object({
   send_welcome_email: z.boolean().optional(),
 })
 
+export const stackAnalyzerSchema = z.object({
+  repository: z
+    .string()
+    .url("Please enter a valid URL")
+    .regex(
+      /^https:\/\/github\.com\/[^/]+\/[^/]+$/,
+      "Please enter a valid GitHub repository URL (e.g., https://github.com/username/repository)",
+    ),
+})
+
 export type SubmitToolSchema = z.infer<typeof submitToolSchema>
 export type NewsletterSchema = z.infer<typeof newsletterSchema>
+export type StackAnalyzerSchema = z.infer<typeof stackAnalyzerSchema>
