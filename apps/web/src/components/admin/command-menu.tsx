@@ -55,8 +55,8 @@ export const CommandMenu = () => {
     const performSearch = async () => {
       if (searchQuery.length > 1) {
         setIsSearching(true)
-        const results = await searchItems(searchQuery)
-        setSearchResults(results)
+        const results = await searchItems({ query: searchQuery })
+        results && setSearchResults(results[0])
         setIsSearching(false)
       } else {
         setSearchResults(null)
@@ -78,7 +78,7 @@ export const CommandMenu = () => {
   }
 
   const handleSendSocialPost = async () => {
-    await testSocialPosts()
+    await testSocialPosts({ slug: "dub" })
     toast.success("Social post sent")
   }
 
