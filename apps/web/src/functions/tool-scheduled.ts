@@ -47,7 +47,7 @@ export const toolScheduled = inngest.createFunction(
       }),
 
       step.run("fetch-repository-data", async () => {
-        const data = await getToolRepositoryData(tool)
+        const data = await getToolRepositoryData(tool.repository)
 
         if (!data) return
 

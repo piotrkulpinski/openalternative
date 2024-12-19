@@ -8,6 +8,7 @@
   "dependencies": {
     "@hono/zod-validator": "^0.4.2",
     "@openalternative/db": "workspace:*",
+    "@openalternative/github": "workspace:*",
     "@specfy/stack-analyser": "^1.8.5",
     "fs-extra": "^11.2.0",
     "hono": "^4.6.13",

@@ -22,7 +22,7 @@ export const fetchTools = inngest.createFunction(
     await step.run("fetch-repository-data", async () => {
       return Promise.all(
         tools.map(async tool => {
-          const updatedTool = await getToolRepositoryData(tool)
+          const updatedTool = await getToolRepositoryData(tool.repository)
           logger.info(`Updated tool data for ${tool.name}`, { updatedTool })
 
           if (!updatedTool) {

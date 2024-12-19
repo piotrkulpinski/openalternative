@@ -1,17 +1,16 @@
-"use client"
-
 import { formatNumber } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict } from "date-fns"
 import { CopyrightIcon, GitForkIcon, HistoryIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { H5 } from "~/components/common/heading"
+import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
 import { Button } from "~/components/web/ui/button"
+import { Card } from "~/components/web/ui/card"
 import { Insights } from "~/components/web/ui/insights"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
-import { BrandGitHubIcon } from "../common/icons/brand-github"
 
 type RepositoryDetailsProps = ComponentProps<"div"> & {
   tool: ToolOne
@@ -54,7 +53,12 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
   ]
 
   return (
-    <div className={cx("flex flex-col gap-4 rounded-lg border p-5", className)} {...props}>
+    <Card
+      hover={false}
+      focus={false}
+      className={cx("items-stretch bg-transparent", className)}
+      {...props}
+    >
       <Stack direction="column">
         <H5 as="strong">Repository details:</H5>
         <Insights insights={insights} className="text-sm" />
@@ -85,6 +89,6 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
         </strong>
         .
       </p>
-    </div>
+    </Card>
   )
 }

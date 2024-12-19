@@ -1,18 +1,20 @@
+import { getRepoOwnerAndName } from "@openalternative/github"
 import { z } from "zod"
 import { config } from "~/config"
+
+export const repositorySchema = z
+  .string()
+  .min(1, "Repository is required")
+  .trim()
+  .regex(
+    /^(?:(?:https?:\/\/)?github\.com\/)?(?<owner>[^/]+)\/(?<name>[a-zA-Z0-9._-]+?)(?:[/?#]|$)/,
+    "Please enter a valid GitHub repository (e.g. https://github.com/owner/name)",
+  )
 
 export const submitToolSchema = z.object({
   name: z.string().min(1, "Name is required"),
   website: z.string().min(1, "Website is required").url("Invalid URL").trim(),
-  repository: z
-    .string()
-    .min(1, "Repository is required")
-    .url("Invalid URL")
-    .trim()
-    .refine(
-      url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
-      "The repository must be a valid GitHub URL with owner and repo name.",
-    ),
+  repository: repositorySchema,
   submitterName: z.string().min(1, "Your name is required"),
   submitterEmail: z
     .string()
@@ -33,5 +35,18 @@ export const newsletterSchema = z.object({
   send_welcome_email: z.boolean().optional(),
 })
 
+export const stackAnalyzerSchema = z.object({
+  repository: repositorySchema.transform(url => {
+    const repo = getRepoOwnerAndName(url)
+
+    if (!repo) {
+      throw new Error("Invalid repository")
+    }
+
+    return `${repo.owner}/${repo.name}`
+  }),
+})
+
 export type SubmitToolSchema = z.infer<typeof submitToolSchema>
 export type NewsletterSchema = z.infer<typeof newsletterSchema>
+export type StackAnalyzerSchema = z.infer<typeof stackAnalyzerSchema>

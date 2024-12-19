@@ -53,7 +53,7 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
   return (
     <div
       className={cx(
-        "flex flex-col divide-y divide-foreground/10 overflow-clip border-y border-foreground/10",
+        "w-full flex flex-col divide-y divide-foreground/10 overflow-clip border-y border-foreground/10",
         className,
       )}
       {...props}
