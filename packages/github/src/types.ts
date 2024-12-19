@@ -5,6 +5,7 @@ export type Repository = {
 
 export type RepositoryData = {
   name: string
+  nameWithOwner: string
   description?: string
   url: string
   homepageUrl?: string
@@ -21,6 +22,7 @@ export type RepositoryData = {
 
 export type RepositoryQueryResult = {
   name: string
+  nameWithOwner: string
   description?: string
   url: string
   homepageUrl?: string

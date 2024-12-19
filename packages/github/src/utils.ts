@@ -93,6 +93,7 @@ export const prepareRepositoryData = async (
   // Return the extracted data
   return {
     name: repository.name,
+    nameWithOwner: repository.nameWithOwner,
     description: repository.description,
     url: repository.url,
     homepageUrl: repository.homepageUrl,

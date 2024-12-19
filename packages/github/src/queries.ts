@@ -2,6 +2,7 @@ export const repositoryQuery = `
   query($owner: String!, $name: String!) {
     repository(owner: $owner, name: $name) {
       name
+      nameWithOwner
       description
       url
       homepageUrl

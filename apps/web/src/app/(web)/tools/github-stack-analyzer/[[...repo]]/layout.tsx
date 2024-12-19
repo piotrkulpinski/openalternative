@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import type { PropsWithChildren } from "react"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import { StackAnalyzerForm } from "./form"
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { ...metadataConfig.alternates, canonical: "/tools/github-stack-analyzer" },
 }
 
-export default function GitHubStackAnalyzerPage() {
+export default function StackAnalyzerLayout({ children }: PropsWithChildren) {
   return (
     <>
       <Intro>
@@ -20,6 +21,8 @@ export default function GitHubStackAnalyzerPage() {
       </Intro>
 
       <StackAnalyzerForm />
+
+      {children}
     </>
   )
 }
