@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import { H4 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { NavigationLink } from "~/components/web/ui/navigation-link"
+import { Prose } from "~/components/web/ui/prose"
 import { metadataConfig } from "~/config/metadata"
 import { getCachedAnalyses, getCachedAnalysis } from "~/lib/stack-analysis"
 import { stackManyPayload } from "~/server/web/stacks/payloads"
@@ -62,15 +63,17 @@ export default async function StackAnalyzerPage({ params }: PageProps) {
     <Stack direction="column">
       <H4>Recently analyzed repositories:</H4>
 
-      {analyses.map(({ repository }) => {
-        return (
-          <Stack key={repository.nameWithOwner}>
-            <NavigationLink href={`${url}/${repository.nameWithOwner}`}>
-              {repository.nameWithOwner}
-            </NavigationLink>
-          </Stack>
-        )
-      })}
+      <Prose className="text-lg">
+        <ul>
+          {analyses.map(({ repository }) => (
+            <li key={repository.nameWithOwner}>
+              <NavigationLink href={`${url}/${repository.nameWithOwner}`}>
+                {repository.nameWithOwner}
+              </NavigationLink>
+            </li>
+          ))}
+        </ul>
+      </Prose>
     </Stack>
   )
 }
