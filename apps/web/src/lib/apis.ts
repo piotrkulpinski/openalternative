@@ -2,7 +2,7 @@ import type { AllowedKeys } from "@specfy/stack-analyser"
 import wretch from "wretch"
 import { env } from "~/env"
 
-export const analyzerApi = wretch("http://localhost:3001/api")
+export const analyzerApi = wretch(env.STACK_ANALYZER_API_URL)
   .headers({ "X-API-Key": env.STACK_ANALYZER_API_KEY })
   .errorType("json")
   .resolve(r => r.json<AllowedKeys[]>())

@@ -1,12 +1,14 @@
 "use server"
 
 import { prisma } from "@openalternative/db"
+import type { AllowedKeys } from "@specfy/stack-analyser"
 import { headers } from "next/headers"
 import { createServerAction } from "zsa"
 import { analyzerApi } from "~/lib/apis"
-import { cacheAnalysis, getCachedAnalysis, isRateLimited } from "~/lib/rate-limiter"
+import { isRateLimited } from "~/lib/rate-limiter"
 import { stackAnalyzerSchema } from "~/server/schemas"
 import { stackManyPayload } from "~/server/web/stacks/payloads"
+import { redis } from "~/services/redis"
 
 /**
  * Get the IP address of the client
@@ -22,6 +24,36 @@ const getIP = async () => {
   }
 
   return headersList.get("x-real-ip") ?? FALLBACK_IP_ADDRESS
+}
+
+/**
+ * Get the cached analysis from Redis
+ * @param repoUrl - The repository URL
+ * @returns The cached analysis or null if there's an error
+ */
+const getCachedAnalysis = async (repoUrl: string): Promise<AllowedKeys[] | null> => {
+  try {
+    const key = `analysis:${repoUrl}`
+    const cached = await redis.get<AllowedKeys[]>(key)
+    return cached
+  } catch (error) {
+    console.error("Cache get error:", error)
+    return null
+  }
+}
+
+/**
+ * Cache the analysis in Redis
+ * @param repoUrl - The repository URL
+ * @param data - The analysis data
+ */
+const cacheAnalysis = async (repoUrl: string, data: AllowedKeys[]): Promise<void> => {
+  try {
+    const key = `analysis:${repoUrl}`
+    await redis.set(key, data, { ex: 60 * 60 * 24 * 30 }) // Cache for 30 days
+  } catch (error) {
+    console.error("Cache set error:", error)
+  }
 }
 
 export const analyzeStack = createServerAction()

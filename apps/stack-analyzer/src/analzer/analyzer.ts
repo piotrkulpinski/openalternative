@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process"
 import path from "node:path"
 import type { AnalyserJson } from "@specfy/stack-analyser"
 import fs from "fs-extra"
-import { getRepoOwnerAndName } from "./utils"
+import { getRepoOwnerAndName, getTechStack } from "./utils"
 
 const getRepoInfo = (repository: string) => {
   const repo = getRepoOwnerAndName(repository)
@@ -52,12 +52,13 @@ const cleanupDirectories = async (repoUrl: string, repoDir: string, outputFile: 
   }
 }
 
-export const processRepository = async (repository: string) => {
+export const analyzeRepositoryStack = async (repository: string) => {
   const { repoDir, repoUrl, outputFile } = getRepoInfo(repository)
 
   try {
     await cloneRepository(repoUrl, repoDir)
-    return await analyzeStack(repoUrl, repoDir, outputFile)
+    const result = await analyzeStack(repoUrl, repoDir, outputFile)
+    return await getTechStack(result)
   } finally {
     await cleanupDirectories(repoUrl, repoDir, outputFile).catch(() => {})
   }

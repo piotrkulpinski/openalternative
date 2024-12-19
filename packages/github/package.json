@@ -1,0 +1,17 @@
+{
+  "name": "@openalternative/github",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./index.ts",
+    "./client": "./client.ts"
+  },
+  "dependencies": {
+    "@octokit/graphql": "^8.1.1",
+    "date-fns": "^4.1.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "5.7.2"
+  }
+}

@@ -1,19 +1,24 @@
 import { zValidator } from "@hono/zod-validator"
 import { Hono } from "hono"
+import { showRoutes } from "hono/dev"
+import { logger } from "hono/logger"
 import { z } from "zod"
-import { processRepository } from "./analyzer"
-import { getTechStack } from "./utils"
+import { analyzeRepositoryStack } from "./analzer/analyzer"
+import { env } from "./env"
+
+const { NODE_ENV, PORT, API_KEY } = env()
 
 const app = new Hono()
 const api = new Hono()
 
+app.use("/*", logger())
 app.get("/", c => c.text("OpenAlternative Stack Analyzer API"))
 
 // Auth middleware
 api.use("*", async (c, next) => {
   const apiKey = c.req.header("X-API-Key")
 
-  if (!apiKey || apiKey !== process.env.API_KEY) {
+  if (!apiKey || apiKey !== API_KEY) {
     return c.json({ error: "Unauthorized" }, 401)
   }
 
@@ -23,15 +28,17 @@ api.use("*", async (c, next) => {
 api.post("/analyze", zValidator("json", z.object({ repository: z.string() })), async c => {
   const { repository } = c.req.valid("json")
 
-  const result = await processRepository(repository)
-  const stack = await getTechStack(result)
+  const stack = await analyzeRepositoryStack(repository)
 
   return c.json(stack)
 })
 
 app.route("/api", api)
 
-export default {
-  port: 3001,
-  fetch: app.fetch,
+if (NODE_ENV === "development") {
+  showRoutes(app, { verbose: true, colorize: true })
 }
+
+const server = { port: PORT, fetch: app.fetch }
+
+export default server
