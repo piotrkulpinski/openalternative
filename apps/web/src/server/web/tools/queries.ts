@@ -31,6 +31,8 @@ export const searchTools = cache(
         OR: [
           { name: { contains: q, mode: "insensitive" } },
           { description: { contains: q, mode: "insensitive" } },
+          { alternatives: { some: { name: { contains: q, mode: "insensitive" } } } },
+          { categories: { some: { name: { contains: q, mode: "insensitive" } } } },
         ],
       }),
     }
