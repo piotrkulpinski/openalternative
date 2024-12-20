@@ -21,8 +21,8 @@ const getRepoInfo = (repository: string) => {
 const cloneRepository = async (repo: string, repoDir: string) => {
   try {
     fs.ensureDirSync(repoDir)
-    // execFileSync("bun", ["x", "tiged", `${repo}`, repoDir, "--disable-cache", "-f"])
-    execFileSync("bun", ["x", "degit", `${repo}`, repoDir, "--disable-cache", "-f"])
+    // execFileSync("bun", ["x", "tiged", `${repo}`, repoDir, "-f"])
+    execFileSync("bun", ["x", "degit", `${repo}`, repoDir, "-f"])
   } catch (error) {
     console.error(`Error cloning ${repo}:`, error)
     throw new Error(`Error cloning ${repo}`)
