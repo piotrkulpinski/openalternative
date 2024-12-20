@@ -1,27 +1,25 @@
 "use server"
 
-import { Ratelimit, type RatelimitConfig } from "@upstash/ratelimit"
+import { Ratelimit } from "@upstash/ratelimit"
 import { headers } from "next/headers"
-import { siteConfig } from "~/config/site"
 import { redis } from "~/services/redis"
-
-const rateLimitConfig: Pick<RatelimitConfig, "redis" | "analytics" | "prefix"> = {
-  redis,
-  analytics: true,
-  prefix: `@${siteConfig.name.toLowerCase()}/ratelimit`,
-}
 
 const limiters = {
   stackAnalysis: new Ratelimit({
-    ...rateLimitConfig,
+    redis,
+    analytics: true,
     limiter: Ratelimit.slidingWindow(10, "12 h"), // 5 attempts per 12 hours
   }),
+
   submission: new Ratelimit({
-    ...rateLimitConfig,
+    redis,
+    analytics: true,
     limiter: Ratelimit.slidingWindow(3, "24 h"), // 3 submissions per day
   }),
+
   newsletter: new Ratelimit({
-    ...rateLimitConfig,
+    redis,
+    analytics: true,
     limiter: Ratelimit.slidingWindow(2, "24 h"), // 2 attempts per day
   }),
 }
@@ -44,13 +42,13 @@ export const getIP = async () => {
 
 /**
  * Check if the user is rate limited
- * @param identifier - The identifier to check
+ * @param id - The identifier to check
  * @param action - The action to check
  * @returns True if the user is rate limited, false otherwise
  */
-export const isRateLimited = async (identifier: string, action: keyof typeof limiters) => {
+export const isRateLimited = async (id: string, action: keyof typeof limiters) => {
   try {
-    const { success } = await limiters[action].limit(identifier)
+    const { success } = await limiters[action].limit(id)
     return !success
   } catch (error) {
     console.error("Rate limiter error:", error)
