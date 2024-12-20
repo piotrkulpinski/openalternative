@@ -4,6 +4,8 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import { StackAnalyzerForm } from "./form"
 
+export const dynamic = "force-static"
+
 export const metadata: Metadata = {
   title: "GitHub Tech Stack Analyzer",
   description:

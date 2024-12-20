@@ -1,5 +1,5 @@
 import { formatNumber, getUrlHostname } from "@curiousleaf/utils"
-import { type RepositoryData, getRepoOwnerAndName } from "@openalternative/github"
+import type { RepositoryData } from "@openalternative/github"
 import { formatDistanceToNowStrict } from "date-fns"
 import {
   ArrowUpRightIcon,
@@ -34,8 +34,6 @@ type StackAnalysisProps = {
 
 export const StackAnalysis = ({ analysis }: StackAnalysisProps) => {
   if (!analysis) return null
-
-  const repo = getRepoOwnerAndName(analysis.repository.url)
 
   const insights = [
     {
@@ -76,10 +74,7 @@ export const StackAnalysis = ({ analysis }: StackAnalysisProps) => {
     <Stack direction="column" className="gap-y-6">
       <Prose>
         <h4>
-          Tech Stack of{" "}
-          <code>
-            {repo?.owner}/{repo?.name}
-          </code>
+          Tech Stack of <code>{analysis.repository.nameWithOwner}</code>
         </h4>
       </Prose>
 

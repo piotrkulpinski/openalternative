@@ -1,21 +1,19 @@
 import { execFileSync } from "node:child_process"
 import path from "node:path"
-import { createGithubClient, getRepoOwnerAndName } from "@openalternative/github"
+import { createGithubClient, getRepositoryString } from "@openalternative/github"
 import type { AnalyserJson } from "@specfy/stack-analyser"
 import fs from "fs-extra"
-import { env } from "../env"
+import { env } from "./env"
 
 const { GITHUB_TOKEN } = env()
 
-const getRepoInfo = (repository: string) => {
-  const repo = getRepoOwnerAndName(repository)
-  if (!repo) throw new Error("Invalid repository")
+const getRepoInfo = (url: string) => {
+  const repo = getRepositoryString(url)
 
-  const repoDir = path.join(process.cwd(), ".repositories", repo.owner, repo.name)
-  const repoName = `${repo.owner}/${repo.name}`
-  const outputFile = path.join(`output-${repo.owner}-${repo.name}.json`)
+  const repoDir = path.join(process.cwd(), ".repositories", repo)
+  const outputFile = path.join(`output-${repo.replace("/", "-")}.json`)
 
-  return { repoDir, repoName, outputFile }
+  return { repo, repoDir, outputFile }
 }
 
 const cloneRepository = async (repo: string, repoDir: string) => {
@@ -50,17 +48,23 @@ const cleanupDirectories = async (repo: string, repoDir: string, outputFile: str
   }
 }
 
-export const analyzeRepositoryStack = async (repo: string) => {
-  const { repoDir, repoName, outputFile } = getRepoInfo(repo)
+export const analyzeRepositoryStack = async (url: string) => {
+  const { repo, repoDir, outputFile } = getRepoInfo(url)
   const githubClient = createGithubClient(GITHUB_TOKEN)
 
   try {
-    await cloneRepository(repoName, repoDir)
-    const result = await analyzeStack(repoName, repoDir, outputFile)
-    const repository = await githubClient.queryRepository(repo)
+    await cloneRepository(repo, repoDir)
 
-    return { stack: [...new Set(result.childs.flatMap(tech => tech.techs))], repository }
+    const [{ childs }, repository] = await Promise.all([
+      // Get analysis
+      analyzeStack(repo, repoDir, outputFile),
+
+      // Get repository
+      githubClient.queryRepository(repo),
+    ])
+
+    return { stack: [...new Set(childs.flatMap(({ techs }) => techs))], repository }
   } finally {
-    await cleanupDirectories(repoName, repoDir, outputFile).catch(() => {})
+    await cleanupDirectories(repo, repoDir, outputFile).catch(() => {})
   }
 }

@@ -1,4 +1,4 @@
-import { getRepoOwnerAndName } from "@openalternative/github"
+import { getRepositoryString } from "@openalternative/github"
 import { z } from "zod"
 import { config } from "~/config"
 
@@ -36,15 +36,7 @@ export const newsletterSchema = z.object({
 })
 
 export const stackAnalyzerSchema = z.object({
-  repository: repositorySchema.transform(url => {
-    const repo = getRepoOwnerAndName(url)
-
-    if (!repo) {
-      throw new Error("Invalid repository")
-    }
-
-    return `${repo.owner}/${repo.name}`
-  }),
+  repository: repositorySchema.transform(getRepositoryString),
 })
 
 export type SubmitToolSchema = z.infer<typeof submitToolSchema>

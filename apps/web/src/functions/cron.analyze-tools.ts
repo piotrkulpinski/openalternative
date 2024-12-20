@@ -1,7 +1,7 @@
 import { prisma } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import { revalidateTag } from "next/cache"
-import { analyzerApi } from "~/lib/apis"
+import { analyzeRepositoryStack } from "~/lib/stack-analysis"
 import { inngest } from "~/services/inngest"
 
 export const analyzeTools = inngest.createFunction(
@@ -25,9 +25,11 @@ export const analyzeTools = inngest.createFunction(
         const promises = batch.map(async (tool, index) => {
           logger.info(`Processing batch ${Math.floor(i / batchSize) + 1}, tool ${index + 1}`)
 
-          const { stack } = await analyzerApi.url("/analyze").post(tool)
+          // Get analysis and cache it
+          const { stack } = await analyzeRepositoryStack(tool.repository)
 
-          await prisma.tool.update({
+          // Update tool with new stack
+          return await prisma.tool.update({
             where: { id: tool.id },
             data: { stacks: { set: stack.map(slug => ({ slug })) } },
           })

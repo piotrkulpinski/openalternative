@@ -12,7 +12,7 @@ import { useServerAction } from "zsa-react"
 import { ToolScheduleDialog } from "~/app/admin/tools/_components/tool-schedule-dialog"
 import { ToolsDeleteDialog } from "~/app/admin/tools/_components/tools-delete-dialog"
 import { Button } from "~/components/admin/ui/button"
-import { reuploadToolAssets } from "~/server/admin/tools/actions"
+import { analyzeToolStack, reuploadToolAssets } from "~/server/admin/tools/actions"
 
 import {
   DropdownMenu,
@@ -35,6 +35,16 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
   const { execute: reuploadAssetsAction } = useServerAction(reuploadToolAssets, {
     onSuccess: () => {
       toast.success("Tool assets reuploaded")
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
+
+  const { execute: analyzeToolStackAction } = useServerAction(analyzeToolStack, {
+    onSuccess: () => {
+      toast.success("Tool stack analyzed")
     },
 
     onError: ({ err }) => {
@@ -97,6 +107,10 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           <DropdownMenuItem onSelect={() => reuploadAssetsAction({ id: tool.id })}>
             Reupload Assets
+          </DropdownMenuItem>
+
+          <DropdownMenuItem onSelect={() => analyzeToolStackAction({ id: tool.id })}>
+            Analyze Stack
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />

@@ -3,7 +3,7 @@ import { Hono } from "hono"
 import { showRoutes } from "hono/dev"
 import { logger } from "hono/logger"
 import { z } from "zod"
-import { analyzeRepositoryStack } from "./analzer/analyzer"
+import { analyzeRepositoryStack } from "./analyzer"
 import { env } from "./env"
 
 const { NODE_ENV, PORT, API_KEY } = env()

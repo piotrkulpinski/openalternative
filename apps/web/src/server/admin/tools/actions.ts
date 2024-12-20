@@ -7,6 +7,7 @@ import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { authedProcedure } from "~/lib/safe-actions"
+import { analyzeRepositoryStack } from "~/lib/stack-analysis"
 import { toolSchema } from "~/server/admin/tools/validations"
 import { inngest } from "~/services/inngest"
 
@@ -129,4 +130,23 @@ export const reuploadToolAssets = authedProcedure
     revalidateTag(`tool-${tool.slug}`)
 
     return true
+  })
+
+export const analyzeToolStack = authedProcedure
+  .createServerAction()
+  .input(z.object({ id: z.string() }))
+  .handler(async ({ input: { id } }) => {
+    const tool = await prisma.tool.findUniqueOrThrow({ where: { id } })
+
+    // Get analysis and cache it
+    const { stack, repository } = await analyzeRepositoryStack(tool.repository)
+
+    console.log(stack)
+    console.log(repository)
+
+    // Update tool with new stack
+    return await prisma.tool.update({
+      where: { id: tool.id },
+      data: { stacks: { set: stack.map(slug => ({ slug })) } },
+    })
   })

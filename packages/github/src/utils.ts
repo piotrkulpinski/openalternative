@@ -7,14 +7,24 @@ import type { Repository, RepositoryData, RepositoryQueryResult } from "./types"
  * @param url The GitHub URL from which to extract the owner and name.
  * @returns An object containing the repository owner and name, or null if the URL is invalid.
  */
-export const getRepoOwnerAndName = (url: string | null): Repository | null => {
-  if (!url) return null
-
+export const getRepository = (url: string): Repository => {
   const match = url.match(
     /^(?:(?:https?:\/\/)?github\.com\/)?(?<owner>[^/]+)\/(?<name>[a-zA-Z0-9._-]+?)(?:[/?#]|$)/,
   )
 
-  return match?.groups as Repository | null
+  return match?.groups as Repository
+}
+
+/**
+ * Returns the repository owner and name as a string.
+ *
+ * @param url The GitHub URL from which to extract the owner and name.
+ * @returns The repository owner and name as a string.
+ */
+export const getRepositoryString = (url: string) => {
+  const { owner, name } = getRepository(url)
+
+  return `${owner}/${name}`
 }
 
 type GetToolScoreProps = {

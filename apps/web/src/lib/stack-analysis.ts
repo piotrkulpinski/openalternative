@@ -1,6 +1,7 @@
 import { isTruthy } from "@curiousleaf/utils"
+import { getRepositoryString } from "@openalternative/github"
 import { headers } from "next/headers"
-import type { AnalyzerAPIResult } from "~/lib/apis"
+import { type AnalyzerAPIResult, analyzerApi } from "~/lib/apis"
 import { redis } from "~/services/redis"
 
 const ANALYSIS_PREFIX = "analysis:"
@@ -84,4 +85,22 @@ export const cacheAnalysis = async (repoUrl: string, data: AnalyzerAPIResult): P
   } catch (error) {
     console.error("Cache set error:", error)
   }
+}
+
+/**
+ * Analyze the stack of a repository by its URL
+ * @param url - The repository URL
+ * @returns The analysis
+ */
+export const analyzeRepositoryStack = async (url: string) => {
+  const repository = getRepositoryString(url)
+
+  // Get analysis
+  const analysis = await analyzerApi.url("/analyze").post({ repository })
+
+  // Cache analysis
+  await cacheAnalysis(repository, analysis)
+
+  // Return analysis
+  return analysis
 }
