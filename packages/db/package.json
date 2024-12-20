@@ -12,16 +12,12 @@
     "db:reset": "prisma migrate reset"
   },
   "dependencies": {
-    "@prisma/client": "^6.0.1"
+    "@prisma/client": "^6.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "prisma": "^6.0.1",
+    "prisma": "^6.1.0",
     "typescript": "5.7.2"
   },
-  "trustedDependencies": [
-    "@prisma/client",
-    "@prisma/engines",
-    "prisma"
-  ]
+  "trustedDependencies": ["@prisma/client", "@prisma/engines", "prisma"]
 }
