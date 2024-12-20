@@ -68,7 +68,7 @@ export function StackAnalyzerForm() {
                   render={({ field }) => (
                     <FormItem>
                       <Stack className="w-full justify-between">
-                        <FormLabel>GitHub Repository URL:</FormLabel>
+                        <FormLabel>GitHub Repository URL*:</FormLabel>
                         <Hint className="text-muted/50">*Must be a public GitHub repository.</Hint>
                       </Stack>
 

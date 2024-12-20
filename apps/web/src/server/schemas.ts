@@ -1,4 +1,4 @@
-import { getRepositoryString } from "@openalternative/github"
+import { getRepositoryString, githubRegex } from "@openalternative/github"
 import { z } from "zod"
 import { config } from "~/config"
 
@@ -6,10 +6,8 @@ export const repositorySchema = z
   .string()
   .min(1, "Repository is required")
   .trim()
-  .regex(
-    /^(?:(?:https?:\/\/)?github\.com\/)?(?<owner>[^/]+)\/(?<name>[a-zA-Z0-9._-]+?)(?:[/?#]|$)/,
-    "Please enter a valid GitHub repository (e.g. https://github.com/owner/name)",
-  )
+  .toLowerCase()
+  .regex(githubRegex, "Please enter a valid GitHub repository (e.g. https://github.com/owner/name)")
 
 export const submitToolSchema = z.object({
   name: z.string().min(1, "Name is required"),

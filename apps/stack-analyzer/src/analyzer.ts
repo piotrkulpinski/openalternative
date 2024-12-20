@@ -17,6 +17,8 @@ const getRepoInfo = (url: string) => {
 }
 
 const cloneRepository = async (repo: string, repoDir: string) => {
+  console.time("Cloning repository")
+
   try {
     fs.ensureDirSync(repoDir)
     // execFileSync("bun", ["x", "tiged", `${repo}`, repoDir, "-f"])
@@ -24,10 +26,14 @@ const cloneRepository = async (repo: string, repoDir: string) => {
   } catch (error) {
     console.error(`Error cloning ${repo}:`, error)
     throw new Error(`Error cloning ${repo}`)
+  } finally {
+    console.timeEnd("Cloning repository")
   }
 }
 
 const analyzeStack = async (repo: string, repoDir: string, outputFile: string) => {
+  console.time("Analyzing stack")
+
   try {
     execFileSync("bun", ["x", "@specfy/stack-analyser", repoDir, "--flat", "-o", outputFile])
     const output = fs.readFileSync(outputFile, "utf-8")
@@ -35,16 +41,22 @@ const analyzeStack = async (repo: string, repoDir: string, outputFile: string) =
   } catch (error) {
     console.error(`Error analyzing stack for ${repo}:`, error)
     throw error
+  } finally {
+    console.timeEnd("Analyzing stack")
   }
 }
 
 const cleanupDirectories = async (repo: string, repoDir: string, outputFile: string) => {
+  console.time("Cleaning up directories")
+
   try {
     await fs.remove(repoDir)
     await fs.remove(outputFile)
   } catch (error) {
     console.error(`Cleanup error for ${repo}:`, error)
     throw error
+  } finally {
+    console.timeEnd("Cleaning up directories")
   }
 }
 

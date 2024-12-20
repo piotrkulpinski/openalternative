@@ -1,6 +1,9 @@
 import { differenceInDays, differenceInYears } from "date-fns"
 import type { Repository, RepositoryData, RepositoryQueryResult } from "./types"
 
+export const githubRegex =
+  /^(?:(?:https?:\/\/)?github\.com\/)?(?<owner>[^/]+)\/(?<name>[a-zA-Z0-9._-]+?)(?:[/?#]|$)/
+
 /**
  * Extracts the repository owner and name from a GitHub URL.
  *
@@ -8,9 +11,7 @@ import type { Repository, RepositoryData, RepositoryQueryResult } from "./types"
  * @returns An object containing the repository owner and name, or null if the URL is invalid.
  */
 export const getRepository = (url: string): Repository => {
-  const match = url.match(
-    /^(?:(?:https?:\/\/)?github\.com\/)?(?<owner>[^/]+)\/(?<name>[a-zA-Z0-9._-]+?)(?:[/?#]|$)/,
-  )
+  const match = url.toLowerCase().match(githubRegex)
 
   return match?.groups as Repository
 }
@@ -102,8 +103,8 @@ export const prepareRepositoryData = async (
 
   // Return the extracted data
   return {
-    name: repository.name,
-    nameWithOwner: repository.nameWithOwner,
+    name: repository.name.toLowerCase(),
+    nameWithOwner: repository.nameWithOwner.toLowerCase(),
     description: repository.description,
     url: repository.url,
     homepageUrl: repository.homepageUrl,

@@ -50,6 +50,10 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
     ).sort(([a], [b]) => stackTypeOrder.indexOf(a) - stackTypeOrder.indexOf(b))
   }, [stacks])
 
+  if (!stacks.length) {
+    return <EmptyList>No tech stack found for this project. We're working on it!</EmptyList>
+  }
+
   return (
     <div
       className={cx(
@@ -79,10 +83,6 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
           </div>
         </Fragment>
       ))}
-
-      {!stacks.length && (
-        <EmptyList>No tools found for this project. We're working on it!</EmptyList>
-      )}
     </div>
   )
 }

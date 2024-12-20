@@ -5,7 +5,7 @@ import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { fetchRepository, testSocialPosts } from "~/actions/misc"
+import { testSocialPosts } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -82,12 +82,6 @@ export const CommandMenu = () => {
     toast.success("Social post sent")
   }
 
-  const handleFetchRepository = async () => {
-    const result = await fetchRepository({ repository: "https://github.com/dubinc/dub" })
-    toast.success("Repository fetched")
-    console.log(result)
-  }
-
   const handleSelect = (url: string) => {
     handleOpenChange(false)
     router.push(url)
@@ -128,7 +122,6 @@ export const CommandMenu = () => {
 
         <CommandGroup heading="Quick Commands">
           <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
-          <CommandItem onSelect={handleFetchRepository}>Fetch Repository</CommandItem>
         </CommandGroup>
 
         {!!searchResults?.tools.length && (
