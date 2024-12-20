@@ -14,13 +14,13 @@ export const fetchTools = inngest.createFunction(
 
   async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
-      return prisma.tool.findMany({
+      return await prisma.tool.findMany({
         where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
       })
     })
 
     await step.run("fetch-repository-data", async () => {
-      return Promise.all(
+      return await Promise.all(
         tools.map(async tool => {
           const updatedTool = await getToolRepositoryData(tool.repository)
           logger.info(`Updated tool data for ${tool.name}`, { updatedTool })
@@ -52,13 +52,13 @@ export const fetchTools = inngest.createFunction(
 
       if (tool) {
         const template = await getPostTemplate(tool)
-        return sendSocialPost(template, tool)
+        return await sendSocialPost(template, tool)
       }
     })
 
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
-      return prisma.$disconnect()
+      return await prisma.$disconnect()
     })
 
     // Revalidate cache

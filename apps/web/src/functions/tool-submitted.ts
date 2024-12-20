@@ -8,7 +8,7 @@ export const toolSubmitted = inngest.createFunction(
   { event: "tool.submitted" },
   async ({ event, step }) => {
     const tool = await step.run("fetch-tool", async () => {
-      return prisma.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
+      return await prisma.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
     })
 
     // Wait for 30 minutes for expedited or featured event
@@ -34,7 +34,7 @@ export const toolSubmitted = inngest.createFunction(
         const to = tool.submitterEmail
         const subject = `🙌 Thanks for submitting ${tool.name}!`
 
-        return sendEmails({ to, subject, react: EmailSubmission({ tool, to, subject }) })
+        return await sendEmails({ to, subject, react: EmailSubmission({ tool, to, subject }) })
       })
     }
   },
