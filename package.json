@@ -3,8 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "admin": "bun --cwd apps/admin",
-    "web": "bun --cwd apps/web",
     "build": "turbo build",
     "dev": "turbo dev",
     "start": "turbo start",

@@ -15,7 +15,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/web/ui/dropdown-menu"
-import { Logo } from "~/components/web/ui/logo"
 import { NavigationLink } from "~/components/web/ui/navigation-link"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
 import { config } from "~/config"
@@ -31,37 +30,27 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
     <footer className="flex flex-col gap-y-8 mt-auto pt-8 border-t border-foreground/10 md:pt-10 lg:pt-12">
       <div
         className={cx(
-          "grid grid-cols-3 gap-y-8 gap-x-4 md:gap-x-6 md:grid-cols-[repeat(12,minmax(0,1fr))]",
+          "grid grid-cols-3 gap-y-8 gap-x-4 md:gap-x-6 md:grid-cols-[repeat(16,minmax(0,1fr))]",
           className,
         )}
         {...props}
       >
-        <div className="flex flex-col items-start gap-4 col-span-full md:col-span-4">
-          {hideNewsletter ? (
-            <Stack direction="column" className="text-sm/normal">
-              <Stack size="sm" className="group/link" asChild>
-                <Link href="/" prefetch={false}>
-                  <Logo className="size-5 shrink-0" />
-                  <span className="font-display font-medium text-sm">{config.site.name}</span>
-                </Link>
-              </Stack>
+        <Stack
+          direction="column"
+          className="flex flex-col items-start gap-4 col-span-full md:col-span-6"
+        >
+          <Stack size="lg" direction="column" className="min-w-0 max-w-64">
+            <H5 as="strong" className="px-0.5 font-medium">
+              Subscribe to our newsletter
+            </H5>
 
-              <p className="text-foreground/65 max-w-80">{config.site.description}</p>
-            </Stack>
-          ) : (
-            <Stack size="lg" direction="column" className="min-w-0 max-w-64">
-              <H5 as="strong" className="px-0.5 font-medium">
-                Subscribe to our newsletter
-              </H5>
+            <p className="-mt-2 px-0.5 text-sm text-muted first:mt-0">
+              Join {formatNumber(config.stats.subscribers, "standard")}+ other members and get
+              updates on new open source tools.
+            </p>
 
-              <p className="-mt-2 px-0.5 text-sm text-muted first:mt-0">
-                Join {formatNumber(config.stats.subscribers, "standard")}+ other members and get
-                updates on new open source tools.
-              </p>
-
-              <NewsletterForm medium="footer_form" />
-            </Stack>
-          )}
+            <NewsletterForm medium="footer_form" />
+          </Stack>
 
           <Stack className="text-sm/normal">
             <TooltipProvider delayDuration={500} disableHoverableContent>
@@ -135,9 +124,9 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               </Tooltip>
             </TooltipProvider>
           </Stack>
-        </div>
+        </Stack>
 
-        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-2">
+        <Stack direction="column" className="text-sm/normal md:col-span-3 md:col-start-8">
           <H6 as="strong">Browse:</H6>
 
           <NavigationLink href="/alternatives">Alternatives</NavigationLink>
@@ -147,36 +136,32 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           <NavigationLink href="/licenses">Licenses</NavigationLink>
         </Stack>
 
-        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-2">
+        <Stack direction="column" className="text-sm/normal md:col-span-3">
           <H6 as="strong">Quick Links:</H6>
 
-          <NavigationLink href="/advertise">Advertise with Us</NavigationLink>
-          <NavigationLink href="/submit">Add a Free Listing</NavigationLink>
           <NavigationLink href="/about">About Us</NavigationLink>
           <NavigationLink href="/blog">Blog</NavigationLink>
+          <NavigationLink href="/advertise">Advertise</NavigationLink>
+          <NavigationLink href="/submit">Add a Free Listing</NavigationLink>
+          {/* <NavigationLink href="/tools/github-stack-analyzer">Stack Analyzer</NavigationLink> */}
         </Stack>
 
-        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-2">
-          <H6 as="strong">Tools:</H6>
+        <Stack direction="column" className="text-sm/normal md:col-span-3">
+          <Stack direction="column">
+            <H6 as="strong">Other Products:</H6>
 
-          <NavigationLink href="/tools/github-stack-analyzer">Tech Stack Analyzer</NavigationLink>
-          <NavigationLink href="/tools/stack-analyzer">Repo Health Check</NavigationLink>
-        </Stack>
-
-        <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-2">
-          <H6 as="strong">Other Products:</H6>
-
-          {config.links.family.map(({ href, title, description }) => (
-            <NavigationLink
-              key={href}
-              href={updateUrlWithSearchParams(href, { ref: config.site.name.toLowerCase() })}
-              target="_blank"
-              rel="noreferrer noopener"
-              title={description}
-            >
-              {title}
-            </NavigationLink>
-          ))}
+            {config.links.family.map(({ href, title, description }) => (
+              <NavigationLink
+                key={href}
+                href={updateUrlWithSearchParams(href, { ref: config.site.name.toLowerCase() })}
+                target="_blank"
+                rel="noreferrer noopener"
+                title={description}
+              >
+                {title}
+              </NavigationLink>
+            ))}
+          </Stack>
         </Stack>
       </div>
 
