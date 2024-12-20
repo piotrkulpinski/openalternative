@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     default: config.site.tagline,
   },
   description: config.site.description,
+  icons: {
+    icon: [{ type: "image/svg+xml", url: "/favicon.svg" }],
+  },
   robots: {
     index: true,
     follow: true,
