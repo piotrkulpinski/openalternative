@@ -1,12 +1,9 @@
-import { Ratelimit, type RatelimitConfig } from "@upstash/ratelimit"
-import { Redis } from "@upstash/redis"
-import { siteConfig } from "~/config/site"
-import { env } from "~/env"
+"use server"
 
-const redis = new Redis({
-  url: env.UPSTASH_REDIS_REST_URL,
-  token: env.UPSTASH_REDIS_REST_TOKEN,
-})
+import { Ratelimit, type RatelimitConfig } from "@upstash/ratelimit"
+import { headers } from "next/headers"
+import { siteConfig } from "~/config/site"
+import { redis } from "~/services/redis"
 
 const rateLimitConfig: Pick<RatelimitConfig, "redis" | "analytics" | "prefix"> = {
   redis,
@@ -14,11 +11,10 @@ const rateLimitConfig: Pick<RatelimitConfig, "redis" | "analytics" | "prefix"> =
   prefix: `@${siteConfig.name.toLowerCase()}/ratelimit`,
 }
 
-// Different limiters for different actions
-export const limiters = {
+const limiters = {
   stackAnalysis: new Ratelimit({
     ...rateLimitConfig,
-    limiter: Ratelimit.slidingWindow(5, "60 s"),
+    limiter: Ratelimit.slidingWindow(10, "12 h"), // 5 attempts per 12 hours
   }),
   submission: new Ratelimit({
     ...rateLimitConfig,
@@ -30,6 +26,28 @@ export const limiters = {
   }),
 }
 
+/**
+ * Get the IP address of the client
+ * @returns IP address
+ */
+export const getIP = async () => {
+  const FALLBACK_IP_ADDRESS = "0.0.0.0"
+  const headersList = await headers()
+  const forwardedFor = headersList.get("x-forwarded-for")
+
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0] ?? FALLBACK_IP_ADDRESS
+  }
+
+  return headersList.get("x-real-ip") ?? FALLBACK_IP_ADDRESS
+}
+
+/**
+ * Check if the user is rate limited
+ * @param identifier - The identifier to check
+ * @param action - The action to check
+ * @returns True if the user is rate limited, false otherwise
+ */
 export const isRateLimited = async (identifier: string, action: keyof typeof limiters) => {
   try {
     const { success } = await limiters[action].limit(identifier)

@@ -3,9 +3,9 @@
 import wretch from "wretch"
 import { createServerAction } from "zsa"
 import { env } from "~/env"
-import { isRateLimited } from "~/lib/rate-limiter"
+import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { newsletterSchema } from "~/server/schemas"
-import { getIP, isRealEmail } from "~/utils/helpers"
+import { isRealEmail } from "~/utils/helpers"
 
 /**
  * Subscribe to the newsletter

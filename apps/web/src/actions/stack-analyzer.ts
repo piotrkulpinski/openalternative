@@ -2,10 +2,9 @@
 
 import { createServerAction } from "zsa"
 import { analyzerApi } from "~/lib/apis"
-import { isRateLimited } from "~/lib/rate-limiter"
+import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { cacheAnalysis, getCachedAnalysis } from "~/lib/stack-analysis"
 import { stackAnalyzerSchema } from "~/server/schemas"
-import { getIP } from "~/utils/helpers"
 
 export const analyzeStack = createServerAction()
   .input(stackAnalyzerSchema)

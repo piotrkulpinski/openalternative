@@ -5,10 +5,10 @@ import { prisma } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { createServerAction } from "zsa"
 import { subscribeToNewsletter } from "~/actions/subscribe"
-import { isRateLimited } from "~/lib/rate-limiter"
+import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { submitToolSchema } from "~/server/schemas"
 import { inngest } from "~/services/inngest"
-import { getIP, isRealEmail } from "~/utils/helpers"
+import { isRealEmail } from "~/utils/helpers"
 
 /**
  * Generates a unique slug by adding a numeric suffix if needed
