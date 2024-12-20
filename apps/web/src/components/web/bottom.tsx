@@ -3,7 +3,7 @@ import { H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { CardSimple, CardSimpleCaption, CardSimpleDivider } from "~/components/web/ui/card-simple"
 import { Container } from "~/components/web/ui/container"
-import { NavigationLink } from "~/components/web/ui/navigation-link"
+import { NavLink } from "~/components/web/ui/nav-link"
 import { siteConfig } from "~/config/site"
 import { findAlternatives } from "~/server/web/alternatives/queries"
 import { findCategories } from "~/server/web/categories/queries"
@@ -43,7 +43,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {alternatives.map(alternative => (
                 <CardSimple key={alternative.slug} className="gap-2" asChild>
-                  <NavigationLink href={`/alternatives/${alternative.slug}`}>
+                  <NavLink href={`/alternatives/${alternative.slug}`}>
                     <span className="truncate">{alternative.name} Alternatives</span>
 
                     <CardSimpleDivider />
@@ -51,7 +51,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
                     <CardSimpleCaption className="max-sm:hidden">
                       {alternative._count.tools}
                     </CardSimpleCaption>
-                  </NavigationLink>
+                  </NavLink>
                 </CardSimple>
               ))}
             </div>
@@ -65,7 +65,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {categories.map(category => (
                 <CardSimple key={category.slug} className="gap-2" asChild>
-                  <NavigationLink href={`/categories/${category.slug}`}>
+                  <NavLink href={`/categories/${category.slug}`}>
                     <span className="truncate">{category.label}</span>
 
                     <CardSimpleDivider />
@@ -73,7 +73,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
                     <CardSimpleCaption className="max-sm:hidden">
                       {category._count.tools}
                     </CardSimpleCaption>
-                  </NavigationLink>
+                  </NavLink>
                 </CardSimple>
               ))}
             </div>

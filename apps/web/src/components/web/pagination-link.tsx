@@ -3,7 +3,7 @@
 import { Slot } from "@radix-ui/react-slot"
 import Link from "next/link"
 import type { ComponentProps, ReactNode } from "react"
-import { navigationLinkVariants } from "~/components/web/ui/navigation-link"
+import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const affixVariants = cva({
@@ -11,7 +11,7 @@ const affixVariants = cva({
 })
 
 type PaginationLinkProps = Omit<ComponentProps<"a"> & ComponentProps<typeof Link>, "prefix"> &
-  VariantProps<typeof navigationLinkVariants> & {
+  VariantProps<typeof navLinkVariants> & {
     prefix?: ReactNode
     suffix?: ReactNode
     isDisabled?: boolean
@@ -28,7 +28,7 @@ export const PaginationLink = ({
 }: PaginationLinkProps) => {
   if (isDisabled) {
     return (
-      <span className={cx(navigationLinkVariants({ className: "pointer-events-none opacity-40" }))}>
+      <span className={cx(navLinkVariants({ className: "pointer-events-none opacity-40" }))}>
         <Slot className={affixVariants()}>{prefix}</Slot>
         <span>{children}</span>
         <Slot className={affixVariants()}>{suffix}</Slot>
@@ -40,7 +40,7 @@ export const PaginationLink = ({
     <Link
       className={cx(
         isActive && "bg-card-dark rounded-xs",
-        navigationLinkVariants({ isActive, className }),
+        navLinkVariants({ isActive, className }),
       )}
       {...props}
       prefetch={false}

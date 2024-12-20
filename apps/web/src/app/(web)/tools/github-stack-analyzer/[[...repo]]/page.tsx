@@ -3,7 +3,7 @@ import { ToolStatus } from "@openalternative/db/client"
 import type { Metadata } from "next"
 import { H4 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
-import { NavigationLink } from "~/components/web/ui/navigation-link"
+import { NavLink } from "~/components/web/ui/nav-link"
 import { Prose } from "~/components/web/ui/prose"
 import { metadataConfig } from "~/config/metadata"
 import { getCachedAnalyses, getCachedAnalysis } from "~/lib/stack-analysis"
@@ -67,9 +67,9 @@ export default async function StackAnalyzerPage({ params }: PageProps) {
         <ul>
           {analyses.map(({ repository }) => (
             <li key={repository.nameWithOwner}>
-              <NavigationLink href={`${url}/${repository.nameWithOwner}`}>
+              <NavLink href={`${url}/${repository.nameWithOwner}`}>
                 {repository.nameWithOwner}
-              </NavigationLink>
+              </NavLink>
             </li>
           ))}
         </ul>

@@ -26,7 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/web/ui/dropdown-menu"
 import { Logo } from "~/components/web/ui/logo"
-import { NavigationLink, navigationLinkVariants } from "~/components/web/ui/navigation-link"
+import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
@@ -97,42 +97,42 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
         <nav className="contents max-lg:hidden">
           <DropdownMenu>
-            <DropdownMenuTrigger className={cx(navigationLinkVariants({ className: "gap-1" }))}>
+            <DropdownMenuTrigger className={cx(navLinkVariants({ className: "gap-1" }))}>
               Browse{" "}
               <ChevronDownIcon className="group-data-[state=open]:-rotate-180 duration-200" />
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
-                <NavigationLink href="/?sort=publishedAt.desc">
+                <NavLink href="/?sort=publishedAt.desc">
                   <CalendarDaysIcon className="shrink-0 size-4 opacity-75" /> Latest tools
-                </NavigationLink>
+                </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink href="/categories">
+                <NavLink href="/categories">
                   <GalleryHorizontalEndIcon className="shrink-0 size-4 opacity-75" /> Categories
-                </NavigationLink>
+                </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink href="/stacks">
+                <NavLink href="/stacks">
                   <BlocksIcon className="shrink-0 size-4 opacity-75" /> Tech Stacks
-                </NavigationLink>
+                </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink href="/topics">
+                <NavLink href="/topics">
                   <TagIcon className="shrink-0 size-4 opacity-75" /> Topics
-                </NavigationLink>
+                </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavigationLink href="/licenses">
+                <NavLink href="/licenses">
                   <CopyrightIcon className="shrink-0 size-4 opacity-75" /> Licenses
-                </NavigationLink>
+                </NavLink>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <NavigationLink href="/alternatives">Alternatives</NavigationLink>
-          <NavigationLink href="/advertise">Advertise</NavigationLink>
+          <NavLink href="/alternatives">Alternatives</NavLink>
+          <NavLink href="/advertise">Advertise</NavLink>
         </nav>
 
         <Stack size="sm" className="max-sm:hidden">
@@ -140,32 +140,32 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <SearchForm />
           </Suspense>
 
-          <NavigationLink
+          <NavLink
             href={config.links.bluesky}
             target="_blank"
             rel="nofollow noreferrer"
             title="Follow us on Bluesky"
           >
             <BrandBlueskyIcon className="size-4" />
-          </NavigationLink>
+          </NavLink>
 
-          <NavigationLink
+          <NavLink
             href={config.links.twitter}
             target="_blank"
             rel="nofollow noreferrer"
             title="Follow us on X"
           >
             <BrandXIcon className="size-4" />
-          </NavigationLink>
+          </NavLink>
 
-          <NavigationLink
+          <NavLink
             href={config.links.github}
             target="_blank"
             rel="nofollow noreferrer"
             title="View source code"
           >
             <BrandGitHubIcon className="size-4" />
-          </NavigationLink>
+          </NavLink>
         </Stack>
 
         <Button size="sm" variant="secondary" asChild>
@@ -181,30 +181,30 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none",
         )}
       >
-        <NavigationLink href="/?sort=publishedAt.desc" className="text-base">
+        <NavLink href="/?sort=publishedAt.desc" className="text-base">
           Latest
-        </NavigationLink>
-        <NavigationLink href="/categories" className="text-base">
+        </NavLink>
+        <NavLink href="/categories" className="text-base">
           Categories
-        </NavigationLink>
-        <NavigationLink href="/alternatives" className="text-base">
+        </NavLink>
+        <NavLink href="/alternatives" className="text-base">
           Alternatives
-        </NavigationLink>
-        <NavigationLink href="/stacks" className="text-base">
+        </NavLink>
+        <NavLink href="/stacks" className="text-base">
           Tech Stacks
-        </NavigationLink>
-        <NavigationLink href="/topics" className="text-base">
+        </NavLink>
+        <NavLink href="/topics" className="text-base">
           Topics
-        </NavigationLink>
-        <NavigationLink href="/submit" className="text-base">
+        </NavLink>
+        <NavLink href="/submit" className="text-base">
           Submit
-        </NavigationLink>
-        <NavigationLink href="/advertise" className="text-base">
+        </NavLink>
+        <NavLink href="/advertise" className="text-base">
           Advertise
-        </NavigationLink>
-        <NavigationLink href="/about" className="text-base">
+        </NavLink>
+        <NavLink href="/about" className="text-base">
           About
-        </NavigationLink>
+        </NavLink>
 
         <Suspense fallback={<SearchIcon className="size-4 sm:hidden" />}>
           <SearchForm className="sm:hidden" />

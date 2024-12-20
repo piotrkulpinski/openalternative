@@ -5,7 +5,7 @@ import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"
 import { type HTMLAttributes, useMemo } from "react"
 import { PaginationLink } from "~/components/web/pagination-link"
-import { navigationLinkVariants } from "~/components/web/ui/navigation-link"
+import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { type UsePaginationProps, usePagination } from "~/hooks/use-pagination"
 import { cx } from "~/utils/cva"
 
@@ -58,7 +58,7 @@ export const Pagination = ({
 
         {paginationRange.map((page, index) => (
           <div key={`page-${index}`}>
-            {typeof page === "string" && <span className={navigationLinkVariants()}>{page}</span>}
+            {typeof page === "string" && <span className={navLinkVariants()}>{page}</span>}
 
             {typeof page === "number" && (
               <PaginationLink
