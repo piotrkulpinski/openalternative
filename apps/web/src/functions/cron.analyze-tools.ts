@@ -12,7 +12,7 @@ export const analyzeTools = inngest.createFunction(
     const batchSize = 5
 
     const tools = await step.run("fetch-tools", async () => {
-      return prisma.tool.findMany({
+      return await prisma.tool.findMany({
         where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
         select: { id: true, repository: true },
       })
@@ -39,7 +39,7 @@ export const analyzeTools = inngest.createFunction(
 
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
-      return prisma.$disconnect()
+      return await prisma.$disconnect()
     })
 
     // Revalidate cache

@@ -36,7 +36,7 @@ export const toolScheduled = inngest.createFunction(
       step.run("generate-content", async () => {
         const { categories, alternatives, ...content } = await generateContent(scrapedData)
 
-        return prisma.tool.update({
+        return await prisma.tool.update({
           where: { id: tool.id },
           data: {
             ...content,
@@ -51,7 +51,7 @@ export const toolScheduled = inngest.createFunction(
 
         if (!data) return
 
-        return prisma.tool.update({
+        return await prisma.tool.update({
           where: { id: tool.id },
           data,
         })
@@ -61,7 +61,7 @@ export const toolScheduled = inngest.createFunction(
         const { id, slug, website } = tool
         const faviconUrl = await uploadFavicon(website, `tools/${slug}/favicon`)
 
-        return prisma.tool.update({
+        return await prisma.tool.update({
           where: { id },
           data: { faviconUrl },
         })
@@ -71,7 +71,7 @@ export const toolScheduled = inngest.createFunction(
         const { id, slug, website } = tool
         const screenshotUrl = await uploadScreenshot(website, `tools/${slug}/screenshot`)
 
-        return prisma.tool.update({
+        return await prisma.tool.update({
           where: { id },
           data: { screenshotUrl },
         })
@@ -80,7 +80,7 @@ export const toolScheduled = inngest.createFunction(
 
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
-      return prisma.$disconnect()
+      return await prisma.$disconnect()
     })
 
     // Revalidate cache
@@ -97,7 +97,7 @@ export const toolScheduled = inngest.createFunction(
       const to = tool.submitterEmail
       const subject = `Great news! ${tool.name} is scheduled for publication on ${config.site.name} 🎉`
 
-      return sendEmails({
+      return await sendEmails({
         to,
         subject,
         react: EmailToolScheduled({ to, subject, tool }),

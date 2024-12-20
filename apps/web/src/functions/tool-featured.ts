@@ -10,7 +10,7 @@ export const toolFeatured = inngest.createFunction(
   { event: "tool.featured" },
   async ({ event, step }) => {
     const tool = await step.run("fetch-tool", async () => {
-      return prisma.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
+      return await prisma.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
     })
 
     // Send submission email to user and admin
@@ -37,7 +37,7 @@ export const toolFeatured = inngest.createFunction(
         })
       }
 
-      return sendEmails(emails)
+      return await sendEmails(emails)
     })
   },
 )

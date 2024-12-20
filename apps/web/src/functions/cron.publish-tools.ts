@@ -12,7 +12,7 @@ export const publishTools = inngest.createFunction(
   { cron: "TZ=Europe/Warsaw 5 * * * *" }, // Every hour at minute 5
   async ({ step, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
-      return prisma.tool.findMany({
+      return await prisma.tool.findMany({
         where: {
           status: ToolStatus.Scheduled,
           publishedAt: { lte: new Date() },
@@ -24,20 +24,29 @@ export const publishTools = inngest.createFunction(
       logger.info(`Publishing ${tools.length} tools`, { tools })
 
       for (const tool of tools) {
-        await step.run(`post-on-socials-${tool.slug}`, async () => {
-          const template = getPostLaunchTemplate(tool)
-          return sendSocialPost(template, tool)
-        })
-
         // Update tool status
         await step.run(`update-tool-status-${tool.slug}`, async () => {
-          await prisma.tool.update({
+          const updatedTool = await prisma.tool.update({
             where: { id: tool.id },
             data: { status: ToolStatus.Published },
           })
 
           // Revalidate cache
           revalidateTag(`tool-${tool.slug}`)
+
+          return updatedTool
+        })
+
+        // Revalidate cache
+        await step.run("revalidate-cache", async () => {
+          revalidateTag("tools")
+          revalidateTag("schedule")
+        })
+
+        // Post on socials
+        await step.run(`post-on-socials-${tool.slug}`, async () => {
+          const template = getPostLaunchTemplate(tool)
+          return await sendSocialPost(template, tool)
         })
 
         // Send email
@@ -47,24 +56,18 @@ export const publishTools = inngest.createFunction(
           const to = tool.submitterEmail
           const subject = `${tool.name} has been published on ${config.site.name} 🎉`
 
-          return sendEmails({
+          return await sendEmails({
             to,
             subject,
             react: EmailToolPublished({ tool, to, subject }),
           })
-        })
-
-        // Revalidate cache
-        await step.run("revalidate-cache", async () => {
-          revalidateTag("tools")
-          revalidateTag("schedule")
         })
       }
     }
 
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
-      return prisma.$disconnect()
+      return await prisma.$disconnect()
     })
   },
 )
