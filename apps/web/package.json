@@ -42,6 +42,7 @@
     "@tanstack/react-table": "^8.20.6",
     "@upstash/ratelimit": "^2.0.5",
     "@upstash/redis": "^1.34.3",
+    "@vercel/speed-insights": "^1.1.0",
     "ai": "^4.0.16",
     "cmdk": "^1.0.4",
     "cva": "^1.0.0-beta.1",

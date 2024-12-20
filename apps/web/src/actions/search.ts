@@ -8,6 +8,8 @@ export const searchItems = authedProcedure
   .createServerAction()
   .input(z.object({ query: z.string() }))
   .handler(async ({ input: { query } }) => {
+    const start = performance.now()
+
     const [tools, alternatives, categories, licenses] = await Promise.all([
       prisma.tool.findMany({
         where: { name: { contains: query, mode: "insensitive" } },
@@ -31,10 +33,7 @@ export const searchItems = authedProcedure
       }),
     ])
 
-    return {
-      tools,
-      alternatives,
-      categories,
-      licenses,
-    }
+    console.log(`Search took ${performance.now() - start}ms`)
+
+    return { tools, alternatives, categories, licenses }
   })
