@@ -13,7 +13,7 @@
     "@openalternative/github": "workspace:*",
     "@specfy/stack-analyser": "^1.8.5",
     "fs-extra": "^11.2.0",
-    "hono": "^4.6.13",
+    "hono": "^4.6.14",
     "zod": "^3.24.1"
   },
   "devDependencies": {
