@@ -1,5 +1,6 @@
 import { prisma } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
+import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
 import { config } from "~/config"
 import EmailToolPublished from "~/emails/tool-published"
@@ -46,7 +47,10 @@ export const publishTools = inngest.createFunction(
         // Post on socials
         await step.run(`post-on-socials-${tool.slug}`, async () => {
           const template = getPostLaunchTemplate(tool)
-          return await sendSocialPost(template, tool)
+
+          return await sendSocialPost(template, tool).catch(err => {
+            throw new NonRetriableError(err.message)
+          })
         })
 
         // Send email

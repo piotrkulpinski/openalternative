@@ -1,5 +1,6 @@
 import { prisma } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
+import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
 import { getMilestoneReached } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
@@ -34,7 +35,10 @@ export const fetchTools = inngest.createFunction(
 
             if (milestone) {
               const template = getPostMilestoneTemplate(tool, milestone)
-              await sendSocialPost(template, tool)
+
+              await sendSocialPost(template, tool).catch(err => {
+                throw new NonRetriableError(err.message)
+              })
             }
           }
 
@@ -52,7 +56,10 @@ export const fetchTools = inngest.createFunction(
 
       if (tool) {
         const template = await getPostTemplate(tool)
-        return await sendSocialPost(template, tool)
+
+        return await sendSocialPost(template, tool).catch(err => {
+          throw new NonRetriableError(err.message)
+        })
       }
     })
 
