@@ -11,6 +11,7 @@
     "format": "bun biome format --organize-imports-enabled --write .",
     "typecheck": "turbo typecheck",
     "db:generate": "bun --cwd packages/db db:generate",
+    "db:migrate": "bun --cwd packages/db db:migrate",
     "db:studio": "bun --cwd packages/db db:studio",
     "db:push": "bun --cwd packages/db db:push",
     "db:reset": "bun --cwd packages/db db:reset",
@@ -21,9 +22,6 @@
     "turbo": "^2.3.3",
     "typescript": "^5.7.2"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "packageManager": "bun@1.1.40"
 }

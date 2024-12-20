@@ -1,3 +1,4 @@
+import { performance } from "node:perf_hooks"
 import { prisma } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import type { inferParserType } from "nuqs/server"
@@ -10,6 +11,7 @@ export const searchAlternatives = cache(
     { q, page, sort, perPage }: inferParserType<typeof alternativesSearchParams>,
     { where, ...args }: Prisma.AlternativeFindManyArgs,
   ) => {
+    const start = performance.now()
     // Values to paginate the results
     const skip = (page - 1) * perPage
     const take = perPage
@@ -46,6 +48,8 @@ export const searchAlternatives = cache(
         where: { ...whereQuery, ...where },
       }),
     ])
+
+    console.log("searchTools", performance.now() - start)
 
     return { alternatives, totalCount }
   },

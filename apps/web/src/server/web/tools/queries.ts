@@ -1,3 +1,4 @@
+import { performance } from "node:perf_hooks"
 import { getRandomElement } from "@curiousleaf/utils"
 import { prisma } from "@openalternative/db"
 import { type Prisma, type Tool, ToolStatus } from "@openalternative/db/client"
@@ -15,26 +16,25 @@ export const searchTools = cache(
     { q, category, page, sort, perPage }: inferParserType<typeof toolsSearchParams>,
     { where, ...args }: Prisma.ToolFindManyArgs,
   ) => {
-    // Values to paginate the results
+    const start = performance.now()
     const skip = (page - 1) * perPage
     const take = perPage
-
-    // Column and order to sort by
-    // Spliting the sort string by "." to get the column and order
-    // Example: "title.desc" => ["title", "desc"]
     const [sortBy, sortOrder] = sort.split(".")
 
     const whereQuery: Prisma.ToolWhereInput = {
       status: ToolStatus.Published,
       ...(category && { categories: { some: { slug: category } } }),
-      ...(q && {
-        OR: [
-          { name: { contains: q, mode: "insensitive" } },
-          { description: { contains: q, mode: "insensitive" } },
-          { alternatives: { some: { name: { contains: q, mode: "insensitive" } } } },
-          { categories: { some: { name: { contains: q, mode: "insensitive" } } } },
-        ],
-      }),
+    }
+
+    // Use full-text search when query exists
+    if (q) {
+      const searchQuery: { id: string }[] = await prisma.$queryRaw`
+        SELECT id
+        FROM "Tool", plainto_tsquery('english', ${q}) query
+        WHERE "searchVector" @@ query
+      `
+
+      whereQuery.id = { in: searchQuery.map(r => r.id) }
     }
 
     const [tools, totalCount] = await prisma.$transaction([
@@ -51,6 +51,8 @@ export const searchTools = cache(
         where: { ...whereQuery, ...where },
       }),
     ])
+
+    console.log("searchTools", performance.now() - start)
 
     return { tools, totalCount }
   },
