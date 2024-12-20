@@ -1,27 +1,10 @@
 import { isTruthy } from "@curiousleaf/utils"
 import { getRepositoryString } from "@openalternative/github"
-import { headers } from "next/headers"
 import { type AnalyzerAPIResult, analyzerApi } from "~/lib/apis"
 import { redis } from "~/services/redis"
 
 const ANALYSIS_PREFIX = "analysis:"
 const DEFAULT_LIMIT = 10
-
-/**
- * Get the IP address of the client
- * @returns IP address
- */
-export const getIP = async () => {
-  const FALLBACK_IP_ADDRESS = "0.0.0.0"
-  const headersList = await headers()
-  const forwardedFor = headersList.get("x-forwarded-for")
-
-  if (forwardedFor) {
-    return forwardedFor.split(",")[0] ?? FALLBACK_IP_ADDRESS
-  }
-
-  return headersList.get("x-real-ip") ?? FALLBACK_IP_ADDRESS
-}
 
 /**
  * Get the cached analysis from Redis

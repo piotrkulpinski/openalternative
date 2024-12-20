@@ -1,3 +1,4 @@
+import { headers } from "next/headers"
 import wretch from "wretch"
 
 type Metadata = {
@@ -19,6 +20,22 @@ export const isRealEmail = async (email: string) => {
   const domain = email.split("@")[1]
 
   return !disposableDomains.includes(domain)
+}
+
+/**
+ * Get the IP address of the client
+ * @returns IP address
+ */
+export const getIP = async () => {
+  const FALLBACK_IP_ADDRESS = "0.0.0.0"
+  const headersList = await headers()
+  const forwardedFor = headersList.get("x-forwarded-for")
+
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0] ?? FALLBACK_IP_ADDRESS
+  }
+
+  return headersList.get("x-real-ip") ?? FALLBACK_IP_ADDRESS
 }
 
 /**

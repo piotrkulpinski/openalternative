@@ -3,8 +3,9 @@
 import wretch from "wretch"
 import { createServerAction } from "zsa"
 import { env } from "~/env"
+import { isRateLimited } from "~/lib/rate-limiter"
 import { newsletterSchema } from "~/server/schemas"
-import { isRealEmail } from "~/utils/helpers"
+import { getIP, isRealEmail } from "~/utils/helpers"
 
 /**
  * Subscribe to the newsletter
@@ -14,6 +15,13 @@ import { isRealEmail } from "~/utils/helpers"
 export const subscribeToNewsletter = createServerAction()
   .input(newsletterSchema)
   .handler(async ({ input: json }) => {
+    const ip = await getIP()
+
+    // Rate limiting check
+    if (await isRateLimited(ip, "newsletter")) {
+      throw new Error("Too many attempts. Please try again later.")
+    }
+
     const isValidEmail = await isRealEmail(json.email)
 
     if (!isValidEmail) {

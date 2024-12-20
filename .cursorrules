@@ -1,4 +1,4 @@
-You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI and Tailwind.
+You are an expert in TypeScript, Node.js, Next.js 15 App Router, React, Shadcn UI, Radix UI and Tailwind.
   
 Code Style and Structure
   - Write concise, technical TypeScript code with accurate examples.
@@ -32,9 +32,10 @@ Performance Optimization
   - Optimize images: use WebP format, include size data, implement lazy loading.
 
 Next.js Specifics
-  - Use zsa for all server actions:
+  - Use the new Next.js 15 App Router.
+  - Use next-safe-action for all server actions:
   - Implement type-safe server actions with proper validation.
-  - Utilize the `handler` function from zsa for creating actions.
+  - Utilize the `handler` function from next-safe-action for creating actions.
   - Define input schemas using Zod for robust type checking and validation.
   - Handle errors gracefully and return appropriate responses.
   - Implement consistent error handling and success responses

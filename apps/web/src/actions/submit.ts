@@ -5,9 +5,10 @@ import { prisma } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { createServerAction } from "zsa"
 import { subscribeToNewsletter } from "~/actions/subscribe"
+import { isRateLimited } from "~/lib/rate-limiter"
 import { submitToolSchema } from "~/server/schemas"
 import { inngest } from "~/services/inngest"
-import { isRealEmail } from "~/utils/helpers"
+import { getIP, isRealEmail } from "~/utils/helpers"
 
 /**
  * Generates a unique slug by adding a numeric suffix if needed
@@ -37,6 +38,13 @@ const generateUniqueSlug = async (baseName: string): Promise<string> => {
 export const submitTool = createServerAction()
   .input(submitToolSchema)
   .handler(async ({ input }) => {
+    const ip = await getIP()
+
+    // Rate limiting check
+    if (await isRateLimited(ip, "submission")) {
+      throw new Error("Too many submissions. Please try again later.")
+    }
+
     const { newsletterOptIn, ...data } = input
     const isValidEmail = await isRealEmail(data.submitterEmail)
 

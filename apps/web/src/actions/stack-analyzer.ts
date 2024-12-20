@@ -4,8 +4,8 @@ import { createServerAction } from "zsa"
 import { analyzerApi } from "~/lib/apis"
 import { isRateLimited } from "~/lib/rate-limiter"
 import { cacheAnalysis, getCachedAnalysis } from "~/lib/stack-analysis"
-import { getIP } from "~/lib/stack-analysis"
 import { stackAnalyzerSchema } from "~/server/schemas"
+import { getIP } from "~/utils/helpers"
 
 export const analyzeStack = createServerAction()
   .input(stackAnalyzerSchema)
@@ -14,7 +14,7 @@ export const analyzeStack = createServerAction()
       const ip = await getIP()
 
       // Rate limiting check
-      if (await isRateLimited(ip)) {
+      if (await isRateLimited(ip, "stackAnalysis")) {
         throw new Error("Too many requests. Please try again in a minute.")
       }
 
