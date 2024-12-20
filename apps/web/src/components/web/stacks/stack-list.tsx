@@ -80,7 +80,9 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
         </Fragment>
       ))}
 
-      {!stacks.length && <EmptyList>No stacks found.</EmptyList>}
+      {!stacks.length && (
+        <EmptyList>No tools found for this project. We're working on it!</EmptyList>
+      )}
     </div>
   )
 }

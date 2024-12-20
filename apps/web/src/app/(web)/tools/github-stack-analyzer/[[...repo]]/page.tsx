@@ -11,6 +11,8 @@ import { stackManyPayload } from "~/server/web/stacks/payloads"
 import { toolOnePayload } from "~/server/web/tools/payloads"
 import { StackAnalysis } from "./analysis"
 
+export const revalidate = 0
+
 type PageProps = {
   params: Promise<{ repo?: string[] }>
 }
