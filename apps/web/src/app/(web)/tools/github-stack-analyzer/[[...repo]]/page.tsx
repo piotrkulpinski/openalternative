@@ -3,6 +3,7 @@ import { ToolStatus } from "@openalternative/db/client"
 import type { Metadata } from "next"
 import { H4 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
+import { BackButton } from "~/components/web/ui/back-button"
 import { NavLink } from "~/components/web/ui/nav-link"
 import { Prose } from "~/components/web/ui/prose"
 import { metadataConfig } from "~/config/metadata"
@@ -10,6 +11,9 @@ import { getCachedAnalyses, getCachedAnalysis } from "~/lib/stack-analysis"
 import { stackManyPayload } from "~/server/web/stacks/payloads"
 import { toolOnePayload } from "~/server/web/tools/payloads"
 import { StackAnalysis } from "./analysis"
+
+export const maxDuration = 60
+export const dynamic = "force-static"
 
 type PageProps = {
   params: Promise<{ repo?: string[] }>
@@ -41,15 +45,17 @@ export default async function StackAnalyzerPage({ params }: PageProps) {
         }),
 
         prisma.tool.findFirst({
-          where: {
-            repository: { endsWith: repoName },
-            status: ToolStatus.Published,
-          },
+          where: { repository: { endsWith: repoName }, status: ToolStatus.Published },
           select: toolOnePayload,
         }),
       ])
 
-      return <StackAnalysis analysis={{ stacks, tool, repository: cached.repository }} />
+      return (
+        <>
+          <StackAnalysis analysis={{ stacks, tool, repository: cached.repository }} />
+          <BackButton href={url} />
+        </>
+      )
     }
   }
 
