@@ -146,7 +146,8 @@ export const findToolBySlug = (slug: string, { where, ...args }: Prisma.ToolFind
 
 export const findRandomTool = async () => {
   const tools = await prisma.$queryRaw<Array<Tool>>`
-    SELECT *
+    SELECT "id", "name", "slug", "website", "repository", "tagline", "description", "content", "stars", "forks", "score", 
+           "faviconUrl", "screenshotUrl", "firstCommitDate", "lastCommitDate", "status", "publishedAt", "createdAt", "updatedAt"
     FROM "Tool"
     WHERE status = 'Published'
     GROUP BY id
