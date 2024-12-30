@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   description: config.site.description,
   icons: {
-    icon: [{ type: "image/svg+xml", url: "/favicon.svg" }],
+    icon: [{ type: "image/png", url: "/favicon.png" }],
   },
   robots: {
     index: true,
