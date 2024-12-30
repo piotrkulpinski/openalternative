@@ -41,12 +41,13 @@ export const ToolFilters = ({ categories, placeholder }: ToolFiltersProps) => {
   }, [filters])
 
   const sortOptions = [
-    { value: "publishedAt.desc", label: "Latest" },
-    { value: "name.asc", label: "Name A-Z" },
-    { value: "name.desc", label: "Name Z-A" },
-    { value: "stars.desc", label: "Stars" },
-    { value: "forks.desc", label: "Forks" },
-    { value: "lastCommitDate.desc", label: "Last Commit" },
+    { value: "publishedAt.desc", label: "Recently Added" },
+    { value: "name.asc", label: "Name (A to Z)" },
+    { value: "name.desc", label: "Name (Z to A)" },
+    { value: "stars.desc", label: "Most Stars" },
+    { value: "forks.desc", label: "Most Forks" },
+    { value: "lastCommitDate.desc", label: "Recently Updated" },
+    { value: "firstCommitDate.desc", label: "Newest Projects" },
   ]
 
   return (
