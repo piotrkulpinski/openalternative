@@ -1,11 +1,12 @@
 import { joinAsSentence } from "@curiousleaf/utils"
+import { ToolStatus } from "@openalternative/db/client"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import type { ToolOne } from "~/server/web/tools/payloads"
 
 type Tool = ToolOne | Jsonify<ToolOne>
 
-export const isToolPublished = (tool: Pick<Tool, "publishedAt">) => {
-  return !!tool.publishedAt && tool.publishedAt <= new Date()
+export const isToolPublished = (tool: Pick<Tool, "status">) => {
+  return tool.status === ToolStatus.Published
 }
 
 export const getToolSuffix = (tool: Pick<Tool, "alternatives" | "tagline">) => {
