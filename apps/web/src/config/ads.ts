@@ -12,9 +12,9 @@ export type AdSpot = {
 export const adsConfig = {
   adSpots: [
     {
-      label: "Homepage Ad",
+      label: "Listing Ad",
       type: "Homepage",
-      description: "Visible on the homepage and search",
+      description: "Visible on the every tool listing page",
       price: 15,
       preview: "https://share.cleanshot.com/7CFqSw0b",
     },

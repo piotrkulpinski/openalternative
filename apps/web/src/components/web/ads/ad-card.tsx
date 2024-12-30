@@ -22,7 +22,7 @@ import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 type AdCardProps = CardProps & {
   rel?: string
-  type?: AdType
+  type: AdType
 }
 
 const AdCard = async ({ className, type, ...props }: AdCardProps) => {
