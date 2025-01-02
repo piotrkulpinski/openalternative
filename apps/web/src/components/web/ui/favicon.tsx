@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from "react"
+import { Image } from "~/components/web/ui/image"
 import { cx } from "~/utils/cva"
 
 type FaviconProps = HTMLAttributes<HTMLDivElement> & {
@@ -26,7 +27,7 @@ export const FaviconImage = ({ className, src, title, ...props }: FaviconProps) 
   if (!src) return null
 
   return (
-    <img
+    <Image
       src={src}
       alt={title ? `A favicon of ${title}` : ""}
       loading="lazy"

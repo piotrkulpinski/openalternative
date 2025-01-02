@@ -6,6 +6,7 @@ import { createSearchParamsCache, parseAsBoolean, parseAsString } from "nuqs/ser
 import { Suspense, cache } from "react"
 import { SubmitProducts } from "~/app/(web)/submit/[slug]/products"
 import { PlanSkeleton } from "~/components/web/plan"
+import { Image } from "~/components/web/ui/image"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
@@ -91,7 +92,7 @@ export default async function SubmitPackages(props: PageProps) {
       </Intro>
 
       {success ? (
-        <img
+        <Image
           src={"/3d-heart.webp"}
           alt=""
           className="max-w-64 w-2/3 h-auto mx-auto"

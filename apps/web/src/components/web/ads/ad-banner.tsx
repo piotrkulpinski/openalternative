@@ -4,6 +4,7 @@ import { ExternalLink } from "~/components/web/external-link"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import { Container } from "~/components/web/ui/container"
+import { Image } from "~/components/web/ui/image"
 import { findAd } from "~/server/web/ads/queries"
 import { cx } from "~/utils/cva"
 
@@ -35,7 +36,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
 
           <div className="text-xs leading-tight text-secondary mr-auto md:text-sm">
             {ad.faviconUrl && (
-              <img
+              <Image
                 src={ad.faviconUrl}
                 alt={ad.name}
                 width={32}

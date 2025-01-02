@@ -13,6 +13,7 @@ import {
 import { MDX } from "~/components/web/mdx"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { Author } from "~/components/web/ui/author"
+import { Image } from "~/components/web/ui/image"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
@@ -82,7 +83,7 @@ export default async function BlogPostPage(props: PageProps) {
         <Section>
           <Section.Content>
             {post.image && (
-              <img
+              <Image
                 src={post.image}
                 alt={post.title}
                 className="w-full h-auto aspect-video object-cover rounded-lg"

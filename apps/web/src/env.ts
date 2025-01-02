@@ -60,6 +60,7 @@ export const env = createEnv({
     NEXT_PUBLIC_PLAUSIBLE_HOST: z.string().url().min(1),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().url().min(1),
     NEXT_PUBLIC_POSTHOG_API_KEY: z.string().min(1),
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),
   },
 
   /**
@@ -74,6 +75,7 @@ export const env = createEnv({
     NEXT_PUBLIC_PLAUSIBLE_HOST: process.env.NEXT_PUBLIC_PLAUSIBLE_HOST,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
     NEXT_PUBLIC_POSTHOG_API_KEY: process.env.NEXT_PUBLIC_POSTHOG_API_KEY,
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   },
 
   /**

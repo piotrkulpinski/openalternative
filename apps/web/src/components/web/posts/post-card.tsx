@@ -4,6 +4,7 @@ import Link from "next/link"
 import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
 import { Card, CardDescription, CardFooter, CardHeader } from "~/components/web/ui/card"
+import { Image } from "~/components/web/ui/image"
 
 type PostCardProps = ComponentProps<typeof Card> & {
   post: Post
@@ -14,7 +15,7 @@ export const PostCard = ({ className, post, ...props }: PostCardProps) => {
     <Card className="overflow-clip" asChild {...props}>
       <Link href={`/blog/${post._meta.path}`} prefetch={false}>
         {post.image && (
-          <img
+          <Image
             src={post.image}
             alt=""
             className="-m-5 mb-0 w-[calc(100%+2.5rem)] max-w-none aspect-video object-cover"

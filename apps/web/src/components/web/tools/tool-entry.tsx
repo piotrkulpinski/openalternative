@@ -8,6 +8,7 @@ import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
+import { Image } from "~/components/web/ui/image"
 import type { ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
@@ -56,7 +57,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
 
       {tool.screenshotUrl && (
         <Link href={href} prefetch={false} className="group">
-          <img
+          <Image
             key={tool.screenshotUrl}
             src={tool.screenshotUrl}
             alt={`Screenshot of ${tool.name} website`}

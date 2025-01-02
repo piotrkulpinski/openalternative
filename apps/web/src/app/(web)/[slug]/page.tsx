@@ -21,6 +21,7 @@ import { Badge } from "~/components/web/ui/badge"
 import { BrandLink } from "~/components/web/ui/brand-link"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
+import { Image } from "~/components/web/ui/image"
 import { IntroDescription } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { Tag } from "~/components/web/ui/tag"
@@ -172,7 +173,7 @@ export default async function ToolPage(props: PageProps) {
           </div>
 
           {tool.screenshotUrl && (
-            <img
+            <Image
               key={tool.screenshotUrl}
               src={tool.screenshotUrl}
               alt={`A screenshot of ${tool.name}`}

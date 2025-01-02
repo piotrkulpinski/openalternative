@@ -15,6 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/web/ui/dropdown-menu"
+import { Image } from "~/components/web/ui/image"
 import { NavLink } from "~/components/web/ui/nav-link"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
 import { config } from "~/config"
@@ -156,7 +157,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
+          <Image
             src="/authors/piotrkulpinski.webp"
             alt="Piotr Kulpinski"
             loading="lazy"
