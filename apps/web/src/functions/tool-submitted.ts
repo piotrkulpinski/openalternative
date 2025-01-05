@@ -1,7 +1,28 @@
 import { prisma } from "@openalternative/db"
+import type { createStepTools } from "inngest/components/InngestStepTools"
 import EmailSubmission from "~/emails/submission"
 import { sendEmails } from "~/lib/email"
 import { inngest } from "~/services/inngest"
+import { waitForPremiumSubmission } from "~/utils/functions"
+
+const isPremiumSubmission = async (
+  step: ReturnType<typeof createStepTools<typeof inngest>>,
+  timeout: string,
+) => {
+  return await Promise.all([
+    step.waitForEvent("wait-for-expedited", {
+      event: "tool.expedited",
+      match: "data.slug",
+      timeout,
+    }),
+
+    step.waitForEvent("wait-for-featured", {
+      event: "tool.featured",
+      match: "data.slug",
+      timeout,
+    }),
+  ])
+}
 
 export const toolSubmitted = inngest.createFunction(
   { id: "tool.submitted" },
@@ -12,19 +33,7 @@ export const toolSubmitted = inngest.createFunction(
     })
 
     // Wait for 30 minutes for expedited or featured event
-    const isPremiumSubmission = await Promise.all([
-      step.waitForEvent("wait-for-expedited", {
-        event: "tool.expedited",
-        timeout: "30m",
-        match: "data.slug",
-      }),
-
-      step.waitForEvent("wait-for-featured", {
-        event: "tool.featured",
-        timeout: "30m",
-        match: "data.slug",
-      }),
-    ])
+    const isPremiumSubmission = await waitForPremiumSubmission(step, "30m")
 
     // Send submission email to user if not expedited
     if (!isPremiumSubmission) {

@@ -4,7 +4,6 @@ import { addHours, differenceInDays, format, formatDistanceToNowStrict } from "d
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
-import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 export type EmailToolScheduledProps = EmailWrapperProps & {
@@ -44,8 +43,6 @@ const EmailToolScheduled = ({ tool, ...props }: EmailToolScheduledProps) => {
           {tool?.name} is scheduled to be added <strong>{dateRelative}</strong>.
         </Text>
       )}
-
-      <EmailFeatureNudge tool={tool} showButton={!isLongQueue} />
     </EmailWrapper>
   )
 }

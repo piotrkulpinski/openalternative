@@ -5,7 +5,6 @@ import type { Jsonify } from "inngest/helpers/jsonify"
 import plur from "plur"
 import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
-import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 export type EmailSubmissionProps = EmailWrapperProps & {
@@ -37,8 +36,6 @@ const EmailSubmission = ({ tool, queueDays = 100, ...props }: EmailSubmissionPro
           </EmailButton>
         </>
       )}
-
-      <EmailFeatureNudge tool={tool} />
     </EmailWrapper>
   )
 }

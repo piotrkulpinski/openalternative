@@ -1,6 +1,7 @@
 import { prisma } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { config } from "~/config"
+import EmailToolExpediteReminder from "~/emails/tool-expedite-reminder"
 import EmailToolScheduled from "~/emails/tool-scheduled"
 import { sendEmails } from "~/lib/email"
 import { generateContent } from "~/lib/generate-content"
@@ -8,6 +9,7 @@ import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { firecrawlClient } from "~/services/firecrawl"
 import { inngest } from "~/services/inngest"
+import { waitForPremiumSubmission } from "~/utils/functions"
 
 export const toolScheduled = inngest.createFunction(
   { id: "tool.scheduled", concurrency: { limit: 2 } },
@@ -90,11 +92,15 @@ export const toolScheduled = inngest.createFunction(
       revalidateTag(`tool-${tool.slug}`)
     })
 
-    // Send email
-    await step.run("send-email", async () => {
-      if (!tool.submitterEmail) return
+    // If no submitter email, return early
+    if (!tool.submitterEmail) {
+      return
+    }
 
-      const to = tool.submitterEmail
+    const to = tool.submitterEmail
+
+    // Send initial email
+    await step.run("send-email", async () => {
       const subject = `Great news! ${tool.name} is scheduled for publication on ${config.site.name} 🎉`
 
       return await sendEmails({
@@ -102,6 +108,38 @@ export const toolScheduled = inngest.createFunction(
         subject,
         react: EmailToolScheduled({ to, subject, tool }),
       })
+    })
+
+    // Wait for 1 month and check if tool was expedited
+    const oneMonthResult = await waitForPremiumSubmission(step, "30d")
+
+    // Send first reminder if not expedited
+    await step.run("send-first-reminder", async () => {
+      if (!oneMonthResult) {
+        const subject = `Skip the queue for ${tool.name} on ${config.site.name} 🚀`
+
+        return await sendEmails({
+          to,
+          subject,
+          react: EmailToolExpediteReminder({ to, subject, tool, monthsWaiting: 1 }),
+        })
+      }
+    })
+
+    // Wait for another month and check if tool was expedited
+    const twoMonthResult = await waitForPremiumSubmission(step, "30d")
+
+    // Send second reminder if not expedited
+    await step.run("send-second-reminder", async () => {
+      if (!twoMonthResult) {
+        const subject = `Last chance to expedite ${tool.name} on ${config.site.name} ⚡️`
+
+        return await sendEmails({
+          to,
+          subject,
+          react: EmailToolExpediteReminder({ to, subject, tool, monthsWaiting: 2 }),
+        })
+      }
     })
   },
 )
