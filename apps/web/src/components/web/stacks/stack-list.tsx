@@ -12,6 +12,7 @@ import { cx } from "~/utils/cva"
 
 type StackListProps = ComponentProps<typeof Grid> & {
   stacks: StackMany[]
+  showCount?: boolean
 }
 
 const stackTypeOrder = [
@@ -33,7 +34,7 @@ const stackTypeOrder = [
   StackType.Network,
 ] as const
 
-const StackList = ({ stacks, className, ...props }: StackListProps) => {
+const StackList = ({ stacks, className, showCount = false, ...props }: StackListProps) => {
   const groupedStacks = useMemo(() => {
     return (
       Object.entries(
@@ -77,7 +78,9 @@ const StackList = ({ stacks, className, ...props }: StackListProps) => {
                   href={`/stacks/${stack.slug}`}
                   name={stack.name}
                   faviconUrl={stack.faviconUrl}
-                />
+                >
+                  {showCount && `(${stack._count.tools})`}
+                </BrandLink>
               ))}
             </Stack>
           </div>
