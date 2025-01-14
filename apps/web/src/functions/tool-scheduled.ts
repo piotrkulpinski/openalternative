@@ -9,7 +9,7 @@ import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { firecrawlClient } from "~/services/firecrawl"
 import { inngest } from "~/services/inngest"
-import { waitForPremiumSubmission } from "~/utils/functions"
+import { ensureFreeSubmissions } from "~/utils/functions"
 
 export const toolScheduled = inngest.createFunction(
   { id: "tool.scheduled", concurrency: { limit: 2 } },
@@ -111,11 +111,11 @@ export const toolScheduled = inngest.createFunction(
     })
 
     // Wait for 1 month and check if tool was expedited
-    const oneMonthResult = await waitForPremiumSubmission(step, "30d")
+    const isFreeAfterOneMonth = await ensureFreeSubmissions(step, "30d")
 
     // Send first reminder if not expedited
     await step.run("send-first-reminder", async () => {
-      if (!oneMonthResult) {
+      if (isFreeAfterOneMonth) {
         const subject = `Skip the queue for ${tool.name} on ${config.site.name} 🚀`
 
         return await sendEmails({
@@ -127,11 +127,11 @@ export const toolScheduled = inngest.createFunction(
     })
 
     // Wait for another month and check if tool was expedited
-    const twoMonthResult = await waitForPremiumSubmission(step, "30d")
+    const isFreeAfterTwoMonths = await ensureFreeSubmissions(step, "30d")
 
     // Send second reminder if not expedited
     await step.run("send-second-reminder", async () => {
-      if (!twoMonthResult) {
+      if (isFreeAfterTwoMonths) {
         const subject = `Last chance to expedite ${tool.name} on ${config.site.name} ⚡️`
 
         return await sendEmails({
