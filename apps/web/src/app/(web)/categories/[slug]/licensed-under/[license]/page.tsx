@@ -41,7 +41,7 @@ const getMetadata = (category: CategoryOne, license: LicenseOne): Metadata => {
 
 export const generateMetadata = async (props: PageProps) => {
   const { category, license } = await getCategory(props)
-  const url = `/categories/${category.slug}/using/${license.slug}`
+  const url = `/categories/${category.slug}/licensed-under/${license.slug}`
 
   return {
     ...getMetadata(category, license),
