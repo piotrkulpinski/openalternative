@@ -24,5 +24,5 @@ export const findAd = cache(
     })
   },
   ["ad"],
-  { revalidate: 60 * 60 },
+  { revalidate: 60 },
 )

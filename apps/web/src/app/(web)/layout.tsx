@@ -1,6 +1,7 @@
 import Script from "next/script"
 import { type PropsWithChildren, Suspense } from "react"
 import type { Graph } from "schema-dts"
+import Providers from "~/app/(web)/providers"
 import { AdBanner } from "~/components/web/ads/ad-banner"
 import { Bottom } from "~/components/web/bottom"
 import { Footer } from "~/components/web/footer"
@@ -10,7 +11,6 @@ import { config } from "~/config"
 import { env } from "~/env"
 
 import "./styles.css"
-import Providers from "~/app/(web)/providers"
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const url = config.site.url
