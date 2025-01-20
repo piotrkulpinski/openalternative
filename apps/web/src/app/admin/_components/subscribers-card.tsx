@@ -113,6 +113,7 @@ const getSubscribers = cache(
 
       return { results, totalSubscribers, averageSubscribers }
     } catch (error) {
+      console.error("Subscribers error:", error)
       return { results: [], totalSubscribers: 0, averageSubscribers: 0 }
     }
   },

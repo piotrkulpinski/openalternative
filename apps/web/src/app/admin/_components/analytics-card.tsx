@@ -17,29 +17,34 @@ type AnalyticsResponse = {
 
 const getAnalytics = cache(
   async () => {
-    const host = env.NEXT_PUBLIC_PLAUSIBLE_HOST
-    const apiKey = env.PLAUSIBLE_API_KEY
-    const domain = env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
+    try {
+      const host = env.NEXT_PUBLIC_PLAUSIBLE_HOST
+      const apiKey = env.PLAUSIBLE_API_KEY
+      const domain = env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
 
-    const api = wretch(`${host}/api/v1`)
-      .auth(`Bearer ${apiKey}`)
-      .options({ cache: "no-store" })
-      .errorType("json")
+      const api = wretch(`${host}/api/v1`)
+        .auth(`Bearer ${apiKey}`)
+        .options({ cache: "no-store" })
+        .errorType("json")
 
-    const queryOptions = new URLSearchParams({
-      metrics: "visitors",
-      period: "30d",
-      site_id: domain,
-    })
+      const queryOptions = new URLSearchParams({
+        metrics: "visitors",
+        period: "30d",
+        site_id: domain,
+      })
 
-    const { results } = await api
-      .get(`/stats/timeseries?${queryOptions.toString()}`)
-      .json<AnalyticsResponse>()
+      const { results } = await api
+        .get(`/stats/timeseries?${queryOptions.toString()}`)
+        .json<AnalyticsResponse>()
 
-    const totalVisitors = results.reduce((acc, curr) => acc + curr.visitors, 0)
-    const averageVisitors = Math.round(totalVisitors / results.length)
+      const totalVisitors = results.reduce((acc, curr) => acc + curr.visitors, 0)
+      const averageVisitors = Math.round(totalVisitors / results.length)
 
-    return { results, totalVisitors, averageVisitors }
+      return { results, totalVisitors, averageVisitors }
+    } catch (error) {
+      console.error("Analytics error:", error)
+      return { results: [], totalVisitors: 0, averageVisitors: 0 }
+    }
   },
   ["analytics"],
   { revalidate: 60 * 60 },
