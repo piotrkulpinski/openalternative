@@ -1,6 +1,6 @@
 export const statsConfig = {
-  pageviews: 180000,
-  tools: 300,
+  pageviews: 200000,
+  tools: 330,
   subscribers: 2100,
-  stars: 2500,
+  stars: 2600,
 }

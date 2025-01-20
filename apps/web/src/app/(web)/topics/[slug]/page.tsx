@@ -1,4 +1,4 @@
-import { titleCase } from "@curiousleaf/utils"
+import { sentenceCase } from "change-case"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
@@ -27,7 +27,7 @@ const getTopic = cache(async ({ params }: PageProps) => {
 })
 
 const getMetadata = (topic: TopicOne): Metadata => {
-  const name = titleCase(topic.slug)
+  const name = sentenceCase(topic.slug)
 
   return {
     title: `Open Source Projects tagged "${name}"`,

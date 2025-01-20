@@ -7,26 +7,27 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "~/components/
 import { Skeleton } from "~/components/common/skeleton"
 import { cx } from "~/utils/cva"
 
-export type AnalyticsChartData = {
+export type ChartData = {
   date: string
-  visitors: number
+  value: number
 }
 
-type AnalyticsChartProps = Partial<ComponentProps<typeof ChartContainer>> & {
-  data: AnalyticsChartData[]
+type ChartProps = Partial<ComponentProps<typeof ChartContainer>> & {
+  data: ChartData[]
   average?: number
+  cellClassName?: string
 }
 
-export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsChartProps) => {
+export const Chart = ({ cellClassName, data, average, config, ...props }: ChartProps) => {
   if (data.length === 0) {
     return <Skeleton className="size-full" />
   }
 
   return (
-    <ChartContainer config={{ visitors: { label: "Visitors" }, ...config }} {...props}>
+    <ChartContainer config={{ ...config }} {...props}>
       <BarChart accessibilityLayer margin={{ left: -2, right: -2 }} data={data}>
         <Bar
-          dataKey="visitors"
+          dataKey="value"
           radius={4}
           fillOpacity={0.75}
           activeBar={<Rectangle fillOpacity={1} />}
@@ -34,7 +35,7 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
           {data.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              className={cx("fill-chart-4", index === data.length - 1 && "opacity-50")}
+              className={cx(cellClassName, index === data.length - 1 && "opacity-50")}
             />
           ))}
         </Bar>
@@ -44,15 +45,10 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
           tickLine={false}
           axisLine={false}
           tickMargin={4}
-          tickFormatter={value =>
-            new Date(value).toLocaleDateString("en-US", {
-              weekday: "short",
-            })
-          }
+          tickFormatter={value => new Date(value).toLocaleDateString("en-US", { weekday: "short" })}
         />
 
         <ChartTooltip
-          defaultIndex={2}
           content={
             <ChartTooltipContent hideIndicator labelFormatter={value => formatDate(value)} />
           }
@@ -69,7 +65,7 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
             <Label
               position="insideTopLeft"
               value={average.toLocaleString()}
-              className="text-lg"
+              className="text-base drop-shadow-[1px_1px_0_var(--color-background)]"
               fill="var(--color-foreground)"
               offset={10}
               startOffset={100}

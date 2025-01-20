@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react"
 import wretch from "wretch"
-import { AnalyticsChart, type AnalyticsChartData } from "~/app/admin/_components/analytics-chart"
+import { Chart } from "~/app/admin/_components/chart"
 import {
   Card,
   CardContent,
@@ -10,6 +10,10 @@ import {
 } from "~/components/admin/ui/card"
 import { env } from "~/env"
 import { cache } from "~/lib/cache"
+
+type AnalyticsResponse = {
+  results: { date: string; visitors: number }[]
+}
 
 const getAnalytics = cache(
   async () => {
@@ -30,7 +34,8 @@ const getAnalytics = cache(
 
     const { results } = await api
       .get(`/stats/timeseries?${queryOptions.toString()}`)
-      .json<{ results: AnalyticsChartData[] }>()
+      .json<AnalyticsResponse>()
+
     const totalVisitors = results.reduce((acc, curr) => acc + curr.visitors, 0)
     const averageVisitors = Math.round(totalVisitors / results.length)
 
@@ -51,7 +56,13 @@ const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
       </CardHeader>
 
       <CardContent>
-        <AnalyticsChart data={results} average={averageVisitors} className="h-56 w-full" />
+        <Chart
+          data={results.map(({ date, visitors }) => ({ date, value: visitors }))}
+          average={averageVisitors}
+          className="h-56 w-full"
+          cellClassName="fill-chart-4"
+          config={{ value: { label: "Visitors" } }}
+        />
       </CardContent>
     </Card>
   )

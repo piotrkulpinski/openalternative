@@ -6,6 +6,7 @@ export const linksConfig = {
   bluesky: "https://bsky.app/profile/openalternative.co",
   linkedin: "https://linkedin.com/company/openalternative",
   github: "https://github.com/piotrkulpinski/openalternative",
+  medium: "https://medium.com/openalternative",
   analytics: "https://go.openalternative.co/analytics",
   feeds: [
     { title: "Open Source Tools", url: `${siteConfig.url}/rss/tools.xml` },

@@ -6,6 +6,7 @@ import { H5, H6 } from "~/components/common/heading"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandLinkedInIcon } from "~/components/common/icons/brand-linkedin"
+import { BrandMediumIcon } from "~/components/common/icons/brand-medium"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Stack } from "~/components/common/stack"
 import { NewsletterForm } from "~/components/web/newsletter-form"
@@ -105,6 +106,12 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               <Tooltip tooltip="View source code">
                 <NavLink href={config.links.github} target="_blank" rel="nofollow noreferrer">
                   <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
+                </NavLink>
+              </Tooltip>
+
+              <Tooltip tooltip="Follow us on Medium">
+                <NavLink href={config.links.medium} target="_blank" rel="nofollow noreferrer">
+                  <BrandMediumIcon className="size-[1.44em] stroke-[1.25]" />
                 </NavLink>
               </Tooltip>
             </TooltipProvider>
