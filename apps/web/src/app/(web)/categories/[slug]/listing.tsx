@@ -21,7 +21,7 @@ export const CategoryToolListing = async ({ category, searchParams }: CategoryTo
       tools={tools}
       totalCount={totalCount}
       perPage={parsedParams.perPage}
-      placeholder={`Search in ${category.label?.toLowerCase()}...`}
+      placeholder={`Search in ${totalCount} ${category.label}...`}
     />
   )
 }

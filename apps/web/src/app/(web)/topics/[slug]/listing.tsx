@@ -1,3 +1,4 @@
+import { capitalCase } from "change-case"
 import type { SearchParams } from "nuqs/server"
 import { ToolQuery } from "~/components/web/tools/tool-query"
 import { searchTools } from "~/server/web/tools/queries"
@@ -21,7 +22,7 @@ export const TopicToolListing = async ({ topic, searchParams }: TopicToolListing
       tools={tools}
       totalCount={totalCount}
       perPage={parsedParams.perPage}
-      placeholder={`Search in "${topic.slug}"...`}
+      placeholder={`Search in ${totalCount} ${capitalCase(topic.slug)} tools...`}
     />
   )
 }

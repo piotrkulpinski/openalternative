@@ -21,7 +21,7 @@ export const StackToolListing = async ({ stack, searchParams }: StackToolListing
       tools={tools}
       totalCount={totalCount}
       perPage={parsedParams.perPage}
-      placeholder={`Search in ${stack.name} tools...`}
+      placeholder={`Search in ${totalCount} ${stack.name} tools...`}
     />
   )
 }

@@ -19,7 +19,7 @@ export const SelfHostedToolListing = async ({ searchParams }: SelfHostedToolList
       tools={tools}
       totalCount={totalCount}
       perPage={parsedParams.perPage}
-      placeholder="Search in self-hosted..."
+      placeholder={`Search in ${totalCount} self-hosted tools...`}
     />
   )
 }
