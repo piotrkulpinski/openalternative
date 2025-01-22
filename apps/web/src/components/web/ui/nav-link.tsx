@@ -6,13 +6,12 @@ import type { ComponentProps } from "react"
 import { cva, cx } from "~/utils/cva"
 
 const navLinkVariants = cva({
-  base: [
-    "group flex items-center gap-2 p-0.5 -m-0.5 text-sm cursor-pointer",
-    "text-muted disabled:opacity-50 hover:text-foreground",
-  ],
+  base: "group flex items-center gap-2 p-0.5 -m-0.5 text-sm cursor-pointer disabled:opacity-50",
+
   variants: {
     isActive: {
       true: "font-medium text-foreground",
+      false: "text-muted hover:text-foreground",
     },
   },
 })

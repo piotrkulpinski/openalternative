@@ -7,6 +7,7 @@ import {
   CopyrightIcon,
   GalleryHorizontalEndIcon,
   SearchIcon,
+  ServerIcon,
   TagIcon,
 } from "lucide-react"
 import Link from "next/link"
@@ -111,6 +112,11 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
               <DropdownMenuItem asChild>
                 <NavLink href="/categories">
                   <GalleryHorizontalEndIcon className="shrink-0 size-4 opacity-75" /> Categories
+                </NavLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <NavLink href="/self-hosted">
+                  <ServerIcon className="shrink-0 size-4 opacity-75" /> Self-hosted
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
