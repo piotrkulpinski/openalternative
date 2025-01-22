@@ -1,6 +1,5 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { AtSignIcon, RssIcon } from "lucide-react"
-import Link from "next/link"
 import type { HTMLAttributes } from "react"
 import { H5, H6 } from "~/components/common/heading"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
@@ -66,9 +65,14 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
                 <DropdownMenuContent align="start" side="top">
                   {config.links.feeds.map(({ url, title }) => (
                     <DropdownMenuItem key={url} asChild>
-                      <Link href={url} target="_blank" rel="nofollow noreferrer" prefetch={false}>
+                      <NavLink
+                        href={url}
+                        target="_blank"
+                        rel="nofollow noreferrer"
+                        prefetch={false}
+                      >
                         RSS &raquo; {title}
-                      </Link>
+                      </NavLink>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>

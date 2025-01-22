@@ -3,7 +3,6 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { Check, Circle } from "lucide-react"
 import type { ComponentProps } from "react"
-import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { cx } from "~/utils/cva"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
@@ -38,9 +37,8 @@ const DropdownMenuItem = ({
   return (
     <DropdownMenuPrimitive.Item
       className={cx(
-        "rounded-sm px-2! py-1.5! m-0!",
-        "focus:outline-hidden focus:bg-card-dark focus:text-foreground",
-        navLinkVariants({ className }),
+        "rounded-sm px-2 py-1.5 m-0 focus:outline-hidden focus:bg-card-dark focus:text-foreground",
+        className,
       )}
       {...props}
     />

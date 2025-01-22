@@ -14,6 +14,10 @@ const navLinkVariants = cva({
       false: "text-muted hover:text-foreground",
     },
   },
+
+  defaultVariants: {
+    isActive: false,
+  },
 })
 
 const isItemActive = (href: string | undefined, pathname: string, exact = false) => {
