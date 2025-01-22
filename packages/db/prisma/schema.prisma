@@ -6,7 +6,6 @@ generator client {
 datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
-  directUrl  = env("DATABASE_URL_UNPOOLED")
   extensions = [citext, pg_trgm]
 }
 
@@ -73,6 +72,7 @@ model Tool {
   faviconUrl      String?
   screenshotUrl   String?
   isFeatured      Boolean                  @default(false)
+  isSelfHosted    Boolean                  @default(false)
   submitterName   String?
   submitterEmail  String?
   submitterNote   String?

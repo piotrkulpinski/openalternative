@@ -218,13 +218,48 @@ export function ToolForm({
 
           <FormField
             control={form.control}
+            name="isSelfHosted"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Self-hosted</FormLabel>
+                <FormControl>
+                  <Switch onCheckedChange={field.onChange} checked={field.value} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="flex flex-row gap-4 max-sm:contents">
+          <FormField
+            control={form.control}
+            name="publishedAt"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Published At</FormLabel>
+                <FormControl>
+                  <Input
+                    type="datetime-local"
+                    {...field}
+                    value={field.value ? formatDate(field.value, "yyyy-MM-dd HH:mm") : undefined}
+                    onChange={e => field.onChange(e.target.value ? new Date(e.target.value) : null)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="status"
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel>Status</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="h-8 w-full tabular-nums">
+                    <SelectTrigger className="w-full tabular-nums">
                       <SelectValue />
                     </SelectTrigger>
 
@@ -242,25 +277,6 @@ export function ToolForm({
             )}
           />
         </div>
-
-        <FormField
-          control={form.control}
-          name="publishedAt"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Published At</FormLabel>
-              <FormControl>
-                <Input
-                  type="datetime-local"
-                  {...field}
-                  value={field.value ? formatDate(field.value, "yyyy-MM-dd HH:mm") : undefined}
-                  onChange={e => field.onChange(e.target.value ? new Date(e.target.value) : null)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <FormField
           control={form.control}

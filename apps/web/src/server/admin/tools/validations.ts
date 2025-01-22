@@ -31,6 +31,7 @@ export const toolSchema = z.object({
   faviconUrl: z.string().optional(),
   screenshotUrl: z.string().optional(),
   isFeatured: z.boolean().default(false),
+  isSelfHosted: z.boolean().default(false),
   submitterName: z.string().optional(),
   submitterEmail: z.string().optional(),
   submitterNote: z.string().optional(),

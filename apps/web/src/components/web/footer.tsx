@@ -85,6 +85,12 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
                 </NavLink>
               </Tooltip>
 
+              <Tooltip tooltip="View source code">
+                <NavLink href={config.links.github} target="_blank" rel="nofollow noreferrer">
+                  <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
+                </NavLink>
+              </Tooltip>
+
               <Tooltip tooltip="Follow us on X/Twitter">
                 <NavLink href={config.links.twitter} target="_blank" rel="nofollow noreferrer">
                   <BrandXIcon className="size-[1.44em] stroke-[1.25]" />
@@ -103,12 +109,6 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
                 </NavLink>
               </Tooltip>
 
-              <Tooltip tooltip="View source code">
-                <NavLink href={config.links.github} target="_blank" rel="nofollow noreferrer">
-                  <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
-                </NavLink>
-              </Tooltip>
-
               <Tooltip tooltip="Follow us on Medium">
                 <NavLink href={config.links.medium} target="_blank" rel="nofollow noreferrer">
                   <BrandMediumIcon className="size-[1.44em] stroke-[1.25]" />
@@ -123,6 +123,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
 
           <NavLink href="/alternatives">Alternatives</NavLink>
           <NavLink href="/categories">Categories</NavLink>
+          <NavLink href="/self-hosted">Self-hosted</NavLink>
           <NavLink href="/stacks">Tech Stacks</NavLink>
           <NavLink href="/topics">Topics</NavLink>
           <NavLink href="/licenses">Licenses</NavLink>
