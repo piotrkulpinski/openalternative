@@ -1,10 +1,11 @@
-import { sentenceCase } from "change-case"
+import { capitalCase } from "change-case"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
 import { TopicToolListing } from "~/app/(web)/topics/[slug]/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { TopicOne } from "~/server/web/topics/payloads"
@@ -27,7 +28,7 @@ const getTopic = cache(async ({ params }: PageProps) => {
 })
 
 const getMetadata = (topic: TopicOne): Metadata => {
-  const name = sentenceCase(topic.slug)
+  const name = capitalCase(topic.slug)
 
   return {
     title: `Open Source Projects tagged "${name}"`,
@@ -57,6 +58,19 @@ export default async function TopicPage(props: PageProps) {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/topics",
+            children: "Topics",
+          },
+          {
+            href: `/topics/${topic.slug}`,
+            children: capitalCase(topic.slug),
+          },
+        ]}
+      />
+
       <Intro>
         <IntroTitle>{`${title}`}</IntroTitle>
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>

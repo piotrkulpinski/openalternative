@@ -13,6 +13,7 @@ import {
 import { MDX } from "~/components/web/mdx"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { Author } from "~/components/web/ui/author"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Image } from "~/components/web/ui/image"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
@@ -60,6 +61,19 @@ export default async function BlogPostPage(props: PageProps) {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/blog",
+            children: "Blog",
+          },
+          {
+            href: `/blog/${post._meta.path}`,
+            children: post.title,
+          },
+        ]}
+      />
+
       <div className="flex flex-col gap-8 md:gap-10 lg:gap-12">
         <Intro>
           <IntroTitle>{post.title}</IntroTitle>

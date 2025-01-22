@@ -19,6 +19,7 @@ import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { Badge } from "~/components/web/ui/badge"
 import { BrandLink } from "~/components/web/ui/brand-link"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { Image } from "~/components/web/ui/image"
@@ -96,169 +97,184 @@ export default async function ToolPage(props: PageProps) {
   }
 
   return (
-    <div className="flex flex-col gap-12">
-      <Section>
-        <Section.Content className="max-md:contents">
-          <div className="flex flex-1 flex-col items-start gap-4 max-md:order-1 md:gap-6">
-            <div className="flex w-full flex-col items-start gap-y-4">
-              <Stack className="w-full">
-                <FaviconImage src={tool.faviconUrl} title={tool.name} />
+    <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/#tools",
+            children: "Open Source Tools",
+          },
+          {
+            href: `/${tool.slug}`,
+            children: tool.name,
+          },
+        ]}
+      />
 
-                <div className="flex flex-1">
-                  <H1 className="!leading-snug truncate">{tool.name}</H1>
-                </div>
+      <div className="flex flex-col gap-12">
+        <Section>
+          <Section.Content className="max-md:contents">
+            <div className="flex flex-1 flex-col items-start gap-4 max-md:order-1 md:gap-6">
+              <div className="flex w-full flex-col items-start gap-y-4">
+                <Stack className="w-full">
+                  <FaviconImage src={tool.faviconUrl} title={tool.name} />
 
-                <ToolBadges tool={tool}>
-                  {tool.discountAmount && (
-                    <Badge size="lg" variant="success">
-                      {tool.discountCode
-                        ? `Use code ${tool.discountCode} for ${tool.discountAmount}!`
-                        : `Get ${tool.discountAmount} with our link!`}
-                    </Badge>
-                  )}
-                </ToolBadges>
+                  <div className="flex flex-1">
+                    <H1 className="!leading-snug truncate">{tool.name}</H1>
+                  </div>
+
+                  <ToolBadges tool={tool}>
+                    {tool.discountAmount && (
+                      <Badge size="lg" variant="success">
+                        {tool.discountCode
+                          ? `Use code ${tool.discountCode} for ${tool.discountAmount}!`
+                          : `Get ${tool.discountAmount} with our link!`}
+                      </Badge>
+                    )}
+                  </ToolBadges>
+                </Stack>
+
+                {tool.description && <IntroDescription>{tool.description}</IntroDescription>}
+              </div>
+
+              {!!tool.alternatives.length && (
+                <>
+                  <h3 className="sr-only">
+                    Open Source Alternative to{" "}
+                    {joinAsSentence(tool.alternatives.map(({ name }) => name))}
+                  </h3>
+
+                  <Stack>
+                    <span className="text-sm">Open Source Alternative to:</span>
+
+                    {tool.alternatives.map(({ slug, name, faviconUrl }) => (
+                      <BrandLink
+                        key={slug}
+                        href={`/alternatives/${slug}`}
+                        name={name}
+                        faviconUrl={faviconUrl}
+                      />
+                    ))}
+                  </Stack>
+                </>
+              )}
+
+              <Stack size="sm">
+                {tool.website && (
+                  <Button suffix={<ArrowUpRightIcon />} asChild>
+                    <ExternalLink
+                      href={tool.website}
+                      rel={tool.isFeatured ? "noopener noreferrer" : undefined}
+                      eventName="click_website"
+                      eventProps={{ url: tool.website }}
+                    >
+                      Visit {tool.name}
+                    </ExternalLink>
+                  </Button>
+                )}
+
+                {tool.hostingUrl && (
+                  <Button variant="secondary" suffix={<ArrowUpRightIcon />} asChild>
+                    <ExternalLink
+                      href={tool.hostingUrl}
+                      eventName="click_ad"
+                      eventProps={{ url: tool.hostingUrl, type: "ToolPage" }}
+                    >
+                      Self-host with Easypanel
+                    </ExternalLink>
+                  </Button>
+                )}
               </Stack>
-
-              {tool.description && <IntroDescription>{tool.description}</IntroDescription>}
             </div>
 
-            {!!tool.alternatives.length && (
-              <>
-                <h3 className="sr-only">
-                  Open Source Alternative to{" "}
-                  {joinAsSentence(tool.alternatives.map(({ name }) => name))}
-                </h3>
-
-                <Stack>
-                  <span className="text-sm">Open Source Alternative to:</span>
-
-                  {tool.alternatives.map(({ slug, name, faviconUrl }) => (
-                    <BrandLink
-                      key={slug}
-                      href={`/alternatives/${slug}`}
-                      name={name}
-                      faviconUrl={faviconUrl}
-                    />
-                  ))}
-                </Stack>
-              </>
+            {tool.screenshotUrl && (
+              <Image
+                key={tool.screenshotUrl}
+                src={tool.screenshotUrl}
+                alt={`A screenshot of ${tool.name}`}
+                width={1280}
+                height={1024}
+                loading="lazy"
+                className="aspect-video h-auto w-full rounded-md border object-cover object-top max-md:order-2"
+              />
             )}
 
-            <Stack size="sm">
-              {tool.website && (
-                <Button suffix={<ArrowUpRightIcon />} asChild>
-                  <ExternalLink
-                    href={tool.website}
-                    rel={tool.isFeatured ? "noopener noreferrer" : undefined}
-                    eventName="click_website"
-                    eventProps={{ url: tool.website }}
-                  >
-                    Visit {tool.name}
-                  </ExternalLink>
-                </Button>
-              )}
+            {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
 
-              {tool.hostingUrl && (
-                <Button variant="secondary" suffix={<ArrowUpRightIcon />} asChild>
-                  <ExternalLink
-                    href={tool.hostingUrl}
-                    eventName="click_ad"
-                    eventProps={{ url: tool.hostingUrl, type: "ToolPage" }}
-                  >
-                    Self-host with Easypanel
-                  </ExternalLink>
-                </Button>
-              )}
-            </Stack>
-          </div>
+            {/* Stacks */}
+            {!!tool.stacks.length && (
+              <Stack size="lg" direction="column" className="w-full max-md:order-6 md:gap-y-6">
+                <H4 as="strong">Technical Stack:</H4>
 
-          {tool.screenshotUrl && (
-            <Image
-              key={tool.screenshotUrl}
-              src={tool.screenshotUrl}
-              alt={`A screenshot of ${tool.name}`}
-              width={1280}
-              height={1024}
-              loading="lazy"
-              className="aspect-video h-auto w-full rounded-md border object-cover object-top max-md:order-2"
-            />
-          )}
-
-          {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
-
-          {/* Stacks */}
-          {!!tool.stacks.length && (
-            <Stack size="lg" direction="column" className="w-full max-md:order-6 md:gap-y-6">
-              <H4 as="strong">Technical Stack:</H4>
-
-              <StackList stacks={tool.stacks} />
-            </Stack>
-          )}
-
-          {/* Categories */}
-          {!!tool.categories.length && (
-            <Stack size="lg" direction="column" className="w-full max-md:order-7">
-              <H5 as="strong">Categories:</H5>
-
-              <Stack>
-                {tool.categories?.map(({ slug, name }) => (
-                  <Tag key={slug} href={`/categories/${slug}`} prefix={<HashIcon />}>
-                    {name}
-                  </Tag>
-                ))}
+                <StackList stacks={tool.stacks} />
               </Stack>
-            </Stack>
-          )}
+            )}
 
-          {/* Topics */}
-          {!!tool.topics.length && (
-            <Stack size="lg" direction="column" className="w-full max-md:order-8">
-              <H5 as="strong">Related topics:</H5>
+            {/* Categories */}
+            {!!tool.categories.length && (
+              <Stack size="lg" direction="column" className="w-full max-md:order-7">
+                <H5 as="strong">Categories:</H5>
 
-              <Stack>
-                {tool.topics.map(({ slug }) => (
-                  <Tag key={slug} href={`/topics/${slug}`} prefix={<HashIcon />}>
-                    {slug}
-                  </Tag>
-                ))}
+                <Stack>
+                  {tool.categories?.map(({ slug, name }) => (
+                    <Tag key={slug} href={`/categories/${slug}`} prefix={<HashIcon />}>
+                      {name}
+                    </Tag>
+                  ))}
+                </Stack>
               </Stack>
-            </Stack>
-          )}
+            )}
 
-          <ShareButtons title={`${title}`} className="max-md:order-9" />
-        </Section.Content>
+            {/* Topics */}
+            {!!tool.topics.length && (
+              <Stack size="lg" direction="column" className="w-full max-md:order-8">
+                <H5 as="strong">Related topics:</H5>
 
-        <Section.Sidebar className="max-md:contents">
-          <RepositoryDetails tool={tool} className="max-md:order-3" />
+                <Stack>
+                  {tool.topics.map(({ slug }) => (
+                    <Tag key={slug} href={`/topics/${slug}`} prefix={<HashIcon />}>
+                      {slug}
+                    </Tag>
+                  ))}
+                </Stack>
+              </Stack>
+            )}
 
-          {/* Advertisement */}
-          <Suspense fallback={<AdCardSkeleton className="max-md:order-4" />}>
-            <AdCard type="ToolPage" className="max-md:order-4" />
-          </Suspense>
+            <ShareButtons title={`${title}`} className="max-md:order-9" />
+          </Section.Content>
 
-          {/* Featured */}
-          <Suspense>
-            <FeaturedTools className="max-md:order-10" />
-          </Suspense>
-        </Section.Sidebar>
-      </Section>
+          <Section.Sidebar className="max-md:contents">
+            <RepositoryDetails tool={tool} className="max-md:order-3" />
 
-      {/* Related */}
-      <Suspense
-        fallback={
-          <Listing title={`Open source alternatives similar to ${tool.name}:`}>
-            <ToolListSkeleton count={3} />
-          </Listing>
-        }
-      >
-        <RelatedTools tool={tool} />
-      </Suspense>
+            {/* Advertisement */}
+            <Suspense fallback={<AdCardSkeleton className="max-md:order-4" />}>
+              <AdCard type="ToolPage" className="max-md:order-4" />
+            </Suspense>
 
-      {/* JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-    </div>
+            {/* Featured */}
+            <Suspense>
+              <FeaturedTools className="max-md:order-10" />
+            </Suspense>
+          </Section.Sidebar>
+        </Section>
+
+        {/* Related */}
+        <Suspense
+          fallback={
+            <Listing title={`Open source alternatives similar to ${tool.name}:`}>
+              <ToolListSkeleton count={3} />
+            </Listing>
+          }
+        >
+          <RelatedTools tool={tool} />
+        </Suspense>
+
+        {/* JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </div>
+    </>
   )
 }

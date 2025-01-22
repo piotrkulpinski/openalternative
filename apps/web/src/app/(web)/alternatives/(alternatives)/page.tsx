@@ -3,6 +3,7 @@ import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { AlternativeListing } from "~/app/(web)/alternatives/(alternatives)/listing"
 import { AlternativeQuerySkeleton } from "~/components/web/alternatives/alternative-query"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 
@@ -11,8 +12,8 @@ type PageProps = {
 }
 
 export const metadata: Metadata = {
-  title: "Popular Open Source Software Alternatives",
-  description: "Browse top proprietary software to find your best Open Source software tools.",
+  title: "Open Source Software Alternatives",
+  description: "Discover top open source alternatives to 300+ popular proprietary software tools.",
   openGraph: { ...metadataConfig.openGraph, url: "/alternatives" },
   alternates: { ...metadataConfig.alternates, canonical: "/alternatives" },
 }
@@ -20,8 +21,17 @@ export const metadata: Metadata = {
 export default function Alternatives({ searchParams }: PageProps) {
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/alternatives",
+            children: "Alternatives",
+          },
+        ]}
+      />
+
       <Intro>
-        <IntroTitle>{`${metadata.title}`}</IntroTitle>
+        <IntroTitle>{`Browse ${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 

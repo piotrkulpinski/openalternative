@@ -17,7 +17,7 @@ type ToolQueryProps = {
 const ToolQuery = ({ tools, perPage, totalCount, categories, placeholder }: ToolQueryProps) => {
   return (
     <>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5" id="tools">
         <ToolFilters categories={categories} placeholder={placeholder} />
         <ToolList tools={tools} />
       </div>

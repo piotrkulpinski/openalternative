@@ -16,17 +16,22 @@ const navLinkVariants = cva({
   },
 })
 
-const isItemActive = (href: string | undefined, pathname: string) => {
+const isItemActive = (href: string | undefined, pathname: string, exact = false) => {
   if (href && href !== "/") {
-    return pathname.includes(href)
+    return exact ? pathname === href : pathname.includes(href)
   }
 
   return false
 }
 
-const NavLink = ({ className, ...props }: ComponentProps<"a"> & ComponentProps<typeof Link>) => {
+type NavLinkProps = ComponentProps<"a"> &
+  ComponentProps<typeof Link> & {
+    exact?: boolean
+  }
+
+const NavLink = ({ className, exact, ...props }: NavLinkProps) => {
   const pathname = usePathname()
-  const isActive = isItemActive(props.href, pathname)
+  const isActive = isItemActive(props.href, pathname, exact)
 
   return (
     <Link prefetch={false} className={cx(navLinkVariants({ isActive, className }))} {...props} />

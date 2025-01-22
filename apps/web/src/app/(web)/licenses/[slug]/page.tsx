@@ -8,6 +8,7 @@ import { Listing } from "~/components/web/listing"
 import { Markdown } from "~/components/web/markdown"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { BackButton } from "~/components/web/ui/back-button"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
@@ -59,6 +60,19 @@ export default async function LicensePage(props: PageProps) {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/licenses",
+            children: "Licenses",
+          },
+          {
+            href: `/licenses/${license.slug}`,
+            children: license.name,
+          },
+        ]}
+      />
+
       <Intro>
         <IntroTitle>{`${title}`}</IntroTitle>
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>

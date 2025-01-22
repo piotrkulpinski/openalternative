@@ -4,6 +4,7 @@ import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
 import { LicenseToolListing } from "~/app/(web)/licenses/[slug]/tools/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { LicenseOne } from "~/server/web/licenses/payloads"
@@ -54,6 +55,23 @@ export default async function LicenseToolsPage(props: PageProps) {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/licenses",
+            children: "Licenses",
+          },
+          {
+            href: `/licenses/${license.slug}`,
+            children: license.name,
+          },
+          {
+            href: `/licenses/${license.slug}/tools`,
+            children: "Tools",
+          },
+        ]}
+      />
+
       <Intro>
         <IntroTitle>{`${title}`}</IntroTitle>
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>

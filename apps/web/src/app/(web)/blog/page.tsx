@@ -1,6 +1,7 @@
 import { allPosts } from "content-collections"
 import type { Metadata } from "next"
 import { PostCard } from "~/components/web/posts/post-card"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Grid } from "~/components/web/ui/grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
@@ -18,6 +19,15 @@ export default function BlogPage() {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/blog",
+            children: "Blog",
+          },
+        ]}
+      />
+
       <Intro>
         <IntroTitle>{`${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>

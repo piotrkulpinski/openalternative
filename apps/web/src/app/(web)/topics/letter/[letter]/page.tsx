@@ -3,6 +3,7 @@ import { Suspense } from "react"
 import { TopicListing } from "~/app/(web)/topics/letter/[letter]/listing"
 import { LetterPicker } from "~/components/web/letter-picker"
 import { TopicListSkeleton } from "~/components/web/topics/topic-list"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
@@ -13,7 +14,7 @@ type PageProps = {
 
 const metadata: Metadata = {
   title: "Open Source Software Topics",
-  description: "Browse top topics to find your best Open Source software options.",
+  description: "Discover top topics to find your best Open Source software options.",
 }
 
 export const generateStaticParams = async () => {
@@ -31,18 +32,34 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default function Topics({ params }: PageProps) {
+export default async function Topics(props: PageProps) {
+  const params = await props.params
+  const letter = decodeURIComponent(params.letter)
+
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/topics",
+            children: "Topics",
+          },
+          {
+            href: `/topics/letter/${letter}`,
+            children: letter.toUpperCase(),
+          },
+        ]}
+      />
+
       <Intro>
-        <IntroTitle>{`${metadata.title}`}</IntroTitle>
+        <IntroTitle>{`Browse ${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 
       <LetterPicker path="/topics/letter" />
 
       <Suspense fallback={<TopicListSkeleton />}>
-        <TopicListing params={params} />
+        <TopicListing params={props.params} />
       </Suspense>
     </>
   )

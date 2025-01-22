@@ -16,6 +16,7 @@ import { InlineMenu } from "~/components/web/inline-menu"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { ToolEntry } from "~/components/web/tools/tool-entry"
 import { BackButton } from "~/components/web/ui/back-button"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
@@ -110,6 +111,19 @@ export default async function AlternativePage(props: PageProps) {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/alternatives",
+            children: "Alternatives",
+          },
+          {
+            href: `/alternatives/${alternative.slug}`,
+            children: alternative.name,
+          },
+        ]}
+      />
+
       <Intro>
         <IntroTitle>Open Source {alternative.name} Alternatives</IntroTitle>
 

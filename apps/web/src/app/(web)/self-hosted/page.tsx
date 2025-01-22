@@ -3,6 +3,7 @@ import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { SelfHostedToolListing } from "~/app/(web)/self-hosted/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 
@@ -18,16 +19,25 @@ export const metadata: Metadata = {
   alternates: { ...metadataConfig.alternates, canonical: "/self-hosted" },
 }
 
-export default function SelfHosted({ searchParams }: PageProps) {
+export default async function SelfHostedPage(props: PageProps) {
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/self-hosted",
+            children: "Self-Hosted Tools",
+          },
+        ]}
+      />
+
       <Intro>
-        <IntroTitle>{`${metadata.title}`}</IntroTitle>
+        <IntroTitle>{`Browse ${metadata.title}`}</IntroTitle>
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 
       <Suspense fallback={<ToolQuerySkeleton />}>
-        <SelfHostedToolListing searchParams={searchParams} />
+        <SelfHostedToolListing searchParams={props.searchParams} />
       </Suspense>
     </>
   )

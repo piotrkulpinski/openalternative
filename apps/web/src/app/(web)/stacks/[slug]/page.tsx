@@ -4,6 +4,7 @@ import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
 import { StackToolListing } from "~/app/(web)/stacks/[slug]/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
+import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { StackOne } from "~/server/web/stacks/payloads"
@@ -54,6 +55,19 @@ export default async function StackPage(props: PageProps) {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/stacks",
+            children: "Tech Stacks",
+          },
+          {
+            href: `/stacks/${stack.slug}`,
+            children: stack.name,
+          },
+        ]}
+      />
+
       <Intro>
         <IntroTitle>{`${title}`}</IntroTitle>
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>
