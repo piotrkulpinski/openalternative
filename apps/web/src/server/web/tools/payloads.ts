@@ -56,6 +56,7 @@ export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({
   name: true,
   slug: true,
   tagline: true,
+  description: true,
   stars: true,
   forks: true,
   faviconUrl: true,
@@ -64,6 +65,7 @@ export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({
   lastCommitDate: true,
   publishedAt: true,
   updatedAt: true,
+  alternatives: { ...toolAlternativesPayload, take: 1 },
 })
 
 export const toolManyExtendedPayload = Prisma.validator<Prisma.ToolSelect>()({

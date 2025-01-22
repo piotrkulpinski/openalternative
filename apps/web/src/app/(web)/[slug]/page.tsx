@@ -1,4 +1,3 @@
-import { joinAsSentence } from "@curiousleaf/utils"
 import { ArrowUpRightIcon, HashIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
@@ -15,10 +14,10 @@ import { Markdown } from "~/components/web/markdown"
 import { RepositoryDetails } from "~/components/web/repository-details"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { StackList } from "~/components/web/stacks/stack-list"
+import { ToolAlternatives } from "~/components/web/tools/tool-alternatives"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { Badge } from "~/components/web/ui/badge"
-import { BrandLink } from "~/components/web/ui/brand-link"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
@@ -137,27 +136,7 @@ export default async function ToolPage(props: PageProps) {
                 {tool.description && <IntroDescription>{tool.description}</IntroDescription>}
               </div>
 
-              {!!tool.alternatives.length && (
-                <>
-                  <h3 className="sr-only">
-                    Open Source Alternative to{" "}
-                    {joinAsSentence(tool.alternatives.map(({ name }) => name))}
-                  </h3>
-
-                  <Stack>
-                    <span className="text-sm">Open Source Alternative to:</span>
-
-                    {tool.alternatives.map(({ slug, name, faviconUrl }) => (
-                      <BrandLink
-                        key={slug}
-                        href={`/alternatives/${slug}`}
-                        name={name}
-                        faviconUrl={faviconUrl}
-                      />
-                    ))}
-                  </Stack>
-                </>
-              )}
+              <ToolAlternatives alternatives={tool.alternatives} />
 
               <Stack size="sm">
                 {tool.website && (

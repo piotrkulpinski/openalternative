@@ -36,7 +36,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
   return (
     <Card asChild {...props}>
-      <Link href={`/${tool.slug}`} prefetch={false}>
+      <Link href={`/${tool.slug}`} prefetch={false} className="group">
         <CardHeader>
           <Favicon src={tool.faviconUrl} title={tool.name} />
 
@@ -49,9 +49,39 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
           </ToolBadges>
         </CardHeader>
 
-        {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
+        <div className="relative size-full flex flex-col">
+          <Stack
+            size="lg"
+            direction="column"
+            className="items-stretch absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100"
+          >
+            {tool.description && (
+              <CardDescription className="line-clamp-4">{tool.description}</CardDescription>
+            )}
 
-        <Insights insights={insights} className="mt-auto" />
+            {!!tool.alternatives.length && (
+              <Stack className="mt-auto">
+                <span className="text-sm">Alternative to:</span>
+
+                {tool.alternatives.map(({ slug, name, faviconUrl }) => (
+                  <Stack size="xs" key={slug}>
+                    <Favicon src={faviconUrl} title={name} className="size-6 p-[3px]" />
+                    <strong className="font-medium text-sm">{name}</strong>
+                  </Stack>
+                ))}
+              </Stack>
+            )}
+          </Stack>
+
+          <Stack
+            size="lg"
+            direction="column"
+            className="flex-1 transition-opacity duration-200 group-hover:opacity-0"
+          >
+            {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
+            <Insights insights={insights} className="mt-auto" />
+          </Stack>
+        </div>
       </Link>
     </Card>
   )
