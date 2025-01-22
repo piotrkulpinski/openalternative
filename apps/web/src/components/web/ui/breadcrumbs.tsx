@@ -37,7 +37,7 @@ export const Breadcrumbs = ({ className, items, ...props }: BreadcrumbsProps) =>
         {[...defaultItems, ...items].map((item, i) => (
           <div
             key={i}
-            className={cx("group contents", i > 0 && "max-md:hidden")}
+            className="contents"
             itemProp="itemListElement"
             itemScope
             itemType="https://schema.org/ListItem"
