@@ -25,7 +25,7 @@ export default function Alternatives({ searchParams }: PageProps) {
         items={[
           {
             href: "/alternatives",
-            children: "Alternatives",
+            name: "Alternatives",
           },
         ]}
       />

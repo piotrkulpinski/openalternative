@@ -62,11 +62,11 @@ export default async function TopicPage(props: PageProps) {
         items={[
           {
             href: "/topics",
-            children: "Topics",
+            name: "Topics",
           },
           {
             href: `/topics/${topic.slug}`,
-            children: capitalCase(topic.slug),
+            name: capitalCase(topic.slug),
           },
         ]}
       />

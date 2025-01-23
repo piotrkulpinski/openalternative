@@ -59,11 +59,11 @@ export default async function StackPage(props: PageProps) {
         items={[
           {
             href: "/stacks",
-            children: "Tech Stacks",
+            name: "Tech Stacks",
           },
           {
             href: `/stacks/${stack.slug}`,
-            children: stack.name,
+            name: stack.name,
           },
         ]}
       />

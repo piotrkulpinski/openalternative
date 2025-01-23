@@ -1,9 +1,11 @@
 "use client"
 
 import { Home } from "lucide-react"
-import type { ComponentProps, HTMLAttributes } from "react"
+import type { HTMLAttributes, ReactNode } from "react"
+import type { Graph } from "schema-dts"
 import { Stack } from "~/components/common/stack"
 import { NavLink } from "~/components/web/ui/nav-link"
+import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
 const BreadcrumbsSeparator = ({ ...props }: HTMLAttributes<HTMLElement>) => {
@@ -14,46 +16,61 @@ const BreadcrumbsSeparator = ({ ...props }: HTMLAttributes<HTMLElement>) => {
   )
 }
 
+type Breadcrumb = {
+  href: string
+  name: string | ReactNode
+}
+
 type BreadcrumbsProps = HTMLAttributes<HTMLElement> & {
-  items: ComponentProps<typeof NavLink>[]
+  items: Breadcrumb[]
 }
 
 export const Breadcrumbs = ({ className, items, ...props }: BreadcrumbsProps) => {
-  const defaultItems: ComponentProps<typeof NavLink>[] = [
+  const breadcrumbItems = [
     {
       href: "/",
-      children: <Home aria-label="Home" />,
+      name: <Home aria-label="Home" />,
     },
+    ...items,
   ]
 
+  const jsonLd: Graph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbItems.map(({ href, name }, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "WebPage",
+            "@id": `${config.site.url}${href}`,
+            name: typeof name === "string" ? name : config.site.name,
+          },
+        })),
+      },
+    ],
+  }
+
   return (
-    <Stack size="sm" asChild>
-      <nav
-        itemScope
-        itemType="https://schema.org/BreadcrumbList"
-        className={cx("-mb-4 md:-mb-6 lg:-mb-8", className)}
-        {...props}
-      >
-        {[...defaultItems, ...items].map((item, i) => (
-          <div
-            key={i}
-            className="contents"
-            itemProp="itemListElement"
-            itemScope
-            itemType="https://schema.org/ListItem"
-          >
-            {i > 0 && (
-              <span className="text-sm text-secondary invert pointer-events-none select-none">
-                /
-              </span>
-            )}
+    <>
+      <Stack size="sm" asChild>
+        <nav className={cx("-mb-4 md:-mb-6 lg:-mb-8", className)} {...props}>
+          {breadcrumbItems.map(({ href, name }, index) => (
+            <div key={index} className="contents">
+              {index > 0 && <BreadcrumbsSeparator />}
+              <NavLink exact href={href}>
+                {name}
+              </NavLink>
+            </div>
+          ))}
+        </nav>
+      </Stack>
 
-            <NavLink itemProp="item" exact {...item} />
-
-            <meta itemProp="position" content={`${i + 1}`} />
-          </div>
-        ))}
-      </nav>
-    </Stack>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+    </>
   )
 }

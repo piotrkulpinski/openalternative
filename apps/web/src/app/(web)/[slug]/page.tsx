@@ -101,11 +101,11 @@ export default async function ToolPage(props: PageProps) {
         items={[
           {
             href: "/#tools",
-            children: "Open Source Tools",
+            name: "Open Source Tools",
           },
           {
             href: `/${tool.slug}`,
-            children: tool.name,
+            name: tool.name,
           },
         ]}
       />

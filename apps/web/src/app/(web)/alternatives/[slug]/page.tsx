@@ -115,11 +115,11 @@ export default async function AlternativePage(props: PageProps) {
         items={[
           {
             href: "/alternatives",
-            children: "Alternatives",
+            name: "Alternatives",
           },
           {
             href: `/alternatives/${alternative.slug}`,
-            children: alternative.name,
+            name: alternative.name,
           },
         ]}
       />

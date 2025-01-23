@@ -23,7 +23,7 @@ export default function BlogPage() {
         items={[
           {
             href: "/blog",
-            children: "Blog",
+            name: "Blog",
           },
         ]}
       />

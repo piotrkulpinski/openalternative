@@ -21,7 +21,7 @@ export default function Stacks() {
         items={[
           {
             href: "/stacks",
-            children: "Tech Stacks",
+            name: "Tech Stacks",
           },
         ]}
       />

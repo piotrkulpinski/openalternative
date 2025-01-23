@@ -21,7 +21,7 @@ export default function Licenses() {
         items={[
           {
             href: "/licenses",
-            children: "Licenses",
+            name: "Licenses",
           },
         ]}
       />

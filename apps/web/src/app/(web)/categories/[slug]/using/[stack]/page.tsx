@@ -61,15 +61,15 @@ export default async function CategoryPage(props: PageProps) {
         items={[
           {
             href: "/categories",
-            children: "Categories",
+            name: "Categories",
           },
           {
             href: `/categories/${category.slug}`,
-            children: category.label || category.name,
+            name: category.label || category.name,
           },
           {
             href: `/categories/${category.slug}/using/${stack.slug}`,
-            children: `Using ${stack.name}`,
+            name: `Using ${stack.name}`,
           },
         ]}
       />

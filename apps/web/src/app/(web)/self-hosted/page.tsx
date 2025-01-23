@@ -26,7 +26,7 @@ export default async function SelfHostedPage(props: PageProps) {
         items={[
           {
             href: "/self-hosted",
-            children: "Self-Hosted Tools",
+            name: "Self-Hosted Tools",
           },
         ]}
       />

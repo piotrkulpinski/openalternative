@@ -64,11 +64,11 @@ export default async function LicensePage(props: PageProps) {
         items={[
           {
             href: "/licenses",
-            children: "Licenses",
+            name: "Licenses",
           },
           {
             href: `/licenses/${license.slug}`,
-            children: license.name,
+            name: license.name,
           },
         ]}
       />

@@ -20,7 +20,7 @@ export default function Categories() {
         items={[
           {
             href: "/categories",
-            children: "Categories",
+            name: "Categories",
           },
         ]}
       />

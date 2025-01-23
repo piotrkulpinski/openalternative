@@ -65,11 +65,11 @@ export default async function BlogPostPage(props: PageProps) {
         items={[
           {
             href: "/blog",
-            children: "Blog",
+            name: "Blog",
           },
           {
             href: `/blog/${post._meta.path}`,
-            children: post.title,
+            name: post.title,
           },
         ]}
       />
