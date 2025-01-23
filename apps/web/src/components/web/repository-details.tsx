@@ -84,7 +84,7 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
 
       <p className="text-muted/75 text-[11px]">
         Fetched automatically from GitHub{" "}
-        <time dateTime={tool.updatedAt.toISOString()} className="font-medium text-muted">
+        <time dateTime={tool.updatedAt?.toISOString()} className="font-medium text-muted">
           {formatDistanceToNowStrict(tool.updatedAt, { addSuffix: true })}
         </time>
         .
