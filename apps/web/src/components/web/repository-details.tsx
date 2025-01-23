@@ -1,5 +1,5 @@
 import { formatNumber } from "@curiousleaf/utils"
-import { formatDistanceToNowStrict } from "date-fns"
+import { formatDistanceToNowStrict, formatISO } from "date-fns"
 import { CopyrightIcon, GitForkIcon, HistoryIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { H5 } from "~/components/common/heading"
@@ -84,7 +84,7 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
 
       <p className="text-muted/75 text-[11px]">
         Fetched automatically from GitHub{" "}
-        <time dateTime={tool.updatedAt?.toISOString()} className="font-medium text-muted">
+        <time dateTime={formatISO(tool.updatedAt)} className="font-medium text-muted">
           {formatDistanceToNowStrict(tool.updatedAt, { addSuffix: true })}
         </time>
         .
