@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:17-alpine
+    image: postgres:latest
     restart: unless-stopped
     environment:
       TZ: UTC
@@ -8,8 +8,10 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data/
+      - openalternative-db-data:/var/lib/postgresql/data/
     deploy:
       resources:
         limits:
@@ -28,15 +30,15 @@ services:
       POSTGRESQL_PORT: 5432
       POSTGRESQL_USERNAME: ${DB_USER}
       POSTGRESQL_PASSWORD: ${DB_PASSWORD}
-      POSTGRESQL_DATABASE: ${DB_NAME}
-      POSTGRESQL_AUTH_TYPE: scram-sha-256
-      PGBOUNCER_AUTH_TYPE: scram-sha-256
-      POSTGRESQL_ADMIN_USERS: ${DB_USER},admin
+      PGBOUNCER_DATABASE: ${DB_NAME}
+      PGBOUNCER_PORT: 6543
+      PGBOUNCER_BIND_ADDRESS: 0.0.0.0
     ports:
-      - "5432:5432"
+      - "6543:6543"
     depends_on:
       postgres:
         condition: service_healthy
 
 volumes:
-  pgdata:
+  openalternative-db-data:
+    driver: local

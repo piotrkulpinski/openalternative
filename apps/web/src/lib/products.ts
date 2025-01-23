@@ -11,7 +11,7 @@ const SYMBOLS = {
 
 type SymbolType = keyof typeof SYMBOLS
 
-const getQueueLength = (queueLength: number) => {
+export const getQueueLength = (queueLength: number) => {
   const queueDays = Math.ceil((queueLength / config.submissions.postingRate) * 7)
   const queueMonths = differenceInMonths(addDays(new Date(), queueDays), new Date())
 

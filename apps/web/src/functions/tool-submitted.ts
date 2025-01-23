@@ -1,4 +1,5 @@
 import { prisma } from "@openalternative/db"
+import { ToolStatus } from "@openalternative/db/client"
 import EmailSubmission from "~/emails/submission"
 import { sendEmails } from "~/lib/email"
 import { inngest } from "~/services/inngest"
@@ -17,13 +18,23 @@ export const toolSubmitted = inngest.createFunction(
 
     // Send submission email to user if it's a free submission
     if (isFreeSubmission) {
+      const queueLength = await step.run("get-queue-length", async () => {
+        return await prisma.tool.count({
+          where: { status: { in: [ToolStatus.Draft, ToolStatus.Scheduled] } },
+        })
+      })
+
       await step.run("send-submission-email", async () => {
         if (!tool.submitterEmail) return
 
         const to = tool.submitterEmail
         const subject = `🙌 Thanks for submitting ${tool.name}!`
 
-        return await sendEmails({ to, subject, react: EmailSubmission({ tool, to, subject }) })
+        return await sendEmails({
+          to,
+          subject,
+          react: EmailSubmission({ tool, to, subject, queueLength }),
+        })
       })
     }
   },
