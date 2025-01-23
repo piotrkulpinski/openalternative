@@ -1,7 +1,7 @@
 import { Pagination } from "~/components/web/pagination"
-import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { ToolList } from "~/components/web/tools/tool-list"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
+import { ToolSearch } from "~/components/web/tools/tool-search"
 import { Input } from "~/components/web/ui/input"
 import type { CategoryMany } from "~/server/web/categories/payloads"
 import type { ToolMany } from "~/server/web/tools/payloads"
@@ -18,7 +18,7 @@ const ToolQuery = ({ tools, perPage, totalCount, categories, placeholder }: Tool
   return (
     <>
       <div className="flex flex-col gap-5" id="tools">
-        <ToolFilters categories={categories} placeholder={placeholder} />
+        <ToolSearch categories={categories} placeholder={placeholder} />
         <ToolList tools={tools} />
       </div>
 

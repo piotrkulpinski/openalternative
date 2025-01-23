@@ -1,8 +1,8 @@
-import { AlternativeFilters } from "~/components/web/alternatives/alternative-filters"
 import {
   AlternativeList,
   AlternativeListSkeleton,
 } from "~/components/web/alternatives/alternative-list"
+import { AlternativeSearch } from "~/components/web/alternatives/alternative-search"
 import { Pagination } from "~/components/web/pagination"
 import { Input } from "~/components/web/ui/input"
 import type { AlternativeMany } from "~/server/web/alternatives/payloads"
@@ -23,7 +23,7 @@ const AlternativeQuery = ({
   return (
     <>
       <div className="flex flex-col gap-5">
-        <AlternativeFilters placeholder={placeholder} />
+        <AlternativeSearch placeholder={placeholder} />
         <AlternativeList alternatives={alternatives} />
       </div>
 
