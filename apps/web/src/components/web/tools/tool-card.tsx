@@ -60,13 +60,15 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
             )}
 
             {!!tool.alternatives.length && (
-              <Stack className="mt-auto">
-                <span className="text-sm">Alternative to:</span>
+              <Stack className="mt-auto text-sm">
+                <span>
+                  <span className="sr-only">Open Source </span>Alternative to:
+                </span>
 
                 {tool.alternatives.map(({ slug, name, faviconUrl }) => (
                   <Stack size="xs" key={slug}>
                     <Favicon src={faviconUrl} title={name} className="size-6 p-[3px]" />
-                    <strong className="font-medium text-sm">{name}</strong>
+                    <strong className="font-medium">{name}</strong>
                   </Stack>
                 ))}
               </Stack>

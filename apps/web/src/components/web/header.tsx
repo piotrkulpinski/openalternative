@@ -91,9 +91,6 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           </svg>
         </button>
 
-        {/* TODO: Add breadcrumbs */}
-        {/* <Breadcrumbs className="mr-auto flex-1" /> */}
-        {/* https://www.openstatus.dev/blog/dynamic-breadcrumb-nextjs */}
         <Logo className="mr-auto" />
 
         <nav className="contents max-lg:hidden">
@@ -190,11 +187,14 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         <NavLink href="/?sort=publishedAt.desc" className="text-base">
           Latest
         </NavLink>
+        <NavLink href="/alternatives" className="text-base">
+          Alternatives
+        </NavLink>
         <NavLink href="/categories" className="text-base">
           Categories
         </NavLink>
-        <NavLink href="/alternatives" className="text-base">
-          Alternatives
+        <NavLink href="/self-hosted" className="text-base">
+          Self-hosted
         </NavLink>
         <NavLink href="/stacks" className="text-base">
           Tech Stacks
