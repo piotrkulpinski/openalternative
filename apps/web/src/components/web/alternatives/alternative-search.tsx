@@ -7,24 +7,22 @@ import { Stack } from "~/components/common/stack"
 import { Input } from "~/components/web/ui/input"
 import { Select } from "~/components/web/ui/select"
 import { useDebounce } from "~/hooks/use-debounce"
-import type { CategoryMany } from "~/server/web/categories/payloads"
-import { toolsSearchParams } from "~/server/web/tools/search-params"
+import { alternativesSearchParams } from "~/server/web/alternatives/search-params"
 
-export type ToolFiltersProps = {
-  categories?: CategoryMany[]
+export type AlternativeSearchProps = {
   placeholder?: string
 }
 
-export const ToolFilters = ({ categories, placeholder }: ToolFiltersProps) => {
+export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
   const [isLoading, startTransition] = useTransition()
-  const [filters, setFilters] = useQueryStates(toolsSearchParams, {
+  const [filters, setFilters] = useQueryStates(alternativesSearchParams, {
     shallow: false,
     startTransition,
   })
   const [inputValue, setInputValue] = useState(filters.q || "")
   const q = useDebounce(inputValue, 300)
 
-  const updateFilters = (values: Partial<Values<typeof toolsSearchParams>>) => {
+  const updateFilters = (values: Partial<Values<typeof alternativesSearchParams>>) => {
     setFilters({ ...values, page: null })
   }
 
@@ -41,13 +39,9 @@ export const ToolFilters = ({ categories, placeholder }: ToolFiltersProps) => {
   }, [filters])
 
   const sortOptions = [
-    { value: "publishedAt.desc", label: "Recently Added" },
-    { value: "name.asc", label: "Name (A to Z)" },
-    { value: "name.desc", label: "Name (Z to A)" },
-    { value: "stars.desc", label: "Most Stars" },
-    { value: "forks.desc", label: "Most Forks" },
-    { value: "lastCommitDate.desc", label: "Recently Updated" },
-    { value: "firstCommitDate.desc", label: "Newest Projects" },
+    { value: "popularity.desc", label: "Popularity" },
+    { value: "name.asc", label: "Name A-Z" },
+    { value: "name.desc", label: "Name Z-A" },
   ]
 
   return (
@@ -61,27 +55,10 @@ export const ToolFilters = ({ categories, placeholder }: ToolFiltersProps) => {
           size="lg"
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
-          placeholder={placeholder || "Search tools..."}
+          placeholder={placeholder || "Search alternatives..."}
           className="w-full truncate pl-10"
         />
       </div>
-
-      {categories && (
-        <Select
-          size="lg"
-          className="min-w-40 max-sm:flex-1"
-          value={filters.category}
-          onChange={e => updateFilters({ category: e.target.value })}
-        >
-          <option value="">All categories</option>
-
-          {categories.map(category => (
-            <option key={category.slug} value={category.slug}>
-              {category.name}
-            </option>
-          ))}
-        </Select>
-      )}
 
       <Select
         size="lg"
@@ -89,7 +66,9 @@ export const ToolFilters = ({ categories, placeholder }: ToolFiltersProps) => {
         value={filters.sort}
         onChange={e => updateFilters({ sort: e.target.value })}
       >
-        <option value="">Order by</option>
+        <option value="" disabled>
+          Order by
+        </option>
 
         {sortOptions.map(option => (
           <option key={option.value} value={option.value}>
