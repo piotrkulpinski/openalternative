@@ -1,4 +1,3 @@
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata, Viewport } from "next"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { PropsWithChildren } from "react"
@@ -44,7 +43,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body className="min-h-dvh flex flex-col bg-background text-foreground font-sans">
         <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster />
-        <SpeedInsights />
       </body>
     </html>
   )
