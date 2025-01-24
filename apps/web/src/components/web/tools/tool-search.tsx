@@ -53,7 +53,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
   ]
 
   return (
-    <Stack direction="column" className="w-full">
+    <Stack size="lg" direction="column" className="w-full">
       <Stack className="w-full">
         <div className="relative grow min-w-0">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
@@ -99,7 +99,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
         </Select>
       </Stack>
 
-      <ToolFilters className={cx(!isFiltersOpen && "hidden")} />
+      {isFiltersOpen && <ToolFilters filters={filters} updateFilters={updateFilters} />}
     </Stack>
   )
 }

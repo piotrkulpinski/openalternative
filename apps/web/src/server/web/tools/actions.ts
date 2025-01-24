@@ -1,60 +1,43 @@
 "use server"
 
-import { prisma } from "@openalternative/db"
 import { createServerAction } from "zsa"
+import type { config } from "~/config"
+import { findAlternatives } from "~/server/web/alternatives/queries"
+import { findCategories } from "~/server/web/categories/queries"
+import { findLicenses } from "~/server/web/licenses/queries"
+import { findStacks } from "~/server/web/stacks/queries"
 
 export type FilterOption = {
-  id: string
+  slug: string
   name: string
+  count: number
 }
 
-export type ToolFilters = {
-  alternatives: FilterOption[]
-  categories: FilterOption[]
-  stacks: FilterOption[]
-  topics: { id: string }[]
-  licenses: FilterOption[]
-}
-
-export const getToolFilters = createServerAction().handler(async () => {
-  try {
-    const [alternatives, categories, stacks, topics, licenses] = await Promise.all([
-      prisma.alternative.findMany({
-        orderBy: { name: "asc" },
-        select: { id: true, name: true },
-      }),
-      prisma.category.findMany({
-        orderBy: { name: "asc" },
-        select: { id: true, name: true },
-      }),
-      prisma.stack.findMany({
-        where: { type: "Tool" },
-        orderBy: { name: "asc" },
-        select: { id: true, name: true },
-      }),
-      prisma.topic.findMany({
-        orderBy: { slug: "asc" },
-        select: { slug: true },
-      }),
-      prisma.license.findMany({
-        orderBy: { name: "asc" },
-        select: { id: true, name: true },
-      }),
+export const findFilterOptions = createServerAction().handler(
+  async (): Promise<Record<(typeof config.search.filters)[number], FilterOption[]>> => {
+    const start = performance.now()
+    const [alternative, category, stack, license] = await Promise.all([
+      findAlternatives({}).then(r =>
+        r.map(({ slug, name, _count }) => ({ slug, name, count: _count.tools })),
+      ),
+      findCategories({}).then(r =>
+        r.map(({ slug, name, _count }) => ({ slug, name, count: _count.tools })),
+      ),
+      findStacks({}).then(r =>
+        r.map(({ slug, name, _count }) => ({ slug, name, count: _count.tools })),
+      ),
+      findLicenses({}).then(r =>
+        r.map(({ slug, name, _count }) => ({ slug, name, count: _count.tools })),
+      ),
     ])
-    console.log(alternatives)
+
+    console.log("findFilterOptions", performance.now() - start)
 
     return {
-      success: true as const,
-      data: {
-        alternatives,
-        categories,
-        stacks,
-        topics: topics.map((topic: { slug: string }) => ({ id: topic.slug })),
-        licenses,
-      } satisfies ToolFilters,
+      alternative,
+      category,
+      stack,
+      license,
     }
-  } catch (error) {
-    console.error(error)
-    return { success: false as const, error }
-  }
-})
+  },
+)

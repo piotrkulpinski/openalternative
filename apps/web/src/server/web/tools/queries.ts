@@ -13,7 +13,16 @@ import type { toolsSearchParams } from "~/server/web/tools/search-params"
 
 export const searchTools = cache(
   async (
-    { q, category, page, sort, perPage }: inferParserType<typeof toolsSearchParams>,
+    {
+      q,
+      alternative,
+      category,
+      stack,
+      license,
+      page,
+      sort,
+      perPage,
+    }: inferParserType<typeof toolsSearchParams>,
     { where, ...args }: Prisma.ToolFindManyArgs,
   ) => {
     const start = performance.now()
@@ -23,7 +32,10 @@ export const searchTools = cache(
 
     const whereQuery: Prisma.ToolWhereInput = {
       status: ToolStatus.Published,
+      ...(alternative && { alternatives: { some: { slug: alternative } } }),
       ...(category && { categories: { some: { slug: category } } }),
+      ...(stack && { stacks: { some: { slug: stack } } }),
+      ...(license && { license: { slug: license } }),
     }
 
     // Use full-text search when query exists

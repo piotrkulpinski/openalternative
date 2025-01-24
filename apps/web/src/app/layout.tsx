@@ -39,7 +39,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en" className={`${geist.variable} scroll-smooth`}>
+    <html lang="en" className={`${geist.variable} scroll-smooth`} suppressHydrationWarning>
       <body className="group/body min-h-dvh flex flex-col bg-background text-foreground font-sans">
         <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster />
