@@ -7,18 +7,18 @@ type Metadata = {
 }
 
 /**
- * Checks if an email is a real email by checking if the domain is not in the disposable domains list
+ * Checks if an email is a disposable email by checking if the domain is in the disposable domains list
  * @param email
  * @returns
  */
-export const isRealEmail = async (email: string) => {
+export const isDisposableEmail = async (email: string) => {
   const disposableJsonURL =
     "https://rawcdn.githack.com/disposable/disposable-email-domains/master/domains.json"
 
   const disposableDomains = await wretch(disposableJsonURL).get().json<string[]>()
   const domain = email.split("@")[1]
 
-  return !disposableDomains.includes(domain)
+  return disposableDomains.includes(domain)
 }
 
 /**

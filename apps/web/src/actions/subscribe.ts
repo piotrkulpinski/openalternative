@@ -5,7 +5,7 @@ import { createServerAction } from "zsa"
 import { env } from "~/env"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { newsletterSchema } from "~/server/schemas"
-import { isRealEmail } from "~/utils/helpers"
+import { isDisposableEmail } from "~/utils/helpers"
 
 /**
  * Subscribe to the newsletter
@@ -22,22 +22,25 @@ export const subscribeToNewsletter = createServerAction()
       throw new Error("Too many attempts. Please try again later.")
     }
 
-    const isValidEmail = await isRealEmail(json.email)
-
-    if (!isValidEmail) {
+    // Disposable email check
+    if (await isDisposableEmail(json.email)) {
       throw new Error("Invalid email address, please use a real one")
     }
 
     const url = `https://api.beehiiv.com/v2/publications/${env.BEEHIIV_PUBLICATION_ID}/subscriptions`
 
-    const { data } = await wretch(url)
-      .auth(`Bearer ${env.BEEHIIV_API_KEY}`)
-      .post(json)
-      .json<{ data: { status: string } }>()
+    try {
+      const { data } = await wretch(url)
+        .auth(`Bearer ${env.BEEHIIV_API_KEY}`)
+        .post(json)
+        .json<{ data: { status: string } }>()
 
-    if (data?.status !== "active") {
-      throw new Error("Failed to subscribe to newsletter")
+      if (data?.status === "pending") {
+        return "You've been subscribed to the newsletter, please check your email for confirmation."
+      }
+
+      return "You've been subscribed to the newsletter."
+    } catch (error) {
+      throw new Error("Failed to subscribe to newsletter. Please try again later.")
     }
-
-    return "You've been subscribed to the newsletter!"
   })

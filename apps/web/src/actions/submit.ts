@@ -8,7 +8,7 @@ import { subscribeToNewsletter } from "~/actions/subscribe"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { submitToolSchema } from "~/server/schemas"
 import { inngest } from "~/services/inngest"
-import { isRealEmail } from "~/utils/helpers"
+import { isDisposableEmail } from "~/utils/helpers"
 
 /**
  * Generates a unique slug by adding a numeric suffix if needed
@@ -37,7 +37,7 @@ const generateUniqueSlug = async (baseName: string): Promise<string> => {
  */
 export const submitTool = createServerAction()
   .input(submitToolSchema)
-  .handler(async ({ input }) => {
+  .handler(async ({ input: { newsletterOptIn, ...data } }) => {
     const ip = await getIP()
 
     // Rate limiting check
@@ -45,10 +45,8 @@ export const submitTool = createServerAction()
       throw new Error("Too many submissions. Please try again later.")
     }
 
-    const { newsletterOptIn, ...data } = input
-    const isValidEmail = await isRealEmail(data.submitterEmail)
-
-    if (!isValidEmail) {
+    // Disposable email check
+    if (await isDisposableEmail(data.submitterEmail)) {
       throw new Error("Invalid email address, please use a real one")
     }
 

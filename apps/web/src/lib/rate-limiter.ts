@@ -20,7 +20,7 @@ const limiters = {
   newsletter: new Ratelimit({
     redis,
     analytics: true,
-    limiter: Ratelimit.slidingWindow(2, "24 h"), // 2 attempts per day
+    limiter: Ratelimit.slidingWindow(3, "24 h"), // 3 attempts per day
   }),
 }
 
