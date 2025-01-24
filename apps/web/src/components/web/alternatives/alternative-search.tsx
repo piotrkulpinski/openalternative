@@ -1,12 +1,12 @@
 "use client"
 
+import { useDebounce } from "@uidotdev/usehooks"
 import { LoaderIcon, SearchIcon } from "lucide-react"
 import { type Values, useQueryStates } from "nuqs"
 import { useEffect, useState, useTransition } from "react"
 import { Stack } from "~/components/common/stack"
 import { Input } from "~/components/web/ui/input"
 import { Select } from "~/components/web/ui/select"
-import { useDebounce } from "~/hooks/use-debounce"
 import { alternativesSearchParams } from "~/server/web/alternatives/search-params"
 
 export type AlternativeSearchProps = {
@@ -66,9 +66,7 @@ export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
         value={filters.sort}
         onChange={e => updateFilters({ sort: e.target.value })}
       >
-        <option value="" disabled>
-          Order by
-        </option>
+        <option value="">Order by</option>
 
         {sortOptions.map(option => (
           <option key={option.value} value={option.value}>

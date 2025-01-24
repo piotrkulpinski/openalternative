@@ -1,6 +1,7 @@
 "use client"
 
 import type { Alternative, Category, License, Tool } from "@openalternative/db/client"
+import { useDebounce } from "@uidotdev/usehooks"
 import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -15,7 +16,6 @@ import {
   CommandItem,
   CommandList,
 } from "~/components/admin/ui/command"
-import { useDebouncedState } from "~/hooks/use-debounced-state"
 
 type SearchResult = {
   tools: Tool[]
@@ -27,9 +27,10 @@ type SearchResult = {
 export const CommandMenu = () => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useDebouncedState("", 250)
+  const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<SearchResult | null>(null)
   const [isSearching, setIsSearching] = useState(false)
+  const query = useDebounce(searchQuery, 100)
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -53,9 +54,9 @@ export const CommandMenu = () => {
 
   useEffect(() => {
     const performSearch = async () => {
-      if (searchQuery.length > 1) {
+      if (query.length > 1) {
         setIsSearching(true)
-        const results = await searchItems({ query: searchQuery })
+        const results = await searchItems({ query: query })
         results && setSearchResults(results[0])
         setIsSearching(false)
       } else {
@@ -64,7 +65,7 @@ export const CommandMenu = () => {
     }
 
     performSearch()
-  }, [searchQuery])
+  }, [query])
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen)

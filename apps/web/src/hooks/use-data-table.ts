@@ -15,10 +15,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import { useDebounce } from "@uidotdev/usehooks"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import * as React from "react"
 import { z } from "zod"
-import { useDebounce } from "~/hooks/use-debounce"
 import { useQueryString } from "~/hooks/use-query-string"
 import type { DataTableFilterField } from "~/types"
 

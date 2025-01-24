@@ -1,5 +1,6 @@
 "use client"
 
+import { useMediaQuery } from "@uidotdev/usehooks"
 import { cx } from "cva"
 import {
   CopyrightIcon,
@@ -15,10 +16,9 @@ import { Nav } from "~/components/admin/nav"
 import { NavMain } from "~/components/admin/nav-main"
 import { Separator } from "~/components/admin/ui/separator"
 import { siteConfig } from "~/config/site"
-import { useIsMobile } from "~/hooks/use-mobile"
 
 export const Sidebar = () => {
-  const isMobile = useIsMobile()
+  const isMobile = useMediaQuery("(max-width: 768px)")
 
   return (
     <div
