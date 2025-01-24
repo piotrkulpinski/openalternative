@@ -15,7 +15,6 @@ export type FilterOption = {
 
 export const findFilterOptions = createServerAction().handler(
   async (): Promise<Record<(typeof config.search.filters)[number], FilterOption[]>> => {
-    const start = performance.now()
     const [alternative, category, stack, license] = await Promise.all([
       findAlternatives({}).then(r =>
         r.map(({ slug, name, _count }) => ({ slug, name, count: _count.tools })),
@@ -30,8 +29,6 @@ export const findFilterOptions = createServerAction().handler(
         r.map(({ slug, name, _count }) => ({ slug, name, count: _count.tools })),
       ),
     ])
-
-    console.log("findFilterOptions", performance.now() - start)
 
     return {
       alternative,
