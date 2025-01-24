@@ -1,24 +1,26 @@
+import { ClientOnly } from "~/components/web/client-only"
 import { Pagination } from "~/components/web/pagination"
 import { ToolList } from "~/components/web/tools/tool-list"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { ToolSearch } from "~/components/web/tools/tool-search"
 import { Input } from "~/components/web/ui/input"
-import type { CategoryMany } from "~/server/web/categories/payloads"
 import type { ToolMany } from "~/server/web/tools/payloads"
 
 type ToolQueryProps = {
   tools: ToolMany[]
-  categories?: CategoryMany[]
   perPage: number
   totalCount: number
   placeholder?: string
 }
 
-const ToolQuery = ({ tools, perPage, totalCount, categories, placeholder }: ToolQueryProps) => {
+const ToolQuery = ({ tools, perPage, totalCount, placeholder }: ToolQueryProps) => {
   return (
     <>
       <div className="flex flex-col gap-5" id="tools">
-        <ToolSearch categories={categories} placeholder={placeholder} />
+        <ClientOnly fallback={<Input size="lg" placeholder="Loading..." disabled />}>
+          <ToolSearch placeholder={placeholder} />
+        </ClientOnly>
+
         <ToolList tools={tools} />
       </div>
 

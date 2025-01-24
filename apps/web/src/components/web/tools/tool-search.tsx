@@ -1,22 +1,24 @@
 "use client"
 
-import { LoaderIcon, SearchIcon } from "lucide-react"
+import { useDebounce } from "@uidotdev/usehooks"
+import { useLocalStorage } from "@uidotdev/usehooks"
+import { cx } from "cva"
+import { ListFilterIcon, LoaderIcon, SearchIcon } from "lucide-react"
 import { type Values, useQueryStates } from "nuqs"
 import { useEffect, useState, useTransition } from "react"
 import { Stack } from "~/components/common/stack"
+import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { Input } from "~/components/web/ui/input"
 import { Select } from "~/components/web/ui/select"
-import { useDebounce } from "~/hooks/use-debounce"
-import type { CategoryMany } from "~/server/web/categories/payloads"
 import { toolsSearchParams } from "~/server/web/tools/search-params"
 
 export type ToolSearchProps = {
-  categories?: CategoryMany[]
   placeholder?: string
 }
 
-export const ToolSearch = ({ categories, placeholder }: ToolSearchProps) => {
+export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
   const [isLoading, startTransition] = useTransition()
+  const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage("filtersOpen", false)
   const [filters, setFilters] = useQueryStates(toolsSearchParams, {
     shallow: false,
     startTransition,
@@ -51,52 +53,53 @@ export const ToolSearch = ({ categories, placeholder }: ToolSearchProps) => {
   ]
 
   return (
-    <Stack className="w-full">
-      <div className="relative grow min-w-0">
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
-          {isLoading ? <LoaderIcon className="animate-spin" /> : <SearchIcon />}
+    <Stack direction="column" className="w-full">
+      <Stack className="w-full">
+        <div className="relative grow min-w-0">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
+            {isLoading ? <LoaderIcon className="animate-spin" /> : <SearchIcon />}
+          </div>
+
+          <Input
+            size="lg"
+            value={inputValue}
+            onChange={e => setInputValue(e.target.value)}
+            placeholder={placeholder || "Search tools..."}
+            className="w-full truncate px-10"
+          />
+
+          <button
+            type="button"
+            className={cx(
+              "absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-2 py-1.5 px-2.5 rounded-md",
+              isFiltersOpen
+                ? "bg-card-dark text-foreground"
+                : "text-muted hover:bg-card-dark hover:text-foreground",
+            )}
+            onClick={() => setIsFiltersOpen(prev => !prev)}
+          >
+            <ListFilterIcon className="size-4" />
+            <span className="text-sm leading-none">Filters</span>
+          </button>
         </div>
 
-        <Input
-          size="lg"
-          value={inputValue}
-          onChange={e => setInputValue(e.target.value)}
-          placeholder={placeholder || "Search tools..."}
-          className="w-full truncate pl-10"
-        />
-      </div>
-
-      {categories && (
         <Select
           size="lg"
-          className="min-w-40 max-sm:flex-1"
-          value={filters.category}
-          onChange={e => updateFilters({ category: e.target.value })}
+          className="min-w-36 max-sm:flex-1"
+          value={filters.sort}
+          onChange={e => updateFilters({ sort: e.target.value })}
         >
-          <option value="">All categories</option>
+          <option value="">Order by</option>
 
-          {categories.map(category => (
-            <option key={category.slug} value={category.slug}>
-              {category.name}
+          {sortOptions.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
             </option>
           ))}
         </Select>
-      )}
+      </Stack>
 
-      <Select
-        size="lg"
-        className="min-w-36 max-sm:flex-1"
-        value={filters.sort}
-        onChange={e => updateFilters({ sort: e.target.value })}
-      >
-        <option value="">Order by</option>
-
-        {sortOptions.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </Select>
+      <ToolFilters className={cx(!isFiltersOpen && "hidden")} />
     </Stack>
   )
 }
