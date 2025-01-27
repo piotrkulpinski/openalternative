@@ -11,7 +11,7 @@ import {
   useTransition,
 } from "react"
 import { toolsSearchParams } from "~/server/web/tools/search-params"
-import type { LockedFilter } from "~/types/search"
+import type { FilterType, LockedFilter } from "~/types/search"
 
 export type ToolFiltersProviderProps = {
   lockedFilters?: LockedFilter[]
@@ -23,6 +23,7 @@ export type ToolFiltersContextType = ToolFiltersProviderProps & {
   inputValue: string
   setInputValue: Dispatch<React.SetStateAction<string>>
   updateFilters: (values: Partial<Values<typeof toolsSearchParams>>) => void
+  getFilterValues: (type: FilterType) => string[]
 }
 
 const ToolFiltersContext = createContext<ToolFiltersContextType | undefined>(undefined)
@@ -47,10 +48,14 @@ const ToolFiltersProvider = ({
     setFilters(prev => ({
       ...prev,
       ...values,
-      // Preserve all locked filters
-      ...Object.fromEntries(lockedFilters.map(lock => [lock.type, [lock.value]])),
       page: null,
     }))
+  }
+
+  const getFilterValues = (type: FilterType) => {
+    const lockedFilter = lockedFilters.find(f => f.type === type)
+    if (lockedFilter) return [lockedFilter.value]
+    return filters[type] || []
   }
 
   // Update query param when input changes
@@ -67,23 +72,17 @@ const ToolFiltersProvider = ({
     }
   }, [filters.q])
 
-  // Initialize locked filters
-  useEffect(() => {
-    const needsUpdate = lockedFilters.some(
-      lock => !filters[lock.type]?.length || !filters[lock.type].includes(lock.value),
-    )
-
-    if (needsUpdate) {
-      setFilters(prev => ({
-        ...prev,
-        ...Object.fromEntries(lockedFilters.map(lock => [lock.type, [lock.value]])),
-      }))
-    }
-  }, [])
-
   return (
     <ToolFiltersContext.Provider
-      value={{ lockedFilters, filters, isLoading, inputValue, setInputValue, updateFilters }}
+      value={{
+        lockedFilters,
+        filters,
+        isLoading,
+        inputValue,
+        setInputValue,
+        updateFilters,
+        getFilterValues,
+      }}
     >
       {children}
     </ToolFiltersContext.Provider>

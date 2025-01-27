@@ -32,7 +32,8 @@ export const ToolRefinement = ({
   className,
   ...props
 }: ToolRefinementProps) => {
-  const { filters, updateFilters } = useToolFilters()
+  const { getFilterValues, updateFilters } = useToolFilters()
+  const selectedValues = getFilterValues(filter)
 
   return (
     <Command
@@ -56,21 +57,21 @@ export const ToolRefinement = ({
               value={item.slug}
               onSelect={() =>
                 updateFilters({
-                  [filter]: filters[filter].includes(item.slug)
-                    ? filters[filter].filter(v => v !== item.slug)
-                    : [...filters[filter], item.slug],
+                  [filter]: selectedValues.includes(item.slug)
+                    ? selectedValues.filter(v => v !== item.slug)
+                    : [...selectedValues, item.slug],
                 })
               }
               className={cx(
                 "flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-secondary py-1 px-2 -mx-1 rounded-sm data-[selected=true]:bg-card-dark data-[selected=true]:text-foreground",
                 disabled && "opacity-50 pointer-events-none",
-                filters[filter].includes(item.slug) && "bg-card-dark text-foreground",
+                selectedValues.includes(item.slug) && "bg-card-dark text-foreground",
               )}
               disabled={disabled}
             >
               <input
                 type="checkbox"
-                checked={filters[filter].includes(item.slug)}
+                checked={selectedValues.includes(item.slug)}
                 readOnly
                 className="pointer-events-none"
               />
