@@ -1,96 +1,88 @@
 "use client"
 
 import { XIcon } from "lucide-react"
-import type { Values } from "nuqs"
-import { type HTMLAttributes, useEffect, useMemo } from "react"
+import { useCallback, useEffect } from "react"
+import type { HTMLAttributes } from "react"
 import { useServerAction } from "zsa-react"
 import { Stack } from "~/components/common/stack"
 import { ToolRefinement } from "~/components/web/tools/tool-refinement"
 import { Badge } from "~/components/web/ui/badge"
-import { config } from "~/config"
+import { searchConfig } from "~/config/search"
+import { useToolFilters } from "~/hooks/use-tool-filters"
 import { findFilterOptions } from "~/server/web/tools/actions"
-import type { toolsSearchParams } from "~/server/web/tools/search-params"
 import { cx } from "~/utils/cva"
 
-export type ToolFiltersProps = HTMLAttributes<HTMLDivElement> & {
-  filters: Values<typeof toolsSearchParams>
-  updateFilters: (values: Partial<Values<typeof toolsSearchParams>>) => void
-}
+const filterTypes = searchConfig.filters
 
-export const ToolFilters = ({ className, filters, updateFilters, ...props }: ToolFiltersProps) => {
+export const ToolFilters = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
+  const { filters, updateFilters } = useToolFilters()
   const { execute, isPending, data } = useServerAction(findFilterOptions)
 
   useEffect(() => {
     execute()
   }, [execute])
 
-  const activeFiltersByType = useMemo(
-    () =>
-      config.search.filters.reduce(
-        (acc, filterType) => {
-          const values = filters[filterType] as string[]
-          if (!values?.length) return acc
+  const hasActiveFilters = filterTypes.some(type => filters[type].length > 0)
 
-          acc[filterType] = values.map(value => ({
-            value,
-            name: data?.[filterType]?.find(item => item.slug === value)?.name ?? value,
-          }))
-          return acc
-        },
-        {} as Record<(typeof config.search.filters)[number], { value: string; name: string }[]>,
-      ),
-    [filters, data],
+  const handleRemoveFilter = useCallback(
+    (type: (typeof filterTypes)[number], value: string) => {
+      updateFilters({
+        [type]: filters[type].filter(v => v !== value),
+      })
+    },
+    [updateFilters],
   )
 
-  const hasActiveFilters = Object.keys(activeFiltersByType).length > 0
-
-  const handleRemoveFilter = (
-    filterType: (typeof config.search.filters)[number],
-    value: string,
-  ) => {
-    updateFilters({
-      [filterType]: filters[filterType].filter(v => v !== value),
-    })
-  }
-
-  const handleClearAll = () => {
-    const resetFilters = Object.fromEntries(
-      config.search.filters.map(filter => [filter, [] as string[]]),
-    )
-    updateFilters(resetFilters)
-  }
+  const handleClearAll = useCallback(() => {
+    updateFilters(Object.fromEntries(filterTypes.map(filter => [filter, []])))
+  }, [updateFilters])
 
   return (
     <div className={cx("grid w-full grid-cols-xs gap-4", className)} {...props}>
-      {config.search.filters.map(filterType => (
-        <ToolRefinement
-          key={filterType}
-          filter={filterType}
-          items={data?.[filterType] ?? []}
-          isPending={isPending}
-          filters={filters}
-          updateFilters={updateFilters}
-        />
+      {filterTypes.map(type => (
+        <ToolRefinement key={type} filter={type} items={data?.[type] ?? []} isPending={isPending} />
       ))}
 
       {hasActiveFilters && (
-        <Stack className="col-span-full">
-          {Object.entries(activeFiltersByType).map(([filterType, values]) => (
-            <Stack key={filterType} size="xs">
-              <span className="text-xs font-medium capitalize text-secondary">{filterType}:</span>
+        <Stack className="col-span-full" size="sm">
+          {filterTypes.map(type => {
+            const activeItems = filters[type]
+            if (!activeItems.length) return null
 
-              {values.map(({ value, name }) => (
-                <Badge key={`${filterType}-${value}`} suffix={<XIcon className="size-3" />} asChild>
-                  <button type="button" onClick={() => handleRemoveFilter(filterType, value)}>
-                    {name}
-                  </button>
-                </Badge>
-              ))}
-            </Stack>
-          ))}
+            return (
+              <Stack key={type} size="xs">
+                <span className="text-xs font-medium capitalize text-secondary">{type}:</span>
+
+                <Stack direction="row" className="flex-wrap gap-1.5">
+                  {activeItems.map(slug => {
+                    const item = data?.[type]?.find(item => item.slug === slug)
+                    if (!item) return null
+
+                    return (
+                      <Badge
+                        key={`${type}-${slug}`}
+                        suffix={
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveFilter(type, slug)}
+                            className="opacity-75 hover:opacity-100"
+                            aria-label={`Remove ${item.name} filter`}
+                          >
+                            <XIcon />
+                          </button>
+                        }
+                      >
+                        {item.name}
+                      </Badge>
+                    )
+                  })}
+                </Stack>
+              </Stack>
+            )
+          })}
 
           <Badge variant="outline" asChild>
-            <button type="button" onClick={handleClearAll}>
+            <button type="button" onClick={handleClearAll} aria-label="Clear all filters">
               Clear all
             </button>
           </Badge>

@@ -10,28 +10,27 @@ import {
   CommandLoading,
 } from "cmdk"
 import type { ComponentProps } from "react"
-import type { ToolFiltersProps } from "~/components/web/tools/tool-filters"
 import { Badge } from "~/components/web/ui/badge"
-import type { config } from "~/config"
+import type { searchConfig } from "~/config/search"
+import { useToolFilters } from "~/hooks/use-tool-filters"
 import type { FilterOption } from "~/server/web/tools/actions"
 import { cx } from "~/utils/cva"
 
-type ToolRefinementProps = Omit<ComponentProps<typeof Command>, "filter"> &
-  ToolFiltersProps & {
-    filter: (typeof config.search.filters)[number]
-    items: FilterOption[]
-    isPending?: boolean
-  }
+type ToolRefinementProps = Omit<ComponentProps<typeof Command>, "filter"> & {
+  filter: (typeof searchConfig.filters)[number]
+  items: FilterOption[]
+  isPending?: boolean
+}
 
 export const ToolRefinement = ({
   filter,
   items,
   isPending,
-  filters,
-  updateFilters,
   className,
   ...props
 }: ToolRefinementProps) => {
+  const { filters, updateFilters } = useToolFilters()
+
   return (
     <Command
       filter={(value, search) => (value.toLowerCase().includes(search.toLowerCase()) ? 1 : 0)}
@@ -41,7 +40,6 @@ export const ToolRefinement = ({
       <CommandInput
         placeholder={`Search ${filter}`}
         className="w-full !text-xs !min-w-[0] px-3 py-2 font-normal border-b outline-none"
-        // disabled
       />
 
       <CommandList className="flex flex-col p-2 max-h-60 overflow-auto">

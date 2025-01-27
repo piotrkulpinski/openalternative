@@ -23,5 +23,5 @@
     "typescript": "^5.7.2"
   },
   "workspaces": ["apps/*", "packages/*"],
-  "packageManager": "bun@1.1.40"
+  "packageManager": "bun@1.1.34"
 }
