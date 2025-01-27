@@ -1,14 +1,7 @@
 "use client"
 
-import { useDebouncedState } from "@mantine/hooks"
 import { type Values, useQueryStates } from "nuqs"
-import {
-  type Dispatch,
-  type PropsWithChildren,
-  createContext,
-  useEffect,
-  useTransition,
-} from "react"
+import { type PropsWithChildren, createContext, useTransition } from "react"
 import { toolsSearchParams } from "~/server/web/tools/search-params"
 import type { FilterType, LockedFilter } from "~/types/search"
 
@@ -19,8 +12,6 @@ export type ToolFiltersProviderProps = {
 export type ToolFiltersContextType = ToolFiltersProviderProps & {
   filters: Values<typeof toolsSearchParams>
   isLoading: boolean
-  query: string
-  setQuery: Dispatch<React.SetStateAction<string>>
   updateFilters: (values: Partial<Values<typeof toolsSearchParams>>) => void
   getFilterValues: (type: FilterType) => string[]
 }
@@ -32,12 +23,12 @@ const ToolFiltersProvider = ({
   lockedFilters = [],
 }: PropsWithChildren<ToolFiltersProviderProps>) => {
   const [isLoading, startTransition] = useTransition()
+
   const [filters, setFilters] = useQueryStates(toolsSearchParams, {
     shallow: false,
+    throttleMs: 300,
     startTransition,
-    history: "push",
   })
-  const [query, setQuery] = useDebouncedState("", 300)
 
   const updateFilters = (values: Partial<Values<typeof toolsSearchParams>>) => {
     // Don't update if trying to modify any locked filter
@@ -56,28 +47,12 @@ const ToolFiltersProvider = ({
     return filters[type] || []
   }
 
-  // Update query param when input changes
-  useEffect(() => {
-    if (query !== filters.q) {
-      updateFilters({ q: query || null })
-    }
-  }, [query])
-
-  // Initialize input value from URL
-  useEffect(() => {
-    if (filters.q && !query) {
-      setQuery(filters.q)
-    }
-  }, [filters.q])
-
   return (
     <ToolFiltersContext.Provider
       value={{
         lockedFilters,
         filters,
         isLoading,
-        query,
-        setQuery,
         updateFilters,
         getFilterValues,
       }}

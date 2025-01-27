@@ -2,7 +2,7 @@ import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString 
 import { config } from "~/config"
 
 export const toolsSearchParams = {
-  q: parseAsString,
+  q: parseAsString.withDefault(""),
   alternative: parseAsArrayOf(parseAsString).withDefault([]),
   category: parseAsArrayOf(parseAsString).withDefault([]),
   stack: parseAsArrayOf(parseAsString).withDefault([]),

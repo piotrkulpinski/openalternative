@@ -14,7 +14,7 @@ export type ToolSearchProps = {
 }
 
 export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
-  const { filters, isLoading, query, setQuery, updateFilters } = useToolFilters()
+  const { filters, isLoading, updateFilters } = useToolFilters()
 
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage({
     key: "filtersOpen",
@@ -41,8 +41,8 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
 
           <Input
             size="lg"
-            value={query}
-            onChange={e => setQuery(e.target.value)}
+            value={filters.q || ""}
+            onChange={e => updateFilters({ q: e.target.value })}
             placeholder={isLoading ? "Loading..." : placeholder || "Search tools..."}
             className="w-full truncate px-10"
           />
