@@ -1,9 +1,9 @@
 "use client"
 
-import { useDebounce } from "@uidotdev/usehooks"
+import { useDebouncedState } from "@mantine/hooks"
 import { LoaderIcon, SearchIcon } from "lucide-react"
 import { type Values, useQueryStates } from "nuqs"
-import { useEffect, useState, useTransition } from "react"
+import { useEffect, useTransition } from "react"
 import { Stack } from "~/components/common/stack"
 import { Input } from "~/components/web/ui/input"
 import { Select } from "~/components/web/ui/select"
@@ -19,8 +19,7 @@ export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
     shallow: false,
     startTransition,
   })
-  const [inputValue, setInputValue] = useState(filters.q || "")
-  const q = useDebounce(inputValue, 300)
+  const [query, setQuery] = useDebouncedState(filters.q || "", 300)
 
   const updateFilters = (values: Partial<Values<typeof alternativesSearchParams>>) => {
     setFilters({ ...values, page: null })
@@ -29,13 +28,13 @@ export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
   useEffect(() => {
     setFilters(prev => ({
       ...prev,
-      q: q || null,
-      page: q && q !== prev.q ? null : prev.page,
+      q: query || null,
+      page: query && query !== prev.q ? null : prev.page,
     }))
-  }, [q])
+  }, [query])
 
   useEffect(() => {
-    setInputValue(filters.q || "")
+    setQuery(filters.q || "")
   }, [filters])
 
   const sortOptions = [
@@ -53,8 +52,8 @@ export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
 
         <Input
           size="lg"
-          value={inputValue}
-          onChange={e => setInputValue(e.target.value)}
+          value={query}
+          onChange={e => setQuery(e.target.value)}
           placeholder={placeholder || "Search alternatives..."}
           className="w-full truncate pl-10"
         />

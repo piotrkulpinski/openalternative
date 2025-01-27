@@ -15,7 +15,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { useDebounce } from "@uidotdev/usehooks"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import * as React from "react"
 import { z } from "zod"
@@ -206,14 +205,11 @@ export function useDataTable<TData>({
   }, [pageIndex, pageSize, sorting, method, scroll])
 
   // Handle server-side filtering
-  const debouncedSearchableColumnFilters = JSON.parse(
-    useDebounce(
-      JSON.stringify(
-        columnFilters.filter(filter => {
-          return searchableColumns.find(column => column.value === filter.id)
-        }),
-      ),
-      500,
+  const searchableColumnFilters = JSON.parse(
+    JSON.stringify(
+      columnFilters.filter(filter => {
+        return searchableColumns.find(column => column.value === filter.id)
+      }),
     ),
   ) as ColumnFiltersState
 
@@ -239,7 +235,7 @@ export function useDataTable<TData>({
     }
 
     // Handle debounced searchable column filters
-    for (const column of debouncedSearchableColumnFilters) {
+    for (const column of searchableColumnFilters) {
       if (typeof column.value === "string") {
         Object.assign(newParamsObject, {
           [column.id]: typeof column.value === "string" ? column.value : null,
@@ -258,7 +254,7 @@ export function useDataTable<TData>({
     for (const key of searchParams.keys()) {
       if (
         (searchableColumns.find(column => column.value === key) &&
-          !debouncedSearchableColumnFilters.find(column => column.id === key)) ||
+          !searchableColumnFilters.find(column => column.id === key)) ||
         (filterableColumns.find(column => column.value === key) &&
           !filterableColumnFilters.find(column => column.id === key))
       ) {
@@ -284,7 +280,7 @@ export function useDataTable<TData>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    JSON.stringify(debouncedSearchableColumnFilters),
+    JSON.stringify(searchableColumnFilters),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     JSON.stringify(filterableColumnFilters),
     method,
