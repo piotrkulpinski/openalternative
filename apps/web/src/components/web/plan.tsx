@@ -2,6 +2,7 @@
 
 import { Slot } from "@radix-ui/react-slot"
 import { ArrowUpRightIcon, CheckIcon, XIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
@@ -104,6 +105,7 @@ const Plan = ({
   isFeatured,
   ...props
 }: PlanProps) => {
+  const router = useRouter()
   const { isSubscription, currentPrice, price, fullPrice, discount, interval, setInterval } =
     usePlanPrices(prices ?? [], coupon)
 
@@ -114,7 +116,7 @@ const Plan = ({
         mode: isSubscription ? "featured" : "expedited",
       })
 
-      window.open(data, "_blank")?.focus()
+      router.push(data)
     },
 
     onError: ({ err }) => {
