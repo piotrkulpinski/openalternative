@@ -1,38 +1,12 @@
-import { useDebounce } from "@uidotdev/usehooks"
-import { type Values, useQueryStates } from "nuqs"
-import { useEffect, useState, useTransition } from "react"
-import { toolsSearchParams } from "~/server/web/tools/search-params"
+import { use } from "react"
+import { ToolFiltersContext } from "~/contexts/tool-filter-context"
 
 export const useToolFilters = () => {
-  const [isLoading, startTransition] = useTransition()
-  const [filters, setFilters] = useQueryStates(toolsSearchParams, {
-    shallow: false,
-    startTransition,
-  })
-  const [inputValue, setInputValue] = useState(filters.q || "")
-  const q = useDebounce(inputValue, 300)
+  const context = use(ToolFiltersContext)
 
-  const updateFilters = (values: Partial<Values<typeof toolsSearchParams>>) => {
-    setFilters(prev => ({ ...prev, ...values, page: null }))
+  if (context === undefined) {
+    throw new Error("useToolFilter must be used within a ToolFilterProvider")
   }
 
-  useEffect(() => {
-    setFilters(prev => ({
-      ...prev,
-      q: q || null,
-      page: q && q !== prev.q ? null : prev.page,
-    }))
-  }, [q])
-
-  useEffect(() => {
-    setInputValue(filters.q || "")
-  }, [filters])
-
-  return {
-    filters,
-    isLoading,
-    inputValue,
-    setInputValue,
-    updateFilters,
-  }
+  return context
 }

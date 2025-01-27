@@ -22,6 +22,7 @@ export const StackToolListing = async ({ stack, searchParams }: StackToolListing
       totalCount={totalCount}
       perPage={parsedParams.perPage}
       placeholder={`Search in ${totalCount} ${stack.name} tools...`}
+      lockedFilters={[{ type: "stack", value: stack.slug }]}
     />
   )
 }

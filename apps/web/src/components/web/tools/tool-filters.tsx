@@ -10,42 +10,53 @@ import { Badge } from "~/components/web/ui/badge"
 import { searchConfig } from "~/config/search"
 import { useToolFilters } from "~/hooks/use-tool-filters"
 import { findFilterOptions } from "~/server/web/tools/actions"
+import type { FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
 
-const filterTypes = searchConfig.filters
-
 export const ToolFilters = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
-  const { filters, updateFilters } = useToolFilters()
+  const { filters, lockedFilters = [], updateFilters } = useToolFilters()
   const { execute, isPending, data } = useServerAction(findFilterOptions)
 
   useEffect(() => {
     execute()
   }, [execute])
 
-  const hasActiveFilters = filterTypes.some(type => filters[type].length > 0)
+  const lockedTypes = lockedFilters.map(f => f.type)
+  const availableFilters = searchConfig.filters.filter(type => !lockedTypes.includes(type))
+  const hasActiveFilters = availableFilters.some(type => filters[type].length > 0)
 
   const handleRemoveFilter = useCallback(
-    (type: (typeof filterTypes)[number], value: string) => {
+    (type: FilterType, value: string) => {
+      if (lockedTypes.includes(type)) return
+
       updateFilters({
         [type]: filters[type].filter(v => v !== value),
       })
     },
-    [updateFilters],
+    [updateFilters, filters, lockedTypes],
   )
 
   const handleClearAll = useCallback(() => {
-    updateFilters(Object.fromEntries(filterTypes.map(filter => [filter, []])))
-  }, [updateFilters])
+    const clearedFilters = Object.fromEntries(availableFilters.map(filter => [filter, []]))
+    updateFilters(clearedFilters)
+  }, [updateFilters, availableFilters])
 
   return (
     <div className={cx("grid w-full grid-cols-xs gap-4", className)} {...props}>
-      {filterTypes.map(type => (
-        <ToolRefinement key={type} filter={type} items={data?.[type] ?? []} isPending={isPending} />
+      {searchConfig.filters.map(type => (
+        <ToolRefinement
+          key={type}
+          filter={type}
+          items={data?.[type] ?? []}
+          isPending={isPending}
+          disabled={lockedTypes.includes(type)}
+          defaultValue={lockedFilters.find(f => f.type === type)?.value}
+        />
       ))}
 
       {hasActiveFilters && (
         <Stack className="col-span-full" size="sm">
-          {filterTypes.map(type => {
+          {availableFilters.map(type => {
             const activeItems = filters[type]
             if (!activeItems.length) return null
 

@@ -25,5 +25,16 @@ export const CategoryToolListing = async ({
     },
   })
 
-  return <ToolQuery tools={tools} totalCount={totalCount} perPage={parsedParams.perPage} />
+  return (
+    <ToolQuery
+      tools={tools}
+      totalCount={totalCount}
+      perPage={parsedParams.perPage}
+      placeholder={`Search in ${totalCount} ${category.label} tools licensed under ${license.name}...`}
+      lockedFilters={[
+        { type: "category", value: category.slug },
+        { type: "license", value: license.slug },
+      ]}
+    />
+  )
 }
