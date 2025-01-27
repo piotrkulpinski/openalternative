@@ -5,8 +5,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   skipTrailingSlashRedirect: true,
 
-  transpilePackages: ["nanoid"],
-
   typescript: {
     ignoreBuildErrors: true,
   },
