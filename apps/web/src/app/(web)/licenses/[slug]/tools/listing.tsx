@@ -15,5 +15,13 @@ export const LicenseToolListing = async ({ license, searchParams }: LicenseToolL
     where: { license: { slug: license.slug } },
   })
 
-  return <ToolQuery tools={tools} totalCount={totalCount} perPage={parsedParams.perPage} />
+  return (
+    <ToolQuery
+      tools={tools}
+      totalCount={totalCount}
+      perPage={parsedParams.perPage}
+      placeholder={`Search in ${totalCount} tools licensed under ${license.name}...`}
+      lockedFilters={[{ type: "license", value: license.slug }]}
+    />
+  )
 }

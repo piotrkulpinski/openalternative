@@ -22,6 +22,7 @@ export const CategoryToolListing = async ({ category, searchParams }: CategoryTo
       totalCount={totalCount}
       perPage={parsedParams.perPage}
       placeholder={`Search in ${totalCount} ${category.label}...`}
+      lockedFilters={[{ type: "category", value: category.slug }]}
     />
   )
 }

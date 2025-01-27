@@ -11,21 +11,24 @@ import {
 } from "cmdk"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/web/ui/badge"
-import type { searchConfig } from "~/config/search"
 import { useToolFilters } from "~/hooks/use-tool-filters"
-import type { FilterOption } from "~/server/web/tools/actions"
+import type { FilterOption, FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
 
 type ToolRefinementProps = Omit<ComponentProps<typeof Command>, "filter"> & {
-  filter: (typeof searchConfig.filters)[number]
+  filter: FilterType
   items: FilterOption[]
   isPending?: boolean
+  disabled?: boolean
+  defaultValue?: string
 }
 
 export const ToolRefinement = ({
   filter,
   items,
   isPending,
+  disabled,
+  defaultValue,
   className,
   ...props
 }: ToolRefinementProps) => {
@@ -39,7 +42,8 @@ export const ToolRefinement = ({
     >
       <CommandInput
         placeholder={`Search ${filter}`}
-        className="w-full !text-xs !min-w-[0] px-3 py-2 font-normal border-b outline-none"
+        className="w-full !text-xs !min-w-[0] px-3 py-2 font-normal border-b outline-none disabled:opacity-50"
+        disabled={disabled}
       />
 
       <CommandList className="flex flex-col p-2 max-h-60 overflow-auto">
@@ -50,19 +54,23 @@ export const ToolRefinement = ({
             <CommandItem
               key={item.slug}
               value={item.slug}
-              onSelect={(value: string) => {
-                const currentValues = filters[filter] as string[]
-                const newValues = currentValues.includes(value)
-                  ? currentValues.filter(v => v !== value)
-                  : [...currentValues, value]
-
-                updateFilters({ [filter]: newValues })
-              }}
-              className="flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-secondary py-1 px-2 -mx-1 rounded-sm data-[selected=true]:bg-card-dark data-[selected=true]:text-foreground data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50"
+              onSelect={() =>
+                updateFilters({
+                  [filter]: filters[filter].includes(item.slug)
+                    ? filters[filter].filter(v => v !== item.slug)
+                    : [...filters[filter], item.slug],
+                })
+              }
+              className={cx(
+                "flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-secondary py-1 px-2 -mx-1 rounded-sm data-[selected=true]:bg-card-dark data-[selected=true]:text-foreground",
+                disabled && "opacity-50 pointer-events-none",
+                filters[filter].includes(item.slug) && "bg-card-dark text-foreground",
+              )}
+              disabled={disabled}
             >
               <input
                 type="checkbox"
-                checked={(filters[filter] as string[]).includes(item.slug)}
+                checked={filters[filter].includes(item.slug)}
                 readOnly
                 className="pointer-events-none"
               />
