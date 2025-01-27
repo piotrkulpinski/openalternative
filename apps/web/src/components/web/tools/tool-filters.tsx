@@ -14,7 +14,7 @@ import type { FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
 
 export const ToolFilters = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
-  const { filters, lockedFilters = [], updateFilters } = useToolFilters()
+  const { filters, lockedFilters = [], updateFilters, getFilterValues } = useToolFilters()
   const { execute, isPending, data } = useServerAction(findFilterOptions)
 
   useEffect(() => {
@@ -23,17 +23,16 @@ export const ToolFilters = ({ className, ...props }: HTMLAttributes<HTMLDivEleme
 
   const lockedTypes = lockedFilters.map(f => f.type)
   const availableFilters = searchConfig.filters.filter(type => !lockedTypes.includes(type))
-  const hasActiveFilters = availableFilters.some(type => filters[type].length > 0)
+  const hasActiveFilters = availableFilters.some(type => getFilterValues(type).length > 0)
 
   const handleRemoveFilter = useCallback(
     (type: FilterType, value: string) => {
       if (lockedTypes.includes(type)) return
 
-      updateFilters({
-        [type]: filters[type].filter(v => v !== value),
-      })
+      const currentValues = getFilterValues(type)
+      updateFilters({ [type]: currentValues.filter(v => v !== value) })
     },
-    [updateFilters, filters, lockedTypes],
+    [updateFilters, getFilterValues, lockedTypes],
   )
 
   const handleClearAll = useCallback(() => {
@@ -57,7 +56,7 @@ export const ToolFilters = ({ className, ...props }: HTMLAttributes<HTMLDivEleme
       {hasActiveFilters && (
         <Stack className="col-span-full" size="sm">
           {availableFilters.map(type => {
-            const activeItems = filters[type]
+            const activeItems = getFilterValues(type)
             if (!activeItems.length) return null
 
             return (
