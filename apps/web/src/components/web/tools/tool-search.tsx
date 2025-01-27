@@ -1,55 +1,30 @@
 "use client"
 
-import { useDebounce } from "@uidotdev/usehooks"
 import { useLocalStorage } from "@uidotdev/usehooks"
 import { cx } from "cva"
 import { ListFilterIcon, LoaderIcon, SearchIcon } from "lucide-react"
-import { type Values, useQueryStates } from "nuqs"
-import { useEffect, useState, useTransition } from "react"
 import { Stack } from "~/components/common/stack"
 import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { Input } from "~/components/web/ui/input"
 import { Select } from "~/components/web/ui/select"
-import { toolsSearchParams } from "~/server/web/tools/search-params"
+import { useToolFilters } from "~/hooks/use-tool-filters"
 
 export type ToolSearchProps = {
   placeholder?: string
 }
 
 export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
-  const [isLoading, startTransition] = useTransition()
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage("filtersOpen", false)
-  const [filters, setFilters] = useQueryStates(toolsSearchParams, {
-    shallow: false,
-    startTransition,
-  })
-  const [inputValue, setInputValue] = useState(filters.q || "")
-  const q = useDebounce(inputValue, 300)
-
-  const updateFilters = (values: Partial<Values<typeof toolsSearchParams>>) => {
-    setFilters(prev => ({ ...prev, ...values, page: null }))
-  }
-
-  useEffect(() => {
-    setFilters(prev => ({
-      ...prev,
-      q: q || null,
-      page: q && q !== prev.q ? null : prev.page,
-    }))
-  }, [q])
-
-  useEffect(() => {
-    setInputValue(filters.q || "")
-  }, [filters])
+  const { filters, isLoading, inputValue, setInputValue, updateFilters } = useToolFilters()
 
   const sortOptions = [
-    { value: "publishedAt.desc", label: "Recently Added" },
+    { value: "publishedAt.desc", label: "Latest" },
     { value: "name.asc", label: "Name (A to Z)" },
     { value: "name.desc", label: "Name (Z to A)" },
     { value: "stars.desc", label: "Most Stars" },
     { value: "forks.desc", label: "Most Forks" },
-    { value: "lastCommitDate.desc", label: "Recently Updated" },
-    { value: "firstCommitDate.desc", label: "Newest Projects" },
+    { value: "lastCommitDate.desc", label: "Last Commit" },
+    { value: "firstCommitDate.desc", label: "Repository Age" },
   ]
 
   return (
@@ -99,7 +74,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
         </Select>
       </Stack>
 
-      {isFiltersOpen && <ToolFilters filters={filters} updateFilters={updateFilters} />}
+      {isFiltersOpen && <ToolFilters />}
     </Stack>
   )
 }

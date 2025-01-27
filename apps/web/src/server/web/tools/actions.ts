@@ -1,7 +1,7 @@
 "use server"
 
 import { createServerAction } from "zsa"
-import type { config } from "~/config"
+import type { searchConfig } from "~/config/search"
 import { findAlternatives } from "~/server/web/alternatives/queries"
 import { findCategories } from "~/server/web/categories/queries"
 import { findLicenses } from "~/server/web/licenses/queries"
@@ -14,7 +14,7 @@ export type FilterOption = {
 }
 
 export const findFilterOptions = createServerAction().handler(
-  async (): Promise<Record<(typeof config.search.filters)[number], FilterOption[]>> => {
+  async (): Promise<Record<(typeof searchConfig.filters)[number], FilterOption[]>> => {
     const [alternative, category, stack, license] = await Promise.all([
       findAlternatives({}).then(r =>
         r.map(({ slug, name, _count }) => ({ slug, name, count: _count.tools })),
