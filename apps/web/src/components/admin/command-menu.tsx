@@ -1,7 +1,7 @@
 "use client"
 
+import { useDebouncedState } from "@mantine/hooks"
 import type { Alternative, Category, License, Tool } from "@openalternative/db/client"
-import { useDebounce } from "@uidotdev/usehooks"
 import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -27,10 +27,9 @@ type SearchResult = {
 export const CommandMenu = () => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
+  const [query, setQuery] = useDebouncedState("", 100)
   const [searchResults, setSearchResults] = useState<SearchResult | null>(null)
   const [isSearching, setIsSearching] = useState(false)
-  const query = useDebounce(searchQuery, 100)
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -56,7 +55,7 @@ export const CommandMenu = () => {
     const performSearch = async () => {
       if (query.length > 1) {
         setIsSearching(true)
-        const results = await searchItems({ query: query })
+        const results = await searchItems({ query })
         results && setSearchResults(results[0])
         setIsSearching(false)
       } else {
@@ -75,7 +74,7 @@ export const CommandMenu = () => {
   }
 
   const handleSearch = (value: string) => {
-    setSearchQuery(value)
+    setQuery(value)
   }
 
   const handleSendSocialPost = async () => {
@@ -91,7 +90,7 @@ export const CommandMenu = () => {
   const clearSearch = () => {
     setTimeout(() => {
       setSearchResults(null)
-      setSearchQuery("")
+      setQuery("")
     }, 250)
   }
 

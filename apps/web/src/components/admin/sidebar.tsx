@@ -1,6 +1,6 @@
 "use client"
 
-import { useMediaQuery } from "@uidotdev/usehooks"
+import { useMediaQuery } from "@mantine/hooks"
 import { cx } from "cva"
 import {
   CopyrightIcon,
@@ -26,7 +26,7 @@ export const Sidebar = () => {
     >
       <Nav>
         <NavMain
-          isCollapsed={isMobile}
+          isCollapsed={!!isMobile}
           links={[
             {
               title: "Dashboard",
@@ -41,7 +41,7 @@ export const Sidebar = () => {
 
       <Nav>
         <NavMain
-          isCollapsed={isMobile}
+          isCollapsed={!!isMobile}
           links={[
             {
               title: "Tools",
@@ -69,7 +69,7 @@ export const Sidebar = () => {
 
       <Nav className="mt-auto">
         <NavMain
-          isCollapsed={isMobile}
+          isCollapsed={!!isMobile}
           links={[
             {
               title: "Visit Site",

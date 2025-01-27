@@ -1,6 +1,6 @@
 "use client"
 
-import { useLocalStorage } from "@uidotdev/usehooks"
+import { useLocalStorage } from "@mantine/hooks"
 import { cx } from "cva"
 import { ListFilterIcon, LoaderIcon, SearchIcon } from "lucide-react"
 import { Stack } from "~/components/common/stack"
@@ -14,8 +14,12 @@ export type ToolSearchProps = {
 }
 
 export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
-  const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage("filtersOpen", false)
-  const { filters, isLoading, inputValue, setInputValue, updateFilters } = useToolFilters()
+  const { filters, isLoading, query, setQuery, updateFilters } = useToolFilters()
+
+  const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage({
+    key: "filtersOpen",
+    defaultValue: false,
+  })
 
   const sortOptions = [
     { value: "publishedAt.desc", label: "Latest" },
@@ -37,8 +41,8 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
 
           <Input
             size="lg"
-            value={inputValue}
-            onChange={e => setInputValue(e.target.value)}
+            value={query}
+            onChange={e => setQuery(e.target.value)}
             placeholder={isLoading ? "Loading..." : placeholder || "Search tools..."}
             className="w-full truncate px-10"
           />
