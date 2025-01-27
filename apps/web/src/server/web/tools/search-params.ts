@@ -1,12 +1,12 @@
-import { createSearchParamsCache, parseAsInteger, parseAsString } from "nuqs/server"
+import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 import { config } from "~/config"
 
 export const toolsSearchParams = {
   q: parseAsString,
-  alternative: parseAsString.withDefault(""),
-  category: parseAsString.withDefault(""),
-  stack: parseAsString.withDefault(""),
-  license: parseAsString.withDefault(""),
+  alternative: parseAsArrayOf(parseAsString).withDefault([]),
+  category: parseAsArrayOf(parseAsString).withDefault([]),
+  stack: parseAsArrayOf(parseAsString).withDefault([]),
+  license: parseAsArrayOf(parseAsString).withDefault([]),
   page: parseAsInteger.withDefault(1),
   sort: parseAsString.withDefault(""),
   perPage: parseAsInteger.withDefault(config.site.toolsPerPage),
