@@ -27,7 +27,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
   const q = useDebounce(inputValue, 300)
 
   const updateFilters = (values: Partial<Values<typeof toolsSearchParams>>) => {
-    setFilters({ ...values, page: null })
+    setFilters(prev => ({ ...prev, ...values, page: null }))
   }
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
             size="lg"
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
-            placeholder={placeholder || "Search tools..."}
+            placeholder={isLoading ? "Loading..." : placeholder || "Search tools..."}
             className="w-full truncate px-10"
           />
 
@@ -79,7 +79,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
             onClick={() => setIsFiltersOpen(prev => !prev)}
           >
             <ListFilterIcon className="size-4" />
-            <span className="text-sm leading-none">Filters</span>
+            <span className="text-sm leading-none max-sm:sr-only">Filters</span>
           </button>
         </div>
 

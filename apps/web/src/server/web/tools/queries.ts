@@ -32,10 +32,10 @@ export const searchTools = cache(
 
     const whereQuery: Prisma.ToolWhereInput = {
       status: ToolStatus.Published,
-      ...(alternative && { alternatives: { some: { slug: alternative } } }),
-      ...(category && { categories: { some: { slug: category } } }),
-      ...(stack && { stacks: { some: { slug: stack } } }),
-      ...(license && { license: { slug: license } }),
+      ...(alternative.length && { alternatives: { some: { slug: { in: alternative } } } }),
+      ...(category.length && { categories: { some: { slug: { in: category } } } }),
+      ...(stack.length && { stacks: { some: { slug: { in: stack } } } }),
+      ...(license.length && { license: { slug: { in: license } } }),
     }
 
     // Use full-text search when query exists

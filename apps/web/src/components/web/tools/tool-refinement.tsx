@@ -53,14 +53,18 @@ export const ToolRefinement = ({
               key={item.slug}
               value={item.slug}
               onSelect={(value: string) => {
-                const currentValue = filters[filter]
-                updateFilters({ [filter]: currentValue === value ? "" : value })
+                const currentValues = filters[filter] as string[]
+                const newValues = currentValues.includes(value)
+                  ? currentValues.filter(v => v !== value)
+                  : [...currentValues, value]
+
+                updateFilters({ [filter]: newValues })
               }}
               className="flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-secondary py-1 px-2 -mx-1 rounded-sm data-[selected=true]:bg-card-dark data-[selected=true]:text-foreground data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50"
             >
               <input
                 type="checkbox"
-                checked={filters[filter] === item.slug}
+                checked={(filters[filter] as string[]).includes(item.slug)}
                 readOnly
                 className="pointer-events-none"
               />

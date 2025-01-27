@@ -9,8 +9,8 @@ const badgeVariants = cva({
   variants: {
     variant: {
       primary: "bg-primary border-transparent text-background hover:[&[href]]:bg-primary/75",
-      soft: "bg-border/50 border-transparent hover:[&[href]]:bg-border/75",
-      outline: "bg-background hover:[&[href]]:bg-card-dark",
+      soft: "bg-border/50 border-transparent hover:[&[href]]:bg-border/75 hover:[&[type]]:bg-border/75",
+      outline: "bg-background hover:[&[href]]:bg-card-dark hover:[&[type]]:bg-card-dark",
       success: "bg-green-700/90 border-transparent text-background dark:bg-green-300/90",
       warning: "bg-yellow-700/90 border-transparent text-background dark:bg-yellow-300/90",
       danger: "bg-red-700/90 border-transparent text-background dark:bg-red-300/90",
