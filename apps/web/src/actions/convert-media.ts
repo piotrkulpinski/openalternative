@@ -25,16 +25,13 @@ export const convertFavicons = createServerAction().handler(async () => {
           )
 
           // Download the .ico file
-          const icoBuffer = await wretch(tool.faviconUrl!)
-            .get()
-            .arrayBuffer()
-            .then(buffer => Buffer.from(buffer))
+          const icoBuffer = await wretch(tool.faviconUrl!).get().arrayBuffer().then(Buffer.from)
 
           // Convert to PNG using sharp
           const ico = sharpIco.sharpsFromIco(icoBuffer)[0] as sharp.Sharp
           const pngBuffer = await ico
             .png()
-            .resize({ width: 128, height: 128 })
+            .resize({ width: 72, height: 72 })
             .flatten({ background: { r: 255, g: 255, b: 255, alpha: 1 } })
             .toBuffer()
 
