@@ -1,4 +1,3 @@
-import { prisma } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { config } from "~/config"
 import EmailToolExpediteReminder from "~/emails/tool-expedite-reminder"
@@ -15,9 +14,9 @@ export const toolScheduled = inngest.createFunction(
   { id: "tool.scheduled", concurrency: { limit: 2 } },
   { event: "tool.scheduled" },
 
-  async ({ event, step, logger }) => {
+  async ({ event, step, db, logger }) => {
     const tool = await step.run("find-tool", async () => {
-      return prisma.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
+      return db.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
     })
 
     // Scrape website
@@ -38,7 +37,7 @@ export const toolScheduled = inngest.createFunction(
       step.run("generate-content", async () => {
         const { categories, alternatives, ...content } = await generateContent(scrapedData)
 
-        return await prisma.tool.update({
+        return await db.tool.update({
           where: { id: tool.id },
           data: {
             ...content,
@@ -53,7 +52,7 @@ export const toolScheduled = inngest.createFunction(
 
         if (!data) return
 
-        return await prisma.tool.update({
+        return await db.tool.update({
           where: { id: tool.id },
           data,
         })
@@ -63,7 +62,7 @@ export const toolScheduled = inngest.createFunction(
         const { id, slug, website } = tool
         const faviconUrl = await uploadFavicon(website, `tools/${slug}/favicon`)
 
-        return await prisma.tool.update({
+        return await db.tool.update({
           where: { id },
           data: { faviconUrl },
         })
@@ -73,7 +72,7 @@ export const toolScheduled = inngest.createFunction(
         const { id, slug, website } = tool
         const screenshotUrl = await uploadScreenshot(website, `tools/${slug}/screenshot`)
 
-        return await prisma.tool.update({
+        return await db.tool.update({
           where: { id },
           data: { screenshotUrl },
         })
@@ -82,7 +81,7 @@ export const toolScheduled = inngest.createFunction(
 
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
-      return await prisma.$disconnect()
+      return await db.$disconnect()
     })
 
     // Revalidate cache

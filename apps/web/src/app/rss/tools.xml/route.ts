@@ -1,4 +1,4 @@
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import RSS from "rss"
 import { config } from "~/config"
@@ -7,7 +7,7 @@ import { addUTMTracking } from "~/utils/helpers"
 export async function GET() {
   const { url, name, tagline } = config.site
 
-  const tools = await prisma.tool.findMany({
+  const tools = await db.tool.findMany({
     where: { status: ToolStatus.Published },
     orderBy: { publishedAt: "desc" },
     take: 50,

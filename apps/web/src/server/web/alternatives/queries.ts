@@ -1,5 +1,5 @@
 import { performance } from "node:perf_hooks"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import type { inferParserType } from "nuqs/server"
 import { cache } from "~/lib/cache"
@@ -31,8 +31,8 @@ export const searchAlternatives = cache(
       }),
     }
 
-    const [alternatives, totalCount] = await prisma.$transaction([
-      prisma.alternative.findMany({
+    const [alternatives, totalCount] = await db.$transaction([
+      db.alternative.findMany({
         ...args,
         orderBy:
           sortBy && sortBy !== "popularity"
@@ -44,7 +44,7 @@ export const searchAlternatives = cache(
         skip,
       }),
 
-      prisma.alternative.count({
+      db.alternative.count({
         where: { ...whereQuery, ...where },
       }),
     ])
@@ -58,7 +58,7 @@ export const searchAlternatives = cache(
 
 export const findAlternatives = cache(
   async ({ where, orderBy, ...args }: Prisma.AlternativeFindManyArgs) => {
-    return prisma.alternative.findMany({
+    return db.alternative.findMany({
       ...args,
       orderBy: orderBy ?? { name: "asc" },
       where: { tools: { some: { status: ToolStatus.Published } }, ...where },
@@ -73,7 +73,7 @@ export const findAlternativeSlugs = async ({
   orderBy,
   ...args
 }: Prisma.AlternativeFindManyArgs) => {
-  return prisma.alternative.findMany({
+  return db.alternative.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
     where: { tools: { some: { status: ToolStatus.Published } }, ...where },
@@ -87,7 +87,7 @@ export const findAlternativeBySlug = (
 ) =>
   cache(
     async (slug: string) => {
-      return prisma.alternative.findFirst({
+      return db.alternative.findFirst({
         ...args,
         where: { slug, ...where },
         select: alternativeOnePayload,

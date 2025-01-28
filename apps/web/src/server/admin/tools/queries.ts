@@ -1,5 +1,5 @@
 import { isTruthy } from "@curiousleaf/utils"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
 import type { SearchParams } from "nuqs/server"
@@ -42,15 +42,15 @@ export const findTools = cache(
     }
 
     // Transaction is used to ensure both queries are executed in a single transaction
-    const [tools, toolsTotal] = await prisma.$transaction([
-      prisma.tool.findMany({
+    const [tools, toolsTotal] = await db.$transaction([
+      db.tool.findMany({
         where,
         orderBy: column ? { [column]: order } : undefined,
         take: per_page,
         skip: offset,
       }),
 
-      prisma.tool.count({
+      db.tool.count({
         where,
       }),
     ])
@@ -62,7 +62,7 @@ export const findTools = cache(
 )
 
 export const findScheduledTools = cache(async () => {
-  return prisma.tool.findMany({
+  return db.tool.findMany({
     where: { status: ToolStatus.Scheduled },
     select: { slug: true, name: true, publishedAt: true },
     orderBy: { publishedAt: "asc" },
@@ -70,7 +70,7 @@ export const findScheduledTools = cache(async () => {
 }, ["schedule"])
 
 export const findToolList = cache(async () => {
-  return prisma.tool.findMany({
+  return db.tool.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
   })
@@ -79,7 +79,7 @@ export const findToolList = cache(async () => {
 export const findToolBySlug = (slug: string) =>
   cache(
     async (slug: string) => {
-      return prisma.tool.findUnique({
+      return db.tool.findUnique({
         where: { slug },
         include: {
           alternatives: true,

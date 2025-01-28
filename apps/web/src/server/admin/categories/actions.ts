@@ -1,7 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { authedProcedure } from "~/lib/safe-actions"
@@ -11,7 +11,7 @@ export const createCategory = authedProcedure
   .createServerAction()
   .input(categorySchema)
   .handler(async ({ input: { tools, ...input } }) => {
-    const category = await prisma.category.create({
+    const category = await db.category.create({
       data: {
         ...input,
         slug: input.slug || slugify(input.name),
@@ -28,7 +28,7 @@ export const updateCategory = authedProcedure
   .createServerAction()
   .input(categorySchema.extend({ id: z.string() }))
   .handler(async ({ input: { id, tools, ...input } }) => {
-    const category = await prisma.category.update({
+    const category = await db.category.update({
       where: { id },
       data: {
         ...input,
@@ -47,7 +47,7 @@ export const updateCategories = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()), data: categorySchema.partial() }))
   .handler(async ({ input: { ids, data } }) => {
-    await prisma.category.updateMany({
+    await db.category.updateMany({
       where: { id: { in: ids } },
       data,
     })
@@ -62,7 +62,7 @@ export const deleteCategories = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))
   .handler(async ({ input: { ids } }) => {
-    await prisma.category.deleteMany({
+    await db.category.deleteMany({
       where: { id: { in: ids } },
     })
 

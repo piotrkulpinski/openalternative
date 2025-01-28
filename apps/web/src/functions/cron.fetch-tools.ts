@@ -1,4 +1,3 @@
-import { prisma } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
@@ -13,9 +12,9 @@ export const fetchTools = inngest.createFunction(
   { id: "fetch-tools" },
   { cron: "TZ=Europe/Warsaw 0 0 * * *" }, // Every day at midnight
 
-  async ({ step, logger }) => {
+  async ({ step, db, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
-      return await prisma.tool.findMany({
+      return await db.tool.findMany({
         where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
       })
     })
@@ -42,7 +41,7 @@ export const fetchTools = inngest.createFunction(
             }
           }
 
-          return prisma.tool.update({
+          return db.tool.update({
             where: { id: tool.id },
             data: updatedTool,
           })
@@ -65,7 +64,7 @@ export const fetchTools = inngest.createFunction(
 
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
-      return await prisma.$disconnect()
+      return await db.$disconnect()
     })
 
     // Revalidate cache

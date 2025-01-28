@@ -1,7 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"
@@ -15,7 +15,7 @@ export const createTool = authedProcedure
   .createServerAction()
   .input(toolSchema)
   .handler(async ({ input: { alternatives, categories, ...input } }) => {
-    const tool = await prisma.tool.create({
+    const tool = await db.tool.create({
       data: {
         ...input,
         slug: input.slug || slugify(input.name),
@@ -38,7 +38,7 @@ export const updateTool = authedProcedure
   .createServerAction()
   .input(toolSchema.extend({ id: z.string() }))
   .handler(async ({ input: { id, alternatives, categories, ...input } }) => {
-    const tool = await prisma.tool.update({
+    const tool = await db.tool.update({
       where: { id },
       data: {
         ...input,
@@ -57,7 +57,7 @@ export const updateTools = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()), data: toolSchema.partial() }))
   .handler(async ({ input: { ids, data } }) => {
-    await prisma.tool.updateMany({
+    await db.tool.updateMany({
       where: { id: { in: ids } },
       data,
     })
@@ -72,12 +72,12 @@ export const deleteTools = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))
   .handler(async ({ input: { ids } }) => {
-    const tools = await prisma.tool.findMany({
+    const tools = await db.tool.findMany({
       where: { id: { in: ids } },
       select: { slug: true },
     })
 
-    await prisma.tool.deleteMany({
+    await db.tool.deleteMany({
       where: { id: { in: ids } },
     })
 
@@ -95,7 +95,7 @@ export const scheduleTool = authedProcedure
   .createServerAction()
   .input(z.object({ id: z.string(), publishedAt: z.coerce.date() }))
   .handler(async ({ input: { id, publishedAt } }) => {
-    const tool = await prisma.tool.update({
+    const tool = await db.tool.update({
       where: { id },
       data: { status: ToolStatus.Scheduled, publishedAt },
     })
@@ -114,14 +114,14 @@ export const reuploadToolAssets = authedProcedure
   .createServerAction()
   .input(z.object({ id: z.string() }))
   .handler(async ({ input: { id } }) => {
-    const tool = await prisma.tool.findUniqueOrThrow({ where: { id } })
+    const tool = await db.tool.findUniqueOrThrow({ where: { id } })
 
     const [faviconUrl, screenshotUrl] = await Promise.all([
       uploadFavicon(tool.website, `tools/${tool.slug}/favicon`),
       uploadScreenshot(tool.website, `tools/${tool.slug}/screenshot`),
     ])
 
-    await prisma.tool.update({
+    await db.tool.update({
       where: { id: tool.id },
       data: { faviconUrl, screenshotUrl },
     })
@@ -136,7 +136,7 @@ export const analyzeToolStack = authedProcedure
   .createServerAction()
   .input(z.object({ id: z.string() }))
   .handler(async ({ input: { id } }) => {
-    const tool = await prisma.tool.findUniqueOrThrow({ where: { id } })
+    const tool = await db.tool.findUniqueOrThrow({ where: { id } })
 
     // Get analysis and cache it
     const { stack, repository } = await analyzeRepositoryStack(tool.repository)
@@ -145,7 +145,7 @@ export const analyzeToolStack = authedProcedure
     console.log(repository)
 
     // Update tool with new stack
-    return await prisma.tool.update({
+    return await db.tool.update({
       where: { id: tool.id },
       data: { stacks: { set: stack.map(slug => ({ slug })) } },
     })

@@ -1,4 +1,3 @@
-import { prisma } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { uploadFavicon } from "~/lib/media"
 import { inngest } from "~/services/inngest"
@@ -7,9 +6,9 @@ export const alternativeCreated = inngest.createFunction(
   { id: "alternative.created" },
   { event: "alternative.created" },
 
-  async ({ event, step }) => {
+  async ({ event, step, db }) => {
     const alternative = await step.run("find-alternative", async () => {
-      return await prisma.alternative.findUniqueOrThrow({ where: { slug: event.data.slug } })
+      return await db.alternative.findUniqueOrThrow({ where: { slug: event.data.slug } })
     })
 
     const faviconUrl = await step.run("upload-favicon", async () => {
@@ -17,7 +16,7 @@ export const alternativeCreated = inngest.createFunction(
     })
 
     await step.run("update-alternative", async () => {
-      return await prisma.alternative.update({
+      return await db.alternative.update({
         where: { id: alternative.id },
         data: { faviconUrl },
       })

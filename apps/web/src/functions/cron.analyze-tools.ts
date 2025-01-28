@@ -1,4 +1,3 @@
-import { prisma } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import { revalidateTag } from "next/cache"
 import { analyzeRepositoryStack } from "~/lib/stack-analysis"
@@ -8,11 +7,11 @@ export const analyzeTools = inngest.createFunction(
   { id: "analyze-tools" },
   { cron: "TZ=Europe/Warsaw 0 0 1 * *" }, // Start of the month at midnight
 
-  async ({ step, logger }) => {
+  async ({ step, db, logger }) => {
     const batchSize = 5
 
     const tools = await step.run("fetch-tools", async () => {
-      return await prisma.tool.findMany({
+      return await db.tool.findMany({
         where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
         select: { id: true, repository: true },
       })
@@ -29,7 +28,7 @@ export const analyzeTools = inngest.createFunction(
           const { stack } = await analyzeRepositoryStack(tool.repository)
 
           // Update tool with new stack
-          return await prisma.tool.update({
+          return await db.tool.update({
             where: { id: tool.id },
             data: { stacks: { set: stack.map(slug => ({ slug })) } },
           })
@@ -41,7 +40,7 @@ export const analyzeTools = inngest.createFunction(
 
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
-      return await prisma.$disconnect()
+      return await db.$disconnect()
     })
 
     // Revalidate cache

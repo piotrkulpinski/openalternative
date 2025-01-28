@@ -1,4 +1,4 @@
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import type { Prisma } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
 import type { SearchParams } from "nuqs/server"
@@ -37,15 +37,15 @@ export const findAlternatives = cache(
     }
 
     // Transaction is used to ensure both queries are executed in a single transaction
-    const [alternatives, alternativesTotal] = await prisma.$transaction([
-      prisma.alternative.findMany({
+    const [alternatives, alternativesTotal] = await db.$transaction([
+      db.alternative.findMany({
         where,
         orderBy: column ? { [column]: order } : undefined,
         take: per_page,
         skip: offset,
       }),
 
-      prisma.alternative.count({
+      db.alternative.count({
         where,
       }),
     ])
@@ -57,7 +57,7 @@ export const findAlternatives = cache(
 )
 
 export const findAlternativeList = cache(async () => {
-  return prisma.alternative.findMany({
+  return db.alternative.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
   })
@@ -66,7 +66,7 @@ export const findAlternativeList = cache(async () => {
 export const findAlternativeBySlug = (slug: string) =>
   cache(
     async (slug: string) => {
-      return prisma.alternative.findUnique({
+      return db.alternative.findUnique({
         where: { slug },
         include: { tools: true },
       })

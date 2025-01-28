@@ -1,6 +1,6 @@
 import { performance } from "node:perf_hooks"
 import { getRandomElement } from "@curiousleaf/utils"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { type Prisma, type Tool, ToolStatus } from "@openalternative/db/client"
 import type { inferParserType } from "nuqs/server"
 import { cache } from "~/lib/cache"
@@ -40,7 +40,7 @@ export const searchTools = cache(
 
     // Use full-text search when query exists
     if (q) {
-      const searchQuery: { id: string }[] = await prisma.$queryRaw`
+      const searchQuery: { id: string }[] = await db.$queryRaw`
         SELECT id
         FROM "Tool", plainto_tsquery('english', ${q}) query
         WHERE "searchVector" @@ query
@@ -49,8 +49,8 @@ export const searchTools = cache(
       whereQuery.id = { in: searchQuery.map(r => r.id) }
     }
 
-    const [tools, totalCount] = await prisma.$transaction([
-      prisma.tool.findMany({
+    const [tools, totalCount] = await db.$transaction([
+      db.tool.findMany({
         ...args,
         orderBy: sortBy ? { [sortBy]: sortOrder } : [{ isFeatured: "desc" }, { score: "desc" }],
         where: { ...whereQuery, ...where },
@@ -59,7 +59,7 @@ export const searchTools = cache(
         skip,
       }),
 
-      prisma.tool.count({
+      db.tool.count({
         where: { ...whereQuery, ...where },
       }),
     ])
@@ -86,13 +86,13 @@ export const findRelatedTools = async ({
   } satisfies Prisma.ToolWhereInput
 
   const take = 3
-  const itemCount = await prisma.tool.count({ where: relatedWhereClause })
+  const itemCount = await db.tool.count({ where: relatedWhereClause })
   const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
   const properties = ["id", "name", "score"] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
   const orderBy = getRandomElement(properties)
   const orderDir = getRandomElement(["asc", "desc"] as const)
 
-  return prisma.tool.findMany({
+  return db.tool.findMany({
     ...args,
     where: relatedWhereClause,
     select: toolManyPayload,
@@ -104,7 +104,7 @@ export const findRelatedTools = async ({
 
 export const findTools = cache(
   async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {
-    return prisma.tool.findMany({
+    return db.tool.findMany({
       ...args,
       where: { status: ToolStatus.Published, ...where },
       orderBy: orderBy ?? [{ isFeatured: "desc" }, { score: "desc" }],
@@ -116,7 +116,7 @@ export const findTools = cache(
 
 export const findToolsWithCategories = cache(
   async ({ where, ...args }: Prisma.ToolFindManyArgs) => {
-    return prisma.tool.findMany({
+    return db.tool.findMany({
       ...args,
       where: { status: ToolStatus.Published, ...where },
       select: toolManyExtendedPayload,
@@ -126,7 +126,7 @@ export const findToolsWithCategories = cache(
 )
 
 export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {
-  return prisma.tool.findMany({
+  return db.tool.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
     where: { status: ToolStatus.Published, ...where },
@@ -136,7 +136,7 @@ export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFind
 
 export const countUpcomingTools = cache(
   async ({ where, ...args }: Prisma.ToolCountArgs) => {
-    return prisma.tool.count({
+    return db.tool.count({
       ...args,
       where: { status: { in: [ToolStatus.Scheduled, ToolStatus.Draft] }, ...where },
     })
@@ -147,7 +147,7 @@ export const countUpcomingTools = cache(
 export const findToolBySlug = (slug: string, { where, ...args }: Prisma.ToolFindFirstArgs = {}) =>
   cache(
     async (slug: string) => {
-      return prisma.tool.findFirst({
+      return db.tool.findFirst({
         ...args,
         where: { slug, status: { not: ToolStatus.Draft }, ...where },
         select: toolOnePayload,
@@ -157,7 +157,7 @@ export const findToolBySlug = (slug: string, { where, ...args }: Prisma.ToolFind
   )(slug)
 
 export const findRandomTool = async () => {
-  const tools = await prisma.$queryRaw<Array<Tool>>`
+  const tools = await db.$queryRaw<Array<Tool>>`
     SELECT "id", "name", "slug", "website", "repository", "tagline", "description", "content", "stars", "forks", "score", 
            "faviconUrl", "screenshotUrl", "firstCommitDate", "lastCommitDate", "status", "publishedAt", "createdAt", "updatedAt"
     FROM "Tool"

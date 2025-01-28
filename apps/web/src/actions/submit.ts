@@ -1,7 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { createServerAction } from "zsa"
 import { subscribeToNewsletter } from "~/actions/subscribe"
@@ -20,7 +20,7 @@ const generateUniqueSlug = async (baseName: string): Promise<string> => {
 
   while (true) {
     // Check if slug exists
-    if (!(await prisma.tool.findUnique({ where: { slug } }))) {
+    if (!(await db.tool.findUnique({ where: { slug } }))) {
       return slug
     }
 
@@ -60,7 +60,7 @@ export const submitTool = createServerAction()
     }
 
     // Check if the tool already exists
-    const existingTool = await prisma.tool.findFirst({
+    const existingTool = await db.tool.findFirst({
       where: { OR: [{ repository: data.repository }, { website: data.website }] },
     })
 
@@ -73,7 +73,7 @@ export const submitTool = createServerAction()
     const slug = await generateUniqueSlug(data.name)
 
     // Save the tool to the database
-    const tool = await prisma.tool.create({
+    const tool = await db.tool.create({
       data: { ...data, slug },
     })
 

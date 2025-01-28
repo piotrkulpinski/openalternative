@@ -1,11 +1,11 @@
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { cache } from "~/lib/cache"
 import { categoryManyPayload, categoryOnePayload } from "~/server/web/categories/payloads"
 
 export const findCategories = cache(
   async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {
-    return prisma.category.findMany({
+    return db.category.findMany({
       ...args,
       orderBy: orderBy ?? { name: "asc" },
       where: { tools: { some: { status: ToolStatus.Published } }, ...where },
@@ -20,7 +20,7 @@ export const findCategorySlugs = async ({
   orderBy,
   ...args
 }: Prisma.CategoryFindManyArgs) => {
-  return prisma.category.findMany({
+  return db.category.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
     where: { tools: { some: { status: ToolStatus.Published } }, ...where },
@@ -34,7 +34,7 @@ export const findCategoryBySlug = (
 ) =>
   cache(
     async (slug: string) => {
-      return prisma.category.findFirst({
+      return db.category.findFirst({
         ...args,
         where: { slug, ...where },
         select: categoryOnePayload,

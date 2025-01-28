@@ -1,4 +1,4 @@
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import type { Prisma } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
 import type { SearchParams } from "nuqs/server"
@@ -37,15 +37,15 @@ export const findLicenses = cache(
     }
 
     // Transaction is used to ensure both queries are executed in a single transaction
-    const [licenses, licensesTotal] = await prisma.$transaction([
-      prisma.license.findMany({
+    const [licenses, licensesTotal] = await db.$transaction([
+      db.license.findMany({
         where,
         orderBy: column ? { [column]: order } : undefined,
         take: per_page,
         skip: offset,
       }),
 
-      prisma.license.count({
+      db.license.count({
         where,
       }),
     ])
@@ -59,7 +59,7 @@ export const findLicenses = cache(
 export const findLicenseBySlug = (slug: string) =>
   cache(
     async (slug: string) => {
-      return prisma.license.findUnique({
+      return db.license.findUnique({
         where: { slug },
       })
     },

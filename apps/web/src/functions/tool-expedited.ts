@@ -1,4 +1,3 @@
-import { prisma } from "@openalternative/db"
 import { config } from "~/config"
 import EmailAdminNewSubmission from "~/emails/admin/new-submission"
 import EmailSubmissionExpedited from "~/emails/submission-expedited"
@@ -8,9 +7,9 @@ import { inngest } from "~/services/inngest"
 export const toolExpedited = inngest.createFunction(
   { id: "tool.expedited" },
   { event: "tool.expedited" },
-  async ({ event, step }) => {
+  async ({ event, step, db }) => {
     const tool = await step.run("fetch-tool", async () => {
-      return await prisma.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
+      return await db.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
     })
 
     // Send submission email to user and admin

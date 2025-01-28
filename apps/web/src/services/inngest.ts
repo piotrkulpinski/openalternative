@@ -1,4 +1,5 @@
-import { EventSchemas, Inngest } from "inngest"
+import { db } from "@openalternative/db"
+import { EventSchemas, Inngest, InngestMiddleware } from "inngest"
 
 type ToolEventData = { slug: string }
 type AlternativeEventData = { slug: string }
@@ -14,7 +15,17 @@ type Events = {
   "alternative.deleted": { data: AlternativeEventData }
 }
 
+const prismaMiddleware = new InngestMiddleware({
+  name: "Prisma Middleware",
+  init: () => ({
+    onFunctionRun: () => ({
+      transformInput: () => ({ ctx: { db } }),
+    }),
+  }),
+})
+
 export const inngest = new Inngest({
   id: "openalternative",
   schemas: new EventSchemas().fromRecord<Events>(),
+  middleware: [prismaMiddleware],
 })

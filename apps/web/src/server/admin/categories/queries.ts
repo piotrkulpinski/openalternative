@@ -1,4 +1,4 @@
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import type { Prisma } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
 import type { SearchParams } from "nuqs/server"
@@ -37,15 +37,15 @@ export const findCategories = cache(
     }
 
     // Transaction is used to ensure both queries are executed in a single transaction
-    const [categories, categoriesTotal] = await prisma.$transaction([
-      prisma.category.findMany({
+    const [categories, categoriesTotal] = await db.$transaction([
+      db.category.findMany({
         where,
         orderBy: column ? { [column]: order } : undefined,
         take: per_page,
         skip: offset,
       }),
 
-      prisma.category.count({
+      db.category.count({
         where,
       }),
     ])
@@ -57,7 +57,7 @@ export const findCategories = cache(
 )
 
 export const findCategoryList = cache(async () => {
-  return prisma.category.findMany({
+  return db.category.findMany({
     select: { id: true, name: true },
     orderBy: { name: "asc" },
   })
@@ -66,7 +66,7 @@ export const findCategoryList = cache(async () => {
 export const findCategoryBySlug = (slug: string) =>
   cache(
     async (slug: string) => {
-      return prisma.category.findUnique({
+      return db.category.findUnique({
         where: { slug },
         include: { tools: true },
       })

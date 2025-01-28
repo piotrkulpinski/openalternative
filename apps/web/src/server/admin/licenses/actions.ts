@@ -1,7 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { authedProcedure } from "~/lib/safe-actions"
@@ -11,7 +11,7 @@ export const createLicense = authedProcedure
   .createServerAction()
   .input(licenseSchema)
   .handler(async ({ input }) => {
-    const license = await prisma.license.create({
+    const license = await db.license.create({
       data: {
         ...input,
         slug: input.slug || slugify(input.name),
@@ -27,7 +27,7 @@ export const updateLicense = authedProcedure
   .createServerAction()
   .input(licenseSchema.extend({ id: z.string() }))
   .handler(async ({ input: { id, ...input } }) => {
-    const license = await prisma.license.update({
+    const license = await db.license.update({
       where: { id },
       data: input,
     })
@@ -42,7 +42,7 @@ export const updateLicenses = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()), data: licenseSchema.partial() }))
   .handler(async ({ input: { ids, data } }) => {
-    await prisma.license.updateMany({
+    await db.license.updateMany({
       where: { id: { in: ids } },
       data,
     })
@@ -57,7 +57,7 @@ export const deleteLicenses = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))
   .handler(async ({ input: { ids } }) => {
-    await prisma.license.deleteMany({
+    await db.license.deleteMany({
       where: { id: { in: ids } },
     })
 

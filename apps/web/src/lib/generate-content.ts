@@ -1,7 +1,7 @@
 import { createAnthropic } from "@ai-sdk/anthropic"
 import { isTruthy } from "@curiousleaf/utils"
 import type { ScrapeResponse } from "@mendable/firecrawl-js"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { generateObject } from "ai"
 import { z } from "zod"
 import { getErrorMessage } from "~/lib/handle-error"
@@ -15,8 +15,8 @@ export const generateContent = async (scrapedData: Omit<ScrapeResponse, "actions
   const model = createAnthropic()("claude-3-5-sonnet-20240620")
 
   const [categories, alternatives] = await Promise.all([
-    prisma.category.findMany(),
-    prisma.alternative.findMany(),
+    db.category.findMany(),
+    db.alternative.findMany(),
   ])
 
   try {

@@ -1,4 +1,4 @@
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { AdType } from "@openalternative/db/client"
 import { revalidateTag } from "next/cache"
 import type Stripe from "stripe"
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
 
         // Handle tool expedited payment
         if (metadata?.tool) {
-          const tool = await prisma.tool.findUniqueOrThrow({
+          const tool = await db.tool.findUniqueOrThrow({
             where: { slug: metadata.tool },
           })
 
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
           )
 
           for (const ad of adsSchema.parse(JSON.parse(metadata.ads))) {
-            await prisma.ad.create({
+            await db.ad.create({
               data: {
                 email: user?.email ?? "",
                 name: fields?.find(({ key }) => key === "name")?.text?.value || "",
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
           break
         }
 
-        const tool = await prisma.tool.update({
+        const tool = await db.tool.update({
           where: { slug: metadata?.tool },
           data: { isFeatured: subscription.status === "active" },
         })

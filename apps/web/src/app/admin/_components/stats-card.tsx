@@ -1,13 +1,9 @@
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { Card, CardDescription, CardHeader, CardTitle } from "~/components/admin/ui/card"
 import { cache } from "~/lib/cache"
 
 const getStats = cache(async () => {
-  return await prisma.$transaction([
-    prisma.tool.count(),
-    prisma.alternative.count(),
-    prisma.category.count(),
-  ])
+  return await db.$transaction([db.tool.count(), db.alternative.count(), db.category.count()])
 }, ["stats"])
 
 export const StatsCard = async () => {

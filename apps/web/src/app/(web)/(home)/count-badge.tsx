@@ -1,5 +1,5 @@
 import { formatNumber } from "@curiousleaf/utils"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import { subDays } from "date-fns"
 import Link from "next/link"
@@ -10,12 +10,12 @@ import { cache } from "~/lib/cache"
 
 const getCounts = cache(
   async () => {
-    return await prisma.$transaction([
-      prisma.tool.count({
+    return await db.$transaction([
+      db.tool.count({
         where: { status: ToolStatus.Published },
       }),
 
-      prisma.tool.count({
+      db.tool.count({
         where: { status: ToolStatus.Published, publishedAt: { gte: subDays(new Date(), 7) } },
       }),
     ])

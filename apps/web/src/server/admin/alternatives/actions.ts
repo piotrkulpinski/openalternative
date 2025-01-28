@@ -1,7 +1,7 @@
 "use server"
 
 import { slugify } from "@curiousleaf/utils"
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { uploadFavicon } from "~/lib/media"
@@ -13,7 +13,7 @@ export const createAlternative = authedProcedure
   .createServerAction()
   .input(alternativeSchema)
   .handler(async ({ input: { tools, ...input } }) => {
-    const alternative = await prisma.alternative.create({
+    const alternative = await db.alternative.create({
       data: {
         ...input,
         slug: input.slug || slugify(input.name),
@@ -32,7 +32,7 @@ export const updateAlternative = authedProcedure
   .createServerAction()
   .input(alternativeSchema.extend({ id: z.string() }))
   .handler(async ({ input: { id, tools, ...input } }) => {
-    const alternative = await prisma.alternative.update({
+    const alternative = await db.alternative.update({
       where: { id },
       data: {
         ...input,
@@ -50,7 +50,7 @@ export const updateAlternatives = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()), data: alternativeSchema.partial() }))
   .handler(async ({ input: { ids, data } }) => {
-    await prisma.alternative.updateMany({
+    await db.alternative.updateMany({
       where: { id: { in: ids } },
       data,
     })
@@ -65,12 +65,12 @@ export const deleteAlternatives = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))
   .handler(async ({ input: { ids } }) => {
-    const alternatives = await prisma.alternative.findMany({
+    const alternatives = await db.alternative.findMany({
       where: { id: { in: ids } },
       select: { slug: true },
     })
 
-    await prisma.alternative.deleteMany({
+    await db.alternative.deleteMany({
       where: { id: { in: ids } },
     })
 
@@ -87,7 +87,7 @@ export const reuploadAlternativeAssets = authedProcedure
   .createServerAction()
   .input(z.object({ id: z.string() }))
   .handler(async ({ input: { id } }) => {
-    const alternative = await prisma.alternative.findUniqueOrThrow({
+    const alternative = await db.alternative.findUniqueOrThrow({
       where: { id },
     })
 
@@ -96,7 +96,7 @@ export const reuploadAlternativeAssets = authedProcedure
       `alternatives/${alternative.slug}/favicon`,
     )
 
-    await prisma.alternative.update({
+    await db.alternative.update({
       where: { id: alternative.id },
       data: { faviconUrl },
     })

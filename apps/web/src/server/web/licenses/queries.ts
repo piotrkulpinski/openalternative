@@ -1,11 +1,11 @@
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { cache } from "~/lib/cache"
 import { licenseManyPayload, licenseOnePayload } from "~/server/web/licenses/payloads"
 
 export const findLicenses = cache(
   async ({ where, orderBy, ...args }: Prisma.LicenseFindManyArgs) => {
-    return prisma.license.findMany({
+    return db.license.findMany({
       ...args,
       orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { name: "asc" }],
       where: { tools: { some: { status: ToolStatus.Published } }, ...where },
@@ -16,7 +16,7 @@ export const findLicenses = cache(
 )
 
 export const findLicenseSlugs = async ({ where, orderBy, ...args }: Prisma.LicenseFindManyArgs) => {
-  return prisma.license.findMany({
+  return db.license.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
     where: { tools: { some: { status: ToolStatus.Published } }, ...where },
@@ -30,7 +30,7 @@ export const findLicenseBySlug = (
 ) =>
   cache(
     async (slug: string) => {
-      return prisma.license.findFirst({
+      return db.license.findFirst({
         ...args,
         where: { slug, ...where },
         select: licenseOnePayload,

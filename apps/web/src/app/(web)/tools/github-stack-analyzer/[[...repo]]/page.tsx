@@ -1,4 +1,4 @@
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import type { Metadata } from "next"
 import { H4 } from "~/components/common/heading"
@@ -38,13 +38,13 @@ export default async function StackAnalyzerPage({ params }: PageProps) {
 
     if (cached) {
       const [stacks, tool] = await Promise.all([
-        prisma.stack.findMany({
+        db.stack.findMany({
           where: { slug: { in: cached.stack } },
           orderBy: [{ tools: { _count: "desc" } }, { name: "asc" }],
           select: stackManyPayload,
         }),
 
-        prisma.tool.findFirst({
+        db.tool.findFirst({
           where: { repository: { endsWith: repoName }, status: ToolStatus.Published },
           select: toolOnePayload,
         }),

@@ -1,6 +1,6 @@
 "use server"
 
-import { prisma } from "@openalternative/db"
+import { db } from "@openalternative/db"
 import { z } from "zod"
 import { authedProcedure } from "~/lib/safe-actions"
 
@@ -11,22 +11,22 @@ export const searchItems = authedProcedure
     const start = performance.now()
 
     const [tools, alternatives, categories, licenses] = await Promise.all([
-      prisma.tool.findMany({
+      db.tool.findMany({
         where: { name: { contains: query, mode: "insensitive" } },
         orderBy: { name: "asc" },
         take: 5,
       }),
-      prisma.alternative.findMany({
+      db.alternative.findMany({
         where: { name: { contains: query, mode: "insensitive" } },
         orderBy: { name: "asc" },
         take: 5,
       }),
-      prisma.category.findMany({
+      db.category.findMany({
         where: { name: { contains: query, mode: "insensitive" } },
         orderBy: { name: "asc" },
         take: 5,
       }),
-      prisma.license.findMany({
+      db.license.findMany({
         where: { name: { contains: query, mode: "insensitive" } },
         orderBy: { name: "asc" },
         take: 5,
