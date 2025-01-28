@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
     loader: "custom",
     loaderFile: "./src/lib/image-loader.ts",
     minimumCacheTTL: 31536000,
+    deviceSizes: [640, 768, 1024],
   },
 
   async rewrites() {

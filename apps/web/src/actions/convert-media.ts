@@ -13,7 +13,6 @@ export const convertFavicons = createServerAction().handler(async () => {
     const tools = await prisma.tool.findMany({
       where: { faviconUrl: { contains: ".ico" } },
       select: { id: true, faviconUrl: true },
-      take: 1,
     })
 
     const results = await Promise.all(

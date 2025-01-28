@@ -8,14 +8,21 @@ const normalizeSrc = (src: string) => {
   return src.startsWith("/") ? src.slice(1) : src
 }
 
-const createParamsString = ({ width, quality }: Omit<ImageLoaderProps, "src">) => {
-  const params = [`width=${width}`, "format=avif", "metadata=none"]
-  if (quality) params.push(`quality=${quality}`)
-  return params.join(",")
+const getParamsString = ({ width, quality }: Omit<ImageLoaderProps, "src">) => {
+  const paramsObj = {
+    width,
+    quality: quality || 75,
+    format: "avif",
+    metadata: "none",
+  }
+
+  return Object.entries(paramsObj)
+    .map(([key, value]) => `${key}=${value}`)
+    .join(",")
 }
 
 export default function cloudflareLoader({ src, width, quality }: ImageLoaderProps) {
   if (process.env.NODE_ENV === "development") return `${src}?w=${width}`
 
-  return `/cdn-cgi/image/${createParamsString({ width, quality })}/${normalizeSrc(src)}`
+  return `/cdn-cgi/image/${getParamsString({ width, quality })}/${normalizeSrc(src)}`
 }
