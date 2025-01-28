@@ -9,7 +9,7 @@ const normalizeSrc = (src: string) => {
 }
 
 const createParamsString = ({ width, quality }: Omit<ImageLoaderProps, "src">) => {
-  const params = [`width=${width}`]
+  const params = [`width=${width}`, "format=avif", "metadata=none"]
   if (quality) params.push(`quality=${quality}`)
   return params.join(",")
 }

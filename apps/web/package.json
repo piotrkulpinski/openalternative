@@ -66,6 +66,7 @@
     "resend": "^4.1.1",
     "rss": "^1.2.2",
     "satori": "^0.12.1",
+    "sharp-ico": "^0.1.5",
     "sonner": "^1.7.2",
     "stripe": "^17.5.0",
     "tailwind-merge": "^2.6.0",

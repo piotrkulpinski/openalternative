@@ -12,6 +12,8 @@ import { s3Client } from "~/services/s3"
  * @returns The S3 location of the uploaded file.
  */
 export const uploadToS3Storage = async (file: Buffer, key: string) => {
+  const timestamp = Date.now()
+
   const upload = new Upload({
     client: s3Client,
     params: {
@@ -31,7 +33,7 @@ export const uploadToS3Storage = async (file: Buffer, key: string) => {
     throw new Error("Failed to upload")
   }
 
-  return `https://${env.S3_BUCKET}.s3.${env.S3_REGION}.amazonaws.com/${result.Key}`
+  return `https://${env.S3_BUCKET}.s3.${env.S3_REGION}.amazonaws.com/${result.Key}?v=${timestamp}`
 }
 
 /**
@@ -50,16 +52,25 @@ export const removeS3Directory = async (directory: string) => {
     const listResponse = await s3Client.send(listCommand)
     for (const object of listResponse.Contents || []) {
       if (object.Key) {
-        const deleteCommand = new DeleteObjectCommand({
-          Bucket: env.S3_BUCKET,
-          Key: object.Key,
-        })
-        await s3Client.send(deleteCommand)
+        await removeS3File(object.Key)
       }
     }
     continuationToken = listResponse.NextContinuationToken
     listCommand.input.ContinuationToken = continuationToken
   } while (continuationToken)
+}
+
+/**
+ * Removes a file from S3.
+ * @param key - The S3 key of the file to remove.
+ */
+export const removeS3File = async (key: string) => {
+  const deleteCommand = new DeleteObjectCommand({
+    Bucket: env.S3_BUCKET,
+    Key: key,
+  })
+
+  return await s3Client.send(deleteCommand)
 }
 
 /**
@@ -73,18 +84,14 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
   const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain_url=${cleanedUrl}`
 
   try {
-    const arrayBuffer = await wretch(faviconUrl)
+    const fileBuffer = await wretch(faviconUrl)
       .get()
-      .badRequest(err => {
-        throw new Error(`Failed to fetch favicon: ${err.message}`)
-      })
+      .badRequest(console.error)
       .arrayBuffer()
-
-    // Convert response to Buffer
-    const buffer = Buffer.from(arrayBuffer)
+      .then(buffer => Buffer.from(buffer))
 
     // Upload to S3
-    const s3Location = await uploadToS3Storage(buffer, `${s3Key}.png`)
+    const s3Location = await uploadToS3Storage(fileBuffer, `${s3Key}.png`)
 
     return s3Location
   } catch (error) {

@@ -6,6 +6,7 @@ import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
+import { appendMediaVariants, convertFavicons } from "~/actions/convert-media"
 import { testSocialPosts } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
@@ -82,6 +83,16 @@ export const CommandMenu = () => {
     toast.success("Social post sent")
   }
 
+  const handleConvertFavicons = async () => {
+    await convertFavicons()
+    toast.success("Favicons converted")
+  }
+
+  const handleAppendMediaVariants = async () => {
+    await appendMediaVariants()
+    toast.success("Variants appended")
+  }
+
   const handleSelect = (url: string) => {
     handleOpenChange(false)
     router.push(url)
@@ -122,6 +133,8 @@ export const CommandMenu = () => {
 
         <CommandGroup heading="Quick Commands">
           <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
+          <CommandItem onSelect={handleConvertFavicons}>Convert Favicons</CommandItem>
+          <CommandItem onSelect={handleAppendMediaVariants}>Append Media Variants</CommandItem>
         </CommandGroup>
 
         {!!searchResults?.tools.length && (

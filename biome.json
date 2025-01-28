@@ -49,6 +49,9 @@
       "security": {
         "noDangerouslySetInnerHtml": "off"
       },
+      "style": {
+        "noNonNullAssertion": "off"
+      },
       "a11y": {
         "useAnchorContent": "off",
         "useValidAnchor": "off",
