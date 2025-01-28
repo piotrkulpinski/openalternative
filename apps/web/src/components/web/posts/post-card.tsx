@@ -1,10 +1,10 @@
 import { formatDate, getReadTime } from "@curiousleaf/utils"
 import type { Post } from "content-collections"
+import Image from "next/image"
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
 import { Card, CardDescription, CardFooter, CardHeader } from "~/components/web/ui/card"
-import { Image } from "~/components/web/ui/image"
 
 type PostCardProps = ComponentProps<typeof Card> & {
   post: Post

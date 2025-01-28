@@ -1,6 +1,6 @@
+import Image from "next/image"
 import type { ComponentProps } from "react"
 import { Stack } from "~/components/common/stack"
-import { Image } from "~/components/web/ui/image"
 
 type AuthorProps = ComponentProps<typeof Stack> & {
   name: string

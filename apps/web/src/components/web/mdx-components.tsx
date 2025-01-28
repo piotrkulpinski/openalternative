@@ -14,13 +14,7 @@ const a = ({ href, ...props }: HTMLProps<HTMLAnchorElement>) => {
   }
 
   return (
-    <a
-      {...props}
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer nofollow"
-      // className="inline-flex items-center gap-px"
-    >
+    <a {...props} href={href} target="_blank" rel="noopener noreferrer nofollow">
       {props.children}
       <ArrowUpRightIcon className="inline-block ml-0.5 mb-0.5 size-3.5 stroke-2" />
     </a>

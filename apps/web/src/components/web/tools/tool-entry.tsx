@@ -1,4 +1,5 @@
 import { ArrowRightIcon } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import type { HTMLAttributes } from "react"
 import { H2 } from "~/components/common/heading"
@@ -8,7 +9,6 @@ import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
-import { Image } from "~/components/web/ui/image"
 import type { ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 

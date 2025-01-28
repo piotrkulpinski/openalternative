@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
@@ -6,7 +7,6 @@ import { createSearchParamsCache, parseAsBoolean, parseAsString } from "nuqs/ser
 import { Suspense, cache } from "react"
 import { SubmitProducts } from "~/app/(web)/submit/[slug]/products"
 import { PlanSkeleton } from "~/components/web/plan"
-import { Image } from "~/components/web/ui/image"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"

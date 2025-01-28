@@ -1,5 +1,6 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { AtSignIcon, RssIcon } from "lucide-react"
+import Image from "next/image"
 import type { HTMLAttributes } from "react"
 import { H5, H6 } from "~/components/common/heading"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
@@ -15,7 +16,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/web/ui/dropdown-menu"
-import { Image } from "~/components/web/ui/image"
 import { NavLink } from "~/components/web/ui/nav-link"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
 import { config } from "~/config"

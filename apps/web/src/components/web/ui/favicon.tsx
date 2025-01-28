@@ -1,5 +1,5 @@
+import Image from "next/image"
 import type { HTMLAttributes } from "react"
-import { Image } from "~/components/web/ui/image"
 import { cx } from "~/utils/cva"
 
 type FaviconProps = HTMLAttributes<HTMLDivElement> & {

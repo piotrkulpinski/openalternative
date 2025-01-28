@@ -20,7 +20,6 @@ export const NewsletterProof = ({ className, ...props }: HTMLAttributes<HTMLElem
           alt=""
           width={56}
           height={56}
-          unoptimized
           loading="lazy"
           className="size-7 border-2 border-card rounded-full"
         />

@@ -14,11 +14,9 @@ const nextConfig: NextConfig = {
   },
 
   images: {
+    loader: "custom",
+    loaderFile: "./src/lib/image-loader.ts",
     minimumCacheTTL: 31536000,
-    remotePatterns: [
-      { hostname: "res.cloudinary.com" },
-      { hostname: `${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com` },
-    ],
   },
 
   async rewrites() {
