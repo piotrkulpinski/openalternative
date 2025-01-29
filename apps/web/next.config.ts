@@ -1,4 +1,5 @@
 import { withContentCollections } from "@content-collections/next"
+import { withSentryConfig } from "@sentry/nextjs"
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
@@ -18,6 +19,9 @@ const nextConfig: NextConfig = {
     loaderFile: "./src/lib/image-loader.ts",
     minimumCacheTTL: 31536000,
     deviceSizes: [640, 768, 1024],
+    remotePatterns: [
+      { hostname: `${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com` },
+    ],
   },
 
   async rewrites() {
@@ -87,4 +91,13 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withContentCollections(nextConfig)
+export default withContentCollections(
+  withSentryConfig(nextConfig, {
+    silent: !process.env.CI,
+    telemetry: false,
+    widenClientFileUpload: true,
+    hideSourceMaps: true,
+    disableLogger: true,
+    sourcemaps: { disable: true },
+  }),
+)
