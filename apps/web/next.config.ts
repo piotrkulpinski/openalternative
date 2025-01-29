@@ -87,6 +87,11 @@ const nextConfig: NextConfig = {
         destination: "/advertise",
         permanent: true,
       },
+      {
+        source: "/miniperplx",
+        destination: "/scira",
+        permanent: true,
+      },
     ]
   },
 }
