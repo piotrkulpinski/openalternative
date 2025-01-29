@@ -9,40 +9,42 @@ import {
   CardTitle,
 } from "~/components/admin/ui/card"
 import { env } from "~/env"
+import { cache } from "~/lib/cache"
 
 type AnalyticsResponse = {
   results: { date: string; visitors: number }[]
 }
 
-const getAnalytics = async () => {
-  try {
-    const host = env.NEXT_PUBLIC_PLAUSIBLE_HOST
-    const apiKey = env.PLAUSIBLE_API_KEY
-    const domain = env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
+const getAnalytics = cache(
+  async () => {
+    try {
+      const host = env.NEXT_PUBLIC_PLAUSIBLE_HOST
+      const apiKey = env.PLAUSIBLE_API_KEY
+      const domain = env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
 
-    const queryOptions = new URLSearchParams({
-      metrics: "visitors",
-      period: "30d",
-      site_id: domain,
-    })
+      const queryOptions = new URLSearchParams({
+        metrics: "visitors",
+        period: "30d",
+        site_id: domain,
+      })
 
-    const { results } = await wretch(`${host}/api/v1/stats/timeseries?${queryOptions.toString()}`)
-      .auth(`Bearer ${apiKey}`)
-      .get()
-      .json<AnalyticsResponse>()
+      const { results } = await wretch(`${host}/api/v1/stats/timeseries?${queryOptions.toString()}`)
+        .auth(`Bearer ${apiKey}`)
+        .get()
+        .json<AnalyticsResponse>()
 
-    const totalVisitors = results.reduce((acc, curr) => acc + curr.visitors, 0)
-    const averageVisitors = Math.round(totalVisitors / results.length)
+      const totalVisitors = results.reduce((acc, curr) => acc + curr.visitors, 0)
+      const averageVisitors = Math.round(totalVisitors / results.length)
 
-    return { results, totalVisitors, averageVisitors }
-  } catch (error) {
-    console.error("Analytics error:", error)
-    return { results: [], totalVisitors: 0, averageVisitors: 0 }
-  }
-}
-//   ["analytics"],
-//   { revalidate: 60 * 60 },
-// )
+      return { results, totalVisitors, averageVisitors }
+    } catch (error) {
+      console.error("Analytics error:", error)
+      return { results: [], totalVisitors: 0, averageVisitors: 0 }
+    }
+  },
+  ["analytics"],
+  { revalidate: 60 * 60 },
+)
 
 const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const { results, totalVisitors, averageVisitors } = await getAnalytics()
