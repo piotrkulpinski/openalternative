@@ -98,6 +98,7 @@ export default withContentCollections(
     widenClientFileUpload: true,
     hideSourceMaps: true,
     disableLogger: true,
+    tunnelRoute: "/monitoring",
     sourcemaps: { disable: true },
   }),
 )
