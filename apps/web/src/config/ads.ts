@@ -89,5 +89,10 @@ export const adsConfig = {
       description: "An open source Lemon Squeezy alternative with 20% lower fees",
       websiteUrl: "https://polar.sh",
     },
+    {
+      name: "Novu",
+      description: "The open-source notification infrastructure",
+      websiteUrl: "https://novu.co?utm_campaign=open-alternative-p-1",
+    },
   ],
 }
