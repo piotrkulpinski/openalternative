@@ -14,7 +14,7 @@ import { isDisposableEmail } from "~/utils/helpers"
  */
 export const subscribeToNewsletter = createServerAction()
   .input(newsletterSchema)
-  .handler(async ({ input: json }) => {
+  .handler(async ({ input: { value: email, ...input } }) => {
     const ip = await getIP()
 
     // Rate limiting check
@@ -23,7 +23,7 @@ export const subscribeToNewsletter = createServerAction()
     }
 
     // Disposable email check
-    if (await isDisposableEmail(json.email)) {
+    if (await isDisposableEmail(email)) {
       throw new Error("Invalid email address, please use a real one")
     }
 
@@ -32,7 +32,7 @@ export const subscribeToNewsletter = createServerAction()
     try {
       const { data } = await wretch(url)
         .auth(`Bearer ${env.BEEHIIV_API_KEY}`)
-        .post(json)
+        .post({ email, ...input })
         .json<{ data: { status: string } }>()
 
       if (data?.status === "pending") {

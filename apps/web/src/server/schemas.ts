@@ -23,7 +23,8 @@ export const submitToolSchema = z.object({
 })
 
 export const newsletterSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  captcha: z.literal("").optional(),
+  value: z.string().email("Please enter a valid email address"),
   referring_site: z.string().optional().default(config.site.url),
   utm_source: z.string().optional().default(config.site.name),
   utm_medium: z.string().optional().default("subscribe_form"),

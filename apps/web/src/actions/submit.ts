@@ -52,7 +52,7 @@ export const submitTool = createServerAction()
 
     if (newsletterOptIn) {
       await subscribeToNewsletter({
-        email: data.submitterEmail,
+        value: data.submitterEmail,
         utm_medium: "submit_form",
         double_opt_override: "off",
         send_welcome_email: false,

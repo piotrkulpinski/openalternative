@@ -35,12 +35,12 @@ export const NewsletterForm = ({
 }: NewsletterFormProps) => {
   const form = useForm<NewsletterSchema>({
     resolver: zodResolver(newsletterSchema),
-    defaultValues: { email: "", utm_medium: medium },
+    defaultValues: { captcha: "", value: "", utm_medium: medium },
   })
 
   const { data, error, isPending, execute } = useServerAction(subscribeToNewsletter, {
     onSuccess: () => {
-      posthog.capture("subscribe_newsletter", { email: form.getValues("email") })
+      posthog.capture("subscribe_newsletter", { email: form.getValues("value") })
       form.reset()
     },
 
@@ -55,11 +55,21 @@ export const NewsletterForm = ({
         noValidate
         {...props}
       >
+        <FormField
+          control={form.control}
+          name="captcha"
+          render={({ field }) => (
+            <FormControl>
+              <Input type="hidden" {...field} />
+            </FormControl>
+          )}
+        />
+
         <Box focusWithin>
           <div className="flex w-full rounded-lg overflow-clip">
             <FormField
               control={form.control}
-              name="email"
+              name="value"
               render={({ field }) => (
                 <FormControl>
                   <Input
@@ -84,8 +94,8 @@ export const NewsletterForm = ({
           </div>
         </Box>
 
-        {(error || form.formState.errors.email) && (
-          <Hint className="-mt-1">{(error || form.formState.errors.email)?.message}</Hint>
+        {(error || form.formState.errors.value) && (
+          <Hint className="-mt-1">{(error || form.formState.errors.value)?.message}</Hint>
         )}
 
         {data && <p className="text-sm text-green-600">{data}</p>}

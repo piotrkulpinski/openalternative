@@ -14,6 +14,11 @@ export const linksConfig = {
   ],
   family: [
     {
+      title: "OpenAds",
+      href: "https://openads.co",
+      description: "Automate ad spot management, increase revenue and make advertisers happy",
+    },
+    {
       title: "DevSuite",
       href: "https://devsuite.co",
       description: "Find the perfect developer tools for your next project",
