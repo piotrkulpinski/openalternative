@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
 import { type ComponentProps, isValidElement } from "react"
-import { Box, type BoxProps } from "~/components/common/box"
+import { type BoxProps, boxVariants } from "~/components/common/box"
 import { Stack } from "~/components/common/stack"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -26,9 +26,7 @@ const Card = ({ className, hover = true, focus = true, asChild, ...props }: Card
   const Comp = useAsChild ? Slot : "div"
 
   return (
-    <Box hover={hover} focus={focus}>
-      <Comp className={cx(cardVariants({ className }))} {...props} />
-    </Box>
+    <Comp className={cx(boxVariants({ hover, focus }), cardVariants({ className }))} {...props} />
   )
 }
 

@@ -7,7 +7,7 @@ import { Stack } from "~/components/common/stack"
 import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { Input } from "~/components/web/ui/input"
 import { Select } from "~/components/web/ui/select"
-import { useToolFilters } from "~/hooks/use-tool-filters"
+import { useToolFilters } from "~/contexts/tool-filter-context"
 
 export type ToolSearchProps = {
   placeholder?: string

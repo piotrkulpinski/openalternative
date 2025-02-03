@@ -2,7 +2,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { LoaderIcon } from "lucide-react"
 import type { ComponentProps, ReactNode } from "react"
 import { Children, isValidElement } from "react"
-import { Box } from "~/components/common/box"
+import { boxVariants } from "~/components/common/box"
 import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -94,27 +94,28 @@ const Button = ({
   const Comp = useAsChild ? Slot : "button"
 
   return (
-    <Box hover focus>
-      <Comp
-        disabled={disabled ?? isPending}
-        className={cx(buttonVariants({ variant, size, isAffixOnly, isPending, className }))}
-        {...props}
-      >
-        <Slottable child={children} asChild={asChild}>
-          {child => (
-            <>
-              <Slot className={buttonAffixVariants()}>{prefix}</Slot>
-              {!isChildrenEmpty(child) && (
-                <span className="flex-1 truncate only:text-center">{child}</span>
-              )}
-              <Slot className={buttonAffixVariants()}>{suffix}</Slot>
+    <Comp
+      disabled={disabled ?? isPending}
+      className={cx(
+        boxVariants({ hover: true, focus: true }),
+        buttonVariants({ variant, size, isAffixOnly, isPending, className }),
+      )}
+      {...props}
+    >
+      <Slottable child={children} asChild={asChild}>
+        {child => (
+          <>
+            <Slot className={buttonAffixVariants()}>{prefix}</Slot>
+            {!isChildrenEmpty(child) && (
+              <span className="flex-1 truncate only:text-center">{child}</span>
+            )}
+            <Slot className={buttonAffixVariants()}>{suffix}</Slot>
 
-              {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
-            </>
-          )}
-        </Slottable>
-      </Comp>
-    </Box>
+            {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
+          </>
+        )}
+      </Slottable>
+    </Comp>
   )
 }
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { type Values, useQueryStates } from "nuqs"
-import { type PropsWithChildren, createContext, useTransition } from "react"
+import { type PropsWithChildren, createContext, use, useTransition } from "react"
 import { toolsSearchParams } from "~/server/web/tools/search-params"
 import type { FilterType, LockedFilter } from "~/types/search"
 
@@ -62,4 +62,14 @@ const ToolFiltersProvider = ({
   )
 }
 
-export { ToolFiltersContext, ToolFiltersProvider }
+const useToolFilters = () => {
+  const context = use(ToolFiltersContext)
+
+  if (context === undefined) {
+    throw new Error("useToolFilter must be used within a ToolFilterProvider")
+  }
+
+  return context
+}
+
+export { ToolFiltersContext, ToolFiltersProvider, useToolFilters }

@@ -5,6 +5,7 @@ import {
 import { AlternativeSearch } from "~/components/web/alternatives/alternative-search"
 import { Pagination } from "~/components/web/pagination"
 import { Input } from "~/components/web/ui/input"
+import { AlternativeFiltersProvider } from "~/contexts/alternative-filter-context"
 import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type AlternativeQueryProps = {
@@ -22,10 +23,12 @@ const AlternativeQuery = ({
 }: AlternativeQueryProps) => {
   return (
     <>
-      <div className="flex flex-col gap-5">
-        <AlternativeSearch placeholder={placeholder} />
-        <AlternativeList alternatives={alternatives} />
-      </div>
+      <AlternativeFiltersProvider>
+        <div className="flex flex-col gap-5">
+          <AlternativeSearch placeholder={placeholder} />
+          <AlternativeList alternatives={alternatives} />
+        </div>
+      </AlternativeFiltersProvider>
 
       <Pagination pageSize={perPage} totalCount={totalCount} />
     </>

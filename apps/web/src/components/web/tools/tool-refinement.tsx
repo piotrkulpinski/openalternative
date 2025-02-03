@@ -11,7 +11,7 @@ import {
 } from "cmdk"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/web/ui/badge"
-import { useToolFilters } from "~/hooks/use-tool-filters"
+import { useToolFilters } from "~/contexts/tool-filter-context"
 import type { FilterOption, FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
 

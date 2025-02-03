@@ -2,7 +2,7 @@ import { createSearchParamsCache, parseAsInteger, parseAsString } from "nuqs/ser
 import { config } from "~/config"
 
 export const alternativesSearchParams = {
-  q: parseAsString,
+  q: parseAsString.withDefault(""),
   page: parseAsInteger.withDefault(1),
   sort: parseAsString.withDefault(""),
   perPage: parseAsInteger.withDefault(config.site.alternativesPerPage),
