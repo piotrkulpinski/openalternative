@@ -11,14 +11,27 @@ import {
   LogOutIcon,
   ReplaceIcon,
 } from "lucide-react"
-import { signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 import { Nav } from "~/components/admin/nav"
 import { NavMain } from "~/components/admin/nav-main"
 import { Separator } from "~/components/admin/ui/separator"
 import { siteConfig } from "~/config/site"
+import { signOut } from "~/lib/auth-client"
 
 export const Sidebar = () => {
   const isMobile = useMediaQuery("(max-width: 768px)")
+  const router = useRouter()
+
+  const handleSignOut = async () =>
+    signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("You've been signed out successfully")
+          router.push("/")
+        },
+      },
+    })
 
   return (
     <div
@@ -79,7 +92,7 @@ export const Sidebar = () => {
             {
               title: "Sign Out",
               href: "#",
-              onClick: () => signOut(),
+              onClick: handleSignOut,
               prefix: <LogOutIcon />,
             },
           ]}
