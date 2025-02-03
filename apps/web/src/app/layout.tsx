@@ -45,6 +45,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body className="group/body min-h-dvh flex flex-col bg-background text-foreground font-sans">
         <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster />
+
         {isDev && (
           <Script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js" />
         )}

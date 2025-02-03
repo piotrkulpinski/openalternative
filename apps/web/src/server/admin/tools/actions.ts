@@ -139,10 +139,7 @@ export const analyzeToolStack = authedProcedure
     const tool = await db.tool.findUniqueOrThrow({ where: { id } })
 
     // Get analysis and cache it
-    const { stack, repository } = await analyzeRepositoryStack(tool.repository)
-
-    console.log(stack)
-    console.log(repository)
+    const { stack } = await analyzeRepositoryStack(tool.repository)
 
     // Update tool with new stack
     return await db.tool.update({
