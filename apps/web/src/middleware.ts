@@ -21,12 +21,6 @@ export default async function ({ nextUrl, headers }: NextRequest) {
   }
 
   if (!isAllowedEmail(session.user.email)) {
-    await betterFetch<typeof auth.$Infer.Session>("/api/auth/sign-out", {
-      method: "POST",
-      baseURL: nextUrl.origin,
-      headers: { cookie: headers.get("cookie") || "" },
-    })
-
     return NextResponse.redirect(new URL("/", nextUrl.toString()))
   }
 

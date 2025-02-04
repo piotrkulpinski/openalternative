@@ -66,8 +66,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <Providers>
       <div className="flex flex-col min-h-dvh">
-        <div className="fixed inset-0 z-50 bg-background/25 backdrop-blur-[1px] pointer-events-none opacity-0 group-data-[scroll-locked]/body:opacity-100 transition-[opacity]" />
-
         <Suspense>
           <AdBanner />
         </Suspense>

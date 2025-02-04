@@ -54,7 +54,6 @@ export const submitTool = createServerAction()
       await subscribeToNewsletter({
         value: data.submitterEmail,
         utm_medium: "submit_form",
-        double_opt_override: "off",
         send_welcome_email: false,
       })
     }

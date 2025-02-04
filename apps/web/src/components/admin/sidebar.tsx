@@ -23,7 +23,7 @@ export const Sidebar = () => {
   const isMobile = useMediaQuery("(max-width: 768px)")
   const router = useRouter()
 
-  const handleSignOut = async () =>
+  const handleSignOut = async () => {
     signOut({
       fetchOptions: {
         onSuccess: () => {
@@ -32,6 +32,7 @@ export const Sidebar = () => {
         },
       },
     })
+  }
 
   return (
     <div

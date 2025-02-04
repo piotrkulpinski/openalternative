@@ -8,12 +8,12 @@ import { config } from "~/config"
 import { signIn } from "~/lib/auth-client"
 
 type LoginButtonProps = ComponentProps<typeof Button> & {
-  provider: "google"
+  provider: "google" | "github"
   callbackURL?: string
 }
 
 export const LoginButton = ({ provider, callbackURL, ...props }: LoginButtonProps) => {
-  callbackURL ||= `${config.site.url}/admin`
+  callbackURL ||= config.site.url
 
   const handleSignIn = () => {
     signIn.social({
@@ -29,7 +29,7 @@ export const LoginButton = ({ provider, callbackURL, ...props }: LoginButtonProp
 
   return (
     <Button size="lg" onClick={handleSignIn} {...props}>
-      Continue with {capitalCase(provider)}
+      Sign in with {capitalCase(provider)}
     </Button>
   )
 }
