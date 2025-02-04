@@ -24,8 +24,6 @@ export const createTool = authedProcedure
       },
     })
 
-    revalidateTag("admin/tools")
-
     // Send an event to the Inngest pipeline
     if (tool.publishedAt) {
       await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } })
@@ -100,7 +98,6 @@ export const scheduleTool = authedProcedure
       data: { status: ToolStatus.Scheduled, publishedAt },
     })
 
-    revalidateTag("admin/tools")
     revalidateTag("schedule")
     revalidateTag(`tool-${tool.slug}`)
 

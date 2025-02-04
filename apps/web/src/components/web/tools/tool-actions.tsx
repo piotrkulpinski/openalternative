@@ -57,7 +57,7 @@ export const ToolActions = ({
             </DropdownMenuTrigger>
           </Tooltip>
 
-          <DropdownMenuContent side="bottom" align="end" className=" min-w-0">
+          <DropdownMenuContent side="bottom" align="end" className="min-w-36">
             <DropdownMenuItem asChild>
               <button type="button" className={navLinkVariants()} onClick={() => {}}>
                 <TriangleAlertIcon className="shrink-0 size-4 opacity-75" />
