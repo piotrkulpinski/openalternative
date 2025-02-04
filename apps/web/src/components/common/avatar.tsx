@@ -20,7 +20,10 @@ const AvatarFallback = ({
   ...props
 }: ComponentProps<typeof AvatarPrimitive.Fallback>) => (
   <AvatarPrimitive.Fallback
-    className={cx("flex size-full items-center justify-center rounded-full bg-muted", className)}
+    className={cx(
+      "flex size-full items-center justify-center text-[10px] rounded-full bg-primary text-white",
+      className,
+    )}
     {...props}
   />
 )

@@ -191,33 +191,25 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         </Stack>
 
         <Stack size="sm">
-          {!session?.user && (
-            <Button size="sm" variant="secondary" asChild>
-              <Link href="/login" prefetch={false}>
-                Sign in
-              </Link>
-            </Button>
-          )}
-
           <Button size="sm" variant="secondary" asChild>
             <Link href="/submit" prefetch={false}>
               Submit
             </Link>
           </Button>
 
-          {session?.user && (
+          {session?.user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  prefix={
-                    <Avatar>
-                      <AvatarImage src={session.user.image ?? undefined} />
-                      <AvatarFallback>{session.user.name?.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                  }
-                />
+                <Button size="sm" variant="secondary">
+                  <Avatar className="inline-flex size-[1.1em]">
+                    <AvatarImage src={session.user.image ?? undefined} />
+                    <AvatarFallback>{session.user.name?.charAt(0)}</AvatarFallback>
+                  </Avatar>
+
+                  <span className="max-lg:hidden align-middle ml-[0.66ch]">
+                    {session.user.name}
+                  </span>
+                </Button>
               </DropdownMenuTrigger>
 
               <DropdownMenuContent side="bottom" align="end">
@@ -236,6 +228,12 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+          ) : (
+            <Button size="sm" variant="secondary" asChild>
+              <Link href="/login" prefetch={false}>
+                Sign in
+              </Link>
+            </Button>
           )}
         </Stack>
       </div>
