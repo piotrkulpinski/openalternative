@@ -17,7 +17,12 @@ export const auth = betterAuth({
     github: {
       clientId: env.AUTH_GITHUB_ID,
       clientSecret: env.AUTH_GITHUB_SECRET,
-      scope: ["read:user", "repo:public_repo"],
+    },
+  },
+
+  account: {
+    accountLinking: {
+      enabled: true,
     },
   },
 })
