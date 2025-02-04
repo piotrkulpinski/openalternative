@@ -44,7 +44,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
             {tool.name}
           </H4>
 
-          <ToolBadges tool={tool} size="sm" className="ml-auto text-base">
+          <ToolBadges tool={tool} className="ml-auto">
             {tool.discountAmount && <Badge variant="success">Get {tool.discountAmount}!</Badge>}
           </ToolBadges>
         </CardHeader>

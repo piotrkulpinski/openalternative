@@ -16,9 +16,7 @@ import { RepositoryDetails } from "~/components/web/repository-details"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { StackList } from "~/components/web/stacks/stack-list"
 import { ToolAlternatives } from "~/components/web/tools/tool-alternatives"
-import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
-import { Badge } from "~/components/web/ui/badge"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
@@ -97,22 +95,22 @@ export default async function ToolPage(props: PageProps) {
 
   return (
     <>
-      <Breadcrumbs
-        items={[
-          {
-            href: "/#tools",
-            name: "Open Source Tools",
-          },
-          {
-            href: `/${tool.slug}`,
-            name: tool.name,
-          },
-        ]}
-      />
-
       <div className="flex flex-col gap-12">
         <Section>
           <Section.Content className="max-md:contents">
+            <Breadcrumbs
+              items={[
+                {
+                  href: "/#tools",
+                  name: "Open Source Tools",
+                },
+                {
+                  href: `/${tool.slug}`,
+                  name: tool.name,
+                },
+              ]}
+            />
+
             <div className="flex flex-1 flex-col items-start gap-4 max-md:order-1 md:gap-6">
               <div className="flex w-full flex-col items-start gap-y-4">
                 <Stack className="w-full">
@@ -122,15 +120,7 @@ export default async function ToolPage(props: PageProps) {
                     <H1 className="!leading-snug truncate">{tool.name}</H1>
                   </div>
 
-                  <ToolBadges tool={tool}>
-                    {tool.discountAmount && (
-                      <Badge size="lg" variant="success">
-                        {tool.discountCode
-                          ? `Use code ${tool.discountCode} for ${tool.discountAmount}!`
-                          : `Get ${tool.discountAmount} with our link!`}
-                      </Badge>
-                    )}
-                  </ToolBadges>
+                  {/* <ToolActions tool={tool} /> */}
                 </Stack>
 
                 {tool.description && <IntroDescription>{tool.description}</IntroDescription>}
@@ -138,7 +128,7 @@ export default async function ToolPage(props: PageProps) {
 
               <ToolAlternatives alternatives={tool.alternatives} />
 
-              <Stack size="sm">
+              <Stack size="sm" className="w-full">
                 {tool.website && (
                   <Button suffix={<ArrowUpRightIcon />} asChild>
                     <ExternalLink
@@ -162,6 +152,14 @@ export default async function ToolPage(props: PageProps) {
                       Self-host with Easypanel
                     </ExternalLink>
                   </Button>
+                )}
+
+                {tool.discountAmount && (
+                  <p className="ml-auto pl-2 text-sm text-green-600 dark:text-green-400">
+                    {tool.discountCode
+                      ? `Use code ${tool.discountCode} for ${tool.discountAmount}!`
+                      : `Get ${tool.discountAmount} with our link!`}
+                  </p>
                 )}
               </Stack>
             </div>

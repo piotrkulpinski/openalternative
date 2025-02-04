@@ -1,3 +1,4 @@
+import { Children, type ReactNode } from "react"
 import wretch from "wretch"
 
 type Metadata = {
@@ -90,4 +91,13 @@ export function nullsToUndefined<T>(obj: T) {
     }
   }
   return obj as any
+}
+
+/**
+ * Returns true if the children are empty
+ * @param children - The children to check
+ * @returns True if the children are empty, false otherwise
+ */
+export const isChildrenEmpty = (children: ReactNode) => {
+  return Children.count(children) === 0
 }

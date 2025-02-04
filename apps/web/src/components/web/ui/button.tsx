@@ -1,10 +1,11 @@
 import { Slot } from "@radix-ui/react-slot"
 import { LoaderIcon } from "lucide-react"
 import type { ComponentProps, ReactNode } from "react"
-import { Children, isValidElement } from "react"
+import { isValidElement } from "react"
 import { boxVariants } from "~/components/common/box"
 import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
+import { isChildrenEmpty } from "~/utils/helpers"
 
 const buttonVariants = cva({
   base: [
@@ -24,20 +25,10 @@ const buttonVariants = cva({
       md: "gap-[0.75ch] py-1.5 px-3",
       lg: "gap-[1ch] py-2.5 px-4 rounded-lg sm:text-sm",
     },
-    isAffixOnly: {
-      true: "",
-    },
     isPending: {
       true: "[&>*:not(.animate-spin)]:text-transparent select-none",
     },
   },
-
-  compoundVariants: [
-    // Is affix only
-    { size: "sm", isAffixOnly: true, class: "px-1" },
-    { size: "md", isAffixOnly: true, class: "px-1.5" },
-    { size: "lg", isAffixOnly: true, class: "px-2" },
-  ],
 
   defaultVariants: {
     variant: "primary",
@@ -46,7 +37,7 @@ const buttonVariants = cva({
 })
 
 const buttonAffixVariants = cva({
-  base: "shrink-0 size-[1.1em]",
+  base: "shrink-0 first:-ml-[0.21425em] last:-mr-[0.21425em] size-[1.1em]",
 })
 
 export type ButtonProps = Omit<ComponentProps<"button">, "size" | "prefix"> &
@@ -83,13 +74,8 @@ const Button = ({
   suffix,
   variant,
   size,
-  isAffixOnly,
   ...props
 }: ButtonProps) => {
-  const isChildrenEmpty = (children: ReactNode) => {
-    return Children.count(children) === 0
-  }
-
   const useAsChild = asChild && isValidElement(children)
   const Comp = useAsChild ? Slot : "button"
 
@@ -98,7 +84,7 @@ const Button = ({
       disabled={disabled ?? isPending}
       className={cx(
         boxVariants({ hover: true, focus: true }),
-        buttonVariants({ variant, size, isAffixOnly, isPending, className }),
+        buttonVariants({ variant, size, isPending, className }),
       )}
       {...props}
     >
@@ -106,9 +92,11 @@ const Button = ({
         {child => (
           <>
             <Slot className={buttonAffixVariants()}>{prefix}</Slot>
+
             {!isChildrenEmpty(child) && (
               <span className="flex-1 truncate only:text-center">{child}</span>
             )}
+
             <Slot className={buttonAffixVariants()}>{suffix}</Slot>
 
             {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}

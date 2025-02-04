@@ -109,7 +109,7 @@ export const AdsCalendar = ({
         <Stack size="sm">
           {adSpot.preview && (
             <Tooltip tooltip="Preview this ad">
-              <Button variant="secondary" size="sm" prefix={<EyeIcon />} isAffixOnly asChild>
+              <Button variant="secondary" size="sm" prefix={<EyeIcon />} asChild>
                 <Link href={adSpot.preview} target="_blank" rel="noopener noreferrer nofollow" />
               </Button>
             </Tooltip>

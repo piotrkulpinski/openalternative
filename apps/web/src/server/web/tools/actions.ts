@@ -1,6 +1,11 @@
 "use server"
 
+import { db } from "@openalternative/db"
+import { headers } from "next/headers"
+import { redirect } from "next/navigation"
+import { z } from "zod"
 import { createServerAction } from "zsa"
+import { auth } from "~/lib/auth"
 import { findAlternatives } from "~/server/web/alternatives/queries"
 import { findCategories } from "~/server/web/categories/queries"
 import { findLicenses } from "~/server/web/licenses/queries"
@@ -32,3 +37,52 @@ export const findFilterOptions = createServerAction().handler(
     }
   },
 )
+
+export const toggleBookmark = createServerAction()
+  .input(z.object({ toolSlug: z.string(), callbackUrl: z.string() }))
+  .handler(async ({ input }) => {
+    try {
+      const session = await auth.api.getSession({ headers: await headers() })
+
+      if (!session?.user) {
+        redirect(`/login?callbackUrl=${encodeURIComponent(input.callbackUrl)}`)
+      }
+
+      const tool = await db.tool.findUnique({
+        where: { slug: input.toolSlug },
+        select: { id: true },
+      })
+
+      if (!tool) {
+        return { success: false, error: "Tool not found" }
+      }
+
+      const existingBookmark = await db.bookmark.findUnique({
+        where: {
+          userId_toolId: {
+            userId: session.user.id,
+            toolId: tool.id,
+          },
+        },
+      })
+
+      if (existingBookmark) {
+        await db.bookmark.delete({
+          where: { id: existingBookmark.id },
+        })
+        return { success: true, data: { bookmarked: false } }
+      }
+
+      await db.bookmark.create({
+        data: {
+          userId: session.user.id,
+          toolId: tool.id,
+        },
+      })
+
+      return { success: true, data: { bookmarked: true } }
+    } catch (error) {
+      console.error("Failed to bookmark:", error)
+      return { success: false, error: "Failed to bookmark" }
+    }
+  })

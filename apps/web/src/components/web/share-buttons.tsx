@@ -80,7 +80,7 @@ export const ShareButtons = ({ title, ...props }: ShareButtonsProps) => {
         <TooltipProvider delayDuration={500} disableHoverableContent>
           {shareOptions.map(({ platform, url, icon }) => (
             <Tooltip key={platform} tooltip={platform}>
-              <Button size="sm" variant="secondary" prefix={icon} isAffixOnly asChild>
+              <Button size="sm" variant="secondary" prefix={icon} asChild>
                 <ExternalLink
                   href={url(currentUrl, shareTitle)}
                   eventName="click_share"

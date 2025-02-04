@@ -9,10 +9,9 @@ import { cx } from "~/utils/cva"
 
 type ToolBadgesProps = HTMLAttributes<HTMLElement> & {
   tool: ToolMany | ToolManyExtended
-  size?: "sm" | "md"
 }
 
-export const ToolBadges = ({ tool, size, children, className, ...props }: ToolBadgesProps) => {
+export const ToolBadges = ({ tool, children, className, ...props }: ToolBadgesProps) => {
   const { firstCommitDate, publishedAt } = tool
   const now = new Date().toISOString()
 
@@ -25,7 +24,7 @@ export const ToolBadges = ({ tool, size, children, className, ...props }: ToolBa
 
   return (
     <TooltipProvider delayDuration={500} disableHoverableContent>
-      <Stack size={size} className={cx("flex-nowrap justify-end text-lg", className)} {...props}>
+      <Stack size="sm" className={cx("flex-nowrap justify-end text-sm", className)} {...props}>
         {isNew && (
           <Tooltip tooltip="Repo is less than 1 year old">
             <SparklesIcon className="text-yellow-500" />

@@ -203,7 +203,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Box hover focus>
-                  <Avatar className="size-6 rounded-md duration-100">
+                  <Avatar className="size-6 duration-100">
                     <AvatarImage src={session.user.image ?? undefined} />
                     <AvatarFallback>{getInitials(session.user.name)}</AvatarFallback>
                   </Avatar>

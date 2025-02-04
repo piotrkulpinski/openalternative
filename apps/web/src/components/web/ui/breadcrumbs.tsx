@@ -25,7 +25,7 @@ type BreadcrumbsProps = HTMLAttributes<HTMLElement> & {
   items: Breadcrumb[]
 }
 
-export const Breadcrumbs = ({ className, items, ...props }: BreadcrumbsProps) => {
+export const Breadcrumbs = ({ children, className, items, ...props }: BreadcrumbsProps) => {
   const breadcrumbItems = [
     {
       href: "/",
@@ -53,9 +53,13 @@ export const Breadcrumbs = ({ className, items, ...props }: BreadcrumbsProps) =>
   }
 
   return (
-    <>
+    <Stack
+      size="lg"
+      className={cx("w-full justify-between -mb-2 md:-mb-6 lg:-mb-8", className)}
+      {...props}
+    >
       <Stack size="sm" asChild>
-        <nav className={cx("-mb-4 md:-mb-6 lg:-mb-8", className)} {...props}>
+        <nav>
           {breadcrumbItems.map(({ href, name }, index) => (
             <div key={index} className="contents">
               {index > 0 && <BreadcrumbsSeparator />}
@@ -71,6 +75,8 @@ export const Breadcrumbs = ({ className, items, ...props }: BreadcrumbsProps) =>
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-    </>
+
+      {children}
+    </Stack>
   )
 }

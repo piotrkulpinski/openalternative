@@ -6,6 +6,7 @@ import { H5 } from "~/components/common/heading"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
+import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { Button } from "~/components/web/ui/button"
 import { Card } from "~/components/web/ui/card"
 import { Insights } from "~/components/web/ui/insights"
@@ -60,7 +61,12 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
       {...props}
     >
       <Stack direction="column">
-        <H5 as="strong">Repository details:</H5>
+        <Stack size="sm" className="w-full justify-between">
+          <H5 as="strong">Details:</H5>
+
+          <ToolBadges tool={tool} />
+        </Stack>
+
         <Insights insights={insights} className="text-sm" />
       </Stack>
 
