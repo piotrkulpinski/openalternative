@@ -1,13 +1,12 @@
 import { db } from "@openalternative/db"
 import { Card, CardDescription, CardHeader, CardTitle } from "~/components/admin/ui/card"
-import { cache } from "~/lib/cache"
-
-const getStats = cache(async () => {
-  return await db.$transaction([db.tool.count(), db.alternative.count(), db.category.count()])
-}, ["stats"])
 
 export const StatsCard = async () => {
-  const stats = await getStats()
+  const stats = await db.$transaction([
+    db.tool.count(),
+    db.alternative.count(),
+    db.category.count(),
+  ])
 
   const statsLabels = {
     0: "Tools",

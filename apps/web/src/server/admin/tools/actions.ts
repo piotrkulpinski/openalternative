@@ -100,7 +100,7 @@ export const scheduleTool = authedProcedure
       data: { status: ToolStatus.Scheduled, publishedAt },
     })
 
-    revalidateTag("admin-tools")
+    revalidateTag("admin/tools")
     revalidateTag("schedule")
     revalidateTag(`tool-${tool.slug}`)
 

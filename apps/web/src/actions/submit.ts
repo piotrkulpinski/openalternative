@@ -80,7 +80,7 @@ export const submitTool = createServerAction()
     await inngest.send({ name: "tool.submitted", data: { slug } })
 
     // Revalidate cache
-    revalidateTag("admin-tools")
+    revalidateTag("admin/tools")
 
     return tool
   })

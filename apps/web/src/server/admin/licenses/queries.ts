@@ -53,7 +53,7 @@ export const findLicenses = cache(
     const pageCount = Math.ceil(licensesTotal / per_page)
     return { licenses, licensesTotal, pageCount }
   },
-  ["admin-licenses", "licenses"],
+  ["admin/licenses", "licenses"],
 )
 
 export const findLicenseBySlug = (slug: string) =>

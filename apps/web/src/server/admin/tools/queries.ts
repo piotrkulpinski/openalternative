@@ -58,7 +58,7 @@ export const findTools = cache(
     const pageCount = Math.ceil(toolsTotal / per_page)
     return { tools, toolsTotal, pageCount }
   },
-  ["admin-tools", "tools"],
+  ["admin/tools", "tools"],
 )
 
 export const findScheduledTools = cache(async () => {
@@ -74,7 +74,7 @@ export const findToolList = cache(async () => {
     select: { id: true, name: true },
     orderBy: { name: "asc" },
   })
-}, ["admin-tools", "tools"])
+}, ["admin/tools", "tools"])
 
 export const findToolBySlug = (slug: string) =>
   cache(
