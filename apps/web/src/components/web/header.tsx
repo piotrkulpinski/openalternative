@@ -1,5 +1,6 @@
 "use client"
 
+import { getInitials } from "@curiousleaf/utils"
 import {
   BlocksIcon,
   CalendarDaysIcon,
@@ -16,6 +17,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { type HTMLAttributes, Suspense, useEffect, useState } from "react"
 import { toast } from "sonner"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/common/avatar"
+import { Box } from "~/components/common/box"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
@@ -200,16 +202,12 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           {session?.user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="secondary">
-                  <Avatar className="inline-flex size-[1.1em]">
+                <Box hover focus>
+                  <Avatar className="size-6 rounded-md duration-100">
                     <AvatarImage src={session.user.image ?? undefined} />
-                    <AvatarFallback>{session.user.name?.charAt(0)}</AvatarFallback>
+                    <AvatarFallback>{getInitials(session.user.name)}</AvatarFallback>
                   </Avatar>
-
-                  <span className="max-lg:hidden align-middle ml-[0.66ch]">
-                    {session.user.name}
-                  </span>
-                </Button>
+                </Box>
               </DropdownMenuTrigger>
 
               <DropdownMenuContent side="bottom" align="end">

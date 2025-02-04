@@ -6,7 +6,7 @@ import { cx } from "~/utils/cva"
 
 const Avatar = ({ className, ...props }: ComponentProps<typeof AvatarPrimitive.Root>) => (
   <AvatarPrimitive.Root
-    className={cx("relative flex size-10 shrink-0 overflow-hidden rounded-full", className)}
+    className={cx("relative flex size-10 shrink-0 overflow-clip rounded-full", className)}
     {...props}
   />
 )
@@ -20,10 +20,7 @@ const AvatarFallback = ({
   ...props
 }: ComponentProps<typeof AvatarPrimitive.Fallback>) => (
   <AvatarPrimitive.Fallback
-    className={cx(
-      "flex size-full items-center justify-center text-[10px] rounded-full bg-primary text-white",
-      className,
-    )}
+    className={cx("flex size-full items-center justify-center text-xs", className)}
     {...props}
   />
 )
