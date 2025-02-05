@@ -15,6 +15,7 @@ export const Calendar = ({ className, classNames, ...props }: ComponentProps<typ
   return (
     <DayPicker
       className={cx("p-3", className)}
+      weekStartsOn={1}
       classNames={{
         months: "relative flex flex-col sm:flex-row gap-y-4 sm:gap-x-4 sm:gap-y-0",
         month: "group/month space-y-4 w-full",

@@ -71,13 +71,15 @@ export default async function StackAnalyzerPage({ params }: PageProps) {
 
       <Prose className="text-lg">
         <ul>
-          {analyses.map(({ repository }) => (
-            <li key={repository.nameWithOwner}>
-              <NavLink href={`${url}/${repository.nameWithOwner}`}>
-                {repository.nameWithOwner}
-              </NavLink>
-            </li>
-          ))}
+          {analyses
+            .filter(a => a.repository)
+            .map(({ repository }) => (
+              <li key={repository.nameWithOwner}>
+                <NavLink href={`${url}/${repository.nameWithOwner}`}>
+                  {repository.nameWithOwner}
+                </NavLink>
+              </li>
+            ))}
         </ul>
       </Prose>
     </Stack>
