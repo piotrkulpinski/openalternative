@@ -15,7 +15,6 @@ import { Markdown } from "~/components/web/markdown"
 import { RepositoryDetails } from "~/components/web/repository-details"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { StackList } from "~/components/web/stacks/stack-list"
-import { ToolActions } from "~/components/web/tools/tool-actions"
 import { ToolAlternatives } from "~/components/web/tools/tool-alternatives"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
@@ -121,7 +120,7 @@ export default async function ToolPage(props: PageProps) {
                     <H1 className="!leading-snug truncate">{tool.name}</H1>
                   </div>
 
-                  <ToolActions tool={tool} />
+                  {/* <ToolActions tool={tool} /> */}
                 </Stack>
 
                 {tool.description && <IntroDescription>{tool.description}</IntroDescription>}
