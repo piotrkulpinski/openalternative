@@ -1,6 +1,7 @@
 "use client"
 
 import { capitalCase } from "change-case"
+import { useSearchParams } from "next/navigation"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { Button } from "~/components/web/ui/button"
@@ -9,11 +10,11 @@ import { signIn } from "~/lib/auth-client"
 
 type LoginButtonProps = ComponentProps<typeof Button> & {
   provider: "google" | "github"
-  callbackURL?: string
 }
 
-export const LoginButton = ({ provider, callbackURL, ...props }: LoginButtonProps) => {
-  callbackURL ||= config.site.url
+export const LoginButton = ({ provider, ...props }: LoginButtonProps) => {
+  const searchParams = useSearchParams()
+  const callbackURL = searchParams.get("callbackURL") || config.site.url
 
   const handleSignIn = () => {
     signIn.social({

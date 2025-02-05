@@ -39,15 +39,15 @@ export const findFilterOptions = createServerAction().handler(
 )
 
 export const toggleBookmark = createServerAction()
-  .input(z.object({ toolSlug: z.string(), callbackUrl: z.string() }))
+  .input(z.object({ toolSlug: z.string(), callbackURL: z.string() }))
   .handler(async ({ input }) => {
+    const session = await auth.api.getSession({ headers: await headers() })
+
+    if (!session?.user) {
+      throw redirect(`/login?callbackURL=${encodeURIComponent(input.callbackURL)}`)
+    }
+
     try {
-      const session = await auth.api.getSession({ headers: await headers() })
-
-      if (!session?.user) {
-        redirect(`/login?callbackUrl=${encodeURIComponent(input.callbackUrl)}`)
-      }
-
       const tool = await db.tool.findUnique({
         where: { slug: input.toolSlug },
         select: { id: true },

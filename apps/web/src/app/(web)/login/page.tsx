@@ -11,7 +11,7 @@ import { auth } from "~/lib/auth"
 
 export const metadata: Metadata = {
   title: "Sign in",
-  description: `Login to ${config.site.name} to access your dashboard and manage your tools.`,
+  description: `Login to ${config.site.name} to access your dashboard and manage your tools (soon).`,
   openGraph: { ...metadataConfig.openGraph, url: "/login" },
   alternates: { ...metadataConfig.alternates, canonical: "/login" },
 }

@@ -4,7 +4,6 @@ import { BookmarkPlusIcon, EllipsisIcon, TriangleAlertIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import type { HTMLAttributes } from "react"
 import { startTransition, useOptimistic } from "react"
-import { toast } from "sonner"
 import { Stack } from "~/components/common/stack"
 import { Button } from "~/components/web/ui/button"
 import {
@@ -15,6 +14,7 @@ import {
 } from "~/components/web/ui/dropdown-menu"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
+import { siteConfig } from "~/config/site"
 import { toggleBookmark } from "~/server/web/tools/actions"
 import type { ToolMany, ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
@@ -32,19 +32,11 @@ export const ToolActions = ({
   ...props
 }: ToolActionsProps) => {
   const pathname = usePathname()
-  // const [isPending, startTransition] = useTransition()
   const [bookmarked, setBookmarked] = useOptimistic(isBookmarked)
 
   const handleBookmark = async () => {
-    const newState = !bookmarked
-
-    try {
-      startTransition(() => setBookmarked(newState))
-      await toggleBookmark({ toolSlug: tool.slug, callbackUrl: pathname })
-    } catch (error) {
-      toast.error((error as Error).message)
-      setBookmarked(!newState)
-    }
+    startTransition(() => setBookmarked(!bookmarked))
+    await toggleBookmark({ toolSlug: tool.slug, callbackURL: `${siteConfig.url}${pathname}` })
   }
 
   return (
@@ -72,7 +64,6 @@ export const ToolActions = ({
             variant={bookmarked ? "fancy" : "secondary"}
             prefix={<BookmarkPlusIcon className="-my-1 size-5!" />}
             onClick={handleBookmark}
-            // isPending={isPending}
           />
         </Tooltip>
 
