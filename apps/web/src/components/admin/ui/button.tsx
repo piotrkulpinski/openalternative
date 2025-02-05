@@ -84,9 +84,7 @@ const Button = ({
           <>
             <Slot className={buttonAffixVariants()}>{prefix}</Slot>
 
-            {!isChildrenEmpty(child) && (
-              <span className="flex-1 truncate only:text-center">{child}</span>
-            )}
+            {!isChildrenEmpty(child) && <span className="contents">{child}</span>}
 
             <Slot className={buttonAffixVariants()}>{suffix}</Slot>
 

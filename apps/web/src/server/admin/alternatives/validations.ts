@@ -1,18 +1,24 @@
+import type { Alternative } from "@openalternative/db/client"
+import {
+  createSearchParamsCache,
+  parseAsInteger,
+  parseAsString,
+  parseAsStringEnum,
+} from "nuqs/server"
 import * as z from "zod"
+import { getSortingStateParser } from "~/lib/parsers"
 
-export const searchParamsSchema = z.object({
-  page: z.coerce.number().default(1),
-  per_page: z.coerce.number().default(50),
-  sort: z.string().optional(),
-  name: z.string().optional(),
-  from: z.string().optional(),
-  to: z.string().optional(),
-  operator: z.enum(["and", "or"]).optional(),
+export const searchParamsCache = createSearchParamsCache({
+  page: parseAsInteger.withDefault(1),
+  perPage: parseAsInteger.withDefault(25),
+  sort: getSortingStateParser<Alternative>().withDefault([{ id: "createdAt", desc: true }]),
+  name: parseAsString.withDefault(""),
+  from: parseAsString.withDefault(""),
+  to: parseAsString.withDefault(""),
+  operator: parseAsStringEnum(["and", "or"]).withDefault("and"),
 })
 
-export const getAlternativesSchema = searchParamsSchema
-
-export type GetAlternativesSchema = z.infer<typeof getAlternativesSchema>
+export type GetAlternativesSchema = Awaited<ReturnType<typeof searchParamsCache.parse>>
 
 export const alternativeSchema = z.object({
   name: z.string().min(1, "Name is required"),

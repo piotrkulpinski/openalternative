@@ -12,7 +12,7 @@ import {
 import { getColumnPinningStyle } from "~/lib/data-table"
 import { cx } from "~/utils/cva"
 
-interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
+type DataTableProps<TData> = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * The table instance returned from useDataTable hook with pagination, sorting, filtering, etc.
    * @type TanstackTable<TData>

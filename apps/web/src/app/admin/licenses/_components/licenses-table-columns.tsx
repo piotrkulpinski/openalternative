@@ -6,40 +6,51 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { LicenseActions } from "~/app/admin/licenses/_components/license-actions"
 import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/admin/data-table/data-table-link"
-import { Checkbox } from "~/components/common/checkbox"
+import type { DataTableRowAction } from "~/types"
 
-export function getColumns(): ColumnDef<License>[] {
+type GetColumnsProps = {
+  setRowAction: React.Dispatch<React.SetStateAction<DataTableRowAction<License> | null>>
+}
+
+export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<License>[] => {
   return [
     {
-      accessorKey: "name",
-      header: ({ table, column }) => (
-        <div className="flex items-center gap-2">
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && "indeterminate")
+      id: "select",
+      header: ({ table }) => (
+        <input
+          type="checkbox"
+          checked={table.getIsAllPageRowsSelected()}
+          ref={input => {
+            if (input) {
+              input.indeterminate =
+                table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected()
             }
-            onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
-            aria-label="Select all"
-            className="my-auto mx-1.5"
-          />
-
-          <DataTableColumnHeader column={column} title="Name" />
-        </div>
+          }}
+          onChange={e => table.toggleAllPageRowsSelected(e.target.checked)}
+          aria-label="Select all"
+          className="translate-y-0.5 ml-1.5"
+        />
       ),
       cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={value => row.toggleSelected(!!value)}
-            aria-label="Select row"
-            className="my-auto mx-1.5"
-          />
-
-          <DataTableLink href={`/admin/licenses/${row.original.slug}`}>
-            {row.getValue("name")}
-          </DataTableLink>
-        </div>
+        <input
+          type="checkbox"
+          checked={row.getIsSelected()}
+          onChange={e => row.toggleSelected(e.target.checked)}
+          aria-label="Select row"
+          className="translate-y-0.5 ml-1.5"
+        />
+      ),
+      size: 0,
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "name",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+      cell: ({ row }) => (
+        <DataTableLink href={`/admin/licenses/${row.original.slug}`}>
+          {row.getValue("name")}
+        </DataTableLink>
       ),
     },
     {
@@ -61,7 +72,11 @@ export function getColumns(): ColumnDef<License>[] {
     {
       id: "actions",
       cell: ({ row }) => (
-        <LicenseActions license={row.original} row={row} className="float-right -my-0.5" />
+        <LicenseActions
+          license={row.original}
+          setRowAction={setRowAction}
+          className="float-right -my-1"
+        />
       ),
       size: 0,
     },

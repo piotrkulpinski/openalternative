@@ -1,7 +1,6 @@
 "use client"
 
 import type { Category } from "@openalternative/db/client"
-import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -19,7 +18,7 @@ import {
 import { deleteCategories } from "~/server/admin/categories/actions"
 
 interface CategoriesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  categories: Row<Category>["original"][]
+  categories: Category[]
   showTrigger?: boolean
   onSuccess?: () => void
 }
@@ -32,6 +31,7 @@ export const CategoriesDeleteDialog = ({
 }: CategoriesDeleteDialogProps) => {
   const { execute, isPending } = useServerAction(deleteCategories, {
     onSuccess: () => {
+      props.onOpenChange?.(false)
       toast.success("Categories deleted")
       onSuccess?.()
     },

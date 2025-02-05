@@ -6,6 +6,7 @@ import * as React from "react"
 import type { DataTableFilterField } from "~/types"
 
 import { DataTableFacetedFilter } from "~/components/admin/data-table/data-table-faceted-filter"
+import { DataTableViewOptions } from "~/components/admin/data-table/data-table-view-options"
 import { Button } from "~/components/admin/ui/button"
 import { Input } from "~/components/admin/ui/input"
 import { cx } from "~/utils/cva"
@@ -41,30 +42,30 @@ export function DataTableToolbar<TData>({
         {searchableColumns.length > 0 &&
           searchableColumns.map(
             column =>
-              table.getColumn(column.value ? String(column.value) : "") && (
+              table.getColumn(column.id ? String(column.id) : "") && (
                 <Input
-                  key={String(column.value)}
+                  key={String(column.id)}
                   placeholder={column.placeholder}
-                  value={(table.getColumn(String(column.value))?.getFilterValue() as string) ?? ""}
-                  onChange={event =>
-                    table.getColumn(String(column.value))?.setFilterValue(event.target.value)
-                  }
+                  value={(table.getColumn(String(column.id))?.getFilterValue() as string) ?? ""}
+                  onChange={e => table.getColumn(String(column.id))?.setFilterValue(e.target.value)}
                   className="h-8 w-40 lg:w-64"
                 />
               ),
           )}
+
         {filterableColumns.length > 0 &&
           filterableColumns.map(
             column =>
-              table.getColumn(column.value ? String(column.value) : "") && (
+              table.getColumn(column.id ? String(column.id) : "") && (
                 <DataTableFacetedFilter
-                  key={String(column.value)}
-                  column={table.getColumn(column.value ? String(column.value) : "")}
+                  key={String(column.id)}
+                  column={table.getColumn(column.id ? String(column.id) : "")}
                   title={column.label}
                   options={column.options ?? []}
                 />
               ),
           )}
+
         {isFiltered && (
           <Button
             aria-label="Reset filters"
@@ -78,7 +79,10 @@ export function DataTableToolbar<TData>({
         )}
       </div>
 
-      {children}
+      <div className="flex items-center gap-2">
+        {children}
+        <DataTableViewOptions table={table} />
+      </div>
     </div>
   )
 }

@@ -10,7 +10,7 @@ import { H3 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
 import { cx } from "~/utils/cva"
 
-interface DataTableSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
+type DataTableSkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * The title of the table.
    * @type string

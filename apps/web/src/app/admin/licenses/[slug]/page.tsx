@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { LicenseActions } from "~/app/admin/licenses/_components/license-actions"
+import { UpdateLicenseActions } from "~/app/admin/licenses/[slug]/actions"
 import { LicenseForm } from "~/app/admin/licenses/_components/license-form"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H3 } from "~/components/common/heading"
@@ -22,7 +22,7 @@ export default async function UpdateLicensePage({ params }: PageProps) {
       <div className="flex items-center justify-between gap-4">
         <H3>Update license</H3>
 
-        <LicenseActions license={license} />
+        <UpdateLicenseActions license={license} />
       </div>
 
       <LicenseForm license={license} />

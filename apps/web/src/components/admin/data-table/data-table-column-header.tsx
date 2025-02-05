@@ -11,7 +11,7 @@ import {
 } from "~/components/admin/ui/dropdown-menu"
 import { cx } from "~/utils/cva"
 
-interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {
+type DataTableColumnHeaderProps<TData, TValue> = React.HTMLAttributes<HTMLDivElement> & {
   column: Column<TData, TValue>
   title: string
 }

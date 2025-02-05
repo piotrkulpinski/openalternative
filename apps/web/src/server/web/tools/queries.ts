@@ -13,18 +13,10 @@ import type { toolsSearchParams } from "~/server/web/tools/search-params"
 
 export const searchTools = cache(
   async (
-    {
-      q,
-      alternative,
-      category,
-      stack,
-      license,
-      page,
-      sort,
-      perPage,
-    }: inferParserType<typeof toolsSearchParams>,
+    search: inferParserType<typeof toolsSearchParams>,
     { where, ...args }: Prisma.ToolFindManyArgs,
   ) => {
+    const { q, alternative, category, stack, license, page, sort, perPage } = search
     const start = performance.now()
     const skip = (page - 1) * perPage
     const take = perPage

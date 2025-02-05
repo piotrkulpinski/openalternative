@@ -1,24 +1,27 @@
-import { ToolStatus } from "@openalternative/db/client"
+import { type Tool, ToolStatus } from "@openalternative/db/client"
+import {
+  createSearchParamsCache,
+  parseAsArrayOf,
+  parseAsInteger,
+  parseAsString,
+  parseAsStringEnum,
+} from "nuqs/server"
 import * as z from "zod"
+import { getSortingStateParser } from "~/lib/parsers"
 import { repositorySchema } from "~/server/schemas"
 
-export const searchParamsSchema = z.object({
-  name: z.string().optional(),
-  status: z.string().optional(),
-  page: z.coerce.number().default(1),
-  per_page: z.coerce.number().default(50),
-  sort: z.string().optional(),
-  from: z.string().optional(),
-  to: z.string().optional(),
-  operator: z
-    .enum(["and", "or"])
-    .default("and")
-    .transform(val => val.toUpperCase()),
+export const searchParamsCache = createSearchParamsCache({
+  page: parseAsInteger.withDefault(1),
+  perPage: parseAsInteger.withDefault(25),
+  sort: getSortingStateParser<Tool>().withDefault([{ id: "createdAt", desc: true }]),
+  name: parseAsString.withDefault(""),
+  status: parseAsArrayOf(z.nativeEnum(ToolStatus)).withDefault([]),
+  from: parseAsString.withDefault(""),
+  to: parseAsString.withDefault(""),
+  operator: parseAsStringEnum(["and", "or"]).withDefault("and"),
 })
 
-export const getToolsSchema = searchParamsSchema
-
-export type GetToolsSchema = z.infer<typeof getToolsSchema>
+export type GetToolsSchema = Awaited<ReturnType<typeof searchParamsCache.parse>>
 
 export const toolSchema = z.object({
   name: z.string().min(1, "Name is required"),

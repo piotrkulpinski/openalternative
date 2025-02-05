@@ -3,7 +3,7 @@ import { AdType } from "@openalternative/db/client"
 import { revalidateTag } from "next/cache"
 import type Stripe from "stripe"
 import { z } from "zod"
-import { env } from "~/env"
+import { env, isProd } from "~/env"
 import { inngest } from "~/services/inngest"
 import { stripe } from "~/services/stripe"
 
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
           })
 
           // Send an event to the Inngest pipeline
-          await inngest.send({ name: "tool.expedited", data: { slug: tool.slug } })
+          isProd && (await inngest.send({ name: "tool.expedited", data: { slug: tool.slug } }))
         }
 
         // Handle sponsoring/ads payment
@@ -89,7 +89,7 @@ export async function POST(request: Request) {
 
         if (event.type === "customer.subscription.created") {
           // Send an event to the Inngest pipeline
-          await inngest.send({ name: "tool.featured", data: { slug: tool.slug } })
+          isProd && (await inngest.send({ name: "tool.featured", data: { slug: tool.slug } }))
         }
 
         if (event.type === "customer.subscription.deleted") {

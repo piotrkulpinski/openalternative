@@ -1,45 +1,40 @@
+import { isTruthy } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import type { Prisma } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
-import type { SearchParams } from "nuqs/server"
-import { searchParamsSchema } from "./validations"
+import type { GetLicensesSchema } from "./validations"
 
-export const findLicenses = async (searchParams: SearchParams) => {
-  const search = searchParamsSchema.parse(searchParams)
-  const { page, per_page, sort, name, operator, from, to } = search
+export const findLicenses = async (search: GetLicensesSchema) => {
+  const { page, perPage, sort, name, operator, from, to } = search
 
   // Offset to paginate the results
-  const offset = (page - 1) * per_page
+  const offset = (page - 1) * perPage
 
   // Column and order to sort by
-  // Spliting the sort string by "." to get the column and order
-  // Example: "title.desc" => ["title", "desc"]
-  const [column, order] = (sort?.split(".").filter(Boolean) ?? ["name", "asc"]) as [
-    keyof Prisma.LicenseOrderByWithRelationInput | undefined,
-    "asc" | "desc" | undefined,
-  ]
+  const orderBy = sort.map(item => ({ [item.id]: item.desc ? "desc" : "asc" }) as const)
 
   // Convert the date strings to date objects
   const fromDate = from ? startOfDay(new Date(from)) : undefined
   const toDate = to ? endOfDay(new Date(to)) : undefined
 
-  const where: Prisma.LicenseWhereInput = {
+  const expressions: (Prisma.LicenseWhereInput | undefined)[] = [
     // Filter by name
-    name: name ? { contains: name, mode: "insensitive" } : undefined,
+    name ? { name: { contains: name, mode: "insensitive" } } : undefined,
 
     // Filter by createdAt
-    createdAt: {
-      gte: fromDate,
-      lte: toDate,
-    },
+    fromDate || toDate ? { createdAt: { gte: fromDate, lte: toDate } } : undefined,
+  ]
+
+  const where: Prisma.LicenseWhereInput = {
+    [operator.toUpperCase()]: expressions.filter(isTruthy),
   }
 
   // Transaction is used to ensure both queries are executed in a single transaction
   const [licenses, licensesTotal] = await db.$transaction([
     db.license.findMany({
       where,
-      orderBy: column ? { [column]: order } : undefined,
-      take: per_page,
+      orderBy,
+      take: perPage,
       skip: offset,
     }),
 
@@ -48,7 +43,7 @@ export const findLicenses = async (searchParams: SearchParams) => {
     }),
   ])
 
-  const pageCount = Math.ceil(licensesTotal / per_page)
+  const pageCount = Math.ceil(licensesTotal / perPage)
   return { licenses, licensesTotal, pageCount }
 }
 

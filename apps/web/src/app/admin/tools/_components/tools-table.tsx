@@ -3,64 +3,57 @@
 import { type Tool, ToolStatus } from "@openalternative/db/client"
 import { CircleDashedIcon, CircleDotDashedIcon, CircleIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
-import * as React from "react"
+import { use, useMemo, useState } from "react"
+import { ToolScheduleDialog } from "~/app/admin/tools/_components/tool-schedule-dialog"
+import { ToolsDeleteDialog } from "~/app/admin/tools/_components/tools-delete-dialog"
 import { DataTable } from "~/components/admin/data-table/data-table"
 import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
 import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
-import { DataTableViewOptions } from "~/components/admin/data-table/data-table-view-options"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/admin/ui/button"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findTools } from "~/server/admin/tools/queries"
-import type { DataTableFilterField } from "~/types"
+import type { DataTableFilterField, DataTableRowAction } from "~/types"
 import { getColumns } from "./tools-table-columns"
 import { ToolsTableToolbarActions } from "./tools-table-toolbar-actions"
 
-interface ToolsTableProps {
+type ToolsTableProps = {
   toolsPromise: ReturnType<typeof findTools>
 }
 
 export function ToolsTable({ toolsPromise }: ToolsTableProps) {
-  const { tools, toolsTotal, pageCount } = React.use(toolsPromise)
+  const { tools, toolsTotal, pageCount } = use(toolsPromise)
+
+  const [rowAction, setRowAction] = useState<DataTableRowAction<Tool> | null>(null)
 
   // Memoize the columns so they don't re-render on every render
-  const columns = React.useMemo(() => getColumns(), [])
+  const columns = useMemo(() => getColumns({ setRowAction }), [])
 
-  /**
-   * This component can render either a faceted filter or a search filter based on the `options` prop.
-   *
-   * @prop options - An array of objects, each representing a filter option. If provided, a faceted filter is rendered. If not, a search filter is rendered.
-   *
-   * Each `option` object has the following properties:
-   * @prop {string} label - The label for the filter option.
-   * @prop {string} value - The value for the filter option.
-   * @prop {React.ReactNode} [icon] - An optional icon to display next to the label.
-   * @prop {boolean} [withCount] - An optional boolean to display the count of the filter option.
-   */
+  // Search filters
   const filterFields: DataTableFilterField<Tool>[] = [
     {
+      id: "name",
       label: "Name",
-      value: "name",
       placeholder: "Filter by name...",
     },
     {
+      id: "status",
       label: "Status",
-      value: "status",
       options: [
         {
           label: "Published",
           value: ToolStatus.Published,
-          icon: <CircleIcon className="!text-lime-600" />,
+          icon: <CircleIcon className="!text-lime-500" />,
         },
         {
           label: "Scheduled",
           value: ToolStatus.Scheduled,
-          icon: <CircleDotDashedIcon className="!text-yellow-600" />,
+          icon: <CircleDotDashedIcon className="!text-yellow-500" />,
         },
         {
           label: "Draft",
           value: ToolStatus.Draft,
-          icon: <CircleDashedIcon className="!text-gray-400" />,
+          icon: <CircleDashedIcon className="!text-gray-500" />,
         },
       ],
     },
@@ -70,8 +63,9 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     data: tools,
     columns,
     pageCount,
-    /* optional props */
     filterFields,
+    shallow: false,
+    clearOnDefault: true,
     initialState: {
       sorting: [{ id: "createdAt", desc: true }],
       columnPinning: { right: ["actions"] },
@@ -80,29 +74,44 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
         submitterEmail: false,
       },
     },
-    // For remembering the previous row selection on page change
-    getRowId: (originalRow, index) => `${originalRow.id}-${index}`,
+    getRowId: originalRow => originalRow.id,
   })
 
   return (
-    <DataTable table={table}>
-      <DataTableHeader
-        title="Tools"
-        total={toolsTotal}
-        callToAction={
-          <Button prefix={<PlusIcon />} asChild>
-            <Link href="/admin/tools/new">
-              <span className="max-sm:sr-only">New tool</span>
-            </Link>
-          </Button>
-        }
-      >
-        <DataTableToolbar table={table} filterFields={filterFields}>
-          <ToolsTableToolbarActions table={table} />
-          <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
-          <DataTableViewOptions table={table} />
-        </DataTableToolbar>
-      </DataTableHeader>
-    </DataTable>
+    <>
+      <DataTable table={table}>
+        <DataTableHeader
+          title="Tools"
+          total={toolsTotal}
+          callToAction={
+            <Button prefix={<PlusIcon />} asChild>
+              <Link href="/admin/tools/new">
+                <span className="max-sm:sr-only">New tool</span>
+              </Link>
+            </Button>
+          }
+        >
+          <DataTableToolbar table={table} filterFields={filterFields}>
+            <ToolsTableToolbarActions table={table} />
+            <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
+          </DataTableToolbar>
+        </DataTableHeader>
+      </DataTable>
+
+      <ToolScheduleDialog
+        open={rowAction?.type === "schedule"}
+        onOpenChange={() => setRowAction(null)}
+        tool={rowAction?.data}
+        showTrigger={false}
+      />
+
+      <ToolsDeleteDialog
+        open={rowAction?.type === "delete"}
+        onOpenChange={() => setRowAction(null)}
+        tools={rowAction?.data ? [rowAction?.data] : []}
+        showTrigger={false}
+        onSuccess={() => table.toggleAllRowsSelected(false)}
+      />
+    </>
   )
 }

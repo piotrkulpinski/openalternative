@@ -1,7 +1,6 @@
 "use client"
 
 import type { Alternative } from "@openalternative/db/client"
-import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
 import type * as React from "react"
 import { toast } from "sonner"
@@ -20,7 +19,7 @@ import {
 import { deleteAlternatives } from "~/server/admin/alternatives/actions"
 
 interface AlternativesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  alternatives: Row<Alternative>["original"][]
+  alternatives: Alternative[]
   showTrigger?: boolean
   onSuccess?: () => void
 }
@@ -33,6 +32,7 @@ export const AlternativesDeleteDialog = ({
 }: AlternativesDeleteDialogProps) => {
   const { execute, isPending } = useServerAction(deleteAlternatives, {
     onSuccess: () => {
+      props.onOpenChange?.(false)
       toast.success("Alternatives deleted")
       onSuccess?.()
     },

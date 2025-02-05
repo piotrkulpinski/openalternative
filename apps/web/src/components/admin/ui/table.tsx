@@ -42,7 +42,7 @@ const TableHead = ({ className, ...props }: ComponentProps<"th">) => {
   return (
     <th
       className={cx(
-        "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+        "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([type=checkbox])]:pr-0",
         className,
       )}
       {...props}
@@ -53,7 +53,7 @@ const TableHead = ({ className, ...props }: ComponentProps<"th">) => {
 const TableCell = ({ className, ...props }: ComponentProps<"td">) => {
   return (
     <td
-      className={cx("p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0", className)}
+      className={cx("p-2 align-middle whitespace-nowrap [&:has([type=checkbox])]:pr-0", className)}
       {...props}
     />
   )

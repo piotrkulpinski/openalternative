@@ -2,24 +2,17 @@ import { isTruthy } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
-import type { SearchParams } from "nuqs/server"
 import { cache } from "~/lib/cache"
-import { searchParamsSchema } from "./validations"
+import type { GetToolsSchema } from "./validations"
 
-export const findTools = async (searchParams: SearchParams) => {
-  const search = searchParamsSchema.parse(searchParams)
-  const { page, per_page, sort, name, status, operator, from, to } = search
+export const findTools = async (search: GetToolsSchema) => {
+  const { page, perPage, sort, name, status, operator, from, to } = search
 
   // Offset to paginate the results
-  const offset = (page - 1) * per_page
+  const offset = (page - 1) * perPage
 
   // Column and order to sort by
-  // Spliting the sort string by "." to get the column and order
-  // Example: "title.desc" => ["title", "desc"]
-  const [column, order] = (sort?.split(".").filter(Boolean) ?? ["createdAt", "desc"]) as [
-    keyof Prisma.ToolOrderByWithRelationInput | undefined,
-    "asc" | "desc" | undefined,
-  ]
+  const orderBy = sort.map(item => ({ [item.id]: item.desc ? "desc" : "asc" }) as const)
 
   // Convert the date strings to date objects
   const fromDate = from ? startOfDay(new Date(from)) : undefined
@@ -30,22 +23,22 @@ export const findTools = async (searchParams: SearchParams) => {
     name ? { name: { contains: name, mode: "insensitive" } } : undefined,
 
     // Filter tasks by status
-    status ? { status: { in: status.split(".") as ToolStatus[] } } : undefined,
+    status.length > 0 ? { status: { in: status } } : undefined,
 
     // Filter by createdAt
     fromDate || toDate ? { createdAt: { gte: fromDate, lte: toDate } } : undefined,
   ]
 
   const where: Prisma.ToolWhereInput = {
-    [operator]: expressions.filter(isTruthy),
+    [operator.toUpperCase()]: expressions.filter(isTruthy),
   }
 
   // Transaction is used to ensure both queries are executed in a single transaction
   const [tools, toolsTotal] = await db.$transaction([
     db.tool.findMany({
       where,
-      orderBy: column ? { [column]: order } : undefined,
-      take: per_page,
+      orderBy,
+      take: perPage,
       skip: offset,
     }),
 
@@ -54,7 +47,7 @@ export const findTools = async (searchParams: SearchParams) => {
     }),
   ])
 
-  const pageCount = Math.ceil(toolsTotal / per_page)
+  const pageCount = Math.ceil(toolsTotal / perPage)
   return { tools, toolsTotal, pageCount }
 }
 

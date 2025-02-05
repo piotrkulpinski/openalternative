@@ -15,14 +15,14 @@ import {
   SelectValue,
 } from "~/components/admin/ui/select"
 
-interface DataTablePaginationProps<TData> {
+type DataTablePaginationProps<TData> = {
   table: Table<TData>
   pageSizeOptions?: number[]
 }
 
 export function DataTablePagination<TData>({
   table,
-  pageSizeOptions = [25, 50, 100],
+  pageSizeOptions = [10, 25, 50],
 }: DataTablePaginationProps<TData>) {
   return (
     <div className="flex flex-row flex-wrap items-center justify-between gap-4 overflow-auto tabular-nums sm:gap-6 lg:gap-8">

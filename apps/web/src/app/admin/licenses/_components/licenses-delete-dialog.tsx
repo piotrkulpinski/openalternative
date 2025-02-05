@@ -1,7 +1,6 @@
 "use client"
 
 import type { License } from "@openalternative/db/client"
-import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
 import type * as React from "react"
 import { toast } from "sonner"
@@ -20,7 +19,7 @@ import {
 import { deleteLicenses } from "~/server/admin/licenses/actions"
 
 interface LicensesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  licenses: Row<License>["original"][]
+  licenses: License[]
   showTrigger?: boolean
   onSuccess?: () => void
 }
@@ -33,6 +32,7 @@ export const LicensesDeleteDialog = ({
 }: LicensesDeleteDialogProps) => {
   const { execute, isPending } = useServerAction(deleteLicenses, {
     onSuccess: () => {
+      props.onOpenChange?.(false)
       toast.success("Licenses deleted")
       onSuccess?.()
     },

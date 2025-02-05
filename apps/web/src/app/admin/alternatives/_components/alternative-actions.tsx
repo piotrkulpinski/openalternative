@@ -1,15 +1,11 @@
 "use client"
 
 import type { Alternative } from "@openalternative/db/client"
-import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import type React from "react"
-import { useState } from "react"
+import type { ComponentProps, Dispatch, SetStateAction } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { AlternativesDeleteDialog } from "~/app/admin/alternatives/_components/alternatives-delete-dialog"
 import { Button } from "~/components/admin/ui/button"
 import {
   DropdownMenu,
@@ -19,22 +15,20 @@ import {
   DropdownMenuTrigger,
 } from "~/components/admin/ui/dropdown-menu"
 import { reuploadAlternativeAssets } from "~/server/admin/alternatives/actions"
+import type { DataTableRowAction } from "~/types"
 import { cx } from "~/utils/cva"
 
-interface AlternativeActionsProps extends React.ComponentPropsWithoutRef<typeof Button> {
+type AlternativeActionsProps = ComponentProps<typeof Button> & {
   alternative: Alternative
-  row?: Row<Alternative>
+  setRowAction: Dispatch<SetStateAction<DataTableRowAction<Alternative> | null>>
 }
 
 export const AlternativeActions = ({
   alternative,
-  row,
+  setRowAction,
   className,
   ...props
 }: AlternativeActionsProps) => {
-  const router = useRouter()
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-
   const { execute: reuploadAssets } = useServerAction(reuploadAlternativeAssets, {
     onSuccess: () => {
       toast.success("Alternative assets reuploaded")
@@ -45,64 +39,51 @@ export const AlternativeActions = ({
     },
   })
 
-  const handleDialogSuccess = () => {
-    setShowDeleteDialog(false)
-    row?.toggleSelected(false)
-    router.push("/admin/alternatives")
-  }
-
   return (
-    <>
-      <AlternativesDeleteDialog
-        open={showDeleteDialog}
-        onOpenChange={setShowDeleteDialog}
-        alternatives={[alternative]}
-        showTrigger={false}
-        onSuccess={handleDialogSuccess}
-      />
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger asChild>
+        <Button
+          aria-label="Open menu"
+          variant="outline"
+          size="sm"
+          prefix={<EllipsisIcon />}
+          className={cx("size-7 data-[state=open]:bg-muted", className)}
+          {...props}
+        />
+      </DropdownMenuTrigger>
 
-      <DropdownMenu modal={false}>
-        <DropdownMenuTrigger asChild>
-          <Button
-            aria-label="Open menu"
-            variant="outline"
-            size="sm"
-            prefix={<EllipsisIcon />}
-            className={cx("size-7 data-[state=open]:bg-muted", className)}
-            {...props}
-          />
-        </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem asChild>
+          <Link href={`/admin/alternatives/${alternative.slug}`}>Edit</Link>
+        </DropdownMenuItem>
 
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem asChild>
-            <Link href={`/admin/alternatives/${alternative.slug}`}>Edit</Link>
-          </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={`/alternatives/${alternative.slug}`} target="_blank">
+            View
+          </Link>
+        </DropdownMenuItem>
 
-          <DropdownMenuItem asChild>
-            <Link href={`/alternatives/${alternative.slug}`} target="_blank">
-              View
-            </Link>
-          </DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => reuploadAssets({ id: alternative.id })}>
+          Reupload Assets
+        </DropdownMenuItem>
 
-          <DropdownMenuItem onSelect={() => reuploadAssets({ id: alternative.id })}>
-            Reupload Assets
-          </DropdownMenuItem>
+        <DropdownMenuSeparator />
 
-          <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href={alternative.website} target="_blank">
+            Visit website
+          </Link>
+        </DropdownMenuItem>
 
-          <DropdownMenuItem asChild>
-            <Link href={alternative.website} target="_blank">
-              Visit website
-            </Link>
-          </DropdownMenuItem>
+        <DropdownMenuSeparator />
 
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)} className="text-destructive">
-            Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
+        <DropdownMenuItem
+          onSelect={() => setRowAction({ data: alternative, type: "delete" })}
+          className="text-red-500"
+        >
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

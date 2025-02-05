@@ -2,12 +2,12 @@
 
 import { isTruthy } from "@curiousleaf/utils"
 import type { Tool } from "@openalternative/db/client"
-import type { Row } from "@tanstack/react-table"
 import { isFriday } from "date-fns"
 import { addDays, isWednesday } from "date-fns"
 import { isMonday } from "date-fns"
 import { ClockIcon } from "lucide-react"
 import * as React from "react"
+import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { Button } from "~/components/admin/ui/button"
@@ -24,8 +24,8 @@ import {
 } from "~/components/admin/ui/dialog"
 import { scheduleTool } from "~/server/admin/tools/actions"
 
-interface ToolScheduleDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  tool: Row<Tool>["original"]
+type ToolScheduleDialogProps = ComponentProps<typeof Dialog> & {
+  tool?: Tool
   showTrigger?: boolean
   onSuccess?: () => void
 }
@@ -40,6 +40,7 @@ export const ToolScheduleDialog = ({
 
   const { execute, isPending } = useServerAction(scheduleTool, {
     onSuccess: () => {
+      props.onOpenChange?.(false)
       toast.success("Tool scheduled")
       onSuccess?.()
     },
@@ -78,7 +79,7 @@ export const ToolScheduleDialog = ({
             }).filter(isTruthy),
           }}
           modifiersClassNames={{
-            schedulable: "bg-yellow-500/15",
+            schedulable: "bg-yellow-500/25",
           }}
           className="px-0"
         />
@@ -91,7 +92,7 @@ export const ToolScheduleDialog = ({
           <Button
             aria-label="Publish"
             variant="default"
-            onClick={() => publishedAt && execute({ id: tool.id, publishedAt })}
+            onClick={() => publishedAt && tool && execute({ id: tool.id, publishedAt })}
             isPending={isPending}
             disabled={!publishedAt || isPending}
           >

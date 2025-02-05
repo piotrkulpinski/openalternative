@@ -1,7 +1,6 @@
 "use client"
 
 import type { Tool } from "@openalternative/db/client"
-import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
 import type * as React from "react"
 import { toast } from "sonner"
@@ -20,7 +19,7 @@ import {
 import { deleteTools } from "~/server/admin/tools/actions"
 
 interface ToolsDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  tools: Row<Tool>["original"][]
+  tools: Tool[]
   showTrigger?: boolean
   onSuccess?: () => void
 }
@@ -33,6 +32,7 @@ export const ToolsDeleteDialog = ({
 }: ToolsDeleteDialogProps) => {
   const { execute, isPending } = useServerAction(deleteTools, {
     onSuccess: () => {
+      props.onOpenChange?.(false)
       toast.success("Tools deleted")
       onSuccess?.()
     },

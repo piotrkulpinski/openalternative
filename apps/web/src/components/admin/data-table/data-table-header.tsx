@@ -4,7 +4,7 @@ import { H3 } from "~/components/common/heading"
 
 import { cx } from "~/utils/cva"
 
-interface DataTableHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+type DataTableHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
   total?: number
   callToAction?: React.ReactNode
 }

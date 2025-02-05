@@ -4,100 +4,81 @@ import type { License } from "@openalternative/db/client"
 import { PlusIcon } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
+import { LicensesDeleteDialog } from "~/app/admin/licenses/_components/licenses-delete-dialog"
 import { DataTable } from "~/components/admin/data-table/data-table"
 import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
 import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
-import { DataTableViewOptions } from "~/components/admin/data-table/data-table-view-options"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/admin/ui/button"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findLicenses } from "~/server/admin/licenses/queries"
-import type { DataTableFilterField } from "~/types"
+import type { DataTableFilterField, DataTableRowAction } from "~/types"
 import { getColumns } from "./licenses-table-columns"
 import { LicensesTableToolbarActions } from "./licenses-table-toolbar-actions"
 
-interface LicensesTableProps {
+type LicensesTableProps = {
   licensesPromise: ReturnType<typeof findLicenses>
 }
 
 export function LicensesTable({ licensesPromise }: LicensesTableProps) {
   const { licenses, licensesTotal, pageCount } = React.use(licensesPromise)
 
-  // Memoize the columns so they don't re-render on every render
-  const columns = React.useMemo(() => getColumns(), [])
+  const [rowAction, setRowAction] = React.useState<DataTableRowAction<License> | null>(null)
 
-  /**
-   * This component can render either a faceted filter or a search filter based on the `options` prop.
-   *
-   * @prop options - An array of objects, each representing a filter option. If provided, a faceted filter is rendered. If not, a search filter is rendered.
-   *
-   * Each `option` object has the following properties:
-   * @prop {string} label - The label for the filter option.
-   * @prop {string} value - The value for the filter option.
-   * @prop {React.ReactNode} [icon] - An optional icon to display next to the label.
-   * @prop {boolean} [withCount] - An optional boolean to display the count of the filter option.
-   */
+  // Memoize the columns so they don't re-render on every render
+  const columns = React.useMemo(() => getColumns({ setRowAction }), [])
+
+  // Search filters
   const filterFields: DataTableFilterField<License>[] = [
     {
+      id: "name",
       label: "Name",
-      value: "name",
       placeholder: "Filter by name...",
     },
-    // {
-    //   label: "Status",
-    //   value: "status",
-    //   options: licenses.status.enumValues.map(status => ({
-    //     label: status[0]?.toUpperCase() + status.slice(1),
-    //     value: status,
-    //     icon: getStatusIcon(status),
-    //     withCount: true,
-    //   })),
-    // },
-    // {
-    //   label: "Priority",
-    //   value: "priority",
-    //   options: licenses.priority.enumValues.map(priority => ({
-    //     label: priority[0]?.toUpperCase() + priority.slice(1),
-    //     value: priority,
-    //     icon: getPriorityIcon(priority),
-    //     withCount: true,
-    //   })),
-    // },
   ]
 
   const { table } = useDataTable({
     data: licenses,
     columns,
     pageCount,
-    /* optional props */
     filterFields,
+    shallow: false,
+    clearOnDefault: true,
     initialState: {
       sorting: [{ id: "name", desc: false }],
       columnPinning: { right: ["actions"] },
     },
-    // For remembering the previous row selection on page change
     getRowId: (originalRow, index) => `${originalRow.id}-${index}`,
   })
 
   return (
-    <DataTable table={table}>
-      <DataTableHeader
-        title="Licenses"
-        total={licensesTotal}
-        callToAction={
-          <Button prefix={<PlusIcon />} asChild>
-            <Link href="/admin/licenses/new">
-              <span className="max-sm:sr-only">New license</span>
-            </Link>
-          </Button>
-        }
-      >
-        <DataTableToolbar table={table} filterFields={filterFields}>
-          <LicensesTableToolbarActions table={table} />
-          <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
-          <DataTableViewOptions table={table} />
-        </DataTableToolbar>
-      </DataTableHeader>
-    </DataTable>
+    <>
+      <DataTable table={table}>
+        <DataTableHeader
+          title="Licenses"
+          total={licensesTotal}
+          callToAction={
+            <Button prefix={<PlusIcon />} asChild>
+              <Link href="/admin/licenses/new">
+                <span className="max-sm:sr-only">New license</span>
+              </Link>
+            </Button>
+          }
+        >
+          <DataTableToolbar table={table} filterFields={filterFields}>
+            <LicensesTableToolbarActions table={table} />
+            <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
+          </DataTableToolbar>
+        </DataTableHeader>
+      </DataTable>
+
+      <LicensesDeleteDialog
+        open={rowAction?.type === "delete"}
+        onOpenChange={() => setRowAction(null)}
+        licenses={rowAction?.data ? [rowAction?.data] : []}
+        showTrigger={false}
+        onSuccess={() => table.toggleAllRowsSelected(false)}
+      />
+    </>
   )
 }

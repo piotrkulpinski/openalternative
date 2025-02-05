@@ -18,7 +18,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "~/components/admin/ui/p
 import { Separator } from "~/components/admin/ui/separator"
 import { Checkbox } from "~/components/common/checkbox"
 
-interface DataTableFacetedFilterProps<TData, TValue> {
+type DataTableFacetedFilterProps<TData, TValue> = {
   column?: Column<TData, TValue>
   title?: string
   options: Option[]

@@ -4,6 +4,7 @@ import { slugify } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { createServerAction } from "zsa"
 import { subscribeToNewsletter } from "~/actions/subscribe"
+import { isProd } from "~/env"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { submitToolSchema } from "~/server/schemas"
 import { inngest } from "~/services/inngest"
@@ -76,7 +77,7 @@ export const submitTool = createServerAction()
     })
 
     // Send an event to the Inngest pipeline
-    await inngest.send({ name: "tool.submitted", data: { slug } })
+    isProd && (await inngest.send({ name: "tool.submitted", data: { slug } }))
 
     return tool
   })
