@@ -61,11 +61,11 @@
       --color-popover-foreground: hsl(0 0% 98%);
       --color-primary: hsl(0 0% 98%);
       --color-primary-foreground: hsl(0 0% 9%);
-      --color-secondary: hsl(0 0% 14.9%);
+      --color-secondary: hsl(0 0% 7.9%);
       --color-secondary-foreground: hsl(0 0% 98%);
-      --color-muted: hsl(0 0% 14.9%);
+      --color-muted: hsl(0 0% 7.9%);
       --color-muted-foreground: hsl(0 0% 63.9%);
-      --color-accent: hsl(0 0% 14.9%);
+      --color-accent: hsl(0 0% 7.9%);
       --color-accent-foreground: hsl(0 0% 98%);
       --color-destructive: hsl(0 62.8% 30.6%);
       --color-destructive-foreground: hsl(0 0% 98%);

@@ -16,7 +16,6 @@ import {
 } from "~/components/admin/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/admin/ui/popover"
 import { Separator } from "~/components/admin/ui/separator"
-import { Checkbox } from "~/components/common/checkbox"
 
 type DataTableFacetedFilterProps<TData, TValue> = {
   column?: Column<TData, TValue>
@@ -91,7 +90,12 @@ export function DataTableFacetedFilter<TData, TValue>({
                     }}
                     className="flex items-center gap-2"
                   >
-                    <Checkbox checked={isSelected} />
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      readOnly
+                      className="pointer-events-none"
+                    />
 
                     <Slot className="size-4 text-muted-foreground" aria-hidden="true">
                       {option.icon}
