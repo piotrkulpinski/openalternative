@@ -6,12 +6,12 @@ import { EmailButton } from "~/emails/components/button"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 import { getQueueLength } from "~/lib/products"
 
-export type EmailSubmissionProps = EmailWrapperProps & {
+export type EmailProps = EmailWrapperProps & {
   tool?: Tool | Jsonify<Tool>
   queueLength?: number
 }
 
-const EmailSubmission = ({ tool, queueLength = 100, ...props }: EmailSubmissionProps) => {
+const EmailSubmission = ({ tool, queueLength = 100, ...props }: EmailProps) => {
   return (
     <EmailWrapper {...props}>
       <Text>Hey {tool?.submitterName}!</Text>

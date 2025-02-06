@@ -4,16 +4,14 @@ import type { Jsonify } from "inngest/helpers/jsonify"
 import plur from "plur"
 import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
-import { EmailWrapper } from "~/emails/components/wrapper"
+import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-interface Props {
-  to: string
-  subject: string
+export type EmailProps = EmailWrapperProps & {
   monthsWaiting: number
   tool: Tool | Jsonify<Tool>
 }
 
-export default function EmailToolExpediteReminder({ tool, monthsWaiting, ...props }: Props) {
+export default function EmailToolExpediteReminder({ tool, monthsWaiting, ...props }: EmailProps) {
   const link = `${config.site.url}/submit/${tool?.slug}`
 
   return (

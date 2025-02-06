@@ -14,8 +14,8 @@ export default async function ({ nextUrl, headers }: NextRequest) {
   })
 
   if (!session) {
-    const callbackURL = new URL(nextUrl.pathname + nextUrl.search, nextUrl.origin)
-    const signInUrl = new URL(`/login?callbackURL=${callbackURL.toString()}`, nextUrl.toString())
+    const callbackURL = nextUrl.pathname + nextUrl.search
+    const signInUrl = new URL(`/login?callbackURL=${callbackURL}`, nextUrl.toString())
 
     return NextResponse.redirect(signInUrl)
   }

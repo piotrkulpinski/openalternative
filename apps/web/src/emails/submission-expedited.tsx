@@ -4,11 +4,11 @@ import type { Jsonify } from "inngest/helpers/jsonify"
 import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-export type EmailSubmissionExpeditedProps = EmailWrapperProps & {
+export type EmailProps = EmailWrapperProps & {
   tool?: Tool | Jsonify<Tool>
 }
 
-const EmailSubmissionExpedited = ({ tool, ...props }: EmailSubmissionExpeditedProps) => {
+const EmailSubmissionExpedited = ({ tool, ...props }: EmailProps) => {
   return (
     <EmailWrapper {...props}>
       <Text>Hey {tool?.submitterName}!</Text>

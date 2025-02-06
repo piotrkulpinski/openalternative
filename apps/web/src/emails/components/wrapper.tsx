@@ -46,6 +46,10 @@ export const EmailWrapper = ({ to, subject, children, ...props }: EmailWrapperPr
               not expecting this email, you can ignore it. If you are concerned about your accounts
               safety, please reply to this email to get in touch with us.
             </Text>
+
+            <Text className="text-xs/normal text-gray-500">
+              Any questions? Please feel free to reach us at {config.site.email}.
+            </Text>
           </Container>
         </Body>
       </Tailwind>

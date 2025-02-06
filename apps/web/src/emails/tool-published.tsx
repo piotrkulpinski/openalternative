@@ -6,11 +6,11 @@ import { EmailButton } from "~/emails/components/button"
 import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-export type EmailToolPublishedProps = EmailWrapperProps & {
+export type EmailProps = EmailWrapperProps & {
   tool?: Tool | Jsonify<Tool>
 }
 
-const EmailToolPublished = ({ tool, ...props }: EmailToolPublishedProps) => {
+const EmailToolPublished = ({ tool, ...props }: EmailProps) => {
   return (
     <EmailWrapper {...props}>
       <Text>Hey {tool?.submitterName}!</Text>

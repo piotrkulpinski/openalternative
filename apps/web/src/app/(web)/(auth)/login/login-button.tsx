@@ -2,10 +2,9 @@
 
 import { capitalCase } from "change-case"
 import { useSearchParams } from "next/navigation"
-import type { ComponentProps } from "react"
+import { type ComponentProps, useState } from "react"
 import { toast } from "sonner"
 import { Button } from "~/components/web/ui/button"
-import { config } from "~/config"
 import { signIn } from "~/lib/auth-client"
 
 type LoginButtonProps = ComponentProps<typeof Button> & {
@@ -14,9 +13,12 @@ type LoginButtonProps = ComponentProps<typeof Button> & {
 
 export const LoginButton = ({ provider, ...props }: LoginButtonProps) => {
   const searchParams = useSearchParams()
-  const callbackURL = searchParams.get("callbackURL") || config.site.url
+  const [isPending, setIsPending] = useState(false)
+  const callbackURL = searchParams.get("callbackURL") || undefined
 
   const handleSignIn = () => {
+    setIsPending(true)
+
     signIn.social({
       provider,
       callbackURL,
@@ -29,7 +31,7 @@ export const LoginButton = ({ provider, ...props }: LoginButtonProps) => {
   }
 
   return (
-    <Button size="lg" onClick={handleSignIn} {...props}>
+    <Button size="lg" onClick={handleSignIn} isPending={isPending} {...props}>
       Sign in with {capitalCase(provider)}
     </Button>
   )

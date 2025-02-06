@@ -5,11 +5,11 @@ import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-export type EmailAdminNewSubmissionProps = EmailWrapperProps & {
+export type EmailProps = EmailWrapperProps & {
   tool?: Tool | Jsonify<Tool>
 }
 
-const EmailAdminNewSubmission = ({ tool, ...props }: EmailAdminNewSubmissionProps) => {
+const EmailAdminNewSubmission = ({ tool, ...props }: EmailProps) => {
   return (
     <EmailWrapper {...props}>
       <Text>Hi!</Text>

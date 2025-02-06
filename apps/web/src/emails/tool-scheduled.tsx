@@ -6,11 +6,11 @@ import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-export type EmailToolScheduledProps = EmailWrapperProps & {
+export type EmailProps = EmailWrapperProps & {
   tool?: Tool | Jsonify<Tool>
 }
 
-const EmailToolScheduled = ({ tool, ...props }: EmailToolScheduledProps) => {
+const EmailToolScheduled = ({ tool, ...props }: EmailProps) => {
   const publishedAt = addHours(tool?.publishedAt || new Date(), 2)
   const isLongQueue = differenceInDays(publishedAt, new Date()) > 7
   const dateRelative = formatDistanceToNowStrict(publishedAt, { addSuffix: true })
