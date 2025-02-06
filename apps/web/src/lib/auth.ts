@@ -31,38 +31,6 @@ export const auth = betterAuth({
     },
   },
 
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 5 * 60,
-    },
-  },
-
-  // rateLimit: {
-  //   window: 10,
-  //   max: 3,
-  //   storage: "secondary-storage",
-  // },
-
-  // secondaryStorage: {
-  //   get: async key => {
-  //     const value = await redis.get<string | null>(key)
-  //     return value ? value : null
-  //   },
-
-  //   set: async (key, value, ttl) => {
-  //     if (ttl) {
-  //       return await redis.set(key, value, { ex: ttl })
-  //     }
-
-  //     await redis.set(key, value)
-  //   },
-
-  //   delete: async key => {
-  //     await redis.del(key)
-  //   },
-  // },
-
   plugins: [
     magicLink({
       sendMagicLink: async ({ email, url }) => {
