@@ -6,7 +6,6 @@ import { config } from "~/config"
 import EmailLoginLink from "~/emails/login-link"
 import { env } from "~/env"
 import { sendEmails } from "~/lib/email"
-import { redis } from "~/services/redis"
 import { isAllowedEmail } from "~/utils/auth"
 
 export const auth = betterAuth({
@@ -32,37 +31,37 @@ export const auth = betterAuth({
     },
   },
 
-  // session: {
-  //   cookieCache: {
-  //     enabled: true,
-  //     maxAge: 5 * 60,
-  //   },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60,
+    },
+  },
+
+  // rateLimit: {
+  //   window: 10,
+  //   max: 3,
+  //   storage: "secondary-storage",
   // },
 
-  rateLimit: {
-    window: 10,
-    max: 3,
-    storage: "secondary-storage",
-  },
+  // secondaryStorage: {
+  //   get: async key => {
+  //     const value = await redis.get<string | null>(key)
+  //     return value ? value : null
+  //   },
 
-  secondaryStorage: {
-    get: async key => {
-      const value = await redis.get<string | null>(key)
-      return value ? value : null
-    },
+  //   set: async (key, value, ttl) => {
+  //     if (ttl) {
+  //       return await redis.set(key, value, { ex: ttl })
+  //     }
 
-    set: async (key, value, ttl) => {
-      if (ttl) {
-        return await redis.set(key, value, { ex: ttl })
-      }
+  //     await redis.set(key, value)
+  //   },
 
-      await redis.set(key, value)
-    },
-
-    delete: async key => {
-      await redis.del(key)
-    },
-  },
+  //   delete: async key => {
+  //     await redis.del(key)
+  //   },
+  // },
 
   plugins: [
     magicLink({
