@@ -35,8 +35,13 @@ export const LoginForm = ({ className, ...props }: LoginFormProps) => {
       email,
       callbackURL,
       fetchOptions: {
-        onSuccess: () => {
+        onResponse: () => {
+          setIsPending(false)
+        },
+        onRequest: () => {
           setIsPending(true)
+        },
+        onSuccess: () => {
           router.push(`/verify?email=${email}`)
         },
         onError: ({ error }) => {

@@ -17,12 +17,13 @@ export const LoginButton = ({ provider, ...props }: LoginButtonProps) => {
   const callbackURL = searchParams.get("callbackURL") || undefined
 
   const handleSignIn = () => {
-    setIsPending(true)
-
     signIn.social({
       provider,
       callbackURL,
       fetchOptions: {
+        onRequest: () => {
+          setIsPending(true)
+        },
         onError: ({ error }) => {
           toast.error(error.message)
         },
