@@ -155,7 +155,7 @@ export default async function ToolPage(props: PageProps) {
                 )}
 
                 {tool.discountAmount && (
-                  <p className="ml-auto pl-2 text-sm text-green-600 dark:text-green-400">
+                  <p className="ml-auto flex-1 pl-2 text-sm text-end text-balance text-green-600 dark:text-green-400">
                     {tool.discountCode
                       ? `Use code ${tool.discountCode} for ${tool.discountAmount}!`
                       : `Get ${tool.discountAmount} with our link!`}
