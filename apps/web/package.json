@@ -40,7 +40,6 @@
     "@radix-ui/react-switch": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.6",
     "@react-email/components": "0.0.28",
-    "@sentry/nextjs": "^8",
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tanstack/react-table": "^8.20.6",
     "@upstash/ratelimit": "^2.0.5",
