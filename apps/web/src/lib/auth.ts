@@ -32,18 +32,18 @@ export const auth = betterAuth({
     },
   },
 
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 5 * 60,
-    },
-  },
-
-  // rateLimit: {
-  //   window: 10,
-  //   max: 3,
-  //   storage: "secondary-storage",
+  // session: {
+  //   cookieCache: {
+  //     enabled: true,
+  //     maxAge: 5 * 60,
+  //   },
   // },
+
+  rateLimit: {
+    window: 10,
+    max: 3,
+    storage: "secondary-storage",
+  },
 
   secondaryStorage: {
     get: async key => {
