@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import { LoginButton } from "~/app/(web)/(auth)/login/login-button"
-import { LoginForm } from "~/app/(web)/(auth)/login/login-form"
+import { LoginButton } from "~/app/(web)/auth/login/login-button"
+import { LoginForm } from "~/app/(web)/auth/login/login-form"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandGoogleIcon } from "~/components/common/icons/brand-google"
 import { Stack } from "~/components/common/stack"
@@ -11,8 +11,8 @@ import { metadataConfig } from "~/config/metadata"
 export const metadata: Metadata = {
   title: "Sign in",
   description: `Login to ${config.site.name} to access your dashboard and manage your tools (soon).`,
-  openGraph: { ...metadataConfig.openGraph, url: "/login" },
-  alternates: { ...metadataConfig.alternates, canonical: "/login" },
+  openGraph: { ...metadataConfig.openGraph, url: "/auth/login" },
+  alternates: { ...metadataConfig.alternates, canonical: "/auth/login" },
 }
 
 export default function LoginPage() {

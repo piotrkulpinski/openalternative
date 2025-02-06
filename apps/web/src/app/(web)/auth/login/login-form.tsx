@@ -42,7 +42,7 @@ export const LoginForm = ({ className, ...props }: LoginFormProps) => {
           setIsPending(true)
         },
         onSuccess: () => {
-          router.push(`/verify?email=${email}`)
+          router.push(`/auth/verify?email=${email}`)
         },
         onError: ({ error }) => {
           toast.error(error.message)

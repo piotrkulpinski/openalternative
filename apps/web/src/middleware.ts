@@ -4,7 +4,7 @@ import type { auth } from "~/lib/auth"
 import { isAllowedEmail } from "~/utils/auth"
 
 export const config = {
-  matcher: "/admin/:path*",
+  matcher: ["/admin/:path*", "/auth/:path*"],
 }
 
 export default async function ({ nextUrl, headers }: NextRequest) {
@@ -13,15 +13,21 @@ export default async function ({ nextUrl, headers }: NextRequest) {
     headers: { cookie: headers.get("cookie") || "" },
   })
 
-  if (!session) {
-    const callbackURL = nextUrl.pathname + nextUrl.search
-    const signInUrl = new URL(`/login?callbackURL=${callbackURL}`, nextUrl.toString())
-
-    return NextResponse.redirect(signInUrl)
+  if (session && nextUrl.pathname.startsWith("/auth")) {
+    return NextResponse.redirect(new URL("/", nextUrl.toString()))
   }
 
-  if (!isAllowedEmail(session.user.email)) {
-    return NextResponse.redirect(new URL("/", nextUrl.toString()))
+  if (nextUrl.pathname.startsWith("/admin")) {
+    if (!session) {
+      const callbackURL = nextUrl.pathname + nextUrl.search
+      const signInUrl = new URL(`/auth/login?callbackURL=${callbackURL}`, nextUrl.toString())
+
+      return NextResponse.redirect(signInUrl)
+    }
+
+    if (!isAllowedEmail(session.user.email)) {
+      return NextResponse.redirect(new URL("/", nextUrl.toString()))
+    }
   }
 
   return NextResponse.next()
