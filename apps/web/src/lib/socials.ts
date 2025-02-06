@@ -30,15 +30,15 @@ export const getSocialsFromUrl = async (url: string) => {
  * @returns Promise resolving to array of post results
  */
 export const sendSocialPost = async (template: string, tool: Tool | Jsonify<Tool>) => {
+  const url = `${config.site.url}/${tool.slug}`
   const socials = await getSocialsFromUrl(tool.website)
+
   const twitterHandle = socials.X?.[0]?.user
   const blueskyHandle = socials.Bluesky?.[0]?.user
-  const url = `${config.site.url}/${tool.slug}`
+  const twitterTemplate = updatePostTemplate(template, twitterHandle, url)
+  const blueskyTemplate = updatePostTemplate(template, blueskyHandle, url)
 
-  return await Promise.all([
-    sendTwitterPost(`${updatePostTemplate(template, twitterHandle, url)}`),
-    sendBlueskyPost(`${updatePostTemplate(template, blueskyHandle, url)}`, url),
-  ])
+  return Promise.all([sendTwitterPost(twitterTemplate), sendBlueskyPost(blueskyTemplate, url)])
 }
 
 /**
@@ -86,5 +86,13 @@ export const getPostTemplate = async (tool: Tool | Jsonify<Tool>) => {
  * @returns Post template celebrating the milestone
  */
 export const getPostMilestoneTemplate = (tool: Tool | Jsonify<Tool>, milestone: number) => {
-  return `⭐ ${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub! Huge congrats to the ${socialHandle} team! 🎉`
+  const templates = [
+    `⭐ ${tool.name} has just reached ${milestone.toLocaleString()} stars on GitHub! Huge congrats to the ${socialHandle} team! 🎉`,
+    `🎯 Another milestone hit! ${tool.name} now has ${milestone.toLocaleString()} stars! Amazing work by the ${socialHandle} team 🌟`,
+    `🚀 Look who's climbing! ${tool.name} just crossed ${milestone.toLocaleString()} GitHub stars! Props to the ${socialHandle} team 💫`,
+    `💫 ${milestone.toLocaleString()} GitHub stars and counting! ${tool.name} keeps growing! Shoutout to the ${socialHandle} team 🔥`,
+    `🎊 Big news! ${tool.name} reached ${milestone.toLocaleString()} stars on GitHub! High five to the ${socialHandle} team! 🙌`,
+  ]
+
+  return templates[Math.floor(Math.random() * templates.length)]
 }

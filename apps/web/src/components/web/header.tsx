@@ -1,23 +1,18 @@
 "use client"
 
-import { getInitials } from "@curiousleaf/utils"
 import {
   BlocksIcon,
   CalendarDaysIcon,
   ChevronDownIcon,
   CopyrightIcon,
   GalleryHorizontalEndIcon,
-  LogOutIcon,
   SearchIcon,
   ServerIcon,
   TagIcon,
 } from "lucide-react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { type HTMLAttributes, Suspense, useEffect, useState } from "react"
-import { toast } from "sonner"
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/common/avatar"
-import { Box } from "~/components/common/box"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
@@ -29,20 +24,16 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/web/ui/dropdown-menu"
 import { Logo } from "~/components/web/ui/logo"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
+import { UserMenu } from "~/components/web/user-menu"
 import { config } from "~/config"
-import { signOut, useSession } from "~/lib/auth-client"
 import { cx } from "~/utils/cva"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   const pathname = usePathname()
-  const router = useRouter()
-  const { data: session } = useSession()
   const [isNavOpen, setNavOpen] = useState(false)
 
   // Close the mobile navigation when the user presses the "Escape" key
@@ -58,17 +49,6 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   useEffect(() => {
     setNavOpen(false)
   }, [pathname])
-
-  const handleSignOut = async () => {
-    signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          toast.success("You've been signed out successfully")
-          router.push("/")
-        },
-      },
-    })
-  }
 
   return (
     <Container
@@ -199,40 +179,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             </Link>
           </Button>
 
-          {session?.user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Box hover focus>
-                  <Avatar className="size-6 duration-100">
-                    <AvatarImage src={session.user.image ?? undefined} />
-                    <AvatarFallback>{getInitials(session.user.name)}</AvatarFallback>
-                  </Avatar>
-                </Box>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent side="bottom" align="end">
-                <DropdownMenuLabel className="truncate font-normal leading-relaxed">
-                  <div className="text-foreground">{session.user.name}</div>
-                  {session.user.email}
-                </DropdownMenuLabel>
-
-                <DropdownMenuSeparator />
-
-                <DropdownMenuItem asChild>
-                  <button type="button" className={navLinkVariants()} onClick={handleSignOut}>
-                    <LogOutIcon className="shrink-0 size-4 opacity-75" />
-                    Logout
-                  </button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Button size="sm" variant="secondary" asChild>
-              <Link href="/login" prefetch={false}>
-                Sign in
-              </Link>
-            </Button>
-          )}
+          <UserMenu />
         </Stack>
       </div>
 

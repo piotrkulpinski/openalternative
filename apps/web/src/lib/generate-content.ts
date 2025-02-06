@@ -12,7 +12,7 @@ import { getErrorMessage } from "~/lib/handle-error"
  * @returns The generated content.
  */
 export const generateContent = async (scrapedData: Omit<ScrapeResponse, "actions">) => {
-  const model = createAnthropic()("claude-3-5-sonnet-20240620")
+  const model = createAnthropic()("claude-3-5-sonnet-latest")
 
   const [categories, alternatives] = await Promise.all([
     db.category.findMany(),

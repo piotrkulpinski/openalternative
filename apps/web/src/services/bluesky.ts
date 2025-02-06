@@ -41,6 +41,7 @@ const getBlueskyEmbedCard = async (url: string | undefined, agent: AtpAgent) => 
  */
 export const sendBlueskyPost = async (text: string, url?: string) => {
   if (!isProd || !env.BLUESKY_USERNAME || !env.BLUESKY_PASSWORD) {
+    console.log(text)
     return
   }
 
