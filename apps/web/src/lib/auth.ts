@@ -39,11 +39,11 @@ export const auth = betterAuth({
     },
   },
 
-  rateLimit: {
-    window: 10,
-    max: 3,
-    storage: "secondary-storage",
-  },
+  // rateLimit: {
+  //   window: 10,
+  //   max: 3,
+  //   storage: "secondary-storage",
+  // },
 
   secondaryStorage: {
     get: async key => {
