@@ -45,7 +45,7 @@
     "@upstash/ratelimit": "^2.0.5",
     "@upstash/redis": "^1.34.3",
     "ai": "^4.1.0",
-    "better-auth": "^1.1.15",
+    "better-auth": "beta",
     "change-case": "^5.4.4",
     "cmdk": "^1.0.4",
     "cva": "^1.0.0-beta.1",

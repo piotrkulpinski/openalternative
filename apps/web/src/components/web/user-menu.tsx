@@ -3,7 +3,6 @@
 import { getInitials } from "@curiousleaf/utils"
 import { LogOutIcon, ShieldHalfIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/common/avatar"
 import { Box } from "~/components/common/box"
@@ -20,15 +19,14 @@ import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { signOut, useSession } from "~/lib/auth-client"
 
 export const UserMenu = () => {
-  const { data: session } = useSession()
-  const router = useRouter()
+  const { data: session, refetch } = useSession()
 
   const handleSignOut = async () => {
     signOut({
       fetchOptions: {
         onSuccess: () => {
+          refetch()
           toast.success("You've been signed out successfully")
-          router.push("/")
         },
       },
     })
