@@ -12,6 +12,9 @@ import { env } from "~/env"
 
 import "./styles.css"
 
+export const revalidate = 86400 // One day
+export const experimental_ppr = true
+
 export default function RootLayout({ children }: PropsWithChildren) {
   const url = config.site.url
   const jsonLd: Graph = {
