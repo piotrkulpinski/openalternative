@@ -9,7 +9,7 @@ import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { TopicOne } from "~/server/web/topics/payloads"
-import { findTopicBySlug, findTopicSlugs } from "~/server/web/topics/queries"
+import { findTopic, findTopicSlugs } from "~/server/web/topics/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -18,7 +18,7 @@ type PageProps = {
 
 const getTopic = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const topic = await findTopicBySlug(slug)
+  const topic = await findTopic({ where: { slug } })
 
   if (!topic) {
     notFound()

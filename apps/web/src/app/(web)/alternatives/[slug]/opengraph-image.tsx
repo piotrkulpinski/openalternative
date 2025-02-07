@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { ImageResponse } from "next/og"
 import { OgBase } from "~/components/web/og/og-base"
 import { loadGoogleFont } from "~/lib/fonts"
-import { findAlternativeBySlug } from "~/server/web/alternatives/queries"
+import { findAlternative } from "~/server/web/alternatives/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -15,7 +15,7 @@ export const size = { width: 1200, height: 630 }
 
 export default async function Image({ params }: PageProps) {
   const { slug } = await params
-  const alternative = await findAlternativeBySlug(slug)
+  const alternative = await findAlternative({ where: { slug } })
 
   if (!alternative) {
     notFound()

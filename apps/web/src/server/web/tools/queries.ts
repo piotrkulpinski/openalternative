@@ -2,8 +2,8 @@ import { performance } from "node:perf_hooks"
 import { getRandomElement } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { type Prisma, type Tool, ToolStatus } from "@openalternative/db/client"
+import { unstable_cacheTag as cacheTag } from "next/cache"
 import type { inferParserType } from "nuqs/server"
-import { cache } from "~/lib/cache"
 import {
   toolManyExtendedPayload,
   toolManyPayload,
@@ -11,57 +11,58 @@ import {
 } from "~/server/web/tools/payloads"
 import type { toolsSearchParams } from "~/server/web/tools/search-params"
 
-export const searchTools = cache(
-  async (
-    search: inferParserType<typeof toolsSearchParams>,
-    { where, ...args }: Prisma.ToolFindManyArgs,
-  ) => {
-    const { q, alternative, category, stack, license, page, sort, perPage } = search
-    const start = performance.now()
-    const skip = (page - 1) * perPage
-    const take = perPage
-    const [sortBy, sortOrder] = sort.split(".")
+export const searchTools = async (
+  search: inferParserType<typeof toolsSearchParams>,
+  { where, ...args }: Prisma.ToolFindManyArgs,
+) => {
+  "use cache"
 
-    const whereQuery: Prisma.ToolWhereInput = {
-      status: ToolStatus.Published,
-      ...(alternative.length && { alternatives: { some: { slug: { in: alternative } } } }),
-      ...(category.length && { categories: { some: { slug: { in: category } } } }),
-      ...(stack.length && { stacks: { some: { slug: { in: stack } } } }),
-      ...(license.length && { license: { slug: { in: license } } }),
-    }
+  cacheTag("tools")
 
-    // Use full-text search when query exists
-    if (q) {
-      const searchQuery: { id: string }[] = await db.$queryRaw`
+  const { q, alternative, category, stack, license, page, sort, perPage } = search
+  const start = performance.now()
+  const skip = (page - 1) * perPage
+  const take = perPage
+  const [sortBy, sortOrder] = sort.split(".")
+
+  const whereQuery: Prisma.ToolWhereInput = {
+    status: ToolStatus.Published,
+    ...(alternative.length && { alternatives: { some: { slug: { in: alternative } } } }),
+    ...(category.length && { categories: { some: { slug: { in: category } } } }),
+    ...(stack.length && { stacks: { some: { slug: { in: stack } } } }),
+    ...(license.length && { license: { slug: { in: license } } }),
+  }
+
+  // Use full-text search when query exists
+  if (q) {
+    const searchQuery: { id: string }[] = await db.$queryRaw`
         SELECT id
         FROM "Tool", plainto_tsquery('english', ${q}) query
         WHERE "searchVector" @@ query
       `
 
-      whereQuery.id = { in: searchQuery.map(r => r.id) }
-    }
+    whereQuery.id = { in: searchQuery.map(r => r.id) }
+  }
 
-    const [tools, totalCount] = await db.$transaction([
-      db.tool.findMany({
-        ...args,
-        orderBy: sortBy ? { [sortBy]: sortOrder } : [{ isFeatured: "desc" }, { score: "desc" }],
-        where: { ...whereQuery, ...where },
-        select: toolManyPayload,
-        take,
-        skip,
-      }),
+  const [tools, totalCount] = await db.$transaction([
+    db.tool.findMany({
+      ...args,
+      orderBy: sortBy ? { [sortBy]: sortOrder } : [{ isFeatured: "desc" }, { score: "desc" }],
+      where: { ...whereQuery, ...where },
+      select: toolManyPayload,
+      take,
+      skip,
+    }),
 
-      db.tool.count({
-        where: { ...whereQuery, ...where },
-      }),
-    ])
+    db.tool.count({
+      where: { ...whereQuery, ...where },
+    }),
+  ])
 
-    console.log("searchTools", performance.now() - start)
+  console.log("searchTools", performance.now() - start)
 
-    return { tools, totalCount }
-  },
-  ["tools"],
-)
+  return { tools, totalCount }
+}
 
 export const findRelatedTools = async ({
   where,
@@ -94,30 +95,36 @@ export const findRelatedTools = async ({
   })
 }
 
-export const findTools = cache(
-  async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {
-    return db.tool.findMany({
-      ...args,
-      where: { status: ToolStatus.Published, ...where },
-      orderBy: orderBy ?? [{ isFeatured: "desc" }, { score: "desc" }],
-      select: toolManyPayload,
-    })
-  },
-  ["tools"],
-)
+export const findTools = async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {
+  "use cache"
 
-export const findToolsWithCategories = cache(
-  async ({ where, ...args }: Prisma.ToolFindManyArgs) => {
-    return db.tool.findMany({
-      ...args,
-      where: { status: ToolStatus.Published, ...where },
-      select: toolManyExtendedPayload,
-    })
-  },
-  ["tools"],
-)
+  cacheTag("tools")
+
+  return db.tool.findMany({
+    ...args,
+    where: { status: ToolStatus.Published, ...where },
+    orderBy: orderBy ?? [{ isFeatured: "desc" }, { score: "desc" }],
+    select: toolManyPayload,
+  })
+}
+
+export const findToolsWithCategories = async ({ where, ...args }: Prisma.ToolFindManyArgs) => {
+  "use cache"
+
+  cacheTag("tools")
+
+  return db.tool.findMany({
+    ...args,
+    where: { status: ToolStatus.Published, ...where },
+    select: toolManyExtendedPayload,
+  })
+}
 
 export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFindManyArgs) => {
+  "use cache"
+
+  cacheTag("tools")
+
   return db.tool.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
@@ -126,27 +133,24 @@ export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFind
   })
 }
 
-export const countUpcomingTools = cache(
-  async ({ where, ...args }: Prisma.ToolCountArgs) => {
-    return db.tool.count({
-      ...args,
-      where: { status: { in: [ToolStatus.Scheduled, ToolStatus.Draft] }, ...where },
-    })
-  },
-  ["schedule"],
-)
+export const countUpcomingTools = async ({ where, ...args }: Prisma.ToolCountArgs) => {
+  return db.tool.count({
+    ...args,
+    where: { status: { in: [ToolStatus.Scheduled, ToolStatus.Draft] }, ...where },
+  })
+}
 
-export const findToolBySlug = (slug: string, { where, ...args }: Prisma.ToolFindFirstArgs = {}) =>
-  cache(
-    async (slug: string) => {
-      return db.tool.findFirst({
-        ...args,
-        where: { slug, status: { not: ToolStatus.Draft }, ...where },
-        select: toolOnePayload,
-      })
-    },
-    ["tool", `tool-${slug}`],
-  )(slug)
+export const findTool = async ({ where, ...args }: Prisma.ToolFindFirstArgs = {}) => {
+  "use cache"
+
+  cacheTag("tool", `tool-${where?.slug}`)
+
+  return db.tool.findFirst({
+    ...args,
+    where: { status: { not: ToolStatus.Draft }, ...where },
+    select: toolOnePayload,
+  })
+}
 
 export const findRandomTool = async () => {
   const tools = await db.$queryRaw<Array<Tool>>`

@@ -4,6 +4,12 @@ import type { NextConfig } from "next"
 const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
 
+  experimental: {
+    ppr: true,
+    dynamicIO: true,
+    useCache: true,
+  },
+
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -94,4 +100,5 @@ const nextConfig: NextConfig = {
   },
 }
 
+// @ts-expect-error
 export default withContentCollections(nextConfig)

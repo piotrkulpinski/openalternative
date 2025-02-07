@@ -1,21 +1,26 @@
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
-import { cache } from "~/lib/cache"
+import { unstable_cacheTag as cacheTag } from "next/cache"
 import { licenseManyPayload, licenseOnePayload } from "~/server/web/licenses/payloads"
 
-export const findLicenses = cache(
-  async ({ where, orderBy, ...args }: Prisma.LicenseFindManyArgs) => {
-    return db.license.findMany({
-      ...args,
-      orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { name: "asc" }],
-      where: { tools: { some: { status: ToolStatus.Published } }, ...where },
-      select: licenseManyPayload,
-    })
-  },
-  ["licenses"],
-)
+export const findLicenses = async ({ where, orderBy, ...args }: Prisma.LicenseFindManyArgs) => {
+  "use cache"
+
+  cacheTag("licenses")
+
+  return db.license.findMany({
+    ...args,
+    orderBy: orderBy ?? [{ tools: { _count: "desc" } }, { name: "asc" }],
+    where: { tools: { some: { status: ToolStatus.Published } }, ...where },
+    select: licenseManyPayload,
+  })
+}
 
 export const findLicenseSlugs = async ({ where, orderBy, ...args }: Prisma.LicenseFindManyArgs) => {
+  "use cache"
+
+  cacheTag("licenses")
+
   return db.license.findMany({
     ...args,
     orderBy: orderBy ?? { name: "asc" },
@@ -24,17 +29,14 @@ export const findLicenseSlugs = async ({ where, orderBy, ...args }: Prisma.Licen
   })
 }
 
-export const findLicenseBySlug = (
-  slug: string,
-  { where, ...args }: Prisma.LicenseFindFirstArgs = {},
-) =>
-  cache(
-    async (slug: string) => {
-      return db.license.findFirst({
-        ...args,
-        where: { slug, ...where },
-        select: licenseOnePayload,
-      })
-    },
-    ["license", `license-${slug}`],
-  )(slug)
+export const findLicense = async ({ where, ...args }: Prisma.LicenseFindFirstArgs = {}) => {
+  "use cache"
+
+  cacheTag("license", `license-${where?.slug}`)
+
+  return db.license.findFirst({
+    ...args,
+    where,
+    select: licenseOnePayload,
+  })
+}

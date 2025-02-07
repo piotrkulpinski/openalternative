@@ -24,7 +24,7 @@ import { Prose } from "~/components/web/ui/prose"
 import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
-import { findAlternativeBySlug, findAlternativeSlugs } from "~/server/web/alternatives/queries"
+import { findAlternative, findAlternativeSlugs } from "~/server/web/alternatives/queries"
 import { findToolsWithCategories } from "~/server/web/tools/queries"
 
 type PageProps = {
@@ -34,7 +34,7 @@ type PageProps = {
 
 const getAlternative = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const alternative = await findAlternativeBySlug(slug)
+  const alternative = await findAlternative({ where: { slug } })
 
   if (!alternative) {
     notFound()

@@ -8,9 +8,9 @@ import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { CategoryOne } from "~/server/web/categories/payloads"
-import { findCategoryBySlug } from "~/server/web/categories/queries"
+import { findCategory } from "~/server/web/categories/queries"
 import type { LicenseOne } from "~/server/web/licenses/payloads"
-import { findLicenseBySlug } from "~/server/web/licenses/queries"
+import { findLicense } from "~/server/web/licenses/queries"
 
 type PageProps = {
   params: Promise<{ slug: string; license: string }>
@@ -20,8 +20,8 @@ type PageProps = {
 const getCategory = cache(async ({ params }: PageProps) => {
   const { slug: categorySlug, license: licenseSlug } = await params
   const [category, license] = await Promise.all([
-    findCategoryBySlug(categorySlug),
-    findLicenseBySlug(licenseSlug),
+    findCategory({ where: { slug: categorySlug } }),
+    findLicense({ where: { slug: licenseSlug } }),
   ])
 
   if (!category || !license) {
