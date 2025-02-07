@@ -124,7 +124,10 @@ export const toolScheduled = inngest.createFunction(
 
     // Send first reminder if not expedited
     await step.run("send-first-reminder", async () => {
-      if (isFreeAfterOneMonth) {
+      const tool = await db.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
+
+      // Check if tool was published before
+      if (!tool.publishedAt && isFreeAfterOneMonth) {
         const subject = `Skip the queue for ${tool.name} on ${config.site.name} 🚀`
 
         return await sendEmails({
@@ -140,7 +143,10 @@ export const toolScheduled = inngest.createFunction(
 
     // Send second reminder if not expedited
     await step.run("send-second-reminder", async () => {
-      if (isFreeAfterTwoMonths) {
+      const tool = await db.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
+
+      // Check if tool was published before
+      if (!tool.publishedAt && isFreeAfterOneMonth) {
         const subject = `Last chance to expedite ${tool.name} on ${config.site.name} ⚡️`
 
         return await sendEmails({

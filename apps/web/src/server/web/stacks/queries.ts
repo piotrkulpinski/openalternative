@@ -31,15 +31,14 @@ export const findStackSlugs = async ({ where, orderBy, ...args }: Prisma.StackFi
   })
 }
 
-export const findStack = async ({ where, ...args }: Prisma.StackFindFirstArgs = {}) => {
+export const findStack = async ({ ...args }: Prisma.StackFindFirstArgs = {}) => {
   "use cache"
 
-  cacheTag("stack", `stack-${where?.slug}`)
+  cacheTag("stack", `stack-${args.where?.slug}`)
   cacheLife("max")
 
   return db.stack.findFirst({
     ...args,
-    where,
     select: stackOnePayload,
   })
 }

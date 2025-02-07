@@ -43,21 +43,6 @@ export const updateCategory = authedProcedure
     return category
   })
 
-export const updateCategories = authedProcedure
-  .createServerAction()
-  .input(z.object({ ids: z.array(z.string()), data: categorySchema.partial() }))
-  .handler(async ({ input: { ids, data } }) => {
-    await db.category.updateMany({
-      where: { id: { in: ids } },
-      data,
-    })
-
-    revalidateTag("categories")
-    revalidateTag("category")
-
-    return true
-  })
-
 export const deleteCategories = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))

@@ -31,15 +31,14 @@ export const findLicenseSlugs = async ({ where, orderBy, ...args }: Prisma.Licen
   })
 }
 
-export const findLicense = async ({ where, ...args }: Prisma.LicenseFindFirstArgs = {}) => {
+export const findLicense = async ({ ...args }: Prisma.LicenseFindFirstArgs = {}) => {
   "use cache"
 
-  cacheTag("license", `license-${where?.slug}`)
+  cacheTag("license", `license-${args.where?.slug}`)
   cacheLife("max")
 
   return db.license.findFirst({
     ...args,
-    where,
     select: licenseOnePayload,
   })
 }

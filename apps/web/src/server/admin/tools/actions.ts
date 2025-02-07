@@ -52,21 +52,6 @@ export const updateTool = authedProcedure
     return tool
   })
 
-export const updateTools = authedProcedure
-  .createServerAction()
-  .input(z.object({ ids: z.array(z.string()), data: toolSchema.partial() }))
-  .handler(async ({ input: { ids, data } }) => {
-    await db.tool.updateMany({
-      where: { id: { in: ids } },
-      data,
-    })
-
-    revalidateTag("tools")
-    revalidateTag("tool")
-
-    return true
-  })
-
 export const deleteTools = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))

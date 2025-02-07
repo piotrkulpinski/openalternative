@@ -48,21 +48,6 @@ export const updateAlternative = authedProcedure
     return alternative
   })
 
-export const updateAlternatives = authedProcedure
-  .createServerAction()
-  .input(z.object({ ids: z.array(z.string()), data: alternativeSchema.partial() }))
-  .handler(async ({ input: { ids, data } }) => {
-    await db.alternative.updateMany({
-      where: { id: { in: ids } },
-      data,
-    })
-
-    revalidateTag("alternatives")
-    revalidateTag(`alternative-${data.slug}`)
-
-    return true
-  })
-
 export const deleteAlternatives = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))

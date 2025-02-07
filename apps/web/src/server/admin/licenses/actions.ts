@@ -38,21 +38,6 @@ export const updateLicense = authedProcedure
     return license
   })
 
-export const updateLicenses = authedProcedure
-  .createServerAction()
-  .input(z.object({ ids: z.array(z.string()), data: licenseSchema.partial() }))
-  .handler(async ({ input: { ids, data } }) => {
-    await db.license.updateMany({
-      where: { id: { in: ids } },
-      data,
-    })
-
-    revalidateTag("licenses")
-    revalidateTag("license")
-
-    return true
-  })
-
 export const deleteLicenses = authedProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))

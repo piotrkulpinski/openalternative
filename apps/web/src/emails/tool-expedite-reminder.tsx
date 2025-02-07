@@ -33,6 +33,13 @@ export default function EmailToolExpediteReminder({ tool, monthsWaiting, ...prop
         <li>⭐️ Featured Listing - Premium placement and immediate publication</li>
       </ul>
 
+      {monthsWaiting > 1 && (
+        <Text className="text-green-500">
+          Don't miss out on our special offer! Use coupon code <strong>EXTRA25</strong> for a 25%
+          discount on your expedited listing option.
+        </Text>
+      )}
+
       <EmailButton href={link}>Click here to expedite your listing</EmailButton>
     </EmailWrapper>
   )

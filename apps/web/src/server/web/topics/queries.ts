@@ -31,15 +31,14 @@ export const findTopicSlugs = async ({ where, orderBy, ...args }: Prisma.TopicFi
   })
 }
 
-export const findTopic = async ({ where, ...args }: Prisma.TopicFindFirstArgs = {}) => {
+export const findTopic = async ({ ...args }: Prisma.TopicFindFirstArgs = {}) => {
   "use cache"
 
-  cacheTag("topic", `topic-${where?.slug}`)
+  cacheTag("topic", `topic-${args.where?.slug}`)
   cacheLife("max")
 
   return db.topic.findFirst({
     ...args,
-    where,
     select: topicOnePayload,
   })
 }
