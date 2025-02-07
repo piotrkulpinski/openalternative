@@ -1,11 +1,8 @@
 import Script from "next/script"
-import { type PropsWithChildren, Suspense } from "react"
+import type { PropsWithChildren } from "react"
 import type { Graph } from "schema-dts"
 import Providers from "~/app/(web)/providers"
-import { AdBanner } from "~/components/web/ads/ad-banner"
-import { Bottom } from "~/components/web/bottom"
 import { Footer } from "~/components/web/footer"
-import { Header } from "~/components/web/header"
 import { Container } from "~/components/web/ui/container"
 import { config } from "~/config"
 import { env } from "~/env"
@@ -13,7 +10,6 @@ import { env } from "~/env"
 import "./styles.css"
 
 export const revalidate = 86400 // One day
-export const experimental_ppr = true
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const url = config.site.url
@@ -69,11 +65,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <Providers>
       <div className="flex flex-col min-h-dvh">
-        <Suspense>
+        {/* <Suspense>
           <AdBanner />
         </Suspense>
 
-        <Header />
+        <Header /> */}
 
         <Container asChild>
           <main className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
@@ -84,7 +80,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         </Container>
       </div>
 
-      <Bottom />
+      {/* <Bottom /> */}
 
       {/* JSON-LD */}
       <Script
