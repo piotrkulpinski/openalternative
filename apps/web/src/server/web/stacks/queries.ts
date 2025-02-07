@@ -1,12 +1,13 @@
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
-import { unstable_cacheTag as cacheTag } from "next/cache"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import { stackManyPayload, stackOnePayload } from "~/server/web/stacks/payloads"
 
 export const findStacks = async ({ where, orderBy, ...args }: Prisma.StackFindManyArgs) => {
   "use cache"
 
   cacheTag("stacks")
+  cacheLife("max")
 
   return db.stack.findMany({
     ...args,
@@ -20,6 +21,7 @@ export const findStackSlugs = async ({ where, orderBy, ...args }: Prisma.StackFi
   "use cache"
 
   cacheTag("stacks")
+  cacheLife("max")
 
   return db.stack.findMany({
     ...args,
@@ -33,6 +35,8 @@ export const findStack = async ({ where, ...args }: Prisma.StackFindFirstArgs = 
   "use cache"
 
   cacheTag("stack", `stack-${where?.slug}`)
+  cacheLife("max")
+
   return db.stack.findFirst({
     ...args,
     where,

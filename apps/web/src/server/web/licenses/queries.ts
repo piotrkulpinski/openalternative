@@ -1,12 +1,13 @@
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
-import { unstable_cacheTag as cacheTag } from "next/cache"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import { licenseManyPayload, licenseOnePayload } from "~/server/web/licenses/payloads"
 
 export const findLicenses = async ({ where, orderBy, ...args }: Prisma.LicenseFindManyArgs) => {
   "use cache"
 
   cacheTag("licenses")
+  cacheLife("max")
 
   return db.license.findMany({
     ...args,
@@ -20,6 +21,7 @@ export const findLicenseSlugs = async ({ where, orderBy, ...args }: Prisma.Licen
   "use cache"
 
   cacheTag("licenses")
+  cacheLife("max")
 
   return db.license.findMany({
     ...args,
@@ -33,6 +35,7 @@ export const findLicense = async ({ where, ...args }: Prisma.LicenseFindFirstArg
   "use cache"
 
   cacheTag("license", `license-${where?.slug}`)
+  cacheLife("max")
 
   return db.license.findFirst({
     ...args,

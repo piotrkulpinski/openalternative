@@ -1,12 +1,13 @@
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
-import { unstable_cacheTag as cacheTag } from "next/cache"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import { topicManyPayload, topicOnePayload } from "~/server/web/topics/payloads"
 
 export const findTopics = async ({ where, orderBy, ...args }: Prisma.TopicFindManyArgs) => {
   "use cache"
 
   cacheTag("topics")
+  cacheLife("max")
 
   return db.topic.findMany({
     ...args,
@@ -20,6 +21,7 @@ export const findTopicSlugs = async ({ where, orderBy, ...args }: Prisma.TopicFi
   "use cache"
 
   cacheTag("topics")
+  cacheLife("max")
 
   return db.topic.findMany({
     ...args,
@@ -33,6 +35,7 @@ export const findTopic = async ({ where, ...args }: Prisma.TopicFindFirstArgs = 
   "use cache"
 
   cacheTag("topic", `topic-${where?.slug}`)
+  cacheLife("max")
 
   return db.topic.findFirst({
     ...args,

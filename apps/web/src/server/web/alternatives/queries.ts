@@ -1,7 +1,7 @@
 import { performance } from "node:perf_hooks"
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
-import { unstable_cacheTag as cacheTag } from "next/cache"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import type { inferParserType } from "nuqs/server"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/web/alternatives/payloads"
 import type { alternativesSearchParams } from "~/server/web/alternatives/search-params"
@@ -13,6 +13,7 @@ export const searchAlternatives = async (
   "use cache"
 
   cacheTag("alternatives")
+  cacheLife("max")
 
   const start = performance.now()
   // Values to paginate the results
@@ -65,6 +66,7 @@ export const findAlternatives = async ({
   "use cache"
 
   cacheTag("alternatives")
+  cacheLife("max")
 
   return db.alternative.findMany({
     ...args,
@@ -82,6 +84,7 @@ export const findAlternativeSlugs = async ({
   "use cache"
 
   cacheTag("alternatives")
+  cacheLife("max")
 
   return db.alternative.findMany({
     ...args,
@@ -95,6 +98,7 @@ export const findAlternative = async ({ where, ...args }: Prisma.AlternativeFind
   "use cache"
 
   cacheTag("alternative", `alternative-${where?.slug}`)
+  cacheLife("max")
 
   return db.alternative.findFirst({
     ...args,

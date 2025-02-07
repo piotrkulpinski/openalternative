@@ -1,12 +1,13 @@
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
-import { unstable_cacheTag as cacheTag } from "next/cache"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import { categoryManyPayload, categoryOnePayload } from "~/server/web/categories/payloads"
 
 export const findCategories = async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {
   "use cache"
 
   cacheTag("categories")
+  cacheLife("max")
 
   return db.category.findMany({
     ...args,
@@ -24,6 +25,7 @@ export const findCategorySlugs = async ({
   "use cache"
 
   cacheTag("categories")
+  cacheLife("max")
 
   return db.category.findMany({
     ...args,
@@ -37,6 +39,7 @@ export const findCategory = async ({ where, ...args }: Prisma.CategoryFindFirstA
   "use cache"
 
   cacheTag("category", `category-${where?.slug}`)
+  cacheLife("max")
 
   return db.category.findFirst({
     ...args,
