@@ -43,7 +43,6 @@ export const PaginationLink = ({
         navLinkVariants({ isActive, className }),
       )}
       {...props}
-      prefetch={false}
     >
       <Slot className={affixVariants()}>{prefix}</Slot>
       <span>{children}</span>

@@ -10,7 +10,7 @@ const a = ({ href, ...props }: HTMLProps<HTMLAnchorElement>) => {
   }
 
   if (href.startsWith("/") || href.startsWith("#")) {
-    return <Link href={href} prefetch={false} {...props} />
+    return <Link href={href} {...props} />
   }
 
   return (

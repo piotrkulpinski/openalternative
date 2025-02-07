@@ -19,7 +19,7 @@ type StackCardProps = ComponentProps<typeof CardSimple> & {
 const StackCard = ({ stack, ...props }: StackCardProps) => {
   return (
     <CardSimple asChild {...props}>
-      <Link href={`/stacks/${stack.slug}`} prefetch={false}>
+      <Link href={`/stacks/${stack.slug}`}>
         <Stack size="sm">
           <Favicon src={stack.faviconUrl} title={stack.name} className="size-6 p-[3px]" />
           <CardSimpleTitle>{stack.name}</CardSimpleTitle>

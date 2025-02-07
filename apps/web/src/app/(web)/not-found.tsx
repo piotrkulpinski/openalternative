@@ -18,9 +18,7 @@ export default function NotFound() {
       </IntroDescription>
 
       <Button size="lg" className="mt-4" asChild>
-        <Link href="/" prefetch={false}>
-          Go back home
-        </Link>
+        <Link href="/">Go back home</Link>
       </Button>
     </Intro>
   )

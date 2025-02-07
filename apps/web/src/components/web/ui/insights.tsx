@@ -31,7 +31,6 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
               {link ? (
                 <Link
                   href={link}
-                  prefetch={false}
                   className="shrink-0 tabular-nums font-medium hover:underline"
                   title={title}
                 >

@@ -173,9 +173,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
         <Stack size="sm">
           <Button size="sm" variant="secondary" asChild>
-            <Link href="/submit" prefetch={false}>
-              Submit
-            </Link>
+            <Link href="/submit">Submit</Link>
           </Button>
 
           {/* <UserMenu /> */}
