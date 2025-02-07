@@ -60,6 +60,10 @@
       "cache": false,
       "persistent": true
     },
+    "start": {
+      "dependsOn": ["^db:generate"],
+      "cache": false
+    },
     "typecheck": {
       "cache": false
     },

@@ -28,8 +28,6 @@ import { getToolSuffix } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { findTool, findToolSlugs } from "~/server/web/tools/queries"
 
-export const revalidate = 7200 // 2 hours
-
 type PageProps = {
   params: Promise<{ slug: string }>
 }

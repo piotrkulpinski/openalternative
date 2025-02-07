@@ -24,7 +24,6 @@ const AlternativeFiltersProvider = ({ children }: PropsWithChildren) => {
   })
 
   const updateFilters = (values: Partial<Values<typeof alternativesSearchParams>>) => {
-    console.log("updating")
     setFilters(prev => ({
       ...prev,
       ...values,
