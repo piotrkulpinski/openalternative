@@ -1,10 +1,11 @@
-import { type Tool, ToolStatus } from "@openalternative/db/client"
+import { ToolStatus } from "@openalternative/db/client"
 import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
 import { getMilestoneReached } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { getPostMilestoneTemplate, getPostTemplate, sendSocialPost } from "~/lib/socials"
 import { isToolPublished } from "~/lib/tools"
+import { findRandomTool } from "~/server/web/tools/queries"
 import { inngest } from "~/services/inngest"
 
 export const fetchTools = inngest.createFunction(
@@ -50,19 +51,12 @@ export const fetchTools = inngest.createFunction(
 
     // Post on Socials about a random tool
     await step.run("post-on-socials", async () => {
-      const tool = await db.$queryRaw<Array<Tool>>`
-        SELECT *
-        FROM "Tool"
-        WHERE status = 'Published'
-        GROUP BY id
-        ORDER BY RANDOM()
-        LIMIT 1
-      `
+      const tool = await findRandomTool()
 
-      if (tool[0]) {
-        const template = await getPostTemplate(tool[0])
+      if (tool) {
+        const template = await getPostTemplate(tool)
 
-        return await sendSocialPost(template, tool[0]).catch(err => {
+        return await sendSocialPost(template, tool).catch(err => {
           throw new NonRetriableError(err.message)
         })
       }

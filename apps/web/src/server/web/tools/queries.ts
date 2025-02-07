@@ -1,7 +1,7 @@
 import { performance } from "node:perf_hooks"
 import { getRandomElement } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
-import { type Prisma, ToolStatus } from "@openalternative/db/client"
+import { type Prisma, type Tool, ToolStatus } from "@openalternative/db/client"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import type { inferParserType } from "nuqs/server"
 import {
@@ -160,4 +160,18 @@ export const findTool = async ({ where, ...args }: Prisma.ToolFindFirstArgs = {}
     where: { status: { not: ToolStatus.Draft }, ...where },
     select: toolOnePayload,
   })
+}
+
+export const findRandomTool = async () => {
+  const tools = await db.$queryRaw<Array<Tool>>`
+    SELECT "id", "name", "slug", "website", "repository", "tagline", "description", "content", "stars", "forks", "score", 
+           "faviconUrl", "screenshotUrl", "firstCommitDate", "lastCommitDate", "status", "publishedAt", "createdAt", "updatedAt"
+    FROM "Tool"
+    WHERE status = 'Published'
+    GROUP BY id
+    ORDER BY RANDOM()
+    LIMIT 1
+  `
+
+  return tools[0]
 }

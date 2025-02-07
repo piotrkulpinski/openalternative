@@ -78,7 +78,7 @@ export const CommandMenu = () => {
   }
 
   const handleSendSocialPost = async () => {
-    await testSocialPosts({ slug: "dub" })
+    await testSocialPosts()
     toast.success("Social post sent")
   }
 
