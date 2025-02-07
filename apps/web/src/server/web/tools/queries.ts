@@ -2,7 +2,7 @@ import { performance } from "node:perf_hooks"
 import { getRandomElement } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { type Prisma, type Tool, ToolStatus } from "@openalternative/db/client"
-import { unstable_cacheTag as cacheTag } from "next/cache"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import type { inferParserType } from "nuqs/server"
 import {
   toolManyExtendedPayload,
@@ -18,6 +18,7 @@ export const searchTools = async (
   "use cache"
 
   cacheTag("tools")
+  cacheLife("max")
 
   const { q, alternative, category, stack, license, page, sort, perPage } = search
   const start = performance.now()
@@ -69,6 +70,11 @@ export const findRelatedTools = async ({
   slug,
   ...args
 }: Prisma.ToolFindManyArgs & { slug: string }) => {
+  "use cache"
+
+  cacheTag("related-tools")
+  cacheLife("minutes")
+
   const relatedWhereClause = {
     ...where,
     AND: [
@@ -99,6 +105,7 @@ export const findTools = async ({ where, orderBy, ...args }: Prisma.ToolFindMany
   "use cache"
 
   cacheTag("tools")
+  cacheLife("max")
 
   return db.tool.findMany({
     ...args,
@@ -112,6 +119,7 @@ export const findToolsWithCategories = async ({ where, ...args }: Prisma.ToolFin
   "use cache"
 
   cacheTag("tools")
+  cacheLife("max")
 
   return db.tool.findMany({
     ...args,
@@ -124,6 +132,7 @@ export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFind
   "use cache"
 
   cacheTag("tools")
+  cacheLife("max")
 
   return db.tool.findMany({
     ...args,
@@ -144,6 +153,7 @@ export const findTool = async ({ where, ...args }: Prisma.ToolFindFirstArgs = {}
   "use cache"
 
   cacheTag("tool", `tool-${where?.slug}`)
+  cacheLife("max")
 
   return db.tool.findFirst({
     ...args,
