@@ -7,6 +7,8 @@ import { Providers } from "./providers"
 
 import "./styles.css"
 
+export const experimental_ppr = false
+
 export const metadata: Metadata = {
   title: "Admin Panel",
 }

@@ -1,5 +1,5 @@
 import { formatNumber } from "@curiousleaf/utils"
-import NumberFlow, { type Format } from "@number-flow/react"
+import NumberFlow, { continuous, type Format } from "@number-flow/react"
 import type { ComponentProps } from "react"
 import type Stripe from "stripe"
 import { Badge } from "~/components/web/ui/badge"
@@ -44,7 +44,7 @@ export const Price = ({
           format={{ ...defaultFormat, ...format }}
           locales="en-US"
           className={cx("flex! items-center font-semibold h-[0.9em]", priceClassName)}
-          continuous
+          plugins={[continuous]}
         />
 
         {!!fullPrice && fullPrice > price && (

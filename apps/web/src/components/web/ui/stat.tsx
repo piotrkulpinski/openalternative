@@ -1,6 +1,6 @@
 "use client"
 
-import NumberFlow, { type Value } from "@number-flow/react"
+import NumberFlow, { continuous, type Value } from "@number-flow/react"
 import { type ComponentProps, useEffect, useState } from "react"
 
 export const Stat = ({ value, ...props }: ComponentProps<typeof NumberFlow>) => {
@@ -8,5 +8,5 @@ export const Stat = ({ value, ...props }: ComponentProps<typeof NumberFlow>) => 
 
   useEffect(() => setState(value), [value])
 
-  return <NumberFlow {...props} value={state} continuous />
+  return <NumberFlow {...props} value={state} plugins={[continuous]} />
 }

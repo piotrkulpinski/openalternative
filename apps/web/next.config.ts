@@ -2,8 +2,6 @@ import { withContentCollections } from "@content-collections/next"
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  skipTrailingSlashRedirect: true,
-
   experimental: {
     ppr: true,
     useCache: true,
@@ -71,13 +69,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/languages",
-        destination: "/stacks",
-        permanent: true,
-      },
-      {
-        source: "/languages/:slug",
-        destination: "/stacks/:slug",
+        source: "/languages/:path*",
+        destination: "/stacks/:path*",
         permanent: true,
       },
       {

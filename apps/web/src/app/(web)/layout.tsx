@@ -93,8 +93,8 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <Script
         defer
         data-domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-        data-api={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/api/event`}
-        src={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
+        data-api={env.NEXT_PUBLIC_PLAUSIBLE_API_URL}
+        src={env.NEXT_PUBLIC_PLAUSIBLE_SCRIPT_URL}
       />
     </Providers>
   )

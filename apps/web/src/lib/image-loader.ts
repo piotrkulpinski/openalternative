@@ -22,7 +22,9 @@ const getParamsString = ({ width, quality }: Omit<ImageLoaderProps, "src">) => {
 }
 
 export default function cloudflareLoader({ src, width, quality }: ImageLoaderProps) {
-  if (process.env.NODE_ENV !== "production") return `${src}?w=${width}`
+  if (process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview") {
+    return `${src}?w=${width}`
+  }
 
   return `/cdn-cgi/image/${getParamsString({ width, quality })}/${normalizeSrc(src)}`
 }

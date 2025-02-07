@@ -24,7 +24,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@mantine/hooks": "^7.16.2",
     "@mendable/firecrawl-js": "^1.16.0",
-    "@number-flow/react": "^0.4.4",
+    "@number-flow/react": "^0.5.5",
     "@octokit/graphql": "^8.2.0",
     "@openalternative/db": "workspace:*",
     "@openalternative/github": "workspace:*",

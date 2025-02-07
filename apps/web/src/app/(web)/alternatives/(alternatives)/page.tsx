@@ -13,7 +13,7 @@ type PageProps = {
 
 export const metadata: Metadata = {
   title: "Open Source Software Alternatives",
-  description: "Discover top open source alternatives to 250+ popular proprietary software tools.",
+  description: "Discover top open source alternatives to 275+ popular proprietary software tools.",
   openGraph: { ...metadataConfig.openGraph, url: "/alternatives" },
   alternates: { ...metadataConfig.alternates, canonical: "/alternatives" },
 }

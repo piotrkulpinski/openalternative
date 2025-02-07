@@ -22,9 +22,9 @@ const getAnalytics = async () => {
   cacheLife("minutes")
 
   try {
-    const host = env.NEXT_PUBLIC_PLAUSIBLE_HOST
-    const apiKey = env.PLAUSIBLE_API_KEY
     const domain = env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
+    const host = env.PLAUSIBLE_API_URL
+    const apiKey = env.PLAUSIBLE_API_KEY
 
     const queryOptions = new URLSearchParams({
       metrics: "visitors",
