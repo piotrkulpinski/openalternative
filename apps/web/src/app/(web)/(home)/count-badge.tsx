@@ -2,27 +2,28 @@ import { formatNumber } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import { subDays } from "date-fns"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import Link from "next/link"
 import plur from "plur"
 import { Badge } from "~/components/web/ui/badge"
 import { Ping } from "~/components/web/ui/ping"
-import { cache } from "~/lib/cache"
 
-const getCounts = cache(
-  async () => {
-    return await db.$transaction([
-      db.tool.count({
-        where: { status: ToolStatus.Published },
-      }),
+const getCounts = async () => {
+  "use cache"
 
-      db.tool.count({
-        where: { status: ToolStatus.Published, publishedAt: { gte: subDays(new Date(), 7) } },
-      }),
-    ])
-  },
-  ["tools-count"],
-  { revalidate: 60 * 60 },
-)
+  cacheTag("tools-count")
+  cacheLife("minutes")
+
+  return await db.$transaction([
+    db.tool.count({
+      where: { status: ToolStatus.Published },
+    }),
+
+    db.tool.count({
+      where: { status: ToolStatus.Published, publishedAt: { gte: subDays(new Date(), 7) } },
+    }),
+  ])
+}
 
 const CountBadge = async () => {
   const [count, newCount] = await getCounts()

@@ -1,4 +1,5 @@
 import { eachDayOfInterval, format, startOfDay, subDays } from "date-fns"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import type { ComponentProps } from "react"
 import wretch from "wretch"
 import { Chart, type ChartData } from "~/app/admin/_components/chart"
@@ -10,7 +11,6 @@ import {
   CardTitle,
 } from "~/components/admin/ui/card"
 import { env } from "~/env"
-import { cache } from "~/lib/cache"
 
 type BeehiivSubscription = {
   id: string
@@ -35,91 +35,92 @@ type SubscribersResponse = {
   total_pages: number
 }
 
-const getSubscribers = cache(
-  async () => {
-    const url = `https://api.beehiiv.com/v2/publications/${env.BEEHIIV_PUBLICATION_ID}/subscriptions`
-    const thirtyDaysAgo = startOfDay(subDays(new Date(), 30))
-    const allSubscribers: BeehiivSubscription[] = []
-    let currentPage = 1
-    let hasMorePages = true
-    let totalResults = 0
+const getSubscribers = async () => {
+  "use cache"
 
-    const baseParams = {
-      limit: "100",
-      status: "active",
-      order_by: "created",
-      direction: "desc",
-    }
+  cacheTag("subscribers")
+  cacheLife("minutes")
 
-    try {
-      while (hasMorePages) {
-        const params = new URLSearchParams({
-          ...baseParams,
-          page: currentPage.toString(),
-        })
+  const url = `https://api.beehiiv.com/v2/publications/${env.BEEHIIV_PUBLICATION_ID}/subscriptions`
+  const thirtyDaysAgo = startOfDay(subDays(new Date(), 30))
+  const allSubscribers: BeehiivSubscription[] = []
+  let currentPage = 1
+  let hasMorePages = true
+  let totalResults = 0
 
-        const response = await wretch(`${url}?${params}`)
-          .auth(`Bearer ${env.BEEHIIV_API_KEY}`)
-          .get()
-          .json<SubscribersResponse>()
+  const baseParams = {
+    limit: "100",
+    status: "active",
+    order_by: "created",
+    direction: "desc",
+  }
 
-        // Store total_results from first response
-        if (currentPage === 1) {
-          totalResults = response.total_results
-        }
+  try {
+    while (hasMorePages) {
+      const params = new URLSearchParams({
+        ...baseParams,
+        page: currentPage.toString(),
+      })
 
-        const subscribers = response.data
-        const oldestSubscriber = subscribers[subscribers.length - 1]
+      const response = await wretch(`${url}?${params}`)
+        .auth(`Bearer ${env.BEEHIIV_API_KEY}`)
+        .get()
+        .json<SubscribersResponse>()
 
-        // Add only subscribers from last 30 days
-        const relevantSubscribers = subscribers.filter(
-          sub => new Date(sub.created * 1000) >= thirtyDaysAgo,
-        )
-
-        allSubscribers.push(...relevantSubscribers)
-
-        // Stop if we've reached subscribers older than 30 days or no more pages
-        if (
-          !oldestSubscriber ||
-          new Date(oldestSubscriber.created * 1000) < thirtyDaysAgo ||
-          currentPage >= response.total_pages
-        ) {
-          hasMorePages = false
-        } else {
-          currentPage++
-        }
+      // Store total_results from first response
+      if (currentPage === 1) {
+        totalResults = response.total_results
       }
 
-      // Group subscribers by date
-      const subscribersByDate = allSubscribers.reduce<Record<string, number>>((acc, sub) => {
-        const date = format(new Date(sub.created * 1000), "yyyy-MM-dd")
-        acc[date] = (acc[date] || 0) + 1
-        return acc
-      }, {})
+      const subscribers = response.data
+      const oldestSubscriber = subscribers[subscribers.length - 1]
 
-      // Fill in missing dates with 0
-      const results: ChartData[] = eachDayOfInterval({
-        start: thirtyDaysAgo,
-        end: new Date(),
-      }).map(day => ({
-        date: format(day, "yyyy-MM-dd"),
-        value: subscribersByDate[format(day, "yyyy-MM-dd")] || 0,
-      }))
-
-      const totalSubscribers = totalResults
-      const averageSubscribers = Math.round(
-        results.reduce((sum, day) => sum + day.value, 0) / results.length,
+      // Add only subscribers from last 30 days
+      const relevantSubscribers = subscribers.filter(
+        sub => new Date(sub.created * 1000) >= thirtyDaysAgo,
       )
 
-      return { results, totalSubscribers, averageSubscribers }
-    } catch (error) {
-      console.error("Subscribers error:", error)
-      return { results: [], totalSubscribers: 0, averageSubscribers: 0 }
+      allSubscribers.push(...relevantSubscribers)
+
+      // Stop if we've reached subscribers older than 30 days or no more pages
+      if (
+        !oldestSubscriber ||
+        new Date(oldestSubscriber.created * 1000) < thirtyDaysAgo ||
+        currentPage >= response.total_pages
+      ) {
+        hasMorePages = false
+      } else {
+        currentPage++
+      }
     }
-  },
-  ["subscribers"],
-  { revalidate: 60 * 60 * 12 },
-)
+
+    // Group subscribers by date
+    const subscribersByDate = allSubscribers.reduce<Record<string, number>>((acc, sub) => {
+      const date = format(new Date(sub.created * 1000), "yyyy-MM-dd")
+      acc[date] = (acc[date] || 0) + 1
+      return acc
+    }, {})
+
+    // Fill in missing dates with 0
+    const results: ChartData[] = eachDayOfInterval({
+      start: thirtyDaysAgo,
+      end: new Date(),
+    }).map(day => ({
+      date: format(day, "yyyy-MM-dd"),
+      value: subscribersByDate[format(day, "yyyy-MM-dd")] || 0,
+    }))
+
+    const totalSubscribers = totalResults
+    const averageSubscribers = Math.round(
+      results.reduce((sum, day) => sum + day.value, 0) / results.length,
+    )
+
+    return { results, totalSubscribers, averageSubscribers }
+  } catch (error) {
+    console.error("Subscribers error:", error)
+    return { results: [], totalSubscribers: 0, averageSubscribers: 0 }
+  }
+}
 
 const SubscribersCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const { results, totalSubscribers, averageSubscribers } = await getSubscribers()

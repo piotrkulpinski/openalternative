@@ -26,7 +26,7 @@ import { Tag } from "~/components/web/ui/tag"
 import { metadataConfig } from "~/config/metadata"
 import { getToolSuffix } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
-import { findToolBySlug, findToolSlugs } from "~/server/web/tools/queries"
+import { findTool, findToolSlugs } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -34,7 +34,7 @@ type PageProps = {
 
 const getTool = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const tool = await findToolBySlug(slug)
+  const tool = await findTool({ where: { slug } })
 
   if (!tool) {
     notFound()

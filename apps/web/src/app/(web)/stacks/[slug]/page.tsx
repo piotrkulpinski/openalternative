@@ -8,7 +8,7 @@ import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { StackOne } from "~/server/web/stacks/payloads"
-import { findStackBySlug, findStackSlugs } from "~/server/web/stacks/queries"
+import { findStack, findStackSlugs } from "~/server/web/stacks/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -17,7 +17,7 @@ type PageProps = {
 
 const getStack = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const stack = await findStackBySlug(slug)
+  const stack = await findStack({ where: { slug } })
 
   if (!stack) {
     notFound()

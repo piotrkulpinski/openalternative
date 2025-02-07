@@ -2,7 +2,6 @@ import { isTruthy } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
-import { cache } from "~/lib/cache"
 import type { GetToolsSchema } from "./validations"
 
 export const findTools = async (search: GetToolsSchema) => {
@@ -51,13 +50,13 @@ export const findTools = async (search: GetToolsSchema) => {
   return { tools, toolsTotal, pageCount }
 }
 
-export const findScheduledTools = cache(async () => {
+export const findScheduledTools = async () => {
   return db.tool.findMany({
     where: { status: ToolStatus.Scheduled },
     select: { slug: true, name: true, publishedAt: true },
     orderBy: { publishedAt: "asc" },
   })
-}, ["schedule"])
+}
 
 export const findToolList = async () => {
   return db.tool.findMany({

@@ -13,7 +13,7 @@ import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
-import { findToolBySlug } from "~/server/web/tools/queries"
+import { findTool } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -30,8 +30,8 @@ const getTool = cache(async ({ params, searchParams }: PageProps) => {
   const { success } = searchParamsCache.parse(await searchParams)
   const { slug } = await params
 
-  const tool = await findToolBySlug(slug, {
-    where: { isFeatured: success ? undefined : false, status: undefined },
+  const tool = await findTool({
+    where: { slug, isFeatured: success ? undefined : false, status: undefined },
   })
 
   if (!tool) {

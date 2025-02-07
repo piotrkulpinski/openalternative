@@ -8,7 +8,7 @@ import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { CategoryOne } from "~/server/web/categories/payloads"
-import { findCategoryBySlug, findCategorySlugs } from "~/server/web/categories/queries"
+import { findCategory, findCategorySlugs } from "~/server/web/categories/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -17,7 +17,7 @@ type PageProps = {
 
 const getCategory = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const category = await findCategoryBySlug(slug)
+  const category = await findCategory({ where: { slug } })
 
   if (!category) {
     notFound()
