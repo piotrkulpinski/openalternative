@@ -28,7 +28,6 @@ import {
 } from "~/components/web/ui/dropdown-menu"
 import { Logo } from "~/components/web/ui/logo"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
-import { UserMenu } from "~/components/web/user-menu"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
@@ -179,7 +178,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             </Link>
           </Button>
 
-          <UserMenu />
+          {/* <UserMenu /> */}
         </Stack>
       </div>
 
