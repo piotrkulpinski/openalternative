@@ -41,7 +41,10 @@ export default async function SubmitPage() {
                 <li>Free to use or can be self-hosted</li>
                 <li>Actively maintained</li>
                 <li>
-                  An <Link href="/alternatives">alternative to popular software</Link>
+                  An{" "}
+                  <Link href="/alternatives" prefetch={false}>
+                    alternative to popular software
+                  </Link>
                 </li>
               </ul>
             </Prose>

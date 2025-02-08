@@ -30,7 +30,7 @@ const CountBadge = async () => {
 
   return (
     <Badge prefix={<Ping />} className="order-first" asChild>
-      <Link href="/?sort=publishedAt.desc">
+      <Link href="/?sort=publishedAt.desc" prefetch={false}>
         {newCount
           ? `${formatNumber(newCount)} new ${plur("tool", newCount)} added`
           : `${formatNumber(count)}+ open source tools`}

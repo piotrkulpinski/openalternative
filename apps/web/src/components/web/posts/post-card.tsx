@@ -13,7 +13,7 @@ type PostCardProps = ComponentProps<typeof Card> & {
 export const PostCard = ({ className, post, ...props }: PostCardProps) => {
   return (
     <Card className="overflow-clip" asChild {...props}>
-      <Link href={`/blog/${post._meta.path}`}>
+      <Link href={`/blog/${post._meta.path}`} prefetch={false}>
         {post.image && (
           <Image
             src={post.image}

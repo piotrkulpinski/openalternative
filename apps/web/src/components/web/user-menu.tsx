@@ -35,7 +35,9 @@ export const UserMenu = () => {
   if (!session?.user) {
     return (
       <Button size="sm" variant="secondary" asChild>
-        <Link href="/auth/login">Sign in</Link>
+        <Link href="/auth/login" prefetch={false}>
+          Sign in
+        </Link>
       </Button>
     )
   }

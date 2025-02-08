@@ -22,7 +22,7 @@ export const FeatureNudge = ({ className, tool, t, ...props }: FeatureNudgeProps
 
       <Stack size="sm">
         <Button size="sm" onClick={() => toast.dismiss(t)} asChild>
-          <Link href={`/submit/${tool.slug}`}>
+          <Link href={`/submit/${tool.slug}`} prefetch={false}>
             Feature {tool.name} on {config.site.name}
           </Link>
         </Button>

@@ -37,7 +37,9 @@ const NavLink = ({ className, exact, ...props }: NavLinkProps) => {
   const pathname = usePathname()
   const isActive = isItemActive(props.href, pathname, exact)
 
-  return <Link className={cx(navLinkVariants({ isActive, className }))} {...props} />
+  return (
+    <Link prefetch={false} className={cx(navLinkVariants({ isActive, className }))} {...props} />
+  )
 }
 
 export { NavLink, navLinkVariants }

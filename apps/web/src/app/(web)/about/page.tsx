@@ -29,7 +29,7 @@ export default function AboutPage() {
         <h2>What is {config.site.name}?</h2>
 
         <p>
-          <Link href="/" title={config.site.tagline}>
+          <Link href="/" title={config.site.tagline} prefetch={false}>
             {config.site.name}
           </Link>{" "}
           is a community driven list of{" "}
