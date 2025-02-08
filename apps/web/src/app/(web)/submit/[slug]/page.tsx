@@ -1,3 +1,4 @@
+import { db } from "@openalternative/db"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
@@ -12,8 +13,7 @@ import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import { isToolPublished } from "~/lib/tools"
-import type { ToolOne } from "~/server/web/tools/payloads"
-import { findTool } from "~/server/web/tools/queries"
+import { type ToolOne, toolOnePayload } from "~/server/web/tools/payloads"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -30,8 +30,9 @@ const getTool = cache(async ({ params, searchParams }: PageProps) => {
   const { success } = searchParamsCache.parse(await searchParams)
   const { slug } = await params
 
-  const tool = await findTool({
-    where: { slug, isFeatured: success ? undefined : false, status: undefined },
+  const tool = await db.tool.findFirst({
+    where: { slug, isFeatured: success ? undefined : false },
+    select: toolOnePayload,
   })
 
   if (!tool) {
