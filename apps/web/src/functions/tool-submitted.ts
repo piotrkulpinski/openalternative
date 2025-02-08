@@ -13,7 +13,7 @@ export const toolSubmitted = inngest.createFunction(
     })
 
     // Wait for 30 minutes for expedited or featured event
-    const isFreeSubmission = await ensureFreeSubmissions(step, "30m")
+    const isFreeSubmission = await ensureFreeSubmissions(step, event.data.slug, "30m")
 
     // Send submission email to user if it's a free submission
     if (isFreeSubmission) {

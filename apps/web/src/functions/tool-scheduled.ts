@@ -120,14 +120,11 @@ export const toolScheduled = inngest.createFunction(
     })
 
     // Wait for 1 month and check if tool was expedited
-    const isFreeAfterOneMonth = await ensureFreeSubmissions(step, "30d")
+    const isFreeAfterOneMonth = await ensureFreeSubmissions(step, tool.slug, "30d")
 
     // Send first reminder if not expedited
     await step.run("send-first-reminder", async () => {
-      const tool = await db.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
-
-      // Check if tool was published before
-      if (!tool.publishedAt && isFreeAfterOneMonth) {
+      if (isFreeAfterOneMonth) {
         const subject = `Skip the queue for ${tool.name} on ${config.site.name} 🚀`
 
         return await sendEmails({
@@ -139,14 +136,11 @@ export const toolScheduled = inngest.createFunction(
     })
 
     // Wait for another month and check if tool was expedited
-    const isFreeAfterTwoMonths = await ensureFreeSubmissions(step, "30d")
+    const isFreeAfterTwoMonths = await ensureFreeSubmissions(step, tool.slug, "30d")
 
     // Send second reminder if not expedited
     await step.run("send-second-reminder", async () => {
-      const tool = await db.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
-
-      // Check if tool was published before
-      if (!tool.publishedAt && isFreeAfterOneMonth) {
+      if (isFreeAfterTwoMonths) {
         const subject = `Last chance to expedite ${tool.name} on ${config.site.name} ⚡️`
 
         return await sendEmails({
