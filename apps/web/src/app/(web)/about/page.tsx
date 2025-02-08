@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import Link from "next/link"
+import { Link } from "~/components/common/link"
 import { Featured } from "~/components/web/featured"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
@@ -29,7 +29,7 @@ export default function AboutPage() {
         <h2>What is {config.site.name}?</h2>
 
         <p>
-          <Link href="/" title={config.site.tagline} prefetch={false}>
+          <Link href="/" title={config.site.tagline}>
             {config.site.name}
           </Link>{" "}
           is a community driven list of{" "}

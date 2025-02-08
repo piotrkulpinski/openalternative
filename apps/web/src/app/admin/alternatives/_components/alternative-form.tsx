@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 import type React from "react"
 import { useForm } from "react-hook-form"
@@ -20,6 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Link } from "~/components/common/link"
 import { createAlternative, updateAlternative } from "~/server/admin/alternatives/actions"
 import type { findAlternativeBySlug } from "~/server/admin/alternatives/queries"
 import { type AlternativeSchema, alternativeSchema } from "~/server/admin/alternatives/validations"

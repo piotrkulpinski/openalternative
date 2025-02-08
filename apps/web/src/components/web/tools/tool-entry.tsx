@@ -1,8 +1,8 @@
 import { ArrowRightIcon } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
 import type { HTMLAttributes } from "react"
 import { H2 } from "~/components/common/heading"
+import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { Markdown } from "~/components/web/markdown"
 import { Button } from "~/components/web/ui/button"
@@ -27,7 +27,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
         className="self-start before:content-['#'_counter(alternatives)] before:tabular-nums before:absolute before:right-full before:-mr-3 before:font-semibold before:text-3xl before:opacity-25 max-lg:before:hidden"
         asChild
       >
-        <Link href={href} className="hover:underline" prefetch={false}>
+        <Link href={href} className="hover:underline">
           <FaviconImage src={tool.faviconUrl} title={tool.name} />
 
           <H2 className="leading-snug!">{tool.name}</H2>
@@ -41,7 +41,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       )}
 
       {tool.screenshotUrl && (
-        <Link href={href} prefetch={false} className="group">
+        <Link href={href} className="group">
           <Image
             key={tool.screenshotUrl}
             src={tool.screenshotUrl}
@@ -63,9 +63,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       )}
 
       <Button suffix={<ArrowRightIcon />} className="self-start" asChild>
-        <Link href={href} prefetch={false}>
-          Read more
-        </Link>
+        <Link href={href}>Read more</Link>
       </Button>
     </div>
   )

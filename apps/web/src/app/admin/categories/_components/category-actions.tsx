@@ -2,7 +2,6 @@
 
 import type { Category } from "@openalternative/db/client"
 import { EllipsisIcon } from "lucide-react"
-import Link from "next/link"
 import type { ComponentProps, Dispatch, SetStateAction } from "react"
 import { Button } from "~/components/admin/ui/button"
 import {
@@ -12,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/admin/ui/dropdown-menu"
+import { Link } from "~/components/common/link"
 import type { DataTableRowAction } from "~/types"
 import { cx } from "~/utils/cva"
 

@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { Link } from "~/components/common/link"
 import {
   AlternativeList,
   AlternativeListSkeleton,
@@ -30,11 +30,7 @@ const AlternativePreview = async () => {
   return (
     <Listing
       title="Discover Open Source alternatives to:"
-      button={
-        <Link href="/alternatives" prefetch={false}>
-          View all alternatives
-        </Link>
-      }
+      button={<Link href="/alternatives">View all alternatives</Link>}
       separated
     >
       <AlternativeList alternatives={alternatives} />

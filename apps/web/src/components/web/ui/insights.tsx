@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
-import Link from "next/link"
 import { Fragment, type HTMLAttributes, type ReactNode, isValidElement } from "react"
+import { Link } from "~/components/common/link"
 import { cx } from "~/utils/cva"
 
 type InsightsProps = HTMLAttributes<HTMLElement> & {
@@ -31,7 +31,6 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
               {link ? (
                 <Link
                   href={link}
-                  prefetch={false}
                   className="shrink-0 tabular-nums font-medium hover:underline"
                   title={title}
                 >

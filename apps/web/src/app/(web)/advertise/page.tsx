@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import Link from "next/link"
+import { Link } from "~/components/common/link"
 import { AdsPicker } from "~/components/web/ads-picker"
 import { Advertisers } from "~/components/web/advertisers"
 import { Stats } from "~/components/web/stats"

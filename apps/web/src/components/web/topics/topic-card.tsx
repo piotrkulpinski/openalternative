@@ -1,6 +1,6 @@
-import Link from "next/link"
 import plur from "plur"
 import type { ComponentProps } from "react"
+import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import {
   CardSimple,
@@ -17,7 +17,7 @@ type TopicCardProps = ComponentProps<typeof CardSimple> & {
 const TopicCard = ({ topic, ...props }: TopicCardProps) => {
   return (
     <CardSimple asChild {...props}>
-      <Link href={`/topics/${topic.slug}`} prefetch={false}>
+      <Link href={`/topics/${topic.slug}`}>
         <CardSimpleTitle>{topic.slug}</CardSimpleTitle>
 
         <CardSimpleDivider />

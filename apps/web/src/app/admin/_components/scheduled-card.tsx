@@ -1,5 +1,4 @@
 import { formatDate } from "@curiousleaf/utils"
-import Link from "next/link"
 import type { ComponentProps } from "react"
 import {
   Card,
@@ -9,6 +8,7 @@ import {
   CardTitle,
 } from "~/components/admin/ui/card"
 import { ScrollArea } from "~/components/admin/ui/scroll-area"
+import { Link } from "~/components/common/link"
 import { findScheduledTools } from "~/server/admin/tools/queries"
 
 const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {

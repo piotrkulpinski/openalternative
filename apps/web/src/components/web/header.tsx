@@ -10,12 +10,12 @@ import {
   ServerIcon,
   TagIcon,
 } from "lucide-react"
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { type HTMLAttributes, Suspense, useEffect, useState } from "react"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
+import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { SearchForm } from "~/components/web/search-form"
 import { Button } from "~/components/web/ui/button"
@@ -173,9 +173,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
         <Stack size="sm">
           <Button size="sm" variant="secondary" asChild>
-            <Link href="/submit" prefetch={false}>
-              Submit
-            </Link>
+            <Link href="/submit">Submit</Link>
           </Button>
 
           {/* <UserMenu /> */}

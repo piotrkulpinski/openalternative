@@ -1,11 +1,11 @@
 "use client"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { ComponentProps, ReactNode } from "react"
 import { Badge } from "~/components/admin/ui/badge"
 import { Button, type ButtonProps } from "~/components/admin/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/admin/ui/tooltip"
+import { Link } from "~/components/common/link"
 
 type NavMainLink = ButtonProps & {
   title: string

@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 import type React from "react"
 import { useForm } from "react-hook-form"
@@ -18,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Link } from "~/components/common/link"
 import { createLicense, updateLicense } from "~/server/admin/licenses/actions"
 import type { findLicenseBySlug } from "~/server/admin/licenses/queries"
 import { type LicenseSchema, licenseSchema } from "~/server/admin/licenses/validations"

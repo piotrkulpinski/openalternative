@@ -1,8 +1,8 @@
 "use client"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { HTMLAttributes } from "react"
+import { Link } from "~/components/common/link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
@@ -25,7 +25,6 @@ export const LetterPicker = ({ path, className, ...props }: LetterPickerProps) =
               ? "bg-primary text-background"
               : "bg-card-dark text-muted hover:bg-border",
           )}
-          prefetch={false}
         >
           {letter}
         </Link>

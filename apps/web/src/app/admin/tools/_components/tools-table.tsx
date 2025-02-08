@@ -2,7 +2,6 @@
 
 import { type Tool, ToolStatus } from "@openalternative/db/client"
 import { CircleDashedIcon, CircleDotDashedIcon, CircleIcon, PlusIcon } from "lucide-react"
-import Link from "next/link"
 import { use, useMemo, useState } from "react"
 import { ToolScheduleDialog } from "~/app/admin/tools/_components/tool-schedule-dialog"
 import { ToolsDeleteDialog } from "~/app/admin/tools/_components/tools-delete-dialog"
@@ -11,6 +10,7 @@ import { DataTableHeader } from "~/components/admin/data-table/data-table-header
 import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/admin/ui/button"
+import { Link } from "~/components/common/link"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findTools } from "~/server/admin/tools/queries"
 import type { DataTableFilterField, DataTableRowAction } from "~/types"

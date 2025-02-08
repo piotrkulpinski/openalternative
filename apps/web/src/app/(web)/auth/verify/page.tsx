@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import Link from "next/link"
 import type { SearchParams } from "nuqs/server"
+import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"

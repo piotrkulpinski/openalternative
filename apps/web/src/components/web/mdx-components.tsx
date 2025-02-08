@@ -1,7 +1,7 @@
 import { ArrowUpRightIcon } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
 import type { HTMLProps } from "react"
+import { Link } from "~/components/common/link"
 import { cx } from "~/utils/cva"
 
 const a = ({ href, ...props }: HTMLProps<HTMLAnchorElement>) => {
@@ -10,7 +10,7 @@ const a = ({ href, ...props }: HTMLProps<HTMLAnchorElement>) => {
   }
 
   if (href.startsWith("/") || href.startsWith("#")) {
-    return <Link href={href} prefetch={false} {...props} />
+    return <Link href={href} {...props} />
   }
 
   return (

@@ -2,7 +2,6 @@
 
 import type { Alternative } from "@openalternative/db/client"
 import { PlusIcon } from "lucide-react"
-import Link from "next/link"
 import * as React from "react"
 import { AlternativesDeleteDialog } from "~/app/admin/alternatives/_components/alternatives-delete-dialog"
 import { DataTable } from "~/components/admin/data-table/data-table"
@@ -10,6 +9,7 @@ import { DataTableHeader } from "~/components/admin/data-table/data-table-header
 import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/admin/ui/button"
+import { Link } from "~/components/common/link"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findAlternatives } from "~/server/admin/alternatives/queries"
 import type { DataTableFilterField, DataTableRowAction } from "~/types"

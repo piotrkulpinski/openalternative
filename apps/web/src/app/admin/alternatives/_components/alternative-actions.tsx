@@ -2,7 +2,6 @@
 
 import type { Alternative } from "@openalternative/db/client"
 import { EllipsisIcon } from "lucide-react"
-import Link from "next/link"
 import type { ComponentProps, Dispatch, SetStateAction } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -14,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/admin/ui/dropdown-menu"
+import { Link } from "~/components/common/link"
 import { reuploadAlternativeAssets } from "~/server/admin/alternatives/actions"
 import type { DataTableRowAction } from "~/types"
 import { cx } from "~/utils/cva"

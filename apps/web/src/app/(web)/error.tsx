@@ -1,7 +1,7 @@
 "use client"
 
-import Link from "next/link"
 import { useEffect } from "react"
+import { Link } from "~/components/common/link"
 import { Button } from "~/components/web/ui/button"
 import { Intro, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"

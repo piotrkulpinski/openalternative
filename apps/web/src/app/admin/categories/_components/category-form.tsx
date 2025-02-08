@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 import type React from "react"
 import { useForm } from "react-hook-form"
@@ -18,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Link } from "~/components/common/link"
 import { createCategory, updateCategory } from "~/server/admin/categories/actions"
 import type { findCategoryBySlug } from "~/server/admin/categories/queries"
 import { type CategorySchema, categorySchema } from "~/server/admin/categories/validations"

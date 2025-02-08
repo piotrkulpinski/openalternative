@@ -3,10 +3,10 @@ import { AwardIcon } from "lucide-react"
 import { ArrowUpRightIcon } from "lucide-react"
 import { SmilePlusIcon } from "lucide-react"
 import type { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Fragment, Suspense, cache } from "react"
+import { Link } from "~/components/common/link"
 import { AlternativeCardExternal } from "~/components/web/alternatives/alternative-card-external"
 import {
   AlternativePreview,
@@ -97,14 +97,14 @@ export default async function AlternativePage(props: PageProps) {
 
   // Pick the top 5 tools
   const bestTools = tools.slice(0, 5).map(tool => (
-    <Link key={tool.slug} href={`/${tool.slug}`} prefetch={false}>
+    <Link key={tool.slug} href={`/${tool.slug}`}>
       {tool.name}
     </Link>
   ))
 
   // Pick the top categories
   const bestCategories = categories.slice(0, 3).map(({ category }) => (
-    <Link key={category.slug} href={`/categories/${category.slug}`} prefetch={false}>
+    <Link key={category.slug} href={`/categories/${category.slug}`}>
       {category.label || category.name}
     </Link>
   ))
@@ -207,9 +207,7 @@ export default async function AlternativePage(props: PageProps) {
                 className="font-normal text-muted ring-0!"
                 asChild
               >
-                <Link href="/submit" prefetch={false}>
-                  Suggest an alternative
-                </Link>
+                <Link href="/submit">Suggest an alternative</Link>
               </Button>
             </InlineMenu>
           </Section.Sidebar>

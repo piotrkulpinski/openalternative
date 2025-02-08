@@ -1,7 +1,7 @@
 "use client"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Link } from "~/components/common/link"
 import { Button } from "~/components/web/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 
@@ -18,9 +18,7 @@ export default function NotFound() {
       </IntroDescription>
 
       <Button size="lg" className="mt-4" asChild>
-        <Link href="/" prefetch={false}>
-          Go back home
-        </Link>
+        <Link href="/">Go back home</Link>
       </Button>
     </Intro>
   )

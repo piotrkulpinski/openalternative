@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { Link } from "~/components/common/link"
 import { Listing } from "~/components/web/listing"
 import { ToolList } from "~/components/web/tools/tool-list"
 import type { LicenseOne } from "~/server/web/licenses/payloads"
@@ -14,11 +14,7 @@ export const LicenseToolListing = async ({ license }: LicenseToolListingProps) =
   return (
     <Listing
       title={`${license.name} Licensed Software Examples`}
-      button={
-        <Link href={`/licenses/${license.slug}/tools`} prefetch={false}>
-          View All Tools
-        </Link>
-      }
+      button={<Link href={`/licenses/${license.slug}/tools`}>View All Tools</Link>}
     >
       <ToolList tools={tools} showAd={false} />
     </Listing>

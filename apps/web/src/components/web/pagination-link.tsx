@@ -1,8 +1,8 @@
 "use client"
 
 import { Slot } from "@radix-ui/react-slot"
-import Link from "next/link"
 import type { ComponentProps, ReactNode } from "react"
+import { Link } from "~/components/common/link"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -43,7 +43,6 @@ export const PaginationLink = ({
         navLinkVariants({ isActive, className }),
       )}
       {...props}
-      prefetch={false}
     >
       <Slot className={affixVariants()}>{prefix}</Slot>
       <span>{children}</span>

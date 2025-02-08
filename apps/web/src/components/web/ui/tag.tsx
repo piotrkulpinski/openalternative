@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
-import Link from "next/link"
 import type { ComponentProps, ReactNode } from "react"
+import { Link } from "~/components/common/link"
 import { cx } from "~/utils/cva"
 
 type TagProps = Omit<ComponentProps<typeof Link>, "prefix"> & {
@@ -18,7 +18,6 @@ type TagProps = Omit<ComponentProps<typeof Link>, "prefix"> & {
 export const Tag = ({ children, className, prefix, suffix, ...props }: TagProps) => {
   return (
     <Link
-      prefetch={false}
       className={cx(
         "flex items-center gap-0.5 text-muted text-sm hover:text-foreground",
         className,

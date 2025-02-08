@@ -2,10 +2,10 @@
 
 import { getInitials } from "@curiousleaf/utils"
 import { LogOutIcon, ShieldHalfIcon } from "lucide-react"
-import Link from "next/link"
 import { toast } from "sonner"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/common/avatar"
 import { Box } from "~/components/common/box"
+import { Link } from "~/components/common/link"
 import { Button } from "~/components/web/ui/button"
 import {
   DropdownMenu,
@@ -35,9 +35,7 @@ export const UserMenu = () => {
   if (!session?.user) {
     return (
       <Button size="sm" variant="secondary" asChild>
-        <Link href="/auth/login" prefetch={false}>
-          Sign in
-        </Link>
+        <Link href="/auth/login">Sign in</Link>
       </Button>
     )
   }

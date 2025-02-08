@@ -1,7 +1,7 @@
 import type { Tool } from "@openalternative/db/client"
-import Link from "next/link"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
+import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { Button } from "~/components/web/ui/button"
 import { config } from "~/config"
@@ -22,7 +22,7 @@ export const FeatureNudge = ({ className, tool, t, ...props }: FeatureNudgeProps
 
       <Stack size="sm">
         <Button size="sm" onClick={() => toast.dismiss(t)} asChild>
-          <Link href={`/submit/${tool.slug}`} prefetch={false}>
+          <Link href={`/submit/${tool.slug}`}>
             Feature {tool.name} on {config.site.name}
           </Link>
         </Button>

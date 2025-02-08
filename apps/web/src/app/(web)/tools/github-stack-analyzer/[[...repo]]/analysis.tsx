@@ -10,8 +10,8 @@ import {
   TimerIcon,
   UsersIcon,
 } from "lucide-react"
-import Link from "next/link"
 import { H5 } from "~/components/common/heading"
+import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
 import { StackList } from "~/components/web/stacks/stack-list"

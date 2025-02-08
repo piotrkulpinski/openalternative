@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { SubmitForm } from "~/app/(web)/submit/form"
+import { Link } from "~/components/common/link"
 import { Card } from "~/components/web/ui/card"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
@@ -41,10 +41,7 @@ export default async function SubmitPage() {
                 <li>Free to use or can be self-hosted</li>
                 <li>Actively maintained</li>
                 <li>
-                  An{" "}
-                  <Link href="/alternatives" prefetch={false}>
-                    alternative to popular software
-                  </Link>
+                  An <Link href="/alternatives">alternative to popular software</Link>
                 </li>
               </ul>
             </Prose>

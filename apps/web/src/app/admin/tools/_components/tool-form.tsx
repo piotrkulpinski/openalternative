@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ToolStatus } from "@openalternative/db/client"
 import { formatDate } from "date-fns"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 import type React from "react"
 import { useForm } from "react-hook-form"
@@ -29,6 +28,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Link } from "~/components/common/link"
 import type { findAlternativeList } from "~/server/admin/alternatives/queries"
 import type { findCategoryList } from "~/server/admin/categories/queries"
 import { createTool, updateTool } from "~/server/admin/tools/actions"

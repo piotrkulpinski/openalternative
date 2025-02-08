@@ -1,7 +1,7 @@
-import Link from "next/link"
 import plur from "plur"
 import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
+import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import { Card, CardDescription, CardFooter, CardHeader } from "~/components/web/ui/card"
 import { Favicon } from "~/components/web/ui/favicon"
@@ -16,7 +16,7 @@ type AlternativeCardProps = Omit<ComponentProps<typeof Card>, "href"> & {
 const AlternativeCard = ({ alternative, showCount, ...props }: AlternativeCardProps) => {
   return (
     <Card asChild {...props}>
-      <Link href={`/alternatives/${alternative.slug}`} prefetch={false}>
+      <Link href={`/alternatives/${alternative.slug}`}>
         <CardHeader>
           <Favicon src={alternative.faviconUrl} title={alternative.name} />
 
