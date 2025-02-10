@@ -5,7 +5,7 @@ type ImageLoaderProps = {
 }
 
 const normalizeSrc = (src: string) => {
-  return src.startsWith("/") ? src.slice(1) : src
+  return encodeURIComponent(src.startsWith("/") ? src.slice(1) : src)
 }
 
 const getParamsString = ({ width, quality }: Omit<ImageLoaderProps, "src">) => {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import { Suspense } from "react"
 import { LoginButton } from "~/app/(web)/auth/login/login-button"
+import { LoginForm } from "~/app/(web)/auth/login/login-form"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandGoogleIcon } from "~/components/common/icons/brand-google"
 import { Stack } from "~/components/common/stack"
@@ -24,15 +24,16 @@ export default function LoginPage() {
       </Intro>
 
       <Stack direction="column" className="items-stretch w-full gap-4">
-        {/* <LoginForm />
+        <LoginForm />
 
         <div className="flex items-center justify-center gap-3 text-sm text-muted before:flex-1 before:border-t after:flex-1 after:border-t">
           or
-        </div> */}
-        <Suspense>
-          <LoginButton provider="google" suffix={<BrandGoogleIcon />} />
-          <LoginButton provider="github" suffix={<BrandGitHubIcon />} />
-        </Suspense>
+        </div>
+
+        {/* <Suspense> */}
+        <LoginButton provider="google" suffix={<BrandGoogleIcon />} />
+        <LoginButton provider="github" suffix={<BrandGitHubIcon />} />
+        {/* </Suspense> */}
       </Stack>
     </>
   )

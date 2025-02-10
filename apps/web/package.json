@@ -54,7 +54,7 @@
     "date-fns": "^4.1.0",
     "inngest": "^3.31.4",
     "lucide-react": "^0.474.0",
-    "next": "canary",
+    "next": "^15.2.0-canary.48",
     "nuqs": "^2.3.2",
     "plur": "^5.1.0",
     "posthog-js": "^1.215.5",

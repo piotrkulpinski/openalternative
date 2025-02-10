@@ -1,8 +1,6 @@
-"use client"
-
 import { getInitials } from "@curiousleaf/utils"
-import { LogOutIcon, ShieldHalfIcon } from "lucide-react"
-import { toast } from "sonner"
+import { ShieldHalfIcon } from "lucide-react"
+import { headers } from "next/headers"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/common/avatar"
 import { Box } from "~/components/common/box"
 import { Link } from "~/components/common/link"
@@ -15,22 +13,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/web/ui/dropdown-menu"
-import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
-import { signOut, useSession } from "~/lib/auth-client"
+import { NavLink } from "~/components/web/ui/nav-link"
+import { UserLogout } from "~/components/web/user-logout"
+import { auth } from "~/lib/auth"
 
-export const UserMenu = () => {
-  const { data: session, refetch } = useSession()
-
-  const handleSignOut = async () => {
-    signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          refetch()
-          toast.success("You've been signed out successfully")
-        },
-      },
-    })
-  }
+export const UserMenu = async () => {
+  const session = await auth.api.getSession({ headers: await headers() })
 
   if (!session?.user) {
     return (
@@ -68,10 +56,7 @@ export const UserMenu = () => {
         )}
 
         <DropdownMenuItem asChild>
-          <button type="button" className={navLinkVariants()} onClick={handleSignOut}>
-            <LogOutIcon className="shrink-0 size-4 opacity-75" />
-            Logout
-          </button>
+          <UserLogout />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

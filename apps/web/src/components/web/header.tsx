@@ -31,7 +31,7 @@ import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
-export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const Header = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   const pathname = usePathname()
   const [isNavOpen, setNavOpen] = useState(false)
 
@@ -176,7 +176,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <Link href="/submit">Submit</Link>
           </Button>
 
-          {/* <UserMenu /> */}
+          {children}
         </Stack>
       </div>
 
