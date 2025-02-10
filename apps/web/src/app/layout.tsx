@@ -5,6 +5,8 @@ import { Toaster } from "~/components/common/toaster"
 import { config } from "~/config"
 import { geist } from "~/lib/fonts"
 
+import "./styles.css"
+
 export const metadata: Metadata = {
   metadataBase: new URL(config.site.url),
   title: {

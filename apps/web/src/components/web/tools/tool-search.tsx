@@ -52,8 +52,8 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
             className={cx(
               "absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-2 py-1.5 px-2.5 rounded-md",
               isFiltersOpen
-                ? "bg-card-dark text-foreground"
-                : "text-muted hover:bg-card-dark hover:text-foreground",
+                ? "bg-accent text-foreground"
+                : "text-muted-foreground hover:bg-accent hover:text-foreground",
             )}
             onClick={() => setIsFiltersOpen(prev => !prev)}
           >

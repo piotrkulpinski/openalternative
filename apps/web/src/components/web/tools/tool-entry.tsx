@@ -35,7 +35,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       </Stack>
 
       {tool.description && (
-        <p className="-mt-4 w-full text-secondary text-pretty md:text-lg md:-mt-6">
+        <p className="-mt-4 w-full text-secondary-foreground text-pretty md:text-lg md:-mt-6">
           {tool.description}
         </p>
       )}

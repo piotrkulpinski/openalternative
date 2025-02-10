@@ -30,7 +30,7 @@ export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
             style={{ "--number-flow-char-height": "0.75em" }}
             className="text-5xl font-semibold tabular-nums"
           />
-          <p className="text-muted">{label}</p>
+          <p className="text-muted-foreground">{label}</p>
         </MDXComponents.a>
       ))}
     </div>

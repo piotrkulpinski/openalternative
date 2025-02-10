@@ -63,9 +63,9 @@ export const ToolRefinement = ({
                 })
               }
               className={cx(
-                "flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-secondary py-1 px-2 -mx-1 rounded-sm data-[selected=true]:bg-card-dark data-[selected=true]:text-foreground",
+                "flex items-center gap-2.5 select-none text-[13px] cursor-pointer text-secondary-foreground py-1 px-2 -mx-1 rounded-sm data-[selected=true]:bg-accent data-[selected=true]:text-foreground",
                 disabled && "opacity-50 pointer-events-none",
-                selectedValues.includes(item.slug) && "bg-card-dark text-foreground",
+                selectedValues.includes(item.slug) && "bg-accent text-foreground",
               )}
               disabled={disabled}
             >
@@ -82,11 +82,11 @@ export const ToolRefinement = ({
         </CommandGroup>
 
         {!isPending && (
-          <CommandEmpty className="px-1 text-sm text-muted">No results found.</CommandEmpty>
+          <CommandEmpty className="px-1 text-sm text-muted-foreground">No results found.</CommandEmpty>
         )}
 
         {isPending && (
-          <CommandLoading className="px-1 text-sm text-muted">Loading...</CommandLoading>
+          <CommandLoading className="px-1 text-sm text-muted-foreground">Loading...</CommandLoading>
         )}
       </CommandList>
     </Command>

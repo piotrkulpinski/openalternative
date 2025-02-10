@@ -86,7 +86,7 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
         </div>
 
         {hasSelections && (
-          <div className="flex flex-col gap-3 text-sm text-muted p-4">
+          <div className="flex flex-col gap-3 text-sm text-muted-foreground p-4">
             {selections.map(selection => {
               if (!selection.dateRange?.from || !selection.dateRange?.to || !selection.duration) {
                 return null
@@ -121,7 +121,7 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
           </div>
         )}
 
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted text-center p-4 sm:justify-between sm:text-start">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground text-center p-4 sm:justify-between sm:text-start">
           {price ? (
             <>
               <Stack size="sm" className="mr-auto">

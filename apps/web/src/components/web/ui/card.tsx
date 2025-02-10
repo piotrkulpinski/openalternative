@@ -7,7 +7,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 const cardVariants = cva({
   base: [
     "relative flex flex-col items-start gap-4 w-full border bg-card p-5 rounded-lg transform-gpu",
-    "hover:[&[href]]:bg-card-dark",
+    "hover:[&[href]]:bg-accent",
   ],
 })
 
@@ -35,13 +35,13 @@ const CardHeader = ({ className, ...props }: ComponentProps<typeof Stack>) => {
 }
 
 const CardFooter = ({ className, ...props }: ComponentProps<typeof Stack>) => {
-  return <Stack size="sm" className={cx("text-xs text-muted", className)} {...props} />
+  return <Stack size="sm" className={cx("text-xs text-muted-foreground", className)} {...props} />
 }
 
 const CardDescription = ({ className, ...props }: ComponentProps<"p">) => {
   return (
     <p
-      className={cx("line-clamp-2 text-sm/normal text-secondary text-pretty", className)}
+      className={cx("line-clamp-2 text-sm/normal text-secondary-foreground text-pretty", className)}
       {...props}
     />
   )

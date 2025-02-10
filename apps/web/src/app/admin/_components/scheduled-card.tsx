@@ -23,7 +23,7 @@ const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
 
       <CardContent className="flex flex-col gap-1 flex-1 text-sm">
         {tools.length ? (
-          <ScrollArea className="px-4 -mx-4 lg:h-56">
+          <ScrollArea className="px-4 -mx-4 h-56">
             {tools.map(tool => (
               <Link
                 key={tool.slug}

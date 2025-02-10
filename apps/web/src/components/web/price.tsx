@@ -49,7 +49,7 @@ export const Price = ({
 
         {!!fullPrice && fullPrice > price && (
           <div className="absolute -top-[1em] left-full ml-1">
-            <del className="tabular-nums text-[0.9em] text-muted">
+            <del className="tabular-nums text-[0.9em] text-muted-foreground">
               {formatNumber(fullPrice, "standard")}
             </del>
           </div>
@@ -57,7 +57,7 @@ export const Price = ({
       </div>
 
       {price > 0 && interval && (
-        <div className="m-[0.25em] self-end text-muted text-[0.9em] leading-none">/{interval}</div>
+        <div className="m-[0.25em] self-end text-muted-foreground text-[0.9em] leading-none">/{interval}</div>
       )}
 
       {!!discount && (

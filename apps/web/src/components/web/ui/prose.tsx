@@ -5,7 +5,7 @@ export const Prose = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
       className={cx(
-        "text-secondary text-pretty leading-relaxed",
+        "text-secondary-foreground text-pretty leading-relaxed",
         "prose prose-neutral dark:prose-invert prose-a:font-normal prose-a:text-foreground prose-a:hover:text-primary prose-hr:border-foreground prose-strong:text-foreground prose-p:first:mt-0 prose-p:last:mb-0 prose-ul:first:mt-0 prose-ul:last:mb-0 prose-li:mt-2 prose-li:first:m-0 prose-img:border prose-img:rounded-md prose-lead:text-lg/relaxed prose-pre:font-mono prose-pre:rounded-none",
         "prose-headings:scroll-mt-20 prose-headings:text-foreground prose-headings:font-semibold prose-headings:tracking-tight",
         "prose-code:before:hidden prose-code:after:hidden prose-code:bg-foreground/10 prose-code:rounded prose-code:mx-[0.088em] prose-code:px-[0.33em] prose-code:py-[0.166em] prose-code:font-normal",

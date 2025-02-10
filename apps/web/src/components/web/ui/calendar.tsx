@@ -24,13 +24,13 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
         button_next: buttonClasses,
         month_grid: "w-full border-collapse gap-y-1",
         weekdays: "flex",
-        weekday: "text-muted/50 rounded-md min-w-8 w-full font-normal text-xs",
+        weekday: "text-muted-foreground/50 rounded-md min-w-8 w-full font-normal text-xs",
         week: "group/week flex mt-2",
         day: "group/day relative w-full text-center text-[0.8125rem] rounded-md focus-within:z-20",
         day_button:
-          "relative w-full p-1.5 cursor-pointer rounded-md hover:bg-card-dark hover:group-data-selected/day:bg-transparent",
+          "relative w-full p-1.5 cursor-pointer rounded-md hover:bg-accent hover:group-data-selected/day:bg-transparent",
         selected: "bg-foreground text-background",
-        range_middle: "bg-card-dark! text-foreground! rounded-none",
+        range_middle: "bg-accent! text-foreground! rounded-none",
         today:
           "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-0.5 after:w-5 after:-translate-x-1/2 after:rounded-[2px] after:bg-current after:pointer-events-none",
         outside: "opacity-40",

@@ -89,7 +89,7 @@ export const StackAnalysis = ({ analysis }: StackAnalysisProps) => {
               <H5 as="strong">Repository details:</H5>
 
               {analysis.repository.description && (
-                <p className="text-sm text-muted">
+                <p className="text-sm text-muted-foreground">
                   {analysis.repository.description}{" "}
                   {analysis.repository.homepageUrl && (
                     <ExternalLink

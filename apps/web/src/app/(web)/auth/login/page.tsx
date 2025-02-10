@@ -29,7 +29,7 @@ export default function LoginPage() {
         <Stack direction="column" className="items-stretch w-full gap-4">
           <LoginForm />
 
-          <div className="flex items-center justify-center gap-3 text-sm text-muted before:flex-1 before:border-t after:flex-1 after:border-t">
+          <div className="flex items-center justify-center gap-3 text-sm text-muted-foreground before:flex-1 before:border-t after:flex-1 after:border-t">
             or
           </div>
 

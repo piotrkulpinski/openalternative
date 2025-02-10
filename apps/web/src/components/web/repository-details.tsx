@@ -23,33 +23,33 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
     { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: <GitForkIcon /> },
     ...(tool.lastCommitDate
       ? [
-          {
-            label: "Last commit",
-            value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
-            title: tool.lastCommitDate.toString(),
-            icon: <TimerIcon />,
-          },
-        ]
+        {
+          label: "Last commit",
+          value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
+          title: tool.lastCommitDate.toString(),
+          icon: <TimerIcon />,
+        },
+      ]
       : []),
     ...(tool.firstCommitDate
       ? [
-          {
-            label: "Repository age",
-            value: formatDistanceToNowStrict(tool.firstCommitDate),
-            title: tool.firstCommitDate.toString(),
-            icon: <HistoryIcon />,
-          },
-        ]
+        {
+          label: "Repository age",
+          value: formatDistanceToNowStrict(tool.firstCommitDate),
+          title: tool.firstCommitDate.toString(),
+          icon: <HistoryIcon />,
+        },
+      ]
       : []),
     ...(tool.license
       ? [
-          {
-            label: "License",
-            value: tool.license.name,
-            link: `/licenses/${tool.license.slug}`,
-            icon: <CopyrightIcon />,
-          },
-        ]
+        {
+          label: "License",
+          value: tool.license.name,
+          link: `/licenses/${tool.license.slug}`,
+          icon: <CopyrightIcon />,
+        },
+      ]
       : []),
   ]
 
@@ -88,9 +88,9 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
         </Button>
       )}
 
-      <p className="text-muted/75 text-[11px]">
+      <p className="text-muted-foreground/75 text-[11px]">
         Fetched automatically from GitHub{" "}
-        <time dateTime={formatISO(tool.updatedAt)} className="font-medium text-muted">
+        <time dateTime={formatISO(tool.updatedAt)} className="font-medium text-muted-foreground">
           {formatDistanceToNowStrict(tool.updatedAt, { addSuffix: true })}
         </time>
         .

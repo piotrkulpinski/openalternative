@@ -45,7 +45,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               Subscribe to our newsletter
             </H5>
 
-            <p className="-mt-2 px-0.5 text-sm text-muted first:mt-0">
+            <p className="-mt-2 px-0.5 text-sm text-muted-foreground first:mt-0">
               Join {formatNumber(config.stats.subscribers, "standard")}+ other members and get
               updates on new open source tools.
             </p>
@@ -58,7 +58,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               <DropdownMenu modal={false}>
                 <Tooltip tooltip="RSS Feeds">
                   <DropdownMenuTrigger aria-label="RSS Feeds" {...props}>
-                    <RssIcon className="size-[1.44em] stroke-[1.25] text-muted hover:text-foreground" />
+                    <RssIcon className="size-[1.44em] stroke-[1.25] text-muted-foreground hover:text-foreground" />
                   </DropdownMenuTrigger>
                 </Tooltip>
 
@@ -176,7 +176,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           Made by Piotr Kulpinski
         </NavLink>
 
-        <p className="text-xs text-muted">This website may contain affiliate links</p>
+        <p className="text-xs text-muted-foreground">This website may contain affiliate links</p>
       </div>
 
       {children}

@@ -61,7 +61,7 @@ export const ToolFilters = ({ className, ...props }: HTMLAttributes<HTMLDivEleme
 
             return (
               <Stack key={type} size="xs">
-                <span className="text-xs font-medium capitalize text-secondary">{type}:</span>
+                <span className="text-xs font-medium capitalize text-secondary-foreground">{type}:</span>
 
                 <Stack direction="row" className="flex-wrap gap-1.5">
                   {activeItems.map(slug => {

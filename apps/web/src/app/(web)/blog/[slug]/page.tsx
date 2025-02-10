@@ -79,7 +79,7 @@ export default async function BlogPostPage(props: PageProps) {
           <IntroTitle>{post.title}</IntroTitle>
           <IntroDescription>{post.description}</IntroDescription>
 
-          <Stack className="mt-2 text-sm text-muted">
+          <Stack className="mt-2 text-sm text-muted-foreground">
             {/* <Badge size="lg" variant="outline">Uncategorized</Badge> */}
 
             {post.publishedAt && (
@@ -113,7 +113,7 @@ export default async function BlogPostPage(props: PageProps) {
 
           <Section.Sidebar>
             <Stack direction="column">
-              <H6 as="strong" className="text-muted">
+              <H6 as="strong" className="text-muted-foreground">
                 Written by
               </H6>
 

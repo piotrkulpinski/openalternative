@@ -11,7 +11,7 @@ const navLinkVariants = cva({
   variants: {
     isActive: {
       true: "font-medium text-foreground",
-      false: "text-muted hover:text-foreground",
+      false: "text-muted-foreground hover:text-foreground",
     },
   },
 

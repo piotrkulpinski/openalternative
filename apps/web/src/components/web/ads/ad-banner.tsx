@@ -19,7 +19,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
     <Box>
       <Container
         className={cx(
-          "group/button relative -top-px inset-x-0 z-60 flex items-center justify-between gap-3 bg-card border-b py-2 hover:bg-card-dark lg:border-x lg:rounded-b-lg",
+          "group/button relative -top-px inset-x-0 z-60 flex items-center justify-between gap-3 bg-card border-b py-2 hover:bg-accent lg:border-x lg:rounded-b-lg",
           className,
         )}
         asChild
@@ -34,7 +34,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
             Ad
           </Badge>
 
-          <div className="text-xs leading-tight text-secondary mr-auto md:text-sm">
+          <div className="text-xs leading-tight text-secondary-foreground mr-auto md:text-sm">
             {ad.faviconUrl && (
               <Image
                 src={ad.faviconUrl}

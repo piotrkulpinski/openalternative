@@ -19,7 +19,7 @@ export const Tag = ({ children, className, prefix, suffix, ...props }: TagProps)
   return (
     <Link
       className={cx(
-        "flex items-center gap-0.5 text-muted text-sm hover:text-foreground",
+        "flex items-center gap-0.5 text-muted-foreground text-sm hover:text-foreground",
         className,
       )}
       {...props}

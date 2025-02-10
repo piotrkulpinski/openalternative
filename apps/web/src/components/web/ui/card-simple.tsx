@@ -32,7 +32,7 @@ const CardSimpleDivider = ({ className, ...props }: ComponentProps<"hr">) => {
 }
 
 const CardSimpleCaption = ({ className, ...props }: ComponentProps<"span">) => {
-  return <span className={cx("shrink-0 text-xs text-secondary", className)} {...props} />
+  return <span className={cx("shrink-0 text-xs text-secondary-foreground", className)} {...props} />
 }
 
 export { CardSimple, CardSimpleTitle, CardSimpleDivider, CardSimpleCaption }

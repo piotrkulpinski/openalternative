@@ -57,16 +57,16 @@ export default async function VerifyPage({ searchParams }: PageProps) {
             target="_blank"
             rel="nofollow noopener noreferrer"
             title={`Open ${provider}`}
-            className="size-14 flex justify-center items-center border bg-border/[0.05] rounded-xl hover:border-border-dark hover:bg-border-dark/[0.15]"
+            className="size-14 flex justify-center items-center border bg-border/[0.05] rounded-xl hover:border-ring hover:bg-ring/[0.15]"
           >
             <Image src={icon} alt={`Open ${provider}`} width="30" height="30" />
           </a>
         ))}
       </Stack>
 
-      <p className="text-xs/relaxed text-muted/50">
+      <p className="text-xs/relaxed text-muted-foreground/50">
         Can't see the e-mail? Please check the spam folder. Wrong e-mail?{" "}
-        <Link href="/auth/login" className="text-muted font-medium hover:text-foreground">
+        <Link href="/auth/login" className="text-muted-foreground font-medium hover:text-foreground">
           Please re-enter your address.
         </Link>
       </p>

@@ -29,8 +29,8 @@ export const InlineMenu = ({ children, className, items, ...props }: InlineMenuP
             className={cx(
               "ring-0!",
               activeId === id
-                ? "bg-card-dark text-foreground"
-                : "text-muted font-normal hover:text-foreground",
+                ? "bg-accent text-foreground"
+                : "text-muted-foreground font-normal hover:text-foreground",
             )}
             onClick={e => {
               e.preventDefault()

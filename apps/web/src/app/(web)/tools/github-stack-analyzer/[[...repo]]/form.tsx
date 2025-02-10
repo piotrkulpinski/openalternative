@@ -69,7 +69,7 @@ export function StackAnalyzerForm() {
                     <FormItem>
                       <Stack className="w-full justify-between">
                         <FormLabel>GitHub Repository URL*:</FormLabel>
-                        <Hint className="text-muted/50">*Must be a public GitHub repository.</Hint>
+                        <Hint className="text-muted-foreground/50">*Must be a public GitHub repository.</Hint>
                       </Stack>
 
                       <FormControl>

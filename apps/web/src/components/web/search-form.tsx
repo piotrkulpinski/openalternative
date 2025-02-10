@@ -58,7 +58,7 @@ export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
         <button
           type="button"
           className={cx(
-            "p-0.5 -m-0.5 text-muted hover:text-foreground duration-200 ease-in-out will-change-transform absolute inset-y-0 right-0",
+            "p-0.5 -m-0.5 text-muted-foreground hover:text-foreground duration-200 ease-in-out will-change-transform absolute inset-y-0 right-0",
             isExpanded ? "opacity-0 translate-x-1 pointer-events-none" : "opacity-100",
           )}
           onClick={handleExpand}

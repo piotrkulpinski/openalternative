@@ -5,8 +5,6 @@ import { Shell } from "~/components/admin/shell"
 import { Toaster } from "~/components/common/toaster"
 import { Providers } from "./providers"
 
-import "./styles.css"
-
 export const metadata: Metadata = {
   title: "Admin Panel",
 }

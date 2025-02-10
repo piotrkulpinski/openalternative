@@ -21,7 +21,7 @@ export const Author = ({ name, image, title, ...props }: AuthorProps) => {
 
       <div>
         <h3 className="font-medium text-base truncate">{name}</h3>
-        {title && <div className="text-muted text-sm/tight">{title}</div>}
+        {title && <div className="text-muted-foreground text-sm/tight">{title}</div>}
       </div>
     </Stack>
   )

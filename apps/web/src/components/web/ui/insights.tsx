@@ -21,7 +21,7 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
         return (
           <Fragment key={label}>
             <li className="flex items-center gap-3 py-1">
-              <p className="flex items-center min-w-0 gap-1.5 text-secondary">
+              <p className="flex items-center min-w-0 gap-1.5 text-secondary-foreground">
                 <Slot className="size-[1.1em] shrink-0 opacity-75">{icon}</Slot>
                 <span className="flex-1 truncate">{label}</span>
               </p>

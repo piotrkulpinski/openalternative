@@ -44,7 +44,7 @@ export default async function AdvertisePage() {
       ))}
 
       <div className="flex flex-col items-center text-center gap-6 mt-4" id="advertisers">
-        <p className="text-sm text-muted">
+        <p className="text-sm text-muted-foreground">
           Join these companies in advertising their business on {config.site.name}
         </p>
 

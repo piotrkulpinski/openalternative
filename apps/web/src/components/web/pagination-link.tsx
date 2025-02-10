@@ -39,7 +39,7 @@ export const PaginationLink = ({
   return (
     <Link
       className={cx(
-        isActive && "bg-card-dark rounded-xs",
+        isActive && "bg-accent rounded-xs",
         navLinkVariants({ isActive, className }),
       )}
       {...props}

@@ -115,7 +115,7 @@ export const AdsCalendar = ({
             </Tooltip>
           )}
 
-          <p className="flex-1 text-muted text-sm text-pretty">{adSpot.description}</p>
+          <p className="flex-1 text-muted-foreground text-sm text-pretty">{adSpot.description}</p>
         </Stack>
       </Stack>
 

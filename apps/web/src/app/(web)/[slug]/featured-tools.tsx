@@ -26,14 +26,14 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
               <Stack size="sm" className="flex-nowrap">
                 <FaviconImage src={tool.faviconUrl} title={tool.name} className="size-4" />
 
-                <H6 as="strong" className="text-muted group-hover:text-foreground">
+                <H6 as="strong" className="text-muted-foreground group-hover:text-foreground">
                   {tool.name}
                 </H6>
               </Stack>
 
               <Stack size="xs">
                 <StarIcon className="size-3" />
-                <span className="text-xs text-muted tabular-nums">
+                <span className="text-xs text-muted-foreground tabular-nums">
                   {formatNumber(tool.stars, "standard")}
                 </span>
               </Stack>

@@ -23,7 +23,7 @@ export const LetterPicker = ({ path, className, ...props }: LetterPickerProps) =
             "px-2 py-1 text-sm font-medium text-center rounded-sm uppercase md:flex-1",
             pathname === `${path}/${letter}`
               ? "bg-primary text-background"
-              : "bg-card-dark text-muted hover:bg-border",
+              : "bg-accent text-muted-foreground hover:bg-border",
           )}
         >
           {letter}
