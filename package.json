@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "turbo dev --log-prefix=none",
     "start": "turbo start",
     "lint": "bun biome lint --apply .",
     "check": "bun biome check --apply .",
@@ -25,6 +25,9 @@
   "overrides": {
     "nanoid": "3.3.6"
   },
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "packageManager": "bun@1.1.34"
 }
