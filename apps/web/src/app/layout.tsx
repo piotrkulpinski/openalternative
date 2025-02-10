@@ -15,17 +15,6 @@ export const metadata: Metadata = {
   icons: {
     icon: [{ type: "image/png", url: "/favicon.png" }],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
   ...config.metadata,
 }
 
