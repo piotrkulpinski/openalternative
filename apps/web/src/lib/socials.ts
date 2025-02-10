@@ -38,7 +38,12 @@ export const sendSocialPost = async (template: string, tool: Tool | Jsonify<Tool
   const twitterTemplate = updatePostTemplate(template, twitterHandle, url)
   const blueskyTemplate = updatePostTemplate(template, blueskyHandle, url)
 
-  return Promise.all([sendTwitterPost(twitterTemplate), sendBlueskyPost(blueskyTemplate, url)])
+  const results = await Promise.allSettled([
+    sendTwitterPost(twitterTemplate),
+    sendBlueskyPost(blueskyTemplate, url),
+  ])
+
+  return results.map(r => (r.status === "fulfilled" ? r.value : r.reason))
 }
 
 /**

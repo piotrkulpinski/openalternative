@@ -48,6 +48,7 @@ export const publishTools = inngest.createFunction(
           const template = getPostLaunchTemplate(tool)
 
           return await sendSocialPost(template, tool).catch(err => {
+            console.error(err)
             throw new NonRetriableError(err.message)
           })
         })
