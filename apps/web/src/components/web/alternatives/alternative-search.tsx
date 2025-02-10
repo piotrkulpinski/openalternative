@@ -15,6 +15,7 @@ export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
 
   const sortOptions = [
     { value: "popularity.desc", label: "Popularity" },
+    { value: "createdAt.desc", label: "Latest" },
     { value: "name.asc", label: "Name A-Z" },
     { value: "name.desc", label: "Name Z-A" },
   ]

@@ -119,7 +119,7 @@
 
   @media (prefers-reduced-motion) {
     * {
-      animation: none !important;
+      /* animation: none !important; */
     }
   }
 
@@ -177,4 +177,35 @@ select:not([size]) {
   @apply bg-[right_0.75rem_center];
   @apply bg-[length:1.25em_1.25em];
   @apply pr-10;
+}
+
+.meteor {
+  @apply rotate-[180deg];
+  animation: meteor 3s linear;
+  animation-delay: var(--meteor-delay, 0s);
+  animation-duration: var(--meteor-duration, 2s);
+}
+
+.meteor::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--meteor-width, 50px);
+  height: 1px;
+  background: inherit;
+}
+
+@keyframes meteor {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
 }

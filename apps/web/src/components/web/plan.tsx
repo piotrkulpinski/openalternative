@@ -14,6 +14,7 @@ import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
 import { PlanIntervalSwitch } from "~/components/web/plan-interval-switch"
 import { Price } from "~/components/web/price"
+import { Beam } from "~/components/web/ui/beam"
 import { Button } from "~/components/web/ui/button"
 import { Card, CardBg, type cardVariants } from "~/components/web/ui/card"
 import { Ping } from "~/components/web/ui/ping"
@@ -25,7 +26,7 @@ import type { ToolOne } from "~/server/web/tools/payloads"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const planVariants = cva({
-  base: "items-stretch gap-8 basis-72 grow max-w-80",
+  base: "items-stretch gap-8 basis-72 grow max-w-80 overflow-clip",
 })
 
 const planFeatureVariants = cva({
@@ -136,7 +137,12 @@ const Plan = ({
 
   return (
     <Card hover={false} className={cx(planVariants({ className }))} {...props}>
-      {isFeatured && <CardBg />}
+      {isFeatured && (
+        <>
+          <Beam className="top-0" />
+          <CardBg />
+        </>
+      )}
 
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-2">

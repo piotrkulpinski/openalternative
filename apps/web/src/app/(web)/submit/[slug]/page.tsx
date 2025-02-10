@@ -8,6 +8,8 @@ import { Suspense, cache } from "react"
 import { SubmitProducts } from "~/app/(web)/submit/[slug]/products"
 import { Link } from "~/components/common/link"
 import { PlanSkeleton } from "~/components/web/plan"
+import { Stats } from "~/components/web/stats"
+import { Testimonial } from "~/components/web/testimonial"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
@@ -107,6 +109,12 @@ export default async function SubmitPackages(props: PageProps) {
           </Suspense>
         </div>
       )}
+
+      <Stats className="my-4" />
+
+      {config.ads.testimonials.map(testimonial => (
+        <Testimonial key={testimonial.quote} {...testimonial} className="my-4" />
+      ))}
 
       <Intro alignment="center">
         <IntroTitle size="h3">Have questions?</IntroTitle>

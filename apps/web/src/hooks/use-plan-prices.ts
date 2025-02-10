@@ -50,7 +50,7 @@ const calculateDiscount = (basePrice: number, price: number) => {
 }
 
 export function usePlanPrices(prices: Stripe.Price[], coupon?: Stripe.Coupon | null) {
-  const [interval, setInterval] = useState<ProductInterval>("month")
+  const [interval, setInterval] = useState<ProductInterval>("year")
   const calculatedPrices = calculatePrices(prices, interval, coupon)
 
   return {
