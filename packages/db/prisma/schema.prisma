@@ -44,6 +44,14 @@ enum StackType {
   Network
 }
 
+enum ReportType {
+  BrokenLink
+  WrongCategory
+  WrongAlternative
+  Outdated
+  Other
+}
+
 model User {
   id            String   @id @default(cuid())
   name          String
@@ -159,6 +167,7 @@ model Tool {
   license      License?      @relation(fields: [licenseId], references: [id])
   licenseId    String?
   bookmarkedBy Bookmark[]
+  reports      Report[]
 
   @@index([id, slug])
   @@index([name])
@@ -246,6 +255,21 @@ model Stack {
 
   // Indexes
   @@index([slug])
+}
+
+model Report {
+  id        String     @id @default(cuid())
+  toolId    String
+  type      ReportType
+  message   String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  // Relations
+  tool Tool @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  // Indexes
+  @@index([toolId])
 }
 
 model Bookmark {

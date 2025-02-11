@@ -425,7 +425,7 @@ export function ToolForm({
             <Link href="/admin/tools">Cancel</Link>
           </Button>
 
-          <Button variant="fancy" isPending={isPending} disabled={isPending}>
+          <Button variant="fancy" isPending={isPending}>
             {tool ? "Update tool" : "Create tool"}
           </Button>
         </div>

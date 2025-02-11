@@ -192,12 +192,7 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
         />
 
         <div className="col-span-full">
-          <Button
-            variant="primary"
-            isPending={isPending}
-            disabled={isPending}
-            className="flex min-w-32"
-          >
+          <Button variant="primary" isPending={isPending} className="flex min-w-32">
             Submit
           </Button>
         </div>

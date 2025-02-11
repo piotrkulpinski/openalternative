@@ -3,11 +3,7 @@ import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "
 import type { ComponentProps } from "react"
 import wretch from "wretch"
 import { Chart, type ChartData } from "~/app/admin/_components/chart"
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-} from "~/components/common/card"
+import { Card, CardDescription, CardHeader } from "~/components/common/card"
 import { H2 } from "~/components/common/heading"
 import { env } from "~/env"
 
@@ -130,7 +126,6 @@ const SubscribersCard = async ({ ...props }: ComponentProps<typeof Card>) => {
         <CardDescription>Subscribers</CardDescription>
         <H2 className="tabular-nums">{totalSubscribers.toLocaleString()}</H2>
       </CardHeader>
-
 
       <Chart
         data={results}

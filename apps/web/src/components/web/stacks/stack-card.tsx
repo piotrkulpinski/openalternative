@@ -3,12 +3,7 @@ import type { ComponentProps } from "react"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
-import {
-  Tile,
-  TileCaption,
-  TileDivider,
-  TileTitle,
-} from "~/components/web/ui/tile"
+import { Tile, TileCaption, TileDivider, TileTitle } from "~/components/web/ui/tile"
 import { Favicon } from "~/components/web/ui/favicon"
 import type { StackMany } from "~/server/web/stacks/payloads"
 
@@ -27,9 +22,7 @@ const StackCard = ({ stack, ...props }: StackCardProps) => {
 
         <TileDivider />
 
-        <TileCaption>
-          {`${stack._count.tools} ${plur("tool", stack._count.tools)}`}
-        </TileCaption>
+        <TileCaption>{`${stack._count.tools} ${plur("tool", stack._count.tools)}`}</TileCaption>
       </Link>
     </Tile>
   )

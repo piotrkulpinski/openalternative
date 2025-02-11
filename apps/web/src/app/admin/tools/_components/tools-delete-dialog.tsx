@@ -76,7 +76,6 @@ export const ToolsDeleteDialog = ({
             className="min-w-24"
             onClick={() => execute({ ids: tools.map(({ id }) => id) })}
             isPending={isPending}
-            disabled={isPending}
           >
             Delete
           </Button>
