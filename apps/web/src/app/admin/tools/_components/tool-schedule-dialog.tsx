@@ -86,7 +86,7 @@ export const ToolScheduleDialog = ({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button size="md" variant="secondary" className="min-w-24">
+            <Button variant="secondary">
               Cancel
             </Button>
           </DialogClose>
@@ -94,7 +94,7 @@ export const ToolScheduleDialog = ({
           <Button
             aria-label="Publish selected rows"
             size="md"
-            className="min-w-24"
+            className="min-w-28"
             onClick={() => publishedAt && tool && execute({ id: tool.id, publishedAt })}
             isPending={isPending}
             disabled={!publishedAt || isPending}

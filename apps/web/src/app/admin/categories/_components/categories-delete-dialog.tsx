@@ -63,7 +63,7 @@ export const CategoriesDeleteDialog = ({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button size="md" variant="secondary" className="min-w-24">
+            <Button variant="secondary">
               Cancel
             </Button>
           </DialogClose>
@@ -72,7 +72,7 @@ export const CategoriesDeleteDialog = ({
             aria-label="Delete selected rows"
             size="md"
             variant="destructive"
-            className="min-w-24"
+            className="min-w-28"
             onClick={() => execute({ ids: categories.map(({ id }) => id) })}
             isPending={isPending}
           >
