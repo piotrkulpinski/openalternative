@@ -100,11 +100,9 @@ export const ToolActions = ({
       <Stack size="sm" className={cx("flex-nowrap justify-end text-lg", className)} {...props}>
         <Dialog open={isOpen} onOpenChange={handleClose}>
           <DropdownMenu>
-            <Tooltip tooltip="More options">
-              <DropdownMenuTrigger asChild>
-                <Button variant="secondary" prefix={<EllipsisIcon className="-my-1 size-5!" />} />
-              </DropdownMenuTrigger>
-            </Tooltip>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" prefix={<EllipsisIcon className="-my-1 size-5!" />} />
+            </DropdownMenuTrigger>
 
             <DropdownMenuContent side="bottom" align="end" className="min-w-36">
               <DropdownMenuItem asChild>
@@ -186,11 +184,17 @@ export const ToolActions = ({
                 />
 
                 <DialogFooter>
-                  <Button type="button" variant="secondary" onClick={handleClose}>
+                  <Button size="md" variant="secondary" className="min-w-24" onClick={handleClose}>
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={isPending}>
-                    Send report
+
+                  <Button
+                    size="md"
+                    variant="destructive"
+                    className="min-w-24"
+                    isPending={isPending}
+                  >
+                    Report
                   </Button>
                 </DialogFooter>
               </form>

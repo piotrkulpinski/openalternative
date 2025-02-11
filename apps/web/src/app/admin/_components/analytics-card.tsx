@@ -2,11 +2,7 @@ import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "
 import type { ComponentProps } from "react"
 import wretch from "wretch"
 import { Chart } from "~/app/admin/_components/chart"
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-} from "~/components/common/card"
+import { Card, CardDescription, CardHeader } from "~/components/common/card"
 import { H2 } from "~/components/common/heading"
 import { env } from "~/env"
 

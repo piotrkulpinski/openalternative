@@ -153,7 +153,7 @@ export function CategoryForm({
             <Link href="/admin/categories">Cancel</Link>
           </Button>
 
-          <Button variant="fancy" isPending={isPending} disabled={isPending}>
+          <Button variant="fancy" isPending={isPending}>
             {category ? "Update category" : "Create category"}
           </Button>
         </div>

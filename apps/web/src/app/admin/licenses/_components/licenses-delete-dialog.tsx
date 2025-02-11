@@ -76,7 +76,6 @@ export const LicensesDeleteDialog = ({
             className="min-w-24"
             onClick={() => execute({ ids: licenses.map(({ id }) => id) })}
             isPending={isPending}
-            disabled={isPending}
           >
             Delete
           </Button>

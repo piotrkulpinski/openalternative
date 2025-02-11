@@ -2,12 +2,7 @@ import plur from "plur"
 import type { ComponentProps } from "react"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
-import {
-  Tile,
-  TileCaption,
-  TileDivider,
-  TileTitle,
-} from "~/components/web/ui/tile"
+import { Tile, TileCaption, TileDivider, TileTitle } from "~/components/web/ui/tile"
 import type { LicenseMany } from "~/server/web/licenses/payloads"
 
 type LicenseCardProps = ComponentProps<typeof Tile> & {
@@ -22,9 +17,7 @@ const LicenseCard = ({ license, ...props }: LicenseCardProps) => {
 
         <TileDivider />
 
-        <TileCaption>
-          {`${license._count.tools} ${plur("tool", license._count.tools)}`}
-        </TileCaption>
+        <TileCaption>{`${license._count.tools} ${plur("tool", license._count.tools)}`}</TileCaption>
       </Link>
     </Tile>
   )

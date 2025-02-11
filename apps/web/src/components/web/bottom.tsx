@@ -48,9 +48,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
 
                     <TileDivider />
 
-                    <TileCaption className="max-sm:hidden">
-                      {alternative._count.tools}
-                    </TileCaption>
+                    <TileCaption className="max-sm:hidden">{alternative._count.tools}</TileCaption>
                   </NavLink>
                 </Tile>
               ))}
@@ -70,9 +68,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
 
                     <TileDivider />
 
-                    <TileCaption className="max-sm:hidden">
-                      {category._count.tools}
-                    </TileCaption>
+                    <TileCaption className="max-sm:hidden">{category._count.tools}</TileCaption>
                   </NavLink>
                 </Tile>
               ))}

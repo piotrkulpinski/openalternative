@@ -75,7 +75,6 @@ export const CategoriesDeleteDialog = ({
             className="min-w-24"
             onClick={() => execute({ ids: categories.map(({ id }) => id) })}
             isPending={isPending}
-            disabled={isPending}
           >
             Delete
           </Button>

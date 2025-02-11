@@ -2,12 +2,7 @@ import plur from "plur"
 import type { ComponentProps } from "react"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
-import {
-  Tile,
-  TileCaption,
-  TileDivider,
-  TileTitle,
-} from "~/components/web/ui/tile"
+import { Tile, TileCaption, TileDivider, TileTitle } from "~/components/web/ui/tile"
 import type { TopicMany } from "~/server/web/topics/payloads"
 
 type TopicCardProps = ComponentProps<typeof Tile> & {
@@ -22,9 +17,7 @@ const TopicCard = ({ topic, ...props }: TopicCardProps) => {
 
         <TileDivider />
 
-        <TileCaption>
-          {`${topic._count.tools} ${plur("tool", topic._count.tools)}`}
-        </TileCaption>
+        <TileCaption>{`${topic._count.tools} ${plur("tool", topic._count.tools)}`}</TileCaption>
       </Link>
     </Tile>
   )

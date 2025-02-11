@@ -1,12 +1,6 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { ComponentProps } from "react"
-import {
-  Card,
-
-  CardDescription,
-  CardHeader,
-
-} from "~/components/common/card"
+import { Card, CardDescription, CardHeader } from "~/components/common/card"
 import { ScrollArea } from "~/components/common/scroll-area"
 import { Link } from "~/components/common/link"
 import { findScheduledTools } from "~/server/admin/tools/queries"

@@ -139,7 +139,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
             <Link href="/admin/licenses">Cancel</Link>
           </Button>
 
-          <Button variant="fancy" isPending={isPending} disabled={isPending}>
+          <Button variant="fancy" isPending={isPending}>
             {license ? "Update license" : "Create license"}
           </Button>
         </div>

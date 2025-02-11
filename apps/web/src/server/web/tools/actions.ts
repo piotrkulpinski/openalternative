@@ -1,6 +1,7 @@
 "use server"
 
 import { db } from "@openalternative/db"
+import { ReportType } from "@openalternative/db/client"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { z } from "zod"
@@ -84,5 +85,38 @@ export const toggleBookmark = createServerAction()
     } catch (error) {
       console.error("Failed to bookmark:", error)
       return { success: false, error: "Failed to bookmark" }
+    }
+  })
+
+export const reportTool = createServerAction()
+  .input(
+    z.object({
+      toolSlug: z.string(),
+      type: z.nativeEnum(ReportType),
+      message: z.string().optional(),
+    }),
+  )
+  .handler(async ({ input }) => {
+    try {
+      const tool = await db.tool.findUnique({
+        where: { slug: input.toolSlug },
+        select: { id: true },
+      })
+
+      if (!tool) {
+        return { success: false, error: "Tool not found" }
+      }
+
+      await db.report.create({
+        data: {
+          toolId: tool.id,
+          type: input.type,
+          message: input.message,
+        },
+      })
+
+      return { success: true }
+    } catch (error) {
+      return { success: false, error: "Unexpected error" }
     }
   })

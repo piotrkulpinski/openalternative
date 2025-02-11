@@ -85,7 +85,7 @@ export function StackAnalyzerForm() {
                             {...field}
                           />
 
-                          <Button type="submit" size="lg" disabled={isPending}>
+                          <Button type="submit" size="lg" isPending={isPending}>
                             {isPending ? "Analyzing..." : "Analyze Repository"}
                           </Button>
                         </Stack>

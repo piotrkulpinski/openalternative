@@ -230,7 +230,7 @@ export function AlternativeForm({
             <Link href="/admin/alternatives">Cancel</Link>
           </Button>
 
-          <Button variant="fancy" isPending={isPending} disabled={isPending}>
+          <Button variant="fancy" isPending={isPending}>
             {alternative ? "Update alternative" : "Create alternative"}
           </Button>
         </div>

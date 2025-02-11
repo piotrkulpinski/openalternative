@@ -79,7 +79,8 @@ export const ToolScheduleDialog = ({
             }).filter(isTruthy),
           }}
           modifiersClassNames={{
-            schedulable: "before:absolute before:bottom-0.5 before:left-1/2 before:z-10 before:size-1 before:rounded-full before:bg-chart-1 before:-translate-x-1/2",
+            schedulable:
+              "before:absolute before:bottom-0.5 before:left-1/2 before:z-10 before:size-1 before:rounded-full before:bg-chart-1 before:-translate-x-1/2",
           }}
         />
 

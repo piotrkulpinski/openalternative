@@ -76,7 +76,6 @@ export const AlternativesDeleteDialog = ({
             className="min-w-24"
             onClick={() => execute({ ids: alternatives.map(({ id }) => id) })}
             isPending={isPending}
-            disabled={isPending}
           >
             Delete
           </Button>
