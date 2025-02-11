@@ -186,18 +186,15 @@ export const ToolActions = ({
                 <DialogFooter>
                   <Button
                     type="button"
-                    size="md"
                     variant="secondary"
-                    className="min-w-24"
                     onClick={handleClose}
                   >
                     Cancel
                   </Button>
 
                   <Button
-                    size="md"
                     variant="destructive"
-                    className="min-w-24"
+                    className="min-w-28"
                     isPending={isPending}
                   >
                     Report

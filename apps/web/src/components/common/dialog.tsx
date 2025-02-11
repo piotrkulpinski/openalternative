@@ -53,14 +53,14 @@ const DialogContent = ({
 
 const DialogHeader = ({ className, ...props }: ComponentProps<"div">) => {
   return (
-    <div className={cx("flex flex-col gap-2 text-center md:text-left", className)} {...props} />
+    <div className={cx("flex flex-col gap-2 text-start", className)} {...props} />
   )
 }
 
 const DialogFooter = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
-      className={cx("flex flex-col-reverse gap-2 md:flex-row md:justify-end", className)}
+      className={cx("flex flex-col-reverse gap-2 -m-4 mt-0 px-4 py-3 border-t md:flex-row md:justify-between sm:-m-6 sm:mt-0 sm:px-6 sm:py-4", className)}
       {...props}
     />
   )
