@@ -44,6 +44,7 @@ export function DataTableToolbar<TData>({
               table.getColumn(column.id ? String(column.id) : "") && (
                 <Input
                   key={String(column.id)}
+                  className="min-w-40"
                   placeholder={column.placeholder}
                   value={(table.getColumn(String(column.id))?.getFilterValue() as string) ?? ""}
                   onChange={e => table.getColumn(String(column.id))?.setFilterValue(e.target.value)}

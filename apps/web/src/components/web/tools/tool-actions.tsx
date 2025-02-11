@@ -184,7 +184,13 @@ export const ToolActions = ({
                 />
 
                 <DialogFooter>
-                  <Button size="md" variant="secondary" className="min-w-24" onClick={handleClose}>
+                  <Button
+                    type="button"
+                    size="md"
+                    variant="secondary"
+                    className="min-w-24"
+                    onClick={handleClose}
+                  >
                     Cancel
                   </Button>
 
