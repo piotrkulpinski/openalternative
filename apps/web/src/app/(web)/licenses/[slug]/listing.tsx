@@ -6,14 +6,15 @@ import { findTools } from "~/server/web/tools/queries"
 
 type LicenseToolListingProps = {
   license: LicenseOne
+  count?: number
 }
 
-export const LicenseToolListing = async ({ license }: LicenseToolListingProps) => {
-  const tools = await findTools({ where: { license: { slug: license.slug } }, take: 3 })
+export const LicenseToolListing = async ({ license, count = 3 }: LicenseToolListingProps) => {
+  const tools = await findTools({ where: { license: { slug: license.slug } }, take: count })
 
   return (
     <Listing
-      title={`${license.name} Licensed Software Examples`}
+      title="Best examples:"
       button={<Link href={`/licenses/${license.slug}/tools`}>View All Tools</Link>}
     >
       <ToolList tools={tools} showAd={false} />

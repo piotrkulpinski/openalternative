@@ -38,6 +38,10 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 512MB
 
 volumes:
   openalternative-db-data:

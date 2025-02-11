@@ -4,6 +4,7 @@ import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
 import { LicenseToolListing } from "~/app/(web)/licenses/[slug]/listing"
 import { H2 } from "~/components/common/heading"
+import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { Listing } from "~/components/web/listing"
 import { Markdown } from "~/components/web/markdown"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
@@ -78,26 +79,31 @@ export default async function LicensePage(props: PageProps) {
         <IntroDescription className="max-w-3xl">{description}</IntroDescription>
       </Intro>
 
-      <Suspense
-        fallback={
-          <Listing title={`${license.name} Licensed Software Examples`}>
-            <ToolListSkeleton count={3} />
-          </Listing>
-        }
-      >
-        <LicenseToolListing license={license} />
-      </Suspense>
+      <Section>
+        <Section.Content>
+          {license.content && <Markdown code={license.content} />}
 
-      {license.content && (
-        <Section>
-          <Section.Content>
-            <H2>What is {license.name} License?</H2>
-            <Markdown code={license.content} />
-          </Section.Content>
-        </Section>
-      )}
+          <BackButton href="/licenses" />
+        </Section.Content>
 
-      <BackButton href="/licenses" />
+        <Section.Sidebar>
+          <Suspense
+            fallback={
+              <Listing title="Best examples:">
+                <ToolListSkeleton count={2} />
+              </Listing>
+            }
+          >
+            <LicenseToolListing license={license} count={2} />
+          </Suspense>
+
+          <hr />
+
+          <Suspense fallback={<AdCardSkeleton className="max-md:hidden" />}>
+            <AdCard type="BlogPost" className="max-md:hidden" />
+          </Suspense>
+        </Section.Sidebar>
+      </Section>
     </>
   )
 }
