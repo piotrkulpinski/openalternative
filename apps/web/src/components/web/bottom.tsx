@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react"
 import { H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
-import { CardSimple, CardSimpleCaption, CardSimpleDivider } from "~/components/web/ui/card-simple"
+import { Tile, TileCaption, TileDivider } from "~/components/web/ui/tile"
 import { Container } from "~/components/web/ui/container"
 import { NavLink } from "~/components/web/ui/nav-link"
 import { siteConfig } from "~/config/site"
@@ -42,17 +42,17 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {alternatives.map(alternative => (
-                <CardSimple key={alternative.slug} className="gap-2" asChild>
+                <Tile key={alternative.slug} className="gap-2" asChild>
                   <NavLink href={`/alternatives/${alternative.slug}`}>
                     <span className="truncate">{alternative.name} Alternatives</span>
 
-                    <CardSimpleDivider />
+                    <TileDivider />
 
-                    <CardSimpleCaption className="max-sm:hidden">
+                    <TileCaption className="max-sm:hidden">
                       {alternative._count.tools}
-                    </CardSimpleCaption>
+                    </TileCaption>
                   </NavLink>
-                </CardSimple>
+                </Tile>
               ))}
             </div>
           </Stack>
@@ -64,17 +64,17 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
               {categories.map(category => (
-                <CardSimple key={category.slug} className="gap-2" asChild>
+                <Tile key={category.slug} className="gap-2" asChild>
                   <NavLink href={`/categories/${category.slug}`}>
                     <span className="truncate">{category.label}</span>
 
-                    <CardSimpleDivider />
+                    <TileDivider />
 
-                    <CardSimpleCaption className="max-sm:hidden">
+                    <TileCaption className="max-sm:hidden">
                       {category._count.tools}
-                    </CardSimpleCaption>
+                    </TileCaption>
                   </NavLink>
-                </CardSimple>
+                </Tile>
               ))}
             </div>
           </Stack>

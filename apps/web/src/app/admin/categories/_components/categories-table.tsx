@@ -8,7 +8,7 @@ import { DataTable } from "~/components/admin/data-table/data-table"
 import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
 import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
-import { Button } from "~/components/admin/ui/button"
+import { Button } from "~/components/common/button"
 import { Link } from "~/components/common/link"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findCategories } from "~/server/admin/categories/queries"
@@ -58,7 +58,7 @@ export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {
           title="Categories"
           total={categoriesTotal}
           callToAction={
-            <Button prefix={<PlusIcon />} asChild>
+            <Button variant="fancy" size="md" prefix={<PlusIcon />} asChild>
               <Link href="/admin/categories/new">
                 <span className="max-sm:sr-only">New category</span>
               </Link>
@@ -67,7 +67,7 @@ export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {
         >
           <DataTableToolbar table={table} filterFields={filterFields}>
             <CategoriesTableToolbarActions table={table} />
-            <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
+            <DateRangePicker align="end" />
           </DataTableToolbar>
         </DataTableHeader>
       </DataTable>

@@ -3,8 +3,8 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 
   --header-height: 3.125rem;
   --header-top: 0rem;
@@ -93,16 +93,7 @@
   }
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
-
   *,
   ::after,
   ::before,
@@ -150,10 +141,6 @@
 
   * {
     @apply underline-offset-2;
-
-    @media (prefers-reduced-motion) {
-      animation: none !important;
-    }
   }
 
   hr {
@@ -197,15 +184,6 @@
   [type]:hover svg[class*="arrow-right"] {
     @apply translate-x-[0.15em];
   }
-
-  select:not([size]) {
-    @apply bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9J2N1cnJlbnRDb2xvcicgc3Ryb2tlLXdpZHRoPScyJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIGNsYXNzPSdsdWNpZGUgbHVjaWRlLWNoZXZyb24tZG93bic+PHBhdGggZD0nbTYgOSA2IDYgNi02Jy8+PC9zdmc+')];
-    @apply dark:bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9JyNmZmYnIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJyBjbGFzcz0nbHVjaWRlIGx1Y2lkZS1jaGV2cm9uLWRvd24nPjxwYXRoIGQ9J202IDkgNiA2IDYtNicvPjwvc3ZnPg==')];
-    @apply bg-no-repeat;
-    @apply bg-[right_0.75rem_center];
-    @apply bg-[length:1.25em_1.25em];
-    @apply pr-10;
-  }
 }
 
 @utility prose {
@@ -213,7 +191,7 @@
     @apply relative;
   }
 
-  & [id]>a[tabindex="-1"] {
+  & [id] > a[tabindex="-1"] {
     @apply opacity-0;
     @apply absolute;
     @apply right-full;
@@ -223,15 +201,15 @@
     @apply mr-0;
   }
 
-  & [id]>a[tabindex="-1"]:after {
+  & [id] > a[tabindex="-1"]:after {
     @apply content-["#"];
   }
 
-  & [id]:hover>a[tabindex="-1"] {
+  & [id]:hover > a[tabindex="-1"] {
     @apply opacity-25;
   }
 
-  & [id]:hover>a[tabindex="-1"]:hover {
+  & [id]:hover > a[tabindex="-1"]:hover {
     @apply opacity-100;
   }
 }

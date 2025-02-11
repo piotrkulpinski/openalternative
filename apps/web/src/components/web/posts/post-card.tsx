@@ -4,7 +4,7 @@ import Image from "next/image"
 import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
-import { Card, CardDescription, CardFooter, CardHeader } from "~/components/web/ui/card"
+import { Card, CardDescription, CardFooter, CardHeader } from "~/components/common/card"
 
 type PostCardProps = ComponentProps<typeof Card> & {
   post: Post

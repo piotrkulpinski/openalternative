@@ -10,7 +10,7 @@ import {
   CommandLoading,
 } from "cmdk"
 import type { ComponentProps } from "react"
-import { Badge } from "~/components/web/ui/badge"
+import { Badge } from "~/components/common/badge"
 import { useToolFilters } from "~/contexts/tool-filter-context"
 import type { FilterOption, FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
@@ -82,7 +82,9 @@ export const ToolRefinement = ({
         </CommandGroup>
 
         {!isPending && (
-          <CommandEmpty className="px-1 text-sm text-muted-foreground">No results found.</CommandEmpty>
+          <CommandEmpty className="px-1 text-sm text-muted-foreground">
+            No results found.
+          </CommandEmpty>
         )}
 
         {isPending && (

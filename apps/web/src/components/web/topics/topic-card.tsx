@@ -3,46 +3,46 @@ import type { ComponentProps } from "react"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import {
-  CardSimple,
-  CardSimpleCaption,
-  CardSimpleDivider,
-  CardSimpleTitle,
-} from "~/components/web/ui/card-simple"
+  Tile,
+  TileCaption,
+  TileDivider,
+  TileTitle,
+} from "~/components/web/ui/tile"
 import type { TopicMany } from "~/server/web/topics/payloads"
 
-type TopicCardProps = ComponentProps<typeof CardSimple> & {
+type TopicCardProps = ComponentProps<typeof Tile> & {
   topic: TopicMany
 }
 
 const TopicCard = ({ topic, ...props }: TopicCardProps) => {
   return (
-    <CardSimple asChild {...props}>
+    <Tile asChild {...props}>
       <Link href={`/topics/${topic.slug}`}>
-        <CardSimpleTitle>{topic.slug}</CardSimpleTitle>
+        <TileTitle>{topic.slug}</TileTitle>
 
-        <CardSimpleDivider />
+        <TileDivider />
 
-        <CardSimpleCaption>
+        <TileCaption>
           {`${topic._count.tools} ${plur("tool", topic._count.tools)}`}
-        </CardSimpleCaption>
+        </TileCaption>
       </Link>
-    </CardSimple>
+    </Tile>
   )
 }
 
 const TopicCardSkeleton = () => {
   return (
-    <CardSimple>
-      <CardSimpleTitle className="w-1/3">
+    <Tile>
+      <TileTitle className="w-1/3">
         <Skeleton>&nbsp;</Skeleton>
-      </CardSimpleTitle>
+      </TileTitle>
 
       <Skeleton className="h-0.5 flex-1" />
 
-      <CardSimpleCaption className="w-1/4">
+      <TileCaption className="w-1/4">
         <Skeleton>&nbsp;</Skeleton>
-      </CardSimpleCaption>
-    </CardSimple>
+      </TileCaption>
+    </Tile>
   )
 }
 

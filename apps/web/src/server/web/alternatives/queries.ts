@@ -53,7 +53,7 @@ export const searchAlternatives = async (
     }),
   ])
 
-  console.log("searchAlternatives", performance.now() - start)
+  console.log("Alterantives search:", performance.now() - start)
 
   return { alternatives, totalCount }
 }

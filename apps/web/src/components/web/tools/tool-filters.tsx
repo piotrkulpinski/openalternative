@@ -6,7 +6,7 @@ import type { HTMLAttributes } from "react"
 import { useServerAction } from "zsa-react"
 import { Stack } from "~/components/common/stack"
 import { ToolRefinement } from "~/components/web/tools/tool-refinement"
-import { Badge } from "~/components/web/ui/badge"
+import { Badge } from "~/components/common/badge"
 import { searchConfig } from "~/config/search"
 import { useToolFilters } from "~/contexts/tool-filter-context"
 import { findFilterOptions } from "~/server/web/tools/actions"
@@ -61,7 +61,9 @@ export const ToolFilters = ({ className, ...props }: HTMLAttributes<HTMLDivEleme
 
             return (
               <Stack key={type} size="xs">
-                <span className="text-xs font-medium capitalize text-secondary-foreground">{type}:</span>
+                <span className="text-xs font-medium capitalize text-secondary-foreground">
+                  {type}:
+                </span>
 
                 <Stack direction="row" className="flex-wrap gap-1.5">
                   {activeItems.map(slug => {

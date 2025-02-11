@@ -3,7 +3,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { DayPicker } from "react-day-picker"
-import { buttonVariants } from "~/components/web/ui/button"
+import { buttonVariants } from "~/components/common/button"
 
 export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPicker>) => {
   const buttonClasses = buttonVariants({
@@ -19,7 +19,7 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
         month: "group/month space-y-4 w-full",
         month_caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-sm font-medium",
-        nav: "absolute inset-x-0 z-10 flex items-center justify-between gap-x-1 pointer-events-none",
+        nav: "absolute top-px inset-x-0 z-10 flex items-center justify-between gap-x-1 pointer-events-none",
         button_previous: buttonClasses,
         button_next: buttonClasses,
         month_grid: "w-full border-collapse gap-y-1",
@@ -28,11 +28,11 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
         week: "group/week flex mt-2",
         day: "group/day relative w-full text-center text-[0.8125rem] rounded-md focus-within:z-20",
         day_button:
-          "relative w-full p-1.5 cursor-pointer rounded-md hover:bg-accent hover:group-data-selected/day:bg-transparent",
-        selected: "bg-foreground text-background",
-        range_middle: "bg-accent! text-foreground! rounded-none",
+          "relative w-full px-1 py-[10%] cursor-pointer rounded-md hover:bg-muted hover:group-data-selected/day:bg-transparent",
+        selected: "bg-foreground! text-background!",
+        range_middle: "bg-muted! text-foreground! rounded-none",
         today:
-          "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-0.5 after:w-5 after:-translate-x-1/2 after:rounded-[2px] after:bg-current after:pointer-events-none",
+          "font-semibold after:absolute after:inset-x-1/2 after:bottom-1.5 after:h-px after:w-4 after:-translate-x-1/2 after:rounded-[2px] after:bg-current",
         outside: "opacity-40",
         disabled: "opacity-40 pointer-events-none",
         hidden: "invisible",

@@ -4,15 +4,15 @@ import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
 import { ExternalLink } from "~/components/web/external-link"
-import { Badge } from "~/components/web/ui/badge"
-import { Button } from "~/components/web/ui/button"
+import { Badge } from "~/components/common/badge"
+import { Button } from "~/components/common/button"
 import {
   Card,
   CardBadges,
   CardDescription,
   CardHeader,
   type CardProps,
-} from "~/components/web/ui/card"
+} from "~/components/common/card"
 import { Favicon } from "~/components/web/ui/favicon"
 import { LogoSymbol } from "~/components/web/ui/logo-symbol"
 import { config } from "~/config"

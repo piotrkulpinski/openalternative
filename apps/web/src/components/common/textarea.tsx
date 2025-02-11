@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
-import { inputVariants } from "~/components/web/ui/input"
+import { inputVariants } from "~/components/common/input"
 import { type VariantProps, cx } from "~/utils/cva"
 
 export type TextAreaProps = Omit<ComponentProps<"textarea">, "size"> &
@@ -11,8 +11,8 @@ export const TextArea = ({ className, size, ...props }: TextAreaProps) => {
     <Box focus>
       <textarea
         className={cx(
-          "leading-normal! resize-none field-sizing-content",
           inputVariants({ size, className }),
+          "leading-normal! resize-none field-sizing-content",
         )}
         {...props}
       />

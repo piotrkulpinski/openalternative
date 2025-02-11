@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react"
-import { Card } from "~/components/web/ui/card"
+import { Card } from "~/components/common/card"
 
 export default function AuthLayout({ children }: PropsWithChildren) {
   return (

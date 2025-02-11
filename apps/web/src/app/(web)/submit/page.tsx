@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { SubmitForm } from "~/app/(web)/submit/form"
 import { Link } from "~/components/common/link"
-import { Card } from "~/components/web/ui/card"
+import { Card } from "~/components/common/card"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { Section } from "~/components/web/ui/section"

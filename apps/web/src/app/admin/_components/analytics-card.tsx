@@ -4,11 +4,10 @@ import wretch from "wretch"
 import { Chart } from "~/app/admin/_components/chart"
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
-} from "~/components/admin/ui/card"
+} from "~/components/common/card"
+import { H2 } from "~/components/common/heading"
 import { env } from "~/env"
 
 type AnalyticsResponse = {
@@ -51,21 +50,19 @@ const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const { results, totalVisitors, averageVisitors } = await getAnalytics()
 
   return (
-    <Card {...props}>
-      <CardHeader>
+    <Card hover={false} focus={false} {...props}>
+      <CardHeader direction="column">
         <CardDescription>Visitors</CardDescription>
-        <CardTitle className="text-3xl tabular-nums">{totalVisitors.toLocaleString()}</CardTitle>
+        <H2 className="tabular-nums">{totalVisitors.toLocaleString()}</H2>
       </CardHeader>
 
-      <CardContent>
-        <Chart
-          data={results.map(({ date, visitors }) => ({ date, value: visitors }))}
-          average={averageVisitors}
-          className="h-56 w-full"
-          cellClassName="fill-chart-4"
-          config={{ value: { label: "Visitors" } }}
-        />
-      </CardContent>
+      <Chart
+        data={results.map(({ date, visitors }) => ({ date, value: visitors }))}
+        average={averageVisitors}
+        className="h-56 w-full"
+        cellClassName="fill-chart-4"
+        config={{ value: { label: "Visitors" } }}
+      />
     </Card>
   )
 }

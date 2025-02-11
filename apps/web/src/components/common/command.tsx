@@ -4,8 +4,8 @@ import type { DialogProps } from "@radix-ui/react-dialog"
 import { Command as CommandPrimitive } from "cmdk"
 import { SearchIcon } from "lucide-react"
 import type { ComponentProps } from "react"
-import { Dialog, DialogContent, DialogTitle } from "~/components/admin/ui/dialog"
-import { ScrollArea } from "~/components/admin/ui/scroll-area"
+import { Dialog, DialogContent, DialogTitle } from "~/components/common/dialog"
+import { ScrollArea } from "~/components/common/scroll-area"
 import { cx } from "~/utils/cva"
 
 const Command = ({ className, ...props }: ComponentProps<typeof CommandPrimitive>) => {

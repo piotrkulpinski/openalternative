@@ -3,7 +3,7 @@ import { differenceInDays } from "date-fns"
 import { BellPlusIcon, ClockIcon, SparklesIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
 import { Stack } from "~/components/common/stack"
-import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
+import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
 import type { ToolMany, ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
@@ -23,7 +23,7 @@ export const ToolBadges = ({ tool, children, className, ...props }: ToolBadgesPr
   const isScheduled = publishedAt !== null && publishedAt > new Date(now)
 
   return (
-    <TooltipProvider delayDuration={500} disableHoverableContent>
+    <TooltipProvider delayDuration={500}>
       <Stack size="sm" className={cx("flex-nowrap justify-end text-sm", className)} {...props}>
         {isNew && (
           <Tooltip tooltip="Repo is less than 1 year old">

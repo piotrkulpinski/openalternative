@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { RelationSelector } from "~/components/admin/relation-selector"
-import { Button } from "~/components/admin/ui/button"
-import { Input } from "~/components/admin/ui/input"
+import { Button } from "~/components/common/button"
+import { Input } from "~/components/common/input"
 import {
   Form,
   FormControl,
@@ -149,11 +149,11 @@ export function CategoryForm({
         />
 
         <div className="flex justify-between gap-4 col-span-full">
-          <Button variant="outline" asChild>
+          <Button variant="secondary" asChild>
             <Link href="/admin/categories">Cancel</Link>
           </Button>
 
-          <Button isPending={isPending} disabled={isPending}>
+          <Button variant="fancy" isPending={isPending} disabled={isPending}>
             {category ? "Update category" : "Create category"}
           </Button>
         </div>

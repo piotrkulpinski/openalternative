@@ -3,7 +3,7 @@ import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
-import { Button } from "~/components/web/ui/button"
+import { Button } from "~/components/common/button"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 

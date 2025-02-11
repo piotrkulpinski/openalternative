@@ -4,50 +4,50 @@ import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
 import {
-  CardSimple,
-  CardSimpleCaption,
-  CardSimpleDivider,
-  CardSimpleTitle,
-} from "~/components/web/ui/card-simple"
+  Tile,
+  TileCaption,
+  TileDivider,
+  TileTitle,
+} from "~/components/web/ui/tile"
 import { Favicon } from "~/components/web/ui/favicon"
 import type { StackMany } from "~/server/web/stacks/payloads"
 
-type StackCardProps = ComponentProps<typeof CardSimple> & {
+type StackCardProps = ComponentProps<typeof Tile> & {
   stack: StackMany
 }
 
 const StackCard = ({ stack, ...props }: StackCardProps) => {
   return (
-    <CardSimple asChild {...props}>
+    <Tile asChild {...props}>
       <Link href={`/stacks/${stack.slug}`}>
         <Stack size="sm">
           <Favicon src={stack.faviconUrl} title={stack.name} className="size-6 p-[3px]" />
-          <CardSimpleTitle>{stack.name}</CardSimpleTitle>
+          <TileTitle>{stack.name}</TileTitle>
         </Stack>
 
-        <CardSimpleDivider />
+        <TileDivider />
 
-        <CardSimpleCaption>
+        <TileCaption>
           {`${stack._count.tools} ${plur("tool", stack._count.tools)}`}
-        </CardSimpleCaption>
+        </TileCaption>
       </Link>
-    </CardSimple>
+    </Tile>
   )
 }
 
 const StackCardSkeleton = () => {
   return (
-    <CardSimple>
-      <CardSimpleTitle className="w-1/3">
+    <Tile>
+      <TileTitle className="w-1/3">
         <Skeleton>&nbsp;</Skeleton>
-      </CardSimpleTitle>
+      </TileTitle>
 
       <Skeleton className="h-0.5 flex-1" />
 
-      <CardSimpleCaption className="w-1/4">
+      <TileCaption className="w-1/4">
         <Skeleton>&nbsp;</Skeleton>
-      </CardSimpleCaption>
-    </CardSimple>
+      </TileCaption>
+    </Tile>
   )
 }
 

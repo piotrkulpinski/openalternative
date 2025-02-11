@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Nav } from "~/components/admin/nav"
 import { NavMain } from "~/components/admin/nav-main"
-import { Separator } from "~/components/admin/ui/separator"
+import { Separator } from "~/components/common/separator"
 import { siteConfig } from "~/config/site"
 import { signOut } from "~/lib/auth-client"
 

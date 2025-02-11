@@ -3,8 +3,8 @@ import { PlusCircleIcon } from "lucide-react"
 import type { Option } from "~/types"
 
 import { Slot } from "@radix-ui/react-slot"
-import { Badge } from "~/components/admin/ui/badge"
-import { Button } from "~/components/admin/ui/button"
+import { Badge } from "~/components/common/badge"
+import { Button } from "~/components/common/button"
 import {
   Command,
   CommandEmpty,
@@ -13,9 +13,9 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "~/components/admin/ui/command"
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/admin/ui/popover"
-import { Separator } from "~/components/admin/ui/separator"
+} from "~/components/common/command"
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
+import { Separator } from "~/components/common/separator"
 
 type DataTableFacetedFilterProps<TData, TValue> = {
   column?: Column<TData, TValue>
@@ -33,30 +33,22 @@ export function DataTableFacetedFilter<TData, TValue>({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="border-dashed" prefix={<PlusCircleIcon />}>
+        <Button variant="secondary" size="md" className="border-dashed" prefix={<PlusCircleIcon />}>
           {title}
           {selectedValues?.size > 0 && (
             <>
               <Separator orientation="vertical" className="mx-0.5 h-3.5" />
 
-              <Badge variant="secondary" className="px-1.5 -my-1 rounded lg:hidden">
-                {selectedValues.size}
-              </Badge>
+              <Badge className="-my-1 rounded lg:hidden">{selectedValues.size}</Badge>
 
               <div className="hidden space-x-1 lg:flex">
                 {selectedValues.size > 2 ? (
-                  <Badge variant="secondary" className="px-1.5 -my-1 rounded">
-                    {selectedValues.size} selected
-                  </Badge>
+                  <Badge className="-my-1 rounded">{selectedValues.size} selected</Badge>
                 ) : (
                   options
                     .filter(option => selectedValues.has(option.value))
                     .map(option => (
-                      <Badge
-                        key={option.value}
-                        variant="secondary"
-                        className="px-1.5 -my-1 rounded"
-                      >
+                      <Badge key={option.value} className="-my-1 rounded">
                         {option.label}
                       </Badge>
                     ))

@@ -17,9 +17,9 @@ import {
 } from "~/components/common/form"
 import { Hint } from "~/components/common/hint"
 import { Stack } from "~/components/common/stack"
-import { Button } from "~/components/web/ui/button"
-import { Card } from "~/components/web/ui/card"
-import { Input } from "~/components/web/ui/input"
+import { Button } from "~/components/common/button"
+import { Card } from "~/components/common/card"
+import { Input } from "~/components/common/input"
 import { Section, SectionContent } from "~/components/web/ui/section"
 import { type StackAnalyzerSchema, stackAnalyzerSchema } from "~/server/schemas"
 
@@ -69,7 +69,9 @@ export function StackAnalyzerForm() {
                     <FormItem>
                       <Stack className="w-full justify-between">
                         <FormLabel>GitHub Repository URL*:</FormLabel>
-                        <Hint className="text-muted-foreground/50">*Must be a public GitHub repository.</Hint>
+                        <Hint className="text-muted-foreground/50">
+                          *Must be a public GitHub repository.
+                        </Hint>
                       </Stack>
 
                       <FormControl>

@@ -5,11 +5,10 @@ import wretch from "wretch"
 import { Chart, type ChartData } from "~/app/admin/_components/chart"
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
-} from "~/components/admin/ui/card"
+} from "~/components/common/card"
+import { H2 } from "~/components/common/heading"
 import { env } from "~/env"
 
 type BeehiivSubscription = {
@@ -126,21 +125,20 @@ const SubscribersCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const { results, totalSubscribers, averageSubscribers } = await getSubscribers()
 
   return (
-    <Card {...props}>
-      <CardHeader>
+    <Card hover={false} focus={false} {...props}>
+      <CardHeader direction="column">
         <CardDescription>Subscribers</CardDescription>
-        <CardTitle className="text-3xl tabular-nums">{totalSubscribers.toLocaleString()}</CardTitle>
+        <H2 className="tabular-nums">{totalSubscribers.toLocaleString()}</H2>
       </CardHeader>
 
-      <CardContent>
-        <Chart
-          data={results}
-          average={averageSubscribers}
-          className="h-56 w-full"
-          cellClassName="fill-chart-2"
-          config={{ value: { label: "Subscribers" } }}
-        />
-      </CardContent>
+
+      <Chart
+        data={results}
+        average={averageSubscribers}
+        className="h-56 w-full"
+        cellClassName="fill-chart-2"
+        config={{ value: { label: "Subscribers" } }}
+      />
     </Card>
   )
 }

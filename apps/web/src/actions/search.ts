@@ -33,7 +33,7 @@ export const searchItems = authedProcedure
       }),
     ])
 
-    console.log(`Search took ${performance.now() - start}ms`)
+    console.log("Admin search:", performance.now() - start)
 
     return { tools, alternatives, categories, licenses }
   })

@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from "react"
 import { Stack } from "~/components/common/stack"
-import { Button, type ButtonProps } from "~/components/web/ui/button"
+import { Button, type ButtonProps } from "~/components/common/button"
 import { type InlineMenuItem, useInlineMenu } from "~/hooks/use-inline-menu"
 import { cx } from "~/utils/cva"
 

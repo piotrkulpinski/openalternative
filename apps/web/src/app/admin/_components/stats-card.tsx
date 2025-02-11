@@ -1,5 +1,6 @@
 import { db } from "@openalternative/db"
-import { Card, CardDescription, CardHeader, CardTitle } from "~/components/admin/ui/card"
+import { Card, CardDescription, CardHeader } from "~/components/common/card"
+import { H2 } from "~/components/common/heading"
 
 export const StatsCard = async () => {
   const stats = await db.$transaction([
@@ -17,10 +18,10 @@ export const StatsCard = async () => {
   return (
     <>
       {stats.map((stat, index) => (
-        <Card key={index} className="col-span-full lg:col-span-2">
-          <CardHeader>
+        <Card key={index} hover={false} focus={false} className="col-span-full lg:col-span-2">
+          <CardHeader direction="column">
             <CardDescription>{statsLabels[index as keyof typeof statsLabels]}</CardDescription>
-            <CardTitle className="text-3xl tabular-nums">{stat.toLocaleString()}</CardTitle>
+            <H2 className="tabular-nums">{stat.toLocaleString()}</H2>
           </CardHeader>
         </Card>
       ))}
