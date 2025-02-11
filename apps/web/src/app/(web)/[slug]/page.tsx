@@ -6,6 +6,7 @@ import { Suspense, cache } from "react"
 import type { ImageObject } from "schema-dts"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
+import { Button } from "~/components/common/button"
 import { H1, H4, H5 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
@@ -19,7 +20,6 @@ import { ToolActions } from "~/components/web/tools/tool-actions"
 import { ToolAlternatives } from "~/components/web/tools/tool-alternatives"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
-import { Button } from "~/components/common/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { IntroDescription } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
@@ -121,7 +121,7 @@ export default async function ToolPage(props: PageProps) {
                     <H1 className="!leading-snug truncate">{tool.name}</H1>
                   </div>
 
-                  {/* <ToolActions tool={tool} /> */}
+                  <ToolActions tool={tool} />
                 </Stack>
 
                 {tool.description && <IntroDescription>{tool.description}</IntroDescription>}

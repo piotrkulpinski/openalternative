@@ -7,6 +7,7 @@ import { redirect } from "next/navigation"
 import { z } from "zod"
 import { createServerAction } from "zsa"
 import { auth } from "~/lib/auth"
+import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { findAlternatives } from "~/server/web/alternatives/queries"
 import { findCategories } from "~/server/web/categories/queries"
 import { findLicenses } from "~/server/web/licenses/queries"
@@ -71,6 +72,7 @@ export const toggleBookmark = createServerAction()
         await db.bookmark.delete({
           where: { id: existingBookmark.id },
         })
+
         return { success: true, data: { bookmarked: false } }
       }
 
@@ -96,27 +98,26 @@ export const reportTool = createServerAction()
       message: z.string().optional(),
     }),
   )
-  .handler(async ({ input }) => {
+  .handler(async ({ input: { toolSlug, type, message } }) => {
+    const ip = await getIP()
+
+    // Rate limiting check
+    if (await isRateLimited(ip, "report")) {
+      throw new Error("Too many requests. Please try again later.")
+    }
+
     try {
-      const tool = await db.tool.findUnique({
-        where: { slug: input.toolSlug },
-        select: { id: true },
-      })
-
-      if (!tool) {
-        return { success: false, error: "Tool not found" }
-      }
-
       await db.report.create({
         data: {
-          toolId: tool.id,
-          type: input.type,
-          message: input.message,
+          type,
+          message,
+          tool: { connect: { slug: toolSlug } },
         },
       })
 
       return { success: true }
     } catch (error) {
-      return { success: false, error: "Unexpected error" }
+      console.error("Failed to report tool:", error)
+      return { success: false, error: "Failed to report tool. Please try again later." }
     }
   })

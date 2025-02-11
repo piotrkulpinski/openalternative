@@ -13,7 +13,8 @@ const Toaster = ({ className, ...props }: ComponentProps<typeof Sonner>) => {
           actionButton: "bg-primary text-primary-foreground",
           cancelButton: "bg-muted text-muted-foreground",
           toast: cx(
-            "select-none bg-background text-foreground border-border! shadow-xs! data-[type=error]:text-red-700/75! data-[type=success]:text-green-700/75! data-[type=info]:text-foreground/65!",
+            "select-none bg-background text-foreground border-background! shadow-xs!",
+            "data-[type=error]:bg-destructive! data-[type=error]:text-destructive-foreground! data-[type=success]:bg-green-700! data-[type=success]:text-white!",
             className,
           ),
         },

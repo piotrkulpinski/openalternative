@@ -80,8 +80,8 @@ export const ToolActions = ({
       setIsOpen(false)
       form.reset()
     },
-    onError: () => {
-      toast.error("Failed to submit report")
+    onError: ({ err }) => {
+      toast.error(err.message)
     },
   })
 
