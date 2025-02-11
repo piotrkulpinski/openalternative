@@ -63,9 +63,7 @@ export const CategoriesDeleteDialog = ({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="secondary">
-              Cancel
-            </Button>
+            <Button variant="secondary">Cancel</Button>
           </DialogClose>
 
           <Button

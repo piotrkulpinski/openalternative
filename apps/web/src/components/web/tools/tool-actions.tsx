@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 import { useServerAction } from "zsa-react"
+import { Button } from "~/components/common/button"
 import {
   Dialog,
   DialogContent,
@@ -19,6 +20,12 @@ import {
   DialogTitle,
 } from "~/components/common/dialog"
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/common/dropdown-menu"
+import {
   Form,
   FormControl,
   FormField,
@@ -26,18 +33,11 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
-import { Stack } from "~/components/common/stack"
-import { Button } from "~/components/common/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/components/common/dropdown-menu"
-import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { RadioGroup, RadioGroupItem } from "~/components/common/radio-group"
+import { Stack } from "~/components/common/stack"
 import { TextArea } from "~/components/common/textarea"
 import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
+import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { siteConfig } from "~/config/site"
 import { reportTool, toggleBookmark } from "~/server/web/tools/actions"
 import type { ToolMany, ToolManyExtended } from "~/server/web/tools/payloads"
@@ -106,7 +106,7 @@ export const ToolActions = ({
 
             <DropdownMenuContent side="bottom" align="end" className="min-w-36">
               <DropdownMenuItem asChild>
-                <button className={navLinkVariants()} onClick={() => setIsOpen(true)}>
+                <button type="button" className={navLinkVariants()} onClick={() => setIsOpen(true)}>
                   <TriangleAlertIcon className="shrink-0 size-4 opacity-75" />
                   Report
                 </button>
@@ -184,19 +184,11 @@ export const ToolActions = ({
                 />
 
                 <DialogFooter>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={handleClose}
-                  >
+                  <Button type="button" variant="secondary" onClick={handleClose}>
                     Cancel
                   </Button>
 
-                  <Button
-                    variant="destructive"
-                    className="min-w-28"
-                    isPending={isPending}
-                  >
+                  <Button variant="destructive" className="min-w-28" isPending={isPending}>
                     Report
                   </Button>
                 </DialogFooter>

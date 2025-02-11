@@ -86,9 +86,7 @@ export const ToolScheduleDialog = ({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="secondary">
-              Cancel
-            </Button>
+            <Button variant="secondary">Cancel</Button>
           </DialogClose>
 
           <Button

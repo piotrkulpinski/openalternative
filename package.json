@@ -25,9 +25,6 @@
   "overrides": {
     "nanoid": "3.3.6"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "packageManager": "bun@1.1.34"
+  "workspaces": ["apps/*", "packages/*"],
+  "packageManager": "bun@1.2.2"
 }
