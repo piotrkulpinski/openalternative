@@ -60,7 +60,7 @@ export function LicensesTable({ licensesPromise }: LicensesTableProps) {
           callToAction={
             <Button variant="fancy" size="md" prefix={<PlusIcon />} asChild>
               <Link href="/admin/licenses/new">
-                <span className="max-sm:sr-only">New license</span>
+                <div className="max-sm:sr-only">New license</div>
               </Link>
             </Button>
           }

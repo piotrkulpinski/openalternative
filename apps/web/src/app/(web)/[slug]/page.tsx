@@ -121,7 +121,7 @@ export default async function ToolPage(props: PageProps) {
                     <H1 className="!leading-snug truncate">{tool.name}</H1>
                   </div>
 
-                  {/* <ToolActions tool={tool} /> */}
+                  <ToolActions tool={tool} />
                 </Stack>
 
                 {tool.description && <IntroDescription>{tool.description}</IntroDescription>}

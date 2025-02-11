@@ -86,7 +86,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
           callToAction={
             <Button variant="fancy" size="md" prefix={<PlusIcon />} asChild>
               <Link href="/admin/tools/new">
-                <span className="max-sm:sr-only">New tool</span>
+                <div className="max-sm:sr-only">New tool</div>
               </Link>
             </Button>
           }
