@@ -5,7 +5,7 @@ import { TrashIcon } from "lucide-react"
 import type * as React from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { Button } from "~/components/admin/ui/button"
+import { Button } from "~/components/common/button"
 import {
   Dialog,
   DialogClose,
@@ -15,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/admin/ui/dialog"
+} from "~/components/common/dialog"
 import { deleteTools } from "~/server/admin/tools/actions"
 
 interface ToolsDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
@@ -46,7 +46,7 @@ export const ToolsDeleteDialog = ({
     <Dialog {...props}>
       {showTrigger && (
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm" prefix={<TrashIcon />}>
+          <Button variant="secondary" size="md" prefix={<TrashIcon />}>
             Delete ({tools.length})
           </Button>
         </DialogTrigger>
@@ -64,12 +64,16 @@ export const ToolsDeleteDialog = ({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button size="md" variant="secondary" className="min-w-24">
+              Cancel
+            </Button>
           </DialogClose>
 
           <Button
             aria-label="Delete selected rows"
+            size="md"
             variant="destructive"
+            className="min-w-24"
             onClick={() => execute({ ids: tools.map(({ id }) => id) })}
             isPending={isPending}
             disabled={isPending}

@@ -12,8 +12,8 @@ import { BrandWhatsAppIcon } from "~/components/common/icons/brand-whatsapp"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
-import { Button } from "~/components/web/ui/button"
-import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
+import { Button } from "~/components/common/button"
+import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
 import { config } from "~/config"
 
 type Platform = "X" | "Bluesky" | "Facebook" | "LinkedIn" | "HackerNews" | "Reddit" | "WhatsApp"
@@ -77,7 +77,7 @@ export const ShareButtons = ({ title, ...props }: ShareButtonsProps) => {
       <H5 as="strong">Share:</H5>
 
       <Stack size="sm">
-        <TooltipProvider delayDuration={500} disableHoverableContent>
+        <TooltipProvider delayDuration={500}>
           {shareOptions.map(({ platform, url, icon }) => (
             <Tooltip key={platform} tooltip={platform}>
               <Button size="sm" variant="secondary" prefix={icon} asChild>

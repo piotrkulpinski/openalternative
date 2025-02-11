@@ -4,7 +4,7 @@ import {
 } from "~/components/web/alternatives/alternative-list"
 import { AlternativeSearch } from "~/components/web/alternatives/alternative-search"
 import { Pagination } from "~/components/web/pagination"
-import { Input } from "~/components/web/ui/input"
+import { Input } from "~/components/common/input"
 import { AlternativeFiltersProvider } from "~/contexts/alternative-filter-context"
 import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 

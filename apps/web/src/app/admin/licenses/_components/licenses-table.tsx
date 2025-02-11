@@ -8,7 +8,7 @@ import { DataTable } from "~/components/admin/data-table/data-table"
 import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
 import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
-import { Button } from "~/components/admin/ui/button"
+import { Button } from "~/components/common/button"
 import { Link } from "~/components/common/link"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findLicenses } from "~/server/admin/licenses/queries"
@@ -58,7 +58,7 @@ export function LicensesTable({ licensesPromise }: LicensesTableProps) {
           title="Licenses"
           total={licensesTotal}
           callToAction={
-            <Button prefix={<PlusIcon />} asChild>
+            <Button variant="fancy" size="md" prefix={<PlusIcon />} asChild>
               <Link href="/admin/licenses/new">
                 <span className="max-sm:sr-only">New license</span>
               </Link>
@@ -67,7 +67,7 @@ export function LicensesTable({ licensesPromise }: LicensesTableProps) {
         >
           <DataTableToolbar table={table} filterFields={filterFields}>
             <LicensesTableToolbarActions table={table} />
-            <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
+            <DateRangePicker align="end" />
           </DataTableToolbar>
         </DataTableHeader>
       </DataTable>

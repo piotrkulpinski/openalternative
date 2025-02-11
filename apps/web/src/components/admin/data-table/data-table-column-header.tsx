@@ -1,14 +1,14 @@
 import type { Column } from "@tanstack/react-table"
 import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon, EyeOffIcon } from "lucide-react"
 
-import { Button } from "~/components/admin/ui/button"
+import { Button } from "~/components/common/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/admin/ui/dropdown-menu"
+} from "~/components/common/dropdown-menu"
 import { cx } from "~/utils/cva"
 
 type DataTableColumnHeaderProps<TData, TValue> = React.HTMLAttributes<HTMLDivElement> & {
@@ -48,7 +48,7 @@ export function DataTableColumnHeader<TData, TValue>({
           <Button
             variant="ghost"
             size="sm"
-            className="-ml-1.5 px-1.5 py-1 h-auto data-[state=open]:bg-accent"
+            className="-ml-2 data-[state=open]:bg-accent"
             suffix={buttonSuffix}
             aria-label={buttonLabel}
           >

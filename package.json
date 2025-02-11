@@ -8,7 +8,7 @@
     "start": "turbo start",
     "lint": "bun biome lint --apply .",
     "check": "bun biome check --apply .",
-    "format": "bun biome format --organize-imports-enabled --write .",
+    "format": "bun biome format --write .",
     "typecheck": "turbo typecheck",
     "db:generate": "bun --cwd packages/db db:generate",
     "db:migrate": "bun --cwd packages/db db:migrate",
@@ -25,9 +25,6 @@
   "overrides": {
     "nanoid": "3.3.6"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "packageManager": "bun@1.1.34"
 }

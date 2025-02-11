@@ -9,7 +9,7 @@ import { Header } from "~/components/web/header"
 import { Container } from "~/components/web/ui/container"
 import { config } from "~/config"
 import { env } from "~/env"
-import { Button } from "~/components/web/ui/button"
+import { Button } from "~/components/common/button"
 import { UserMenu } from "~/components/web/user-menu"
 
 export default function RootLayout({ children }: PropsWithChildren) {

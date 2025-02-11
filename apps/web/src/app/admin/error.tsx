@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { Button } from "~/components/admin/ui/button"
+import { Button } from "~/components/common/button"
 import { H3 } from "~/components/common/heading"
 
 type ErrorProps = {

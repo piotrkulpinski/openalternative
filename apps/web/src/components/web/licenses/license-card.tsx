@@ -3,46 +3,46 @@ import type { ComponentProps } from "react"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import {
-  CardSimple,
-  CardSimpleCaption,
-  CardSimpleDivider,
-  CardSimpleTitle,
-} from "~/components/web/ui/card-simple"
+  Tile,
+  TileCaption,
+  TileDivider,
+  TileTitle,
+} from "~/components/web/ui/tile"
 import type { LicenseMany } from "~/server/web/licenses/payloads"
 
-type LicenseCardProps = ComponentProps<typeof CardSimple> & {
+type LicenseCardProps = ComponentProps<typeof Tile> & {
   license: LicenseMany
 }
 
 const LicenseCard = ({ license, ...props }: LicenseCardProps) => {
   return (
-    <CardSimple asChild {...props}>
+    <Tile asChild {...props}>
       <Link href={`/licenses/${license.slug}`}>
-        <CardSimpleTitle>{license.name}</CardSimpleTitle>
+        <TileTitle>{license.name}</TileTitle>
 
-        <CardSimpleDivider />
+        <TileDivider />
 
-        <CardSimpleCaption>
+        <TileCaption>
           {`${license._count.tools} ${plur("tool", license._count.tools)}`}
-        </CardSimpleCaption>
+        </TileCaption>
       </Link>
-    </CardSimple>
+    </Tile>
   )
 }
 
 const LicenseCardSkeleton = () => {
   return (
-    <CardSimple>
-      <CardSimpleTitle className="w-1/3">
+    <Tile>
+      <TileTitle className="w-1/3">
         <Skeleton>&nbsp;</Skeleton>
-      </CardSimpleTitle>
+      </TileTitle>
 
       <Skeleton className="h-0.5 flex-1" />
 
-      <CardSimpleCaption className="w-1/4">
+      <TileCaption className="w-1/4">
         <Skeleton>&nbsp;</Skeleton>
-      </CardSimpleCaption>
-    </CardSimple>
+      </TileCaption>
+    </Tile>
   )
 }
 

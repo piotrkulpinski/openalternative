@@ -10,8 +10,8 @@ import * as React from "react"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { Button } from "~/components/admin/ui/button"
-import { Calendar } from "~/components/admin/ui/calendar"
+import { Button } from "~/components/common/button"
+import { Calendar } from "~/components/common/calendar"
 import {
   Dialog,
   DialogClose,
@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/admin/ui/dialog"
+} from "~/components/common/dialog"
 import { scheduleTool } from "~/server/admin/tools/actions"
 
 type ToolScheduleDialogProps = ComponentProps<typeof Dialog> & {
@@ -54,7 +54,7 @@ export const ToolScheduleDialog = ({
     <Dialog {...props}>
       {showTrigger && (
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm">
+          <Button variant="secondary" size="md">
             <ClockIcon className="max-sm:mr-2" aria-hidden="true" />
             Schedule
           </Button>
@@ -79,19 +79,21 @@ export const ToolScheduleDialog = ({
             }).filter(isTruthy),
           }}
           modifiersClassNames={{
-            schedulable: "bg-yellow-500/25",
+            schedulable: "before:absolute before:bottom-0.5 before:left-1/2 before:z-10 before:size-1 before:rounded-full before:bg-chart-1 before:-translate-x-1/2",
           }}
-          className="px-0"
         />
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button size="md" variant="secondary" className="min-w-24">
+              Cancel
+            </Button>
           </DialogClose>
 
           <Button
-            aria-label="Publish"
-            variant="default"
+            aria-label="Publish selected rows"
+            size="md"
+            className="min-w-24"
             onClick={() => publishedAt && tool && execute({ id: tool.id, publishedAt })}
             isPending={isPending}
             disabled={!publishedAt || isPending}

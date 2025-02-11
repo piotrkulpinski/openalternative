@@ -18,14 +18,14 @@ import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { SearchForm } from "~/components/web/search-form"
-import { Button } from "~/components/web/ui/button"
+import { Button } from "~/components/common/button"
 import { Container } from "~/components/web/ui/container"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "~/components/web/ui/dropdown-menu"
+} from "~/components/common/dropdown-menu"
 import { Logo } from "~/components/web/ui/logo"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { config } from "~/config"

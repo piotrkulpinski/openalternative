@@ -4,11 +4,10 @@ import type { Table } from "@tanstack/react-table"
 import { XIcon } from "lucide-react"
 import * as React from "react"
 import type { DataTableFilterField } from "~/types"
-
 import { DataTableFacetedFilter } from "~/components/admin/data-table/data-table-faceted-filter"
 import { DataTableViewOptions } from "~/components/admin/data-table/data-table-view-options"
-import { Button } from "~/components/admin/ui/button"
-import { Input } from "~/components/admin/ui/input"
+import { Button } from "~/components/common/button"
+import { Input } from "~/components/common/input"
 import { cx } from "~/utils/cva"
 
 interface DataTableToolbarProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
@@ -48,7 +47,6 @@ export function DataTableToolbar<TData>({
                   placeholder={column.placeholder}
                   value={(table.getColumn(String(column.id))?.getFilterValue() as string) ?? ""}
                   onChange={e => table.getColumn(String(column.id))?.setFilterValue(e.target.value)}
-                  className="h-8 w-40 lg:w-64"
                 />
               ),
           )}
@@ -70,7 +68,7 @@ export function DataTableToolbar<TData>({
           <Button
             aria-label="Reset filters"
             variant="ghost"
-            className="h-8 px-2 lg:px-3"
+            size="md"
             onClick={() => table.resetColumnFilters()}
             suffix={<XIcon />}
           >

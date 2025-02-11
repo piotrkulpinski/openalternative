@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/admin/ui/table"
+} from "~/components/common/table"
 import { getColumnPinningStyle } from "~/lib/data-table"
 import { cx } from "~/utils/cva"
 

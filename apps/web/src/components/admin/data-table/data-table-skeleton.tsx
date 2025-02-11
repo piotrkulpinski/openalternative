@@ -5,7 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/admin/ui/table"
+} from "~/components/common/table"
 import { H3 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
 import { cx } from "~/utils/cva"

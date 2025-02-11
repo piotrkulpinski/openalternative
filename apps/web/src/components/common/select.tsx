@@ -3,30 +3,32 @@
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon, ChevronsUpDownIcon } from "lucide-react"
 import type { ComponentProps } from "react"
-import { cx } from "~/utils/cva"
+import { cx, popoverAnimationClasses, VariantProps } from "~/utils/cva"
+import { Box } from "~/components/common/box"
+import { inputVariants } from "./input"
 
 const Select = SelectPrimitive.Root
 const SelectGroup = SelectPrimitive.Group
 const SelectValue = SelectPrimitive.Value
 
 const SelectTrigger = ({
-  className,
   children,
+  className,
+  size,
   ...props
-}: ComponentProps<typeof SelectPrimitive.Trigger>) => {
+}: ComponentProps<typeof SelectPrimitive.Trigger> & VariantProps<typeof inputVariants>) => {
   return (
-    <SelectPrimitive.Trigger
-      className={cx(
-        "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs ring-offset-background placeholder:text-muted-foreground focus:outline-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-        className,
-      )}
-      {...props}
-    >
-      {children}
-      <SelectPrimitive.Icon asChild>
-        <ChevronsUpDownIcon className="ml-1 size-4 opacity-50" />
-      </SelectPrimitive.Icon>
-    </SelectPrimitive.Trigger>
+    <Box hover focus>
+      <SelectPrimitive.Trigger
+        className={cx(inputVariants({ size }), "flex items-center justify-between", className)}
+        {...props}
+      >
+        {children}
+        <SelectPrimitive.Icon asChild>
+          <ChevronsUpDownIcon className="ml-1 size-4 opacity-50" />
+        </SelectPrimitive.Icon>
+      </SelectPrimitive.Trigger>
+    </Box>
   )
 }
 
@@ -68,7 +70,8 @@ const SelectContent = ({
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
         className={cx(
-          "relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          "relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md",
+          popoverAnimationClasses,
           position === "popper" &&
             "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
           className,
@@ -109,7 +112,7 @@ const SelectItem = ({
   return (
     <SelectPrimitive.Item
       className={cx(
-        "relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm text-secondary-foreground outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className,
       )}
       {...props}

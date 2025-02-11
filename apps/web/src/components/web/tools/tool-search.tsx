@@ -5,8 +5,14 @@ import { cx } from "cva"
 import { ListFilterIcon, LoaderIcon, SearchIcon } from "lucide-react"
 import { Stack } from "~/components/common/stack"
 import { ToolFilters } from "~/components/web/tools/tool-filters"
-import { Input } from "~/components/web/ui/input"
-import { Select } from "~/components/web/ui/select"
+import { Input } from "~/components/common/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/common/select"
 import { useToolFilters } from "~/contexts/tool-filter-context"
 
 export type ToolSearchProps = {
@@ -62,19 +68,18 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
           </button>
         </div>
 
-        <Select
-          size="lg"
-          className="min-w-36 max-sm:flex-1"
-          value={filters.sort}
-          onChange={e => updateFilters({ sort: e.target.value })}
-        >
-          <option value="">Order by</option>
+        <Select value={filters.sort} onValueChange={value => updateFilters({ sort: value })}>
+          <SelectTrigger size="lg" className="w-auto min-w-36 max-sm:flex-1">
+            <SelectValue placeholder="Order by" />
+          </SelectTrigger>
 
-          {sortOptions.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
+          <SelectContent align="end">
+            {sortOptions.map(option => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </Stack>
 

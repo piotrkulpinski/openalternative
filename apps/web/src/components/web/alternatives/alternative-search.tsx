@@ -2,9 +2,16 @@
 
 import { LoaderIcon, SearchIcon } from "lucide-react"
 import { Stack } from "~/components/common/stack"
-import { Input } from "~/components/web/ui/input"
-import { Select } from "~/components/web/ui/select"
+import { Input } from "~/components/common/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/common/select"
 import { useAlternativeFilters } from "~/contexts/alternative-filter-context"
+import { ToolStatus } from "@openalternative/db/client"
 
 export type AlternativeSearchProps = {
   placeholder?: string
@@ -32,23 +39,22 @@ export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
           value={filters.q || ""}
           onChange={e => updateFilters({ q: e.target.value })}
           placeholder={placeholder || "Search alternatives..."}
-          className="w-full truncate pl-10"
+          className="pl-10"
         />
       </div>
 
-      <Select
-        size="lg"
-        className="min-w-36 max-sm:flex-1"
-        value={filters.sort}
-        onChange={e => updateFilters({ sort: e.target.value })}
-      >
-        <option value="">Order by</option>
+      <Select value={filters.sort} onValueChange={value => updateFilters({ sort: value })}>
+        <SelectTrigger size="lg" className="w-auto min-w-36 max-sm:flex-1">
+          <SelectValue placeholder="Order by" />
+        </SelectTrigger>
 
-        {sortOptions.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        <SelectContent align="end">
+          {sortOptions.map(option => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
       </Select>
     </Stack>
   )

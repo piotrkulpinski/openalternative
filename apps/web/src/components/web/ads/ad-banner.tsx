@@ -2,8 +2,8 @@ import Image from "next/image"
 import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
 import { ExternalLink } from "~/components/web/external-link"
-import { Badge } from "~/components/web/ui/badge"
-import { Button } from "~/components/web/ui/button"
+import { Badge } from "~/components/common/badge"
+import { Button } from "~/components/common/button"
 import { Container } from "~/components/web/ui/container"
 import { findAd } from "~/server/web/ads/queries"
 import { cx } from "~/utils/cva"
@@ -19,7 +19,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
     <Box>
       <Container
         className={cx(
-          "group/button relative -top-px inset-x-0 z-60 flex items-center justify-between gap-3 bg-card border-b py-2 hover:bg-accent lg:border-x lg:rounded-b-lg",
+          "group/button relative -top-px inset-x-0 z-50 flex items-center justify-between gap-3 bg-card border-b py-2 hover:bg-accent lg:border-x lg:rounded-b-lg",
           className,
         )}
         asChild

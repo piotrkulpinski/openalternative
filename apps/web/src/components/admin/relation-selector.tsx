@@ -1,7 +1,7 @@
 import { MousePointerClickIcon } from "lucide-react"
 import { use } from "react"
-import { Badge } from "~/components/admin/ui/badge"
-import { Button } from "~/components/admin/ui/button"
+import { Badge } from "~/components/common/badge"
+import { Button } from "~/components/common/button"
 import {
   Command,
   CommandEmpty,
@@ -9,9 +9,10 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "~/components/admin/ui/command"
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/admin/ui/popover"
-import { Separator } from "~/components/admin/ui/separator"
+} from "~/components/common/command"
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
+import { Separator } from "~/components/common/separator"
+import { Stack } from "~/components/common/stack"
 
 type Relation = {
   id: string
@@ -33,28 +34,27 @@ export const RelationSelector = ({ promise, selectedIds, onChange }: RelationSel
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+          variant="secondary"
+          size="md"
           className="justify-start w-full px-3 gap-2.5"
           prefix={<MousePointerClickIcon />}
           suffix={
-            <Badge variant="outline" className="ml-auto px-1.5 size-auto">
+            <Badge variant="outline" className="ml-auto size-auto">
               {selectedRelations.length}
             </Badge>
           }
         >
           <Separator orientation="vertical" />
 
-          <div className="relative flex-1 flex items-center gap-1 overflow-hidden">
+          <Stack size="xs">
             {selectedRelations.length === 0 && (
               <span className="font-normal text-muted-foreground">Select</span>
             )}
 
             {selectedRelations.map(relation => (
-              <Badge key={relation.id} variant="secondary" className="px-1.5">
-                {relation.name}
-              </Badge>
+              <Badge key={relation.id}>{relation.name}</Badge>
             ))}
-          </div>
+          </Stack>
         </Button>
       </PopoverTrigger>
 

@@ -2,10 +2,17 @@
 
 import { usePathname } from "next/navigation"
 import type { ComponentProps, ReactNode } from "react"
-import { Badge } from "~/components/admin/ui/badge"
-import { Button, type ButtonProps } from "~/components/admin/ui/button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/admin/ui/tooltip"
+import { Badge } from "~/components/common/badge"
+import { Button, type ButtonProps } from "~/components/common/button"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/common/tooltip"
 import { Link } from "~/components/common/link"
+import { Stack } from "~/components/common/stack"
+import { cx } from "~/utils/cva"
 
 type NavMainLink = ButtonProps & {
   title: string
@@ -22,51 +29,57 @@ export const NavMain = ({ className, links, isCollapsed, ...props }: NavMainProp
   const pathname = usePathname()
   const rootPath = "/admin"
 
-  const getButtonVariant = (href: string) => {
+  const isActive = (href: string) => {
     if (
       (href === rootPath && href === pathname) ||
       (href !== rootPath && pathname.startsWith(href))
     ) {
-      return "secondary"
+      return true
     }
 
-    return "ghost"
+    return false
   }
 
   return (
-    <>
+    <TooltipProvider delayDuration={250}>
       {links.map(({ href, title, label, ...props }, index) =>
         isCollapsed ? (
-          <Tooltip key={index}>
-            <TooltipTrigger asChild>
-              <Button
-                size="sm"
-                variant={getButtonVariant(href)}
-                aria-label={title}
-                asChild
-                {...props}
-              >
-                <Link href={href} />
-              </Button>
-            </TooltipTrigger>
-
-            <TooltipContent side="right" className="flex items-center gap-4">
-              {title}
-              {label && <span className="opacity-60">{label}</span>}
-            </TooltipContent>
+          <Tooltip
+            key={index}
+            side="right"
+            tooltip={
+              <Stack size="lg">
+                {title}
+                {label && <span className="opacity-60">{label}</span>}
+              </Stack>
+            }
+          >
+            <Button
+              size="md"
+              variant="ghost"
+              aria-label={title}
+              className={cx(isActive(href) && "bg-accent")}
+              hover={false}
+              asChild
+              {...props}
+            >
+              <Link href={href} />
+            </Button>
           </Tooltip>
         ) : (
           <Button
             key={index}
-            variant={getButtonVariant(href)}
+            size="md"
+            variant="ghost"
             suffix={
               label && (
-                <Badge variant="outline" className="ml-auto px-1.5 size-auto">
+                <Badge variant="outline" className="ml-auto size-auto">
                   {label}
                 </Badge>
               )
             }
-            className="justify-start"
+            className={cx("justify-start", isActive(href) && "bg-accent")}
+            hover={false}
             asChild
             {...props}
           >
@@ -74,6 +87,6 @@ export const NavMain = ({ className, links, isCollapsed, ...props }: NavMainProp
           </Button>
         ),
       )}
-    </>
+    </TooltipProvider>
   )
 }

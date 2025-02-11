@@ -10,7 +10,10 @@ import { cx } from "~/utils/cva"
 
 const BreadcrumbsSeparator = ({ ...props }: HTMLAttributes<HTMLElement>) => {
   return (
-    <span className="text-sm text-secondary-foreground invert pointer-events-none select-none" {...props}>
+    <span
+      className="text-sm text-secondary-foreground invert pointer-events-none select-none"
+      {...props}
+    >
       /
     </span>
   )

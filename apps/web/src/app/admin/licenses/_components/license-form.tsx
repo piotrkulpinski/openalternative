@@ -6,9 +6,9 @@ import type React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { Button } from "~/components/admin/ui/button"
-import { Input } from "~/components/admin/ui/input"
-import { Textarea } from "~/components/admin/ui/textarea"
+import { Button } from "~/components/common/button"
+import { Input } from "~/components/common/input"
+import { TextArea } from "~/components/common/textarea"
 import {
   Form,
   FormControl,
@@ -113,7 +113,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
             <FormItem className="col-span-full">
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea {...field} />
+                <TextArea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -127,7 +127,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
             <FormItem className="col-span-full">
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Textarea {...field} />
+                <TextArea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -135,11 +135,11 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
         />
 
         <div className="flex justify-between gap-4 col-span-full">
-          <Button variant="outline" asChild>
+          <Button variant="secondary" asChild>
             <Link href="/admin/licenses">Cancel</Link>
           </Button>
 
-          <Button isPending={isPending} disabled={isPending}>
+          <Button variant="fancy" isPending={isPending} disabled={isPending}>
             {license ? "Update license" : "Create license"}
           </Button>
         </div>

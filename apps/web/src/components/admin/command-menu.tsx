@@ -15,7 +15,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "~/components/admin/ui/command"
+} from "~/components/common/command"
 
 type SearchResult = {
   tools: Tool[]

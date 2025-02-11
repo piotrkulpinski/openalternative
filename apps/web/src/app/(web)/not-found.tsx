@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation"
 import { Link } from "~/components/common/link"
-import { Button } from "~/components/web/ui/button"
+import { Button } from "~/components/common/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 
 export default function NotFound() {

@@ -9,21 +9,23 @@ import { isChildrenEmpty } from "~/utils/helpers"
 
 const buttonVariants = cva({
   base: [
-    "group/button relative inline-flex items-center justify-center border font-medium text-[0.8125rem] text-start leading-tight rounded-md hover:z-10",
+    "group/button relative inline-flex items-center justify-center border border-transparent font-medium text-[0.8125rem] text-start leading-tight rounded-md hover:z-10 hover:border-transparent",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
   variants: {
     variant: {
-      fancy: "border-transparent! bg-primary text-primary-foreground hover:opacity-90",
-      primary: "border-transparent! text-background bg-foreground hover:opacity-90",
-      secondary: "bg-background text-secondary-foreground hover:bg-card hover:border-ring",
-      ghost: "border-transparent! text-foreground hover:bg-accent",
+      fancy: "bg-primary text-primary-foreground hover:opacity-90",
+      primary: "text-background bg-foreground hover:opacity-90",
+      secondary:
+        "border-border bg-background text-secondary-foreground hover:bg-card hover:border-ring",
+      ghost: "text-foreground hover:bg-accent",
+      destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
     },
     size: {
-      sm: "gap-[0.66ch] py-1 px-2 leading-none",
-      md: "gap-[0.75ch] py-1.5 px-3",
-      lg: "gap-[1ch] py-2.5 px-4 rounded-lg sm:text-sm",
+      sm: "px-2 py-1 gap-[0.66ch] leading-none",
+      md: "px-3 py-2 gap-[0.75ch]",
+      lg: "px-4 py-2.5 gap-[1ch] rounded-lg sm:text-sm",
     },
     isPending: {
       true: "[&>*:not(.animate-spin)]:text-transparent select-none",
@@ -37,11 +39,12 @@ const buttonVariants = cva({
 })
 
 const buttonAffixVariants = cva({
-  base: "shrink-0 first:-ml-[0.21425em] last:-mr-[0.21425em] size-[1.1em]",
+  base: "shrink-0 first:-ml-[0.21425em] last:-mr-[0.21425em] size-[1.1em] opacity-75",
 })
 
 export type ButtonProps = Omit<ComponentProps<"button">, "size" | "prefix"> &
-  VariantProps<typeof buttonVariants> & {
+  VariantProps<typeof buttonVariants> &
+  VariantProps<typeof boxVariants> & {
     /**
      * If set to `true`, the button will be rendered as a child within the component.
      * This child component must be a valid React component.
@@ -74,6 +77,8 @@ const Button = ({
   suffix,
   variant,
   size,
+  hover = true,
+  focus = true,
   ...props
 }: ButtonProps) => {
   const useAsChild = asChild && isValidElement(children)
@@ -83,7 +88,7 @@ const Button = ({
     <Comp
       disabled={disabled ?? isPending}
       className={cx(
-        boxVariants({ hover: true, focus: true }),
+        boxVariants({ hover, focus }),
         buttonVariants({ variant, size, isPending, className }),
       )}
       {...props}
@@ -94,7 +99,8 @@ const Button = ({
             <Slot className={buttonAffixVariants()}>{prefix}</Slot>
 
             {!isChildrenEmpty(child) && (
-              <span className="flex-1 truncate only:text-center">{child}</span>
+              // <span className="flex-1 truncate only:text-center">{child}</span>
+              <span className="contents">{child}</span>
             )}
 
             <Slot className={buttonAffixVariants()}>{suffix}</Slot>

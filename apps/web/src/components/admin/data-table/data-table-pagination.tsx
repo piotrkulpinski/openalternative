@@ -6,14 +6,14 @@ import {
   ChevronsRightIcon,
 } from "lucide-react"
 
-import { Button } from "~/components/admin/ui/button"
+import { Button } from "~/components/common/button"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/admin/ui/select"
+} from "~/components/common/select"
 
 type DataTablePaginationProps<TData> = {
   table: Table<TData>
@@ -40,7 +40,7 @@ export function DataTablePagination<TData>({
             table.setPageSize(Number(value))
           }}
         >
-          <SelectTrigger className="h-8 w-auto tabular-nums">
+          <SelectTrigger className="w-auto tabular-nums">
             <SelectValue placeholder={table.getState().pagination.pageSize} />
           </SelectTrigger>
 
@@ -61,8 +61,8 @@ export function DataTablePagination<TData>({
       <div className="flex items-center gap-2">
         <Button
           aria-label="Go to first page"
-          variant="outline"
-          size="sm"
+          variant="secondary"
+          size="md"
           className="max-lg:hidden"
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
@@ -71,8 +71,8 @@ export function DataTablePagination<TData>({
 
         <Button
           aria-label="Go to previous page"
-          variant="outline"
-          size="sm"
+          variant="secondary"
+          size="md"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
           prefix={<ChevronLeftIcon />}
@@ -80,8 +80,8 @@ export function DataTablePagination<TData>({
 
         <Button
           aria-label="Go to next page"
-          variant="outline"
-          size="sm"
+          variant="secondary"
+          size="md"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
           suffix={<ChevronRightIcon />}
@@ -89,8 +89,8 @@ export function DataTablePagination<TData>({
 
         <Button
           aria-label="Go to last page"
-          variant="outline"
-          size="sm"
+          variant="secondary"
+          size="md"
           className="max-lg:hidden"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}

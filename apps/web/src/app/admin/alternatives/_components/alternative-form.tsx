@@ -7,10 +7,10 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { RelationSelector } from "~/components/admin/relation-selector"
-import { Button } from "~/components/admin/ui/button"
-import { Input } from "~/components/admin/ui/input"
-import { Switch } from "~/components/admin/ui/switch"
-import { Textarea } from "~/components/admin/ui/textarea"
+import { Button } from "~/components/common/button"
+import { Input } from "~/components/common/input"
+import { Switch } from "~/components/common/switch"
+import { TextArea } from "~/components/common/textarea"
 import {
   Form,
   FormControl,
@@ -144,7 +144,7 @@ export function AlternativeForm({
             <FormItem className="col-span-full">
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea
+                <TextArea
                   placeholder="PostHog is the only all-in-one platform for product analytics, feature flags, session replays, experiments, and surveys that's built for developers."
                   {...field}
                 />
@@ -226,11 +226,11 @@ export function AlternativeForm({
         />
 
         <div className="flex justify-between gap-4 col-span-full">
-          <Button variant="outline" asChild>
+          <Button variant="secondary" asChild>
             <Link href="/admin/alternatives">Cancel</Link>
           </Button>
 
-          <Button isPending={isPending} disabled={isPending}>
+          <Button variant="fancy" isPending={isPending} disabled={isPending}>
             {alternative ? "Update alternative" : "Create alternative"}
           </Button>
         </div>

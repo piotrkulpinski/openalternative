@@ -7,8 +7,8 @@ import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
-import { Button } from "~/components/web/ui/button"
-import { Card } from "~/components/web/ui/card"
+import { Button } from "~/components/common/button"
+import { Card } from "~/components/common/card"
 import { Insights } from "~/components/web/ui/insights"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
@@ -23,33 +23,33 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
     { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: <GitForkIcon /> },
     ...(tool.lastCommitDate
       ? [
-        {
-          label: "Last commit",
-          value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
-          title: tool.lastCommitDate.toString(),
-          icon: <TimerIcon />,
-        },
-      ]
+          {
+            label: "Last commit",
+            value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
+            title: tool.lastCommitDate.toString(),
+            icon: <TimerIcon />,
+          },
+        ]
       : []),
     ...(tool.firstCommitDate
       ? [
-        {
-          label: "Repository age",
-          value: formatDistanceToNowStrict(tool.firstCommitDate),
-          title: tool.firstCommitDate.toString(),
-          icon: <HistoryIcon />,
-        },
-      ]
+          {
+            label: "Repository age",
+            value: formatDistanceToNowStrict(tool.firstCommitDate),
+            title: tool.firstCommitDate.toString(),
+            icon: <HistoryIcon />,
+          },
+        ]
       : []),
     ...(tool.license
       ? [
-        {
-          label: "License",
-          value: tool.license.name,
-          link: `/licenses/${tool.license.slug}`,
-          icon: <CopyrightIcon />,
-        },
-      ]
+          {
+            label: "License",
+            value: tool.license.name,
+            link: `/licenses/${tool.license.slug}`,
+            icon: <CopyrightIcon />,
+          },
+        ]
       : []),
   ]
 

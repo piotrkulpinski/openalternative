@@ -15,9 +15,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "~/components/web/ui/dropdown-menu"
+} from "~/components/common/dropdown-menu"
 import { NavLink } from "~/components/web/ui/nav-link"
-import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
+import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 import { updateUrlWithSearchParams } from "~/utils/queryString"
@@ -54,7 +54,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           </Stack>
 
           <Stack className="text-sm/normal">
-            <TooltipProvider delayDuration={500} disableHoverableContent>
+            <TooltipProvider delayDuration={500}>
               <DropdownMenu modal={false}>
                 <Tooltip tooltip="RSS Feeds">
                   <DropdownMenuTrigger aria-label="RSS Feeds" {...props}>

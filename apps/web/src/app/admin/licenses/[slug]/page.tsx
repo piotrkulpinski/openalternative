@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { UpdateLicenseActions } from "~/app/admin/licenses/[slug]/actions"
 import { LicenseForm } from "~/app/admin/licenses/_components/license-form"
-import { Wrapper } from "~/components/admin/ui/wrapper"
+import { Wrapper } from "~/components/admin/wrapper"
 import { H3 } from "~/components/common/heading"
 import { findLicenseBySlug } from "~/server/admin/licenses/queries"
 

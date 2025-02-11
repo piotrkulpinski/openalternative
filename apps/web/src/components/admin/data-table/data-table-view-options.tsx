@@ -4,7 +4,7 @@ import type { Table } from "@tanstack/react-table"
 import { sentenceCase } from "change-case"
 import { Check, ChevronsUpDown, Settings2 } from "lucide-react"
 import { useRef } from "react"
-import { Button } from "~/components/admin/ui/button"
+import { Button } from "~/components/common/button"
 import {
   Command,
   CommandEmpty,
@@ -12,8 +12,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "~/components/admin/ui/command"
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/admin/ui/popover"
+} from "~/components/common/command"
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
 import { cx } from "~/utils/cva"
 
 type DataTableViewOptionsProps<TData> = {
@@ -29,13 +29,15 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
         <Button
           ref={triggerRef}
           aria-label="Toggle columns"
-          variant="outline"
-          size="sm"
-          className="ml-auto hidden h-8 gap-2 focus:outline-none focus:ring-1 focus:ring-ring focus-visible:ring-0 lg:flex"
+          variant="secondary"
+          size="md"
+          className="ml-auto hidden gap-2 lg:flex"
+          prefix={<Settings2 />}
+          suffix={<ChevronsUpDown />}
         >
-          <Settings2 className="size-4" />
+          {/* <Settings2 className="size-4" /> */}
           View
-          <ChevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" />
+          {/* <ChevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" /> */}
         </Button>
       </PopoverTrigger>
       <PopoverContent

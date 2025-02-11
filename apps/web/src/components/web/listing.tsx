@@ -2,7 +2,7 @@ import { ArrowRightIcon } from "lucide-react"
 import type { ComponentProps, ReactNode } from "react"
 import { H4 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
-import { Button } from "~/components/web/ui/button"
+import { Button } from "~/components/common/button"
 import { cx } from "~/utils/cva"
 
 type ListingProps = ComponentProps<typeof Stack> & {

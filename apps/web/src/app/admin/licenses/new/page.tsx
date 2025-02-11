@@ -1,5 +1,5 @@
 import { LicenseForm } from "~/app/admin/licenses/_components/license-form"
-import { Wrapper } from "~/components/admin/ui/wrapper"
+import { Wrapper } from "~/components/admin/wrapper"
 import { H3 } from "~/components/common/heading"
 
 export default function CreateLicensePage() {

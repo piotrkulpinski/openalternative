@@ -15,9 +15,9 @@ import { createStripeAdsCheckout } from "~/actions/stripe"
 import { Stack } from "~/components/common/stack"
 import { AdsCalendar } from "~/components/web/ads-calendar"
 import { Price } from "~/components/web/price"
-import { Badge } from "~/components/web/ui/badge"
-import { Button } from "~/components/web/ui/button"
-import { Tooltip, TooltipProvider } from "~/components/web/ui/tooltip"
+import { Badge } from "~/components/common/badge"
+import { Button } from "~/components/common/button"
+import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
 import { config } from "~/config"
 import { useAds } from "~/hooks/use-ads"
 import type { AdMany } from "~/server/web/ads/payloads"
@@ -70,7 +70,7 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
   }
 
   return (
-    <TooltipProvider delayDuration={250} disableHoverableContent>
+    <TooltipProvider delayDuration={250}>
       <div className={cx("flex flex-col w-full border divide-y rounded-md", className)} {...props}>
         <div className="flex flex-col w-full sm:flex-row sm:divide-x max-sm:divide-y">
           {config.ads.adSpots.map(adSpot => (

@@ -2,7 +2,7 @@ import { formatNumber } from "@curiousleaf/utils"
 import NumberFlow, { continuous, type Format } from "@number-flow/react"
 import type { ComponentProps } from "react"
 import type Stripe from "stripe"
-import { Badge } from "~/components/web/ui/badge"
+import { Badge } from "~/components/common/badge"
 import { cx } from "~/utils/cva"
 
 const defaultFormat: Format = {
@@ -57,7 +57,9 @@ export const Price = ({
       </div>
 
       {price > 0 && interval && (
-        <div className="m-[0.25em] self-end text-muted-foreground text-[0.9em] leading-none">/{interval}</div>
+        <div className="m-[0.25em] self-end text-muted-foreground text-[0.9em] leading-none">
+          /{interval}
+        </div>
       )}
 
       {!!discount && (

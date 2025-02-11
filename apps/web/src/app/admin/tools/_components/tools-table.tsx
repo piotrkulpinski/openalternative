@@ -9,7 +9,7 @@ import { DataTable } from "~/components/admin/data-table/data-table"
 import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
 import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
-import { Button } from "~/components/admin/ui/button"
+import { Button } from "~/components/common/button"
 import { Link } from "~/components/common/link"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findTools } from "~/server/admin/tools/queries"
@@ -84,7 +84,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
           title="Tools"
           total={toolsTotal}
           callToAction={
-            <Button prefix={<PlusIcon />} asChild>
+            <Button variant="fancy" size="md" prefix={<PlusIcon />} asChild>
               <Link href="/admin/tools/new">
                 <span className="max-sm:sr-only">New tool</span>
               </Link>
@@ -93,7 +93,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
         >
           <DataTableToolbar table={table} filterFields={filterFields}>
             <ToolsTableToolbarActions table={table} />
-            <DateRangePicker triggerSize="sm" triggerClassName="ml-auto" align="end" />
+            <DateRangePicker align="end" />
           </DataTableToolbar>
         </DataTableHeader>
       </DataTable>

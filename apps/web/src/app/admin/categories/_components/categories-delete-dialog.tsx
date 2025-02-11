@@ -4,7 +4,7 @@ import type { Category } from "@openalternative/db/client"
 import { TrashIcon } from "lucide-react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { Button } from "~/components/admin/ui/button"
+import { Button } from "~/components/common/button"
 import {
   Dialog,
   DialogClose,
@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/admin/ui/dialog"
+} from "~/components/common/dialog"
 import { deleteCategories } from "~/server/admin/categories/actions"
 
 interface CategoriesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
@@ -45,7 +45,7 @@ export const CategoriesDeleteDialog = ({
     <Dialog {...props}>
       {showTrigger && (
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm" prefix={<TrashIcon />}>
+          <Button variant="secondary" size="md" prefix={<TrashIcon />}>
             Delete ({categories.length})
           </Button>
         </DialogTrigger>
@@ -63,12 +63,16 @@ export const CategoriesDeleteDialog = ({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button size="md" variant="secondary" className="min-w-24">
+              Cancel
+            </Button>
           </DialogClose>
 
           <Button
             aria-label="Delete selected rows"
+            size="md"
             variant="destructive"
+            className="min-w-24"
             onClick={() => execute({ ids: categories.map(({ id }) => id) })}
             isPending={isPending}
             disabled={isPending}

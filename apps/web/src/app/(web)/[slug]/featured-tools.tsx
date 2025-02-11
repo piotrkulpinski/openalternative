@@ -4,7 +4,7 @@ import type { ComponentProps } from "react"
 import { H5, H6 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
-import { Card } from "~/components/web/ui/card"
+import { Card } from "~/components/common/card"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { findTools } from "~/server/web/tools/queries"
 

@@ -4,7 +4,7 @@ import { SearchIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { parseAsString, useQueryState } from "nuqs"
 import { type FormEvent, type HTMLAttributes, useEffect, useRef, useState } from "react"
-import { Input } from "~/components/web/ui/input"
+import { Input } from "~/components/common/input"
 import { cx } from "~/utils/cva"
 
 export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormElement>) => {

@@ -7,9 +7,9 @@ import { parseAsString, useQueryStates } from "nuqs"
 import type * as React from "react"
 import { useMemo } from "react"
 import type { DateRange } from "react-day-picker"
-import { Button, type ButtonProps } from "~/components/admin/ui/button"
-import { Calendar } from "~/components/admin/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/admin/ui/popover"
+import { Button, type ButtonProps } from "~/components/common/button"
+import { Calendar } from "~/components/common/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
 import { cx } from "~/utils/cva"
 
 interface DateRangePickerProps extends React.ComponentProps<typeof PopoverContent> {
@@ -60,7 +60,7 @@ interface DateRangePickerProps extends React.ComponentProps<typeof PopoverConten
 export function DateRangePicker({
   defaultDateRange,
   placeholder = "Pick a date",
-  triggerVariant = "outline",
+  triggerVariant = "secondary",
   triggerSize = "md",
   triggerClassName,
   shallow = false,
@@ -115,7 +115,7 @@ export function DateRangePicker({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className={cx("w-auto p-0", className)} {...props}>
+      <PopoverContent className={cx("w-auto", className)} {...props}>
         <Calendar
           autoFocus
           mode="range"

@@ -15,11 +15,11 @@ import { Stack } from "~/components/common/stack"
 import { PlanIntervalSwitch } from "~/components/web/plan-interval-switch"
 import { Price } from "~/components/web/price"
 import { Beam } from "~/components/web/ui/beam"
-import { Button } from "~/components/web/ui/button"
-import { Card, CardBg, type cardVariants } from "~/components/web/ui/card"
-import { Ping } from "~/components/web/ui/ping"
-import { Tooltip } from "~/components/web/ui/tooltip"
-import { TooltipProvider } from "~/components/web/ui/tooltip"
+import { Button } from "~/components/common/button"
+import { Card, CardBg, type cardVariants } from "~/components/common/card"
+import { Ping } from "~/components/common/ping"
+import { Tooltip } from "~/components/common/tooltip"
+import { TooltipProvider } from "~/components/common/tooltip"
 import { usePlanPrices } from "~/hooks/use-plan-prices"
 import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
@@ -177,7 +177,7 @@ const Plan = ({
       />
 
       {!!features && (
-        <TooltipProvider delayDuration={0} disableHoverableContent>
+        <TooltipProvider delayDuration={0}>
           <Stack direction="column" className="items-stretch">
             {features.map(({ type, name, footnote }) => (
               <div key={name} className={cx(planFeatureVariants())}>

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { UpdateAlternativeActions } from "~/app/admin/alternatives/[slug]/actions"
 import { AlternativeForm } from "~/app/admin/alternatives/_components/alternative-form"
-import { Wrapper } from "~/components/admin/ui/wrapper"
+import { Wrapper } from "~/components/admin/wrapper"
 import { H3 } from "~/components/common/heading"
 import { findAlternativeBySlug } from "~/server/admin/alternatives/queries"
 import { findToolList } from "~/server/admin/tools/queries"
