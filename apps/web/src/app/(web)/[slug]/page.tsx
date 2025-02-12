@@ -130,18 +130,16 @@ export default async function ToolPage(props: PageProps) {
               <ToolAlternatives alternatives={tool.alternatives} />
 
               <Stack size="sm" className="w-full">
-                {tool.websiteUrl && (
-                  <Button suffix={<ArrowUpRightIcon />} asChild>
-                    <ExternalLink
-                      href={tool.websiteUrl}
-                      rel={tool.isFeatured ? "noopener noreferrer" : undefined}
-                      eventName="click_website"
-                      eventProps={{ url: tool.websiteUrl }}
-                    >
-                      Visit {tool.name}
-                    </ExternalLink>
-                  </Button>
-                )}
+                <Button suffix={<ArrowUpRightIcon />} asChild>
+                  <ExternalLink
+                    href={tool.affiliateUrl || tool.websiteUrl}
+                    rel={tool.isFeatured ? "noopener noreferrer" : undefined}
+                    eventName="click_website"
+                    eventProps={{ url: tool.websiteUrl }}
+                  >
+                    Visit {tool.name}
+                  </ExternalLink>
+                </Button>
 
                 {tool.hostingUrl && (
                   <Button variant="secondary" suffix={<ArrowUpRightIcon />} asChild>
