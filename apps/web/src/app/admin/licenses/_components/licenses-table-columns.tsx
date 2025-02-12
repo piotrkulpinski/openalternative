@@ -3,13 +3,14 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { License } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
+import type { Dispatch, SetStateAction } from "react"
 import { LicenseActions } from "~/app/admin/licenses/_components/license-actions"
 import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/admin/data-table/data-table-link"
 import type { DataTableRowAction } from "~/types"
 
 type GetColumnsProps = {
-  setRowAction: React.Dispatch<React.SetStateAction<DataTableRowAction<License> | null>>
+  setRowAction: Dispatch<SetStateAction<DataTableRowAction<License> | null>>
 }
 
 export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<License>[] => {
