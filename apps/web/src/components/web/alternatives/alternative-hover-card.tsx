@@ -12,8 +12,8 @@ export const AlternativeHoverCard = ({ alternative, ...props }: AlternativeHover
     <HoverCard openDelay={300}>
       <HoverCardTrigger asChild {...props} />
 
-      <HoverCardContent asChild>
-        <AlternativeCard alternative={alternative} className="w-72" />
+      <HoverCardContent align="start" asChild>
+        <AlternativeCard alternative={alternative} showCount />
       </HoverCardContent>
     </HoverCard>
   )

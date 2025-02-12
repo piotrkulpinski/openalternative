@@ -129,7 +129,7 @@ export default async function ToolPage(props: PageProps) {
 
               <ToolAlternatives alternatives={tool.alternatives} />
 
-              <Stack size="sm" className="w-full">
+              <Stack className="w-full">
                 <Button suffix={<ArrowUpRightIcon />} asChild>
                   <ExternalLink
                     href={tool.affiliateUrl || tool.websiteUrl}
@@ -154,7 +154,7 @@ export default async function ToolPage(props: PageProps) {
                 )}
 
                 {tool.discountAmount && (
-                  <p className="ml-auto flex-1 pl-2 text-sm text-end text-balance text-green-600 dark:text-green-400">
+                  <p className="pl-2 flex-1 text-sm text-balance text-green-500">
                     {tool.discountCode
                       ? `Use code ${tool.discountCode} for ${tool.discountAmount}!`
                       : `Get ${tool.discountAmount} with our link!`}
