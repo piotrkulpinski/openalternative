@@ -1,14 +1,14 @@
 "use client"
 
+import { getUrlHostname } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ReportType } from "@openalternative/db/client"
-import { BookmarkPlusIcon, EllipsisIcon, TriangleAlertIcon } from "lucide-react"
+import { EllipsisIcon, ShieldPlusIcon, TriangleAlertIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import type { HTMLAttributes } from "react"
-import { startTransition, useOptimistic, useState } from "react"
+import { useOptimistic, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { z } from "zod"
 import { useServerAction } from "zsa-react"
 import { Button } from "~/components/common/button"
 import {
@@ -36,19 +36,12 @@ import {
 import { RadioGroup, RadioGroupItem } from "~/components/common/radio-group"
 import { Stack } from "~/components/common/stack"
 import { TextArea } from "~/components/common/textarea"
-import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
+import { TooltipProvider } from "~/components/common/tooltip"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
-import { siteConfig } from "~/config/site"
-import { reportTool, toggleBookmark } from "~/server/web/tools/actions"
+import { type ReportSchema, reportSchema } from "~/server/schemas"
+import { reportTool } from "~/server/web/tools/actions"
 import type { ToolMany, ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
-
-const reportSchema = z.object({
-  type: z.nativeEnum(ReportType),
-  message: z.string().optional(),
-})
-
-type ReportSchema = z.infer<typeof reportSchema>
 
 type ToolActionsProps = HTMLAttributes<HTMLElement> & {
   tool: ToolMany | ToolManyExtended
@@ -64,7 +57,8 @@ export const ToolActions = ({
 }: ToolActionsProps) => {
   const pathname = usePathname()
   const [bookmarked, setBookmarked] = useOptimistic(isBookmarked)
-  const [isOpen, setIsOpen] = useState(false)
+  const [isReportOpen, setIsReportOpen] = useState(false)
+  const [isClaimOpen, setIsClaimOpen] = useState(false)
 
   const form = useForm<ReportSchema>({
     resolver: zodResolver(reportSchema),
@@ -77,7 +71,7 @@ export const ToolActions = ({
   const { execute, isPending } = useServerAction(reportTool, {
     onSuccess: () => {
       toast.success("Thank you for your report")
-      setIsOpen(false)
+      setIsReportOpen(false)
       form.reset()
     },
     onError: ({ err }) => {
@@ -85,20 +79,15 @@ export const ToolActions = ({
     },
   })
 
-  const handleBookmark = async () => {
-    startTransition(() => setBookmarked(!bookmarked))
-    await toggleBookmark({ toolSlug: tool.slug, callbackURL: `${siteConfig.url}${pathname}` })
-  }
-
-  const handleClose = () => {
-    form.reset()
-    setIsOpen(false)
-  }
+  // const handleBookmark = async () => {
+  //   startTransition(() => setBookmarked(!bookmarked))
+  //   await toggleBookmark({ toolSlug: tool.slug, callbackURL: `${siteConfig.url}${pathname}` })
+  // }
 
   return (
     <TooltipProvider delayDuration={250}>
       <Stack size="sm" className={cx("flex-nowrap justify-end text-lg", className)} {...props}>
-        <Dialog open={isOpen} onOpenChange={handleClose}>
+        <Dialog open={isReportOpen} onOpenChange={setIsReportOpen}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" prefix={<EllipsisIcon className="-my-1 size-5!" />} />
@@ -106,7 +95,21 @@ export const ToolActions = ({
 
             <DropdownMenuContent side="bottom" align="end" className="min-w-36">
               <DropdownMenuItem asChild>
-                <button type="button" className={navLinkVariants()} onClick={() => setIsOpen(true)}>
+                <button
+                  type="button"
+                  className={navLinkVariants()}
+                  onClick={() => setIsClaimOpen(true)}
+                >
+                  <ShieldPlusIcon className="shrink-0 size-4 opacity-75" />
+                  Claim Listing
+                </button>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <button
+                  type="button"
+                  className={navLinkVariants()}
+                  onClick={() => setIsReportOpen(true)}
+                >
                   <TriangleAlertIcon className="shrink-0 size-4 opacity-75" />
                   Report
                 </button>
@@ -114,7 +117,7 @@ export const ToolActions = ({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <DialogContent>
+          <DialogContent className="max-w-md">
             <DialogHeader>
               <DialogTitle>Report {tool.name}</DialogTitle>
               <DialogDescription>What is happening with this tool?</DialogDescription>
@@ -184,7 +187,7 @@ export const ToolActions = ({
                 />
 
                 <DialogFooter>
-                  <Button type="button" variant="secondary" onClick={handleClose}>
+                  <Button type="button" variant="secondary" onClick={() => setIsReportOpen(false)}>
                     Cancel
                   </Button>
 
@@ -194,6 +197,30 @@ export const ToolActions = ({
                 </DialogFooter>
               </form>
             </Form>
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={isClaimOpen} onOpenChange={setIsClaimOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Claim {tool.name}</DialogTitle>
+
+              <DialogDescription>
+                To claim this listing and manage it, you need to sign in with an email address from
+                the same domain – <strong>{getUrlHostname(tool.websiteUrl)}</strong>. This helps us
+                verify that you represent the organization.
+              </DialogDescription>
+            </DialogHeader>
+
+            <DialogFooter>
+              <Button variant="secondary" onClick={() => setIsClaimOpen(false)}>
+                Cancel
+              </Button>
+
+              <Button asChild>
+                <a href="/auth/login">Sign in to claim</a>
+              </Button>
+            </DialogFooter>
           </DialogContent>
         </Dialog>
 

@@ -1,3 +1,4 @@
+import { ReportType } from "@openalternative/db/client"
 import { getRepositoryString, githubRegex } from "@openalternative/github"
 import { z } from "zod"
 import { config } from "~/config"
@@ -38,6 +39,12 @@ export const stackAnalyzerSchema = z.object({
   repository: repositorySchema.transform(getRepositoryString),
 })
 
+export const reportSchema = z.object({
+  type: z.nativeEnum(ReportType),
+  message: z.string().optional(),
+})
+
 export type SubmitToolSchema = z.infer<typeof submitToolSchema>
 export type NewsletterSchema = z.infer<typeof newsletterSchema>
 export type StackAnalyzerSchema = z.infer<typeof stackAnalyzerSchema>
+export type ReportSchema = z.infer<typeof reportSchema>
