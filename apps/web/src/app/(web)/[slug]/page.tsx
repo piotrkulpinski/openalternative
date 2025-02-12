@@ -96,22 +96,22 @@ export default async function ToolPage(props: PageProps) {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          {
+            href: "/#tools",
+            name: "Open Source Tools",
+          },
+          {
+            href: `/${tool.slug}`,
+            name: tool.name,
+          },
+        ]}
+      />
+
       <div className="flex flex-col gap-12">
         <Section>
           <Section.Content className="max-md:contents">
-            <Breadcrumbs
-              items={[
-                {
-                  href: "/#tools",
-                  name: "Open Source Tools",
-                },
-                {
-                  href: `/${tool.slug}`,
-                  name: tool.name,
-                },
-              ]}
-            />
-
             <div className="flex flex-1 flex-col items-start gap-4 max-md:order-1 md:gap-6">
               <div className="flex w-full flex-col items-start gap-y-4">
                 <Stack className="w-full">
