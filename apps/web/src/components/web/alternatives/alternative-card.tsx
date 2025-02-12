@@ -1,12 +1,11 @@
 import plur from "plur"
 import type { ComponentProps } from "react"
+import { Card, CardDescription, CardFooter, CardHeader } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
-import { Card, CardDescription, CardFooter, CardHeader } from "~/components/common/card"
 import { Favicon } from "~/components/web/ui/favicon"
 import type { AlternativeMany } from "~/server/web/alternatives/payloads"
-import { cx } from "~/utils/cva"
 
 type AlternativeCardProps = Omit<ComponentProps<typeof Card>, "href"> & {
   alternative: AlternativeMany
@@ -26,13 +25,11 @@ const AlternativeCard = ({ alternative, showCount, ...props }: AlternativeCardPr
         </CardHeader>
 
         {alternative.description && (
-          <CardDescription className={cx(!showCount && "line-clamp-3")}>
-            {alternative.description}
-          </CardDescription>
+          <CardDescription className="line-clamp-3">{alternative.description}</CardDescription>
         )}
 
         {showCount && (
-          <CardFooter>
+          <CardFooter className="mt-auto">
             {alternative._count.tools} {plur("alternative", alternative._count.tools)}
           </CardFooter>
         )}

@@ -13,7 +13,7 @@ export const AlternativeHoverCard = ({ alternative, ...props }: AlternativeHover
       <HoverCardTrigger asChild {...props} />
 
       <HoverCardContent asChild>
-        <AlternativeCard alternative={alternative} className="w-80" />
+        <AlternativeCard alternative={alternative} className="w-72" />
       </HoverCardContent>
     </HoverCard>
   )
