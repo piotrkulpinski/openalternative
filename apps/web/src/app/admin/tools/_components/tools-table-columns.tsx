@@ -3,6 +3,7 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { Tool } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
+import type { Dispatch, SetStateAction } from "react"
 import { ToolActions } from "~/app/admin/tools/_components/tool-actions"
 import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/admin/data-table/data-table-link"
@@ -10,7 +11,7 @@ import { DataTableThumbnail } from "~/components/admin/data-table/data-table-thu
 import type { DataTableRowAction } from "~/types"
 
 type GetColumnsProps = {
-  setRowAction: React.Dispatch<React.SetStateAction<DataTableRowAction<Tool> | null>>
+  setRowAction: Dispatch<SetStateAction<DataTableRowAction<Tool> | null>>
 }
 
 export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Tool>[] => {

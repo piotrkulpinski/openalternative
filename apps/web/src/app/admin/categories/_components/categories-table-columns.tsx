@@ -3,13 +3,14 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { Category } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
+import type { Dispatch, SetStateAction } from "react"
 import { CategoryActions } from "~/app/admin/categories/_components/category-actions"
 import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/admin/data-table/data-table-link"
 import type { DataTableRowAction } from "~/types"
 
 type GetColumnsProps = {
-  setRowAction: React.Dispatch<React.SetStateAction<DataTableRowAction<Category> | null>>
+  setRowAction: Dispatch<SetStateAction<DataTableRowAction<Category> | null>>
 }
 
 export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Category>[] => {
