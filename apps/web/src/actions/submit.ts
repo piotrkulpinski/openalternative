@@ -2,9 +2,11 @@
 
 import { slugify } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
+import { headers } from "next/headers"
 import { createServerAction } from "zsa"
 import { subscribeToNewsletter } from "~/actions/subscribe"
 import { isProd } from "~/env"
+import { auth } from "~/lib/auth"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { submitToolSchema } from "~/server/schemas"
 import { inngest } from "~/services/inngest"
@@ -38,16 +40,20 @@ const generateUniqueSlug = async (baseName: string): Promise<string> => {
 export const submitTool = createServerAction()
   .input(submitToolSchema)
   .handler(async ({ input: { newsletterOptIn, ...data } }) => {
-    const ip = await getIP()
+    const session = await auth.api.getSession({ headers: await headers() })
 
-    // Rate limiting check
-    if (await isRateLimited(ip, "submission")) {
-      throw new Error("Too many submissions. Please try again later.")
-    }
+    if (!session?.user) {
+      const ip = await getIP()
 
-    // Disposable email check
-    if (await isDisposableEmail(data.submitterEmail)) {
-      throw new Error("Invalid email address, please use a real one")
+      // Rate limiting check
+      if (await isRateLimited(ip, "submission")) {
+        throw new Error("Too many submissions. Please try again later.")
+      }
+
+      // Disposable email check
+      if (await isDisposableEmail(data.submitterEmail)) {
+        throw new Error("Invalid email address, please use a real one")
+      }
     }
 
     if (newsletterOptIn) {
@@ -73,7 +79,7 @@ export const submitTool = createServerAction()
 
     // Save the tool to the database
     const tool = await db.tool.create({
-      data: { ...data, slug },
+      data: { ...data, slug, ownerId: session?.user.id },
     })
 
     // Send an event to the Inngest pipeline
