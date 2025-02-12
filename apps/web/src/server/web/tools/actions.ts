@@ -1,13 +1,13 @@
 "use server"
 
 import { db } from "@openalternative/db"
-import { ReportType } from "@openalternative/db/client"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { z } from "zod"
 import { createServerAction } from "zsa"
 import { auth } from "~/lib/auth"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
+import { reportSchema } from "~/server/schemas"
 import { findAlternatives } from "~/server/web/alternatives/queries"
 import { findCategories } from "~/server/web/categories/queries"
 import { findLicenses } from "~/server/web/licenses/queries"
@@ -91,13 +91,7 @@ export const toggleBookmark = createServerAction()
   })
 
 export const reportTool = createServerAction()
-  .input(
-    z.object({
-      toolSlug: z.string(),
-      type: z.nativeEnum(ReportType),
-      message: z.string().optional(),
-    }),
-  )
+  .input(reportSchema.extend({ toolSlug: z.string() }))
   .handler(async ({ input: { toolSlug, type, message } }) => {
     const ip = await getIP()
 
