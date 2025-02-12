@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { submitTool } from "~/actions/submit"
+import { Button } from "~/components/common/button"
 import { Checkbox } from "~/components/common/checkbox"
 import {
   Form,
@@ -18,9 +19,8 @@ import {
   FormMessage,
 } from "~/components/common/form"
 import { Hint } from "~/components/common/hint"
-import { FeatureNudge } from "~/components/web/feature-nudge"
-import { Button } from "~/components/common/button"
 import { Input } from "~/components/common/input"
+import { FeatureNudge } from "~/components/web/feature-nudge"
 import { useSession } from "~/lib/auth-client"
 import { type SubmitToolSchema, submitToolSchema } from "~/server/schemas"
 import { cx } from "~/utils/cva"
@@ -33,8 +33,8 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
     resolver: zodResolver(submitToolSchema),
     values: {
       name: "",
-      website: "",
-      repository: "",
+      websiteUrl: "",
+      repositoryUrl: "",
       submitterName: session?.user.name || "",
       submitterEmail: session?.user.email || "",
       submitterNote: "",
@@ -127,7 +127,7 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
 
         <FormField
           control={form.control}
-          name="website"
+          name="websiteUrl"
           render={({ field }) => (
             <FormItem>
               <FormLabel isRequired>Website URL:</FormLabel>
@@ -141,7 +141,7 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
 
         <FormField
           control={form.control}
-          name="repository"
+          name="repositoryUrl"
           render={({ field }) => (
             <FormItem className="col-span-full">
               <FormLabel isRequired>Repository URL:</FormLabel>

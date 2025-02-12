@@ -130,13 +130,13 @@ export default async function ToolPage(props: PageProps) {
               <ToolAlternatives alternatives={tool.alternatives} />
 
               <Stack size="sm" className="w-full">
-                {tool.website && (
+                {tool.websiteUrl && (
                   <Button suffix={<ArrowUpRightIcon />} asChild>
                     <ExternalLink
-                      href={tool.website}
+                      href={tool.websiteUrl}
                       rel={tool.isFeatured ? "noopener noreferrer" : undefined}
                       eventName="click_website"
-                      eventProps={{ url: tool.website }}
+                      eventProps={{ url: tool.websiteUrl }}
                     >
                       Visit {tool.name}
                     </ExternalLink>

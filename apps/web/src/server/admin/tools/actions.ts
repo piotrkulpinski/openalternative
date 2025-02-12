@@ -100,8 +100,8 @@ export const reuploadToolAssets = authedProcedure
     const tool = await db.tool.findUniqueOrThrow({ where: { id } })
 
     const [faviconUrl, screenshotUrl] = await Promise.all([
-      uploadFavicon(tool.website, `tools/${tool.slug}/favicon`),
-      uploadScreenshot(tool.website, `tools/${tool.slug}/screenshot`),
+      uploadFavicon(tool.websiteUrl, `tools/${tool.slug}/favicon`),
+      uploadScreenshot(tool.websiteUrl, `tools/${tool.slug}/screenshot`),
     ])
 
     await db.tool.update({
@@ -122,7 +122,7 @@ export const analyzeToolStack = authedProcedure
     const tool = await db.tool.findUniqueOrThrow({ where: { id } })
 
     // Get analysis and cache it
-    const { stack } = await analyzeRepositoryStack(tool.repository)
+    const { stack } = await analyzeRepositoryStack(tool.repositoryUrl)
 
     // Update tool with new stack
     return await db.tool.update({

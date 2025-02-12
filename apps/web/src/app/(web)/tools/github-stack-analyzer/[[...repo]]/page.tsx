@@ -45,7 +45,7 @@ export default async function StackAnalyzerPage({ params }: PageProps) {
         }),
 
         db.tool.findFirst({
-          where: { repository: { endsWith: repoName }, status: ToolStatus.Published },
+          where: { repositoryUrl: { endsWith: repoName }, status: ToolStatus.Published },
           select: toolOnePayload,
         }),
       ])

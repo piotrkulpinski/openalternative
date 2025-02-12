@@ -27,8 +27,8 @@ export const toolStackPayload = Prisma.validator<Prisma.Tool$stacksArgs>()({
 export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   name: true,
   slug: true,
-  website: true,
-  repository: true,
+  websiteUrl: true,
+  repositoryUrl: true,
   tagline: true,
   description: true,
   content: true,
@@ -55,6 +55,7 @@ export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
 export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({
   name: true,
   slug: true,
+  websiteUrl: true,
   tagline: true,
   description: true,
   stars: true,
@@ -71,6 +72,7 @@ export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({
 export const toolManyExtendedPayload = Prisma.validator<Prisma.ToolSelect>()({
   name: true,
   slug: true,
+  websiteUrl: true,
   description: true,
   content: true,
   faviconUrl: true,

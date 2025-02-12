@@ -80,7 +80,7 @@ export const reuploadAlternativeAssets = authedProcedure
     })
 
     const faviconUrl = await uploadFavicon(
-      alternative.website,
+      alternative.websiteUrl,
       `alternatives/${alternative.slug}/favicon`,
     )
 

@@ -10,7 +10,16 @@ import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/common/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/common/form"
 import { Input } from "~/components/common/input"
+import { Link } from "~/components/common/link"
 import {
   Select,
   SelectContent,
@@ -20,15 +29,6 @@ import {
 } from "~/components/common/select"
 import { Switch } from "~/components/common/switch"
 import { TextArea } from "~/components/common/textarea"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/components/common/form"
-import { Link } from "~/components/common/link"
 import type { findAlternativeList } from "~/server/admin/alternatives/queries"
 import type { findCategoryList } from "~/server/admin/categories/queries"
 import { createTool, updateTool } from "~/server/admin/tools/actions"
@@ -98,44 +98,14 @@ export function ToolForm({
         noValidate
         {...props}
       >
-        <div className="flex flex-row gap-4 max-sm:contents">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="PostHog" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Slug</FormLabel>
-                <FormControl>
-                  <Input placeholder="posthog" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
         <FormField
           control={form.control}
-          name="website"
+          name="name"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Website</FormLabel>
+            <FormItem className="flex-1">
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="https://posthog.com" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,12 +114,54 @@ export function ToolForm({
 
         <FormField
           control={form.control}
-          name="repository"
+          name="slug"
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <FormLabel>Slug</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="websiteUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Repository</FormLabel>
+              <FormLabel>Website URL</FormLabel>
               <FormControl>
-                <Input type="url" placeholder="https://github.com/posthog/posthog" {...field} />
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="affiliateUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Affiliate URL</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="repositoryUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Repository URL</FormLabel>
+              <FormControl>
+                <Input type="url" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -163,7 +175,7 @@ export function ToolForm({
             <FormItem>
               <FormLabel>Tagline</FormLabel>
               <FormControl>
-                <Input placeholder="How developers build successful products" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -177,10 +189,7 @@ export function ToolForm({
             <FormItem className="col-span-full">
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <TextArea
-                  placeholder="PostHog is the only all-in-one platform for product analytics, feature flags, session replays, experiments, and surveys that's built for developers."
-                  {...field}
-                />
+                <TextArea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

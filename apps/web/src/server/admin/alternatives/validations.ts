@@ -23,7 +23,7 @@ export type GetAlternativesSchema = Awaited<ReturnType<typeof searchParamsCache.
 export const alternativeSchema = z.object({
   name: z.string().min(1, "Name is required"),
   slug: z.string().optional(),
-  website: z.string().min(1, "Website is required").url(),
+  websiteUrl: z.string().min(1, "Website is required").url(),
   description: z.string().optional(),
   faviconUrl: z.string().optional(),
   isFeatured: z.boolean().optional(),

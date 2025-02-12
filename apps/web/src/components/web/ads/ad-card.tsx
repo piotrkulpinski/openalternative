@@ -1,9 +1,6 @@
 import type { AdType } from "@openalternative/db/client"
 import { ArrowUpRightIcon } from "lucide-react"
 import type { ComponentProps } from "react"
-import { H4 } from "~/components/common/heading"
-import { Skeleton } from "~/components/common/skeleton"
-import { ExternalLink } from "~/components/web/external-link"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
 import {
@@ -13,6 +10,9 @@ import {
   CardHeader,
   type CardProps,
 } from "~/components/common/card"
+import { H4 } from "~/components/common/heading"
+import { Skeleton } from "~/components/common/skeleton"
+import { ExternalLink } from "~/components/web/external-link"
 import { Favicon } from "~/components/web/ui/favicon"
 import { LogoSymbol } from "~/components/web/ui/logo-symbol"
 import { config } from "~/config"
@@ -27,7 +27,7 @@ type AdCardProps = CardProps & {
 
 const AdCard = async ({ className, type, ...props }: AdCardProps) => {
   const ad = (await findAd({ where: { type } })) ?? config.ads.defaultAd
-  const isDefault = !ad.website.startsWith("http")
+  const isDefault = !ad.websiteUrl.startsWith("http")
 
   return (
     <Card
@@ -36,11 +36,11 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
       {...props}
     >
       <ExternalLink
-        href={updateUrlWithSearchParams(ad.website, { ref: "openalternative" })}
+        href={updateUrlWithSearchParams(ad.websiteUrl, { ref: "openalternative" })}
         target={isDefault ? "_self" : undefined}
         rel={!isDefault ? "noopener noreferrer nofollow" : undefined}
         eventName="click_ad"
-        eventProps={{ url: ad.website, type: ad.type }}
+        eventProps={{ url: ad.websiteUrl, type: ad.type }}
       >
         {!isDefault && (
           <CardBadges>

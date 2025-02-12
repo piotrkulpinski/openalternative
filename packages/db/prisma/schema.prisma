@@ -120,7 +120,7 @@ model Ad {
   email       String
   name        String
   description String?
-  website     String
+  websiteUrl  String
   faviconUrl  String?
   type        AdType   @default(Homepage)
   startsAt    DateTime
@@ -133,8 +133,9 @@ model Tool {
   id              String                   @id @default(cuid())
   name            String                   @db.Citext
   slug            String                   @unique
-  website         String                   @unique
-  repository      String                   @unique
+  websiteUrl      String                   @unique
+  affiliateUrl    String?
+  repositoryUrl   String                   @unique
   tagline         String?
   description     String?
   content         String?
@@ -181,7 +182,7 @@ model Alternative {
   name           String   @db.Citext
   slug           String   @unique
   description    String?
-  website        String   @unique
+  websiteUrl     String   @unique
   faviconUrl     String?
   isFeatured     Boolean  @default(false)
   discountCode   String?
@@ -204,7 +205,7 @@ model Category {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Implicit relation  
+  // Implicit relation
   tools Tool[]
 
   // Indexes

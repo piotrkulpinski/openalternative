@@ -3,7 +3,7 @@ import { Prisma } from "@openalternative/db/client"
 export const adOnePayload = Prisma.validator<Prisma.AdSelect>()({
   name: true,
   description: true,
-  website: true,
+  websiteUrl: true,
   faviconUrl: true,
   type: true,
 })

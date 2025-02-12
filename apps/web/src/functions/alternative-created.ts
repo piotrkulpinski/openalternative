@@ -12,7 +12,7 @@ export const alternativeCreated = inngest.createFunction(
     })
 
     const faviconUrl = await step.run("upload-favicon", async () => {
-      return await uploadFavicon(alternative.website, `alternatives/${alternative.slug}/favicon`)
+      return await uploadFavicon(alternative.websiteUrl, `alternatives/${alternative.slug}/favicon`)
     })
 
     await step.run("update-alternative", async () => {

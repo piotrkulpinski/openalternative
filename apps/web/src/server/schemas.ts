@@ -11,8 +11,8 @@ export const repositorySchema = z
 
 export const submitToolSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  website: z.string().min(1, "Website is required").url("Invalid URL").trim(),
-  repository: repositorySchema,
+  websiteUrl: z.string().min(1, "Website is required").url("Invalid URL").trim(),
+  repositoryUrl: repositorySchema,
   submitterName: z.string().min(1, "Your name is required"),
   submitterEmail: z
     .string()

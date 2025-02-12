@@ -70,7 +70,7 @@ export const AlternativeActions = ({
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href={alternative.website} target="_blank">
+          <Link href={alternative.websiteUrl} target="_blank">
             Visit website
           </Link>
         </DropdownMenuItem>

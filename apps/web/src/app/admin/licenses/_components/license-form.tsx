@@ -7,8 +7,6 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { Button } from "~/components/common/button"
-import { Input } from "~/components/common/input"
-import { TextArea } from "~/components/common/textarea"
 import {
   Form,
   FormControl,
@@ -17,7 +15,9 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
+import { TextArea } from "~/components/common/textarea"
 import { createLicense, updateLicense } from "~/server/admin/licenses/actions"
 import type { findLicenseBySlug } from "~/server/admin/licenses/queries"
 import { type LicenseSchema, licenseSchema } from "~/server/admin/licenses/validations"
@@ -85,7 +85,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="MIT" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

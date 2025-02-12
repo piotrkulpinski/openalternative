@@ -88,13 +88,13 @@ export const ToolActions = ({ className, tool, setRowAction, ...props }: ToolAct
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href={tool.website} target="_blank">
+          <Link href={tool.websiteUrl} target="_blank">
             Visit website
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link href={tool.repository} target="_blank">
+          <Link href={tool.repositoryUrl} target="_blank">
             Visit repository
           </Link>
         </DropdownMenuItem>

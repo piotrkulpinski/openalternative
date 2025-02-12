@@ -2,10 +2,10 @@
 
 import { ArrowUpRightIcon } from "lucide-react"
 import type { HTMLAttributes } from "react"
-import { H4 } from "~/components/common/heading"
-import { ExternalLink } from "~/components/web/external-link"
 import { Button } from "~/components/common/button"
 import { Card, CardDescription, CardHeader } from "~/components/common/card"
+import { H4 } from "~/components/common/heading"
+import { ExternalLink } from "~/components/web/external-link"
 import { Favicon } from "~/components/web/ui/favicon"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
 import { cx } from "~/utils/cva"
@@ -22,9 +22,9 @@ export const AlternativeCardExternal = ({
   return (
     <Card className={cx("group/button", className)} {...props} asChild>
       <ExternalLink
-        href={alternative.website}
+        href={alternative.websiteUrl}
         eventName="click_alternative"
-        eventProps={{ url: alternative.website }}
+        eventProps={{ url: alternative.websiteUrl }}
       >
         <CardHeader>
           <Favicon src={alternative.faviconUrl} title={alternative.name} />

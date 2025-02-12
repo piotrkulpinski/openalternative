@@ -1,9 +1,9 @@
 import Image from "next/image"
 import type { ComponentProps } from "react"
-import { Box } from "~/components/common/box"
-import { ExternalLink } from "~/components/web/external-link"
 import { Badge } from "~/components/common/badge"
+import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
+import { ExternalLink } from "~/components/web/external-link"
 import { Container } from "~/components/web/ui/container"
 import { findAd } from "~/server/web/ads/queries"
 import { cx } from "~/utils/cva"
@@ -26,9 +26,9 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
         {...props}
       >
         <ExternalLink
-          href={ad.website}
+          href={ad.websiteUrl}
           eventName="click_ad"
-          eventProps={{ url: ad.website, type: ad.type }}
+          eventProps={{ url: ad.websiteUrl, type: ad.type }}
         >
           <Badge variant="outline" className="max-sm:order-last">
             Ad

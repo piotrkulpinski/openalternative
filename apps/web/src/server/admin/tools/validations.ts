@@ -26,8 +26,9 @@ export type GetToolsSchema = Awaited<ReturnType<typeof searchParamsCache.parse>>
 export const toolSchema = z.object({
   name: z.string().min(1, "Name is required"),
   slug: z.string().optional(),
-  website: z.string().min(1, "Website is required").url(),
-  repository: repositorySchema,
+  websiteUrl: z.string().min(1, "Website is required").url(),
+  affiliateUrl: z.string().url().optional().or(z.literal("")).default(""),
+  repositoryUrl: repositorySchema,
   tagline: z.string().optional(),
   description: z.string().optional(),
   content: z.string().optional(),

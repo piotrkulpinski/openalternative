@@ -2,13 +2,13 @@ import { formatNumber } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict, formatISO } from "date-fns"
 import { CopyrightIcon, GitForkIcon, HistoryIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { ComponentProps } from "react"
+import { Button } from "~/components/common/button"
+import { Card } from "~/components/common/card"
 import { H5 } from "~/components/common/heading"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
-import { Button } from "~/components/common/button"
-import { Card } from "~/components/common/card"
 import { Insights } from "~/components/web/ui/insights"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
@@ -70,7 +70,7 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
         <Insights insights={insights} className="text-sm" />
       </Stack>
 
-      {tool.repository && (
+      {tool.repositoryUrl && (
         <Button
           size="md"
           variant="secondary"
@@ -79,9 +79,9 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
           asChild
         >
           <ExternalLink
-            href={tool.repository}
+            href={tool.repositoryUrl}
             eventName="click_repository"
-            eventProps={{ url: tool.repository }}
+            eventProps={{ url: tool.repositoryUrl }}
           >
             View Repository
           </ExternalLink>

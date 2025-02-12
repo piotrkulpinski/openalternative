@@ -59,7 +59,7 @@ export async function POST(request: Request) {
                 email: user?.email ?? "",
                 name: fields?.find(({ key }) => key === "name")?.text?.value || "",
                 description: fields?.find(({ key }) => key === "description")?.text?.value ?? "",
-                website: fields?.find(({ key }) => key === "website")?.text?.value || "",
+                websiteUrl: fields?.find(({ key }) => key === "website")?.text?.value || "",
                 ...ad,
               },
             })

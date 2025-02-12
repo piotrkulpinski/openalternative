@@ -4,7 +4,7 @@ export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeSelect>(
   name: true,
   slug: true,
   description: true,
-  website: true,
+  websiteUrl: true,
   faviconUrl: true,
   discountCode: true,
   discountAmount: true,

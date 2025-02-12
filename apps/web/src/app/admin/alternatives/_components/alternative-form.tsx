@@ -8,9 +8,6 @@ import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/common/button"
-import { Input } from "~/components/common/input"
-import { Switch } from "~/components/common/switch"
-import { TextArea } from "~/components/common/textarea"
 import {
   Form,
   FormControl,
@@ -19,7 +16,10 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
+import { Switch } from "~/components/common/switch"
+import { TextArea } from "~/components/common/textarea"
 import { createAlternative, updateAlternative } from "~/server/admin/alternatives/actions"
 import type { findAlternativeBySlug } from "~/server/admin/alternatives/queries"
 import { type AlternativeSchema, alternativeSchema } from "~/server/admin/alternatives/validations"
@@ -101,7 +101,7 @@ export function AlternativeForm({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="PostHog" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -115,7 +115,7 @@ export function AlternativeForm({
               <FormItem>
                 <FormLabel>Slug</FormLabel>
                 <FormControl>
-                  <Input placeholder="posthog" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -125,12 +125,12 @@ export function AlternativeForm({
 
         <FormField
           control={form.control}
-          name="website"
+          name="websiteUrl"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Website</FormLabel>
               <FormControl>
-                <Input placeholder="https://posthog.com" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,10 +144,7 @@ export function AlternativeForm({
             <FormItem className="col-span-full">
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <TextArea
-                  placeholder="PostHog is the only all-in-one platform for product analytics, feature flags, session replays, experiments, and surveys that's built for developers."
-                  {...field}
-                />
+                <TextArea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

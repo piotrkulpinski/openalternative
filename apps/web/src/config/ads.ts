@@ -29,7 +29,7 @@ export const adsConfig = {
 
   defaultAd: {
     type: "All",
-    website: "/advertise",
+    websiteUrl: "/advertise",
     name: "Advertise with us",
     description:
       "Reach out to our audience of professional open source/tech enthusiasts to boost your sales.",

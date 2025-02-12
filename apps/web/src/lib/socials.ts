@@ -31,19 +31,17 @@ export const getSocialsFromUrl = async (url: string) => {
  */
 export const sendSocialPost = async (template: string, tool: Tool | Jsonify<Tool>) => {
   const url = `${config.site.url}/${tool.slug}`
-  const socials = await getSocialsFromUrl(tool.website)
+  const socials = await getSocialsFromUrl(tool.websiteUrl)
 
   const twitterHandle = socials.X?.[0]?.user
   const blueskyHandle = socials.Bluesky?.[0]?.user
   const twitterTemplate = updatePostTemplate(template, twitterHandle, url)
   const blueskyTemplate = updatePostTemplate(template, blueskyHandle, url)
 
-  const results = await Promise.allSettled([
+  return await Promise.all([
     sendTwitterPost(twitterTemplate),
     sendBlueskyPost(blueskyTemplate, url),
   ])
-
-  return results.map(r => (r.status === "fulfilled" ? r.value : r.reason))
 }
 
 /**

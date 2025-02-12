@@ -22,7 +22,7 @@ export const toolScheduled = inngest.createFunction(
 
     // Scrape website
     const scrapedData = await step.run("scrape-website", async () => {
-      const data = await firecrawlClient.scrapeUrl(tool.website, { formats: ["markdown"] })
+      const data = await firecrawlClient.scrapeUrl(tool.websiteUrl, { formats: ["markdown"] })
 
       if (!data.success) {
         throw new Error(data.error)
@@ -49,7 +49,7 @@ export const toolScheduled = inngest.createFunction(
       }),
 
       step.run("fetch-repository-data", async () => {
-        const data = await getToolRepositoryData(tool.repository)
+        const data = await getToolRepositoryData(tool.repositoryUrl)
 
         if (!data) return
 
@@ -60,8 +60,8 @@ export const toolScheduled = inngest.createFunction(
       }),
 
       step.run("analyze-repository-stack", async () => {
-        const { id, repository } = tool
-        const { stack } = await analyzeRepositoryStack(repository)
+        const { id, repositoryUrl } = tool
+        const { stack } = await analyzeRepositoryStack(repositoryUrl)
 
         return await db.tool.update({
           where: { id },
@@ -70,8 +70,8 @@ export const toolScheduled = inngest.createFunction(
       }),
 
       step.run("upload-favicon", async () => {
-        const { id, slug, website } = tool
-        const faviconUrl = await uploadFavicon(website, `tools/${slug}/favicon`)
+        const { id, slug, websiteUrl } = tool
+        const faviconUrl = await uploadFavicon(websiteUrl, `tools/${slug}/favicon`)
 
         return await db.tool.update({
           where: { id },
@@ -80,8 +80,8 @@ export const toolScheduled = inngest.createFunction(
       }),
 
       step.run("upload-screenshot", async () => {
-        const { id, slug, website } = tool
-        const screenshotUrl = await uploadScreenshot(website, `tools/${slug}/screenshot`)
+        const { id, slug, websiteUrl } = tool
+        const screenshotUrl = await uploadScreenshot(websiteUrl, `tools/${slug}/screenshot`)
 
         return await db.tool.update({
           where: { id },

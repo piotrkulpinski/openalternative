@@ -1,9 +1,9 @@
 import type { ComponentProps } from "react"
 import { H6 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
-import { Tile, TileCaption, TileDivider } from "~/components/web/ui/tile"
 import { Container } from "~/components/web/ui/container"
 import { NavLink } from "~/components/web/ui/nav-link"
+import { Tile, TileCaption, TileDivider } from "~/components/web/ui/tile"
 import { siteConfig } from "~/config/site"
 import { findAlternatives } from "~/server/web/alternatives/queries"
 import { findCategories } from "~/server/web/categories/queries"
@@ -17,7 +17,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
     }),
 
     findAlternatives({
-      where: { website: { startsWith: siteConfig.affiliateUrl } },
+      where: { websiteUrl: { startsWith: siteConfig.affiliateUrl } },
       orderBy: { tools: { _count: "desc" } },
       take: 12,
     }),

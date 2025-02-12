@@ -4,6 +4,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { XIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
+import { Prose } from "~/components/web/ui/prose"
 import { cx } from "~/utils/cva"
 
 const Dialog = DialogPrimitive.Root
@@ -76,14 +77,14 @@ const DialogTitle = ({ children, ...props }: ComponentProps<typeof DialogPrimiti
 }
 
 const DialogDescription = ({
+  children,
   className,
   ...props
 }: ComponentProps<typeof DialogPrimitive.Description>) => {
   return (
-    <DialogPrimitive.Description
-      className={cx("text-sm/normal text-muted-foreground", className)}
-      {...props}
-    />
+    <DialogPrimitive.Description asChild className={cx("text-sm/normal", className)} {...props}>
+      <Prose>{children}</Prose>
+    </DialogPrimitive.Description>
   )
 }
 

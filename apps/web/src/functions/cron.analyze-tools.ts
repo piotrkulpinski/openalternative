@@ -13,7 +13,7 @@ export const analyzeTools = inngest.createFunction(
     const tools = await step.run("fetch-tools", async () => {
       return await db.tool.findMany({
         where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
-        select: { id: true, repository: true },
+        select: { id: true, repositoryUrl: true },
       })
     })
 
@@ -25,7 +25,7 @@ export const analyzeTools = inngest.createFunction(
           logger.info(`Processing batch ${Math.floor(i / batchSize) + 1}, tool ${index + 1}`)
 
           // Get analysis and cache it
-          const { stack } = await analyzeRepositoryStack(tool.repository)
+          const { stack } = await analyzeRepositoryStack(tool.repositoryUrl)
 
           // Update tool with new stack
           return await db.tool.update({
