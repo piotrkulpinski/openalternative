@@ -65,6 +65,10 @@ model User {
   accounts  Account[]
   sessions  Session[]
   bookmarks Bookmark[]
+  tools     Tool[]
+
+  // Indexes
+  @@index([id])
 }
 
 model Session {
@@ -169,12 +173,15 @@ model Tool {
   licenseId    String?
   bookmarkedBy Bookmark[]
   reports      Report[]
+  owner        User?         @relation(fields: [ownerId], references: [id])
+  ownerId      String?
 
   @@index([id, slug])
   @@index([name])
   @@index([status])
   @@index([isFeatured, score])
   @@index([searchVector], type: Gin)
+  @@index([ownerId])
 }
 
 model Alternative {
