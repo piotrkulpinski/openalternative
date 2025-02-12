@@ -9,7 +9,7 @@ import { isChildrenEmpty } from "~/utils/helpers"
 
 const buttonVariants = cva({
   base: [
-    "group/button relative inline-flex items-center justify-center border border-transparent font-medium text-[0.8125rem] text-start leading-tight rounded-md hover:z-10 hover:border-transparent",
+    "group/button relative inline-flex items-center justify-center border border-transparent font-medium text-[0.8125rem] text-start leading-tight rounded-md overflow-clip hover:z-10 hover:border-transparent",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
@@ -19,7 +19,7 @@ const buttonVariants = cva({
       primary: "text-background bg-foreground hover:opacity-90",
       secondary:
         "border-border bg-background text-secondary-foreground hover:bg-card hover:border-ring",
-      ghost: "text-foreground hover:bg-accent",
+      ghost: "text-secondary-foreground hover:bg-accent hover:text-foreground",
       destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
     },
     size: {
@@ -39,7 +39,7 @@ const buttonVariants = cva({
 })
 
 const buttonAffixVariants = cva({
-  base: "shrink-0 first:-ml-[0.21425em] last:-mr-[0.21425em] size-[1.1em] opacity-75",
+  base: "shrink-0 first:-ml-[0.21425em] last:-mr-[0.21425em] size-[1.25em] opacity-75",
 })
 
 export type ButtonProps = Omit<ComponentProps<"button">, "size" | "prefix"> &

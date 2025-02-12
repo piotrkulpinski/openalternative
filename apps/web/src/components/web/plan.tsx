@@ -9,17 +9,17 @@ import { toast } from "sonner"
 import type Stripe from "stripe"
 import { useServerAction } from "zsa-react"
 import { createStripeToolCheckout } from "~/actions/stripe"
+import { Button } from "~/components/common/button"
+import { Card, CardBg, type cardVariants } from "~/components/common/card"
 import { H5 } from "~/components/common/heading"
+import { Ping } from "~/components/common/ping"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
+import { Tooltip } from "~/components/common/tooltip"
+import { TooltipProvider } from "~/components/common/tooltip"
 import { PlanIntervalSwitch } from "~/components/web/plan-interval-switch"
 import { Price } from "~/components/web/price"
 import { Beam } from "~/components/web/ui/beam"
-import { Button } from "~/components/common/button"
-import { Card, CardBg, type cardVariants } from "~/components/common/card"
-import { Ping } from "~/components/common/ping"
-import { Tooltip } from "~/components/common/tooltip"
-import { TooltipProvider } from "~/components/common/tooltip"
 import { usePlanPrices } from "~/hooks/use-plan-prices"
 import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
@@ -139,7 +139,7 @@ const Plan = ({
     <Card hover={false} className={cx(planVariants({ className }))} {...props}>
       {isFeatured && (
         <>
-          <Beam className="top-0" />
+          <Beam />
           <CardBg />
         </>
       )}
