@@ -177,7 +177,7 @@
   [href]:hover svg[class*="arrow-up-right"],
   [type]:hover svg[class*="arrow-up-right"] {
     @apply translate-x-[0.1em];
-    @apply -translate-y-[0.1em];
+    @apply rotate-12;
   }
 
   [href]:hover svg[class*="arrow-right"],

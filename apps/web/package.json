@@ -9,11 +9,10 @@
     "build": "next build",
     "lint": "bun biome lint --apply .",
     "check": "bun biome check --apply .",
-    "format": "bun biome format --organize-imports-enabled --write ."
+    "format": "bun biome format --write ."
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^1.1.7",
-    "@ai-sdk/openai": "^1.1.10",
+    "@ai-sdk/google": "^1.1.13",
     "@atproto/api": "^0.13.35",
     "@aws-sdk/client-s3": "^3.744.0",
     "@aws-sdk/lib-storage": "^3.744.0",
