@@ -1,7 +1,15 @@
+"use client"
+
 import { formatNumber } from "@curiousleaf/utils"
 import { AtSignIcon, RssIcon } from "lucide-react"
 import Image from "next/image"
 import type { HTMLAttributes } from "react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/common/dropdown-menu"
 import { H5, H6 } from "~/components/common/heading"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
@@ -9,18 +17,12 @@ import { BrandLinkedInIcon } from "~/components/common/icons/brand-linkedin"
 import { BrandMediumIcon } from "~/components/common/icons/brand-medium"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Stack } from "~/components/common/stack"
-import { NewsletterForm } from "~/components/web/newsletter-form"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/components/common/dropdown-menu"
-import { NavLink } from "~/components/web/ui/nav-link"
 import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
+import { ExternalLink } from "~/components/web/external-link"
+import { NewsletterForm } from "~/components/web/newsletter-form"
+import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
-import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 type FooterProps = HTMLAttributes<HTMLElement> & {
   hideNewsletter?: boolean
@@ -143,15 +145,15 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
             <H6 as="strong">Other Products:</H6>
 
             {config.links.family.map(({ href, title, description }) => (
-              <NavLink
+              <ExternalLink
                 key={href}
-                href={updateUrlWithSearchParams(href, { ref: config.site.name.toLowerCase() })}
-                target="_blank"
+                href={href}
                 rel="noreferrer noopener"
                 title={description}
+                className={navLinkVariants()}
               >
                 {title}
-              </NavLink>
+              </ExternalLink>
             ))}
           </Stack>
         </Stack>

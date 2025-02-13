@@ -7,8 +7,7 @@
   },
   "dependencies": {
     "@octokit/graphql": "^8.2.0",
-    "date-fns": "^4.1.0",
-    "zod": "^3.24.2"
+    "date-fns": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.2",

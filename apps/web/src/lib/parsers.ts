@@ -3,7 +3,7 @@ import { createParser } from "nuqs/server"
 import { z } from "zod"
 import type { ExtendedSortingState } from "~/types"
 
-export const sortingItemSchema = z.object({
+const sortingItemSchema = z.object({
   id: z.string(),
   desc: z.boolean(),
 })

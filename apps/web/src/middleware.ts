@@ -1,4 +1,4 @@
-import { betterFetch } from "@better-fetch/fetch"
+import { betterFetch } from "better-auth/react"
 import { type NextRequest, NextResponse } from "next/server"
 import type { auth } from "~/lib/auth"
 import { isAdminEmail } from "~/utils/auth"

@@ -18,7 +18,6 @@ import { LogoSymbol } from "~/components/web/ui/logo-symbol"
 import { config } from "~/config"
 import { findAd } from "~/server/web/ads/queries"
 import { cx } from "~/utils/cva"
-import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 type AdCardProps = CardProps & {
   rel?: string
@@ -36,9 +35,8 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
       {...props}
     >
       <ExternalLink
-        href={updateUrlWithSearchParams(ad.websiteUrl, { ref: "openalternative" })}
+        href={ad.websiteUrl}
         target={isDefault ? "_self" : undefined}
-        rel={!isDefault ? "noopener noreferrer nofollow" : undefined}
         eventName="click_ad"
         eventProps={{ url: ad.websiteUrl, type: ad.type }}
       >
