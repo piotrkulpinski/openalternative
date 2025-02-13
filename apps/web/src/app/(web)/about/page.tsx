@@ -34,9 +34,8 @@ export default function AboutPage() {
           </Link>{" "}
           is a community driven list of{" "}
           <strong>open source alternatives to proprietary software</strong> and applications. The
-          goal of the site is to be your first stop when researching for a new open source service
-          to help you grow your business. It will help you find alternatives and reviews of the
-          products you already use.
+          goal of the site is to be your first stop when searching for open source services. It will
+          help you find alternatives to the products you already use.
         </p>
 
         <h2>How did {config.site.name} get started?</h2>

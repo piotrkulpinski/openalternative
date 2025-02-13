@@ -2,9 +2,9 @@
 
 import { db } from "@openalternative/db"
 import { z } from "zod"
-import { authedProcedure } from "~/lib/safe-actions"
+import { adminProcedure } from "~/lib/safe-actions"
 
-export const searchItems = authedProcedure
+export const searchItems = adminProcedure
   .createServerAction()
   .input(z.object({ query: z.string() }))
   .handler(async ({ input: { query } }) => {

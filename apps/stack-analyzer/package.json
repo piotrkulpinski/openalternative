@@ -12,13 +12,13 @@
     "@openalternative/db": "workspace:*",
     "@openalternative/github": "workspace:*",
     "@specfy/stack-analyser": "^1.8.5",
-    "fs-extra": "^11.2.0",
-    "hono": "^4.6.14",
-    "zod": "^3.24.1"
+    "fs-extra": "^11.3.0",
+    "hono": "^4.7.1",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.13.2",
     "typescript": "^5.7.3"
   },
   "packageManager": "bun@1.2.2"

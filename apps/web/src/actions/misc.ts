@@ -2,10 +2,10 @@
 
 import { db } from "@openalternative/db"
 import { z } from "zod"
-import { authedProcedure } from "~/lib/safe-actions"
+import { adminProcedure } from "~/lib/safe-actions"
 import { getPostTemplate, sendSocialPost } from "~/lib/socials"
 
-export const testSocialPosts = authedProcedure
+export const testSocialPosts = adminProcedure
   .createServerAction()
   .input(z.object({ slug: z.string() }))
   .handler(async ({ input: { slug } }) => {

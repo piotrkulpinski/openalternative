@@ -6,11 +6,11 @@ import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { isProd } from "~/env"
 import { uploadFavicon } from "~/lib/media"
-import { authedProcedure } from "~/lib/safe-actions"
+import { adminProcedure } from "~/lib/safe-actions"
 import { alternativeSchema } from "~/server/admin/alternatives/validations"
 import { inngest } from "~/services/inngest"
 
-export const createAlternative = authedProcedure
+export const createAlternative = adminProcedure
   .createServerAction()
   .input(alternativeSchema)
   .handler(async ({ input: { tools, ...input } }) => {
@@ -30,7 +30,7 @@ export const createAlternative = authedProcedure
     return alternative
   })
 
-export const updateAlternative = authedProcedure
+export const updateAlternative = adminProcedure
   .createServerAction()
   .input(alternativeSchema.extend({ id: z.string() }))
   .handler(async ({ input: { id, tools, ...input } }) => {
@@ -48,7 +48,7 @@ export const updateAlternative = authedProcedure
     return alternative
   })
 
-export const deleteAlternatives = authedProcedure
+export const deleteAlternatives = adminProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))
   .handler(async ({ input: { ids } }) => {
@@ -71,7 +71,7 @@ export const deleteAlternatives = authedProcedure
     return true
   })
 
-export const reuploadAlternativeAssets = authedProcedure
+export const reuploadAlternativeAssets = adminProcedure
   .createServerAction()
   .input(z.object({ id: z.string() }))
   .handler(async ({ input: { id } }) => {

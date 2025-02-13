@@ -27,7 +27,7 @@ export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
     findLicenseSlugs({}),
   ])
 
-  const pages = ["/about", "/advertise", "/submit", "/newsletter", "/self-hosted"]
+  const pages = ["/about", "/advertise", "/submit", "/self-hosted"]
   const now = new Date()
 
   return [

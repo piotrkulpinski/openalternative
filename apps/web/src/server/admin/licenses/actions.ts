@@ -4,10 +4,10 @@ import { slugify } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"
-import { authedProcedure } from "~/lib/safe-actions"
+import { adminProcedure } from "~/lib/safe-actions"
 import { licenseSchema } from "~/server/admin/licenses/validations"
 
-export const createLicense = authedProcedure
+export const createLicense = adminProcedure
   .createServerAction()
   .input(licenseSchema)
   .handler(async ({ input }) => {
@@ -23,7 +23,7 @@ export const createLicense = authedProcedure
     return license
   })
 
-export const updateLicense = authedProcedure
+export const updateLicense = adminProcedure
   .createServerAction()
   .input(licenseSchema.extend({ id: z.string() }))
   .handler(async ({ input: { id, ...input } }) => {
@@ -38,7 +38,7 @@ export const updateLicense = authedProcedure
     return license
   })
 
-export const deleteLicenses = authedProcedure
+export const deleteLicenses = adminProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))
   .handler(async ({ input: { ids } }) => {

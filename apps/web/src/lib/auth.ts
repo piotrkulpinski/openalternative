@@ -6,7 +6,7 @@ import { config } from "~/config"
 import EmailLoginLink from "~/emails/login-link"
 import { env } from "~/env"
 import { sendEmails } from "~/lib/email"
-import { isAllowedEmail } from "~/utils/auth"
+import { isAdminEmail } from "~/utils/auth"
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
@@ -42,7 +42,7 @@ export const auth = betterAuth({
     }),
 
     customSession(async ({ user, session }) => ({
-      user: { ...user, isAdmin: isAllowedEmail(user.email) },
+      user: { ...user, isAdmin: isAdminEmail(user.email) },
       session,
     })),
   ],
