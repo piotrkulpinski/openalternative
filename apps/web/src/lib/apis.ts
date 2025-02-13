@@ -8,10 +8,10 @@ export type AnalyzerAPIResult = {
   repository: RepositoryData
 }
 
-export const analyzerApi = wretch(env.STACK_ANALYZER_API_URL)
-  .headers({ "X-API-Key": env.STACK_ANALYZER_API_KEY })
-  .errorType("json")
-  .resolve(r => r.json<AnalyzerAPIResult>())
+// export const analyzerApi = wretch(env.STACK_ANALYZER_API_URL)
+//   .headers({ "X-API-Key": env.STACK_ANALYZER_API_KEY })
+//   .errorType("json")
+//   .resolve(r => r.json<AnalyzerAPIResult>())
 
 export type BrandLinkAPIResult = Record<string, Array<Record<string, string> & { url: string }>>
 

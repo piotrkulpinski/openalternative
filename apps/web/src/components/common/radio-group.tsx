@@ -2,7 +2,7 @@
 
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
 import { Circle } from "lucide-react"
-import { ComponentProps, type ComponentPropsWithoutRef } from "react"
+import type { ComponentProps, ComponentPropsWithoutRef } from "react"
 import { cx } from "~/utils/cva"
 
 const RadioGroup = ({ className, ...props }: ComponentProps<typeof RadioGroupPrimitive.Root>) => {

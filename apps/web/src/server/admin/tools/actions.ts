@@ -8,7 +8,6 @@ import { z } from "zod"
 import { isProd } from "~/env"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { authedProcedure } from "~/lib/safe-actions"
-import { analyzeRepositoryStack } from "~/lib/stack-analysis"
 import { toolSchema } from "~/server/admin/tools/validations"
 import { inngest } from "~/services/inngest"
 
@@ -115,18 +114,3 @@ export const reuploadToolAssets = authedProcedure
     return true
   })
 
-export const analyzeToolStack = authedProcedure
-  .createServerAction()
-  .input(z.object({ id: z.string() }))
-  .handler(async ({ input: { id } }) => {
-    const tool = await db.tool.findUniqueOrThrow({ where: { id } })
-
-    // Get analysis and cache it
-    const { stack } = await analyzeRepositoryStack(tool.repositoryUrl)
-
-    // Update tool with new stack
-    return await db.tool.update({
-      where: { id: tool.id },
-      data: { stacks: { set: stack.map(slug => ({ slug })) } },
-    })
-  })

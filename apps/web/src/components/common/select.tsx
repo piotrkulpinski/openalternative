@@ -3,7 +3,7 @@
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon, ChevronsUpDownIcon } from "lucide-react"
 import type { ComponentProps } from "react"
-import { cx, popoverAnimationClasses, VariantProps } from "~/utils/cva"
+import { cx, popoverAnimationClasses, type VariantProps } from "~/utils/cva"
 import { Box } from "~/components/common/box"
 import { inputVariants } from "./input"
 

@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
 import { Link } from "~/components/common/link"
-import { analyzeToolStack, reuploadToolAssets } from "~/server/admin/tools/actions"
+import { reuploadToolAssets } from "~/server/admin/tools/actions"
 import type { DataTableRowAction } from "~/types"
 import { cx } from "~/utils/cva"
 
@@ -34,15 +34,6 @@ export const ToolActions = ({ className, tool, setRowAction, ...props }: ToolAct
     },
   })
 
-  const { execute: analyzeToolStackAction } = useServerAction(analyzeToolStack, {
-    onSuccess: () => {
-      toast.success("Tool stack analyzed")
-    },
-
-    onError: ({ err }) => {
-      toast.error(err.message)
-    },
-  })
 
   return (
     <DropdownMenu modal={false}>
@@ -81,9 +72,6 @@ export const ToolActions = ({ className, tool, setRowAction, ...props }: ToolAct
           Reupload Assets
         </DropdownMenuItem>
 
-        <DropdownMenuItem onSelect={() => analyzeToolStackAction({ id: tool.id })}>
-          Analyze Stack
-        </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
