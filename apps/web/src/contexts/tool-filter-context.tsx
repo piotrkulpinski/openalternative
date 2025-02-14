@@ -72,4 +72,4 @@ const useToolFilters = () => {
   return context
 }
 
-export { ToolFiltersContext, ToolFiltersProvider, useToolFilters }
+export { ToolFiltersProvider, useToolFilters }

@@ -26,7 +26,7 @@ export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
             value={value}
             format={{ notation: "compact" }}
             locales="en-US"
-            // @ts-ignore
+            // @ts-expect-error
             style={{ "--number-flow-char-height": "0.75em" }}
             className="text-5xl font-semibold tabular-nums"
           />

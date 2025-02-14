@@ -1,12 +1,11 @@
 import type { Metadata } from "next"
 import { Link } from "~/components/common/link"
+import { ExternalLink } from "~/components/web/external-link"
 import { Featured } from "~/components/web/featured"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
-import { addUTMTracking } from "~/utils/helpers"
-import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -34,9 +33,8 @@ export default function AboutPage() {
           </Link>{" "}
           is a community driven list of{" "}
           <strong>open source alternatives to proprietary software</strong> and applications. The
-          goal of the site is to be your first stop when researching for a new open source service
-          to help you grow your business. It will help you find alternatives and reviews of the
-          products you already use.
+          goal of the site is to be your first stop when searching for open source services. It will
+          help you find alternatives to the products you already use.
         </p>
 
         <h2>How did {config.site.name} get started?</h2>
@@ -122,14 +120,9 @@ export default function AboutPage() {
         <ul>
           {config.links.toolsUsed.map(link => (
             <li key={link.title}>
-              <a
-                href={addUTMTracking(link.href, { source: config.site.name.toLowerCase() })}
-                title={link.description}
-                target="_blank"
-                rel="nofollow noreferrer"
-              >
+              <ExternalLink href={link.href} title={link.description}>
                 {link.title}
-              </a>{" "}
+                </ExternalLink>{" "}
               – {link.description}
             </li>
           ))}
@@ -162,14 +155,9 @@ export default function AboutPage() {
         <ul>
           {config.links.family.map(link => (
             <li key={link.title}>
-              <a
-                href={updateUrlWithSearchParams(link.href, { ref: config.site.name.toLowerCase() })}
-                title={link.description}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <ExternalLink href={link.href} title={link.description} rel="noopener noreferrer">
                 {link.title}
-              </a>{" "}
+              </ExternalLink>{" "}
               – {link.description}
             </li>
           ))}

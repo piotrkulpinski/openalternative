@@ -54,4 +54,4 @@ const useAlternativeFilters = () => {
   return context
 }
 
-export { AlternativeFiltersContext, AlternativeFiltersProvider, useAlternativeFilters }
+export { AlternativeFiltersProvider, useAlternativeFilters }

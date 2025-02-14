@@ -35,9 +35,7 @@ export const newsletterSchema = z.object({
   send_welcome_email: z.boolean().optional(),
 })
 
-export const stackAnalyzerSchema = z.object({
-  repository: repositorySchema.transform(getRepositoryString),
-})
+
 
 export const reportSchema = z.object({
   type: z.nativeEnum(ReportType),
@@ -46,5 +44,4 @@ export const reportSchema = z.object({
 
 export type SubmitToolSchema = z.infer<typeof submitToolSchema>
 export type NewsletterSchema = z.infer<typeof newsletterSchema>
-export type StackAnalyzerSchema = z.infer<typeof stackAnalyzerSchema>
 export type ReportSchema = z.infer<typeof reportSchema>

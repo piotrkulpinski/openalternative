@@ -19,7 +19,7 @@ export const env = createEnv({
     VERCEL_ENV: z.enum(["development", "preview", "production"]).default("development"),
     BETTER_AUTH_SECRET: z.string().min(1),
     BETTER_AUTH_URL: z.string().min(1).url(),
-    AUTH_ALLOWED_EMAILS: z.string().optional(),
+    AUTH_ADMIN_EMAILS: z.string().min(1),
     AUTH_GOOGLE_ID: z.string().min(1),
     AUTH_GOOGLE_SECRET: z.string().min(1),
     AUTH_GITHUB_ID: z.string().min(1),
@@ -45,11 +45,8 @@ export const env = createEnv({
     TWITTER_ACCESS_SECRET: z.string().optional(),
     BLUESKY_USERNAME: z.string().optional(),
     BLUESKY_PASSWORD: z.string().optional(),
-    OPENAI_API_KEY: z.string().min(1),
-    ANTHROPIC_API_KEY: z.string().min(1),
     FIRECRAWL_API_KEY: z.string().min(1),
-    STACK_ANALYZER_API_URL: z.string().min(1).url(),
-    STACK_ANALYZER_API_KEY: z.string().min(1),
+    GEMINI_API_KEY: z.string().min(1)
   },
 
   /**

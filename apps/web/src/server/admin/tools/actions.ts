@@ -7,11 +7,11 @@ import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { isProd } from "~/env"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
-import { authedProcedure } from "~/lib/safe-actions"
+import { adminProcedure } from "~/lib/safe-actions"
 import { toolSchema } from "~/server/admin/tools/validations"
 import { inngest } from "~/services/inngest"
 
-export const createTool = authedProcedure
+export const createTool = adminProcedure
   .createServerAction()
   .input(toolSchema)
   .handler(async ({ input: { alternatives, categories, ...input } }) => {
@@ -32,7 +32,7 @@ export const createTool = authedProcedure
     return tool
   })
 
-export const updateTool = authedProcedure
+export const updateTool = adminProcedure
   .createServerAction()
   .input(toolSchema.extend({ id: z.string() }))
   .handler(async ({ input: { id, alternatives, categories, ...input } }) => {
@@ -51,7 +51,7 @@ export const updateTool = authedProcedure
     return tool
   })
 
-export const deleteTools = authedProcedure
+export const deleteTools = adminProcedure
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))
   .handler(async ({ input: { ids } }) => {
@@ -74,7 +74,7 @@ export const deleteTools = authedProcedure
     return true
   })
 
-export const scheduleTool = authedProcedure
+export const scheduleTool = adminProcedure
   .createServerAction()
   .input(z.object({ id: z.string(), publishedAt: z.coerce.date() }))
   .handler(async ({ input: { id, publishedAt } }) => {
@@ -92,7 +92,7 @@ export const scheduleTool = authedProcedure
     return true
   })
 
-export const reuploadToolAssets = authedProcedure
+export const reuploadToolAssets = adminProcedure
   .createServerAction()
   .input(z.object({ id: z.string() }))
   .handler(async ({ input: { id } }) => {

@@ -1,9 +1,10 @@
-import { createAnthropic } from "@ai-sdk/anthropic"
+import { createGoogleGenerativeAI } from "@ai-sdk/google"
 import { isTruthy } from "@curiousleaf/utils"
 import type { ScrapeResponse } from "@mendable/firecrawl-js"
 import { db } from "@openalternative/db"
 import { generateObject } from "ai"
 import { z } from "zod"
+import { env } from "~/env"
 import { getErrorMessage } from "~/lib/handle-error"
 
 /**
@@ -12,7 +13,8 @@ import { getErrorMessage } from "~/lib/handle-error"
  * @returns The generated content.
  */
 export const generateContent = async (scrapedData: Omit<ScrapeResponse, "actions">) => {
-  const model = createAnthropic()("claude-3-5-sonnet-latest")
+  const google = createGoogleGenerativeAI({ apiKey: env.GEMINI_API_KEY })
+  const model = google("gemini-2.0-pro-exp-02-05")
 
   const [categories, alternatives] = await Promise.all([
     db.category.findMany(),

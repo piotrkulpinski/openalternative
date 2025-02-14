@@ -4,10 +4,10 @@ import { slugify } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"
-import { authedProcedure } from "~/lib/safe-actions"
+import { adminProcedure  } from "~/lib/safe-actions"
 import { categorySchema } from "~/server/admin/categories/validations"
 
-export const createCategory = authedProcedure
+export const createCategory = adminProcedure 
   .createServerAction()
   .input(categorySchema)
   .handler(async ({ input: { tools, ...input } }) => {
@@ -24,7 +24,7 @@ export const createCategory = authedProcedure
     return category
   })
 
-export const updateCategory = authedProcedure
+export const updateCategory = adminProcedure 
   .createServerAction()
   .input(categorySchema.extend({ id: z.string() }))
   .handler(async ({ input: { id, tools, ...input } }) => {
@@ -43,7 +43,7 @@ export const updateCategory = authedProcedure
     return category
   })
 
-export const deleteCategories = authedProcedure
+export const deleteCategories = adminProcedure 
   .createServerAction()
   .input(z.object({ ids: z.array(z.string()) }))
   .handler(async ({ input: { ids } }) => {

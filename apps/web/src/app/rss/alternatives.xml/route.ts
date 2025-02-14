@@ -2,10 +2,11 @@ import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import RSS from "rss"
 import { config } from "~/config"
-import { addUTMTracking } from "~/utils/helpers"
+import { addSearchParams } from "~/utils/search-params"
 
 export async function GET() {
   const { url, name, tagline } = config.site
+  const rssSearchParams = { utm_source: "openalternative.co", utm_medium: "rss" }
 
   const alternatives = await db.alternative.findMany({
     where: { tools: { some: { status: ToolStatus.Published } } },
@@ -23,7 +24,7 @@ export async function GET() {
   const feed = new RSS({
     title: name,
     description: tagline,
-    site_url: addUTMTracking(`${url}/alternatives`, { source: "rss" }),
+    site_url: addSearchParams(`${url}/alternatives`, rssSearchParams),
     feed_url: `${url}/rss/alternatives.xml`,
     copyright: `${new Date().getFullYear()} ${name}`,
     language: "en",
@@ -35,7 +36,7 @@ export async function GET() {
     feed.item({
       guid: alternative.id,
       title: alternative.name,
-      url: addUTMTracking(`${url}/alternatives/${alternative.slug}`, { source: "rss" }),
+      url: addSearchParams(`${url}/alternatives/${alternative.slug}`, rssSearchParams),
       date: alternative.createdAt.toUTCString(),
       description: alternative.description ?? "",
     })

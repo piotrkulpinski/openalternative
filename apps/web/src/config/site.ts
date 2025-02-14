@@ -9,8 +9,6 @@ export const siteConfig = {
   url: env.NEXT_PUBLIC_SITE_URL,
 
   alphabet: "abcdefghijklmnopqrstuvwxyz",
-  toolsPerPage: 35,
-  alternativesPerPage: 54,
 
   affiliateUrl: "https://go.openalternative.co",
 }

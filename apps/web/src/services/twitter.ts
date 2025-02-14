@@ -42,11 +42,11 @@ const generateOAuthSignature = (
  * @param baseUrl - The base URL of the API endpoint
  * @param [jsonBody] - The JSON body to send with the request
  */
-export async function makeOAuthRequest(
+const makeOAuthRequest = async (
   httpMethod: string,
   baseUrl: string,
   jsonBody?: Record<string, unknown>,
-) {
+) => {
   if (
     !env.TWITTER_API_KEY ||
     !env.TWITTER_ACCESS_TOKEN ||

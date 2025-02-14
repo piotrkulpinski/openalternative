@@ -14,7 +14,7 @@ const socialHandle = "{social handle}"
  * @param url - Website URL to fetch social media links for
  * @returns Object containing social media handles and URLs, or empty object on error
  */
-export const getSocialsFromUrl = async (url: string) => {
+const getSocialsFromUrl = async (url: string) => {
   try {
     return await brandLinkApi.get(`/links?url=${url}`)
   } catch (error) {
@@ -51,7 +51,7 @@ export const sendSocialPost = async (template: string, tool: Tool | Jsonify<Tool
  * @param url - Tool URL to include in the post
  * @returns Updated post text with handle and tool URL
  */
-export const updatePostTemplate = (template: string, handle: string | undefined, url: string) => {
+const updatePostTemplate = (template: string, handle: string | undefined, url: string) => {
   return `${template.replace(` ${socialHandle}`, handle ? ` @${handle}` : "")}\n\n${url}`
 }
 

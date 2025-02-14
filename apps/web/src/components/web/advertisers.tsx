@@ -3,7 +3,6 @@ import type { HTMLAttributes } from "react"
 import { ExternalLink } from "~/components/web/external-link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
-import { updateUrlWithSearchParams } from "~/utils/queryString"
 
 export const Advertisers = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   return (
@@ -17,7 +16,7 @@ export const Advertisers = ({ className, ...props }: HTMLAttributes<HTMLDivEleme
       {config.ads.advertisers.map(ad => (
         <ExternalLink
           key={ad.name}
-          href={updateUrlWithSearchParams(ad.websiteUrl, { ref: "openalternative" })}
+          href={ad.websiteUrl}
           rel="noopener noreferrer"
           eventName="click_ad"
           eventProps={{ url: ad.websiteUrl, type: "Advertisers" }}

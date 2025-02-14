@@ -2,7 +2,8 @@
 
 import { type Properties, posthog } from "posthog-js"
 import type { ComponentProps } from "react"
-import { updateUrlWithSearchParams } from "~/utils/queryString"
+import { siteConfig } from "~/config/site"
+import { addSearchParams } from "~/utils/search-params"
 
 type ExternalLinkProps = ComponentProps<"a"> & {
   eventName?: string
@@ -21,7 +22,7 @@ export const ExternalLink = ({
 
   return (
     <a
-      href={updateUrlWithSearchParams(href, { ref: "openalternative" })}
+      href={addSearchParams(href, { ref: siteConfig.name.toLowerCase() })}
       target={target}
       rel={rel}
       onClick={() => eventName && posthog.capture(eventName, eventProps)}

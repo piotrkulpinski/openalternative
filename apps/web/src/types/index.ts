@@ -9,13 +9,13 @@ export type Option = {
   withCount?: boolean
 }
 
-export interface ExtendedColumnSort<TData> extends Omit<ColumnSort, "id"> {
+export type ExtendedColumnSort<TData> = Omit<ColumnSort, "id"> & {
   id: StringKeyOf<TData>
 }
 
 export type ExtendedSortingState<TData> = ExtendedColumnSort<TData>[]
 
-export interface DataTableFilterField<TData> {
+export type DataTableFilterField<TData> = {
   id: StringKeyOf<TData>
   label: string
   placeholder?: string

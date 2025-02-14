@@ -164,7 +164,7 @@ export const findTool = async ({ where, ...args }: Prisma.ToolFindFirstArgs = {}
 
 export const findRandomTool = async () => {
   const tools = await db.$queryRaw<Array<Tool>>`
-    SELECT "id", "name", "slug", "website", "repository", "tagline", "description", "content", "stars", "forks", "score",
+    SELECT "id", "name", "slug", "websiteUrl", "repositoryUrl", "tagline", "description", "content", "stars", "forks", "score",
            "faviconUrl", "screenshotUrl", "firstCommitDate", "lastCommitDate", "status", "publishedAt", "createdAt", "updatedAt"
     FROM "Tool"
     WHERE status = 'Published'

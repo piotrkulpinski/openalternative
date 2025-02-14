@@ -7,7 +7,6 @@ import { sendEmails } from "~/lib/email"
 import { generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
-import { analyzeRepositoryStack } from "~/lib/stack-analysis"
 import { firecrawlClient } from "~/services/firecrawl"
 import { inngest } from "~/services/inngest"
 import { ensureFreeSubmissions } from "~/utils/functions"
@@ -60,15 +59,6 @@ export const toolScheduled = inngest.createFunction(
         })
       }),
 
-      step.run("analyze-repository-stack", async () => {
-        const { id, repositoryUrl } = tool
-        const { stack } = await analyzeRepositoryStack(repositoryUrl)
-
-        return await db.tool.update({
-          where: { id },
-          data: { stacks: { set: stack.map(slug => ({ slug })) } },
-        })
-      }),
 
       step.run("upload-favicon", async () => {
         const { id, slug, websiteUrl } = tool
