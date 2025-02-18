@@ -2,13 +2,13 @@
 
 import { LogOutIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { signOut } from "~/lib/auth-client"
 import { cx } from "~/utils/cva"
 
-export const UserLogout = ({ className, ...props }: HTMLAttributes<HTMLButtonElement>) => {
+export const UserLogout = ({ className, ...props }: ComponentProps<"button">) => {
   const router = useRouter()
 
   const handleSignOut = async () => {

@@ -7,7 +7,7 @@ type FaviconProps = ComponentProps<"div"> & {
   title?: string | null
 }
 
-export const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
+const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
   if (!src) return null
 
   return (
@@ -28,7 +28,7 @@ type FaviconImageProps = Omit<ComponentProps<typeof Image>, "src" | "alt"> & {
   title?: string | null
 }
 
-export const FaviconImage = ({ className, src, title, ...props }: FaviconImageProps) => {
+const FaviconImage = ({ className, src, title, ...props }: FaviconImageProps) => {
   if (!src) return null
 
   return (
@@ -43,3 +43,5 @@ export const FaviconImage = ({ className, src, title, ...props }: FaviconImagePr
     />
   )
 }
+
+export { Favicon, FaviconImage }

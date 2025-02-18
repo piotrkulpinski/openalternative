@@ -1,7 +1,7 @@
-import type { SVGAttributes } from "react"
+import type { ComponentProps } from "react"
 import { cx } from "~/utils/cva"
 
-export const BrandHackerNewsIcon = ({ className, ...props }: SVGAttributes<SVGSVGElement>) => {
+export const BrandHackerNewsIcon = ({ className, ...props }: ComponentProps<"svg">) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

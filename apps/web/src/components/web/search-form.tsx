@@ -3,11 +3,11 @@
 import { SearchIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { parseAsString, useQueryState } from "nuqs"
-import { type FormEvent, type HTMLAttributes, useEffect, useRef, useState } from "react"
+import { type ComponentProps, type FormEvent, useEffect, useRef, useState } from "react"
 import { Input } from "~/components/common/input"
 import { cx } from "~/utils/cva"
 
-export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormElement>) => {
+export const SearchForm = ({ className, ...props }: ComponentProps<"form">) => {
   const router = useRouter()
   const [searchQuery] = useQueryState("q", parseAsString.withDefault(""))
   const [query, setQuery] = useState(searchQuery)
