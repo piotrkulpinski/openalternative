@@ -45,6 +45,7 @@ export const env = createEnv({
     TWITTER_ACCESS_SECRET: z.string().optional(),
     BLUESKY_USERNAME: z.string().optional(),
     BLUESKY_PASSWORD: z.string().optional(),
+    MASTODON_ACCESS_TOKEN: z.string().optional(),
     GEMINI_API_KEY: z.string().min(1),
     FIRECRAWL_API_KEY: z.string().min(1),
     STACK_ANALYZER_API_URL: z.string().min(1).url(),

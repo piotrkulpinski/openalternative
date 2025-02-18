@@ -5,6 +5,7 @@ import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
 import { brandLinkApi } from "~/lib/apis"
 import { sendBlueskyPost } from "~/services/bluesky"
+import { sendMastodonPost } from "~/services/mastodon"
 import { sendTwitterPost } from "~/services/twitter"
 
 const socialHandle = "{social handle}"
@@ -35,12 +36,15 @@ export const sendSocialPost = async (template: string, tool: Tool | Jsonify<Tool
 
   const twitterHandle = socials.X?.[0]?.user
   const blueskyHandle = socials.Bluesky?.[0]?.user
+  const mastodonHandle = socials.Mastodon?.[0]?.user
   const twitterTemplate = updatePostTemplate(template, twitterHandle, url)
   const blueskyTemplate = updatePostTemplate(template, blueskyHandle, url)
+  const mastodonTemplate = updatePostTemplate(template, mastodonHandle, url)
 
   return await Promise.all([
     sendTwitterPost(twitterTemplate),
     sendBlueskyPost(blueskyTemplate, url),
+    sendMastodonPost(mastodonTemplate, url),
   ])
 }
 
