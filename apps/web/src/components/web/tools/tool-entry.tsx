@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "lucide-react"
 import Image from "next/image"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { Button } from "~/components/common/button"
 import { H2 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
@@ -10,7 +10,7 @@ import { FaviconImage } from "~/components/web/ui/favicon"
 import type { ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
-type ToolEntryProps = HTMLAttributes<HTMLElement> & {
+type ToolEntryProps = ComponentProps<"div"> & {
   tool: ToolManyExtended
 }
 

@@ -25,7 +25,7 @@ export default function AboutPage() {
       <Featured />
 
       <Prose>
-        <h2>What is {config.site.name}?</h2>
+        <h3>What is {config.site.name}?</h3>
 
         <p>
           <Link href="/" title={config.site.tagline}>
@@ -37,7 +37,7 @@ export default function AboutPage() {
           help you find alternatives to the products you already use.
         </p>
 
-        <h2>How did {config.site.name} get started?</h2>
+        <h3>How did {config.site.name} get started?</h3>
 
         <p>
           The project started as a weekend project to learn a new technology and try something new
@@ -62,7 +62,7 @@ export default function AboutPage() {
           proprietary software and applications would be a great way to give back to the community.
         </p>
 
-        <h2>How are rankings calculated?</h2>
+        <h3>How are rankings calculated?</h3>
 
         <p>
           {config.site.name} uses a sophisticated algorithm to calculate the health score of each
@@ -115,7 +115,7 @@ export default function AboutPage() {
           newcomers in the open source community.
         </p>
 
-        <h2>Tools Used</h2>
+        <h3>Tools Used</h3>
 
         <ul>
           {config.links.toolsUsed.map(link => (
@@ -128,7 +128,7 @@ export default function AboutPage() {
           ))}
         </ul>
 
-        <h2>Contribute</h2>
+        <h3>Contribute</h3>
 
         <p>
           If you have any suggestions for open source alternatives to proprietary software and
@@ -142,7 +142,15 @@ export default function AboutPage() {
 
         <p>Enjoy and feel free to contribute!</p>
 
-        <h2>About the Author</h2>
+        <h3>Affiliate links</h3>
+
+        <p>
+          The site participates in affiliate programs with select service providers, where some
+          links are automatically tracked as affiliate links. I try to make sure that these services
+          are not given preferential treatment.
+        </p>
+
+        <h3>About the Author</h3>
 
         <p>
           I'm a software developer and entrepreneur. I've been building web applications for over 15
@@ -153,12 +161,12 @@ export default function AboutPage() {
         <p>Some of my other projects:</p>
 
         <ul>
-          {config.links.family.map(link => (
-            <li key={link.title}>
-              <ExternalLink href={link.href} title={link.description} rel="noopener noreferrer">
-                {link.title}
+          {config.links.family.map(({ href, title, description }) => (
+            <li key={title}>
+              <ExternalLink href={href} title={description} rel="noopener noreferrer">
+                {title}
               </ExternalLink>{" "}
-              – {link.description}
+              – {description}
             </li>
           ))}
         </ul>

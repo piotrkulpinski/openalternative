@@ -1,5 +1,6 @@
 import { type Table as TanstackTable, flexRender } from "@tanstack/react-table"
 import type * as React from "react"
+import type { ComponentProps } from "react"
 import { DataTablePagination } from "~/components/admin/data-table/data-table-pagination"
 import {
   Table,
@@ -12,7 +13,7 @@ import {
 import { getColumnPinningStyle } from "~/lib/data-table"
 import { cx } from "~/utils/cva"
 
-type DataTableProps<TData> = React.HTMLAttributes<HTMLDivElement> & {
+type DataTableProps<TData> = ComponentProps<"div"> & {
   /**
    * The table instance returned from useDataTable hook with pagination, sorting, filtering, etc.
    * @type TanstackTable<TData>

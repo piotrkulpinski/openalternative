@@ -1,3 +1,6 @@
+import type { ComponentProps } from "react"
+import { H3 } from "~/components/common/heading"
+import { Skeleton } from "~/components/common/skeleton"
 import {
   Table,
   TableBody,
@@ -6,11 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/common/table"
-import { H3 } from "~/components/common/heading"
-import { Skeleton } from "~/components/common/skeleton"
 import { cx } from "~/utils/cva"
 
-type DataTableSkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
+type DataTableSkeletonProps = ComponentProps<"div"> & {
   /**
    * The title of the table.
    * @type string

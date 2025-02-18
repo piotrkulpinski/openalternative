@@ -1,5 +1,6 @@
 import type { Column } from "@tanstack/react-table"
 import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon, EyeOffIcon } from "lucide-react"
+import type { ComponentProps } from "react"
 
 import { Button } from "~/components/common/button"
 import {
@@ -11,7 +12,7 @@ import {
 } from "~/components/common/dropdown-menu"
 import { cx } from "~/utils/cva"
 
-type DataTableColumnHeaderProps<TData, TValue> = React.HTMLAttributes<HTMLDivElement> & {
+type DataTableColumnHeaderProps<TData, TValue> = ComponentProps<"div"> & {
   column: Column<TData, TValue>
   title: string
 }

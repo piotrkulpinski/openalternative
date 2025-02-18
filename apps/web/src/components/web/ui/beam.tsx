@@ -1,7 +1,7 @@
-import { type HTMLAttributes, useEffect, useRef } from "react"
+import { type ComponentProps, useEffect, useRef } from "react"
 import { cx } from "~/utils/cva"
 
-export const Beam = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
+export const Beam = ({ className, ...props }: ComponentProps<"div">) => {
   const meteorRef = useRef<HTMLDivElement>(null!)
 
   useEffect(() => {

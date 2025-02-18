@@ -2,7 +2,7 @@
 
 import { EllipsisIcon, ShieldPlusIcon, SparklesIcon, TriangleAlertIcon } from "lucide-react"
 import Link from "next/link"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { useState } from "react"
 import { Button } from "~/components/common/button"
 import {
@@ -21,7 +21,7 @@ import { useSession } from "~/lib/auth-client"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
-type ToolActionsProps = HTMLAttributes<HTMLElement> & {
+type ToolActionsProps = ComponentProps<typeof Stack> & {
   tool: ToolOne
 }
 

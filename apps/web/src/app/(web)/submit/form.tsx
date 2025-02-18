@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -25,7 +25,7 @@ import { useSession } from "~/lib/auth-client"
 import { type SubmitToolSchema, submitToolSchema } from "~/server/schemas"
 import { cx } from "~/utils/cva"
 
-export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormElement>) => {
+export const SubmitForm = ({ className, ...props }: ComponentProps<"form">) => {
   const router = useRouter()
   const { data: session } = useSession()
 

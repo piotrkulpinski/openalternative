@@ -1,10 +1,10 @@
 import { slugify } from "@curiousleaf/utils"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { ExternalLink } from "~/components/web/external-link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
-export const Advertisers = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
+export const Advertisers = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
       className={cx(

@@ -1,9 +1,9 @@
 import { Slot } from "radix-ui"
-import { Fragment, type HTMLAttributes, type ReactNode, isValidElement } from "react"
+import { type ComponentProps, Fragment, type ReactNode, isValidElement } from "react"
 import { Link } from "~/components/common/link"
 import { cx } from "~/utils/cva"
 
-type InsightsProps = HTMLAttributes<HTMLElement> & {
+type InsightsProps = ComponentProps<"ul"> & {
   insights: {
     label: string
     value: ReactNode

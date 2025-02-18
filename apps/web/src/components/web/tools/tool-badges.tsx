@@ -1,13 +1,13 @@
 import { formatDate } from "@curiousleaf/utils"
 import { differenceInDays } from "date-fns"
 import { BellPlusIcon, ClockIcon, SparklesIcon } from "lucide-react"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { Stack } from "~/components/common/stack"
 import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
 import type { ToolMany, ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
-type ToolBadgesProps = HTMLAttributes<HTMLElement> & {
+type ToolBadgesProps = ComponentProps<typeof Stack> & {
   tool: ToolMany | ToolManyExtended
 }
 

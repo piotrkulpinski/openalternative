@@ -1,8 +1,8 @@
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
-export const Featured = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const Featured = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div className={cx("space-y-2", className)} {...props}>
       <h4 className="text-[0.625rem] tracking-wide uppercase text-muted-foreground">

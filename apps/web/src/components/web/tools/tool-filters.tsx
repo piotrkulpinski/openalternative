@@ -1,8 +1,7 @@
 "use client"
 
 import { XIcon } from "lucide-react"
-import { useCallback, useEffect } from "react"
-import type { HTMLAttributes } from "react"
+import { type ComponentProps, useCallback, useEffect } from "react"
 import { useServerAction } from "zsa-react"
 import { findFilterOptions } from "~/actions/filters"
 import { Badge } from "~/components/common/badge"
@@ -13,7 +12,7 @@ import { useToolFilters } from "~/contexts/tool-filter-context"
 import type { FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
 
-export const ToolFilters = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
+export const ToolFilters = ({ className, ...props }: ComponentProps<"div">) => {
   const { filters, lockedFilters = [], updateFilters, getFilterValues } = useToolFilters()
   const { execute, isPending, data } = useServerAction(findFilterOptions)
 

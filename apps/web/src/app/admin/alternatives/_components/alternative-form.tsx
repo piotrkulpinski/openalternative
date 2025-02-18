@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { redirect } from "next/navigation"
-import type React from "react"
+import type { ComponentProps } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -27,7 +27,7 @@ import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
-type AlternativeFormProps = React.HTMLAttributes<HTMLFormElement> & {
+type AlternativeFormProps = ComponentProps<"form"> & {
   alternative?: Awaited<ReturnType<typeof findAlternativeBySlug>>
   tools: ReturnType<typeof findToolList>
 }

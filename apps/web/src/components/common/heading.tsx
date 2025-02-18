@@ -1,5 +1,5 @@
 import { Slot } from "radix-ui"
-import { type ElementType, type HTMLProps, isValidElement } from "react"
+import { type ComponentProps, type ElementType, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const headingVariants = cva({
@@ -21,7 +21,7 @@ const headingVariants = cva({
   },
 })
 
-export type HeadingProps = Omit<HTMLProps<HTMLHeadingElement>, "size"> &
+export type HeadingProps = Omit<ComponentProps<"h1">, "size"> &
   VariantProps<typeof headingVariants> & {
     /**
      * If set to `true`, the button will be rendered as a child within the component.

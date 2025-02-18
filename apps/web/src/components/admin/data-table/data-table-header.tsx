@@ -1,10 +1,11 @@
 import { Slot } from "radix-ui"
 import type * as React from "react"
+import type { ComponentProps } from "react"
 import { H3 } from "~/components/common/heading"
 
 import { cx } from "~/utils/cva"
 
-type DataTableHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
+type DataTableHeaderProps = ComponentProps<"div"> & {
   total?: number
   callToAction?: React.ReactNode
 }

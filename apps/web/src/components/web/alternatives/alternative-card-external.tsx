@@ -1,7 +1,7 @@
 "use client"
 
 import { ArrowUpRightIcon } from "lucide-react"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { Button } from "~/components/common/button"
 import { Card, CardDescription, CardHeader } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
@@ -10,7 +10,7 @@ import { Favicon } from "~/components/web/ui/favicon"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
 import { cx } from "~/utils/cva"
 
-type AlternativeCardExternalProps = HTMLAttributes<HTMLElement> & {
+type AlternativeCardExternalProps = ComponentProps<typeof Card> & {
   alternative: AlternativeOne
 }
 

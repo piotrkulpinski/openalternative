@@ -3,13 +3,13 @@
 import { getCurrentPage, getPageLink } from "@curiousleaf/utils"
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"
-import { type HTMLAttributes, useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 import { PaginationLink } from "~/components/web/pagination-link"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { type UsePaginationProps, usePagination } from "~/hooks/use-pagination"
 import { cx } from "~/utils/cva"
 
-export type PaginationProps = HTMLAttributes<HTMLElement> & Omit<UsePaginationProps, "currentPage">
+export type PaginationProps = ComponentProps<"nav"> & Omit<UsePaginationProps, "currentPage">
 
 export const Pagination = ({
   className,

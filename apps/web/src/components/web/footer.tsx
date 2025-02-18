@@ -3,7 +3,7 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { AtSignIcon, RssIcon } from "lucide-react"
 import Image from "next/image"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,13 +25,16 @@ import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
-type FooterProps = HTMLAttributes<HTMLElement> & {
+type FooterProps = ComponentProps<"div"> & {
   hideNewsletter?: boolean
 }
 
 export const Footer = ({ children, className, hideNewsletter, ...props }: FooterProps) => {
   return (
-    <footer className="flex flex-col gap-y-8 mt-auto pt-8 border-t border-foreground/10 md:pt-10 lg:pt-12">
+    <footer
+      className="flex flex-col gap-y-8 mt-auto pt-8 border-t border-foreground/10 md:pt-10 lg:pt-12"
+      {...props}
+    >
       <div
         className={cx(
           "grid grid-cols-3 gap-y-8 gap-x-4 md:gap-x-6 md:grid-cols-[repeat(16,minmax(0,1fr))]",
@@ -60,7 +63,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
             <TooltipProvider delayDuration={500}>
               <DropdownMenu modal={false}>
                 <Tooltip tooltip="RSS Feeds">
-                  <DropdownMenuTrigger aria-label="RSS Feeds" {...props}>
+                  <DropdownMenuTrigger aria-label="RSS Feeds">
                     <RssIcon className="size-[1.44em] text-muted-foreground hover:text-foreground" />
                   </DropdownMenuTrigger>
                 </Tooltip>
@@ -148,21 +151,19 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
         </Stack>
 
         <Stack direction="column" className="text-sm/normal md:col-span-3">
-          <Stack direction="column">
-            <H6 as="strong">Other Products:</H6>
+          <H6 as="strong">Other Products:</H6>
 
-            {config.links.family.map(({ href, title, description }) => (
-              <ExternalLink
-                key={href}
-                href={href}
-                rel="noreferrer noopener"
-                title={description}
-                className={navLinkVariants()}
-              >
-                {title}
-              </ExternalLink>
-            ))}
-          </Stack>
+          {config.links.family.map(({ href, title, description }) => (
+            <ExternalLink
+              key={href}
+              href={href}
+              rel="noreferrer noopener"
+              title={description}
+              className={navLinkVariants()}
+            >
+              {title}
+            </ExternalLink>
+          ))}
         </Stack>
       </div>
 
@@ -175,7 +176,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
         >
           <Image
             src="/authors/piotrkulpinski.webp"
-            alt="Piotr Kulpinski"
+            alt="Piotr Kulpinski avatar"
             loading="lazy"
             width="16"
             height="16"

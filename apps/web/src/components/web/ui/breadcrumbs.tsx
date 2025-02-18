@@ -1,14 +1,14 @@
 "use client"
 
 import { Home } from "lucide-react"
-import type { HTMLAttributes, ReactNode } from "react"
+import type { ComponentProps, ReactNode } from "react"
 import type { Graph } from "schema-dts"
 import { Stack } from "~/components/common/stack"
 import { NavLink } from "~/components/web/ui/nav-link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
-const BreadcrumbsSeparator = ({ ...props }: HTMLAttributes<HTMLElement>) => {
+const BreadcrumbsSeparator = ({ ...props }: ComponentProps<"span">) => {
   return (
     <span
       className="text-sm text-secondary-foreground invert pointer-events-none select-none"
@@ -24,7 +24,7 @@ type Breadcrumb = {
   name: string | ReactNode
 }
 
-type BreadcrumbsProps = HTMLAttributes<HTMLElement> & {
+type BreadcrumbsProps = ComponentProps<typeof Stack> & {
   items: Breadcrumb[]
 }
 

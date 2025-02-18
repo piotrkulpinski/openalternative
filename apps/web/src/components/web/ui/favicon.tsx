@@ -1,8 +1,8 @@
 import Image from "next/image"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { cx } from "~/utils/cva"
 
-type FaviconProps = HTMLAttributes<HTMLDivElement> & {
+type FaviconProps = ComponentProps<"div"> & {
   src: string | null
   title?: string | null
 }
@@ -23,7 +23,12 @@ export const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
   )
 }
 
-export const FaviconImage = ({ className, src, title, ...props }: FaviconProps) => {
+type FaviconImageProps = Omit<ComponentProps<typeof Image>, "src" | "alt"> & {
+  src: string | null
+  title?: string | null
+}
+
+export const FaviconImage = ({ className, src, title, ...props }: FaviconImageProps) => {
   if (!src) return null
 
   return (

@@ -1,12 +1,12 @@
 import { ArrowUpRightIcon } from "lucide-react"
 import Image from "next/image"
-import type { HTMLProps } from "react"
+import type { ComponentProps } from "react"
 import { Link } from "~/components/common/link"
 import { cx } from "~/utils/cva"
 
-const a = ({ href, ...props }: HTMLProps<HTMLAnchorElement>) => {
+const a = ({ href, ...props }: ComponentProps<"a">) => {
   if (typeof href !== "string") {
-    return <div {...(props as HTMLProps<HTMLDivElement>)} />
+    return <div {...(props as ComponentProps<"div">)} />
   }
 
   if (href.startsWith("/") || href.startsWith("#")) {
@@ -21,7 +21,7 @@ const a = ({ href, ...props }: HTMLProps<HTMLAnchorElement>) => {
   )
 }
 
-const img = ({ className, ...props }: HTMLProps<HTMLImageElement>) => {
+const img = ({ className, ...props }: ComponentProps<"img">) => {
   if (typeof props.src !== "string" || typeof props.alt !== "string") {
     throw new TypeError("Image src and alt are required")
   }
@@ -32,7 +32,6 @@ const img = ({ className, ...props }: HTMLProps<HTMLImageElement>) => {
       alt={props.alt}
       width={1240}
       height={698}
-      unoptimized
       loading="lazy"
       className={cx("w-full rounded-lg", className)}
     />

@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect } from "react"
-import { Link } from "~/components/common/link"
 import { Button } from "~/components/common/button"
+import { Link } from "~/components/common/link"
 import { Intro, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
-import { env } from "~/env"
+import { config } from "~/config"
 
 type ErrorProps = {
   error: Error & { digest?: string }
@@ -25,7 +25,7 @@ export default function Error({ error, reset }: ErrorProps) {
       <Prose>
         <p>
           Please try again. If the problem persists, contact support at{" "}
-          <Link href={`mailto:${env.NEXT_PUBLIC_SITE_EMAIL}`}>{env.NEXT_PUBLIC_SITE_EMAIL}</Link>.
+          <Link href={`mailto:${config.site.email}`}>{config.site.email}</Link>.
         </p>
       </Prose>
 

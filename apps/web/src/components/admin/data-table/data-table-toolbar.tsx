@@ -3,14 +3,15 @@
 import type { Table } from "@tanstack/react-table"
 import { XIcon } from "lucide-react"
 import * as React from "react"
-import type { DataTableFilterField } from "~/types"
+import type { ComponentProps } from "react"
 import { DataTableFacetedFilter } from "~/components/admin/data-table/data-table-faceted-filter"
 import { DataTableViewOptions } from "~/components/admin/data-table/data-table-view-options"
 import { Button } from "~/components/common/button"
 import { Input } from "~/components/common/input"
+import type { DataTableFilterField } from "~/types"
 import { cx } from "~/utils/cva"
 
-interface DataTableToolbarProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
+type DataTableToolbarProps<TData> = ComponentProps<"div"> & {
   table: Table<TData>
   filterFields?: DataTableFilterField<TData>[]
 }

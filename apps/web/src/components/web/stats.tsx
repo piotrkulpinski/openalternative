@@ -1,10 +1,10 @@
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { MDXComponents } from "~/components/web/mdx-components"
 import { Stat } from "~/components/web/ui/stat"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
-export const Stats = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+export const Stats = ({ className, ...props }: ComponentProps<"div">) => {
   const stats = [
     { value: config.stats.pageviews, label: "Monthly Pageviews" },
     { value: config.stats.tools, label: "Listed Projects" },

@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { redirect } from "next/navigation"
-import type React from "react"
+import type { ComponentProps } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -24,7 +24,7 @@ import { type LicenseSchema, licenseSchema } from "~/server/admin/licenses/valid
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
-type LicenseFormProps = React.HTMLAttributes<HTMLFormElement> & {
+type LicenseFormProps = ComponentProps<"form"> & {
   license?: Awaited<ReturnType<typeof findLicenseBySlug>>
 }
 

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { cloneElement, forwardRef, isValidElement } from "react"
 
-export type SlottableProps = {
+type SlottableProps = {
   asChild?: boolean
   child?: ReactNode
   children: (child: ReactNode) => ReactNode

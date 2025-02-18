@@ -1,12 +1,12 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
 import { Link } from "~/components/common/link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
-type LetterPickerProps = HTMLAttributes<HTMLDivElement> & {
+type LetterPickerProps = ComponentProps<"div"> & {
   path: string
 }
 

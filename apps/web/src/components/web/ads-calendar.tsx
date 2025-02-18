@@ -1,23 +1,22 @@
 import type { AdType } from "@openalternative/db/client"
 import { differenceInDays, endOfDay, startOfDay } from "date-fns"
 import { EyeIcon } from "lucide-react"
-import type { HTMLAttributes } from "react"
-import { useCallback, useMemo } from "react"
+import { type ComponentProps, useCallback, useMemo } from "react"
 import type { DateRange } from "react-day-picker"
+import { Button } from "~/components/common/button"
+import { Calendar } from "~/components/common/calendar"
 import { H4 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
-import { Price } from "~/components/web/price"
-import { Button } from "~/components/common/button"
-import { Calendar } from "~/components/common/calendar"
 import { Tooltip } from "~/components/common/tooltip"
+import { Price } from "~/components/web/price"
 import type { AdSpot } from "~/config/ads"
 import type { AdsSelection, useAds } from "~/hooks/use-ads"
 import type { AdMany } from "~/server/web/ads/payloads"
 import { getFirstAvailableMonth } from "~/utils/ads"
 import { cx } from "~/utils/cva"
 
-type AdsCalendarProps = HTMLAttributes<HTMLDivElement> & {
+type AdsCalendarProps = ComponentProps<"div"> & {
   adSpot: AdSpot
   ads: AdMany[]
   price: ReturnType<typeof useAds>["price"]

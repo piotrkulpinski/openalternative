@@ -2,13 +2,12 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { redirect } from "next/navigation"
-import type React from "react"
+import type { ComponentProps } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/common/button"
-import { Input } from "~/components/common/input"
 import {
   Form,
   FormControl,
@@ -17,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
 import { createCategory, updateCategory } from "~/server/admin/categories/actions"
 import type { findCategoryBySlug } from "~/server/admin/categories/queries"
@@ -25,7 +25,7 @@ import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
-type CategoryFormProps = React.HTMLAttributes<HTMLFormElement> & {
+type CategoryFormProps = ComponentProps<"form"> & {
   category?: Awaited<ReturnType<typeof findCategoryBySlug>>
   tools: ReturnType<typeof findToolList>
 }
