@@ -3,8 +3,8 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol", "Noto Color Emoji";
+  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   --header-height: 3.125rem;
   --header-top: 0rem;
@@ -158,11 +158,13 @@
     @apply cursor-pointer;
   }
 
-  svg.lucide:not([class*="stroke"]) {
-    @apply !stroke-[1.75];
+  svg.lucide:not([class*="stroke"]),
+  svg.brand:not([class*="stroke"]) {
+    @apply !stroke-[1.5];
   }
 
-  svg.lucide:not([class*="size-"]):not([class*="h-"]) {
+  svg.lucide:not([class*="size-"]):not([class*="h-"]),
+  svg.brand:not([class*="size-"]):not([class*="h-"]) {
     @apply !size-[1em];
   }
 

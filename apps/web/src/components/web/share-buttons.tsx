@@ -2,21 +2,30 @@
 
 import { usePathname } from "next/navigation"
 import type { ComponentProps, ReactNode } from "react"
+import { Button } from "~/components/common/button"
 import { H5 } from "~/components/common/heading"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandFacebookIcon } from "~/components/common/icons/brand-facebook"
 import { BrandHackerNewsIcon } from "~/components/common/icons/brand-hackernews"
 import { BrandLinkedInIcon } from "~/components/common/icons/brand-linkedin"
+import { BrandMastodonIcon } from "~/components/common/icons/brand-mastodon"
 import { BrandRedditIcon } from "~/components/common/icons/brand-reddit"
 import { BrandWhatsAppIcon } from "~/components/common/icons/brand-whatsapp"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Stack } from "~/components/common/stack"
-import { ExternalLink } from "~/components/web/external-link"
-import { Button } from "~/components/common/button"
 import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
+import { ExternalLink } from "~/components/web/external-link"
 import { config } from "~/config"
 
-type Platform = "X" | "Bluesky" | "Facebook" | "LinkedIn" | "HackerNews" | "Reddit" | "WhatsApp"
+type Platform =
+  | "X"
+  | "Bluesky"
+  | "Mastodon"
+  | "Facebook"
+  | "LinkedIn"
+  | "HackerNews"
+  | "Reddit"
+  | "WhatsApp"
 
 type ShareOption = {
   platform: Platform
@@ -34,6 +43,11 @@ const shareOptions: ShareOption[] = [
     platform: "Bluesky",
     url: (url, title) => `https://bsky.app/intent/compose?text=${title}+${url}`,
     icon: <BrandBlueskyIcon />,
+  },
+  {
+    platform: "Mastodon",
+    url: (url, title) => `https://mastodon.social/share?text=${title}+${url}`,
+    icon: <BrandMastodonIcon />,
   },
   {
     platform: "Facebook",

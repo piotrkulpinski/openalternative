@@ -1,6 +1,7 @@
 import type { SVGAttributes } from "react"
+import { cx } from "~/utils/cva"
 
-export const BrandLinkedInIcon = ({ ...props }: SVGAttributes<SVGSVGElement>) => {
+export const BrandLinkedInIcon = ({ className, ...props }: SVGAttributes<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,11 +10,9 @@ export const BrandLinkedInIcon = ({ ...props }: SVGAttributes<SVGSVGElement>) =>
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
       role="img"
       aria-label="LinkedIn Icon"
+      className={cx("brand", className)}
       {...props}
     >
       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />

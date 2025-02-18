@@ -14,6 +14,7 @@ import { H5, H6 } from "~/components/common/heading"
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandLinkedInIcon } from "~/components/common/icons/brand-linkedin"
+import { BrandMastodonIcon } from "~/components/common/icons/brand-mastodon"
 import { BrandMediumIcon } from "~/components/common/icons/brand-medium"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Stack } from "~/components/common/stack"
@@ -60,7 +61,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               <DropdownMenu modal={false}>
                 <Tooltip tooltip="RSS Feeds">
                   <DropdownMenuTrigger aria-label="RSS Feeds" {...props}>
-                    <RssIcon className="size-[1.44em] stroke-[1.25] text-muted-foreground hover:text-foreground" />
+                    <RssIcon className="size-[1.44em] text-muted-foreground hover:text-foreground" />
                   </DropdownMenuTrigger>
                 </Tooltip>
 
@@ -82,37 +83,43 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
                   rel="nofollow noreferrer"
                   aria-label="Contact us"
                 >
-                  <AtSignIcon className="size-[1.44em] stroke-[1.25]" />
+                  <AtSignIcon className="size-[1.44em]" />
                 </NavLink>
               </Tooltip>
 
               <Tooltip tooltip="View source code">
                 <NavLink href={config.links.github} target="_blank" rel="nofollow noreferrer">
-                  <BrandGitHubIcon className="size-[1.44em] stroke-[1.25]" />
+                  <BrandGitHubIcon className="size-[1.44em]" />
                 </NavLink>
               </Tooltip>
 
               <Tooltip tooltip="Follow us on X/Twitter">
                 <NavLink href={config.links.twitter} target="_blank" rel="nofollow noreferrer">
-                  <BrandXIcon className="size-[1.44em] stroke-[1.25]" />
+                  <BrandXIcon className="size-[1.44em]" />
                 </NavLink>
               </Tooltip>
 
               <Tooltip tooltip="Follow us on Bluesky">
                 <NavLink href={config.links.bluesky} target="_blank" rel="nofollow noreferrer">
-                  <BrandBlueskyIcon className="size-[1.44em] stroke-[1.25]" />
+                  <BrandBlueskyIcon className="size-[1.44em]" />
+                </NavLink>
+              </Tooltip>
+
+              <Tooltip tooltip="Follow us on Mastodon">
+                <NavLink href={config.links.mastodon} target="_blank" rel="me nofollow noreferrer">
+                  <BrandMastodonIcon className="size-[1.44em]" />
                 </NavLink>
               </Tooltip>
 
               <Tooltip tooltip="Follow us on LinkedIn">
                 <NavLink href={config.links.linkedin} target="_blank" rel="nofollow noreferrer">
-                  <BrandLinkedInIcon className="size-[1.44em] stroke-[1.25]" />
+                  <BrandLinkedInIcon className="size-[1.44em]" />
                 </NavLink>
               </Tooltip>
 
               <Tooltip tooltip="Follow us on Medium">
                 <NavLink href={config.links.medium} target="_blank" rel="nofollow noreferrer">
-                  <BrandMediumIcon className="size-[1.44em] stroke-[1.25]" />
+                  <BrandMediumIcon className="size-[1.44em]" />
                 </NavLink>
               </Tooltip>
             </TooltipProvider>

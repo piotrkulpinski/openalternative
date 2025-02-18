@@ -1,6 +1,7 @@
 import type { SVGAttributes } from "react"
+import { cx } from "~/utils/cva"
 
-export const BrandMediumIcon = ({ ...props }: SVGAttributes<SVGSVGElement>) => {
+export const BrandMediumIcon = ({ className, ...props }: SVGAttributes<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,11 +10,9 @@ export const BrandMediumIcon = ({ ...props }: SVGAttributes<SVGSVGElement>) => {
       viewBox="0 0 256 256"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
       role="img"
       aria-label="Medium Icon"
+      className={cx("brand", className)}
       {...props}
     >
       <ellipse

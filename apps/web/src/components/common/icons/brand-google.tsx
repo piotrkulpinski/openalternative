@@ -1,6 +1,7 @@
 import type { SVGAttributes } from "react"
+import { cx } from "~/utils/cva"
 
-export const BrandGoogleIcon = ({ ...props }: SVGAttributes<SVGSVGElement>) => {
+export const BrandGoogleIcon = ({ className, ...props }: SVGAttributes<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,6 +11,7 @@ export const BrandGoogleIcon = ({ ...props }: SVGAttributes<SVGSVGElement>) => {
       fill="currentColor"
       role="img"
       aria-label="Google Icon"
+      className={cx("brand", className)}
       {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
