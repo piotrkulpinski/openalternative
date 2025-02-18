@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
+import { StackCategories } from "~/app/(web)/stacks/[slug]/categories"
 import { StackToolListing } from "~/app/(web)/stacks/[slug]/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
@@ -75,6 +76,10 @@ export default async function StackPage(props: PageProps) {
 
       <Suspense fallback={<ToolQuerySkeleton />}>
         <StackToolListing stack={stack} searchParams={props.searchParams} />
+      </Suspense>
+
+      <Suspense>
+        <StackCategories stack={stack} />
       </Suspense>
     </>
   )

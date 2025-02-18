@@ -47,6 +47,7 @@ export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
     // Categories
     createEntry("/categories", now),
     ...categories.map(c => createEntry(`/categories/${c.slug}`, c.updatedAt)),
+    ...categories.map(c => createEntry(`/categories/${c.slug}/self-hosted`, c.updatedAt)),
     ...categories.flatMap(c => [
       ...stacks.map(s => createEntry(`/categories/${c.slug}/using/${s.slug}`, c.updatedAt)),
     ]),

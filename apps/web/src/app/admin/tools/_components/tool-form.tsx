@@ -272,7 +272,7 @@ export function ToolForm({
                       <SelectValue />
                     </SelectTrigger>
 
-                    <SelectContent side="top" className="tabular-nums">
+                    <SelectContent className="tabular-nums">
                       {Object.values(ToolStatus).map(status => (
                         <SelectItem key={status} value={status}>
                           {status}

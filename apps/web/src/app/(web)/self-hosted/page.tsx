@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
+import { SelfHostedCategories } from "~/app/(web)/self-hosted/categories"
 import { SelfHostedToolListing } from "~/app/(web)/self-hosted/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
@@ -38,6 +39,10 @@ export default async function SelfHostedPage(props: PageProps) {
 
       <Suspense fallback={<ToolQuerySkeleton />}>
         <SelfHostedToolListing searchParams={props.searchParams} />
+      </Suspense>
+
+      <Suspense>
+        <SelfHostedCategories />
       </Suspense>
     </>
   )
