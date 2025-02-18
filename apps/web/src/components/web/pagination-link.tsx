@@ -1,6 +1,6 @@
 "use client"
 
-import { Slot } from "@radix-ui/react-slot"
+import { Slot } from "radix-ui"
 import type { ComponentProps, ReactNode } from "react"
 import { Link } from "~/components/common/link"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
@@ -29,9 +29,9 @@ export const PaginationLink = ({
   if (isDisabled) {
     return (
       <span className={cx(navLinkVariants({ className: "pointer-events-none opacity-40" }))}>
-        <Slot className={affixVariants()}>{prefix}</Slot>
+        <Slot.Root className={affixVariants()}>{prefix}</Slot.Root>
         <span>{children}</span>
-        <Slot className={affixVariants()}>{suffix}</Slot>
+        <Slot.Root className={affixVariants()}>{suffix}</Slot.Root>
       </span>
     )
   }
@@ -41,9 +41,9 @@ export const PaginationLink = ({
       className={cx(isActive && "bg-accent rounded-xs", navLinkVariants({ isActive, className }))}
       {...props}
     >
-      <Slot className={affixVariants()}>{prefix}</Slot>
+      <Slot.Root className={affixVariants()}>{prefix}</Slot.Root>
       <span>{children}</span>
-      <Slot className={affixVariants()}>{suffix}</Slot>
+      <Slot.Root className={affixVariants()}>{suffix}</Slot.Root>
     </Link>
   )
 }

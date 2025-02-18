@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot"
+import { Slot } from "radix-ui"
 import type * as React from "react"
 import { H3 } from "~/components/common/heading"
 
@@ -31,7 +31,7 @@ export function DataTableHeader({
           {typeof total === "number" && <span className="ml-1.5 opacity-40">({total})</span>}
         </H3>
 
-        <Slot className="-my-0.5">{callToAction}</Slot>
+        <Slot.Root className="-my-0.5">{callToAction}</Slot.Root>
       </div>
 
       {children}

@@ -1,9 +1,9 @@
 "use client"
 
-import { Slot } from "@radix-ui/react-slot"
 import { ArrowUpRightIcon, CheckIcon, XIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
+import { Slot } from "radix-ui"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import type Stripe from "stripe"
@@ -181,9 +181,9 @@ const Plan = ({
           <Stack direction="column" className="items-stretch">
             {features.map(({ type, name, footnote }) => (
               <div key={name} className={cx(planFeatureVariants())}>
-                <Slot className={cx(planFeatureCheckVariants({ type }))}>
+                <Slot.Root className={cx(planFeatureCheckVariants({ type }))}>
                   {type === "negative" ? <XIcon /> : <CheckIcon />}
-                </Slot>
+                </Slot.Root>
 
                 <span className={cx("truncate", type === "negative" && "opacity-50")}>{name}</span>
 

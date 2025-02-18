@@ -1,5 +1,5 @@
-import { Slot } from "@radix-ui/react-slot"
 import { LoaderIcon } from "lucide-react"
+import { Slot } from "radix-ui"
 import type { ComponentProps, ReactNode } from "react"
 import { isValidElement } from "react"
 import { boxVariants } from "~/components/common/box"
@@ -82,7 +82,7 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const useAsChild = asChild && isValidElement(children)
-  const Comp = useAsChild ? Slot : "button"
+  const Comp = useAsChild ? Slot.Root : "button"
 
   return (
     <Comp
@@ -96,13 +96,13 @@ const Button = ({
       <Slottable child={children} asChild={asChild}>
         {child => (
           <>
-            <Slot className={buttonAffixVariants()}>{prefix}</Slot>
+            <Slot.Root className={buttonAffixVariants()}>{prefix}</Slot.Root>
 
             {!isChildrenEmpty(child) && (
               <span className="flex-1 truncate only:text-center has-[div]:contents">{child}</span>
             )}
 
-            <Slot className={buttonAffixVariants()}>{suffix}</Slot>
+            <Slot.Root className={buttonAffixVariants()}>{suffix}</Slot.Root>
 
             {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
           </>

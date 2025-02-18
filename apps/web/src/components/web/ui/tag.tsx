@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot"
+import { Slot } from "radix-ui"
 import type { ComponentProps, ReactNode } from "react"
 import { Link } from "~/components/common/link"
 import { cx } from "~/utils/cva"
@@ -24,9 +24,9 @@ export const Tag = ({ children, className, prefix, suffix, ...props }: TagProps)
       )}
       {...props}
     >
-      {prefix && <Slot className="opacity-30 mr-0.5">{prefix}</Slot>}
+      {prefix && <Slot.Root className="opacity-30 mr-0.5">{prefix}</Slot.Root>}
       {children}
-      {suffix && <Slot className="opacity-30 ml-0.5">{suffix}</Slot>}
+      {suffix && <Slot.Root className="opacity-30 ml-0.5">{suffix}</Slot.Root>}
     </Link>
   )
 }

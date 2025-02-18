@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot"
+import { Slot } from "radix-ui"
 import { type ComponentProps, type ReactNode, isValidElement } from "react"
 import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
@@ -62,16 +62,16 @@ const Badge = ({
   ...props
 }: BadgeProps) => {
   const useAsChild = asChild && isValidElement(children)
-  const Comp = useAsChild ? Slot : "span"
+  const Comp = useAsChild ? Slot.Root : "span"
 
   return (
     <Comp className={cx(badgeVariants({ variant, size, className }))} {...props}>
       <Slottable child={children} asChild={asChild}>
         {child => (
           <>
-            {prefix && <Slot className={cx(badgeAffixVariants())}>{prefix}</Slot>}
+            {prefix && <Slot.Root className={cx(badgeAffixVariants())}>{prefix}</Slot.Root>}
             {child}
-            {suffix && <Slot className={cx(badgeAffixVariants())}>{suffix}</Slot>}
+            {suffix && <Slot.Root className={cx(badgeAffixVariants())}>{suffix}</Slot.Root>}
           </>
         )}
       </Slottable>

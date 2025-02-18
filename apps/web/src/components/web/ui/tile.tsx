@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot"
+import { Slot } from "radix-ui"
 import { type ComponentProps, isValidElement } from "react"
 import { H5, type Heading } from "~/components/common/heading"
 import { type VariantProps, cva, cx } from "~/utils/cva"
@@ -18,7 +18,7 @@ type TileProps = ComponentProps<"div"> &
 
 const Tile = ({ className, asChild, ...props }: TileProps) => {
   const useAsChild = asChild && isValidElement(props.children)
-  const Comp = useAsChild ? Slot : "div"
+  const Comp = useAsChild ? Slot.Root : "div"
 
   return <Comp className={cx(tileVariants({ className }))} {...props} />
 }

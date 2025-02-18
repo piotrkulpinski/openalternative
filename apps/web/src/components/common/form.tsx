@@ -1,6 +1,6 @@
 "use client"
 
-import { Slot } from "@radix-ui/react-slot"
+import { Slot } from "radix-ui"
 import { type ComponentProps, createContext, use, useId } from "react"
 import {
   Controller,
@@ -82,11 +82,11 @@ const FormLabel = (props: ComponentProps<typeof Label>) => {
   return <Label htmlFor={formItemId} {...props} />
 }
 
-const FormControl = (props: ComponentProps<typeof Slot>) => {
+const FormControl = (props: ComponentProps<typeof Slot.Root>) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
   return (
-    <Slot
+    <Slot.Root
       id={formItemId}
       aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
       aria-invalid={!!error}

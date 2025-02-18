@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot"
+import { Slot } from "radix-ui"
 import { Fragment, type HTMLAttributes, type ReactNode, isValidElement } from "react"
 import { Link } from "~/components/common/link"
 import { cx } from "~/utils/cva"
@@ -22,7 +22,7 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
           <Fragment key={label}>
             <li className="flex items-center gap-3 py-1">
               <p className="flex items-center min-w-0 gap-1.5 text-secondary-foreground">
-                <Slot className="size-[1.1em] shrink-0 opacity-75">{icon}</Slot>
+                <Slot.Root className="size-[1.1em] shrink-0 opacity-75">{icon}</Slot.Root>
                 <span className="flex-1 truncate">{label}</span>
               </p>
 
@@ -37,9 +37,9 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
                   {value}
                 </Link>
               ) : (
-                <Slot className="shrink-0 tabular-nums font-medium" title={title}>
+                <Slot.Root className="shrink-0 tabular-nums font-medium" title={title}>
                   {valueComp}
-                </Slot>
+                </Slot.Root>
               )}
             </li>
           </Fragment>

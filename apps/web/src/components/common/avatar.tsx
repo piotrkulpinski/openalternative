@@ -1,6 +1,6 @@
 "use client"
 
-import * as AvatarPrimitive from "@radix-ui/react-avatar"
+import { Avatar as AvatarPrimitive } from "radix-ui"
 import type { ComponentProps } from "react"
 import { cx } from "~/utils/cva"
 

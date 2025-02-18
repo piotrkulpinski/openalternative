@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot"
+import { Slot } from "radix-ui"
 import type { ComponentProps } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -12,7 +12,7 @@ type ContainerProps = ComponentProps<"div"> &
   }
 
 const Container = ({ className, asChild, ...props }: ContainerProps) => {
-  const Comp = asChild ? Slot : "div"
+  const Comp = asChild ? Slot.Root : "div"
 
   return <Comp className={cx(containerVariants({ className }))} {...props} />
 }

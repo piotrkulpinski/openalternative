@@ -1,8 +1,8 @@
 "use client"
 
-import type { DialogProps } from "@radix-ui/react-dialog"
 import { Command as CommandPrimitive } from "cmdk"
 import { SearchIcon } from "lucide-react"
+import type {} from "radix-ui"
 import type { ComponentProps } from "react"
 import { Dialog, DialogContent, DialogTitle } from "~/components/common/dialog"
 import { ScrollArea } from "~/components/common/scroll-area"
@@ -20,7 +20,7 @@ const Command = ({ className, ...props }: ComponentProps<typeof CommandPrimitive
   )
 }
 
-const CommandDialog = ({ children, ...props }: DialogProps) => {
+const CommandDialog = ({ children, ...props }: ComponentProps<typeof Dialog>) => {
   return (
     <Dialog {...props}>
       <DialogTitle className="sr-only">Command Menu</DialogTitle>

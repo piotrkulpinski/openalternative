@@ -1,8 +1,8 @@
 "use client"
 
-import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+import { Tooltip as TooltipPrimitive } from "radix-ui"
 import type { ComponentProps, ReactNode } from "react"
-import { cx, popoverAnimationClasses } from "~/utils/cva"
+import { cx } from "~/utils/cva"
 
 const TooltipProvider = TooltipPrimitive.Provider
 const TooltipRoot = TooltipPrimitive.Root
