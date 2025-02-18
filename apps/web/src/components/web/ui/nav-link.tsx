@@ -22,7 +22,7 @@ const navLinkVariants = cva({
 
 const isItemActive = (href: string | undefined, pathname: string, exact = false) => {
   if (href && href !== "/") {
-    return exact ? pathname === href : pathname.includes(href)
+    return exact ? pathname === href : pathname.startsWith(href)
   }
 
   return false

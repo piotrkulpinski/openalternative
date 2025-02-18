@@ -28,7 +28,7 @@ const SelfHostedCategories = async () => {
           <Tile key={category.slug} asChild>
             <Link href={`/categories/${category.slug}/self-hosted`}>
               <h6 className="text-muted-foreground text-sm truncate group-hover:text-foreground">
-                Best self-hosted {category.label}
+                Self-hosted {category.label}
               </h6>
             </Link>
           </Tile>
