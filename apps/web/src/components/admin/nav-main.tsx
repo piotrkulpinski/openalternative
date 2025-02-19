@@ -4,14 +4,9 @@ import { usePathname } from "next/navigation"
 import type { ComponentProps, ReactNode } from "react"
 import { Badge } from "~/components/common/badge"
 import { Button, type ButtonProps } from "~/components/common/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "~/components/common/tooltip"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
+import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
 import { cx } from "~/utils/cva"
 
 type NavMainLink = ButtonProps & {
@@ -58,7 +53,7 @@ export const NavMain = ({ className, links, isCollapsed, ...props }: NavMainProp
               size="md"
               variant="ghost"
               aria-label={title}
-              className={cx(isActive(href) && "bg-accent")}
+              className={cx(isActive(href) && "bg-accent text-foreground")}
               hover={false}
               asChild
               {...props}
@@ -78,7 +73,7 @@ export const NavMain = ({ className, links, isCollapsed, ...props }: NavMainProp
                 </Badge>
               )
             }
-            className={cx("justify-start", isActive(href) && "bg-accent")}
+            className={cx("justify-start", isActive(href) && "bg-accent text-foreground")}
             hover={false}
             asChild
             {...props}

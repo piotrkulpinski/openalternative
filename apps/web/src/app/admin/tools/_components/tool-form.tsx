@@ -33,9 +33,8 @@ import type { findAlternativeList } from "~/server/admin/alternatives/queries"
 import type { findCategoryList } from "~/server/admin/categories/queries"
 import { createTool, updateTool } from "~/server/admin/tools/actions"
 import type { findToolBySlug } from "~/server/admin/tools/queries"
-import { type ToolSchema, toolSchema } from "~/server/admin/tools/validations"
+import { toolSchema } from "~/server/admin/tools/validations"
 import { cx } from "~/utils/cva"
-import { nullsToUndefined } from "~/utils/helpers"
 
 type ToolFormProps = ComponentProps<"form"> & {
   tool?: Awaited<ReturnType<typeof findToolBySlug>>
@@ -51,12 +50,31 @@ export function ToolForm({
   categories,
   ...props
 }: ToolFormProps) {
-  const form = useForm<ToolSchema>({
+  const form = useForm({
     resolver: zodResolver(toolSchema),
     defaultValues: {
-      ...nullsToUndefined(tool),
-      alternatives: tool?.alternatives.map(({ id }) => id),
-      categories: tool?.categories.map(({ id }) => id),
+      name: tool?.name ?? "",
+      slug: tool?.slug ?? "",
+      tagline: tool?.tagline ?? "",
+      description: tool?.description ?? "",
+      content: tool?.content ?? "",
+      websiteUrl: tool?.websiteUrl ?? "",
+      affiliateUrl: tool?.affiliateUrl ?? "",
+      repositoryUrl: tool?.repositoryUrl ?? "",
+      faviconUrl: tool?.faviconUrl ?? "",
+      screenshotUrl: tool?.screenshotUrl ?? "",
+      isFeatured: tool?.isFeatured ?? false,
+      isSelfHosted: tool?.isSelfHosted ?? false,
+      submitterName: tool?.submitterName ?? "",
+      submitterEmail: tool?.submitterEmail ?? "",
+      submitterNote: tool?.submitterNote ?? "",
+      hostingUrl: tool?.hostingUrl ?? "",
+      discountCode: tool?.discountCode ?? "",
+      discountAmount: tool?.discountAmount ?? "",
+      status: tool?.status ?? ToolStatus.Draft,
+      publishedAt: tool?.publishedAt ?? undefined,
+      alternatives: tool?.alternatives.map(a => a.id) ?? [],
+      categories: tool?.categories.map(c => c.id) ?? [],
     },
   })
 
@@ -105,7 +123,7 @@ export function ToolForm({
             <FormItem className="flex-1">
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input data-1p-ignore {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -434,7 +452,7 @@ export function ToolForm({
             <Link href="/admin/tools">Cancel</Link>
           </Button>
 
-          <Button variant="fancy" isPending={isPending}>
+          <Button variant="primary" isPending={isPending}>
             {tool ? "Update tool" : "Create tool"}
           </Button>
         </div>

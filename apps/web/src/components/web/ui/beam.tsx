@@ -43,7 +43,7 @@ export const Beam = ({ className, ...props }: ComponentProps<"div">) => {
     <div
       ref={meteorRef}
       className={cx(
-        "meteor absolute top-0 inset-x-0 z-[40] h-[0.1rem] w-[0.1rem] rounded-full bg-gradient-to-r from-white/35 via-white/35 to-transparent shadow-[0_0_0_1px_#ffffff10] rotate-[180deg]",
+        "meteor absolute top-0 inset-x-0 z-[40] size-[0.1rem] rounded-full bg-gradient-to-r from-foreground/35 via-foreground/35 to-transparent shadow-foreground/10 shadow-[0_0_0_1px_var(--tw-shadow-color)] rotate-[180deg]",
         className,
       )}
       {...props}

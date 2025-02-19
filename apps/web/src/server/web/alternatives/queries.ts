@@ -16,13 +16,8 @@ export const searchAlternatives = async (
   cacheLife("max")
 
   const start = performance.now()
-  // Values to paginate the results
   const skip = (page - 1) * perPage
   const take = perPage
-
-  // Column and order to sort by
-  // Spliting the sort string by "." to get the column and order
-  // Example: "title.desc" => ["title", "desc"]
   const [sortBy, sortOrder] = sort.split(".")
 
   const whereQuery: Prisma.AlternativeWhereInput = {

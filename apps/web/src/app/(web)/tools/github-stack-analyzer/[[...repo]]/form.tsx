@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { analyzeStack } from "~/actions/stack-analyzer"
+import { Button } from "~/components/common/button"
+import { Card } from "~/components/common/card"
 import {
   Form,
   FormControl,
@@ -16,10 +18,8 @@ import {
   FormMessage,
 } from "~/components/common/form"
 import { Hint } from "~/components/common/hint"
-import { Stack } from "~/components/common/stack"
-import { Button } from "~/components/common/button"
-import { Card } from "~/components/common/card"
 import { Input } from "~/components/common/input"
+import { Stack } from "~/components/common/stack"
 import { Section, SectionContent } from "~/components/web/ui/section"
 import { type StackAnalyzerSchema, stackAnalyzerSchema } from "~/server/schemas"
 
@@ -81,7 +81,6 @@ export function StackAnalyzerForm() {
                             placeholder="https://github.com/owner/name"
                             disabled={isPending}
                             className="flex-1"
-                            data-1p-ignore
                             {...field}
                           />
 

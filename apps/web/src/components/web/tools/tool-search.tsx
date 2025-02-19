@@ -3,8 +3,6 @@
 import { useLocalStorage } from "@mantine/hooks"
 import { cx } from "cva"
 import { ListFilterIcon, LoaderIcon, SearchIcon } from "lucide-react"
-import { Stack } from "~/components/common/stack"
-import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { Input } from "~/components/common/input"
 import {
   Select,
@@ -13,6 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/common/select"
+import { Stack } from "~/components/common/stack"
+import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { useToolFilters } from "~/contexts/tool-filter-context"
 
 export type ToolSearchProps = {
@@ -68,7 +68,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
           </button>
         </div>
 
-        <Select value={filters.sort} onValueChange={value => updateFilters({ sort: value })}>
+        <Select value={filters.sort} onValueChange={sort => updateFilters({ sort })}>
           <SelectTrigger size="lg" className="w-auto min-w-36 max-sm:flex-1">
             <SelectValue placeholder="Order by" />
           </SelectTrigger>

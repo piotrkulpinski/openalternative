@@ -11,7 +11,7 @@ import { getSortingStateParser } from "~/lib/parsers"
 export const searchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   perPage: parseAsInteger.withDefault(25),
-  sort: getSortingStateParser<Alternative>().withDefault([{ id: "createdAt", desc: true }]),
+  sort: getSortingStateParser<Alternative>().withDefault([{ id: "name", desc: false }]),
   name: parseAsString.withDefault(""),
   from: parseAsString.withDefault(""),
   to: parseAsString.withDefault(""),

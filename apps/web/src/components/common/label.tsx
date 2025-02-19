@@ -5,7 +5,7 @@ import type { ComponentProps } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const labelVariants = cva({
-  base: "block text-sm font-medium text-foreground [&[for]]:cursor-pointer",
+  base: "self-start text-sm font-medium text-foreground [&[for]]:cursor-pointer",
 
   variants: {
     isRequired: {

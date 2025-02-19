@@ -1,4 +1,3 @@
-import { Children, type ReactNode } from "react"
 import wretch from "wretch"
 
 type Metadata = {
@@ -53,31 +52,4 @@ export const getElementPosition = (id?: string) => {
   const top = Math.floor(window.scrollY + el.getBoundingClientRect().top - scrollMt)
 
   return { id, top }
-}
-
-/**
- * Converts null and undefined values to undefined
- * @param obj
- * @returns
- */
-export function nullsToUndefined<T>(obj: T) {
-  if (obj === null || obj === undefined) {
-    return undefined as any
-  }
-
-  if ((obj as any).constructor.name === "Object" || Array.isArray(obj)) {
-    for (const key in obj) {
-      obj[key] = nullsToUndefined(obj[key]) as any
-    }
-  }
-  return obj as any
-}
-
-/**
- * Returns true if the children are empty
- * @param children - The children to check
- * @returns True if the children are empty, false otherwise
- */
-export const isChildrenEmpty = (children: ReactNode) => {
-  return Children.count(children) === 0
 }

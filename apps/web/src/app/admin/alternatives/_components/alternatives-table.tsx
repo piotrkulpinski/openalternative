@@ -58,7 +58,7 @@ export function AlternativesTable({ alternativesPromise }: AlternativesTableProp
           title="Alternatives"
           total={alternativesTotal}
           callToAction={
-            <Button variant="fancy" size="md" prefix={<PlusIcon />} asChild>
+            <Button variant="primary" size="md" prefix={<PlusIcon />} asChild>
               <Link href="/admin/alternatives/new">
                 <div className="max-sm:sr-only">New alternative</div>
               </Link>

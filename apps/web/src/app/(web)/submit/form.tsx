@@ -82,7 +82,7 @@ export const SubmitForm = ({ className, ...props }: ComponentProps<"form">) => {
                 <FormItem>
                   <FormLabel isRequired>Your Name:</FormLabel>
                   <FormControl>
-                    <Input type="text" size="lg" placeholder="John Doe" data-1p-ignore {...field} />
+                    <Input type="text" size="lg" placeholder="John Doe" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -96,13 +96,7 @@ export const SubmitForm = ({ className, ...props }: ComponentProps<"form">) => {
                 <FormItem>
                   <FormLabel isRequired>Your Email:</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      size="lg"
-                      placeholder="john@doe.com"
-                      data-1p-ignore
-                      {...field}
-                    />
+                    <Input type="email" size="lg" placeholder="john@doe.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

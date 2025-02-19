@@ -2,6 +2,7 @@ import { ArrowUpRightIcon } from "lucide-react"
 import Image from "next/image"
 import type { ComponentProps } from "react"
 import { Link } from "~/components/common/link"
+import { ExternalLink } from "~/components/web/external-link"
 import { cx } from "~/utils/cva"
 
 const a = ({ href, ...props }: ComponentProps<"a">) => {
@@ -14,10 +15,10 @@ const a = ({ href, ...props }: ComponentProps<"a">) => {
   }
 
   return (
-    <a {...props} href={href} target="_blank" rel="noopener noreferrer nofollow">
+    <ExternalLink {...props} href={href}>
       {props.children}
       <ArrowUpRightIcon className="inline-block ml-0.5 mb-0.5 size-3.5 stroke-2" />
-    </a>
+    </ExternalLink>
   )
 }
 

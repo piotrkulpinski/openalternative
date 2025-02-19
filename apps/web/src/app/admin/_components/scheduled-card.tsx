@@ -1,10 +1,10 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { ComponentProps } from "react"
 import { Card, CardDescription, CardHeader } from "~/components/common/card"
-import { ScrollArea } from "~/components/common/scroll-area"
-import { Link } from "~/components/common/link"
-import { findScheduledTools } from "~/server/admin/tools/queries"
 import { H2 } from "~/components/common/heading"
+import { Link } from "~/components/common/link"
+import { ScrollArea } from "~/components/common/scroll-area"
+import { findScheduledTools } from "~/server/admin/tools/queries"
 
 const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await findScheduledTools()
@@ -36,7 +36,7 @@ const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
           ))}
         </ScrollArea>
       ) : (
-        <p className="text-muted-foreground">No upcoming tools at the moment.</p>
+        <p className="text-sm text-muted-foreground">No upcoming tools at the moment.</p>
       )}
     </Card>
   )

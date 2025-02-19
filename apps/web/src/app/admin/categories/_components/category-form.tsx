@@ -20,10 +20,9 @@ import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
 import { createCategory, updateCategory } from "~/server/admin/categories/actions"
 import type { findCategoryBySlug } from "~/server/admin/categories/queries"
-import { type CategorySchema, categorySchema } from "~/server/admin/categories/validations"
+import { categorySchema } from "~/server/admin/categories/validations"
 import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
-import { nullsToUndefined } from "~/utils/helpers"
 
 type CategoryFormProps = ComponentProps<"form"> & {
   category?: Awaited<ReturnType<typeof findCategoryBySlug>>
@@ -37,11 +36,13 @@ export function CategoryForm({
   tools,
   ...props
 }: CategoryFormProps) {
-  const form = useForm<CategorySchema>({
+  const form = useForm({
     resolver: zodResolver(categorySchema),
     defaultValues: {
-      ...nullsToUndefined(category),
-      tools: category?.tools.map(({ id }) => id),
+      name: category?.name ?? "",
+      slug: category?.slug ?? "",
+      label: category?.label ?? "",
+      tools: category?.tools.map(t => t.id) ?? [],
     },
   })
 
@@ -97,7 +98,7 @@ export function CategoryForm({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input data-1p-ignore {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -153,7 +154,7 @@ export function CategoryForm({
             <Link href="/admin/categories">Cancel</Link>
           </Button>
 
-          <Button variant="fancy" isPending={isPending}>
+          <Button variant="primary" isPending={isPending}>
             {category ? "Update category" : "Create category"}
           </Button>
         </div>

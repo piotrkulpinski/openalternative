@@ -1,11 +1,10 @@
 import { LoaderIcon } from "lucide-react"
 import { Slot } from "radix-ui"
 import type { ComponentProps, ReactNode } from "react"
-import { isValidElement } from "react"
+import { Children, isValidElement } from "react"
 import { boxVariants } from "~/components/common/box"
 import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
-import { isChildrenEmpty } from "~/utils/helpers"
 
 const buttonVariants = cva({
   base: [
@@ -98,7 +97,7 @@ const Button = ({
           <>
             <Slot.Root className={buttonAffixVariants()}>{prefix}</Slot.Root>
 
-            {!isChildrenEmpty(child) && (
+            {Children.count(child) !== 0 && (
               <span className="flex-1 truncate only:text-center has-[div]:contents">{child}</span>
             )}
 

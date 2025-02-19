@@ -20,18 +20,22 @@ import { Link } from "~/components/common/link"
 import { TextArea } from "~/components/common/textarea"
 import { createLicense, updateLicense } from "~/server/admin/licenses/actions"
 import type { findLicenseBySlug } from "~/server/admin/licenses/queries"
-import { type LicenseSchema, licenseSchema } from "~/server/admin/licenses/validations"
+import { licenseSchema } from "~/server/admin/licenses/validations"
 import { cx } from "~/utils/cva"
-import { nullsToUndefined } from "~/utils/helpers"
 
 type LicenseFormProps = ComponentProps<"form"> & {
   license?: Awaited<ReturnType<typeof findLicenseBySlug>>
 }
 
 export function LicenseForm({ children, className, license, ...props }: LicenseFormProps) {
-  const form = useForm<LicenseSchema>({
+  const form = useForm({
     resolver: zodResolver(licenseSchema),
-    defaultValues: nullsToUndefined(license),
+    defaultValues: {
+      name: license?.name ?? "",
+      slug: license?.slug ?? "",
+      description: license?.description ?? "",
+      content: license?.content ?? "",
+    },
   })
 
   // Create license
@@ -85,7 +89,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input data-1p-ignore {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -139,7 +143,7 @@ export function LicenseForm({ children, className, license, ...props }: LicenseF
             <Link href="/admin/licenses">Cancel</Link>
           </Button>
 
-          <Button variant="fancy" isPending={isPending}>
+          <Button variant="primary" isPending={isPending}>
             {license ? "Update license" : "Create license"}
           </Button>
         </div>

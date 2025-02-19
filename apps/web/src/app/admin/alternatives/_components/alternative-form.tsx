@@ -22,10 +22,9 @@ import { Switch } from "~/components/common/switch"
 import { TextArea } from "~/components/common/textarea"
 import { createAlternative, updateAlternative } from "~/server/admin/alternatives/actions"
 import type { findAlternativeBySlug } from "~/server/admin/alternatives/queries"
-import { type AlternativeSchema, alternativeSchema } from "~/server/admin/alternatives/validations"
+import { alternativeSchema } from "~/server/admin/alternatives/validations"
 import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
-import { nullsToUndefined } from "~/utils/helpers"
 
 type AlternativeFormProps = ComponentProps<"form"> & {
   alternative?: Awaited<ReturnType<typeof findAlternativeBySlug>>
@@ -39,11 +38,18 @@ export function AlternativeForm({
   tools,
   ...props
 }: AlternativeFormProps) {
-  const form = useForm<AlternativeSchema>({
+  const form = useForm({
     resolver: zodResolver(alternativeSchema),
     defaultValues: {
-      ...nullsToUndefined(alternative),
-      tools: alternative?.tools.map(({ id }) => id),
+      name: alternative?.name ?? "",
+      slug: alternative?.slug ?? "",
+      websiteUrl: alternative?.websiteUrl ?? "",
+      description: alternative?.description ?? "",
+      faviconUrl: alternative?.faviconUrl ?? "",
+      isFeatured: alternative?.isFeatured ?? false,
+      discountCode: alternative?.discountCode ?? "",
+      discountAmount: alternative?.discountAmount ?? "",
+      tools: alternative?.tools.map(t => t.id) ?? [],
     },
   })
 
@@ -101,7 +107,7 @@ export function AlternativeForm({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input data-1p-ignore {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -227,7 +233,7 @@ export function AlternativeForm({
             <Link href="/admin/alternatives">Cancel</Link>
           </Button>
 
-          <Button variant="fancy" isPending={isPending}>
+          <Button variant="primary" isPending={isPending}>
             {alternative ? "Update alternative" : "Create alternative"}
           </Button>
         </div>
