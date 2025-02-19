@@ -28,7 +28,7 @@ const TileTitle = ({ className, ...props }: ComponentProps<typeof Heading>) => {
 }
 
 const TileDivider = ({ className, ...props }: ComponentProps<"hr">) => {
-  return <hr className={cx("min-w-2 flex-1 group-hover:opacity-35", className)} {...props} />
+  return <hr className={cx("min-w-2 flex-1 group-hover:border-ring", className)} {...props} />
 }
 
 const TileCaption = ({ className, ...props }: ComponentProps<"span">) => {

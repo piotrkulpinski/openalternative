@@ -38,9 +38,9 @@ const CardFooter = ({ className, ...props }: ComponentProps<typeof Stack>) => {
   return <Stack size="sm" className={cx("text-xs text-muted-foreground", className)} {...props} />
 }
 
-const CardDescription = ({ className, ...props }: ComponentProps<"p">) => {
+const CardDescription = ({ className, ...props }: ComponentProps<"div">) => {
   return (
-    <p
+    <div
       className={cx("line-clamp-2 text-sm/normal text-secondary-foreground text-pretty", className)}
       {...props}
     />

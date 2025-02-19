@@ -143,11 +143,6 @@
     @apply underline-offset-2;
   }
 
-  hr {
-    @apply border-foreground;
-    @apply opacity-10;
-  }
-
   a,
   button,
   label[for],
