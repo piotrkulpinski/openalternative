@@ -178,9 +178,9 @@ export default function AboutPage() {
 
         <p>
           –{" "}
-          <a href={config.links.author} target="_blank" rel="noreferrer">
+          <ExternalLink href={config.links.author} doFollow>
             Piotr Kulpinski
-          </a>
+          </ExternalLink>
         </p>
       </Prose>
     </>

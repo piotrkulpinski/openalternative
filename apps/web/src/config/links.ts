@@ -31,9 +31,9 @@ export const linksConfig = {
       description: "No-code directory website builder",
     },
     {
-      title: "Chipmunk Theme",
-      href: "https://chipmunktheme.com",
-      description: "Build directory websites in WordPress",
+      title: "Dirstarter",
+      href: "https://dirstarter.com",
+      description: "Next.js directory website boilerplate",
     },
   ],
   toolsUsed: [

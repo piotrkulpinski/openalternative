@@ -133,7 +133,7 @@ export default async function ToolPage(props: PageProps) {
                 <Button suffix={<ArrowUpRightIcon />} className="sm:min-w-36" asChild>
                   <ExternalLink
                     href={tool.affiliateUrl || tool.websiteUrl}
-                    doFollow={!tool.isFeatured}
+                    doFollow={tool.isFeatured}
                     eventName="click_website"
                     eventProps={{ url: tool.websiteUrl }}
                   >

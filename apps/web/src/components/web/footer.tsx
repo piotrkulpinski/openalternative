@@ -166,8 +166,8 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
         </Stack>
       </div>
 
-      <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
-        <p className="text-xs text-muted-foreground">
+      <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full text-sm text-muted-foreground">
+        <p>
           Made with{" "}
           <ExternalLink
             href={config.links.madeWith}
@@ -188,7 +188,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           </ExternalLink>
         </p>
 
-        <p className="text-xs text-muted-foreground">This website may contain affiliate links</p>
+        <p>This website may contain affiliate links</p>
       </div>
 
       {children}

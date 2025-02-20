@@ -78,6 +78,7 @@ export const NewsletterForm = ({
                     required
                     size={size}
                     className="flex-1 min-w-0 border-0 outline-0 ring-0!"
+                    data-1p-ignore
                     {...field}
                   />
                 </FormControl>
