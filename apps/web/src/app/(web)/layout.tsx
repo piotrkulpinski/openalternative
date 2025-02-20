@@ -7,7 +7,6 @@ import { AdBanner } from "~/components/web/ads/ad-banner"
 import { Bottom } from "~/components/web/bottom"
 import { Footer } from "~/components/web/footer"
 import { Header } from "~/components/web/header"
-import { LaunchToast } from "~/components/web/launch-toast"
 import { Container } from "~/components/web/ui/container"
 import { UserMenu } from "~/components/web/user-menu"
 import { config } from "~/config"
@@ -93,7 +92,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
       </div>
 
       <Bottom />
-      <LaunchToast />
 
       {/* JSON-LD */}
       <Script

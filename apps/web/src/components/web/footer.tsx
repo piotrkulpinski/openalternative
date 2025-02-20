@@ -171,8 +171,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           Made with{" "}
           <ExternalLink
             href={config.links.madeWith}
-            className="font-medium text-secondary-foreground hover:text-foreground"
-            target="_blank"
+            className="font-medium text-foreground hover:text-secondary-foreground"
             doFollow
           >
             Dirstarter
@@ -180,8 +179,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           by{" "}
           <ExternalLink
             href={config.links.author}
-            className="font-medium text-secondary-foreground hover:text-foreground"
-            target="_blank"
+            className="font-medium text-foreground hover:text-secondary-foreground"
             doFollow
           >
             Piotr Kulpinski

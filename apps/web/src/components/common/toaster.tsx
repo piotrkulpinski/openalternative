@@ -9,7 +9,7 @@ const Toaster = ({ className, ...props }: ComponentProps<typeof Sonner>) => {
       className="pointer-events-auto"
       toastOptions={{
         classNames: {
-          default: "bg-background! text-foreground! border-border! shadow-sm!",
+          default: "bg-background! text-foreground! border-border! rounded-lg shadow-sm!",
           error: "bg-destructive! text-destructive-foreground!",
           success: "bg-green-700! text-white!",
           description: "text-muted-foreground",

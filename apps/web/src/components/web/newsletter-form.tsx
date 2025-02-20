@@ -88,7 +88,7 @@ export const NewsletterForm = ({
             <Button
               isPending={isPending}
               className={cx(
-                "shrink-0 ",
+                "shrink-0",
                 size === "lg" ? "text-sm/tight px-4 py-2 m-1" : "px-3 py-1.5 m-0.5",
               )}
               {...buttonProps}

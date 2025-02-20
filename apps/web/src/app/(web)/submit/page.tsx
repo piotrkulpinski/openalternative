@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { SubmitForm } from "~/app/(web)/submit/form"
-import { Link } from "~/components/common/link"
 import { Card } from "~/components/common/card"
+import { Link } from "~/components/common/link"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
 import { Section } from "~/components/web/ui/section"
@@ -38,8 +38,8 @@ export default async function SubmitPage() {
 
               <ul className="[&_li]:p-0 list-inside p-0">
                 <li>Open source</li>
-                <li>Free to use or can be self-hosted</li>
                 <li>Actively maintained</li>
+                <li>Hosted publicly on GitHub</li>
                 <li>
                   An <Link href="/alternatives">alternative to popular software</Link>
                 </li>

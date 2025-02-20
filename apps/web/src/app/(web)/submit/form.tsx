@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { ToolStatus } from "@openalternative/db/client"
 import { useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
 import type { ComponentProps } from "react"
@@ -49,7 +50,7 @@ export const SubmitForm = ({ className, ...props }: ComponentProps<"form">) => {
       // Capture event
       posthog.capture("submit_tool", { slug: data.slug })
 
-      if (data.publishedAt && data.publishedAt <= new Date()) {
+      if (data.status === ToolStatus.Published) {
         if (data.isFeatured) {
           toast.info(`${data.name} has already been published.`)
         } else {
@@ -57,7 +58,7 @@ export const SubmitForm = ({ className, ...props }: ComponentProps<"form">) => {
             duration: Number.POSITIVE_INFINITY,
           })
         }
-        router.push(`/tools/${data.slug}`)
+        router.push(`/${data.slug}`)
       } else {
         toast.success(`${data.name} has been submitted.`)
         router.push(`/submit/${data.slug}`)
