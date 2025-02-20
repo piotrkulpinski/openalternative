@@ -1,11 +1,13 @@
 "use client"
 
+import { getUrlHostname } from "@curiousleaf/utils"
 import { type Properties, posthog } from "posthog-js"
 import type { ComponentProps } from "react"
 import { siteConfig } from "~/config/site"
 import { addSearchParams } from "~/utils/search-params"
 
 type ExternalLinkProps = ComponentProps<"a"> & {
+  doFollow?: boolean
   eventName?: string
   eventProps?: Properties
 }
@@ -13,7 +15,7 @@ type ExternalLinkProps = ComponentProps<"a"> & {
 export const ExternalLink = ({
   href,
   target = "_blank",
-  rel = "noopener noreferrer nofollow",
+  doFollow = false,
   eventName,
   eventProps,
   ...props
@@ -22,9 +24,9 @@ export const ExternalLink = ({
 
   return (
     <a
-      href={addSearchParams(href, { ref: siteConfig.name.toLowerCase() })}
+      href={addSearchParams(href, { ref: getUrlHostname(siteConfig.url) })}
       target={target}
-      rel={rel}
+      rel={`noopener noreferrer ${doFollow ? "" : "nofollow"}`}
       onClick={() => eventName && posthog.capture(eventName, eventProps)}
       {...props}
     />

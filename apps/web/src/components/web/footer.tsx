@@ -2,7 +2,6 @@
 
 import { formatNumber } from "@curiousleaf/utils"
 import { AtSignIcon, RssIcon } from "lucide-react"
-import Image from "next/image"
 import type { ComponentProps } from "react"
 import {
   DropdownMenu,
@@ -157,9 +156,9 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
             <ExternalLink
               key={href}
               href={href}
-              rel="noreferrer noopener"
               title={description}
               className={navLinkVariants()}
+              doFollow
             >
               {title}
             </ExternalLink>
@@ -168,23 +167,26 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
       </div>
 
       <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
-        <NavLink
-          href={config.links.author}
-          className="text-xs"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            src="/authors/piotrkulpinski.webp"
-            alt="Piotr Kulpinski avatar"
-            loading="lazy"
-            width="16"
-            height="16"
-            decoding="async"
-            className="max-sm:hidden size-4 rounded-full"
-          />
-          Made by Piotr Kulpinski
-        </NavLink>
+        <p className="text-xs text-muted-foreground">
+          Made with{" "}
+          <ExternalLink
+            href={config.links.madeWith}
+            className="font-medium text-secondary-foreground hover:text-foreground"
+            target="_blank"
+            doFollow
+          >
+            Dirstarter
+          </ExternalLink>{" "}
+          by{" "}
+          <ExternalLink
+            href={config.links.author}
+            className="font-medium text-secondary-foreground hover:text-foreground"
+            target="_blank"
+            doFollow
+          >
+            Piotr Kulpinski
+          </ExternalLink>
+        </p>
 
         <p className="text-xs text-muted-foreground">This website may contain affiliate links</p>
       </div>

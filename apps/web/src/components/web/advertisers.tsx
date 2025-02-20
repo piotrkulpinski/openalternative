@@ -17,7 +17,7 @@ export const Advertisers = ({ className, ...props }: ComponentProps<"div">) => {
         <ExternalLink
           key={ad.name}
           href={ad.websiteUrl}
-          rel="noopener noreferrer"
+          doFollow
           eventName="click_ad"
           eventProps={{ url: ad.websiteUrl, type: "Advertisers" }}
           className="flex flex-wrap items-center gap-x-2 font-semibold opacity-85 hover:opacity-100 md:text-lg"

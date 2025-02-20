@@ -163,7 +163,7 @@ export default function AboutPage() {
         <ul>
           {config.links.family.map(({ href, title, description }) => (
             <li key={title}>
-              <ExternalLink href={href} title={description} rel="noopener noreferrer">
+              <ExternalLink href={href} title={description} doFollow>
                 {title}
               </ExternalLink>{" "}
               – {description}
