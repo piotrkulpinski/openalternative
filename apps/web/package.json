@@ -12,7 +12,7 @@
     "format": "bun biome format --write ."
   },
   "dependencies": {
-    "@ai-sdk/google": "^1.1.13",
+    "@ai-sdk/anthropic": "^1.1.9",
     "@atproto/api": "^0.13.35",
     "@aws-sdk/client-s3": "^3.744.0",
     "@aws-sdk/lib-storage": "^3.744.0",
