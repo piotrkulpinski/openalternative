@@ -16,19 +16,14 @@ export const linksConfig = {
   ],
   family: [
     {
-      title: "OpenAds",
-      href: "https://openads.co",
-      description: "Automate ad spot management, increase revenue and make advertisers happy",
-    },
-    {
       title: "DevSuite",
       href: "https://devsuite.co",
       description: "Find the perfect developer tools for your next project",
     },
     {
-      title: "Superstash",
-      href: "https://superstash.co",
-      description: "No-code directory website builder",
+      title: "OpenAds",
+      href: "https://openads.co",
+      description: "Automate ad spot management and increase website revenue",
     },
     {
       title: "Dirstarter",

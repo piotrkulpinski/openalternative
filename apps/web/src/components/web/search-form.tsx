@@ -36,23 +36,23 @@ export const SearchForm = ({ className, ...props }: ComponentProps<"form">) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className={cx("flex items-center shrink-0", className)}
+      className={cx("flex items-center", className)}
       noValidate
       {...props}
     >
       <div className="relative flex">
         <Input
-          size="sm"
           ref={inputRef}
+          size="sm"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Search tools..."
-          className={cx(
-            "transition-[width,opacity,transform] duration-200 ease-in-out",
-            isExpanded ? "w-28 opacity-100" : "w-0 opacity-0",
-          )}
+          placeholder="Search..."
           onFocus={handleExpand}
           onBlur={handleCollapse}
+          className={cx(
+            "transition-[max-width,opacity,transform] duration-200 ease-in-out",
+            isExpanded ? "max-w-24 sm:max-w-32 opacity-100" : "max-w-0 opacity-0",
+          )}
         />
 
         <button

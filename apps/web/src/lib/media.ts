@@ -11,9 +11,7 @@ import { s3Client } from "~/services/s3"
  * @param key - The S3 key to upload the file to.
  * @returns The S3 location of the uploaded file.
  */
-export const uploadToS3Storage = async (file: Buffer, key: string) => {
-  const timestamp = Date.now()
-
+const uploadToS3Storage = async (file: Buffer, key: string) => {
   const upload = new Upload({
     client: s3Client,
     params: {
@@ -33,7 +31,7 @@ export const uploadToS3Storage = async (file: Buffer, key: string) => {
     throw new Error("Failed to upload")
   }
 
-  return `https://${env.S3_BUCKET}.s3.${env.S3_REGION}.amazonaws.com/${result.Key}?v=${timestamp}`
+  return `https://${env.S3_BUCKET}.s3.${env.S3_REGION}.amazonaws.com/${result.Key}`
 }
 
 /**
@@ -80,6 +78,7 @@ export const removeS3File = async (key: string) => {
  * @returns The S3 location of the uploaded favicon.
  */
 export const uploadFavicon = async (url: string, s3Key: string): Promise<string | null> => {
+  const timestamp = Date.now()
   const cleanedUrl = encodeURIComponent(stripURLSubpath(url) ?? "")
   const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain_url=${cleanedUrl}`
 
@@ -93,7 +92,7 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
     // Upload to S3
     const s3Location = await uploadToS3Storage(fileBuffer, `${s3Key}.png`)
 
-    return s3Location
+    return `${s3Location}?v=${timestamp}`
   } catch (error) {
     console.error("Error fetching or uploading favicon:", error)
     return null
@@ -107,6 +106,8 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
  * @returns The S3 location of the uploaded screenshot.
  */
 export const uploadScreenshot = async (url: string, s3Key: string): Promise<string> => {
+  const timestamp = Date.now()
+
   const queryParams = new URLSearchParams({
     url,
     access_key: env.SCREENSHOTONE_ACCESS_KEY,
@@ -145,7 +146,7 @@ export const uploadScreenshot = async (url: string, s3Key: string): Promise<stri
     const endpointUrl = `https://api.screenshotone.com/take?${queryParams.toString()}`
     const { store } = await wretch(endpointUrl).get().json<{ store: { location: string } }>()
 
-    return store.location
+    return `${store.location}?v=${timestamp}`
   } catch (error) {
     console.error("Error fetching screenshot:", error)
     throw error

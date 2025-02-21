@@ -144,21 +144,21 @@ export const Header = ({ children, className, ...props }: ComponentProps<typeof 
           </Suspense>
 
           <NavLink
-            href={config.links.bluesky}
-            target="_blank"
-            rel="nofollow noreferrer"
-            title="Follow us on Bluesky"
-          >
-            <BrandBlueskyIcon className="size-4" />
-          </NavLink>
-
-          <NavLink
             href={config.links.twitter}
             target="_blank"
             rel="nofollow noreferrer"
             title="Follow us on X"
           >
             <BrandXIcon className="size-4" />
+          </NavLink>
+
+          <NavLink
+            href={config.links.bluesky}
+            target="_blank"
+            rel="nofollow noreferrer"
+            title="Follow us on Bluesky"
+          >
+            <BrandBlueskyIcon className="size-4" />
           </NavLink>
 
           <NavLink
