@@ -88,6 +88,11 @@ const nextConfig: NextConfig = {
         destination: "/scira",
         permanent: true,
       },
+      {
+        source: "/categories/feedback-management",
+        destination: "/categories/customer-feedback",
+        permanent: true,
+      },
     ]
   },
 }
