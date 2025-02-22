@@ -1,20 +1,36 @@
 import { createAnthropic } from "@ai-sdk/anthropic"
 import { isTruthy } from "@curiousleaf/utils"
-import type { ScrapeResponse } from "@mendable/firecrawl-js"
 import { db } from "@openalternative/db"
 import { generateObject } from "ai"
 import { z } from "zod"
 import { env } from "~/env"
 import { getErrorMessage } from "~/lib/handle-error"
+import { firecrawlClient } from "~/services/firecrawl"
+
+/**
+ * Scrapes a website and returns the scraped data.
+ * @param url The URL of the website to scrape.
+ * @returns The scraped data.
+ */
+const scrapeWebsiteData = async (url: string) => {
+  const data = await firecrawlClient.scrapeUrl(url, { formats: ["markdown"] })
+
+  if (!data.success) {
+    throw new Error(data.error)
+  }
+
+  return data
+}
 
 /**
  * Generates content for a tool.
- * @param tool The tool to generate content for.
+ * @param url The URL of the website to scrape.
  * @returns The generated content.
  */
-export const generateContent = async (scrapedData: Omit<ScrapeResponse, "actions">) => {
+export const generateContent = async (url: string) => {
   const anthropic = createAnthropic({ apiKey: env.ANTHROPIC_API_KEY })
   const model = anthropic("claude-3-5-sonnet-latest")
+  const scrapedData = await scrapeWebsiteData(url)
 
   const [categories, alternatives] = await Promise.all([
     db.category.findMany(),
@@ -37,6 +53,11 @@ export const generateContent = async (scrapedData: Omit<ScrapeResponse, "actions
         .string()
         .describe(
           "A detailed and engaging longer description with key benefits (up to 1000 characters). Can be Markdown formatted, but should start with paragraph and not use headings. Highlight important points with bold text. Make sure the lists use correct Markdown syntax.",
+        ),
+      isSelfHosted: z
+        .boolean()
+        .describe(
+          "Is the tool self-hosted? Figure it out from the content of the website, if it states the tool can be self-hosted.",
         ),
       categories: z
         .array(z.string())

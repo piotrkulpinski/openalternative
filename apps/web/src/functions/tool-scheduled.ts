@@ -8,7 +8,6 @@ import { generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { analyzeRepositoryStack } from "~/lib/stack-analysis"
-import { firecrawlClient } from "~/services/firecrawl"
 import { inngest } from "~/services/inngest"
 import { ensureFreeSubmissions } from "~/utils/functions"
 
@@ -21,23 +20,10 @@ export const toolScheduled = inngest.createFunction(
       return db.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
     })
 
-    // Scrape website
-    const scrapedData = await step.run("scrape-website", async () => {
-      const data = await firecrawlClient.scrapeUrl(tool.websiteUrl, { formats: ["markdown"] })
-
-      if (!data.success) {
-        throw new Error(data.error)
-      }
-
-      logger.info(`Scraped website for ${tool.name}`, { data })
-
-      return data
-    })
-
     // Run steps in parallel
     await Promise.all([
       step.run("generate-content", async () => {
-        const { categories, alternatives, ...content } = await generateContent(scrapedData)
+        const { categories, alternatives, ...content } = await generateContent(tool.websiteUrl)
 
         return await db.tool.update({
           where: { id: tool.id },
