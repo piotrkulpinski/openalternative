@@ -25,6 +25,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         sameAs: [
           config.links.twitter,
           config.links.bluesky,
+          config.links.mastodon,
           config.links.linkedin,
           config.links.github,
         ],
@@ -103,8 +104,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <Script
         defer
         data-domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-        data-api={env.NEXT_PUBLIC_PLAUSIBLE_API_URL}
-        src={env.NEXT_PUBLIC_PLAUSIBLE_SCRIPT_URL}
+        src={`${env.NEXT_PUBLIC_PLAUSIBLE_URL}/js/script.js`}
       />
     </Providers>
   )

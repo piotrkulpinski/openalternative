@@ -18,7 +18,7 @@ const getAnalytics = async () => {
 
   try {
     const domain = env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
-    const host = env.PLAUSIBLE_API_URL
+    const host = env.NEXT_PUBLIC_PLAUSIBLE_URL
     const apiKey = env.PLAUSIBLE_API_KEY
 
     const queryOptions = new URLSearchParams({
