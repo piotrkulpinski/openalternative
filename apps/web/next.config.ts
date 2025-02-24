@@ -5,14 +5,12 @@ const nextConfig: NextConfig = {
   experimental: {
     ppr: true,
     useCache: true,
-  },
 
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-
-  eslint: {
-    ignoreDuringBuilds: true,
+    optimizePackageImports: [
+      "@content-collections/core",
+      "@content-collections/mdx",
+      "@content-collections/next",
+    ],
   },
 
   images: {
@@ -59,11 +57,6 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/latest",
-        destination: "/?sort=publishedAt.desc",
-        permanent: true,
-      },
-      {
         source: "/topics",
         destination: "/topics/letter/a",
         permanent: true,
@@ -81,11 +74,6 @@ const nextConfig: NextConfig = {
       {
         source: "/sponsor",
         destination: "/advertise",
-        permanent: true,
-      },
-      {
-        source: "/miniperplx",
-        destination: "/scira",
         permanent: true,
       },
       {

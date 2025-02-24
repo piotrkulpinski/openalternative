@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "email": "cp .env ./node_modules/react-email/dist/preview && email dev",
-    "dev": "next dev -p 5173",
+    "dev": "next dev -p 5173 --turbo",
     "start": "next start -p 5173",
     "build": "next build",
     "lint": "bun biome lint --apply .",
