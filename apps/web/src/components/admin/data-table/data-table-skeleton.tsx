@@ -100,7 +100,7 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
         <div className="flex flex-1 items-center space-x-2">
           {searchableColumnCount > 0
             ? Array.from({ length: searchableColumnCount }).map((_, i) => (
-                <Skeleton key={i} className="h-8 w-full min-w-40 lg:min-w-60" />
+                <Skeleton key={i} className="h-8 w-40 lg:w-60" />
               ))
             : null}
           {filterableColumnCount > 0

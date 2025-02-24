@@ -35,17 +35,20 @@ export function DataTableToolbar<TData>({
 
   return (
     <div
-      className={cx("flex w-full items-center justify-between gap-2 overflow-auto", className)}
+      className={cx(
+        "flex items-center justify-between gap-2 w-full py-1 -my-1 overflow-auto",
+        className,
+      )}
       {...props}
     >
-      <div className="flex flex-1 items-center space-x-2">
+      <div className="flex items-center space-x-2">
         {searchableColumns.length > 0 &&
           searchableColumns.map(
             column =>
               table.getColumn(column.id ? String(column.id) : "") && (
                 <Input
                   key={String(column.id)}
-                  className="min-w-40"
+                  className="w-40 lg:w-60"
                   placeholder={column.placeholder}
                   value={(table.getColumn(String(column.id))?.getFilterValue() as string) ?? ""}
                   onChange={e => table.getColumn(String(column.id))?.setFilterValue(e.target.value)}
