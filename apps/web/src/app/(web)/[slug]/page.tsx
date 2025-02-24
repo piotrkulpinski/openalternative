@@ -169,7 +169,7 @@ export default async function ToolPage(props: PageProps) {
                 doFollow={tool.isFeatured}
                 eventName="click_website"
                 eventProps={{ url: tool.websiteUrl }}
-                className="group relative rounded-md overflow-clip max-md:order-2"
+                className="group relative bg-accent border rounded-md overflow-clip max-md:order-2"
               >
                 <Image
                   key={tool.screenshotUrl}
@@ -178,7 +178,7 @@ export default async function ToolPage(props: PageProps) {
                   width={1280}
                   height={1024}
                   loading="lazy"
-                  className="aspect-video h-auto w-full bg-accent border object-cover object-top group-hover:opacity-50 group-hover:scale-[102%]"
+                  className="aspect-video h-auto w-full object-cover object-top group-hover:opacity-50 group-hover:scale-[102%]"
                 />
 
                 <Button

@@ -11,6 +11,7 @@ import { githubClient } from "~/services/github"
  */
 export const getToolRepositoryData = async (repository: string) => {
   const repo = await githubClient.queryRepository(repository)
+  const selfHostedTopics = ["selfhosted", "self-hosted"]
 
   if (!repo) return null
 
@@ -20,10 +21,11 @@ export const getToolRepositoryData = async (repository: string) => {
     score: repo.score,
     firstCommitDate: repo.createdAt,
     lastCommitDate: repo.pushedAt,
+    isSelfHosted: repo.topics.some(topic => selfHostedTopics.includes(topic)),
 
     // License
     license: repo.license
-      ? ({
+      ? {
           connectOrCreate: {
             where: { name: repo.license },
             create: {
@@ -31,7 +33,7 @@ export const getToolRepositoryData = async (repository: string) => {
               slug: slugify(repo.license).replace(/-0$/, ""),
             },
           },
-        } satisfies Prisma.ToolUpdateInput["license"])
+        }
       : undefined,
 
     // Topics

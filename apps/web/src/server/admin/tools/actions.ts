@@ -6,6 +6,7 @@ import { ToolStatus } from "@openalternative/db/client"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { isProd } from "~/env"
+import { generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { adminProcedure } from "~/lib/safe-actions"
 import { analyzeRepositoryStack } from "~/lib/stack-analysis"
@@ -107,6 +108,24 @@ export const reuploadToolAssets = adminProcedure
     await db.tool.update({
       where: { id: tool.id },
       data: { faviconUrl, screenshotUrl },
+    })
+
+    revalidateTag("tools")
+    revalidateTag(`tool-${tool.slug}`)
+
+    return true
+  })
+
+export const regenerateToolContent = adminProcedure
+  .createServerAction()
+  .input(z.object({ id: z.string() }))
+  .handler(async ({ input: { id } }) => {
+    const tool = await db.tool.findUniqueOrThrow({ where: { id } })
+    const data = await generateContent(tool.websiteUrl)
+
+    await db.tool.update({
+      where: { id: tool.id },
+      data,
     })
 
     revalidateTag("tools")

@@ -4,7 +4,7 @@ import { config } from "~/config"
 import EmailToolExpediteReminder from "~/emails/tool-expedite-reminder"
 import EmailToolScheduled from "~/emails/tool-scheduled"
 import { sendEmails } from "~/lib/email"
-import { generateContent } from "~/lib/generate-content"
+import { generateContentWithRelations } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { analyzeRepositoryStack } from "~/lib/stack-analysis"
@@ -23,7 +23,9 @@ export const toolScheduled = inngest.createFunction(
     // Run steps in parallel
     await Promise.all([
       step.run("generate-content", async () => {
-        const { categories, alternatives, ...content } = await generateContent(tool.websiteUrl)
+        const { categories, alternatives, ...content } = await generateContentWithRelations(
+          tool.websiteUrl,
+        )
 
         return await db.tool.update({
           where: { id: tool.id },

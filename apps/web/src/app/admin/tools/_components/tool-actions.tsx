@@ -14,7 +14,11 @@ import {
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
 import { Link } from "~/components/common/link"
-import { analyzeToolStack, reuploadToolAssets } from "~/server/admin/tools/actions"
+import {
+  analyzeToolStack,
+  regenerateToolContent,
+  reuploadToolAssets,
+} from "~/server/admin/tools/actions"
 import type { DataTableRowAction } from "~/types"
 import { cx } from "~/utils/cva"
 
@@ -24,25 +28,31 @@ type ToolActionsProps = ComponentProps<typeof Button> & {
 }
 
 export const ToolActions = ({ className, tool, setRowAction, ...props }: ToolActionsProps) => {
-  const { execute: reuploadAssetsAction } = useServerAction(reuploadToolAssets, {
-    onSuccess: () => {
-      toast.success("Tool assets reuploaded")
+  const actions = [
+    {
+      action: reuploadToolAssets,
+      label: "Reupload Assets",
+      successMessage: "Tool assets reuploaded",
     },
+    {
+      action: regenerateToolContent,
+      label: "Regenerate Content",
+      successMessage: "Tool content regenerated",
+    },
+    {
+      action: analyzeToolStack,
+      label: "Analyze Stack",
+      successMessage: "Tool stack analyzed",
+    },
+  ] as const
 
-    onError: ({ err }) => {
-      toast.error(err.message)
-    },
-  })
-
-  const { execute: analyzeToolStackAction } = useServerAction(analyzeToolStack, {
-    onSuccess: () => {
-      toast.success("Tool stack analyzed")
-    },
-
-    onError: ({ err }) => {
-      toast.error(err.message)
-    },
-  })
+  const toolActions = actions.map(({ label, action, successMessage }) => ({
+    label,
+    execute: useServerAction(action, {
+      onSuccess: () => toast.success(successMessage),
+      onError: ({ err }) => toast.error(err.message),
+    }).execute,
+  }))
 
   return (
     <DropdownMenu modal={false}>
@@ -77,13 +87,11 @@ export const ToolActions = ({ className, tool, setRowAction, ...props }: ToolAct
           </DropdownMenuItem>
         )}
 
-        <DropdownMenuItem onSelect={() => reuploadAssetsAction({ id: tool.id })}>
-          Reupload Assets
-        </DropdownMenuItem>
-
-        <DropdownMenuItem onSelect={() => analyzeToolStackAction({ id: tool.id })}>
-          Analyze Stack
-        </DropdownMenuItem>
+        {toolActions.map(({ label, execute }) => (
+          <DropdownMenuItem key={label} onSelect={() => execute({ id: tool.id })}>
+            {label}
+          </DropdownMenuItem>
+        ))}
 
         <DropdownMenuSeparator />
 

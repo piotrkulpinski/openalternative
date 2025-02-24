@@ -1,9 +1,29 @@
 import wretch from "wretch"
 
-type Metadata = {
-  title: string
-  description: string
-  image: string
+type Success<T> = {
+  data: T
+  error: null
+}
+
+type Failure<E> = {
+  data: null
+  error: E
+}
+
+type Result<T, E = Error> = Success<T> | Failure<E>
+
+/**
+ * Wraps a promise and returns a result object with the data or error
+ * @param promise - The promise to wrap
+ * @returns A result object with the data or error
+ */
+export const tryCatch = async <T, E = Error>(promise: Promise<T>): Promise<Result<T, E>> => {
+  try {
+    const data = await promise
+    return { data, error: null }
+  } catch (error) {
+    return { data: null, error: error as E }
+  }
 }
 
 /**
@@ -19,6 +39,12 @@ export const isDisposableEmail = async (email: string) => {
   const domain = email.split("@")[1]
 
   return disposableDomains.includes(domain)
+}
+
+type Metadata = {
+  title: string
+  description: string
+  image: string
 }
 
 /**
