@@ -19,11 +19,8 @@ export default async function CategoriesPage(props: CategoriesPageProps) {
       fallback={
         <DataTableSkeleton
           title="Categories"
-          columnCount={5}
-          rowCount={15}
           searchableColumnCount={1}
           filterableColumnCount={2}
-          cellWidths={["12%", "48%", "15%", "15%", "10%"]}
           shrinkZero
         />
       }

@@ -25,7 +25,7 @@ export function DataTablePagination<TData>({
   pageSizeOptions = [10, 25, 50],
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex flex-row flex-wrap items-center justify-between gap-4 overflow-auto tabular-nums sm:gap-6 lg:gap-8">
+    <div className="flex flex-row flex-wrap items-center justify-between gap-4 tabular-nums sm:gap-6 lg:gap-8">
       <div className="grow whitespace-nowrap text-sm text-muted-foreground max-sm:hidden">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.

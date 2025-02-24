@@ -19,11 +19,8 @@ export default async function ToolsPage(props: ToolsPageProps) {
       fallback={
         <DataTableSkeleton
           title="Tools"
-          columnCount={5}
-          rowCount={15}
           searchableColumnCount={1}
           filterableColumnCount={2}
-          cellWidths={["12%", "48%", "15%", "15%", "10%"]}
           shrinkZero
         />
       }
