@@ -53,15 +53,15 @@ type Metadata = {
  * @returns The metadata
  */
 export const getUrlMetadata = async (url: string) => {
-  try {
-    const api = wretch(`https://api.dub.co/metatags?url=${url}`)
-    const metadata = await api.get().json<Metadata>()
+  const api = wretch(`https://api.dub.co/metatags?url=${url}`)
+  const { data, error } = await tryCatch(api.get().json<Metadata>())
 
-    return metadata
-  } catch (error) {
+  if (error) {
     console.error("Error fetching metadata:", error)
     return
   }
+
+  return data
 }
 
 /**

@@ -2,8 +2,10 @@ import { DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3"
 import { Upload } from "@aws-sdk/lib-storage"
 import { stripURLSubpath } from "@curiousleaf/utils"
 import wretch from "wretch"
+import QueryStringAddon from "wretch/addons/queryString"
 import { env } from "~/env"
 import { s3Client } from "~/services/s3"
+import { tryCatch } from "~/utils/helpers"
 
 /**
  * Uploads a file to S3 and returns the S3 location.
@@ -82,21 +84,28 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
   const cleanedUrl = encodeURIComponent(stripURLSubpath(url) ?? "")
   const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain_url=${cleanedUrl}`
 
-  try {
-    const fileBuffer = await wretch(faviconUrl)
+  const faviconResponse = await tryCatch(
+    wretch(faviconUrl)
       .get()
       .badRequest(console.error)
       .arrayBuffer()
-      .then(buffer => Buffer.from(buffer))
+      .then(buffer => Buffer.from(buffer)),
+  )
 
-    // Upload to S3
-    const s3Location = await uploadToS3Storage(fileBuffer, `${s3Key}.png`)
-
-    return `${s3Location}?v=${timestamp}`
-  } catch (error) {
-    console.error("Error fetching or uploading favicon:", error)
+  if (faviconResponse.error) {
+    console.error("Error fetching favicon:", faviconResponse.error)
     return null
   }
+
+  // Upload to S3
+  const { data, error } = await tryCatch(uploadToS3Storage(faviconResponse.data, `${s3Key}.png`))
+
+  if (error) {
+    console.error("Error uploading favicon:", error)
+    return null
+  }
+
+  return `${data}?v=${timestamp}`
 }
 
 /**
@@ -108,7 +117,7 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
 export const uploadScreenshot = async (url: string, s3Key: string): Promise<string> => {
   const timestamp = Date.now()
 
-  const queryParams = new URLSearchParams({
+  const query = {
     url,
     access_key: env.SCREENSHOTONE_ACCESS_KEY,
     response_type: "json",
@@ -140,15 +149,20 @@ export const uploadScreenshot = async (url: string, s3Key: string): Promise<stri
     storage_access_key_id: env.S3_ACCESS_KEY,
     storage_secret_access_key: env.S3_SECRET_ACCESS_KEY,
     storage_return_location: "true",
-  })
+  }
 
-  try {
-    const endpointUrl = `https://api.screenshotone.com/take?${queryParams.toString()}`
-    const { store } = await wretch(endpointUrl).get().json<{ store: { location: string } }>()
+  const { data, error } = await tryCatch(
+    wretch("https://api.screenshotone.com/take")
+      .addon(QueryStringAddon)
+      .query(query)
+      .get()
+      .json<{ store: { location: string } }>(),
+  )
 
-    return `${store.location}?v=${timestamp}`
-  } catch (error) {
+  if (error) {
     console.error("Error fetching screenshot:", error)
     throw error
   }
+
+  return `${data.store.location}?v=${timestamp}`
 }

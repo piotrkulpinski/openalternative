@@ -7,6 +7,7 @@ import { brandLinkApi } from "~/lib/apis"
 import { sendBlueskyPost } from "~/services/bluesky"
 import { sendMastodonPost } from "~/services/mastodon"
 import { sendTwitterPost } from "~/services/twitter"
+import { tryCatch } from "~/utils/helpers"
 
 const socialHandle = "{social handle}"
 
@@ -16,12 +17,14 @@ const socialHandle = "{social handle}"
  * @returns Object containing social media handles and URLs, or empty object on error
  */
 const getSocialsFromUrl = async (url: string) => {
-  try {
-    return await brandLinkApi.get(`/links?url=${url}`)
-  } catch (error) {
+  const { data, error } = await tryCatch(brandLinkApi.get(`/links?url=${url}`))
+
+  if (error) {
     console.error("Error fetching socials:", error)
     return {}
   }
+
+  return data
 }
 
 /**

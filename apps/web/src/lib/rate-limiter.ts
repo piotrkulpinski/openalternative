@@ -3,6 +3,7 @@
 import { Ratelimit } from "@upstash/ratelimit"
 import { headers } from "next/headers"
 import { redis } from "~/services/redis"
+import { tryCatch } from "~/utils/helpers"
 
 const limiters = {
   stackAnalysis: new Ratelimit({
@@ -53,11 +54,12 @@ export const getIP = async () => {
  * @returns True if the user is rate limited, false otherwise
  */
 export const isRateLimited = async (id: string, action: keyof typeof limiters) => {
-  try {
-    const { success } = await limiters[action].limit(id)
-    return !success
-  } catch (error) {
+  const { data, error } = await tryCatch(limiters[action].limit(id))
+
+  if (error) {
     console.error("Rate limiter error:", error)
     return false // Fail open to prevent blocking legitimate users
   }
+
+  return !data.success
 }

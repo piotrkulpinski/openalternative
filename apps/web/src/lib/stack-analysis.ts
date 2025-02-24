@@ -2,6 +2,7 @@ import { isTruthy } from "@curiousleaf/utils"
 import { getRepositoryString } from "@openalternative/github"
 import { type AnalyzerAPIResult, analyzerApi } from "~/lib/apis"
 import { redis } from "~/services/redis"
+import { tryCatch } from "~/utils/helpers"
 
 const ANALYSIS_PREFIX = "analysis:"
 const DEFAULT_LIMIT = 10
@@ -11,15 +12,16 @@ const DEFAULT_LIMIT = 10
  * @param repoUrl - The repository URL
  * @returns The cached analysis or null if there's an error
  */
-export const getCachedAnalysis = async (repoUrl: string): Promise<AnalyzerAPIResult | null> => {
-  try {
-    const key = `analysis:${repoUrl}`
-    const cached = await redis.get<AnalyzerAPIResult>(key)
-    return cached
-  } catch (error) {
+export const getCachedAnalysis = async (repoUrl: string) => {
+  const key = `analysis:${repoUrl}`
+  const { data, error } = await tryCatch(redis.get<AnalyzerAPIResult>(key))
+
+  if (error) {
     console.error("Cache get error:", error)
     return null
   }
+
+  return data
 }
 
 /**
@@ -28,7 +30,7 @@ export const getCachedAnalysis = async (repoUrl: string): Promise<AnalyzerAPIRes
  * @param limit - Maximum number of results to return
  * @returns Array of analysis results
  */
-export const getCachedAnalyses = async (limit = DEFAULT_LIMIT): Promise<AnalyzerAPIResult[]> => {
+export const getCachedAnalyses = async (limit = DEFAULT_LIMIT) => {
   const results = []
   let cursor = 0
 
@@ -59,13 +61,11 @@ export const getCachedAnalyses = async (limit = DEFAULT_LIMIT): Promise<Analyzer
  * @param repoUrl - The repository URL
  * @param data - The analysis data
  */
-export const cacheAnalysis = async (repoUrl: string, data: AnalyzerAPIResult): Promise<void> => {
-  // if (!isProd) return
+export const cacheAnalysis = async (repoUrl: string, data: AnalyzerAPIResult) => {
+  const key = `analysis:${repoUrl}`
+  const { error } = await tryCatch(redis.set(key, data, { ex: 60 * 60 * 24 * 30 }))
 
-  try {
-    const key = `analysis:${repoUrl}`
-    await redis.set(key, data, { ex: 60 * 60 * 24 * 30 }) // Cache for 30 days
-  } catch (error) {
+  if (error) {
     console.error("Cache set error:", error)
   }
 }

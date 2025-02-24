@@ -16,18 +16,13 @@ export const reportTool = createServerAction()
       throw new Error("Too many requests. Please try again later.")
     }
 
-    try {
-      await db.report.create({
-        data: {
-          type,
-          message,
-          tool: { connect: { slug: toolSlug } },
-        },
-      })
+    await db.report.create({
+      data: {
+        type,
+        message,
+        tool: { connect: { slug: toolSlug } },
+      },
+    })
 
-      return { success: true }
-    } catch (error) {
-      console.error("Failed to report tool:", error)
-      return { success: false, error: "Failed to report tool. Please try again later." }
-    }
+    return { success: true }
   })

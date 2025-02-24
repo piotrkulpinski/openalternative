@@ -32,18 +32,13 @@ export const claimTool = createServerAction()
       throw new Error("Your email domain must match the tool's website domain to claim it.")
     }
 
-    try {
-      await db.tool.update({
-        where: { id: tool.id },
-        data: { ownerId: session.user.id },
-      })
+    await db.tool.update({
+      where: { id: tool.id },
+      data: { ownerId: session.user.id },
+    })
 
-      // Revalidate cache
-      revalidateTag(`tool-${tool.slug}`)
+    // Revalidate cache
+    revalidateTag(`tool-${tool.slug}`)
 
-      return { success: true }
-    } catch (error) {
-      console.error("Failed to claim tool:", error)
-      return { success: false, error: "Failed to claim this tool. Please try again later." }
-    }
+    return { success: true }
   })

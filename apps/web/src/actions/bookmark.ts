@@ -16,43 +16,38 @@ export const toggleBookmark = createServerAction()
       throw redirect(`/auth/login?callbackURL=${encodeURIComponent(input.callbackURL)}`)
     }
 
-    try {
-      const tool = await db.tool.findUnique({
-        where: { slug: input.toolSlug },
-        select: { id: true },
-      })
+    const tool = await db.tool.findUnique({
+      where: { slug: input.toolSlug },
+      select: { id: true },
+    })
 
-      if (!tool) {
-        return { success: false, error: "Tool not found" }
-      }
+    if (!tool) {
+      return { success: false, error: "Tool not found" }
+    }
 
-      const existingBookmark = await db.bookmark.findUnique({
-        where: {
-          userId_toolId: {
-            userId: session.user.id,
-            toolId: tool.id,
-          },
-        },
-      })
-
-      if (existingBookmark) {
-        await db.bookmark.delete({
-          where: { id: existingBookmark.id },
-        })
-
-        return { success: true, data: { bookmarked: false } }
-      }
-
-      await db.bookmark.create({
-        data: {
+    const existingBookmark = await db.bookmark.findUnique({
+      where: {
+        userId_toolId: {
           userId: session.user.id,
           toolId: tool.id,
         },
+      },
+    })
+
+    if (existingBookmark) {
+      await db.bookmark.delete({
+        where: { id: existingBookmark.id },
       })
 
-      return { success: true, data: { bookmarked: true } }
-    } catch (error) {
-      console.error("Failed to bookmark:", error)
-      return { success: false, error: "Failed to bookmark" }
+      return { success: true, data: { bookmarked: false } }
     }
+
+    await db.bookmark.create({
+      data: {
+        userId: session.user.id,
+        toolId: tool.id,
+      },
+    })
+
+    return { success: true, data: { bookmarked: true } }
   })
