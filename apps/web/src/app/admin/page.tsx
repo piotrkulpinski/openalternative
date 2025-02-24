@@ -9,11 +9,19 @@ export default function DashboardPage() {
     <>
       <H3>Dashboard</H3>
 
-      <div className="grid grid-cols-2 gap-4 overflow-clip md:grid-cols-3 lg:grid-cols-6">
-        <StatsCard />
-        <AnalyticsCard className="col-span-full lg:col-span-3" />
-        <SubscribersCard className="col-span-full lg:col-span-3" />
-        <ScheduledCard className="col-span-full lg:col-span-3" />
+      <div className="grid gap-4 lg:grid-cols-5">
+        <div className="grid gap-4 content-start lg:col-span-3">
+          <div className="grid gap-4 md:grid-cols-3">
+            <StatsCard />
+          </div>
+
+          <ScheduledCard />
+        </div>
+
+        <div className="grid gap-4 lg:col-span-2">
+          <AnalyticsCard />
+          <SubscribersCard />
+        </div>
       </div>
     </>
   )

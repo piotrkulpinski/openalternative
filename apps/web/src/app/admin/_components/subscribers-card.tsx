@@ -130,9 +130,9 @@ const SubscribersCard = async ({ ...props }: ComponentProps<typeof Card>) => {
       <Chart
         data={results}
         average={averageSubscribers}
-        className="h-56 w-full"
-        cellClassName="fill-chart-2"
-        config={{ value: { label: "Subscribers" } }}
+        className="w-full"
+        cellClassName="bg-chart-2"
+        label="Subscribers"
       />
     </Card>
   )

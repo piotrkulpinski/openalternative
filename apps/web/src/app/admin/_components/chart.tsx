@@ -1,10 +1,9 @@
 "use client"
 
-import { formatDate } from "@curiousleaf/utils"
+import { format } from "date-fns"
 import type { ComponentProps } from "react"
-import { Bar, BarChart, Cell, Label, Rectangle, ReferenceLine, XAxis } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "~/components/common/chart"
-import { Skeleton } from "~/components/common/skeleton"
+import { Stack } from "~/components/common/stack"
+import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
 import { cx } from "~/utils/cva"
 
 export type ChartData = {
@@ -12,67 +11,65 @@ export type ChartData = {
   value: number
 }
 
-type ChartProps = Partial<ComponentProps<typeof ChartContainer>> & {
+type ChartProps = Partial<ComponentProps<"div">> & {
   data: ChartData[]
   average?: number
   cellClassName?: string
+  label?: string
 }
 
-export const Chart = ({ cellClassName, data, average, config, ...props }: ChartProps) => {
+export const Chart = ({ className, cellClassName, data, average, label, ...props }: ChartProps) => {
   if (data.length === 0) {
-    return <Skeleton className="size-full" />
+    return <p className="text-sm text-muted-foreground">No data available.</p>
   }
 
+  const maxValue = Math.max(...data.map(d => d.value), average || 0)
+
   return (
-    <ChartContainer config={{ ...config }} {...props}>
-      <BarChart accessibilityLayer margin={{ left: -2, right: -2 }} data={data}>
-        <Bar
-          dataKey="value"
-          radius={4}
-          fillOpacity={0.75}
-          activeBar={<Rectangle fillOpacity={1} />}
-        >
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              className={cx(cellClassName, index === data.length - 1 && "opacity-50")}
-            />
-          ))}
-        </Bar>
-
-        <XAxis
-          dataKey="date"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={4}
-          tickFormatter={value => new Date(value).toLocaleDateString("en-US", { weekday: "short" })}
-        />
-
-        <ChartTooltip
-          content={
-            <ChartTooltipContent hideIndicator labelFormatter={value => formatDate(value)} />
-          }
-          cursor={false}
-        />
-
+    <TooltipProvider delayDuration={250}>
+      <div className={cx("relative flex h-full min-h-48 w-full flex-col", className)} {...props}>
         {average && (
-          <ReferenceLine
-            y={average}
-            stroke="var(--color-muted-foreground)"
-            strokeDasharray="3 3"
-            strokeWidth={1}
+          <div
+            className="absolute inset-x-0 z-10 flex items-center"
+            style={{ bottom: `${(average / maxValue) * 100}%` }}
           >
-            <Label
-              position="insideTopLeft"
-              value={average.toLocaleString()}
-              className="text-base drop-shadow-[1px_1px_0_var(--color-background)]"
-              fill="var(--color-foreground)"
-              offset={10}
-              startOffset={100}
-            />
-          </ReferenceLine>
+            <div className="h-px w-full flex-1 border border-dashed border-foreground/15" />
+
+            <span className="absolute right-0 bottom-1 text-sm text-muted-foreground tabular-nums">
+              {average.toLocaleString()}
+            </span>
+          </div>
         )}
-      </BarChart>
-    </ChartContainer>
+
+        <div className="flex items-end justify-between gap-0.5 size-full">
+          {data.map((item, index) => (
+            <Tooltip
+              key={item.date}
+              side="bottom"
+              tooltip={
+                <Stack size="sm" direction="column">
+                  <span className="opacity-60">
+                    {format(new Date(item.date), "EEE, MMM d, yyyy")}
+                  </span>
+
+                  <span className="font-medium">
+                    {item.value.toLocaleString()} {label}
+                  </span>
+                </Stack>
+              }
+            >
+              <div
+                className={cx(
+                  "flex-1 bg-primary rounded-full transition-[height] duration-300 opacity-75 hover:opacity-100",
+                  index === data.length - 1 && "opacity-50",
+                  cellClassName,
+                )}
+                style={{ height: `${(item.value / maxValue) * 100}%` }}
+              />
+            </Tooltip>
+          ))}
+        </div>
+      </div>
+    </TooltipProvider>
   )
 }

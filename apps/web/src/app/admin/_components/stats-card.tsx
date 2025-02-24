@@ -18,7 +18,7 @@ export const StatsCard = async () => {
   return (
     <>
       {stats.map((stat, index) => (
-        <Card key={index} hover={false} focus={false} className="col-span-full lg:col-span-2">
+        <Card key={index} hover={false} focus={false}>
           <CardHeader direction="column">
             <CardDescription>{statsLabels[index as keyof typeof statsLabels]}</CardDescription>
             <H2 className="tabular-nums">{stat.toLocaleString()}</H2>

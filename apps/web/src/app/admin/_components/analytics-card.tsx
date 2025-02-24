@@ -55,9 +55,9 @@ const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
       <Chart
         data={results.map(({ date, visitors }) => ({ date, value: visitors }))}
         average={averageVisitors}
-        className="h-56 w-full"
-        cellClassName="fill-chart-4"
-        config={{ value: { label: "Visitors" } }}
+        className="w-full"
+        cellClassName="bg-chart-4"
+        label="Visitors"
       />
     </Card>
   )
