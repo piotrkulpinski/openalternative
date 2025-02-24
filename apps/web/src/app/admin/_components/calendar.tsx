@@ -7,6 +7,7 @@ import {
   endOfWeek,
   format,
   isSameDay,
+  isSameMonth,
   startOfMonth,
   startOfWeek,
   subMonths,
@@ -20,8 +21,51 @@ import { Stack } from "~/components/common/stack"
 import type { findScheduledTools } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
 
+type Tools = Awaited<ReturnType<typeof findScheduledTools>>
+
+type CalendarDayProps = ComponentProps<"td"> & {
+  day: Date
+  currentDate: Date
+  tools: Tools
+}
+
+const CalendarDay = ({ className, day, tools, currentDate, ...props }: CalendarDayProps) => {
+  const isToday = isSameDay(day, new Date())
+  const isCurrentMonth = isSameMonth(day, currentDate)
+  const publishedTools = tools.filter(
+    ({ publishedAt }) => publishedAt && isSameDay(publishedAt, day),
+  )
+
+  return (
+    <td
+      className={cx(
+        "h-16 p-2 border align-top",
+        !isCurrentMonth && "bg-muted text-muted-foreground/50",
+        className,
+      )}
+      {...props}
+    >
+      <Stack size="xs" direction="column">
+        <div className={cx("text-xs", isToday ? "text-red-500 opacity-100" : "opacity-50")}>
+          {format(day, "d")}
+        </div>
+
+        {publishedTools.map(tool => (
+          <Link
+            key={tool.slug}
+            href={`/admin/tools/${tool.slug}`}
+            className="font-medium truncate hover:text-primary w-full"
+          >
+            {tool.name}
+          </Link>
+        ))}
+      </Stack>
+    </td>
+  )
+}
+
 type CalendarProps = ComponentProps<"div"> & {
-  tools: Awaited<ReturnType<typeof findScheduledTools>>
+  tools: Tools
 }
 
 export const Calendar = ({ className, tools, ...props }: CalendarProps) => {
@@ -33,9 +77,6 @@ export const Calendar = ({ className, tools, ...props }: CalendarProps) => {
   const calendarStart = startOfWeek(monthStart, { weekStartsOn: 1 })
   const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 1 })
 
-  const isCurrentMonth =
-    monthStart.getMonth() === today.getMonth() && monthStart.getFullYear() === today.getFullYear()
-
   const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd })
 
   const weeks = Array.from({ length: Math.ceil(days.length / 7) }, (_, i) =>
@@ -43,14 +84,14 @@ export const Calendar = ({ className, tools, ...props }: CalendarProps) => {
   )
 
   return (
-    <div className={cx("space-y-4", className)} {...props}>
-      <div className="flex items-center justify-between">
+    <div className={cx("space-y-2", className)} {...props}>
+      <Stack className="justify-between">
         <Button
           variant="secondary"
           size="sm"
           prefix={<ChevronLeftIcon />}
           onClick={() => setCurrentDate(date => subMonths(date, 1))}
-          disabled={isCurrentMonth}
+          disabled={isSameMonth(currentDate, today)}
         />
 
         <H5>{format(currentDate, "MMMM yyyy")}</H5>
@@ -61,7 +102,7 @@ export const Calendar = ({ className, tools, ...props }: CalendarProps) => {
           prefix={<ChevronRightIcon />}
           onClick={() => setCurrentDate(date => addMonths(date, 1))}
         />
-      </div>
+      </Stack>
 
       <table className="w-full table-fixed border-collapse text-sm">
         <thead>
@@ -70,7 +111,7 @@ export const Calendar = ({ className, tools, ...props }: CalendarProps) => {
               <th
                 key={day}
                 style={{ width: index < 5 ? "16%" : "10%" }}
-                className="text-center text-muted-foreground py-2 text-xs font-normal border"
+                className="text-start text-muted-foreground p-2 text-xs font-normal"
               >
                 {day}
               </th>
@@ -81,38 +122,13 @@ export const Calendar = ({ className, tools, ...props }: CalendarProps) => {
         <tbody>
           {weeks.map((week, weekIndex) => (
             <tr key={weekIndex}>
-              {week.map((day, dayIndex) => (
-                <td
-                  key={`${weekIndex}-${dayIndex}`}
-                  className={cx(
-                    "h-16 p-2 border align-top",
-                    format(day, "MMM") !== format(currentDate, "MMM") &&
-                      "bg-muted text-muted-foreground/50",
-                  )}
-                >
-                  <Stack size="xs" direction="column">
-                    <div
-                      className={cx(
-                        "text-xs opacity-50",
-                        isSameDay(day, today) && "text-primary opacity-100",
-                      )}
-                    >
-                      {format(day, "d")}
-                    </div>
-
-                    {tools
-                      .filter(tool => tool.publishedAt && isSameDay(tool.publishedAt, day))
-                      .map(tool => (
-                        <Link
-                          key={tool.slug}
-                          href={`/admin/tools/${tool.slug}`}
-                          className="font-medium truncate hover:text-primary w-full"
-                        >
-                          {tool.name}
-                        </Link>
-                      ))}
-                  </Stack>
-                </td>
+              {week.map(day => (
+                <CalendarDay
+                  key={day.toISOString()}
+                  day={day}
+                  tools={tools}
+                  currentDate={currentDate}
+                />
               ))}
             </tr>
           ))}

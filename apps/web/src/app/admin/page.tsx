@@ -9,8 +9,8 @@ export default function DashboardPage() {
     <>
       <H3>Dashboard</H3>
 
-      <div className="grid gap-4 lg:grid-cols-5">
-        <div className="grid gap-4 content-start lg:col-span-3">
+      <div className="grid gap-4 items-start lg:grid-cols-5">
+        <div className="grid gap-4 lg:col-span-3">
           <div className="grid gap-4 md:grid-cols-3">
             <StatsCard />
           </div>

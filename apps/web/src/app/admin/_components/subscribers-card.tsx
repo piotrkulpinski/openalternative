@@ -106,9 +106,7 @@ const getSubscribers = async () => {
     }))
 
     const totalSubscribers = totalResults
-    const averageSubscribers = Math.round(
-      results.reduce((sum, day) => sum + day.value, 0) / results.length,
-    )
+    const averageSubscribers = results.reduce((sum, day) => sum + day.value, 0) / results.length
 
     return { results, totalSubscribers, averageSubscribers }
   } catch (error) {
@@ -132,7 +130,7 @@ const SubscribersCard = async ({ ...props }: ComponentProps<typeof Card>) => {
         average={averageSubscribers}
         className="w-full"
         cellClassName="bg-chart-2"
-        label="Subscribers"
+        label="Subscriber"
       />
     </Card>
   )

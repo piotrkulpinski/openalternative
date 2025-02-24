@@ -33,7 +33,7 @@ const getAnalytics = async () => {
       .json<AnalyticsResponse>()
 
     const totalVisitors = results.reduce((acc, curr) => acc + curr.visitors, 0)
-    const averageVisitors = Math.round(totalVisitors / results.length)
+    const averageVisitors = totalVisitors / results.length
 
     return { results, totalVisitors, averageVisitors }
   } catch (error) {
@@ -57,7 +57,7 @@ const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
         average={averageVisitors}
         className="w-full"
         cellClassName="bg-chart-4"
-        label="Visitors"
+        label="Visitor"
       />
     </Card>
   )

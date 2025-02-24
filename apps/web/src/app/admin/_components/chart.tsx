@@ -1,6 +1,7 @@
 "use client"
 
 import { format } from "date-fns"
+import plur from "plur"
 import type { ComponentProps } from "react"
 import { Stack } from "~/components/common/stack"
 import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
@@ -28,7 +29,7 @@ export const Chart = ({ className, cellClassName, data, average, label, ...props
   return (
     <TooltipProvider delayDuration={250}>
       <div className={cx("relative flex h-full min-h-48 w-full flex-col", className)} {...props}>
-        {average && (
+        {average !== undefined && (
           <div
             className="absolute inset-x-0 z-10 flex items-center"
             style={{ bottom: `${(average / maxValue) * 100}%` }}
@@ -36,7 +37,7 @@ export const Chart = ({ className, cellClassName, data, average, label, ...props
             <div className="h-px w-full flex-1 border border-dashed border-foreground/15" />
 
             <span className="absolute right-0 bottom-1 text-sm text-muted-foreground tabular-nums">
-              {average.toLocaleString()}
+              {Math.round(average).toLocaleString()}
             </span>
           </div>
         )}
@@ -53,7 +54,7 @@ export const Chart = ({ className, cellClassName, data, average, label, ...props
                   </span>
 
                   <span className="font-medium">
-                    {item.value.toLocaleString()} {label}
+                    {item.value.toLocaleString()} {label && plur(label, item.value)}
                   </span>
                 </Stack>
               }
