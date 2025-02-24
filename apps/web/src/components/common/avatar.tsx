@@ -6,7 +6,7 @@ import { cx } from "~/utils/cva"
 
 const Avatar = ({ className, ...props }: ComponentProps<typeof AvatarPrimitive.Root>) => (
   <AvatarPrimitive.Root
-    className={cx("relative flex size-10 shrink-0 overflow-clip rounded-full", className)}
+    className={cx("relative flex size-10 shrink-0 overflow-clip bg-accent rounded-md", className)}
     {...props}
   />
 )

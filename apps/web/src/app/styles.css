@@ -149,7 +149,7 @@
   [href] [class*="group-hover"] {
     @apply transition;
     @apply ease-out;
-    @apply duration-100;
+    @apply duration-200;
     @apply cursor-pointer;
   }
 

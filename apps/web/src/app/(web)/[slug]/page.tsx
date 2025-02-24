@@ -164,15 +164,32 @@ export default async function ToolPage(props: PageProps) {
             </div>
 
             {tool.screenshotUrl && (
-              <Image
-                key={tool.screenshotUrl}
-                src={tool.screenshotUrl}
-                alt={`A screenshot of ${tool.name}`}
-                width={1280}
-                height={1024}
-                loading="lazy"
-                className="aspect-video h-auto w-full rounded-md border object-cover object-top max-md:order-2"
-              />
+              <ExternalLink
+                href={tool.affiliateUrl || tool.websiteUrl}
+                doFollow={tool.isFeatured}
+                eventName="click_website"
+                eventProps={{ url: tool.websiteUrl }}
+                className="group relative rounded-md overflow-clip max-md:order-2"
+              >
+                <Image
+                  key={tool.screenshotUrl}
+                  src={tool.screenshotUrl}
+                  alt={`A screenshot of ${tool.name}`}
+                  width={1280}
+                  height={1024}
+                  loading="lazy"
+                  className="aspect-video h-auto w-full bg-accent border object-cover object-top group-hover:opacity-50 group-hover:scale-[102%]"
+                />
+
+                <Button
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none shadow-xl group-hover:opacity-100"
+                  focus={false}
+                  suffix={<ArrowUpRightIcon />}
+                  asChild
+                >
+                  <span>Visit {tool.name}</span>
+                </Button>
+              </ExternalLink>
             )}
 
             {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
