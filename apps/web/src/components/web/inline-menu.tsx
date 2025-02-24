@@ -1,8 +1,8 @@
 "use client"
 
 import type { ComponentProps } from "react"
-import { Stack } from "~/components/common/stack"
 import { Button, type ButtonProps } from "~/components/common/button"
+import { Stack } from "~/components/common/stack"
 import { type InlineMenuItem, useInlineMenu } from "~/hooks/use-inline-menu"
 import { cx } from "~/utils/cva"
 
@@ -27,7 +27,7 @@ export const InlineMenu = ({ children, className, items, ...props }: InlineMenuP
             key={id}
             variant="ghost"
             className={cx(
-              "ring-0!",
+              "hover:ring-transparent focus-visible:ring-transparent",
               activeId === id
                 ? "bg-accent text-foreground"
                 : "text-muted-foreground font-normal hover:text-foreground",

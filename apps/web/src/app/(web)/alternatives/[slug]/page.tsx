@@ -6,6 +6,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Fragment, Suspense, cache } from "react"
+import { Button } from "~/components/common/button"
 import { Link } from "~/components/common/link"
 import { AlternativeCardExternal } from "~/components/web/alternatives/alternative-card-external"
 import {
@@ -17,7 +18,6 @@ import { ShareButtons } from "~/components/web/share-buttons"
 import { ToolEntry } from "~/components/web/tools/tool-entry"
 import { BackButton } from "~/components/web/ui/back-button"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
-import { Button } from "~/components/common/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
@@ -204,7 +204,7 @@ export default async function AlternativePage(props: PageProps) {
                 variant="ghost"
                 prefix={<SmilePlusIcon />}
                 suffix={<ArrowUpRightIcon />}
-                className="font-normal text-muted-foreground ring-0!"
+                className="font-normal text-muted-foreground hover:ring-transparent focus-visible:ring-transparent"
                 asChild
               >
                 <Link href="/submit">Suggest an alternative</Link>
