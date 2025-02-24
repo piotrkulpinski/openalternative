@@ -9,7 +9,8 @@
     "build": "next build",
     "lint": "bun biome lint --apply .",
     "check": "bun biome check --apply .",
-    "format": "bun biome format --write ."
+    "format": "bun biome format --write .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^1.1.9",

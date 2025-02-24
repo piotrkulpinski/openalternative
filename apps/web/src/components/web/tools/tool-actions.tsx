@@ -27,14 +27,8 @@ type ToolActionsProps = ComponentProps<typeof Stack> & {
 
 export const ToolActions = ({ tool, children, className, ...props }: ToolActionsProps) => {
   const { data: session } = useSession()
-  // const [bookmarked, setBookmarked] = useOptimistic(isBookmarked)
   const [isReportOpen, setIsReportOpen] = useState(false)
   const [isClaimOpen, setIsClaimOpen] = useState(false)
-
-  // const handleBookmark = async () => {
-  //   startTransition(() => setBookmarked(!bookmarked))
-  //   await toggleBookmark({ toolSlug, callbackURL: `${siteConfig.url}${pathname}` })
-  // }
 
   return (
     <TooltipProvider delayDuration={250}>
@@ -76,14 +70,6 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
-        {/* <Tooltip tooltip={bookmarked ? "Remove bookmark" : "Add bookmark"}>
-          <Button
-            variant={bookmarked ? "fancy" : "secondary"}
-            prefix={<BookmarkPlusIcon className="-my-1 size-5!" />}
-            onClick={handleBookmark}
-          />
-        </Tooltip> */}
 
         {children}
       </Stack>
