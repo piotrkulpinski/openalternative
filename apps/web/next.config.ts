@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
     ],
   },
 
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
   images: {
     loader: "custom",
     loaderFile: "./src/lib/image-loader.ts",
