@@ -10,6 +10,7 @@ import {
   LayoutDashboardIcon,
   LogOutIcon,
   ReplaceIcon,
+  TriangleAlertIcon,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -76,6 +77,21 @@ export const Sidebar = () => {
               title: "Licenses",
               href: "/admin/licenses",
               prefix: <CopyrightIcon />,
+            },
+          ]}
+        />
+      </Nav>
+
+      <Separator />
+
+      <Nav>
+        <NavMain
+          isCollapsed={!!isMobile}
+          links={[
+            {
+              title: "Reports",
+              href: "/admin/reports",
+              prefix: <TriangleAlertIcon />,
             },
           ]}
         />
