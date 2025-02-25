@@ -172,7 +172,6 @@ export default async function ToolPage(props: PageProps) {
                 className="group relative bg-accent border rounded-md overflow-clip max-md:order-2"
               >
                 <Image
-                  key={tool.screenshotUrl}
                   src={tool.screenshotUrl}
                   alt={`A screenshot of ${tool.name}`}
                   width={1280}
@@ -182,12 +181,13 @@ export default async function ToolPage(props: PageProps) {
                 />
 
                 <Button
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none shadow-xl group-hover:opacity-100"
+                  size="md"
                   focus={false}
                   suffix={<ArrowUpRightIcon />}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none shadow-xl group-hover:opacity-100"
                   asChild
                 >
-                  <span>Visit {tool.name}</span>
+                  <span>Visit</span>
                 </Button>
               </ExternalLink>
             )}
