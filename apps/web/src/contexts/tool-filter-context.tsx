@@ -25,7 +25,7 @@ export type ToolFiltersContextType = {
   getFilterValues: (type: FilterType) => string[]
 }
 
-const ToolFiltersContext = createContext<ToolFiltersContextType | undefined>(undefined)
+const ToolFiltersContext = createContext<ToolFiltersContextType>(null!)
 
 const ToolFiltersProvider = ({
   children,

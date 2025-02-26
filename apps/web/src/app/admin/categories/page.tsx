@@ -15,16 +15,7 @@ export default async function CategoriesPage(props: CategoriesPageProps) {
   const categoriesPromise = findCategories(search)
 
   return (
-    <Suspense
-      fallback={
-        <DataTableSkeleton
-          title="Categories"
-          searchableColumnCount={1}
-          filterableColumnCount={2}
-          shrinkZero
-        />
-      }
-    >
+    <Suspense fallback={<DataTableSkeleton title="Categories" />}>
       <CategoriesTable categoriesPromise={categoriesPromise} />
     </Suspense>
   )

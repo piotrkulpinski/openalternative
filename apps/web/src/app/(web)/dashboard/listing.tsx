@@ -13,28 +13,19 @@ export const DashboardToolListing = async ({ params, searchParams }: DashboardPa
   const { path } = await params
   const parsedParams = adminToolsSearchParams.parse(await searchParams)
   const session = await auth.api.getSession({ headers: await headers() })
+  const status = [ToolStatus.Draft, ToolStatus.Scheduled, ToolStatus.Published]
 
   if (!session?.user) {
     throw redirect(`/auth/login?callbackURL=${encodeURIComponent("/dashboard")}`)
   }
 
-  const { email, id } = session.user
-
-  const toolsPromise = findTools(parsedParams, {
-    // ...(path === "tools" && {
-    AND: [
-      { status: { notIn: [ToolStatus.Deleted] } },
-      { OR: [{ submitterEmail: email }, { ownerId: id }] },
-    ],
-    // }),
-  })
+  const toolsPromise = findTools(
+    { ...parsedParams, status: status },
+    { OR: [{ submitterEmail: session.user.email }, { ownerId: session.user.id }] },
+  )
 
   return (
-    <Suspense
-      fallback={
-        <DataTableSkeleton searchableColumnCount={1} filterableColumnCount={2} shrinkZero />
-      }
-    >
+    <Suspense fallback={<DataTableSkeleton />}>
       <DashboardTable toolsPromise={toolsPromise} />
     </Suspense>
   )

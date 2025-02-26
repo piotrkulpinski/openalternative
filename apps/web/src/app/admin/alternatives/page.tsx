@@ -15,16 +15,7 @@ export default async function AlternativesPage(props: AlternativesPageProps) {
   const alternativesPromise = findAlternatives(search)
 
   return (
-    <Suspense
-      fallback={
-        <DataTableSkeleton
-          title="Alternatives"
-          searchableColumnCount={1}
-          filterableColumnCount={2}
-          shrinkZero
-        />
-      }
-    >
+    <Suspense fallback={<DataTableSkeleton title="Alternatives" />}>
       <AlternativesTable alternativesPromise={alternativesPromise} />
     </Suspense>
   )

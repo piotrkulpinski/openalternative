@@ -15,16 +15,7 @@ export default async function LicensesPage(props: LicensesPageProps) {
   const licensesPromise = findLicenses(search)
 
   return (
-    <Suspense
-      fallback={
-        <DataTableSkeleton
-          title="Licenses"
-          searchableColumnCount={1}
-          filterableColumnCount={2}
-          shrinkZero
-        />
-      }
-    >
+    <Suspense fallback={<DataTableSkeleton title="Licenses" />}>
       <LicensesTable licensesPromise={licensesPromise} />
     </Suspense>
   )
