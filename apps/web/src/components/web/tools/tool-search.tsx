@@ -20,7 +20,7 @@ export type ToolSearchProps = {
 }
 
 export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
-  const { filters, isLoading, updateFilters } = useToolFilters()
+  const { filters, isLoading, enableFilters, updateFilters } = useToolFilters()
 
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage({
     key: "filtersOpen",
@@ -53,19 +53,21 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
             className="w-full truncate px-10"
           />
 
-          <button
-            type="button"
-            className={cx(
-              "absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-2 py-1.5 px-2.5 rounded-md",
-              isFiltersOpen
-                ? "bg-accent text-foreground"
-                : "text-muted-foreground hover:bg-accent hover:text-foreground",
-            )}
-            onClick={() => setIsFiltersOpen(prev => !prev)}
-          >
-            <ListFilterIcon className="size-4" />
-            <span className="text-sm leading-none max-sm:sr-only">Filters</span>
-          </button>
+          {enableFilters && (
+            <button
+              type="button"
+              className={cx(
+                "absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-2 py-1.5 px-2.5 rounded-md",
+                isFiltersOpen
+                  ? "bg-accent text-foreground"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground",
+              )}
+              onClick={() => setIsFiltersOpen(prev => !prev)}
+            >
+              <ListFilterIcon className="size-4" />
+              <span className="text-sm leading-none max-sm:sr-only">Filters</span>
+            </button>
+          )}
         </div>
 
         <Select value={filters.sort} onValueChange={sort => updateFilters({ sort })}>
@@ -83,7 +85,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
         </Select>
       </Stack>
 
-      {isFiltersOpen && <ToolFilters />}
+      {enableFilters && isFiltersOpen && <ToolFilters />}
     </Stack>
   )
 }

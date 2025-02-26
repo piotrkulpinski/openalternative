@@ -13,48 +13,37 @@ import type { FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
 
 export const ToolFilters = ({ className, ...props }: ComponentProps<"div">) => {
-  const { filters, lockedFilters = [], updateFilters, getFilterValues } = useToolFilters()
+  const { filters, updateFilters, getFilterValues } = useToolFilters()
   const { execute, isPending, data } = useServerAction(findFilterOptions)
 
   useEffect(() => {
     execute()
   }, [execute])
 
-  const lockedTypes = lockedFilters.map(f => f.type)
-  const availableFilters = searchConfig.filters.filter(type => !lockedTypes.includes(type))
-  const hasActiveFilters = availableFilters.some(type => getFilterValues(type).length > 0)
+  const hasActiveFilters = searchConfig.filters.some(type => getFilterValues(type).length > 0)
 
   const handleRemoveFilter = useCallback(
     (type: FilterType, value: string) => {
-      if (lockedTypes.includes(type)) return
-
       const currentValues = getFilterValues(type)
       updateFilters({ [type]: currentValues.filter(v => v !== value) })
     },
-    [updateFilters, getFilterValues, lockedTypes],
+    [updateFilters, getFilterValues],
   )
 
   const handleClearAll = useCallback(() => {
-    const clearedFilters = Object.fromEntries(availableFilters.map(filter => [filter, []]))
+    const clearedFilters = Object.fromEntries(searchConfig.filters.map(f => [f, []]))
     updateFilters(clearedFilters)
-  }, [updateFilters, availableFilters])
+  }, [updateFilters])
 
   return (
     <div className={cx("grid w-full grid-cols-xs gap-4", className)} {...props}>
       {searchConfig.filters.map(type => (
-        <ToolRefinement
-          key={type}
-          filter={type}
-          items={data?.[type] ?? []}
-          isPending={isPending}
-          disabled={lockedTypes.includes(type)}
-          defaultValue={lockedFilters.find(f => f.type === type)?.value}
-        />
+        <ToolRefinement key={type} filter={type} items={data?.[type] ?? []} isPending={isPending} />
       ))}
 
       {hasActiveFilters && (
         <Stack className="col-span-full" size="sm">
-          {availableFilters.map(type => {
+          {searchConfig.filters.map(type => {
             const activeItems = getFilterValues(type)
             if (!activeItems.length) return null
 

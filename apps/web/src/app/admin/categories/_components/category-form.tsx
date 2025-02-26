@@ -20,7 +20,7 @@ import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
 import { createCategory, updateCategory } from "~/server/admin/categories/actions"
 import type { findCategoryBySlug } from "~/server/admin/categories/queries"
-import { categorySchema } from "~/server/admin/categories/validations"
+import { categorySchema } from "~/server/admin/categories/schemas"
 import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
 

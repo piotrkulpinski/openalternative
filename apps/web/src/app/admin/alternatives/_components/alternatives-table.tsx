@@ -4,12 +4,13 @@ import type { Alternative } from "@openalternative/db/client"
 import { PlusIcon } from "lucide-react"
 import * as React from "react"
 import { AlternativesDeleteDialog } from "~/app/admin/alternatives/_components/alternatives-delete-dialog"
-import { DataTable } from "~/components/admin/data-table/data-table"
-import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
-import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/common/button"
 import { Link } from "~/components/common/link"
+import { DataTable } from "~/components/data-table/data-table"
+import { DataTableHeader } from "~/components/data-table/data-table-header"
+import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
+import { DataTableViewOptions } from "~/components/data-table/data-table-view-options"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findAlternatives } from "~/server/admin/alternatives/queries"
 import type { DataTableFilterField, DataTableRowAction } from "~/types"
@@ -33,7 +34,7 @@ export function AlternativesTable({ alternativesPromise }: AlternativesTableProp
     {
       id: "name",
       label: "Name",
-      placeholder: "Filter by name...",
+      placeholder: "Search by name...",
     },
   ]
 
@@ -68,6 +69,7 @@ export function AlternativesTable({ alternativesPromise }: AlternativesTableProp
           <DataTableToolbar table={table} filterFields={filterFields}>
             <AlternativesTableToolbarActions table={table} />
             <DateRangePicker align="end" />
+            <DataTableViewOptions table={table} />
           </DataTableToolbar>
         </DataTableHeader>
       </DataTable>

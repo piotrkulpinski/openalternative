@@ -67,7 +67,7 @@ const getMetadata = (tool: ToolOne, success: boolean): Metadata => {
   }
 
   return {
-    title: "Choose a submission package",
+    title: `Choose a plan for ${tool.name}`,
     description: `Maximize ${tool.name}'s impact from day one. Select a package that suits your goals - from free listing to premium features.`,
   }
 }

@@ -4,12 +4,13 @@ import type { License } from "@openalternative/db/client"
 import { PlusIcon } from "lucide-react"
 import * as React from "react"
 import { LicensesDeleteDialog } from "~/app/admin/licenses/_components/licenses-delete-dialog"
-import { DataTable } from "~/components/admin/data-table/data-table"
-import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
-import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/common/button"
 import { Link } from "~/components/common/link"
+import { DataTable } from "~/components/data-table/data-table"
+import { DataTableHeader } from "~/components/data-table/data-table-header"
+import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
+import { DataTableViewOptions } from "~/components/data-table/data-table-view-options"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findLicenses } from "~/server/admin/licenses/queries"
 import type { DataTableFilterField, DataTableRowAction } from "~/types"
@@ -33,7 +34,7 @@ export function LicensesTable({ licensesPromise }: LicensesTableProps) {
     {
       id: "name",
       label: "Name",
-      placeholder: "Filter by name...",
+      placeholder: "Search by name...",
     },
   ]
 
@@ -68,6 +69,7 @@ export function LicensesTable({ licensesPromise }: LicensesTableProps) {
           <DataTableToolbar table={table} filterFields={filterFields}>
             <LicensesTableToolbarActions table={table} />
             <DateRangePicker align="end" />
+            <DataTableViewOptions table={table} />
           </DataTableToolbar>
         </DataTableHeader>
       </DataTable>

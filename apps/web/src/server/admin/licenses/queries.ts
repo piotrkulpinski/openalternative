@@ -2,10 +2,10 @@ import { isTruthy } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import type { Prisma } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
-import type { GetLicensesSchema } from "./validations"
+import type { FindLicensesSchema } from "./schemas"
 
-export const findLicenses = async (search: GetLicensesSchema) => {
-  const { page, perPage, sort, name, operator, from, to } = search
+export const findLicenses = async (search: FindLicensesSchema) => {
+  const { name, page, perPage, sort, from, to, operator } = search
 
   // Offset to paginate the results
   const offset = (page - 1) * perPage

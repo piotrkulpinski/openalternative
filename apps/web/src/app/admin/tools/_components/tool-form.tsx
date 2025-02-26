@@ -33,7 +33,7 @@ import type { findAlternativeList } from "~/server/admin/alternatives/queries"
 import type { findCategoryList } from "~/server/admin/categories/queries"
 import { createTool, updateTool } from "~/server/admin/tools/actions"
 import type { findToolBySlug } from "~/server/admin/tools/queries"
-import { toolSchema } from "~/server/admin/tools/validations"
+import { toolSchema } from "~/server/admin/tools/schemas"
 import { cx } from "~/utils/cva"
 
 type ToolFormProps = ComponentProps<"form"> & {

@@ -26,10 +26,10 @@ import {
 import { RadioGroup, RadioGroupItem } from "~/components/common/radio-group"
 import { TextArea } from "~/components/common/textarea"
 import { type ReportSchema, reportSchema } from "~/server/schemas"
-import type { ToolMany, ToolManyExtended } from "~/server/web/tools/payloads"
+import type { ToolOne } from "~/server/web/tools/payloads"
 
 type ToolReportDialogProps = {
-  tool: ToolMany | ToolManyExtended
+  tool: ToolOne
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }

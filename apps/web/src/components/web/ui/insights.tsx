@@ -18,6 +18,7 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
     <ul className={cx("w-full text-xs", className)} {...props}>
       {insights.map(({ label, value, link, title, icon }) => {
         const valueComp = isValidElement(value) ? value : <span>{value}</span>
+
         return (
           <Fragment key={label}>
             <li className="flex items-center gap-3 py-1">

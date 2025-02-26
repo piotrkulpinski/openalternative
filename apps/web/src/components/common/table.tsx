@@ -30,7 +30,7 @@ const TableRow = ({ className, ...props }: ComponentProps<"tr">) => {
   return (
     <tr
       className={cx(
-        "group/row border-b [tbody>&]:[&:has([type=checkbox])]:hover:bg-muted data-[state=selected]:bg-accent",
+        "group/row border-b [tbody>&]:hover:bg-muted data-[state=selected]:bg-accent",
         className,
       )}
       {...props}
@@ -42,7 +42,7 @@ const TableHead = ({ className, ...props }: ComponentProps<"th">) => {
   return (
     <th
       className={cx(
-        "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([type=checkbox])]:pr-0",
+        "p-2 text-left align-middle font-medium text-muted-foreground [&:has([type=checkbox])]:pr-0 first:not-[&:has([type=checkbox])]:pl-4",
         className,
       )}
       {...props}
@@ -53,7 +53,10 @@ const TableHead = ({ className, ...props }: ComponentProps<"th">) => {
 const TableCell = ({ className, ...props }: ComponentProps<"td">) => {
   return (
     <td
-      className={cx("p-2 align-middle whitespace-nowrap [&:has([type=checkbox])]:pr-0", className)}
+      className={cx(
+        "p-2 align-middle whitespace-nowrap [&:has([type=checkbox])]:pr-0 first:not-[&:has([type=checkbox])]:pl-4",
+        className,
+      )}
       {...props}
     />
   )

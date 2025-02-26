@@ -153,6 +153,10 @@
     @apply cursor-pointer;
   }
 
+  strong {
+    @apply font-medium;
+  }
+
   svg.lucide:not([class*="stroke"]),
   svg.brand:not([class*="stroke"]) {
     @apply !stroke-[1.5];

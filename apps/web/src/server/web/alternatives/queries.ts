@@ -4,7 +4,7 @@ import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import type { inferParserType } from "nuqs/server"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/web/alternatives/payloads"
-import type { alternativesSearchParams } from "~/server/web/alternatives/search-params"
+import type { alternativesSearchParams } from "~/server/web/alternatives/schemas"
 
 export const searchAlternatives = async (
   { q, page, sort, perPage }: inferParserType<typeof alternativesSearchParams>,
@@ -50,7 +50,8 @@ export const searchAlternatives = async (
 
   console.log("Alternatives search:", performance.now() - start)
 
-  return { alternatives, totalCount }
+  const pageCount = Math.ceil(totalCount / perPage)
+  return { alternatives, totalCount, pageCount }
 }
 
 export const findAlternatives = async ({

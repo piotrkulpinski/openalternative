@@ -16,7 +16,7 @@ type DataTableSkeletonProps = ComponentProps<"div"> & {
    * The title of the table.
    * @type string
    */
-  title: string
+  title?: string
 
   /**
    * The number of columns in the table.

@@ -2,10 +2,10 @@ import { isTruthy } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import type { Prisma } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
-import type { GetAlternativesSchema } from "./validations"
+import type { FindAlternativesSchema } from "./schemas"
 
-export const findAlternatives = async (search: GetAlternativesSchema) => {
-  const { page, perPage, sort, name, operator, from, to } = search
+export const findAlternatives = async (search: FindAlternativesSchema) => {
+  const { name, page, perPage, sort, from, to, operator } = search
 
   // Offset to paginate the results
   const offset = (page - 1) * perPage
