@@ -12,12 +12,18 @@ type ToolQueryProps = ToolListProps &
     placeholder?: string
   }
 
-const ToolQuery = ({ tools, perPage, totalCount, placeholder, ...props }: ToolQueryProps) => {
+const ToolQuery = ({
+  perPage,
+  totalCount,
+  placeholder,
+  enableFilters,
+  ...props
+}: ToolQueryProps) => {
   return (
-    <ToolFiltersProvider {...props}>
+    <ToolFiltersProvider enableFilters={enableFilters}>
       <div className="flex flex-col gap-5" id="tools">
         <ToolSearch placeholder={placeholder} />
-        <ToolList tools={tools} />
+        <ToolList {...props} />
       </div>
 
       <Pagination pageSize={perPage} totalCount={totalCount} />
