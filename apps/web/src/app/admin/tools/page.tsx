@@ -15,16 +15,7 @@ export default async function ToolsPage(props: ToolsPageProps) {
   const toolsPromise = findTools(search)
 
   return (
-    <Suspense
-      fallback={
-        <DataTableSkeleton
-          title="Tools"
-          searchableColumnCount={1}
-          filterableColumnCount={2}
-          shrinkZero
-        />
-      }
-    >
+    <Suspense fallback={<DataTableSkeleton title="Tools" />}>
       <ToolsTable toolsPromise={toolsPromise} />
     </Suspense>
   )

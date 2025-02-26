@@ -57,23 +57,30 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
             case ToolStatus.Published:
               return (
                 <Stack size="sm">
-                  <CircleIcon className="text-green-600/75 dark:text-green-500/75" />
-                  <span className="text-muted-foreground">{formatDate(publishedAt!)}</span>
+                  <CircleIcon className="stroke-3 text-green-600/75 dark:text-green-500/75" />
+                  <span className="text-muted-foreground font-medium">
+                    {formatDate(publishedAt!)}
+                  </span>
                 </Stack>
               )
             case ToolStatus.Scheduled:
               return (
                 <Stack size="sm" title={formatDate(publishedAt!)}>
-                  <CircleDotDashedIcon className="text-yellow-700/75 dark:text-yellow-500/75" />
-                  <span className="text-yellow-700 dark:text-yellow-500">
-                    {formatDistanceToNowStrict(publishedAt!, { addSuffix: true })}
+                  <CircleDotDashedIcon className="stroke-3 text-yellow-700/75 dark:text-yellow-500/75" />
+                  <span className="text-muted-foreground font-medium">
+                    Scheduled{" "}
+                    {formatDistanceToNowStrict(publishedAt!, {
+                      unit: "day",
+                      roundingMethod: "ceil",
+                      addSuffix: true,
+                    })}
                   </span>
                 </Stack>
               )
             case ToolStatus.Draft:
               return (
                 <Stack size="sm">
-                  <CircleDashedIcon className="text-muted-foreground/75" />
+                  <CircleDashedIcon className="stroke-3 text-muted-foreground/75" />
                   <span className="text-muted-foreground/75">Awaiting review</span>
                 </Stack>
               )
@@ -97,7 +104,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
         id: "actions",
         cell: ({ row }) => {
           const { slug, isFeatured, publishedAt } = row.original
-          const isLongQueue = !publishedAt || differenceInDays(publishedAt, new Date()) > 7
+          const isLongQueue = !publishedAt || differenceInDays(publishedAt, new Date()) >= 7
 
           return (
             <Stack size="sm" className="float-right -my-1">

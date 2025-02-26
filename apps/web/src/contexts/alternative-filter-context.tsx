@@ -10,9 +10,7 @@ export type AlternativeFiltersContextType = {
   updateFilters: (values: Partial<Values<typeof alternativesSearchParams>>) => void
 }
 
-const AlternativeFiltersContext = createContext<AlternativeFiltersContextType | undefined>(
-  undefined,
-)
+const AlternativeFiltersContext = createContext<AlternativeFiltersContextType>(null!)
 
 const AlternativeFiltersProvider = ({ children }: PropsWithChildren) => {
   const [isLoading, startTransition] = useTransition()
@@ -24,21 +22,11 @@ const AlternativeFiltersProvider = ({ children }: PropsWithChildren) => {
   })
 
   const updateFilters = (values: Partial<Values<typeof alternativesSearchParams>>) => {
-    setFilters(prev => ({
-      ...prev,
-      ...values,
-      page: null,
-    }))
+    setFilters(prev => ({ ...prev, ...values, page: null }))
   }
 
   return (
-    <AlternativeFiltersContext.Provider
-      value={{
-        filters,
-        isLoading,
-        updateFilters,
-      }}
-    >
+    <AlternativeFiltersContext.Provider value={{ filters, isLoading, updateFilters }}>
       {children}
     </AlternativeFiltersContext.Provider>
   )

@@ -82,12 +82,12 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
     title,
     columnCount = 5,
     rowCount = 10,
-    searchableColumnCount = 0,
-    filterableColumnCount = 0,
+    searchableColumnCount = 1,
+    filterableColumnCount = 2,
     showViewOptions = true,
     cellWidths = ["auto"],
     withPagination = true,
-    shrinkZero = false,
+    shrinkZero = true,
     className,
     ...skeletonProps
   } = props
