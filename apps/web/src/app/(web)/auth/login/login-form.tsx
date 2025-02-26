@@ -7,8 +7,8 @@ import { type ComponentProps, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "~/components/common/form"
 import { Button } from "~/components/common/button"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "~/components/common/form"
 import { Input } from "~/components/common/input"
 import { signIn } from "~/lib/auth-client"
 import { cx } from "~/utils/cva"
@@ -55,7 +55,7 @@ export const LoginForm = ({ className, ...props }: LoginFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSignIn)}
-        className={cx("flex flex-col gap-4", className)}
+        className={cx("flex flex-col gap-2", className)}
         noValidate
         {...props}
       >

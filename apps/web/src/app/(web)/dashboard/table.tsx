@@ -51,7 +51,6 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
         header: ({ column }) => <DataTableColumnHeader column={column} title="Published At" />,
         cell: ({ row }) => {
           const { status, publishedAt } = row.original
-          const now = new Date()
 
           switch (status) {
             case ToolStatus.Published:
