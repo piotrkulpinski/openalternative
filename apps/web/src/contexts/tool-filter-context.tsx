@@ -1,18 +1,27 @@
 "use client"
 
-import { type Values, useQueryStates } from "nuqs"
+import { type Values, parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
 import { type PropsWithChildren, createContext, use, useTransition } from "react"
-import { toolsSearchParams } from "~/server/web/tools/search-params"
-import type { FilterType, LockedFilter } from "~/types/search"
+import { toolsSearchParams } from "~/server/web/tools/schemas"
+import type { FilterType } from "~/types/search"
 
-export type ToolFiltersProviderProps = {
-  lockedFilters?: LockedFilter[]
+const filterSearchParams = {
+  ...toolsSearchParams,
+  alternative: parseAsArrayOf(parseAsString).withDefault([]),
+  category: parseAsArrayOf(parseAsString).withDefault([]),
+  stack: parseAsArrayOf(parseAsString).withDefault([]),
+  license: parseAsArrayOf(parseAsString).withDefault([]),
 }
 
-export type ToolFiltersContextType = ToolFiltersProviderProps & {
-  filters: Values<typeof toolsSearchParams>
+export type ToolFiltersProviderProps = {
+  enableFilters?: boolean
+}
+
+export type ToolFiltersContextType = {
+  filters: Values<typeof filterSearchParams>
   isLoading: boolean
-  updateFilters: (values: Partial<Values<typeof toolsSearchParams>>) => void
+  enableFilters: boolean
+  updateFilters: (values: Partial<Values<typeof filterSearchParams>>) => void
   getFilterValues: (type: FilterType) => string[]
 }
 
@@ -20,20 +29,17 @@ const ToolFiltersContext = createContext<ToolFiltersContextType | undefined>(und
 
 const ToolFiltersProvider = ({
   children,
-  lockedFilters = [],
+  enableFilters = false,
 }: PropsWithChildren<ToolFiltersProviderProps>) => {
   const [isLoading, startTransition] = useTransition()
 
-  const [filters, setFilters] = useQueryStates(toolsSearchParams, {
+  const [filters, setFilters] = useQueryStates(filterSearchParams, {
     shallow: false,
     throttleMs: 300,
     startTransition,
   })
 
-  const updateFilters = (values: Partial<Values<typeof toolsSearchParams>>) => {
-    // Don't update if trying to modify any locked filter
-    if (lockedFilters.some(lock => values[lock.type])) return
-
+  const updateFilters = (values: Partial<Values<typeof filterSearchParams>>) => {
     setFilters(prev => ({
       ...prev,
       ...values,
@@ -41,16 +47,12 @@ const ToolFiltersProvider = ({
     }))
   }
 
-  const getFilterValues = (type: FilterType) => {
-    const lockedFilter = lockedFilters.find(f => f.type === type)
-    if (lockedFilter) return [lockedFilter.value]
-    return filters[type] || []
-  }
+  const getFilterValues = (type: FilterType) => filters[type] || []
 
   return (
     <ToolFiltersContext.Provider
       value={{
-        lockedFilters,
+        enableFilters,
         filters,
         isLoading,
         updateFilters,

@@ -40,4 +40,4 @@ const ToolListSkeleton = ({ count = 6 }: { count?: number }) => {
   )
 }
 
-export { ToolList, ToolListSkeleton }
+export { ToolList, ToolListSkeleton, type ToolListProps }

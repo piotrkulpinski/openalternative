@@ -6,22 +6,22 @@ import {
   parseAsString,
   parseAsStringEnum,
 } from "nuqs/server"
-import * as z from "zod"
+import { z } from "zod"
 import { getSortingStateParser } from "~/lib/parsers"
 import { repositorySchema } from "~/server/schemas"
 
-export const searchParamsCache = createSearchParamsCache({
+export const adminToolsSearchParams = createSearchParamsCache({
+  name: parseAsString.withDefault(""),
+  sort: getSortingStateParser<Tool>().withDefault([{ id: "createdAt", desc: true }]),
   page: parseAsInteger.withDefault(1),
   perPage: parseAsInteger.withDefault(25),
-  sort: getSortingStateParser<Tool>().withDefault([{ id: "createdAt", desc: true }]),
-  name: parseAsString.withDefault(""),
-  status: parseAsArrayOf(z.nativeEnum(ToolStatus)).withDefault([]),
   from: parseAsString.withDefault(""),
   to: parseAsString.withDefault(""),
   operator: parseAsStringEnum(["and", "or"]).withDefault("and"),
+  status: parseAsArrayOf(z.nativeEnum(ToolStatus)).withDefault([]),
 })
 
-export type GetToolsSchema = Awaited<ReturnType<typeof searchParamsCache.parse>>
+export type FindToolsSchema = Awaited<ReturnType<typeof adminToolsSearchParams.parse>>
 
 export const toolSchema = z.object({
   name: z.string().min(1, "Name is required"),

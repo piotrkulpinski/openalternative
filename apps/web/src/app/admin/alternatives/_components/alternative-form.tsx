@@ -22,7 +22,7 @@ import { Switch } from "~/components/common/switch"
 import { TextArea } from "~/components/common/textarea"
 import { createAlternative, updateAlternative } from "~/server/admin/alternatives/actions"
 import type { findAlternativeBySlug } from "~/server/admin/alternatives/queries"
-import { alternativeSchema } from "~/server/admin/alternatives/validations"
+import { alternativeSchema } from "~/server/admin/alternatives/schemas"
 import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
 

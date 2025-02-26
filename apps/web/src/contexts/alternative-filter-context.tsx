@@ -2,7 +2,7 @@
 
 import { type Values, useQueryStates } from "nuqs"
 import { type PropsWithChildren, createContext, use, useTransition } from "react"
-import { alternativesSearchParams } from "~/server/web/alternatives/search-params"
+import { alternativesSearchParams } from "~/server/web/alternatives/schemas"
 
 export type AlternativeFiltersContextType = {
   filters: Values<typeof alternativesSearchParams>

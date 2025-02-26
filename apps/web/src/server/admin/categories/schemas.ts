@@ -5,20 +5,20 @@ import {
   parseAsString,
   parseAsStringEnum,
 } from "nuqs/server"
-import * as z from "zod"
+import { z } from "zod"
 import { getSortingStateParser } from "~/lib/parsers"
 
-export const searchParamsCache = createSearchParamsCache({
+export const adminCategoriesSearchParams = createSearchParamsCache({
+  name: parseAsString.withDefault(""),
   page: parseAsInteger.withDefault(1),
   perPage: parseAsInteger.withDefault(25),
   sort: getSortingStateParser<Category>().withDefault([{ id: "name", desc: false }]),
-  name: parseAsString.withDefault(""),
   from: parseAsString.withDefault(""),
   to: parseAsString.withDefault(""),
   operator: parseAsStringEnum(["and", "or"]).withDefault("and"),
 })
 
-export type GetCategoriesSchema = Awaited<ReturnType<typeof searchParamsCache.parse>>
+export type FindCategoriesSchema = Awaited<ReturnType<typeof adminCategoriesSearchParams.parse>>
 
 export const categorySchema = z.object({
   name: z.string().min(1, "Name is required"),

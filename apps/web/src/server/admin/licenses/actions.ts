@@ -5,7 +5,7 @@ import { db } from "@openalternative/db"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { adminProcedure } from "~/lib/safe-actions"
-import { licenseSchema } from "~/server/admin/licenses/validations"
+import { licenseSchema } from "~/server/admin/licenses/schemas"
 
 export const createLicense = adminProcedure
   .createServerAction()

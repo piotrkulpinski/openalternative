@@ -5,9 +5,9 @@ import type { Alternative } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import type { Dispatch, SetStateAction } from "react"
 import { AlternativeActions } from "~/app/admin/alternatives/_components/alternative-actions"
-import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
-import { DataTableLink } from "~/components/admin/data-table/data-table-link"
-import { DataTableThumbnail } from "~/components/admin/data-table/data-table-thumbnail"
+import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
+import { DataTableLink } from "~/components/data-table/data-table-link"
+import { DataTableThumbnail } from "~/components/data-table/data-table-thumbnail"
 import type { DataTableRowAction } from "~/types"
 
 type GetColumnsProps = {

@@ -4,11 +4,11 @@ import { BellPlusIcon, ClockIcon, SparklesIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { Stack } from "~/components/common/stack"
 import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
-import type { ToolMany, ToolManyExtended } from "~/server/web/tools/payloads"
+import type { ToolMany, ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
 type ToolBadgesProps = ComponentProps<typeof Stack> & {
-  tool: ToolMany | ToolManyExtended
+  tool: ToolOne | ToolMany
 }
 
 export const ToolBadges = ({ tool, children, className, ...props }: ToolBadgesProps) => {

@@ -5,12 +5,13 @@ import { CircleDashedIcon, CircleDotDashedIcon, CircleIcon, PlusIcon } from "luc
 import { use, useMemo, useState } from "react"
 import { ToolScheduleDialog } from "~/app/admin/tools/_components/tool-schedule-dialog"
 import { ToolsDeleteDialog } from "~/app/admin/tools/_components/tools-delete-dialog"
-import { DataTable } from "~/components/admin/data-table/data-table"
-import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
-import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/common/button"
 import { Link } from "~/components/common/link"
+import { DataTable } from "~/components/data-table/data-table"
+import { DataTableHeader } from "~/components/data-table/data-table-header"
+import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
+import { DataTableViewOptions } from "~/components/data-table/data-table-view-options"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findTools } from "~/server/admin/tools/queries"
 import type { DataTableFilterField, DataTableRowAction } from "~/types"
@@ -34,7 +35,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     {
       id: "name",
       label: "Name",
-      placeholder: "Filter by name...",
+      placeholder: "Search by name...",
     },
     {
       id: "status",
@@ -94,6 +95,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
           <DataTableToolbar table={table} filterFields={filterFields}>
             <ToolsTableToolbarActions table={table} />
             <DateRangePicker align="end" />
+            <DataTableViewOptions table={table} />
           </DataTableToolbar>
         </DataTableHeader>
       </DataTable>

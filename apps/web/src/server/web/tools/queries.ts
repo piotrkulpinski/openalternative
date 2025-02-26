@@ -9,7 +9,7 @@ import {
   toolManyPayload,
   toolOnePayload,
 } from "~/server/web/tools/payloads"
-import type { toolsSearchParams } from "~/server/web/tools/search-params"
+import type { toolsSearchParams } from "~/server/web/tools/schemas"
 
 export const searchTools = async (
   search: inferParserType<typeof toolsSearchParams>,
@@ -20,7 +20,7 @@ export const searchTools = async (
   cacheTag("tools")
   cacheLife("max")
 
-  const { q, alternative, category, stack, license, page, sort, perPage } = search
+  const { q, page, sort, perPage } = search
   const start = performance.now()
   const skip = (page - 1) * perPage
   const take = perPage
@@ -28,19 +28,15 @@ export const searchTools = async (
 
   const whereQuery: Prisma.ToolWhereInput = {
     status: ToolStatus.Published,
-    ...(alternative.length && { alternatives: { some: { slug: { in: alternative } } } }),
-    ...(category.length && { categories: { some: { slug: { in: category } } } }),
-    ...(stack.length && { stacks: { some: { slug: { in: stack } } } }),
-    ...(license.length && { license: { slug: { in: license } } }),
   }
 
   // Use full-text search when query exists
   if (q) {
     const searchQuery: { id: string }[] = await db.$queryRaw`
-        SELECT id
-        FROM "Tool", plainto_tsquery('english', ${q}) query
-        WHERE "searchVector" @@ query
-      `
+      SELECT id
+      FROM "Tool", plainto_tsquery('english', ${q}) query
+      WHERE "searchVector" @@ query
+    `
 
     whereQuery.id = { in: searchQuery.map(r => r.id) }
   }
@@ -62,7 +58,8 @@ export const searchTools = async (
 
   console.log("Tools search:", performance.now() - start)
 
-  return { tools, totalCount }
+  const pageCount = Math.ceil(totalCount / perPage)
+  return { tools, totalCount, pageCount }
 }
 
 export const findRelatedTools = async ({

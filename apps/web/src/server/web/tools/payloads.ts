@@ -67,6 +67,7 @@ export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({
   firstCommitDate: true,
   lastCommitDate: true,
   publishedAt: true,
+  createdAt: true,
   updatedAt: true,
   alternatives: { ...toolAlternativesPayload, take: 1 },
 })
@@ -83,6 +84,7 @@ export const toolManyExtendedPayload = Prisma.validator<Prisma.ToolSelect>()({
   discountAmount: true,
   firstCommitDate: true,
   publishedAt: true,
+  createdAt: true,
   updatedAt: true,
   categories: true,
 })

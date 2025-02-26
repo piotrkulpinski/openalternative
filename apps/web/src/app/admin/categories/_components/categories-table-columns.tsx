@@ -5,8 +5,8 @@ import type { Category } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import type { Dispatch, SetStateAction } from "react"
 import { CategoryActions } from "~/app/admin/categories/_components/category-actions"
-import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
-import { DataTableLink } from "~/components/admin/data-table/data-table-link"
+import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
+import { DataTableLink } from "~/components/data-table/data-table-link"
 import type { DataTableRowAction } from "~/types"
 
 type GetColumnsProps = {

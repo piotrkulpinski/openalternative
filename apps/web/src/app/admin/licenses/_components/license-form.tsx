@@ -20,7 +20,7 @@ import { Link } from "~/components/common/link"
 import { TextArea } from "~/components/common/textarea"
 import { createLicense, updateLicense } from "~/server/admin/licenses/actions"
 import type { findLicenseBySlug } from "~/server/admin/licenses/queries"
-import { licenseSchema } from "~/server/admin/licenses/validations"
+import { licenseSchema } from "~/server/admin/licenses/schemas"
 import { cx } from "~/utils/cva"
 
 type LicenseFormProps = ComponentProps<"form"> & {

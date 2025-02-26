@@ -2,7 +2,6 @@ import type { Column } from "@tanstack/react-table"
 import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon, EyeOffIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 
-import { Button } from "~/components/common/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,16 +44,12 @@ export function DataTableColumnHeader<TData, TValue>({
   return (
     <div className={cx("flex items-center space-x-2", className)}>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="-ml-2 data-[state=open]:bg-accent"
-            suffix={buttonSuffix}
-            aria-label={buttonLabel}
-          >
-            {title}
-          </Button>
+        <DropdownMenuTrigger
+          className="flex items-center gap-1 text-muted-foreground/70 whitespace-nowrap rounded-md hover:text-foreground data-[state=open]:text-foreground"
+          aria-label={buttonLabel}
+        >
+          {title}
+          {buttonSuffix}
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="start">

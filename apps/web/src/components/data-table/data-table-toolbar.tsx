@@ -4,10 +4,10 @@ import type { Table } from "@tanstack/react-table"
 import { XIcon } from "lucide-react"
 import * as React from "react"
 import type { ComponentProps } from "react"
-import { DataTableFacetedFilter } from "~/components/admin/data-table/data-table-faceted-filter"
-import { DataTableViewOptions } from "~/components/admin/data-table/data-table-view-options"
 import { Button } from "~/components/common/button"
 import { Input } from "~/components/common/input"
+import { Stack } from "~/components/common/stack"
+import { DataTableFacetedFilter } from "~/components/data-table/data-table-faceted-filter"
 import type { DataTableFilterField } from "~/types"
 import { cx } from "~/utils/cva"
 
@@ -34,14 +34,12 @@ export function DataTableToolbar<TData>({
   }, [filterFields])
 
   return (
-    <div
-      className={cx(
-        "flex items-center justify-between gap-2 w-full py-1 -my-1 overflow-auto",
-        className,
-      )}
+    <Stack
+      size="sm"
+      className={cx("justify-between w-full py-1 -my-1 overflow-auto", className)}
       {...props}
     >
-      <div className="flex items-center space-x-2">
+      <Stack size="sm">
         {searchableColumns.length > 0 &&
           searchableColumns.map(
             column =>
@@ -80,12 +78,9 @@ export function DataTableToolbar<TData>({
             Reset
           </Button>
         )}
-      </div>
+      </Stack>
 
-      <div className="flex items-center gap-2">
-        {children}
-        <DataTableViewOptions table={table} />
-      </div>
-    </div>
+      <Stack size="sm">{children}</Stack>
+    </Stack>
   )
 }

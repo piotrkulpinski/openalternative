@@ -10,7 +10,7 @@ import { generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { adminProcedure } from "~/lib/safe-actions"
 import { analyzeRepositoryStack } from "~/lib/stack-analysis"
-import { toolSchema } from "~/server/admin/tools/validations"
+import { toolSchema } from "~/server/admin/tools/schemas"
 import { inngest } from "~/services/inngest"
 
 export const createTool = adminProcedure

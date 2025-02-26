@@ -7,7 +7,7 @@ import { z } from "zod"
 import { isProd } from "~/env"
 import { uploadFavicon } from "~/lib/media"
 import { adminProcedure } from "~/lib/safe-actions"
-import { alternativeSchema } from "~/server/admin/alternatives/validations"
+import { alternativeSchema } from "~/server/admin/alternatives/schemas"
 import { inngest } from "~/services/inngest"
 
 export const createAlternative = adminProcedure

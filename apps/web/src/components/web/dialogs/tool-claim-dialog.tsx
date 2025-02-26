@@ -15,10 +15,10 @@ import {
 } from "~/components/common/dialog"
 import { siteConfig } from "~/config/site"
 import { useSession } from "~/lib/auth-client"
-import type { ToolMany, ToolManyExtended } from "~/server/web/tools/payloads"
+import type { ToolOne } from "~/server/web/tools/payloads"
 
 type ToolClaimDialogProps = {
-  tool: ToolMany | ToolManyExtended
+  tool: ToolOne
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }

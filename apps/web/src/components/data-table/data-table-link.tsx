@@ -1,6 +1,5 @@
 import type { ComponentProps } from "react"
 import { Link } from "~/components/common/link"
-
 import { cx } from "~/utils/cva"
 
 export const DataTableLink = ({ className, ...props }: ComponentProps<typeof Link>) => {
