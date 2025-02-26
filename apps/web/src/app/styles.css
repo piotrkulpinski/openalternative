@@ -159,7 +159,7 @@
 
   svg.lucide:not([class*="stroke"]),
   svg.brand:not([class*="stroke"]) {
-    @apply !stroke-[1.5];
+    @apply !stroke-[1.75];
   }
 
   svg.lucide:not([class*="size-"]):not([class*="h-"]),

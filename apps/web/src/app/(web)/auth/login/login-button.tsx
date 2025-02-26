@@ -32,8 +32,8 @@ export const LoginButton = ({ provider, ...props }: LoginButtonProps) => {
   }
 
   return (
-    <Button size="lg" onClick={handleSignIn} isPending={isPending} {...props}>
-      Sign in with {capitalCase(provider)}
+    <Button size="lg" variant="secondary" onClick={handleSignIn} isPending={isPending} {...props}>
+      Continue with {capitalCase(provider)}
     </Button>
   )
 }
