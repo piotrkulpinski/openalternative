@@ -3,10 +3,10 @@ import { Pagination } from "~/components/web/pagination"
 import { ToolList, type ToolListProps } from "~/components/web/tools/tool-list"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { ToolSearch } from "~/components/web/tools/tool-search"
-import { ToolFiltersProvider, type ToolFiltersProviderProps } from "~/contexts/tool-filter-context"
+import { FiltersProvider, type FiltersProviderProps } from "~/contexts/filter-context"
 
 type ToolQueryProps = ToolListProps &
-  ToolFiltersProviderProps & {
+  FiltersProviderProps & {
     perPage: number
     totalCount: number
     placeholder?: string
@@ -20,14 +20,14 @@ const ToolQuery = ({
   ...props
 }: ToolQueryProps) => {
   return (
-    <ToolFiltersProvider enableFilters={enableFilters}>
+    <FiltersProvider enableFilters={enableFilters}>
       <div className="flex flex-col gap-5" id="tools">
         <ToolSearch placeholder={placeholder} />
         <ToolList {...props} />
       </div>
 
       <Pagination pageSize={perPage} totalCount={totalCount} />
-    </ToolFiltersProvider>
+    </FiltersProvider>
   )
 }
 

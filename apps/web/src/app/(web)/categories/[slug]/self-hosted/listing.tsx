@@ -1,8 +1,8 @@
 import type { SearchParams } from "nuqs/server"
 import { ToolQuery } from "~/components/web/tools/tool-query"
 import type { CategoryOne } from "~/server/web/categories/payloads"
+import { filterSearchParamsCache } from "~/server/web/shared/schemas"
 import { searchTools } from "~/server/web/tools/queries"
-import { toolsSearchParamsCache } from "~/server/web/tools/schemas"
 
 type CategoryToolListingProps = {
   category: CategoryOne
@@ -10,13 +10,11 @@ type CategoryToolListingProps = {
 }
 
 export const CategoryToolListing = async ({ category, searchParams }: CategoryToolListingProps) => {
-  const parsedParams = toolsSearchParamsCache.parse(await searchParams)
+  const parsedParams = filterSearchParamsCache.parse(await searchParams)
 
   const { tools, totalCount } = await searchTools(parsedParams, {
-    where: {
-      categories: { some: { slug: category.slug } },
-      isSelfHosted: true,
-    },
+    categories: { some: { slug: category.slug } },
+    isSelfHosted: true,
   })
 
   return (
