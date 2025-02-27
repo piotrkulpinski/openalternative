@@ -13,14 +13,14 @@ import {
 } from "~/components/common/select"
 import { Stack } from "~/components/common/stack"
 import { ToolFilters } from "~/components/web/tools/tool-filters"
-import { useToolFilters } from "~/contexts/tool-filter-context"
+import { useFilters } from "~/contexts/filter-context"
 
 export type ToolSearchProps = {
   placeholder?: string
 }
 
 export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
-  const { filters, isLoading, enableFilters, updateFilters } = useToolFilters()
+  const { filters, isLoading, enableFilters, updateFilters } = useFilters()
 
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage({
     key: "filtersOpen",

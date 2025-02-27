@@ -8,26 +8,26 @@ import { Badge } from "~/components/common/badge"
 import { Stack } from "~/components/common/stack"
 import { ToolRefinement } from "~/components/web/tools/tool-refinement"
 import { searchConfig } from "~/config/search"
-import { useToolFilters } from "~/contexts/tool-filter-context"
+import { useFilters } from "~/contexts/filter-context"
 import type { FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
 
 export const ToolFilters = ({ className, ...props }: ComponentProps<"div">) => {
-  const { filters, updateFilters, getFilterValues } = useToolFilters()
+  const { filters, updateFilters } = useFilters()
   const { execute, isPending, data } = useServerAction(findFilterOptions)
 
   useEffect(() => {
     execute()
   }, [execute])
 
-  const hasActiveFilters = searchConfig.filters.some(type => getFilterValues(type).length > 0)
+  const hasActiveFilters = searchConfig.filters.some(type => !!filters[type].length)
 
   const handleRemoveFilter = useCallback(
     (type: FilterType, value: string) => {
-      const currentValues = getFilterValues(type)
+      const currentValues = filters[type]
       updateFilters({ [type]: currentValues.filter(v => v !== value) })
     },
-    [updateFilters, getFilterValues],
+    [filters, updateFilters],
   )
 
   const handleClearAll = useCallback(() => {
@@ -44,7 +44,7 @@ export const ToolFilters = ({ className, ...props }: ComponentProps<"div">) => {
       {hasActiveFilters && (
         <Stack className="col-span-full" size="sm">
           {searchConfig.filters.map(type => {
-            const activeItems = getFilterValues(type)
+            const activeItems = filters[type]
             if (!activeItems.length) return null
 
             return (

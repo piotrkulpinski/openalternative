@@ -10,8 +10,9 @@ import {
   CommandLoading,
 } from "cmdk"
 import type { ComponentProps } from "react"
+import { memo } from "react"
 import { Badge } from "~/components/common/badge"
-import { useToolFilters } from "~/contexts/tool-filter-context"
+import { useFilters } from "~/contexts/filter-context"
 import type { FilterOption, FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
 
@@ -23,7 +24,7 @@ type ToolRefinementProps = Omit<ComponentProps<typeof Command>, "filter"> & {
   defaultValue?: string
 }
 
-export const ToolRefinement = ({
+export const ToolRefinement = memo(({
   filter,
   items,
   isPending,
@@ -32,8 +33,8 @@ export const ToolRefinement = ({
   className,
   ...props
 }: ToolRefinementProps) => {
-  const { getFilterValues, updateFilters } = useToolFilters()
-  const selectedValues = getFilterValues(filter)
+  const { filters, updateFilters } = useFilters()
+  const selectedValues = filters[filter]
 
   return (
     <Command
@@ -93,4 +94,4 @@ export const ToolRefinement = ({
       </CommandList>
     </Command>
   )
-}
+})

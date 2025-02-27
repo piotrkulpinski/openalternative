@@ -1,4 +1,5 @@
-import type { ComponentProps } from "react"
+import { type ComponentProps, Fragment, Suspense } from "react"
+import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import {
   AlternativeCard,
   AlternativeCardSkeleton,
@@ -9,13 +10,27 @@ import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type AlternativeListProps = ComponentProps<typeof Grid> & {
   alternatives: AlternativeMany[]
+  showAd?: boolean
 }
 
-const AlternativeList = ({ alternatives, ...props }: AlternativeListProps) => {
+const AlternativeList = ({ alternatives, showAd = true, ...props }: AlternativeListProps) => {
   return (
     <Grid {...props}>
-      {alternatives.map(alternative => (
-        <AlternativeCard key={alternative.slug} alternative={alternative} showCount />
+      {alternatives.map((alternative, order) => (
+        <Fragment key={alternative.slug}>
+          {showAd && Math.min(2, alternatives.length - 1) === order && (
+            <Suspense fallback={<AdCardSkeleton className="sm:order-2" />}>
+              <AdCard type="Homepage" className="sm:order-2" />
+            </Suspense>
+          )}
+
+          <AlternativeCard
+            key={alternative.slug}
+            alternative={alternative}
+            style={{ order }}
+            showCount
+          />
+        </Fragment>
       ))}
 
       {!alternatives.length && <EmptyList>No alternatives found.</EmptyList>}

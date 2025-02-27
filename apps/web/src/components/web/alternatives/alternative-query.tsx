@@ -1,11 +1,11 @@
+import { Input } from "~/components/common/input"
 import {
   AlternativeList,
   AlternativeListSkeleton,
 } from "~/components/web/alternatives/alternative-list"
 import { AlternativeSearch } from "~/components/web/alternatives/alternative-search"
 import { Pagination } from "~/components/web/pagination"
-import { Input } from "~/components/common/input"
-import { AlternativeFiltersProvider } from "~/contexts/alternative-filter-context"
+import { FiltersProvider } from "~/contexts/filter-context"
 import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type AlternativeQueryProps = {
@@ -23,12 +23,12 @@ const AlternativeQuery = ({
 }: AlternativeQueryProps) => {
   return (
     <>
-      <AlternativeFiltersProvider>
+      <FiltersProvider>
         <div className="flex flex-col gap-5">
           <AlternativeSearch placeholder={placeholder} />
           <AlternativeList alternatives={alternatives} />
         </div>
-      </AlternativeFiltersProvider>
+      </FiltersProvider>
 
       <Pagination pageSize={perPage} totalCount={totalCount} />
     </>

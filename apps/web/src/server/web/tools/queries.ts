@@ -3,24 +3,20 @@ import { getRandomElement } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { type Prisma, type Tool, ToolStatus } from "@openalternative/db/client"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
-import type { inferParserType } from "nuqs/server"
+import type { FilterSearchParams } from "~/server/web/shared/schemas"
 import {
   toolManyExtendedPayload,
   toolManyPayload,
   toolOnePayload,
 } from "~/server/web/tools/payloads"
-import type { toolsSearchParams } from "~/server/web/tools/schemas"
 
-export const searchTools = async (
-  search: inferParserType<typeof toolsSearchParams>,
-  { where, ...args }: Prisma.ToolFindManyArgs,
-) => {
+export const searchTools = async (search: FilterSearchParams, where?: Prisma.ToolWhereInput) => {
   "use cache"
 
   cacheTag("tools")
   cacheLife("max")
 
-  const { q, page, sort, perPage } = search
+  const { q, page, sort, perPage, alternative, category, stack, license } = search
   const start = performance.now()
   const skip = (page - 1) * perPage
   const take = perPage
@@ -28,6 +24,10 @@ export const searchTools = async (
 
   const whereQuery: Prisma.ToolWhereInput = {
     status: ToolStatus.Published,
+    ...(!!alternative.length && { alternatives: { some: { slug: { in: alternative } } } }),
+    ...(!!category.length && { categories: { some: { slug: { in: category } } } }),
+    ...(!!stack.length && { stacks: { some: { slug: { in: stack } } } }),
+    ...(!!license.length && { license: { slug: { in: license } } }),
   }
 
   // Use full-text search when query exists
@@ -43,7 +43,6 @@ export const searchTools = async (
 
   const [tools, totalCount] = await db.$transaction([
     db.tool.findMany({
-      ...args,
       orderBy: sortBy ? { [sortBy]: sortOrder } : [{ isFeatured: "desc" }, { score: "desc" }],
       where: { ...whereQuery, ...where },
       select: toolManyPayload,

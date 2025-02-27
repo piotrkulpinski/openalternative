@@ -2,19 +2,17 @@ import { performance } from "node:perf_hooks"
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
-import type { inferParserType } from "nuqs/server"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/web/alternatives/payloads"
-import type { alternativesSearchParams } from "~/server/web/alternatives/schemas"
+import type { FilterSearchParams } from "~/server/web/shared/schemas"
 
-export const searchAlternatives = async (
-  { q, page, sort, perPage }: inferParserType<typeof alternativesSearchParams>,
-  { where, ...args }: Prisma.AlternativeFindManyArgs,
-) => {
+
+export const searchAlternatives = async (search: FilterSearchParams, where?: Prisma.AlternativeWhereInput) => {
   "use cache"
 
   cacheTag("alternatives")
   cacheLife("max")
 
+  const { q, page, sort, perPage } = search
   const start = performance.now()
   const skip = (page - 1) * perPage
   const take = perPage
@@ -32,7 +30,6 @@ export const searchAlternatives = async (
 
   const [alternatives, totalCount] = await db.$transaction([
     db.alternative.findMany({
-      ...args,
       orderBy:
         sortBy && sortBy !== "popularity"
           ? { [sortBy]: sortOrder }

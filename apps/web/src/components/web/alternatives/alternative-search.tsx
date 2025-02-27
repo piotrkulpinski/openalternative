@@ -1,7 +1,6 @@
 "use client"
 
 import { LoaderIcon, SearchIcon } from "lucide-react"
-import { Stack } from "~/components/common/stack"
 import { Input } from "~/components/common/input"
 import {
   Select,
@@ -10,15 +9,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/common/select"
-import { useAlternativeFilters } from "~/contexts/alternative-filter-context"
-import { ToolStatus } from "@openalternative/db/client"
+import { Stack } from "~/components/common/stack"
+import { useFilters } from "~/contexts/filter-context"
 
 export type AlternativeSearchProps = {
   placeholder?: string
 }
 
 export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
-  const { filters, isLoading, updateFilters } = useAlternativeFilters()
+  const { filters, isLoading, updateFilters } = useFilters()
 
   const sortOptions = [
     { value: "popularity.desc", label: "Popularity" },
