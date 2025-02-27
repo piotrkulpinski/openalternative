@@ -12,3 +12,4 @@ export const filterSearchParams = {
 }
 
 export const filterSearchParamsCache = createSearchParamsCache(filterSearchParams)
+export type FilterSearchParams = Awaited<ReturnType<typeof filterSearchParamsCache.parse>>

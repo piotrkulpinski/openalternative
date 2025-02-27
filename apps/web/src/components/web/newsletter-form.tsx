@@ -77,7 +77,7 @@ export const NewsletterForm = ({
                     placeholder={placeholder}
                     required
                     size={size}
-                    className="flex-1 min-w-0 border-0 outline-0 ring-0!"
+                    className="flex-1 min-w-0 border-0 focus-visible:ring-transparent"
                     data-1p-ignore
                     {...field}
                   />
