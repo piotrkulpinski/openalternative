@@ -6,7 +6,7 @@
     "./client": "./client.ts"
   },
   "dependencies": {
-    "@octokit/graphql": "^8.2.0",
+    "@octokit/graphql": "^8.2.1",
     "date-fns": "^4.1.0"
   },
   "devDependencies": {

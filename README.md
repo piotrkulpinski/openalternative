@@ -47,7 +47,19 @@ OpenAlternative is an GPL-3.0-licensed open source project with its ongoing deve
   </a>
 </p>
 
-## Project Structure
+## Services
+
+OpenAlternative uses the following third-party services:
+
+- Database: [Neon](https://neon.tech)
+- Analytics: [Plausible](https://plausible.io), [PostHog](https://posthog.com)
+- Newsletter: [Beehiiv](https://go.openalternative.co/beehiiv)
+- Background Jobs: [Inngest](https://inngest.com)
+- File Storage: [AWS S3](https://aws.amazon.com/s3)
+- Payments: [Stripe](https://stripe.com)
+- Screenshots: [ScreenshotOne](https://go.openalternative.co/screenshotone)
+
+Make sure to set up accounts with these services and add the necessary environment variables to your `.env` file.
 
 ## Project Structure
 
@@ -131,20 +143,6 @@ All commands are run from the root of the project, from a terminal:
 | `bun run db:push` | Push Prisma schema to database                  |
 | `bun run db:pull` | Pull Prisma schema from database                |
 | `bun run db:reset` | Reset Prisma schema                            |
-
-## Third-Party Services
-
-OpenAlternative uses the following third-party services:
-
-- Database: [Supabase](https://supabase.com)
-- Analytics: [Plausible](https://plausible.io), [PostHog](https://posthog.com)
-- Newsletter: [Beehiiv](https://go.openalternative.co/beehiiv)
-- Background Jobs: [Inngest](https://inngest.com)
-- File Storage: [AWS S3](https://aws.amazon.com/s3)
-- Payments: [Stripe](https://stripe.com)
-- Screenshots: [ScreenshotOne](https://go.openalternative.co/screenshotone)
-
-Make sure to set up accounts with these services and add the necessary environment variables to your `.env` file.
 
 ## Deployment
 
