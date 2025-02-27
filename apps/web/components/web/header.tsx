@@ -67,7 +67,7 @@ export const Header = ({ children, className, ...props }: ComponentProps<typeof 
         <button
           type="button"
           onClick={() => setNavOpen(!isNavOpen)}
-          className="block -m-1 lg:hidden"
+          className="block -m-1.5 lg:hidden"
           aria-label="Toggle navigation"
         >
           <svg

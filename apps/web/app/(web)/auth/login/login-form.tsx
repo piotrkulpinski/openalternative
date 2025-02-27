@@ -10,12 +10,12 @@ import { z } from "zod"
 import { Button } from "~/components/common/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "~/components/common/form"
 import { Input } from "~/components/common/input"
+import { Stack } from "~/components/common/stack"
 import { signIn } from "~/lib/auth-client"
-import { cx } from "~/utils/cva"
 
 type LoginFormProps = ComponentProps<"form"> & {}
 
-export const LoginForm = ({ className, ...props }: LoginFormProps) => {
+export const LoginForm = ({ ...props }: LoginFormProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, setIsPending] = useState(false)
@@ -53,29 +53,27 @@ export const LoginForm = ({ className, ...props }: LoginFormProps) => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSignIn)}
-        className={cx("flex flex-col gap-2", className)}
-        noValidate
-        {...props}
-      >
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input type="email" size="lg" placeholder="Enter your email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <Stack direction="column" className="items-stretch" asChild>
+        <form onSubmit={form.handleSubmit(handleSignIn)} noValidate {...props}>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type="email" size="lg" placeholder="Enter your email" {...field} />
+                </FormControl>
 
-        <Button variant="fancy" className="w-full" suffix={<InboxIcon />} isPending={isPending}>
-          Send me a Magic Link
-        </Button>
-      </form>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button suffix={<InboxIcon />} isPending={isPending}>
+            Send me a Magic Link
+          </Button>
+        </form>
+      </Stack>
     </Form>
   )
 }

@@ -7,7 +7,12 @@ import { cx } from "~/utils/cva"
 
 export const Logo = ({ className, ...props }: ComponentProps<typeof Stack>) => {
   return (
-    <Stack size="sm" className={cx("group/logo text-foreground", className)} asChild {...props}>
+    <Stack
+      size="sm"
+      className={cx("group/logo flex-nowrap text-foreground", className)}
+      asChild
+      {...props}
+    >
       <Link href="/">
         <LogoSymbol className="duration-300! ease-in-out! will-change-transform group-hover/logo:rotate-90" />
 
