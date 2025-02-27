@@ -9,7 +9,7 @@ import { inngest } from "~/services/inngest"
 
 export const publishTools = inngest.createFunction(
   { id: "publish-tools" },
-  { cron: "TZ=Europe/Warsaw 5 * * * *" }, // Every hour at minute 5
+  { cron: "TZ=Europe/Warsaw 5 0,12 * * *" }, // Every 12 hours at minute 5 (00:05 and 12:05)
   async ({ step, db, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return await db.tool.findMany({

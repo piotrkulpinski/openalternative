@@ -21,17 +21,14 @@ export const getToolRepositoryData = async (repository: string) => {
     score: repo.score,
     firstCommitDate: repo.createdAt,
     lastCommitDate: repo.pushedAt,
-    isSelfHosted: repo.topics.some(topic => selfHostedTopics.includes(topic)),
+    isSelfHosted: repo.topics.some(selfHostedTopics.includes) ? true : undefined,
 
     // License
     license: repo.license
       ? {
           connectOrCreate: {
             where: { name: repo.license },
-            create: {
-              name: repo.license,
-              slug: slugify(repo.license).replace(/-0$/, ""),
-            },
+            create: { name: repo.license, slug: slugify(repo.license).replace(/-0$/, "") },
           },
         }
       : undefined,
