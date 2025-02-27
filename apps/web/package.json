@@ -23,7 +23,7 @@
     "@curiousleaf/utils": "^1.1.1",
     "@hookform/resolvers": "^3.10.0",
     "@mantine/hooks": "^7.17.0",
-    "@mendable/firecrawl-js": "^1.18.2",
+    "@mendable/firecrawl-js": "1.18.2",
     "@number-flow/react": "^0.5.5",
     "@openalternative/db": "workspace:*",
     "@openalternative/github": "workspace:*",

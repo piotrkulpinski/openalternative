@@ -23,7 +23,7 @@ export default function LoginPage() {
       </Intro>
 
       <Suspense fallback={<LoaderIcon className="animate-spin mx-auto" />}>
-        <Stack direction="column" className="items-stretch w-full gap-2">
+        <Stack direction="column" className="items-stretch w-full">
           <LoginForm />
 
           <div className="flex items-center justify-center gap-3 my-2 text-sm text-muted-foreground before:flex-1 before:border-t after:flex-1 after:border-t">
