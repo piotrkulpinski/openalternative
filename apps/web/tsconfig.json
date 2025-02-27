@@ -16,7 +16,7 @@
     "incremental": true,
     "plugins": [{ "name": "next" }],
     "paths": {
-      "~/*": ["./src/*"],
+      "~/*": ["./*"],
       "content-collections": ["./.content-collections/generated"]
     }
   },

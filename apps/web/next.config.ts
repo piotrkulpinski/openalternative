@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
 
   images: {
     loader: "custom",
-    loaderFile: "./src/lib/image-loader.ts",
+    loaderFile: "./lib/image-loader.ts",
     minimumCacheTTL: 31536000,
     deviceSizes: [640, 768, 1024],
     remotePatterns: [
@@ -91,4 +91,5 @@ const nextConfig: NextConfig = {
   },
 }
 
+// @ts-expect-error
 export default withContentCollections(nextConfig)
