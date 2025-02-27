@@ -1,6 +1,13 @@
-import { formatNumber } from "@curiousleaf/utils"
+import { formatDate, formatNumber, isTruthy } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict, formatISO } from "date-fns"
-import { CopyrightIcon, GitForkIcon, HistoryIcon, StarIcon, TimerIcon } from "lucide-react"
+import {
+  CopyrightIcon,
+  GitForkIcon,
+  HistoryIcon,
+  ServerIcon,
+  StarIcon,
+  TimerIcon,
+} from "lucide-react"
 import type { ComponentProps } from "react"
 import { Button } from "~/components/common/button"
 import { Card } from "~/components/common/card"
@@ -21,36 +28,38 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
   const insights = [
     { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: <StarIcon /> },
     { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: <GitForkIcon /> },
-    ...(tool.lastCommitDate
-      ? [
-          {
-            label: "Last commit",
-            value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
-            title: tool.lastCommitDate.toString(),
-            icon: <TimerIcon />,
-          },
-        ]
-      : []),
-    ...(tool.firstCommitDate
-      ? [
-          {
-            label: "Repository age",
-            value: formatDistanceToNowStrict(tool.firstCommitDate),
-            title: tool.firstCommitDate.toString(),
-            icon: <HistoryIcon />,
-          },
-        ]
-      : []),
-    ...(tool.license
-      ? [
-          {
-            label: "License",
-            value: tool.license.name,
-            link: `/licenses/${tool.license.slug}`,
-            icon: <CopyrightIcon />,
-          },
-        ]
-      : []),
+    tool.lastCommitDate
+      ? {
+          label: "Last commit",
+          value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
+          title: formatDate(tool.lastCommitDate),
+          icon: <TimerIcon />,
+        }
+      : undefined,
+    tool.firstCommitDate
+      ? {
+          label: "Repository age",
+          value: formatDistanceToNowStrict(tool.firstCommitDate),
+          title: formatDate(tool.firstCommitDate),
+          icon: <HistoryIcon />,
+        }
+      : undefined,
+    tool.license
+      ? {
+          label: "License",
+          value: tool.license.name,
+          link: `/licenses/${tool.license.slug}`,
+          icon: <CopyrightIcon />,
+        }
+      : undefined,
+    tool.isSelfHosted
+      ? {
+          label: "Self-hosted",
+          value: "Yes",
+          link: "/self-hosted",
+          icon: <ServerIcon />,
+        }
+      : undefined,
   ]
 
   return (
@@ -67,7 +76,7 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
           <ToolBadges tool={tool} />
         </Stack>
 
-        <Insights insights={insights} className="text-sm" />
+        <Insights insights={insights.filter(isTruthy)} className="text-sm" />
       </Stack>
 
       {tool.repositoryUrl && (

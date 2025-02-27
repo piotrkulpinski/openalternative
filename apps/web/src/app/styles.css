@@ -3,8 +3,8 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 
   --header-height: 3.125rem;
   --header-top: 0rem;
@@ -140,7 +140,7 @@
   }
 
   * {
-    @apply underline-offset-2;
+    @apply underline-offset-3;
   }
 
   a,
@@ -148,8 +148,7 @@
   label[for],
   [href] [class*="group-hover"] {
     @apply transition;
-    @apply ease-out;
-    @apply duration-200;
+    @apply duration-150;
     @apply cursor-pointer;
   }
 

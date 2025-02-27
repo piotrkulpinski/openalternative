@@ -32,7 +32,7 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
               {link ? (
                 <Link
                   href={link}
-                  className="shrink-0 tabular-nums font-medium hover:underline"
+                  className="shrink-0 tabular-nums font-medium decoration-border underline hover:decoration-foreground"
                   title={title}
                 >
                   {value}
