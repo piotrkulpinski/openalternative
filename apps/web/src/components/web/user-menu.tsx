@@ -47,7 +47,7 @@ export const UserMenu = async () => {
 
         <DropdownMenuSeparator />
 
-        {session.user.isAdmin && (
+        {session.user.role === "admin" && (
           <DropdownMenuItem asChild>
             <NavLink href="/admin">
               <ShieldHalfIcon className="shrink-0 size-4 opacity-75" /> Admin Panel

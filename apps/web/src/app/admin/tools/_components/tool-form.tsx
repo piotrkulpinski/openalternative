@@ -29,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/common/select"
+import { Stack } from "~/components/common/stack"
 import { Switch } from "~/components/common/switch"
 import { TextArea } from "~/components/common/textarea"
 import { Markdown } from "~/components/web/markdown"
@@ -224,25 +225,28 @@ export function ToolForm({
           name="content"
           render={({ field }) => (
             <FormItem className="col-span-full items-stretch">
-              <div className="flex items-center justify-between">
+              <Stack className="justify-between">
                 <FormLabel>Content</FormLabel>
 
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => setIsPreviewing(prev => !prev)}
-                  prefix={isPreviewing ? <PencilIcon /> : <EyeIcon />}
-                >
-                  {isPreviewing ? "Edit" : "Preview"}
-                </Button>
-              </div>
+                {field.value && (
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => setIsPreviewing(prev => !prev)}
+                    prefix={isPreviewing ? <PencilIcon /> : <EyeIcon />}
+                    className="-my-0.5"
+                  >
+                    {isPreviewing ? "Edit" : "Preview"}
+                  </Button>
+                )}
+              </Stack>
 
               <FormControl>
-                {isPreviewing ? (
+                {field.value && isPreviewing ? (
                   <Markdown
                     code={field.value}
-                    className={cx(inputVariants(), "min-h-32 max-w-none border leading-normal")}
+                    className={cx(inputVariants(), "max-w-none border leading-normal")}
                   />
                 ) : (
                   <TextArea {...field} />
