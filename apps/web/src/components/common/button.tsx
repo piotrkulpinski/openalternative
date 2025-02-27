@@ -38,7 +38,7 @@ const buttonVariants = cva({
 })
 
 const buttonAffixVariants = cva({
-  base: "shrink-0 first:-ml-[0.21425em] last:-mr-[0.21425em] size-[1.25em] opacity-75",
+  base: "shrink-0 first:-ml-[0.21425em] last:-mr-[0.21425em] size-[1.1em] opacity-75",
 })
 
 export type ButtonProps = Omit<ComponentProps<"button">, "size" | "prefix"> &

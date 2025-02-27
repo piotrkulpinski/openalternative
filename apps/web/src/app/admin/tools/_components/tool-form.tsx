@@ -3,8 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ToolStatus } from "@openalternative/db/client"
 import { formatDate } from "date-fns"
+import { EyeIcon, PencilIcon } from "lucide-react"
 import { redirect } from "next/navigation"
 import type { ComponentProps } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -18,7 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
-import { Input } from "~/components/common/input"
+import { Input, inputVariants } from "~/components/common/input"
 import { Link } from "~/components/common/link"
 import {
   Select,
@@ -29,6 +31,7 @@ import {
 } from "~/components/common/select"
 import { Switch } from "~/components/common/switch"
 import { TextArea } from "~/components/common/textarea"
+import { Markdown } from "~/components/web/markdown"
 import type { findAlternativeList } from "~/server/admin/alternatives/queries"
 import type { findCategoryList } from "~/server/admin/categories/queries"
 import { createTool, updateTool } from "~/server/admin/tools/actions"
@@ -50,6 +53,8 @@ export function ToolForm({
   categories,
   ...props
 }: ToolFormProps) {
+  const [isPreviewing, setIsPreviewing] = useState(false)
+
   const form = useForm({
     resolver: zodResolver(toolSchema),
     defaultValues: {
@@ -218,10 +223,30 @@ export function ToolForm({
           control={form.control}
           name="content"
           render={({ field }) => (
-            <FormItem className="col-span-full">
-              <FormLabel>Content</FormLabel>
+            <FormItem className="col-span-full items-stretch">
+              <div className="flex items-center justify-between">
+                <FormLabel>Content</FormLabel>
+
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => setIsPreviewing(prev => !prev)}
+                  prefix={isPreviewing ? <PencilIcon /> : <EyeIcon />}
+                >
+                  {isPreviewing ? "Edit" : "Preview"}
+                </Button>
+              </div>
+
               <FormControl>
-                <TextArea {...field} />
+                {isPreviewing ? (
+                  <Markdown
+                    code={field.value}
+                    className={cx(inputVariants(), "min-h-32 max-w-none border leading-normal")}
+                  />
+                ) : (
+                  <TextArea {...field} />
+                )}
               </FormControl>
               <FormMessage />
             </FormItem>
