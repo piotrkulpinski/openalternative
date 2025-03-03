@@ -2,13 +2,12 @@ import Script from "next/script"
 import { type PropsWithChildren, Suspense } from "react"
 import type { Graph } from "schema-dts"
 import Providers from "~/app/(web)/providers"
-import { Button } from "~/components/common/button"
 import { AdBanner } from "~/components/web/ads/ad-banner"
 import { Bottom } from "~/components/web/bottom"
 import { Footer } from "~/components/web/footer"
 import { Header } from "~/components/web/header"
 import { Container } from "~/components/web/ui/container"
-import { UserMenu } from "~/components/web/user-menu"
+import { UserMenu, UserMenuSkeleton } from "~/components/web/user-menu"
 import { config } from "~/config"
 import { env } from "~/env"
 
@@ -72,13 +71,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         </Suspense>
 
         <Header>
-          <Suspense
-            fallback={
-              <Button size="sm" variant="secondary" disabled>
-                Sign in
-              </Button>
-            }
-          >
+          <Suspense fallback={<UserMenuSkeleton />}>
             <UserMenu />
           </Suspense>
         </Header>

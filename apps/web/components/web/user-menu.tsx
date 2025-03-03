@@ -17,7 +17,7 @@ import { NavLink } from "~/components/web/ui/nav-link"
 import { UserLogout } from "~/components/web/user-logout"
 import { auth } from "~/lib/auth"
 
-export const UserMenu = async () => {
+const UserMenu = async () => {
   const session = await auth.api.getSession({ headers: await headers() })
 
   if (!session?.user) {
@@ -68,3 +68,13 @@ export const UserMenu = async () => {
     </DropdownMenu>
   )
 }
+
+const UserMenuSkeleton = () => {
+  return (
+    <Button size="sm" variant="secondary" disabled>
+      Sign in
+    </Button>
+  )
+}
+
+export { UserMenu, UserMenuSkeleton }
