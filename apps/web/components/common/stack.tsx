@@ -18,11 +18,16 @@ const stackVariants = cva({
       row: "flex-row flex-wrap items-center place-content-start",
       column: "flex-col items-start",
     },
+    wrap: {
+      true: "flex-wrap",
+      false: "",
+    },
   },
 
   defaultVariants: {
     size: "md",
     direction: "row",
+    wrap: true,
   },
 })
 
@@ -35,11 +40,11 @@ type StackProps = ComponentProps<"div"> &
     asChild?: boolean
   }
 
-const Stack = ({ className, asChild, size, direction, ...props }: StackProps) => {
+const Stack = ({ className, asChild, size, direction, wrap, ...props }: StackProps) => {
   const useAsChild = asChild && isValidElement(props.children)
   const Comp = useAsChild ? Slot.Root : "div"
 
-  return <Comp className={cx(stackVariants({ size, direction, className }))} {...props} />
+  return <Comp className={cx(stackVariants({ size, direction, wrap, className }))} {...props} />
 }
 
 export { Stack }

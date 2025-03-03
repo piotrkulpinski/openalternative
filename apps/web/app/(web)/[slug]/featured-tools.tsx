@@ -1,10 +1,10 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { StarIcon } from "lucide-react"
 import type { ComponentProps } from "react"
+import { Card } from "~/components/common/card"
 import { H5, H6 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
-import { Card } from "~/components/common/card"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { findTools } from "~/server/web/tools/queries"
 
@@ -23,7 +23,7 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
         {tools.map(tool => (
           <Stack key={tool.slug} size="sm" className="group py-1.5 justify-between w-full" asChild>
             <Link href={`/${tool.slug}`}>
-              <Stack size="sm" className="flex-nowrap">
+              <Stack size="sm" wrap={false}>
                 <FaviconImage src={tool.faviconUrl} title={tool.name} className="size-4" />
 
                 <H6 as="strong" className="text-muted-foreground group-hover:text-foreground">

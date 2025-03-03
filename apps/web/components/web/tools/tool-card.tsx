@@ -54,6 +54,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
             <Stack
               size="lg"
               direction="column"
+              wrap={false}
               className="items-stretch absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100"
             >
               {tool.description && (

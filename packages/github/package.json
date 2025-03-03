@@ -10,7 +10,7 @@
     "date-fns": "^4.1.0"
   },
   "devDependencies": {
-    "@types/node": "^22.13.2",
-    "typescript": "5.7.2"
+    "@types/node": "^22.13.9",
+    "typescript": "^5.8.2"
   }
 }

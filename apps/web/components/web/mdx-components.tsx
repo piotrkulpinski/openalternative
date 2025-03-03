@@ -17,7 +17,7 @@ const a = ({ href, ...props }: ComponentProps<"a">) => {
   return (
     <ExternalLink {...props} href={href}>
       {props.children}
-      <ArrowUpRightIcon className="inline-block ml-0.5 mb-0.5 size-3.5 stroke-2" />
+      <ArrowUpRightIcon className="inline-block ml-0.5 mb-0.5 size-3.5" />
     </ExternalLink>
   )
 }
@@ -31,8 +31,8 @@ const img = ({ className, ...props }: ComponentProps<"img">) => {
     <Image
       src={props.src}
       alt={props.alt}
-      width={1240}
-      height={698}
+      width={1280}
+      height={720}
       loading="lazy"
       className={cx("w-full rounded-lg", className)}
     />

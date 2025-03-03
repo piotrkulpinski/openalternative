@@ -175,9 +175,9 @@ export default async function ToolPage(props: PageProps) {
                   src={tool.screenshotUrl}
                   alt={`A screenshot of ${tool.name}`}
                   width={1280}
-                  height={1024}
+                  height={720}
                   loading="lazy"
-                  className="aspect-video h-auto w-full object-cover object-top group-hover:opacity-50 group-hover:scale-[102%]"
+                  className="aspect-video h-auto w-full object-cover object-top group-hover:opacity-50 group-hover:scale-[102%] group-hover:blur-[1px]"
                 />
 
                 <Button

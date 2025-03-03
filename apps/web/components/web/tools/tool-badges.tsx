@@ -23,7 +23,7 @@ export const ToolBadges = ({ tool, children, className, ...props }: ToolBadgesPr
 
   return (
     <TooltipProvider delayDuration={500}>
-      <Stack size="sm" className={cx("flex-nowrap justify-end text-sm", className)} {...props}>
+      <Stack size="sm" wrap={false} className={cx("justify-end text-sm", className)} {...props}>
         {isNew && (
           <Tooltip tooltip="Repo is less than 1 year old">
             <SparklesIcon className="text-yellow-500" />

@@ -16,13 +16,9 @@
     "@prisma/client": "^6.4.1"
   },
   "devDependencies": {
-    "@types/node": "^22.13.5",
+    "@types/node": "^22.13.9",
     "prisma": "^6.4.1",
-    "typescript": "5.7.2"
+    "typescript": "^5.8.2"
   },
-  "trustedDependencies": [
-    "@prisma/client",
-    "@prisma/engines",
-    "prisma"
-  ]
+  "trustedDependencies": ["@prisma/client", "@prisma/engines", "prisma"]
 }

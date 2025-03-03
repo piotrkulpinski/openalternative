@@ -43,7 +43,7 @@ export default async function VerifyPage({ searchParams }: PageProps) {
     <>
       <Intro>
         <IntroTitle size="h3">{`${metadata.title}`}</IntroTitle>
-        <IntroDescription className="md:text-base">
+        <IntroDescription className="md:text-sm">
           We've sent you a magic link to <strong className="text-foreground">{email}</strong>.
           Please click the link to confirm your address.
         </IntroDescription>

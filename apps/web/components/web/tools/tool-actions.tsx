@@ -32,7 +32,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
 
   return (
     <TooltipProvider delayDuration={250}>
-      <Stack size="sm" className={cx("flex-nowrap justify-end", className)} {...props}>
+      <Stack size="sm" wrap={false} className={cx("justify-end", className)} {...props}>
         {!tool.isFeatured && tool.owner && tool.owner?.email === session?.user.email && (
           <Button variant="secondary" prefix={<SparklesIcon className="text-yellow-500" />} asChild>
             <Link href={`/submit/${tool.slug}`}>

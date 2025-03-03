@@ -41,7 +41,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
                 alt={ad.name}
                 width={32}
                 height={32}
-                className="inline-flex align-text-top mr-1 size-3.5 md:size-4"
+                className="flex float-left align-middle mr-1.5 size-3.5 rounded-sm md:size-4"
               />
             )}
             <strong className="font-medium text-foreground">{ad.name}</strong> — {ad.description}

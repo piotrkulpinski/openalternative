@@ -63,6 +63,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/latest",
+        destination: "/?sort=publishedAt.desc",
+        permanent: true,
+      },
+      {
         source: "/topics",
         destination: "/topics/letter/a",
         permanent: true,
