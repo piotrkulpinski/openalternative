@@ -3,7 +3,6 @@
 import { useMediaQuery } from "@mantine/hooks"
 import { cx } from "cva"
 import {
-  CopyrightIcon,
   GalleryHorizontalEndIcon,
   GemIcon,
   GlobeIcon,
@@ -71,11 +70,6 @@ export const Sidebar = () => {
               title: "Categories",
               href: "/admin/categories",
               prefix: <GalleryHorizontalEndIcon />,
-            },
-            {
-              title: "Licenses",
-              href: "/admin/licenses",
-              prefix: <CopyrightIcon />,
             },
           ]}
         />

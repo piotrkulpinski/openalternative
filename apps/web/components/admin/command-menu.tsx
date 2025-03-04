@@ -1,7 +1,7 @@
 "use client"
 
 import { useDebouncedState } from "@mantine/hooks"
-import type { Alternative, Category, License, Tool } from "@openalternative/db/client"
+import type { Alternative, Category, Tool } from "@openalternative/db/client"
 import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -21,7 +21,6 @@ type SearchResult = {
   tools: Tool[]
   alternatives: Alternative[]
   categories: Category[]
-  licenses: License[]
 }
 
 export const CommandMenu = () => {
@@ -115,9 +114,6 @@ export const CommandMenu = () => {
           <CommandItem onSelect={() => handleSelect("/admin/categories/new")}>
             New Category
           </CommandItem>
-          <CommandItem onSelect={() => handleSelect("/admin/licenses/new")}>
-            New License
-          </CommandItem>
         </CommandGroup>
 
         <CommandGroup heading="Quick Commands">
@@ -160,19 +156,6 @@ export const CommandMenu = () => {
                 onSelect={() => handleSelect(`/admin/categories/${category.slug}`)}
               >
                 {category.name}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        )}
-
-        {!!searchResults?.licenses.length && (
-          <CommandGroup heading="Licenses">
-            {searchResults.licenses.map(license => (
-              <CommandItem
-                key={license.id}
-                onSelect={() => handleSelect(`/admin/licenses/${license.slug}`)}
-              >
-                {license.name}
               </CommandItem>
             ))}
           </CommandGroup>
