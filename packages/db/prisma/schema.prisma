@@ -237,13 +237,11 @@ model Topic {
 }
 
 model License {
-  id          String   @id @default(cuid())
-  name        String   @unique @db.Citext
-  slug        String   @unique
-  description String?
-  content     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  name      String   @unique @db.Citext
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
   tools Tool[]

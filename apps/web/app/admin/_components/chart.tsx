@@ -42,7 +42,7 @@ export const Chart = ({ className, cellClassName, data, average, label, ...props
           </div>
         )}
 
-        <div className="flex items-end justify-between gap-0.5 size-full">
+        <div className="flex items-end justify-between gap-1 size-full">
           {data.map((item, index) => (
             <Tooltip
               key={item.date}

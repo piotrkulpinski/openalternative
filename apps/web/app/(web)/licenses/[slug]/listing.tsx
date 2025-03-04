@@ -1,23 +1,26 @@
-import { Link } from "~/components/common/link"
-import { Listing } from "~/components/web/listing"
-import { ToolList } from "~/components/web/tools/tool-list"
+import type { SearchParams } from "nuqs/server"
+import { ToolQuery } from "~/components/web/tools/tool-query"
 import type { LicenseOne } from "~/server/web/licenses/payloads"
-import { findTools } from "~/server/web/tools/queries"
-
+import { filterSearchParamsCache } from "~/server/web/shared/schemas"
+import { searchTools } from "~/server/web/tools/queries"
 type LicenseToolListingProps = {
   license: LicenseOne
-  count?: number
+  searchParams: Promise<SearchParams>
 }
 
-export const LicenseToolListing = async ({ license, count = 3 }: LicenseToolListingProps) => {
-  const tools = await findTools({ where: { license: { slug: license.slug } }, take: count })
+export const LicenseToolListing = async ({ license, searchParams }: LicenseToolListingProps) => {
+  const parsedParams = filterSearchParamsCache.parse(await searchParams)
+
+  const { tools, totalCount } = await searchTools(parsedParams, {
+    license: { slug: license.slug },
+  })
 
   return (
-    <Listing
-      title="Best examples:"
-      button={<Link href={`/licenses/${license.slug}/tools`}>View All Tools</Link>}
-    >
-      <ToolList tools={tools} showAd={false} />
-    </Listing>
+    <ToolQuery
+      tools={tools}
+      totalCount={totalCount}
+      perPage={parsedParams.perPage}
+      placeholder={`Search in ${totalCount} tools licensed under ${license.name}...`}
+    />
   )
 }

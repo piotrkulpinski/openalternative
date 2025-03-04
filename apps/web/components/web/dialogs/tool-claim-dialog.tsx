@@ -30,7 +30,7 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
 
   const { execute, isPending } = useServerAction(claimTool, {
     onSuccess: () => {
-      toast.success("Thank you for your claim")
+      toast.success("You've successfully claimed this tool.")
       setIsOpen(false)
     },
     onError: ({ err }) => {

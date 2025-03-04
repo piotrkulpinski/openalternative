@@ -4,8 +4,8 @@ import { ToolStatus } from "@openalternative/db/client"
 import { subDays } from "date-fns"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import plur from "plur"
-import { Link } from "~/components/common/link"
 import { Badge } from "~/components/common/badge"
+import { Link } from "~/components/common/link"
 import { Ping } from "~/components/common/ping"
 
 const getCounts = async () => {
@@ -30,7 +30,7 @@ const CountBadge = async () => {
 
   return (
     <Badge prefix={<Ping />} className="order-first" asChild>
-      <Link href="/?sort=publishedAt.desc">
+      <Link href="/latest">
         {newCount
           ? `${formatNumber(newCount)} new ${plur("tool", newCount)} added`
           : `${formatNumber(count)}+ open source tools`}

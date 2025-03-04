@@ -61,14 +61,12 @@ export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
     ...stacks.map(l => createEntry(`/stacks/${l.slug}`, l.updatedAt)),
 
     // Topics
+    createEntry("/topics", now),
     ...config.site.alphabet.split("").map(letter => createEntry(`/topics/letter/${letter}`, now)),
     ...topics.map(t => createEntry(`/topics/${t.slug}`, t.updatedAt)),
 
     // Licenses
     createEntry("/licenses", now),
-    ...licenses.flatMap(l => [
-      createEntry(`/licenses/${l.slug}`, l.updatedAt, { changeFrequency: "monthly" }),
-      createEntry(`/licenses/${l.slug}/tools`, l.updatedAt),
-    ]),
+    ...licenses.map(l => createEntry(`/licenses/${l.slug}`, l.updatedAt)),
   ]
 }

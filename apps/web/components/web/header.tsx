@@ -10,7 +10,7 @@ import {
   ServerIcon,
   TagIcon,
 } from "lucide-react"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { type ComponentProps, Suspense, useEffect, useState } from "react"
 import { Button } from "~/components/common/button"
 import {
@@ -34,6 +34,7 @@ import { cx } from "~/utils/cva"
 
 export const Header = ({ children, className, ...props }: ComponentProps<typeof Container>) => {
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [isNavOpen, setNavOpen] = useState(false)
 
   // Close the mobile navigation when the user presses the "Escape" key
@@ -48,7 +49,7 @@ export const Header = ({ children, className, ...props }: ComponentProps<typeof 
 
   useEffect(() => {
     setNavOpen(false)
-  }, [pathname])
+  }, [pathname, searchParams])
 
   return (
     <Container
@@ -86,7 +87,7 @@ export const Header = ({ children, className, ...props }: ComponentProps<typeof 
 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
-                <NavLink href="/?sort=publishedAt.desc">
+                <NavLink href="/latest">
                   <CalendarDaysIcon className="shrink-0 size-4 opacity-75" /> Latest tools
                 </NavLink>
               </DropdownMenuItem>
@@ -170,7 +171,7 @@ export const Header = ({ children, className, ...props }: ComponentProps<typeof 
           isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none",
         )}
       >
-        <NavLink href="/?sort=publishedAt.desc" className="text-base">
+        <NavLink href="/latest" className="text-base">
           Latest
         </NavLink>
         <NavLink href="/alternatives" className="text-base">

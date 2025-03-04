@@ -78,6 +78,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/licenses/:path*/tools",
+        destination: "/licenses/:path*",
+        permanent: true,
+      },
+      {
         source: "/newsletter",
         destination: "/",
         permanent: true,

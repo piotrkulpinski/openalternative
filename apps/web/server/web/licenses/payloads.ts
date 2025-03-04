@@ -3,8 +3,6 @@ import { Prisma, ToolStatus } from "@openalternative/db/client"
 export const licenseOnePayload = Prisma.validator<Prisma.LicenseSelect>()({
   name: true,
   slug: true,
-  description: true,
-  content: true,
   _count: { select: { tools: { where: { status: ToolStatus.Published } } } },
 })
 

@@ -45,7 +45,7 @@ export const ToolReportDialog = ({ tool, isOpen, setIsOpen }: ToolReportDialogPr
 
   const { execute, isPending } = useServerAction(reportTool, {
     onSuccess: () => {
-      toast.success("Thank you for your report")
+      toast.success("Thank you for your report. We'll take a look at it shortly.")
       setIsOpen(false)
       form.reset()
     },
