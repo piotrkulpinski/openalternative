@@ -12,12 +12,12 @@ import type { DateRange } from "react-day-picker"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { createStripeAdsCheckout } from "~/actions/stripe"
-import { Stack } from "~/components/common/stack"
-import { AdsCalendar } from "~/components/web/ads-calendar"
-import { Price } from "~/components/web/price"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
+import { Stack } from "~/components/common/stack"
 import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
+import { AdsCalendar } from "~/components/web/ads-calendar"
+import { Price } from "~/components/web/price"
 import { config } from "~/config"
 import { useAds } from "~/hooks/use-ads"
 import type { AdMany } from "~/server/web/ads/payloads"
@@ -102,7 +102,6 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
                     <Button
                       variant="secondary"
                       size="sm"
-                      className="p-0.5"
                       aria-label={`Clear ${adSpot.label} selection`}
                       prefix={<XIcon />}
                       onClick={() => clearSelection(selection.type)}

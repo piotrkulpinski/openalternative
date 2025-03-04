@@ -9,7 +9,7 @@ import { findRandomTool } from "~/server/web/tools/queries"
 import { inngest } from "~/services/inngest"
 
 export const fetchTools = inngest.createFunction(
-  { id: "fetch-tools" },
+  { id: "fetch-tools", retries: 1 },
   { cron: "TZ=Europe/Warsaw 0 0 * * *" }, // Every day at midnight
 
   async ({ step, db, logger }) => {

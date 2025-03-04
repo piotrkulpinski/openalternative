@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
-import { Link } from "~/components/common/link"
+import { Button } from "~/components/common/button"
 import { AdsPicker } from "~/components/web/ads-picker"
 import { Advertisers } from "~/components/web/advertisers"
+import { ExternalLink } from "~/components/web/external-link"
 import { Stats } from "~/components/web/stats"
 import { Testimonial } from "~/components/web/testimonial"
-import { Button } from "~/components/common/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
@@ -62,10 +62,8 @@ export default async function AdvertisePage() {
           Tell us more about your company and we will get back to you as soon as possible.
         </IntroDescription>
 
-        <Button variant="fancy" className="mt-4 min-w-40" asChild>
-          <Link href={`mailto:${config.site.email}`} target="_blank" rel="noopener noreferrer">
-            Contact us
-          </Link>
+        <Button className="mt-4 min-w-40" asChild>
+          <ExternalLink href={`mailto:${config.site.email}`}>Contact us</ExternalLink>
         </Button>
       </Intro>
     </>

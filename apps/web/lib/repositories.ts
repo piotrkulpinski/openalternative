@@ -21,7 +21,7 @@ export const getToolRepositoryData = async (repository: string) => {
     score: repo.score,
     firstCommitDate: repo.createdAt,
     lastCommitDate: repo.pushedAt,
-    isSelfHosted: repo.topics.some(selfHostedTopics.includes) ? true : undefined,
+    isSelfHosted: repo.topics.some(topic => selfHostedTopics.includes(topic)) ? true : undefined,
 
     // License
     license: repo.license
