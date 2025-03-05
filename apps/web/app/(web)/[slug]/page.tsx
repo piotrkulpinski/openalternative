@@ -6,6 +6,7 @@ import { Suspense, cache } from "react"
 import type { ImageObject } from "schema-dts"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
+import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
 import { H1, H4, H5 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
@@ -164,32 +165,34 @@ export default async function ToolPage(props: PageProps) {
             </div>
 
             {tool.screenshotUrl && (
-              <ExternalLink
-                href={tool.affiliateUrl || tool.websiteUrl}
-                doFollow={tool.isFeatured}
-                eventName="click_website"
-                eventProps={{ url: tool.websiteUrl }}
-                className="group relative bg-accent border rounded-md overflow-clip max-md:order-2"
-              >
-                <Image
-                  src={tool.screenshotUrl}
-                  alt={`A screenshot of ${tool.name}`}
-                  width={1280}
-                  height={720}
-                  loading="lazy"
-                  className="aspect-video h-auto w-full object-cover object-top group-hover:opacity-50 group-hover:scale-[102%] group-hover:blur-[1px]"
-                />
-
-                <Button
-                  size="md"
-                  focus={false}
-                  suffix={<ArrowUpRightIcon />}
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none shadow-xl group-hover:opacity-100"
-                  asChild
+              <Box hover>
+                <ExternalLink
+                  href={tool.affiliateUrl || tool.websiteUrl}
+                  doFollow={tool.isFeatured}
+                  eventName="click_website"
+                  eventProps={{ url: tool.websiteUrl }}
+                  className="group relative rounded-md overflow-clip max-md:order-2"
                 >
-                  <span>Visit</span>
-                </Button>
-              </ExternalLink>
+                  <Image
+                    src={tool.screenshotUrl}
+                    alt={`A screenshot of ${tool.name}`}
+                    width={1280}
+                    height={720}
+                    loading="lazy"
+                    className="aspect-video h-auto w-full object-cover will-change-transform group-hover:opacity-50 group-hover:scale-[102%] group-hover:blur-[1px]"
+                  />
+
+                  <Button
+                    size="md"
+                    focus={false}
+                    suffix={<ArrowUpRightIcon />}
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none shadow-lg group-hover:opacity-100"
+                    asChild
+                  >
+                    <span>Visit</span>
+                  </Button>
+                </ExternalLink>
+              </Box>
             )}
 
             {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
