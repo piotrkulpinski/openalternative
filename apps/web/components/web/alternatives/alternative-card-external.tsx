@@ -1,5 +1,3 @@
-"use client"
-
 import { ArrowUpRightIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { Button } from "~/components/common/button"

@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from "lucide-react"
 import Image from "next/image"
 import type { ComponentProps } from "react"
+import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
 import { H2 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
@@ -42,15 +43,17 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
 
       {tool.screenshotUrl && (
         <Link href={href} className="group">
-          <Image
-            key={tool.screenshotUrl}
-            src={tool.screenshotUrl}
-            alt={`Screenshot of ${tool.name} website`}
-            width={1280}
-            height={1024}
-            loading="lazy"
-            className="aspect-video h-auto w-full rounded-md border object-cover object-top group-hover:brightness-95"
-          />
+          <Box hover>
+            <Image
+              key={tool.screenshotUrl}
+              src={tool.screenshotUrl}
+              alt={`Screenshot of ${tool.name} website`}
+              width={1280}
+              height={1024}
+              loading="lazy"
+              className="aspect-video h-auto w-full rounded-md object-cover object-top group-hover:brightness-95"
+            />
+          </Box>
         </Link>
       )}
 

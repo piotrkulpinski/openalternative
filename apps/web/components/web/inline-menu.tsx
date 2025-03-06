@@ -17,6 +17,7 @@ export const InlineMenu = ({ children, className, items, ...props }: InlineMenuP
     <Stack
       size="xs"
       direction="column"
+      wrap={false}
       className={cx("items-stretch overflow-y-auto overscroll-contain scroll-smooth", className)}
       asChild
       {...props}
