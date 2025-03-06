@@ -103,18 +103,6 @@ To set up the project for development:
 4. Run `bun run db:push` to push the Prisma schema to the database
 5. Run `bun run dev` to start the application in development mode
 
-## Development
-
-This project uses [Bun](https://bun.sh/) as the package manager and runtime. Make sure you have Bun installed before proceeding.
-
-To set up the project for development:
-
-1. Clone the repository
-2. Run `bun install` to install all dependencies
-3. Set up the required environment variables (see below)
-4. Run `bun run db:push` to push the Prisma schema to the database
-5. Run `bun run dev` to start the application in development mode
-
 ### Environment Variables
 
 Refer to the `.env.example` file for a complete list of required variables.
