@@ -6,7 +6,7 @@ import { EmailButton } from "~/emails/components/button"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 export type EmailProps = EmailWrapperProps & {
-  tool?: Tool | Jsonify<Tool>
+  tool: Tool | Jsonify<Tool>
 }
 
 const EmailAdminNewSubmission = ({ tool, ...props }: EmailProps) => {
@@ -15,12 +15,12 @@ const EmailAdminNewSubmission = ({ tool, ...props }: EmailProps) => {
       <Text>Hi!</Text>
 
       <Text>
-        {tool?.submitterName} has opted to expedite the submission of {tool?.name}. You should
-        review and approve it as soon as possible.
+        {tool.submitterName} has opted to expedite the submission of {tool.name}. You should review
+        and approve it as soon as possible.
       </Text>
 
-      <EmailButton href={`${config.site.url}/admin/tools/${tool?.slug}`}>
-        Review {tool?.name}'s submission
+      <EmailButton href={`${config.site.url}/admin/tools/${tool.slug}`}>
+        Review {tool.name}'s submission
       </EmailButton>
     </EmailWrapper>
   )

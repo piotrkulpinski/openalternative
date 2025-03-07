@@ -18,7 +18,7 @@ const EmailLoginLink = ({ url, ...props }: EmailProps) => {
 
       <Text>or copy and paste this URL into your browser:</Text>
 
-      <Text className="max-w-sm flex-wrap break-words font-medium">{url}</Text>
+      <Text className="max-w-sm flex-wrap break-words font-medium leading-snug">{url}</Text>
     </EmailWrapper>
   )
 }

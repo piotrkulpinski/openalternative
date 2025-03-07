@@ -15,9 +15,10 @@ import { config } from "~/config"
 export type EmailWrapperProps = ContainerProps & {
   to: string
   subject: string
+  signature?: boolean
 }
 
-export const EmailWrapper = ({ to, subject, children, ...props }: EmailWrapperProps) => {
+export const EmailWrapper = ({ to, subject, signature, children, ...props }: EmailWrapperProps) => {
   return (
     <Html>
       <Head />
@@ -35,6 +36,14 @@ export const EmailWrapper = ({ to, subject, children, ...props }: EmailWrapperPr
             </Link>
 
             {children}
+
+            {signature && (
+              <Text>
+                Best,
+                <br />
+                Piotr from {config.site.name}
+              </Text>
+            )}
 
             <Hr />
 

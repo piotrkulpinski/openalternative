@@ -5,12 +5,12 @@ import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
 
 type EmailFeatureNudgeProps = {
-  tool?: Tool | Jsonify<Tool>
+  tool: Tool | Jsonify<Tool>
   showButton?: boolean
 }
 
 export const EmailFeatureNudge = ({ tool, showButton }: EmailFeatureNudgeProps) => {
-  const link = `${config.site.url}/submit/${tool?.slug}`
+  const link = `${config.site.url}/submit/${tool.slug}`
 
   const benefits = [
     "⏱️ Get published within 12 hours",
@@ -20,7 +20,7 @@ export const EmailFeatureNudge = ({ tool, showButton }: EmailFeatureNudgeProps) 
     "✏️ Unlimited content updates",
   ]
 
-  if (tool?.isFeatured) {
+  if (tool.isFeatured) {
     return null
   }
 
@@ -29,7 +29,7 @@ export const EmailFeatureNudge = ({ tool, showButton }: EmailFeatureNudgeProps) 
       {showButton && <Hr />}
 
       <Text>
-        Want to maximize {tool?.name}'s visibility? Consider upgrading to{" "}
+        Want to maximize {tool.name}'s visibility? Consider upgrading to{" "}
         <Link href={link}>our Featured plan</Link>. We offer a wide range of featuring options:
       </Text>
 
@@ -41,7 +41,7 @@ export const EmailFeatureNudge = ({ tool, showButton }: EmailFeatureNudgeProps) 
         ))}
       </ul>
 
-      {showButton && <EmailButton href={link}>Boost {tool?.name}'s visibility</EmailButton>}
+      {showButton && <EmailButton href={link}>Boost {tool.name}'s visibility</EmailButton>}
     </>
   )
 }
