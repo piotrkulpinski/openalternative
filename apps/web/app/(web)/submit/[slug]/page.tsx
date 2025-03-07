@@ -105,7 +105,7 @@ export default async function SubmitPackages(props: PageProps) {
       ) : (
         <div className="flex flex-wrap justify-center gap-5">
           <Suspense fallback={[...Array(3)].map((_, index) => <PlanSkeleton key={index} />)}>
-            <SubmitProducts tool={tool} />
+            <SubmitProducts tool={tool} searchParams={props.searchParams} />
           </Suspense>
         </div>
       )}
