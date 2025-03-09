@@ -49,9 +49,11 @@ export const Price = ({
 
         {!!fullPrice && fullPrice > price && (
           <div className="absolute -top-[1em] left-full ml-1">
-            <del className="tabular-nums text-[0.9em] text-muted-foreground">
+            <span className="text-[0.9em] text-muted-foreground">
               {formatNumber(fullPrice, "standard")}
-            </del>
+            </span>
+
+            <span className="absolute -inset-x-0.5 top-1/2 h-[0.1em] -rotate-10 bg-red-500/50" />
           </div>
         )}
       </div>

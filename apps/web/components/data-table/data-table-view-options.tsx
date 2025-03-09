@@ -35,9 +35,7 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           prefix={<Settings2 />}
           suffix={<ChevronsUpDown />}
         >
-          {/* <Settings2 className="size-4" /> */}
           View
-          {/* <ChevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" /> */}
         </Button>
       </PopoverTrigger>
       <PopoverContent

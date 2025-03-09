@@ -2,7 +2,7 @@
 
 import type { Tool } from "@openalternative/db/client"
 import { TrashIcon } from "lucide-react"
-import type * as React from "react"
+import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { Button } from "~/components/common/button"
@@ -18,7 +18,7 @@ import {
 } from "~/components/common/dialog"
 import { deleteTools } from "~/server/admin/tools/actions"
 
-interface ToolsDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+type ToolsDeleteDialogProps = ComponentProps<typeof Dialog> & {
   tools: Tool[]
   showTrigger?: boolean
   onSuccess?: () => void

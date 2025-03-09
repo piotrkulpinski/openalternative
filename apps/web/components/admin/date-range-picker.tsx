@@ -4,15 +4,14 @@ import { formatDate, formatDateRange } from "@curiousleaf/utils"
 import { parseISO } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { parseAsString, useQueryStates } from "nuqs"
-import type * as React from "react"
-import { useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 import type { DateRange } from "react-day-picker"
 import { Button, type ButtonProps } from "~/components/common/button"
 import { Calendar } from "~/components/common/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
 import { cx } from "~/utils/cva"
 
-interface DateRangePickerProps extends React.ComponentProps<typeof PopoverContent> {
+type DateRangePickerProps = ComponentProps<typeof PopoverContent> & {
   /**
    * The selected date range.
    * @default undefined

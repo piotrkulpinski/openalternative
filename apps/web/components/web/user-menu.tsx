@@ -41,8 +41,11 @@ const UserMenu = async () => {
 
       <DropdownMenuContent side="bottom" align="end">
         <DropdownMenuLabel className="truncate font-normal leading-relaxed">
-          <div className="text-foreground">{session.user.name}</div>
-          {session.user.email}
+          {session.user.name}
+
+          {session.user.name !== session.user.email && (
+            <div className="text-muted-foreground">{session.user.email}</div>
+          )}
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />

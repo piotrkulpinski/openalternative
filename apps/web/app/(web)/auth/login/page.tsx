@@ -36,7 +36,6 @@ export default function LoginPage() {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 256 262"
-                className="opacity-100"
                 role="img"
                 aria-label="Google"
               >
@@ -67,7 +66,6 @@ export default function LoginPage() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 256 250"
                 fill="currentColor"
-                className="opacity-100"
                 role="img"
                 aria-label="GitHub"
               >

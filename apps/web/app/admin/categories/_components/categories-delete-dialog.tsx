@@ -2,6 +2,7 @@
 
 import type { Category } from "@openalternative/db/client"
 import { TrashIcon } from "lucide-react"
+import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { Button } from "~/components/common/button"
@@ -17,7 +18,7 @@ import {
 } from "~/components/common/dialog"
 import { deleteCategories } from "~/server/admin/categories/actions"
 
-interface CategoriesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+type CategoriesDeleteDialogProps = ComponentProps<typeof Dialog> & {
   categories: Category[]
   showTrigger?: boolean
   onSuccess?: () => void

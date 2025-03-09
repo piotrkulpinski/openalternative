@@ -2,7 +2,7 @@
 
 import type { Alternative } from "@openalternative/db/client"
 import { TrashIcon } from "lucide-react"
-import type * as React from "react"
+import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { Button } from "~/components/common/button"
@@ -18,7 +18,7 @@ import {
 } from "~/components/common/dialog"
 import { deleteAlternatives } from "~/server/admin/alternatives/actions"
 
-interface AlternativesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+type AlternativesDeleteDialogProps = ComponentProps<typeof Dialog> & {
   alternatives: Alternative[]
   showTrigger?: boolean
   onSuccess?: () => void

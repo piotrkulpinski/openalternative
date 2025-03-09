@@ -1,8 +1,9 @@
 "use client"
 
-import { useMediaQuery } from "@mantine/hooks"
+import { useHotkeys, useMediaQuery } from "@mantine/hooks"
 import { cx } from "cva"
 import {
+  DockIcon,
   GalleryHorizontalEndIcon,
   GemIcon,
   GlobeIcon,
@@ -11,16 +12,34 @@ import {
   ReplaceIcon,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { toast } from "sonner"
+import { CommandMenu } from "~/components/admin/command-menu"
 import { Nav } from "~/components/admin/nav"
-import { NavMain } from "~/components/admin/nav-main"
-import { Separator } from "~/components/common/separator"
+import { Kbd } from "~/components/common/kbd"
 import { siteConfig } from "~/config/site"
 import { signOut } from "~/lib/auth-client"
 
 export const Sidebar = () => {
+  const [isCommandOpen, setIsCommandOpen] = useState(false)
   const isMobile = useMediaQuery("(max-width: 768px)")
   const router = useRouter()
+
+  useHotkeys(
+    [
+      ["mod+K", () => setIsCommandOpen(prev => !prev)],
+      ["mod+1", () => handleRedirect("/admin/tools/new")],
+      ["mod+2", () => handleRedirect("/admin/alternatives/new")],
+      ["mod+3", () => handleRedirect("/admin/categories/new")],
+    ],
+    [],
+    true,
+  )
+
+  const handleRedirect = (path: string) => {
+    router.push(path)
+    setIsCommandOpen(false)
+  }
 
   const handleSignOut = async () => {
     signOut({
@@ -34,65 +53,63 @@ export const Sidebar = () => {
   }
 
   return (
-    <div
-      className={cx("sticky top-0 h-dvh z-40 flex flex-col border-r", isMobile ? "w-12" : "w-48")}
-    >
-      <Nav>
-        <NavMain
-          isCollapsed={!!isMobile}
-          links={[
-            {
-              title: "Dashboard",
-              href: "/admin",
-              prefix: <LayoutDashboardIcon />,
-            },
-          ]}
-        />
-      </Nav>
+    <>
+      <Nav
+        isCollapsed={!!isMobile}
+        className={cx("sticky top-0 h-dvh z-40 border-r", isMobile ? "w-12" : "w-48")}
+        links={[
+          {
+            title: "Dashboard",
+            href: "/admin",
+            prefix: <LayoutDashboardIcon />,
+          },
 
-      <Separator />
+          undefined, // Separator
 
-      <Nav>
-        <NavMain
-          isCollapsed={!!isMobile}
-          links={[
-            {
-              title: "Tools",
-              href: "/admin/tools",
-              prefix: <GemIcon />,
-            },
-            {
-              title: "Alternatives",
-              href: "/admin/alternatives",
-              prefix: <ReplaceIcon />,
-            },
-            {
-              title: "Categories",
-              href: "/admin/categories",
-              prefix: <GalleryHorizontalEndIcon />,
-            },
-          ]}
-        />
-      </Nav>
+          {
+            title: "Tools",
+            href: "/admin/tools",
+            prefix: <GemIcon />,
+          },
+          {
+            title: "Alternatives",
+            href: "/admin/alternatives",
+            prefix: <ReplaceIcon />,
+          },
+          {
+            title: "Categories",
+            href: "/admin/categories",
+            prefix: <GalleryHorizontalEndIcon />,
+          },
 
-      <Nav className="mt-auto">
-        <NavMain
-          isCollapsed={!!isMobile}
-          links={[
-            {
-              title: "Visit Site",
-              href: siteConfig.url,
-              prefix: <GlobeIcon />,
-            },
-            {
-              title: "Sign Out",
-              href: "#",
-              onClick: handleSignOut,
-              prefix: <LogOutIcon />,
-            },
-          ]}
-        />
-      </Nav>
-    </div>
+          undefined, // Separator
+
+          {
+            title: "Quick Menu",
+            href: "#",
+            onClick: () => setIsCommandOpen(true),
+            prefix: <DockIcon />,
+            suffix: (
+              <Kbd meta className="size-auto">
+                K
+              </Kbd>
+            ),
+          },
+          {
+            title: "Visit Site",
+            href: siteConfig.url,
+            prefix: <GlobeIcon />,
+          },
+          {
+            title: "Sign Out",
+            href: "#",
+            onClick: handleSignOut,
+            prefix: <LogOutIcon />,
+          },
+        ]}
+      />
+
+      <CommandMenu isOpen={isCommandOpen} onOpenChange={setIsCommandOpen} />
+    </>
   )
 }

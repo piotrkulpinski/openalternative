@@ -235,7 +235,7 @@ export function ToolForm({
                     variant="secondary"
                     onClick={() => setIsPreviewing(prev => !prev)}
                     prefix={isPreviewing ? <PencilIcon /> : <EyeIcon />}
-                    className="-my-0.5"
+                    className="-my-1"
                   >
                     {isPreviewing ? "Edit" : "Preview"}
                   </Button>

@@ -195,7 +195,7 @@ export default async function AlternativePage(props: PageProps) {
               items={tools.map(({ slug, name, faviconUrl }, index) => ({
                 id: slug,
                 title: name,
-                prefix: <FaviconImage src={faviconUrl} title={name} />,
+                prefix: <FaviconImage src={faviconUrl} title={name} className="size-4" />,
                 suffix: index < 3 && <AwardIcon className={medalColors[index]} />,
               }))}
               className="flex-1 mx-5 max-md:hidden"
