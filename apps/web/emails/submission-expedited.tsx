@@ -11,7 +11,7 @@ export type EmailProps = EmailWrapperProps & {
 const EmailSubmissionExpedited = ({ tool, ...props }: EmailProps) => {
   return (
     <EmailWrapper signature {...props}>
-      <Text>Hey {tool.submitterName}!</Text>
+      <Text>Hey {tool.submitterName?.trim()}!</Text>
 
       <Text>
         Thanks for submitting {tool.name}, it will now be reviewed and added to our directory{" "}

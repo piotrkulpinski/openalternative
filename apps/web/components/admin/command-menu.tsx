@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { testSocialPosts } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
+import { sendExpediteEmailsCommand } from "~/actions/send-expedite-emails-command"
 import {
   CommandDialog,
   CommandEmpty,
@@ -44,6 +45,20 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
     },
   })
 
+  const { execute: executeExpediteEmails } = useServerAction(sendExpediteEmailsCommand, {
+    onSuccess: ({ data }) => {
+      if (data.success) {
+        toast.success(data.message)
+      } else {
+        toast.error(data.message)
+      }
+    },
+    onError: ({ err }) => {
+      console.error(err)
+      toast.error("Failed to send expedite emails")
+    },
+  })
+
   useEffect(() => {
     const performSearch = async () => {
       if (query.length > 1) {
@@ -66,6 +81,10 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
   const handleSendSocialPost = async () => {
     await testSocialPosts({ slug: "dub" })
     toast.success("Social post sent")
+  }
+
+  const handleSendExpediteEmails = async () => {
+    await executeExpediteEmails()
   }
 
   const handleSelect = (url: string) => {
@@ -112,6 +131,7 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
 
         <CommandGroup heading="Quick Commands">
           <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
+          <CommandItem onSelect={handleSendExpediteEmails}>Send Expedite Emails</CommandItem>
         </CommandGroup>
 
         {!!searchResults?.tools.length && (

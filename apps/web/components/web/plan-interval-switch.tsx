@@ -52,10 +52,7 @@ export const PlanIntervalSwitch = ({
   }, [updateIndicator])
 
   return (
-    <div
-      className={cx("relative flex rounded-md bg-foreground/[7.5%] p-0.5", className)}
-      {...props}
-    >
+    <div className={cx("relative flex rounded-md bg-foreground/10 p-0.5", className)} {...props}>
       <div
         className="absolute inset-0.5 bg-background rounded-sm will-change-transform transition-all duration-300 ease-in-out"
         style={indicatorStyle}

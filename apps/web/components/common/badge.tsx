@@ -4,16 +4,16 @@ import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const badgeVariants = cva({
-  base: "inline-flex items-center rounded-sm text-secondary-foreground leading-tight border whitespace-nowrap",
+  base: "inline-flex items-center rounded-sm text-secondary-foreground leading-tight border border-transparent whitespace-nowrap",
 
   variants: {
     variant: {
-      primary: "bg-primary border-transparent text-background hover:[&[href]]:bg-primary/75",
-      soft: "bg-border/50 border-transparent hover:[&[href]]:bg-border/75 hover:[&[type]]:bg-border/75",
-      outline: "bg-background hover:[&[href]]:bg-accent hover:[&[type]]:bg-accent",
-      success: "bg-green-700/90 border-transparent text-background dark:bg-green-300/90",
-      warning: "bg-yellow-700/90 border-transparent text-background dark:bg-yellow-300/90",
-      danger: "bg-red-700/90 border-transparent text-background dark:bg-red-300/90",
+      primary: "bg-primary text-background hover:[&[href]]:bg-primary/75",
+      soft: "bg-border/50 hover:[&[href]]:bg-border/75 hover:[&[type]]:bg-border/75",
+      outline: "bg-background border-border hover:[&[href]]:bg-accent hover:[&[type]]:bg-accent",
+      success: "bg-green-500/50 text-foreground",
+      warning: "bg-yellow-500/50 text-foreground",
+      danger: "bg-red-500/50 text-foreground",
     },
     size: {
       sm: "px-1 py-px gap-1 text-[0.625rem]",

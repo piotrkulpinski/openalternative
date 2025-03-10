@@ -26,7 +26,7 @@ import type { ToolOne } from "~/server/web/tools/payloads"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const planVariants = cva({
-  base: "items-stretch gap-8 basis-72 grow max-w-80 overflow-clip",
+  base: "items-stretch gap-8 basis-72 grow max-w-80 bg-transparent overflow-clip",
 })
 
 const planFeatureVariants = cva({
@@ -38,7 +38,7 @@ const planFeatureCheckVariants = cva({
 
   variants: {
     type: {
-      positive: "bg-green-700/90 text-white dark:bg-green-500/50",
+      positive: "bg-green-500/50",
       neutral: "bg-foreground/10",
       negative: "bg-foreground/10",
     },
@@ -108,7 +108,7 @@ const Plan = ({
 }: PlanProps) => {
   const router = useRouter()
   const { isSubscription, currentPrice, price, fullPrice, discount, interval, setInterval } =
-    usePlanPrices(prices ?? [], coupon)
+    usePlanPrices(prices, coupon)
 
   const { execute, isPending } = useServerAction(createStripeToolCheckout, {
     onSuccess: ({ data }) => {

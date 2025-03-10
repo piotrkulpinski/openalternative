@@ -15,8 +15,8 @@ const EmailAdminNewSubmission = ({ tool, ...props }: EmailProps) => {
       <Text>Hi!</Text>
 
       <Text>
-        {tool.submitterName} has opted to expedite the submission of {tool.name}. You should review
-        and approve it as soon as possible.
+        {tool.submitterName?.trim()} has opted to expedite the submission of {tool.name}. You should
+        review and approve it as soon as possible.
       </Text>
 
       <EmailButton href={`${config.site.url}/admin/tools/${tool.slug}`}>

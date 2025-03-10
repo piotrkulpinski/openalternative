@@ -13,7 +13,7 @@ export type EmailProps = EmailWrapperProps & {
 const EmailSubmission = ({ tool, queueLength = 100, ...props }: EmailProps) => {
   return (
     <EmailWrapper signature {...props}>
-      <Text>Hey {tool.submitterName}!</Text>
+      <Text>Hey {tool.submitterName?.trim()}!</Text>
 
       <Text>Thanks for submitting {tool.name}, it'll be reviewed shortly!</Text>
 

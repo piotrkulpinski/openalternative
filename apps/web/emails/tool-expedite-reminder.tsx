@@ -14,7 +14,7 @@ export type EmailProps = EmailWrapperProps & {
 const EmailToolExpediteReminder = ({ tool, monthsWaiting, ...props }: EmailProps) => {
   return (
     <EmailWrapper signature {...props}>
-      <Text>Hey {tool.submitterName}!</Text>
+      <Text>Hey {tool.submitterName?.trim()}!</Text>
 
       <Text>
         It's been {monthsWaiting} {plur("month", monthsWaiting)} since you submitted {tool.name} to{" "}
@@ -32,7 +32,7 @@ const EmailToolExpediteReminder = ({ tool, monthsWaiting, ...props }: EmailProps
       </ul>
 
       {monthsWaiting > 1 && (
-        <Text className="text-green-600 dark:text-green-400">
+        <Text className="text-green-500">
           Don't miss out on our special offer! Use coupon code <strong>EXTRA25</strong> for a 25%
           discount on your expedited listing option.
         </Text>
