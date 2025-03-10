@@ -32,7 +32,7 @@ const EmailToolExpediteReminder = ({ tool, monthsWaiting, ...props }: EmailProps
       </ul>
 
       {monthsWaiting > 1 && (
-        <Text className="text-green-500">
+        <Text className="text-green-600 dark:text-green-400">
           Don't miss out on our special offer! Use coupon code <strong>EXTRA25</strong> for a 25%
           discount on your expedited listing option.
         </Text>
