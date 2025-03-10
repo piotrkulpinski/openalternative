@@ -179,7 +179,7 @@ export default async function ToolPage(props: PageProps) {
                     width={1280}
                     height={720}
                     loading="lazy"
-                    className="aspect-video h-auto w-full object-cover will-change-transform group-hover:opacity-50 group-hover:scale-[102%] group-hover:blur-[1px]"
+                    className="aspect-video h-auto w-full object-cover will-change-transform group-hover:opacity-75 group-hover:scale-[102%] group-hover:blur-[1px]"
                   />
 
                   <Button

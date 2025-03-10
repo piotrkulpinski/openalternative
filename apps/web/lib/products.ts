@@ -54,6 +54,55 @@ export const getProducts = (products: Stripe.Product[], isPublished: boolean) =>
 }
 
 /**
+ * Check if a product is eligible for a discount with the given coupon.
+ *
+ * @param productId - The ID of the product to check.
+ * @param coupon - The coupon to check against.
+ * @returns Whether the product is eligible for the discount.
+ */
+export const isProductDiscounted = (productId: string, coupon?: Stripe.Coupon) => {
+  return !coupon?.applies_to || coupon.applies_to.products.includes(productId)
+}
+
+/**
+ * Find the index of the last discounted product in a list of products.
+ *
+ * @param products - The list of products to check.
+ * @param coupon - The coupon to check against.
+ * @returns The index of the last discounted product, or -1 if none are discounted.
+ */
+export const getLastDiscountedProductIndex = (
+  products: Stripe.Product[],
+  coupon?: Stripe.Coupon,
+) => {
+  return products.reduce(
+    (lastIdx, product, idx) => (isProductDiscounted(product.id, coupon) ? idx : lastIdx),
+    -1,
+  )
+}
+
+/**
+ * Determine if a product should be featured in the UI.
+ *
+ * @param index - The index of the product in the list.
+ * @param products - The list of all products.
+ * @param coupon - The coupon being applied, if any.
+ * @param isDiscounted - Whether the product is eligible for a discount.
+ * @returns Whether the product should be featured.
+ */
+export const isProductFeatured = (
+  index: number,
+  products: Stripe.Product[],
+  coupon?: Stripe.Coupon,
+  isDiscounted = true,
+) => {
+  if (!coupon) return index === products.length - 1
+
+  const lastDiscountedIndex = getLastDiscountedProductIndex(products, coupon)
+  return isDiscounted && index === lastDiscountedIndex
+}
+
+/**
  * Get the features of a product.
  *
  * @param product - The product to get the features of.
@@ -84,4 +133,34 @@ export const getProductFeatures = (
 
     return { ...feature, name, type }
   })
+}
+
+/**
+ * Fetch prices for a list of products and prepare them for display.
+ *
+ * @param products - The list of products to prepare.
+ * @param coupon - The coupon being applied, if any.
+ * @param stripe - The Stripe instance to use for fetching prices.
+ * @returns A promise that resolves to an array of products with their prices and discount status.
+ */
+export const prepareProductsWithPrices = async (
+  products: Stripe.Product[],
+  coupon?: Stripe.Coupon,
+  stripe?: Stripe,
+) => {
+  if (!stripe) throw new Error("Stripe instance is required")
+
+  return Promise.all(
+    products.map(async (product, index) => {
+      const prices = await stripe.prices.list({ product: product.id, active: true })
+      const isDiscounted = isProductDiscounted(product.id, coupon)
+
+      return {
+        product,
+        prices: prices.data,
+        isDiscounted,
+        isFeatured: isProductFeatured(index, products, coupon, isDiscounted),
+      }
+    }),
+  )
 }

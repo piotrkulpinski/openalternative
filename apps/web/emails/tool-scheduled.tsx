@@ -3,7 +3,7 @@ import { Text } from "@react-email/components"
 import { addHours, differenceInDays, format, formatDistanceToNowStrict } from "date-fns"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
-import { EmailButton } from "~/emails/components/button"
+import { EmailExpediteNudge } from "~/emails/components/expedite-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 export type EmailProps = EmailWrapperProps & {
@@ -26,18 +26,9 @@ const EmailToolScheduled = ({ tool, ...props }: EmailProps) => {
       </Text>
 
       {isLongQueue ? (
-        <>
-          <Text>
-            Due to the high volume of submissions we're currently receiving, there's a bit of a
-            queue. {tool.name} is scheduled to be added on <strong>{dateFormatted}</strong>.
-            However, if you'd like to fast-track your submission, you have the option to skip the
-            queue.
-          </Text>
-
-          <EmailButton href={`${config.site.url}/submit/${tool.slug}`}>
-            Publish {tool.name} within 24 hours
-          </EmailButton>
-        </>
+        <EmailExpediteNudge tool={tool}>
+          on <strong>{dateFormatted}</strong>
+        </EmailExpediteNudge>
       ) : (
         <Text>
           {tool.name} is scheduled to be added <strong>{dateRelative}</strong>.

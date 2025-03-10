@@ -32,7 +32,7 @@ const IntroDescription = ({ className, ...props }: ComponentProps<"h2">) => {
   return (
     <h2
       className={cx(
-        "max-w-2xl text-pretty text-secondary-foreground md:text-lg *:[&[href]]:underline *:[&[href]]:hover:text-primary",
+        "max-w-2xl text-pretty text-secondary-foreground [word-break:break-word] md:text-lg *:[&[href]]:underline *:[&[href]]:hover:text-primary",
         className,
       )}
       {...props}

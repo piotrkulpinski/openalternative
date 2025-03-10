@@ -30,6 +30,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
     return [
       {
         accessorKey: "name",
+        enableHiding: false,
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         cell: ({ row }) => {
           const { name, slug, status, faviconUrl } = row.original
@@ -48,6 +49,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
       },
       {
         accessorKey: "publishedAt",
+        enableHiding: false,
         header: ({ column }) => <DataTableColumnHeader column={column} title="Published At" />,
         cell: ({ row }) => {
           const { status, publishedAt } = row.original
@@ -91,6 +93,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
       },
       {
         accessorKey: "createdAt",
+        enableHiding: false,
         header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
         cell: ({ row }) => (
           <span className="text-muted-foreground">
@@ -101,6 +104,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
       },
       {
         id: "actions",
+        enableHiding: false,
         cell: ({ row }) => {
           const { slug, isFeatured, publishedAt } = row.original
           const isLongQueue = !publishedAt || differenceInDays(publishedAt, new Date()) >= 7
