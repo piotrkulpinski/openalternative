@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { testSocialPosts } from "~/actions/misc"
+import { sendExpediteDealEmails, testSocialPosts } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
-import { sendExpediteEmailsCommand } from "~/actions/send-expedite-emails-command"
 import {
   CommandDialog,
   CommandEmpty,
@@ -45,20 +44,6 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
     },
   })
 
-  const { execute: executeExpediteEmails } = useServerAction(sendExpediteEmailsCommand, {
-    onSuccess: ({ data }) => {
-      if (data.success) {
-        toast.success(data.message)
-      } else {
-        toast.error(data.message)
-      }
-    },
-    onError: ({ err }) => {
-      console.error(err)
-      toast.error("Failed to send expedite emails")
-    },
-  })
-
   useEffect(() => {
     const performSearch = async () => {
       if (query.length > 1) {
@@ -84,7 +69,8 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
   }
 
   const handleSendExpediteEmails = async () => {
-    await executeExpediteEmails()
+    await sendExpediteDealEmails()
+    toast.success("Expedite emails sent")
   }
 
   const handleSelect = (url: string) => {
