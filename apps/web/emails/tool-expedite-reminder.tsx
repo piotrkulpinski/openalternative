@@ -38,7 +38,7 @@ const EmailToolExpediteReminder = ({ tool, monthsWaiting, ...props }: EmailProps
         </Text>
       )}
 
-      <EmailButton href={`${config.site.url}/submit/${tool.slug}`}>
+      <EmailButton href={`${config.site.url}/submit/${tool.slug}?discountCode=EXTRA25`}>
         Publish {tool.name} within 24 hours
       </EmailButton>
     </EmailWrapper>

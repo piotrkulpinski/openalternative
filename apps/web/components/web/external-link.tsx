@@ -20,11 +20,9 @@ export const ExternalLink = ({
   eventProps,
   ...props
 }: ExternalLinkProps) => {
-  if (!href) return null
-
   return (
     <a
-      href={addSearchParams(href, { ref: getUrlHostname(siteConfig.url) })}
+      href={addSearchParams(href!, { ref: getUrlHostname(siteConfig.url) })}
       target={target}
       rel={`noopener noreferrer ${doFollow ? "" : "nofollow"}`}
       onClick={() => eventName && posthog.capture(eventName, eventProps)}
