@@ -23,7 +23,7 @@ export const EmailWrapper = ({ to, subject, signature, children, ...props }: Ema
     <Html>
       <Head />
       <Tailwind>
-        <Body className="mx-auto my-auto bg-background font-sans">
+        <Body className="mx-auto my-auto bg-background">
           <Container className="w-full max-w-[580px] mx-auto px-10" {...props}>
             <Link href={config.site.url} className="inline-block mt-6 mb-2">
               <Img

@@ -2,7 +2,7 @@
 
 import { slugify } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
-import { revalidateTag } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 import { z } from "zod"
 import { adminProcedure } from "~/lib/safe-actions"
 import { categorySchema } from "~/server/admin/categories/schemas"
@@ -51,6 +51,7 @@ export const deleteCategories = adminProcedure
       where: { id: { in: ids } },
     })
 
+    revalidatePath("/admin/categories")
     revalidateTag("categories")
 
     return true

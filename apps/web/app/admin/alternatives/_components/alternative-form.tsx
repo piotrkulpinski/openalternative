@@ -72,9 +72,8 @@ export function AlternativeForm({
   const { execute: updateAlternativeAction, isPending: isUpdatingAlternative } = useServerAction(
     updateAlternative,
     {
-      onSuccess: ({ data }) => {
+      onSuccess: () => {
         toast.success("Alternative successfully updated")
-        redirect(`/admin/alternatives/${data.slug}`)
       },
 
       onError: ({ err }) => {
