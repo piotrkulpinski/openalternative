@@ -41,7 +41,11 @@ const removeSymbol = (featureName?: string, type?: SymbolType) => {
  * @param isPublished - Whether the tool is published.
  * @returns The products for pricing.
  */
-export const getProducts = (products: Stripe.Product[], isPublished: boolean) => {
+export const getProducts = (
+  products: Stripe.Product[],
+  coupon: Stripe.Coupon | undefined,
+  isPublished: boolean,
+) => {
   return (
     products
       // Sort by price
@@ -53,6 +57,9 @@ export const getProducts = (products: Stripe.Product[], isPublished: boolean) =>
 
       // Filter out expedited products if the tool is published
       .filter(product => !isPublished || !product.name.includes("Expedited"))
+
+      // Filter out products that are not eligible for the coupon
+      .filter(product => isProductDiscounted(product.id, coupon) || product.name.includes("Free"))
 
       // Clean up the name
       .map(({ name, ...product }) => ({ ...product, name: name.replace("Listing", "").trim() }))

@@ -37,8 +37,8 @@ export const SubmitProducts = async ({ tool, searchParams }: SubmitProductsProps
   ])
 
   const isPublished = isToolPublished(tool)
-  const products = getProducts(stripeProducts.data, isPublished)
   const coupon = stripePromo?.data[0]?.coupon
+  const products = getProducts(stripeProducts.data, coupon, isPublished)
   const productsWithPrices = await prepareProductsWithPrices(products, coupon, stripe)
 
   return (
