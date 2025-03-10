@@ -3,7 +3,7 @@
 import { slugify } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
-import { revalidateTag } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 import { z } from "zod"
 import { isProd } from "~/env"
 import { generateContent } from "~/lib/generate-content"
@@ -66,6 +66,7 @@ export const deleteTools = adminProcedure
       where: { id: { in: ids } },
     })
 
+    revalidatePath("/admin/tools")
     revalidateTag("tools")
 
     // Send an event to the Inngest pipeline

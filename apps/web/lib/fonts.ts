@@ -1,12 +1,4 @@
-import { Geist } from "next/font/google"
 import type { FontWeight } from "satori"
-
-export const geist = Geist({
-  variable: "--font-geist",
-  display: "swap",
-  subsets: ["latin"],
-  weight: "variable",
-})
 
 export const loadGoogleFont = async (font: string, weight: FontWeight) => {
   const url = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}`

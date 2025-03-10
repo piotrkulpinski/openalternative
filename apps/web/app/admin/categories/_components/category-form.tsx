@@ -65,9 +65,8 @@ export function CategoryForm({
   const { execute: updateCategoryAction, isPending: isUpdatingCategory } = useServerAction(
     updateCategory,
     {
-      onSuccess: ({ data }) => {
+      onSuccess: () => {
         toast.success("Category successfully updated")
-        redirect(`/admin/categories/${data.slug}`)
       },
 
       onError: ({ err }) => {

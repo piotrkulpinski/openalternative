@@ -2,7 +2,7 @@
 
 import { slugify } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
-import { revalidateTag } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 import { z } from "zod"
 import { isProd } from "~/env"
 import { uploadFavicon } from "~/lib/media"
@@ -61,6 +61,7 @@ export const deleteAlternatives = adminProcedure
       where: { id: { in: ids } },
     })
 
+    revalidatePath("/admin/alternatives")
     revalidateTag("alternatives")
 
     for (const alternative of alternatives) {
