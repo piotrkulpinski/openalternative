@@ -1,7 +1,7 @@
 import type { SearchParams } from "nuqs/server"
 import { ToolQuery } from "~/components/web/tools/tool-query"
 import type { LicenseOne } from "~/server/web/licenses/payloads"
-import { filterSearchParamsCache } from "~/server/web/shared/schemas"
+import { filterParamsCache } from "~/server/web/shared/schemas"
 import { searchTools } from "~/server/web/tools/queries"
 type LicenseToolListingProps = {
   license: LicenseOne
@@ -9,7 +9,7 @@ type LicenseToolListingProps = {
 }
 
 export const LicenseToolListing = async ({ license, searchParams }: LicenseToolListingProps) => {
-  const parsedParams = filterSearchParamsCache.parse(await searchParams)
+  const parsedParams = filterParamsCache.parse(await searchParams)
 
   const { tools, totalCount } = await searchTools(parsedParams, {
     license: { slug: license.slug },

@@ -10,7 +10,7 @@ import { z } from "zod"
 import { getSortingStateParser } from "~/lib/parsers"
 import { repositorySchema } from "~/server/schemas"
 
-export const adminToolsSearchParams = createSearchParamsCache({
+export const toolsTableParamsSchema = {
   name: parseAsString.withDefault(""),
   sort: getSortingStateParser<Tool>().withDefault([{ id: "createdAt", desc: true }]),
   page: parseAsInteger.withDefault(1),
@@ -19,9 +19,10 @@ export const adminToolsSearchParams = createSearchParamsCache({
   to: parseAsString.withDefault(""),
   operator: parseAsStringEnum(["and", "or"]).withDefault("and"),
   status: parseAsArrayOf(z.nativeEnum(ToolStatus)).withDefault([]),
-})
+}
 
-export type FindToolsSchema = Awaited<ReturnType<typeof adminToolsSearchParams.parse>>
+export const toolsTableParamsCache = createSearchParamsCache(toolsTableParamsSchema)
+export type ToolsTableSchema = Awaited<ReturnType<typeof toolsTableParamsCache.parse>>
 
 export const toolSchema = z.object({
   name: z.string().min(1, "Name is required"),

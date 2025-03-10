@@ -15,7 +15,7 @@ const stackVariants = cva({
       lg: "gap-x-4 gap-y-3",
     },
     direction: {
-      row: "flex-row flex-wrap items-center place-content-start",
+      row: "flex-row items-center place-content-start",
       column: "flex-col items-start",
     },
     wrap: {

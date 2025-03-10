@@ -8,7 +8,7 @@ import {
 import { z } from "zod"
 import { getSortingStateParser } from "~/lib/parsers"
 
-export const adminAlternativesSearchParams = createSearchParamsCache({
+export const alternativesTableParamsSchema = {
   name: parseAsString.withDefault(""),
   page: parseAsInteger.withDefault(1),
   perPage: parseAsInteger.withDefault(25),
@@ -16,9 +16,10 @@ export const adminAlternativesSearchParams = createSearchParamsCache({
   from: parseAsString.withDefault(""),
   to: parseAsString.withDefault(""),
   operator: parseAsStringEnum(["and", "or"]).withDefault("and"),
-})
+}
 
-export type FindAlternativesSchema = Awaited<ReturnType<typeof adminAlternativesSearchParams.parse>>
+export const alternativesTableParamsCache = createSearchParamsCache(alternativesTableParamsSchema)
+export type AlternativesTableSchema = Awaited<ReturnType<typeof alternativesTableParamsCache.parse>>
 
 export const alternativeSchema = z.object({
   name: z.string().min(1, "Name is required"),

@@ -2,7 +2,8 @@
 
 import type { Alternative } from "@openalternative/db/client"
 import { PlusIcon } from "lucide-react"
-import * as React from "react"
+import { useQueryStates } from "nuqs"
+import { use, useMemo, useState } from "react"
 import { AlternativesDeleteDialog } from "~/app/admin/alternatives/_components/alternatives-delete-dialog"
 import { DateRangePicker } from "~/components/admin/date-range-picker"
 import { Button } from "~/components/common/button"
@@ -13,6 +14,7 @@ import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
 import { DataTableViewOptions } from "~/components/data-table/data-table-view-options"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findAlternatives } from "~/server/admin/alternatives/queries"
+import { alternativesTableParamsSchema } from "~/server/admin/alternatives/schemas"
 import type { DataTableFilterField, DataTableRowAction } from "~/types"
 import { getColumns } from "./alternatives-table-columns"
 import { AlternativesTableToolbarActions } from "./alternatives-table-toolbar-actions"
@@ -22,12 +24,12 @@ type AlternativesTableProps = {
 }
 
 export function AlternativesTable({ alternativesPromise }: AlternativesTableProps) {
-  const { alternatives, alternativesTotal, pageCount } = React.use(alternativesPromise)
-
-  const [rowAction, setRowAction] = React.useState<DataTableRowAction<Alternative> | null>(null)
+  const { alternatives, alternativesTotal, pageCount } = use(alternativesPromise)
+  const [{ perPage, sort }] = useQueryStates(alternativesTableParamsSchema)
+  const [rowAction, setRowAction] = useState<DataTableRowAction<Alternative> | null>(null)
 
   // Memoize the columns so they don't re-render on every render
-  const columns = React.useMemo(() => getColumns({ setRowAction }), [])
+  const columns = useMemo(() => getColumns({ setRowAction }), [])
 
   // Search filters
   const filterFields: DataTableFilterField<Alternative>[] = [
@@ -46,7 +48,8 @@ export function AlternativesTable({ alternativesPromise }: AlternativesTableProp
     shallow: false,
     clearOnDefault: true,
     initialState: {
-      sorting: [{ id: "name", desc: false }],
+      pagination: { pageIndex: 0, pageSize: perPage },
+      sorting: sort,
       columnPinning: { right: ["actions"] },
     },
     getRowId: (originalRow, index) => `${originalRow.id}-${index}`,

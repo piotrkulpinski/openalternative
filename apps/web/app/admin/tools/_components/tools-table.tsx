@@ -2,6 +2,7 @@
 
 import { type Tool, ToolStatus } from "@openalternative/db/client"
 import { CircleDashedIcon, CircleDotDashedIcon, CircleIcon, PlusIcon } from "lucide-react"
+import { useQueryStates } from "nuqs"
 import { use, useMemo, useState } from "react"
 import { ToolScheduleDialog } from "~/app/admin/tools/_components/tool-schedule-dialog"
 import { ToolsDeleteDialog } from "~/app/admin/tools/_components/tools-delete-dialog"
@@ -14,6 +15,7 @@ import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
 import { DataTableViewOptions } from "~/components/data-table/data-table-view-options"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findTools } from "~/server/admin/tools/queries"
+import { toolsTableParamsSchema } from "~/server/admin/tools/schemas"
 import type { DataTableFilterField, DataTableRowAction } from "~/types"
 import { getColumns } from "./tools-table-columns"
 import { ToolsTableToolbarActions } from "./tools-table-toolbar-actions"
@@ -24,7 +26,7 @@ type ToolsTableProps = {
 
 export function ToolsTable({ toolsPromise }: ToolsTableProps) {
   const { tools, toolsTotal, pageCount } = use(toolsPromise)
-
+  const [{ perPage, sort }] = useQueryStates(toolsTableParamsSchema)
   const [rowAction, setRowAction] = useState<DataTableRowAction<Tool> | null>(null)
 
   // Memoize the columns so they don't re-render on every render
@@ -68,12 +70,10 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
     shallow: false,
     clearOnDefault: true,
     initialState: {
-      sorting: [{ id: "createdAt", desc: true }],
+      pagination: { pageIndex: 0, pageSize: perPage },
+      sorting: sort,
+      columnVisibility: { status: false, submitterEmail: false },
       columnPinning: { right: ["actions"] },
-      columnVisibility: {
-        status: false,
-        submitterEmail: false,
-      },
     },
     getRowId: originalRow => originalRow.id,
   })

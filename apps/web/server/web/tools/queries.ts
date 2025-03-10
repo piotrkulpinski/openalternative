@@ -3,14 +3,14 @@ import { getRandomElement } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { type Prisma, type Tool, ToolStatus } from "@openalternative/db/client"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
-import type { FilterSearchParams } from "~/server/web/shared/schemas"
+import type { FilterSchema } from "~/server/web/shared/schemas"
 import {
   toolManyExtendedPayload,
   toolManyPayload,
   toolOnePayload,
 } from "~/server/web/tools/payloads"
 
-export const searchTools = async (search: FilterSearchParams, where?: Prisma.ToolWhereInput) => {
+export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhereInput) => {
   "use cache"
 
   cacheTag("tools")
