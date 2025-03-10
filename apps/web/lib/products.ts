@@ -11,17 +11,11 @@ const SYMBOLS = {
 
 type SymbolType = keyof typeof SYMBOLS
 
-export const getQueueMonths = (queueLength: number) => {
+export const getQueueLength = (queueLength: number) => {
   const queueDays = Math.ceil((queueLength / config.submissions.postingRate) * 7)
   const queueMonths = Math.max(differenceInMonths(addDays(new Date(), queueDays), new Date()), 1)
 
-  return queueMonths
-}
-
-export const getQueueLength = (queueLength: number) => {
-  const queueMonths = getQueueMonths(queueLength)
-
-  return `${queueMonths}+ ${plur("month", queueMonths)}`
+  return `${queueMonths} ${plur("month", queueMonths)}`
 }
 
 const getFeatureType = (featureName?: string) => {

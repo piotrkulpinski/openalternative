@@ -2,9 +2,9 @@ import { isTruthy } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
-import type { FindToolsSchema } from "./schemas"
+import type { ToolsTableSchema } from "./schemas"
 
-export const findTools = async (search: FindToolsSchema, where?: Prisma.ToolWhereInput) => {
+export const findTools = async (search: ToolsTableSchema, where?: Prisma.ToolWhereInput) => {
   const { name, sort, page, perPage, from, to, operator, status } = search
 
   // Offset to paginate the results

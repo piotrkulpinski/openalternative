@@ -41,6 +41,7 @@ export function DataTableToolbar<TData>({
   return (
     <Stack
       size="sm"
+      wrap={false}
       className={cx("justify-between w-full py-1 -my-1 overflow-auto", className)}
       {...props}
     >

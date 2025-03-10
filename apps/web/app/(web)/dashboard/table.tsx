@@ -5,6 +5,7 @@ import { type Tool, ToolStatus } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import { differenceInDays, formatDistanceToNowStrict } from "date-fns"
 import { CircleDashedIcon, CircleDotDashedIcon, CircleIcon, PlusIcon } from "lucide-react"
+import { useQueryStates } from "nuqs"
 import { use, useMemo } from "react"
 import { Button } from "~/components/common/button"
 import { Link } from "~/components/common/link"
@@ -16,6 +17,7 @@ import { DataTableThumbnail } from "~/components/data-table/data-table-thumbnail
 import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findTools } from "~/server/admin/tools/queries"
+import { toolsTableParamsSchema } from "~/server/admin/tools/schemas"
 import type { DataTableFilterField } from "~/types"
 
 type DashboardTableProps = {
@@ -24,6 +26,7 @@ type DashboardTableProps = {
 
 export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
   const { tools, pageCount } = use(toolsPromise)
+  const [{ perPage, sort }] = useQueryStates(toolsTableParamsSchema)
 
   // Memoize the columns so they don't re-render on every render
   const columns = useMemo((): ColumnDef<Tool>[] => {
@@ -147,7 +150,8 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
     shallow: false,
     clearOnDefault: true,
     initialState: {
-      sorting: [{ id: "createdAt", desc: true }],
+      pagination: { pageIndex: 0, pageSize: perPage },
+      sorting: sort,
       columnPinning: { right: ["actions"] },
       columnVisibility: { createdAt: false },
     },
