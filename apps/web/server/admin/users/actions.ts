@@ -15,6 +15,8 @@ export const updateUser = adminProcedure
       data: input,
     })
 
+    revalidatePath("/admin/users")
+
     return user
   })
 

@@ -103,11 +103,11 @@ export function UserForm({ children, className, user, ...props }: UserFormProps)
         />
 
         <div className="flex justify-between gap-4 col-span-full">
-          <Button variant="secondary" asChild>
+          <Button size="md" variant="secondary" asChild>
             <Link href="/admin/users">Cancel</Link>
           </Button>
 
-          <Button variant="primary" isPending={isPending}>
+          <Button size="md" variant="primary" isPending={isPending}>
             Update user
           </Button>
         </div>
