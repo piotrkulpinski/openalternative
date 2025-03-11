@@ -314,11 +314,11 @@ export function ToolForm({
                 <FormLabel>Status</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="w-full tabular-nums">
+                    <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
 
-                    <SelectContent className="tabular-nums">
+                    <SelectContent>
                       {Object.values(ToolStatus).map(status => (
                         <SelectItem key={status} value={status}>
                           {status}

@@ -13,7 +13,6 @@ import { Stack } from "~/components/common/stack"
 import { DataTable } from "~/components/data-table/data-table"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
-import { DataTableThumbnail } from "~/components/data-table/data-table-thumbnail"
 import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findTools } from "~/server/admin/tools/queries"
@@ -42,12 +41,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
             return <span className="text-muted-foreground font-medium">{name}</span>
           }
 
-          return (
-            <DataTableLink href={`/${slug}`}>
-              {faviconUrl && <DataTableThumbnail src={faviconUrl} />}
-              {name}
-            </DataTableLink>
-          )
+          return <DataTableLink href={`/${slug}`} image={faviconUrl} title={name} />
         },
       },
       {

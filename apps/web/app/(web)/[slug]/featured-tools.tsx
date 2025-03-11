@@ -32,10 +32,8 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
               </Stack>
 
               <Stack size="xs">
-                <StarIcon className="size-3" />
-                <span className="text-xs text-muted-foreground tabular-nums">
-                  {formatNumber(tool.stars, "standard")}
-                </span>
+                <span className="text-xs">{formatNumber(tool.stars)}</span>
+                <StarIcon className="size-3 opacity-50" />
               </Stack>
             </Link>
           </Stack>

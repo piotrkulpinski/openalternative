@@ -7,7 +7,6 @@ import type { Dispatch, SetStateAction } from "react"
 import { AlternativeActions } from "~/app/admin/alternatives/_components/alternative-actions"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
-import { DataTableThumbnail } from "~/components/data-table/data-table-thumbnail"
 import type { DataTableRowAction } from "~/types"
 
 type GetColumnsProps = {
@@ -49,12 +48,13 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Alterna
     {
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
-      cell: ({ row }) => (
-        <DataTableLink href={`/admin/alternatives/${row.original.slug}`}>
-          {row.original.faviconUrl && <DataTableThumbnail src={row.original.faviconUrl} />}
-          {row.getValue("name")}
-        </DataTableLink>
-      ),
+      cell: ({ row }) => {
+        const { name, slug, faviconUrl } = row.original
+
+        return (
+          <DataTableLink href={`/admin/alternatives/${slug}`} image={faviconUrl} title={name} />
+        )
+      },
     },
     {
       accessorKey: "description",

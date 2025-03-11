@@ -3,6 +3,7 @@
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react"
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
 import type { ComponentProps } from "react"
+import { Kbd } from "~/components/common/kbd"
 import { cx, popoverAnimationClasses } from "~/utils/cva"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
@@ -150,10 +151,7 @@ const DropdownMenuSeparator = ({
 )
 
 const DropdownMenuShortcut = ({ className, ...props }: ComponentProps<"kbd">) => (
-  <kbd
-    className={cx("ml-auto text-xs tracking-widest tabular-nums opacity-60", className)}
-    {...props}
-  />
+  <Kbd className={cx("ml-auto", className)} {...props} />
 )
 
 export {

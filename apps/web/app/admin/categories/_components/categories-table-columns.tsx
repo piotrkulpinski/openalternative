@@ -49,9 +49,7 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Categor
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => (
-        <DataTableLink href={`/admin/categories/${row.original.slug}`}>
-          {row.getValue("name")}
-        </DataTableLink>
+        <DataTableLink href={`/admin/categories/${row.original.slug}`} title={row.original.name} />
       ),
     },
     {
