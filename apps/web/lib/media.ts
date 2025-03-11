@@ -13,7 +13,7 @@ import { tryCatch } from "~/utils/helpers"
  * @param key - The S3 key to upload the file to.
  * @returns The S3 location of the uploaded file.
  */
-const uploadToS3Storage = async (file: Buffer, key: string) => {
+export const uploadToS3Storage = async (file: Buffer, key: string) => {
   const upload = new Upload({
     client: s3Client,
     params: {

@@ -20,7 +20,7 @@
     "@content-collections/core": "0.7.3",
     "@content-collections/mdx": "^0.2.0",
     "@content-collections/next": "0.2.4",
-    "@curiousleaf/utils": "^1.1.1",
+    "@curiousleaf/utils": "^1.1.2",
     "@hookform/resolvers": "^3.10.0",
     "@mantine/hooks": "^7.17.1",
     "@mendable/firecrawl-js": "1.18.2",
