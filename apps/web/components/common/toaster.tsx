@@ -10,7 +10,9 @@ const Toaster = ({ className, ...props }: ComponentProps<typeof Sonner>) => {
       className="pointer-events-auto"
       toastOptions={{
         classNames: {
-          default: "bg-background! text-foreground! border-border! rounded-lg shadow-sm!",
+          default: "bg-background! border-border! rounded-lg shadow-sm!",
+          success: "[&_svg]:text-green-700",
+          error: "bg-destructive! text-destructive-foreground!",
           description: "text-muted-foreground",
           actionButton: "bg-primary! text-primary-foreground!",
           cancelButton: "bg-muted! text-muted-foreground!",
@@ -18,8 +20,8 @@ const Toaster = ({ className, ...props }: ComponentProps<typeof Sonner>) => {
         },
       }}
       icons={{
-        success: <CheckCircleIcon className="size-4 text-green-700" />,
-        error: <XCircleIcon className="size-4 text-destructive" />,
+        success: <CheckCircleIcon className="size-4" />,
+        error: <XCircleIcon className="size-4" />,
         loading: <LoaderIcon className="size-4 animate-spin" />,
       }}
       {...props}

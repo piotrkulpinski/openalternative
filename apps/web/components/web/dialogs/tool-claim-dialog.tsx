@@ -3,7 +3,6 @@ import { usePathname } from "next/navigation"
 import type { Dispatch, SetStateAction } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { claimTool } from "~/actions/claim"
 import { Button } from "~/components/common/button"
 import {
   Dialog,
@@ -16,6 +15,7 @@ import {
 import { siteConfig } from "~/config/site"
 import { useSession } from "~/lib/auth-client"
 import type { ToolOne } from "~/server/web/tools/payloads"
+import { claimTool } from "~/server/web/users/actions"
 
 type ToolClaimDialogProps = {
   tool: ToolOne
