@@ -2,7 +2,9 @@
 
 import { db } from "@openalternative/db"
 import { revalidatePath } from "next/cache"
+import { after } from "next/server"
 import { z } from "zod"
+import { removeS3Directories } from "~/lib/media"
 import { adminProcedure } from "~/lib/safe-actions"
 import { userSchema } from "~/server/admin/users/schemas"
 
@@ -29,6 +31,11 @@ export const deleteUsers = adminProcedure
     })
 
     revalidatePath("/admin/users")
+
+    // Remove the user images from S3 asynchronously
+    after(async () => {
+      await removeS3Directories(ids.map(id => `users/${id}`))
+    })
 
     return true
   })
