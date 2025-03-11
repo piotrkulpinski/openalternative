@@ -23,8 +23,9 @@ export type UsersTableSchema = Awaited<ReturnType<typeof usersTableParamsCache.p
 
 export const userSchema = z.object({
   name: z.string().optional(),
-  email: z.string().email("Invalid email"),
+  email: z.string().email("Invalid email").optional().or(z.literal("")),
   image: z.string().url().optional().or(z.literal("")),
+  role: z.enum(["admin", "user"]).optional(),
 })
 
 export type UserSchema = z.infer<typeof userSchema>

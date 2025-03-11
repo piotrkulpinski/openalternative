@@ -476,11 +476,11 @@ export function ToolForm({
         />
 
         <div className="flex justify-between gap-4 col-span-full">
-          <Button variant="secondary" asChild>
+          <Button size="md" variant="secondary" asChild>
             <Link href="/admin/tools">Cancel</Link>
           </Button>
 
-          <Button variant="primary" isPending={isPending}>
+          <Button size="md" variant="primary" isPending={isPending}>
             {tool ? "Update tool" : "Create tool"}
           </Button>
         </div>

@@ -149,11 +149,11 @@ export function CategoryForm({
         />
 
         <div className="flex justify-between gap-4 col-span-full">
-          <Button variant="secondary" asChild>
+          <Button size="md" variant="secondary" asChild>
             <Link href="/admin/categories">Cancel</Link>
           </Button>
 
-          <Button variant="primary" isPending={isPending}>
+          <Button size="md" variant="primary" isPending={isPending}>
             {category ? "Update category" : "Create category"}
           </Button>
         </div>
