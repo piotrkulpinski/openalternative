@@ -3,6 +3,9 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
+  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+
   --header-height: 3.125rem;
   --header-top: 0rem;
 
