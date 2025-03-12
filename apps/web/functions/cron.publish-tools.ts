@@ -37,35 +37,38 @@ export const publishTools = inngest.createFunction(
           return updatedTool
         })
 
-        // Revalidate cache
-        await step.run("revalidate-cache", async () => {
-          revalidateTag("tools")
-          revalidateTag("schedule")
-        })
+        // Run steps in parallel
+        await Promise.all([
+          // Revalidate cache
+          step.run("revalidate-cache", async () => {
+            revalidateTag("tools")
+            revalidateTag("schedule")
+          }),
 
-        // Post on socials
-        await step.run(`post-on-socials-${tool.slug}`, async () => {
-          const template = getPostLaunchTemplate(tool)
+          // Post on socials
+          step.run(`post-on-socials-${tool.slug}`, async () => {
+            const template = getPostLaunchTemplate(tool)
 
-          return await sendSocialPost(template, tool).catch(err => {
-            console.error(err)
-            throw new NonRetriableError(err.message)
-          })
-        })
+            return await sendSocialPost(template, tool).catch(err => {
+              console.error(err)
+              throw new NonRetriableError(err.message)
+            })
+          }),
 
-        // Send email
-        await step.run(`send-email-${tool.slug}`, async () => {
-          if (!tool.submitterEmail) return
+          // Send email
+          step.run(`send-email-${tool.slug}`, async () => {
+            if (!tool.submitterEmail) return
 
-          const to = tool.submitterEmail
-          const subject = `${tool.name} has been published on ${config.site.name} 🎉`
+            const to = tool.submitterEmail
+            const subject = `${tool.name} has been published on ${config.site.name} 🎉`
 
-          return await sendEmails({
-            to,
-            subject,
-            react: EmailToolPublished({ tool, to, subject }),
-          })
-        })
+            return await sendEmails({
+              to,
+              subject,
+              react: EmailToolPublished({ tool, to, subject }),
+            })
+          }),
+        ])
       }
     }
 

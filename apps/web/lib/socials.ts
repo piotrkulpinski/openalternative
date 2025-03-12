@@ -44,7 +44,7 @@ export const sendSocialPost = async (template: string, tool: Tool | Jsonify<Tool
   const blueskyTemplate = updatePostTemplate(template, blueskyHandle, url)
   const mastodonTemplate = updatePostTemplate(template, mastodonHandle, url)
 
-  return await Promise.all([
+  return Promise.allSettled([
     sendTwitterPost(twitterTemplate),
     sendBlueskyPost(blueskyTemplate, url),
     sendMastodonPost(mastodonTemplate, url),
