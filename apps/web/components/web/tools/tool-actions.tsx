@@ -1,22 +1,15 @@
 "use client"
 
-import { EllipsisIcon, ShieldPlusIcon, SparklesIcon, TriangleAlertIcon } from "lucide-react"
+import { ShieldPlusIcon, SparklesIcon, TriangleAlertIcon } from "lucide-react"
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import { useState } from "react"
 import { Button } from "~/components/common/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/components/common/dropdown-menu"
 import { Stack } from "~/components/common/stack"
 import { TooltipProvider } from "~/components/common/tooltip"
 import { ToolClaimDialog } from "~/components/web/dialogs/tool-claim-dialog"
 import { ToolReportDialog } from "~/components/web/dialogs/tool-report-dialog"
 import { Beam } from "~/components/web/ui/beam"
-import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { useSession } from "~/lib/auth-client"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
@@ -31,7 +24,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
   const [isClaimOpen, setIsClaimOpen] = useState(false)
 
   return (
-    <TooltipProvider delayDuration={250}>
+    <TooltipProvider delayDuration={100}>
       <Stack size="sm" wrap={false} className={cx("justify-end", className)} {...props}>
         {!tool.isFeatured && tool.owner && tool.owner?.email === session?.user.email && (
           <Button variant="secondary" prefix={<SparklesIcon className="text-yellow-500" />} asChild>
@@ -52,24 +45,12 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
           </Button>
         )}
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="secondary" prefix={<EllipsisIcon />} />
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent side="bottom" align="end" className="min-w-36">
-            <DropdownMenuItem asChild>
-              <button
-                type="button"
-                className={navLinkVariants()}
-                onClick={() => setIsReportOpen(true)}
-              >
-                <TriangleAlertIcon className="shrink-0 size-4 opacity-75" />
-                Report
-              </button>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button
+          variant="secondary"
+          prefix={<TriangleAlertIcon />}
+          onClick={() => setIsReportOpen(true)}
+          aria-label="Report"
+        />
 
         {children}
       </Stack>
