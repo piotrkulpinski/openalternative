@@ -9,8 +9,7 @@ import { auth } from "~/lib/auth"
 import { findTools } from "~/server/admin/tools/queries"
 import { toolsTableParamsCache } from "~/server/admin/tools/schemas"
 
-export const DashboardToolListing = async ({ params, searchParams }: DashboardPageProps) => {
-  const { path } = await params
+export const DashboardToolListing = async ({ searchParams }: DashboardPageProps) => {
   const parsedParams = toolsTableParamsCache.parse(await searchParams)
   const session = await auth.api.getSession({ headers: await headers() })
   const status = [ToolStatus.Draft, ToolStatus.Scheduled, ToolStatus.Published]

@@ -50,9 +50,9 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               Subscribe to our newsletter
             </H5>
 
-            <p className="-mt-2 px-0.5 text-sm text-muted-foreground first:mt-0">
-              Join {formatNumber(config.stats.subscribers, "standard")}+ other members and get
-              updates on new open source tools.
+            <p className="-mt-2 px-0.5 text-xs text-muted-foreground first:mt-0">
+              Join {formatNumber(config.stats.subscribers + config.stats.stars, "standard")}+ other
+              members and get updates on new open source tools.
             </p>
 
             <NewsletterForm medium="footer_form" />

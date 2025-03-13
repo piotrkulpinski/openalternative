@@ -119,6 +119,7 @@ export const Header = ({ children, className, ...props }: ComponentProps<typeof 
           </DropdownMenu>
 
           <NavLink href="/alternatives">Alternatives</NavLink>
+          <NavLink href="/self-hosted">Self-hosted</NavLink>
           <NavLink href="/advertise">Advertise</NavLink>
         </nav>
 
