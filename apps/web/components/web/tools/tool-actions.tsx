@@ -1,12 +1,12 @@
 "use client"
 
-import { ShieldPlusIcon, SparklesIcon, TriangleAlertIcon } from "lucide-react"
+import { BadgeCheckIcon, SparklesIcon, TriangleAlertIcon } from "lucide-react"
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import { useState } from "react"
 import { Button } from "~/components/common/button"
 import { Stack } from "~/components/common/stack"
-import { TooltipProvider } from "~/components/common/tooltip"
+import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
 import { ToolClaimDialog } from "~/components/web/dialogs/tool-claim-dialog"
 import { ToolReportDialog } from "~/components/web/dialogs/tool-report-dialog"
 import { Beam } from "~/components/web/ui/beam"
@@ -24,10 +24,16 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
   const [isClaimOpen, setIsClaimOpen] = useState(false)
 
   return (
-    <TooltipProvider delayDuration={100}>
+    <TooltipProvider delayDuration={250}>
       <Stack size="sm" wrap={false} className={cx("justify-end", className)} {...props}>
         {!tool.isFeatured && tool.owner && tool.owner?.email === session?.user.email && (
-          <Button variant="secondary" prefix={<SparklesIcon className="text-yellow-500" />} asChild>
+          <Button
+            size="md"
+            variant="secondary"
+            prefix={<SparklesIcon className="text-inherit" />}
+            className="text-blue-600 dark:text-blue-400"
+            asChild
+          >
             <Link href={`/submit/${tool.slug}`}>
               Promote
               <Beam />
@@ -37,20 +43,25 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
 
         {!tool.owner && (
           <Button
+            size="md"
             variant="secondary"
-            prefix={<ShieldPlusIcon className="text-yellow-500" />}
+            prefix={<BadgeCheckIcon className="text-inherit" />}
             onClick={() => setIsClaimOpen(true)}
+            className="text-blue-600 dark:text-blue-400"
           >
             Claim
           </Button>
         )}
 
-        <Button
-          variant="secondary"
-          prefix={<TriangleAlertIcon />}
-          onClick={() => setIsReportOpen(true)}
-          aria-label="Report"
-        />
+        <Tooltip tooltip="Send a report/suggestion">
+          <Button
+            size="md"
+            variant="secondary"
+            prefix={<TriangleAlertIcon />}
+            onClick={() => setIsReportOpen(true)}
+            aria-label="Report"
+          />
+        </Tooltip>
 
         {children}
       </Stack>
