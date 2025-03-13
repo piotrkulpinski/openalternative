@@ -153,7 +153,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
   })
 
   return (
-    <DataTable table={table}>
+    <DataTable table={table} emptyState="No tools found. Submit or claim a tool to get started.">
       <DataTableToolbar table={table} filterFields={filterFields}>
         <Button size="md" variant="primary" prefix={<PlusIcon />} asChild>
           <Link href="/submit">Submit a tool</Link>

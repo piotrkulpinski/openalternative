@@ -27,11 +27,20 @@ type DataTableProps<TData> = ComponentProps<"div"> & {
    * @example floatingBar={<TasksTableFloatingBar table={table} />}
    */
   floatingBar?: React.ReactNode | null
+
+  /**
+   * The empty state to render when the table has no data.
+   * @default null
+   * @type React.ReactNode | null
+   * @example emptyState={<div>No data</div>}
+   */
+  emptyState?: React.ReactNode | null
 }
 
 export function DataTable<TData>({
   table,
   floatingBar = null,
+  emptyState = "No results.",
   children,
   className,
   ...props
@@ -42,25 +51,27 @@ export function DataTable<TData>({
 
       <div className={cx("overflow-hidden rounded-md border", className)} {...props}>
         <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map(headerGroup => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      style={getColumnPinningStyle({ column: header.column })}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
+          {!!table.getRowModel().rows?.length && (
+            <TableHeader>
+              {table.getHeaderGroups().map(headerGroup => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map(header => {
+                    return (
+                      <TableHead
+                        key={header.id}
+                        colSpan={header.colSpan}
+                        style={getColumnPinningStyle({ column: header.column })}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                      </TableHead>
+                    )
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+          )}
 
           <TableBody>
             {table.getRowModel().rows?.length ? (
@@ -78,9 +89,9 @@ export function DataTable<TData>({
                 </TableRow>
               ))
             ) : (
-              <TableRow>
+              <TableRow aria-disabled>
                 <TableCell colSpan={table.getAllColumns().length} className="h-24 text-center">
-                  No results.
+                  {emptyState}
                 </TableCell>
               </TableRow>
             )}
