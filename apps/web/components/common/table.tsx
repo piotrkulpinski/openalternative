@@ -30,7 +30,7 @@ const TableRow = ({ className, ...props }: ComponentProps<"tr">) => {
   return (
     <tr
       className={cx(
-        "group/row border-b [tbody>&]:hover:bg-muted data-[state=selected]:bg-accent",
+        "group/row border-b [tbody>&:not([aria-disabled])]:hover:bg-muted data-[state=selected]:bg-accent",
         className,
       )}
       {...props}
