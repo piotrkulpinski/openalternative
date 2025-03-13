@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { PropsWithChildren } from "react"
 import { Toaster } from "~/components/common/toaster"
+import { TooltipProvider } from "~/components/common/tooltip"
 import { config } from "~/config"
 
 export const metadata: Metadata = {
@@ -30,7 +31,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className="min-h-dvh flex flex-col bg-background text-foreground">
-        <NuqsAdapter>{children}</NuqsAdapter>
+        <NuqsAdapter>
+          <TooltipProvider delayDuration={250}>{children}</TooltipProvider>
+        </NuqsAdapter>
         <Toaster />
       </body>
     </html>

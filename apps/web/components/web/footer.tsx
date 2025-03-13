@@ -17,7 +17,7 @@ import { BrandMastodonIcon } from "~/components/common/icons/brand-mastodon"
 import { BrandMediumIcon } from "~/components/common/icons/brand-medium"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Stack } from "~/components/common/stack"
-import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
+import { Tooltip } from "~/components/common/tooltip"
 import { ExternalLink } from "~/components/web/external-link"
 import { NewsletterForm } from "~/components/web/newsletter-form"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
@@ -59,72 +59,70 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           </Stack>
 
           <Stack className="text-sm/normal">
-            <TooltipProvider delayDuration={500}>
-              <DropdownMenu modal={false}>
-                <Tooltip tooltip="RSS Feeds">
-                  <DropdownMenuTrigger aria-label="RSS Feeds">
-                    <RssIcon className="size-[1.44em] text-muted-foreground hover:text-foreground" />
-                  </DropdownMenuTrigger>
-                </Tooltip>
-
-                <DropdownMenuContent align="start" side="top">
-                  {config.links.feeds.map(({ url, title }) => (
-                    <DropdownMenuItem key={url} asChild>
-                      <NavLink href={url} target="_blank" rel="nofollow noreferrer">
-                        RSS &raquo; {title}
-                      </NavLink>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              <Tooltip tooltip="Contact us">
-                <NavLink
-                  href={`mailto:${config.site.email}`}
-                  target="_blank"
-                  rel="nofollow noreferrer"
-                  aria-label="Contact us"
-                >
-                  <AtSignIcon className="size-[1.44em]" />
-                </NavLink>
+            <DropdownMenu modal={false}>
+              <Tooltip tooltip="RSS Feeds">
+                <DropdownMenuTrigger aria-label="RSS Feeds">
+                  <RssIcon className="size-[1.44em] stroke-[1.5] text-muted-foreground hover:text-foreground" />
+                </DropdownMenuTrigger>
               </Tooltip>
 
-              <Tooltip tooltip="View source code">
-                <NavLink href={config.links.github} target="_blank" rel="nofollow noreferrer">
-                  <BrandGitHubIcon className="size-[1.44em]" />
-                </NavLink>
-              </Tooltip>
+              <DropdownMenuContent align="start" side="top">
+                {config.links.feeds.map(({ url, title }) => (
+                  <DropdownMenuItem key={url} asChild>
+                    <NavLink href={url} target="_blank" rel="nofollow noreferrer">
+                      RSS &raquo; {title}
+                    </NavLink>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-              <Tooltip tooltip="Follow us on X/Twitter">
-                <NavLink href={config.links.twitter} target="_blank" rel="nofollow noreferrer">
-                  <BrandXIcon className="size-[1.44em]" />
-                </NavLink>
-              </Tooltip>
+            <Tooltip tooltip="Contact us">
+              <NavLink
+                href={`mailto:${config.site.email}`}
+                target="_blank"
+                rel="nofollow noreferrer"
+                aria-label="Contact us"
+              >
+                <AtSignIcon className="size-[1.44em] stroke-[1.5]" />
+              </NavLink>
+            </Tooltip>
 
-              <Tooltip tooltip="Follow us on Bluesky">
-                <NavLink href={config.links.bluesky} target="_blank" rel="nofollow noreferrer">
-                  <BrandBlueskyIcon className="size-[1.44em]" />
-                </NavLink>
-              </Tooltip>
+            <Tooltip tooltip="View source code">
+              <NavLink href={config.links.github} target="_blank" rel="nofollow noreferrer">
+                <BrandGitHubIcon className="size-[1.44em] stroke-[1.5]" />
+              </NavLink>
+            </Tooltip>
 
-              <Tooltip tooltip="Follow us on Mastodon">
-                <NavLink href={config.links.mastodon} target="_blank" rel="me nofollow noreferrer">
-                  <BrandMastodonIcon className="size-[1.44em]" />
-                </NavLink>
-              </Tooltip>
+            <Tooltip tooltip="Follow us on X/Twitter">
+              <NavLink href={config.links.twitter} target="_blank" rel="nofollow noreferrer">
+                <BrandXIcon className="size-[1.44em] stroke-[1.5]" />
+              </NavLink>
+            </Tooltip>
 
-              <Tooltip tooltip="Follow us on LinkedIn">
-                <NavLink href={config.links.linkedin} target="_blank" rel="nofollow noreferrer">
-                  <BrandLinkedInIcon className="size-[1.44em]" />
-                </NavLink>
-              </Tooltip>
+            <Tooltip tooltip="Follow us on Bluesky">
+              <NavLink href={config.links.bluesky} target="_blank" rel="nofollow noreferrer">
+                <BrandBlueskyIcon className="size-[1.44em] stroke-[1.5]" />
+              </NavLink>
+            </Tooltip>
 
-              <Tooltip tooltip="Follow us on Medium">
-                <NavLink href={config.links.medium} target="_blank" rel="nofollow noreferrer">
-                  <BrandMediumIcon className="size-[1.44em]" />
-                </NavLink>
-              </Tooltip>
-            </TooltipProvider>
+            <Tooltip tooltip="Follow us on Mastodon">
+              <NavLink href={config.links.mastodon} target="_blank" rel="me nofollow noreferrer">
+                <BrandMastodonIcon className="size-[1.44em] stroke-[1.5]" />
+              </NavLink>
+            </Tooltip>
+
+            <Tooltip tooltip="Follow us on LinkedIn">
+              <NavLink href={config.links.linkedin} target="_blank" rel="nofollow noreferrer">
+                <BrandLinkedInIcon className="size-[1.44em] stroke-[1.5]" />
+              </NavLink>
+            </Tooltip>
+
+            <Tooltip tooltip="Follow us on Medium">
+              <NavLink href={config.links.medium} target="_blank" rel="nofollow noreferrer">
+                <BrandMediumIcon className="size-[1.44em] stroke-[1.5]" />
+              </NavLink>
+            </Tooltip>
           </Stack>
         </Stack>
 

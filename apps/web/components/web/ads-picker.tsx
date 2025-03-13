@@ -15,7 +15,7 @@ import { createStripeAdsCheckout } from "~/actions/stripe"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
 import { Stack } from "~/components/common/stack"
-import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
+import { Tooltip } from "~/components/common/tooltip"
 import { AdsCalendar } from "~/components/web/ads-calendar"
 import { Price } from "~/components/web/price"
 import { config } from "~/config"
@@ -70,96 +70,94 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
   }
 
   return (
-    <TooltipProvider delayDuration={250}>
-      <div className={cx("flex flex-col w-full border divide-y rounded-md", className)} {...props}>
-        <div className="flex flex-col w-full sm:flex-row sm:divide-x max-sm:divide-y">
-          {config.ads.adSpots.map(adSpot => (
-            <AdsCalendar
-              key={adSpot.type}
-              adSpot={adSpot}
-              ads={ads}
-              price={price}
-              selections={selections}
-              updateSelection={updateSelection}
-            />
-          ))}
+    <div className={cx("flex flex-col w-full border divide-y rounded-md", className)} {...props}>
+      <div className="flex flex-col w-full sm:flex-row sm:divide-x max-sm:divide-y">
+        {config.ads.adSpots.map(adSpot => (
+          <AdsCalendar
+            key={adSpot.type}
+            adSpot={adSpot}
+            ads={ads}
+            price={price}
+            selections={selections}
+            updateSelection={updateSelection}
+          />
+        ))}
+      </div>
+
+      {hasSelections && (
+        <div className="flex flex-col gap-3 text-sm text-muted-foreground p-4">
+          {selections.map(selection => {
+            if (!selection.dateRange?.from || !selection.dateRange?.to || !selection.duration) {
+              return null
+            }
+
+            const adSpot = findAdSpot(selection.type)
+            const from = startOfDay(selection.dateRange.from)
+            const to = endOfDay(selection.dateRange.to)
+
+            return (
+              <div key={selection.type} className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <span className="flex items-center gap-2 mr-auto">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    aria-label={`Clear ${adSpot.label} selection`}
+                    prefix={<XIcon />}
+                    onClick={() => clearSelection(selection.type)}
+                  />
+
+                  <div>
+                    <strong className="font-medium text-foreground">{adSpot.label}</strong> – (
+                    {selection.duration} {plur("day", selection.duration)})
+                  </div>
+                </span>
+
+                <span>{formatDateRange(from, to)}</span>
+              </div>
+            )
+          })}
         </div>
+      )}
 
-        {hasSelections && (
-          <div className="flex flex-col gap-3 text-sm text-muted-foreground p-4">
-            {selections.map(selection => {
-              if (!selection.dateRange?.from || !selection.dateRange?.to || !selection.duration) {
-                return null
-              }
+      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground text-center p-4 sm:justify-between sm:text-start">
+        {price ? (
+          <>
+            <Stack size="sm" className="mr-auto">
+              Total:
+              <Price
+                price={price.discountedPrice}
+                fullPrice={price.totalPrice}
+                priceClassName="text-foreground text-base"
+              />
+            </Stack>
 
-              const adSpot = findAdSpot(selection.type)
-              const from = startOfDay(selection.dateRange.from)
-              const to = endOfDay(selection.dateRange.to)
-
-              return (
-                <div key={selection.type} className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <span className="flex items-center gap-2 mr-auto">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      aria-label={`Clear ${adSpot.label} selection`}
-                      prefix={<XIcon />}
-                      onClick={() => clearSelection(selection.type)}
-                    />
-
-                    <div>
-                      <strong className="font-medium text-foreground">{adSpot.label}</strong> – (
-                      {selection.duration} {plur("day", selection.duration)})
-                    </div>
-                  </span>
-
-                  <span>{formatDateRange(from, to)}</span>
-                </div>
-              )
-            })}
-          </div>
+            {price.discountPercentage > 0 && (
+              <Tooltip tooltip="Discount applied based on the order value. Max 30% off.">
+                <Badge
+                  size="lg"
+                  variant="outline"
+                  className="-my-1 text-green-700/90 dark:text-green-300/90"
+                >
+                  {price.discountPercentage}% off
+                </Badge>
+              </Tooltip>
+            )}
+          </>
+        ) : (
+          <p>Please select dates for at least one ad type</p>
         )}
 
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground text-center p-4 sm:justify-between sm:text-start">
-          {price ? (
-            <>
-              <Stack size="sm" className="mr-auto">
-                Total:
-                <Price
-                  price={price.discountedPrice}
-                  fullPrice={price.totalPrice}
-                  priceClassName="text-foreground text-base"
-                />
-              </Stack>
-
-              {price.discountPercentage > 0 && (
-                <Tooltip tooltip="Discount applied based on the order value. Max 30% off.">
-                  <Badge
-                    size="lg"
-                    variant="outline"
-                    className="-my-1 text-green-700/90 dark:text-green-300/90"
-                  >
-                    {price.discountPercentage}% off
-                  </Badge>
-                </Tooltip>
-              )}
-            </>
-          ) : (
-            <p>Please select dates for at least one ad type</p>
-          )}
-
-          <Button
-            variant="fancy"
-            size="lg"
-            disabled={!hasSelections || isPending}
-            isPending={isPending}
-            className="max-sm:w-full sm:-my-2"
-            onClick={handleCheckout}
-          >
-            Purchase Now
-          </Button>
-        </div>
+        <Button
+          variant="fancy"
+          size="lg"
+          disabled={!hasSelections || isPending}
+          isPending={isPending}
+          className="max-sm:w-full sm:-my-2"
+          onClick={handleCheckout}
+        >
+          Purchase Now
+        </Button>
       </div>
-    </TooltipProvider>
+    </div>
   )
 }
