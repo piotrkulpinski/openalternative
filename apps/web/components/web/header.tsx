@@ -12,7 +12,6 @@ import {
 } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { type ComponentProps, Suspense, useEffect, useState } from "react"
-import { Button } from "~/components/common/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +21,6 @@ import {
 import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
 import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
-import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { SearchForm } from "~/components/web/search-form"
 import { Container } from "~/components/web/ui/container"
@@ -122,6 +120,7 @@ export const Header = ({ className, ...props }: ComponentProps<typeof Container>
           <NavLink href="/alternatives">Alternatives</NavLink>
           <NavLink href="/self-hosted">Self-hosted</NavLink>
           <NavLink href="/advertise">Advertise</NavLink>
+          <NavLink href="/submit">Submit</NavLink>
         </nav>
 
         <Stack size="sm" className="max-sm:hidden">
@@ -157,13 +156,7 @@ export const Header = ({ className, ...props }: ComponentProps<typeof Container>
           </NavLink>
         </Stack>
 
-        <Stack size="sm">
-          <Button size="sm" variant="secondary" asChild>
-            <Link href="/submit">Submit</Link>
-          </Button>
-
-          <UserMenu />
-        </Stack>
+        <UserMenu />
       </div>
 
       <nav

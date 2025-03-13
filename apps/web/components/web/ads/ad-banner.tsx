@@ -30,7 +30,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
           eventName="click_ad"
           eventProps={{ url: ad.websiteUrl, type: ad.type }}
         >
-          <Badge variant="outline" className="max-sm:order-last">
+          <Badge variant="outline" className="leading-none max-sm:order-last">
             Ad
           </Badge>
 
@@ -50,7 +50,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
           <Button
             variant="secondary"
             size="sm"
-            className="shrink-0 pointer-events-none max-sm:hidden"
+            className="shrink-0 leading-none pointer-events-none max-sm:hidden"
             asChild
           >
             <span>Learn More</span>
