@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "email": "cp .env ./node_modules/react-email/dist/preview && email dev",
+    "email": "cp .env ../../node_modules/react-email/dist/preview && email dev",
     "dev": "next dev -p 5173 --turbo",
     "start": "next start -p 5173",
     "build": "next build",

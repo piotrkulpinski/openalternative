@@ -9,7 +9,7 @@ const mdxOptions: Options = {
 
 const posts = defineCollection({
   name: "posts",
-  directory: "src/content/posts",
+  directory: "content/posts",
   include: "**/*.md",
 
   schema: z => ({
