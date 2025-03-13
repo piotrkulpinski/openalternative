@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/common/dialog"
+import { LoginDialog } from "~/components/web/auth/login-dialog"
 import { siteConfig } from "~/config/site"
 import { useSession } from "~/lib/auth-client"
 import type { ToolOne } from "~/server/web/tools/payloads"
@@ -35,6 +36,10 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
     },
   })
 
+  if (!session?.user) {
+    return <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-w-md">
@@ -43,14 +48,15 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
 
           <DialogDescription>
             <p>
-              To claim this listing, you need to sign in with an email address from the same domain
-              – <strong>{getUrlHostname(tool.websiteUrl)}</strong>. This helps us verify that you
-              represent the organization.
+              To claim this listing, you need to verify the ownership of the{" "}
+              <strong>{getUrlHostname(tool.websiteUrl)}</strong> domain. This helps us to ensure
+              that you represent the organization.
             </p>
 
             <p>By claiming this tool, you'll be able to:</p>
 
             <ul className="mt-2 list-disc pl-4">
+              <li>Get a verified badge</li>
               <li>Update tool information</li>
               <li>Manage its categories and alternatives</li>
               <li>Promote it on {siteConfig.name}</li>
@@ -68,7 +74,7 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
             className="min-w-28"
             isPending={isPending}
           >
-            {session?.user ? `Claim ${tool.name}` : "Sign in to claim"}
+            Claim {tool.name}
           </Button>
         </DialogFooter>
       </DialogContent>
