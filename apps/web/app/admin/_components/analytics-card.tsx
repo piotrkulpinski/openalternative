@@ -47,9 +47,10 @@ const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
 
   return (
     <Card hover={false} focus={false} {...props}>
-      <CardHeader direction="column">
+      <CardHeader>
         <CardDescription>Visitors</CardDescription>
-        <H2 className="tabular-nums">{totalVisitors.toLocaleString()}</H2>
+        <span className="ml-auto text-xs text-muted-foreground">last 30 days</span>
+        <H2 className="w-full">{totalVisitors.toLocaleString()}</H2>
       </CardHeader>
 
       <Chart

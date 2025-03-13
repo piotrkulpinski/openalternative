@@ -28,7 +28,7 @@ export const Chart = ({ className, cellClassName, data, average, label, ...props
 
   return (
     <TooltipProvider delayDuration={250}>
-      <div className={cx("relative flex h-full min-h-48 w-full flex-col", className)} {...props}>
+      <div className={cx("relative flex h-full min-h-24 w-full flex-col", className)} {...props}>
         {average !== undefined && (
           <div
             className="absolute inset-x-0 z-10 flex items-center pointer-events-none"
@@ -36,7 +36,7 @@ export const Chart = ({ className, cellClassName, data, average, label, ...props
           >
             <div className="h-px w-full flex-1 border border-dashed border-foreground/15" />
 
-            <span className="absolute right-0 bottom-1 text-sm text-muted-foreground tabular-nums">
+            <span className="absolute right-0 bottom-1 text-sm text-muted-foreground ">
               {Math.round(average).toLocaleString()}
             </span>
           </div>

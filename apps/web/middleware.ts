@@ -7,25 +7,25 @@ export const config = {
 }
 
 export default async function ({ nextUrl, headers }: NextRequest) {
-  const session = await wretch(`${nextUrl.origin}/api/auth/get-session`)
+  const baseUrl = nextUrl.toString()
+  const { pathname, origin, search } = nextUrl
+
+  const session = await wretch(`${origin}/api/auth/get-session`)
     .headers({ cookie: headers.get("cookie") || "" })
     .get()
     .json<typeof auth.$Infer.Session>()
 
-  if (session && nextUrl.pathname.startsWith("/auth")) {
-    return NextResponse.redirect(new URL("/", nextUrl.toString()))
+  if (session && pathname.startsWith("/auth")) {
+    return NextResponse.redirect(new URL("/", baseUrl))
   }
 
-  if (nextUrl.pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/admin")) {
     if (!session) {
-      const callbackURL = nextUrl.pathname + nextUrl.search
-      const signInUrl = new URL(`/auth/login?callbackURL=${callbackURL}`, nextUrl.toString())
-
-      return NextResponse.redirect(signInUrl)
+      return NextResponse.redirect(new URL(`/auth/login?callbackURL=${pathname}${search}`, baseUrl))
     }
 
     if (session.user.role !== "admin") {
-      return NextResponse.redirect(new URL("/", nextUrl.toString()))
+      return NextResponse.redirect(new URL("/", baseUrl))
     }
   }
 

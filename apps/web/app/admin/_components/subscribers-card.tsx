@@ -120,9 +120,10 @@ const SubscribersCard = async ({ ...props }: ComponentProps<typeof Card>) => {
 
   return (
     <Card hover={false} focus={false} {...props}>
-      <CardHeader direction="column">
+      <CardHeader>
         <CardDescription>Subscribers</CardDescription>
-        <H2 className="tabular-nums">{totalSubscribers.toLocaleString()}</H2>
+        <span className="ml-auto text-xs text-muted-foreground">last 30 days</span>
+        <H2 className="w-full">{totalSubscribers.toLocaleString()}</H2>
       </CardHeader>
 
       <Chart
