@@ -44,9 +44,10 @@ export const submitTool = createServerAction()
 
     if (!session?.user) {
       const ip = await getIP()
+      const rateLimitKey = `submission:${ip}`
 
       // Rate limiting check
-      if (await isRateLimited(ip, "submission")) {
+      if (await isRateLimited(rateLimitKey, "submission")) {
         throw new Error("Too many submissions. Please try again later.")
       }
 
