@@ -13,7 +13,7 @@ import { BrandRedditIcon } from "~/components/common/icons/brand-reddit"
 import { BrandWhatsAppIcon } from "~/components/common/icons/brand-whatsapp"
 import { BrandXIcon } from "~/components/common/icons/brand-x"
 import { Stack } from "~/components/common/stack"
-import { Tooltip, TooltipProvider } from "~/components/common/tooltip"
+import { Tooltip } from "~/components/common/tooltip"
 import { ExternalLink } from "~/components/web/external-link"
 import { config } from "~/config"
 
@@ -91,19 +91,17 @@ export const ShareButtons = ({ title, ...props }: ShareButtonsProps) => {
       <H5 as="strong">Share:</H5>
 
       <Stack size="sm">
-        <TooltipProvider delayDuration={500}>
-          {shareOptions.map(({ platform, url, icon }) => (
-            <Tooltip key={platform} tooltip={platform}>
-              <Button size="sm" variant="secondary" prefix={icon} asChild>
-                <ExternalLink
-                  href={url(currentUrl, shareTitle)}
-                  eventName="click_share"
-                  eventProps={{ url: currentUrl, platform }}
-                />
-              </Button>
-            </Tooltip>
-          ))}
-        </TooltipProvider>
+        {shareOptions.map(({ platform, url, icon }) => (
+          <Tooltip key={platform} tooltip={platform}>
+            <Button size="sm" variant="secondary" prefix={icon} asChild>
+              <ExternalLink
+                href={url(currentUrl, shareTitle)}
+                eventName="click_share"
+                eventProps={{ url: currentUrl, platform }}
+              />
+            </Button>
+          </Tooltip>
+        ))}
       </Stack>
     </Stack>
   )

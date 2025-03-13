@@ -16,7 +16,6 @@ import { Ping } from "~/components/common/ping"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
-import { TooltipProvider } from "~/components/common/tooltip"
 import { PlanIntervalSwitch } from "~/components/web/plan-interval-switch"
 import { Price } from "~/components/web/price"
 import { Beam } from "~/components/web/ui/beam"
@@ -182,25 +181,23 @@ const Plan = ({
       />
 
       {!!features && (
-        <TooltipProvider delayDuration={0}>
-          <Stack direction="column" className="my-auto items-stretch">
-            {features.map(({ type, name, footnote }) => (
-              <div key={name} className={cx(planFeatureVariants())}>
-                <Slot.Root className={cx(planFeatureCheckVariants({ type }))}>
-                  {type === "negative" ? <XIcon /> : <CheckIcon />}
-                </Slot.Root>
+        <Stack direction="column" className="my-auto items-stretch">
+          {features.map(({ type, name, footnote }) => (
+            <div key={name} className={cx(planFeatureVariants())}>
+              <Slot.Root className={cx(planFeatureCheckVariants({ type }))}>
+                {type === "negative" ? <XIcon /> : <CheckIcon />}
+              </Slot.Root>
 
-                <span className={cx("truncate", type === "negative" && "opacity-50")}>{name}</span>
+              <span className={cx("truncate", type === "negative" && "opacity-50")}>{name}</span>
 
-                {footnote && (
-                  <Tooltip tooltip={footnote}>
-                    <Ping className="-ml-1 mt-1" />
-                  </Tooltip>
-                )}
-              </div>
-            ))}
-          </Stack>
-        </TooltipProvider>
+              {footnote && (
+                <Tooltip tooltip={footnote} delayDuration={0}>
+                  <Ping className="-ml-1 mt-1" />
+                </Tooltip>
+              )}
+            </div>
+          ))}
+        </Stack>
       )}
 
       <Button
