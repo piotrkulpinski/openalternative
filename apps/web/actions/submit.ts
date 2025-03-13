@@ -1,6 +1,6 @@
 "use server"
 
-import { slugify } from "@curiousleaf/utils"
+import { getUrlHostname, slugify } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { headers } from "next/headers"
 import { createServerAction } from "zsa"
@@ -77,9 +77,14 @@ export const submitTool = createServerAction()
     // Generate a unique slug
     const slug = await generateUniqueSlug(data.name)
 
+    // Check if the email domain matches the tool's website domain
+    const ownerId = session?.user.email.includes(getUrlHostname(data.websiteUrl))
+      ? session?.user.id
+      : undefined
+
     // Save the tool to the database
     const tool = await db.tool.create({
-      data: { ...data, slug, ownerId: session?.user.id },
+      data: { ...data, slug, ownerId },
     })
 
     // Send an event to the Inngest pipeline
