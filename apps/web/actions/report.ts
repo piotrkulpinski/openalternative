@@ -10,9 +10,10 @@ export const reportTool = createServerAction()
   .input(reportSchema.extend({ toolSlug: z.string() }))
   .handler(async ({ input: { toolSlug, type, message } }) => {
     const ip = await getIP()
+    const rateLimitKey = `report:${ip}`
 
     // Rate limiting check
-    if (await isRateLimited(ip, "report")) {
+    if (await isRateLimited(rateLimitKey, "report")) {
       throw new Error("Too many requests. Please try again later.")
     }
 

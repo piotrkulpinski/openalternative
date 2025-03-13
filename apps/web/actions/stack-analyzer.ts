@@ -11,9 +11,10 @@ export const analyzeStack = createServerAction()
   .input(stackAnalyzerSchema)
   .handler(async ({ input: { repository } }) => {
     const ip = await getIP()
+    const rateLimitKey = `stack-analysis:${ip}`
 
     // Rate limiting check
-    if (await isRateLimited(ip, "stackAnalysis")) {
+    if (await isRateLimited(rateLimitKey, "stackAnalysis")) {
       throw new Error("Too many requests. Please try again in a minute.")
     }
 

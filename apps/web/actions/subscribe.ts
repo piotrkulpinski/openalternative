@@ -16,9 +16,10 @@ export const subscribeToNewsletter = createServerAction()
   .input(newsletterSchema)
   .handler(async ({ input: { value: email, ...input } }) => {
     const ip = await getIP()
+    const rateLimitKey = `newsletter:${ip}`
 
     // Rate limiting check
-    if (await isRateLimited(ip, "newsletter")) {
+    if (await isRateLimited(rateLimitKey, "newsletter")) {
       throw new Error("Too many attempts. Please try again later.")
     }
 
