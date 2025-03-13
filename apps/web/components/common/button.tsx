@@ -22,7 +22,7 @@ const buttonVariants = cva({
       destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
     },
     size: {
-      sm: "px-2 py-1 gap-[0.66ch] leading-none",
+      sm: "px-2 py-1 gap-[0.66ch]",
       md: "px-3 py-2 gap-[0.75ch]",
       lg: "px-4 py-2.5 gap-[1ch] rounded-lg sm:text-sm",
     },

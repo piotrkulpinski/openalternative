@@ -7,7 +7,7 @@ const inputVariants = cva({
 
   variants: {
     size: {
-      sm: "px-2 py-1 font-normal leading-none rounded-md",
+      sm: "px-2 py-1 font-normal rounded-md",
       md: "px-3 py-2 rounded-md",
       lg: "px-4 py-2.5 rounded-lg sm:text-sm",
     },

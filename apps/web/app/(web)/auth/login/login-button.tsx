@@ -14,7 +14,7 @@ type LoginButtonProps = ComponentProps<typeof Button> & {
 export const LoginButton = ({ provider, ...props }: LoginButtonProps) => {
   const searchParams = useSearchParams()
   const [isPending, setIsPending] = useState(false)
-  const callbackURL = searchParams.get("callbackURL") || undefined
+  const callbackURL = searchParams.get("next") || undefined
 
   const handleSignIn = () => {
     signIn.social({

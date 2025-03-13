@@ -1,5 +1,4 @@
 import { getUrlHostname } from "@curiousleaf/utils"
-import { usePathname } from "next/navigation"
 import type { Dispatch, SetStateAction } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -24,9 +23,7 @@ type ToolClaimDialogProps = {
 }
 
 export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProps) => {
-  const pathname = usePathname()
   const { data: session } = useSession()
-  const callbackURL = `${siteConfig.url}${pathname}`
 
   const { execute, isPending } = useServerAction(claimTool, {
     onSuccess: () => {
@@ -67,7 +64,7 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
           </Button>
 
           <Button
-            onClick={() => execute({ toolSlug: tool.slug, callbackURL })}
+            onClick={() => execute({ toolSlug: tool.slug })}
             className="min-w-28"
             isPending={isPending}
           >

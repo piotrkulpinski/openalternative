@@ -19,7 +19,7 @@ export const LoginForm = ({ ...props }: LoginFormProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, setIsPending] = useState(false)
-  const callbackURL = searchParams.get("callbackURL") || undefined
+  const callbackURL = searchParams.get("next") || undefined
 
   const schema = z.object({
     email: z.string().email(),

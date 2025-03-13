@@ -35,16 +35,16 @@ export const uploadUserImage = userProcedure
 
 export const claimTool = userProcedure
   .createServerAction()
-  .input(z.object({ toolSlug: z.string(), callbackURL: z.string() }))
-  .handler(async ({ input }) => {
+  .input(z.object({ toolSlug: z.string() }))
+  .handler(async ({ input: { toolSlug: slug } }) => {
     const session = await auth.api.getSession({ headers: await headers() })
 
     if (!session?.user) {
-      throw redirect(`/auth/login?callbackURL=${encodeURIComponent(input.callbackURL)}`)
+      throw redirect(`/auth/login?next=/${slug}`)
     }
 
     const tool = await db.tool.findUniqueOrThrow({
-      where: { slug: input.toolSlug },
+      where: { slug },
       select: { id: true, slug: true, websiteUrl: true, ownerId: true },
     })
 

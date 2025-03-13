@@ -21,7 +21,7 @@ export default async function ({ nextUrl, headers }: NextRequest) {
 
   if (pathname.startsWith("/admin")) {
     if (!session) {
-      return NextResponse.redirect(new URL(`/auth/login?callbackURL=${pathname}${search}`, baseUrl))
+      return NextResponse.redirect(new URL(`/auth/login?next=${pathname}${search}`, baseUrl))
     }
 
     if (session.user.role !== "admin") {

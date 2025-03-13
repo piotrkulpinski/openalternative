@@ -29,10 +29,11 @@ import { Container } from "~/components/web/ui/container"
 import { Hamburger } from "~/components/web/ui/hamburger"
 import { Logo } from "~/components/web/ui/logo"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
+import { UserMenu } from "~/components/web/user-menu"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
-export const Header = ({ children, className, ...props }: ComponentProps<typeof Container>) => {
+export const Header = ({ className, ...props }: ComponentProps<typeof Container>) => {
   const pathname = usePathname()
   const [isNavOpen, setNavOpen] = useState(false)
 
@@ -161,7 +162,7 @@ export const Header = ({ children, className, ...props }: ComponentProps<typeof 
             <Link href="/submit">Submit</Link>
           </Button>
 
-          {children}
+          <UserMenu />
         </Stack>
       </div>
 
