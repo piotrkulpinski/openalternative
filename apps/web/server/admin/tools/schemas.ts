@@ -8,7 +8,7 @@ import {
 } from "nuqs/server"
 import { z } from "zod"
 import { getSortingStateParser } from "~/lib/parsers"
-import { repositorySchema } from "~/server/schemas"
+import { repositorySchema } from "~/server/web/shared/schemas"
 
 export const toolsTableParamsSchema = {
   name: parseAsString.withDefault(""),

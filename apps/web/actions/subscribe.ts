@@ -4,7 +4,7 @@ import wretch from "wretch"
 import { createServerAction } from "zsa"
 import { env } from "~/env"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
-import { newsletterSchema } from "~/server/schemas"
+import { newsletterSchema } from "~/server/web/shared/schemas"
 import { isDisposableEmail, tryCatch } from "~/utils/helpers"
 
 /**

@@ -2,7 +2,7 @@ import { differenceInDays, differenceInYears } from "date-fns"
 import type { Repository, RepositoryData, RepositoryQueryResult } from "./types"
 
 export const githubRegex =
-  /^(?:(?:https?:\/\/)?github\.com\/)?(?<owner>[^/]+)\/(?<name>[a-zA-Z0-9._-]+?)(?:[/?#]|$)/
+  /^(?:https?:\/\/)?github\.com\/(?<owner>[^/]+)\/(?<name>[a-zA-Z0-9._-]+?)(?:[/?#]|$)/
 
 /**
  * Extracts the repository owner and name from a GitHub URL.

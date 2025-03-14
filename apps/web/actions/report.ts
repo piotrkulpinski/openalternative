@@ -4,7 +4,7 @@ import { db } from "@openalternative/db"
 import { z } from "zod"
 import { createServerAction } from "zsa"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
-import { reportSchema } from "~/server/schemas"
+import { reportSchema } from "~/server/web/shared/schemas"
 
 export const reportTool = createServerAction()
   .input(reportSchema.extend({ toolSlug: z.string() }))

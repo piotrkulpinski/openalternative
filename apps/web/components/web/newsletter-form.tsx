@@ -11,7 +11,7 @@ import { Button } from "~/components/common/button"
 import { Form, FormControl, FormField } from "~/components/common/form"
 import { Hint } from "~/components/common/hint"
 import { Input } from "~/components/common/input"
-import { type NewsletterSchema, newsletterSchema } from "~/server/schemas"
+import { type NewsletterSchema, newsletterSchema } from "~/server/web/shared/schemas"
 import { cx } from "~/utils/cva"
 
 type ButtonProps = ComponentProps<typeof Button>

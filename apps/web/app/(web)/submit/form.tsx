@@ -23,7 +23,7 @@ import { Hint } from "~/components/common/hint"
 import { Input } from "~/components/common/input"
 import { FeatureNudge } from "~/components/web/feature-nudge"
 import { useSession } from "~/lib/auth-client"
-import { type SubmitToolSchema, submitToolSchema } from "~/server/schemas"
+import { type SubmitToolSchema, submitToolSchema } from "~/server/web/shared/schemas"
 import { cx } from "~/utils/cva"
 
 export const SubmitForm = ({ className, ...props }: ComponentProps<"form">) => {

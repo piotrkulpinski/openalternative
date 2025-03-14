@@ -8,7 +8,7 @@ import { subscribeToNewsletter } from "~/actions/subscribe"
 import { isProd } from "~/env"
 import { auth } from "~/lib/auth"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
-import { submitToolSchema } from "~/server/schemas"
+import { submitToolSchema } from "~/server/web/shared/schemas"
 import { inngest } from "~/services/inngest"
 import { isDisposableEmail } from "~/utils/helpers"
 
