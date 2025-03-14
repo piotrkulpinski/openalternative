@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, BadgeCheckIcon, HashIcon } from "lucide-react"
+import { ArrowUpRightIcon, HashIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Image from "next/image"
 import { notFound } from "next/navigation"
@@ -10,7 +10,6 @@ import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
 import { H2, H4, H5 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
-import { Tooltip } from "~/components/common/tooltip"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
 import { Listing } from "~/components/web/listing"
@@ -25,6 +24,7 @@ import { FaviconImage } from "~/components/web/ui/favicon"
 import { IntroDescription } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { Tag } from "~/components/web/ui/tag"
+import { VerifiedBadge } from "~/components/web/verified-badge"
 import { metadataConfig } from "~/config/metadata"
 import { getToolSuffix } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
@@ -109,11 +109,7 @@ export default async function ToolPage(props: PageProps) {
                     {tool.name}
                   </H2>
 
-                  {tool.owner && (
-                    <Tooltip tooltip="Verified">
-                      <BadgeCheckIcon className="-ml-1.5 -mb-[0.25em] size-6 fill-blue-500 stroke-background" />
-                    </Tooltip>
-                  )}
+                  {tool.owner && <VerifiedBadge size="lg" />}
                 </Stack>
 
                 <ToolActions tool={tool} />

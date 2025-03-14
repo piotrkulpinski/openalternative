@@ -1,4 +1,4 @@
-import { ArrowRightIcon, BadgeCheckIcon } from "lucide-react"
+import { ArrowRightIcon } from "lucide-react"
 import Image from "next/image"
 import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
@@ -6,10 +6,10 @@ import { Button } from "~/components/common/button"
 import { H2 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
-import { Tooltip } from "~/components/common/tooltip"
 import { Markdown } from "~/components/web/markdown"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { FaviconImage } from "~/components/web/ui/favicon"
+import { VerifiedBadge } from "~/components/web/verified-badge"
 import type { ToolManyExtended } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
@@ -35,11 +35,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
 
             <H2 className="!leading-tight truncate">{tool.name}</H2>
 
-            {tool.owner && (
-              <Tooltip tooltip="Verified">
-                <BadgeCheckIcon className="-ml-1.5 -mb-[0.25em] size-6 fill-blue-500 stroke-background" />
-              </Tooltip>
-            )}
+            {tool.owner && <VerifiedBadge size="lg" />}
           </Link>
         </Stack>
 

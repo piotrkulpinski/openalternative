@@ -3,11 +3,11 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { Tool } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
-import { BadgeCheckIcon } from "lucide-react"
 import type { Dispatch, SetStateAction } from "react"
 import { ToolActions } from "~/app/admin/tools/_components/tool-actions"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
+import { VerifiedBadge } from "~/components/web/verified-badge"
 import type { DataTableRowAction } from "~/types"
 
 type GetColumnsProps = {
@@ -54,9 +54,7 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Tool>[]
 
         return (
           <DataTableLink href={`/admin/tools/${slug}`} image={faviconUrl} title={name}>
-            {ownerId && (
-              <BadgeCheckIcon className="-ml-1 -mb-[0.15em] size-4 fill-blue-500 stroke-background" />
-            )}
+            {ownerId && <VerifiedBadge size="sm" />}
           </DataTableLink>
         )
       },

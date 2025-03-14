@@ -1,17 +1,17 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { cx } from "cva"
 import { formatDistanceToNowStrict } from "date-fns"
-import { BadgeCheckIcon, GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
+import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { Card, CardDescription, CardHeader } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
-import { Tooltip } from "~/components/common/tooltip"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { Favicon } from "~/components/web/ui/favicon"
 import { Insights } from "~/components/web/ui/insights"
+import { VerifiedBadge } from "~/components/web/verified-badge"
 import type { ToolMany } from "~/server/web/tools/payloads"
 
 type ToolCardProps = ComponentProps<typeof Card> & {
@@ -44,11 +44,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
             {tool.name}
           </H4>
 
-          {tool.owner && (
-            <Tooltip tooltip="Verified">
-              <BadgeCheckIcon className="-ml-1.5 -mb-[0.15em] size-5 fill-blue-500 stroke-background" />
-            </Tooltip>
-          )}
+          {tool.owner && <VerifiedBadge size="md" className="-ml-1.5" />}
 
           <ToolBadges tool={tool} className="ml-auto" />
         </CardHeader>

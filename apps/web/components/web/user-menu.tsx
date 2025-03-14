@@ -1,8 +1,6 @@
-"use client"
-
 import { getInitials } from "@curiousleaf/utils"
 import { ShieldHalfIcon, UserIcon } from "lucide-react"
-import { usePathname } from "next/navigation"
+import { headers } from "next/headers"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/common/avatar"
 import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
@@ -17,24 +15,15 @@ import {
 import { Link } from "~/components/common/link"
 import { NavLink } from "~/components/web/ui/nav-link"
 import { UserLogout } from "~/components/web/user-logout"
-import { useSession } from "~/lib/auth-client"
+import { auth } from "~/lib/auth"
 
-const UserMenu = () => {
-  const pathname = usePathname()
-  const { data: session, isPending } = useSession()
-
-  if (isPending) {
-    return (
-      <Button size="sm" variant="secondary" disabled>
-        Sign In
-      </Button>
-    )
-  }
+const UserMenu = async () => {
+  const session = await auth.api.getSession({ headers: await headers() })
 
   if (!session?.user) {
     return (
       <Button size="sm" variant="secondary" asChild>
-        <Link href={`/auth/login?next=${pathname}`}>Sign In</Link>
+        <Link href="/auth/login">Sign In</Link>
       </Button>
     )
   }
@@ -83,4 +72,12 @@ const UserMenu = () => {
   )
 }
 
-export { UserMenu }
+const UserMenuSkeleton = () => {
+  return (
+    <Button size="sm" variant="secondary" disabled>
+      Sign In
+    </Button>
+  )
+}
+
+export { UserMenu, UserMenuSkeleton }

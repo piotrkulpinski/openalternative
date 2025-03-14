@@ -4,7 +4,13 @@ import { formatDate } from "@curiousleaf/utils"
 import { type Tool, ToolStatus } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import { differenceInDays, formatDistanceToNowStrict } from "date-fns"
-import { CircleDashedIcon, CircleDotDashedIcon, CircleIcon, PlusIcon } from "lucide-react"
+import {
+  CircleDashedIcon,
+  CircleDotDashedIcon,
+  CircleIcon,
+  PlusIcon,
+  SparklesIcon,
+} from "lucide-react"
 import { useQueryStates } from "nuqs"
 import { use, useMemo } from "react"
 import { Button } from "~/components/common/button"
@@ -14,6 +20,7 @@ import { DataTable } from "~/components/data-table/data-table"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
 import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
+import { VerifiedBadge } from "~/components/web/verified-badge"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findTools } from "~/server/admin/tools/queries"
 import { toolsTableParamsSchema } from "~/server/admin/tools/schemas"
@@ -35,13 +42,17 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
         enableHiding: false,
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         cell: ({ row }) => {
-          const { name, slug, status, faviconUrl } = row.original
+          const { name, slug, status, faviconUrl, ownerId } = row.original
 
           if (status === ToolStatus.Draft) {
             return <span className="text-muted-foreground font-medium">{name}</span>
           }
 
-          return <DataTableLink href={`/${slug}`} image={faviconUrl} title={name} />
+          return (
+            <DataTableLink href={`/${slug}`} image={faviconUrl} title={name}>
+              {ownerId && <VerifiedBadge size="sm" />}
+            </DataTableLink>
+          )
         },
       },
       {
@@ -54,7 +65,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
           switch (status) {
             case ToolStatus.Published:
               return (
-                <Stack size="sm">
+                <Stack size="sm" wrap={false}>
                   <CircleIcon className="stroke-3 text-green-600/75 dark:text-green-500/75" />
                   <span className="text-muted-foreground font-medium">
                     {formatDate(publishedAt!)}
@@ -63,7 +74,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
               )
             case ToolStatus.Scheduled:
               return (
-                <Stack size="sm" title={formatDate(publishedAt!)}>
+                <Stack size="sm" wrap={false} title={formatDate(publishedAt!)}>
                   <CircleDotDashedIcon className="stroke-3 text-yellow-700/75 dark:text-yellow-500/75" />
                   <span className="text-muted-foreground font-medium">
                     Scheduled{" "}
@@ -77,7 +88,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
               )
             case ToolStatus.Draft:
               return (
-                <Stack size="sm">
+                <Stack size="sm" wrap={false}>
                   <CircleDashedIcon className="stroke-3 text-muted-foreground/75" />
                   <span className="text-muted-foreground/75">Awaiting review</span>
                 </Stack>
@@ -86,7 +97,16 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
               return ""
           }
         },
-        size: 0,
+      },
+      {
+        accessorKey: "pageviews",
+        enableHiding: false,
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Views (last 30d)" />,
+        cell: ({ row }) => (
+          <span className="text-muted-foreground">
+            {row.getValue<number>("pageviews")?.toLocaleString()}
+          </span>
+        ),
       },
       {
         accessorKey: "createdAt",
@@ -97,7 +117,6 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
             {formatDate(row.getValue<Date>("createdAt"))}
           </span>
         ),
-        size: 0,
       },
       {
         id: "actions",
@@ -115,14 +134,19 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
               )}
 
               {!isFeatured && (
-                <Button size="sm" variant="primary" asChild>
-                  <Link href={`/submit/${slug}`}>Feature</Link>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  prefix={<SparklesIcon className="text-inherit" />}
+                  className="text-blue-600 dark:text-blue-400"
+                  asChild
+                >
+                  <Link href={`/submit/${slug}`}>Promote</Link>
                 </Button>
               )}
             </Stack>
           )
         },
-        size: 0,
       },
     ]
   }, [])
