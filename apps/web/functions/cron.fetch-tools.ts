@@ -1,6 +1,7 @@
 import { ToolStatus } from "@openalternative/db/client"
 import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
+import { getPageAnalytics } from "~/lib/analytics"
 import { getMilestoneReached } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { getPostMilestoneTemplate, getPostTemplate, sendSocialPost } from "~/lib/socials"
@@ -22,7 +23,11 @@ export const fetchTools = inngest.createFunction(
     await step.run("fetch-repository-data", async () => {
       return await Promise.all(
         tools.map(async tool => {
-          const updatedTool = await getToolRepositoryData(tool.repositoryUrl)
+          const [updatedTool, { pageviews }] = await Promise.all([
+            getToolRepositoryData(tool.repositoryUrl),
+            getPageAnalytics(tool.slug),
+          ])
+
           logger.info(`Updated tool data for ${tool.name}`, { updatedTool })
 
           if (!updatedTool) {
@@ -43,7 +48,7 @@ export const fetchTools = inngest.createFunction(
 
           return db.tool.update({
             where: { id: tool.id },
-            data: updatedTool,
+            data: { ...updatedTool, pageviews },
           })
         }),
       )

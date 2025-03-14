@@ -165,6 +165,7 @@ model Tool {
   discountAmount  String?
   firstCommitDate DateTime?
   lastCommitDate  DateTime?
+  pageviews       Int?                     @default(0)
   status          ToolStatus               @default(Draft)
   publishedAt     DateTime?
   createdAt       DateTime                 @default(now())

@@ -41,7 +41,6 @@ const getSubscribers = async () => {
   const allSubscribers: BeehiivSubscription[] = []
   let currentPage = 1
   let hasMorePages = true
-  let totalResults = 0
 
   const baseParams = {
     limit: "100",
@@ -61,11 +60,6 @@ const getSubscribers = async () => {
         .auth(`Bearer ${env.BEEHIIV_API_KEY}`)
         .get()
         .json<SubscribersResponse>()
-
-      // Store total_results from first response
-      if (currentPage === 1) {
-        totalResults = response.total_results
-      }
 
       const subscribers = response.data
       const oldestSubscriber = subscribers[subscribers.length - 1]
@@ -105,7 +99,8 @@ const getSubscribers = async () => {
       value: subscribersByDate[format(day, "yyyy-MM-dd")] || 0,
     }))
 
-    const totalSubscribers = totalResults
+    // Use number of subscribers from the last 30 days instead of all-time total
+    const totalSubscribers = allSubscribers.length
     const averageSubscribers = results.reduce((sum, day) => sum + day.value, 0) / results.length
 
     return { results, totalSubscribers, averageSubscribers }

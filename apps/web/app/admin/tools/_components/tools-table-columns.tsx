@@ -94,6 +94,12 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Tool>[]
       size: 0,
     },
     {
+      accessorKey: "pageviews",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Pageviews" />,
+      cell: ({ row }) => <span className="text-muted-foreground">{row.getValue("pageviews")}</span>,
+      size: 0,
+    },
+    {
       accessorKey: "status",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
       cell: ({ row }) => <span className="text-muted-foreground">{row.getValue("status")}</span>,
