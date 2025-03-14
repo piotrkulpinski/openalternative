@@ -6,7 +6,6 @@ import { getMilestoneReached } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { getPostMilestoneTemplate, getPostTemplate, sendSocialPost } from "~/lib/socials"
 import { isToolPublished } from "~/lib/tools"
-import { findRandomTool } from "~/server/web/tools/queries"
 import { inngest } from "~/services/inngest"
 
 export const fetchTools = inngest.createFunction(
@@ -25,7 +24,7 @@ export const fetchTools = inngest.createFunction(
         tools.map(async tool => {
           const [updatedTool, { pageviews }] = await Promise.all([
             getToolRepositoryData(tool.repositoryUrl),
-            getPageAnalytics(tool.slug),
+            getPageAnalytics(`/${tool.slug}`),
           ])
 
           logger.info(`Updated tool data for ${tool.name}`, { updatedTool })
@@ -56,7 +55,8 @@ export const fetchTools = inngest.createFunction(
 
     // Post on Socials about a random tool
     await step.run("post-on-socials", async () => {
-      const tool = await findRandomTool()
+      const publishedTools = tools.filter(isToolPublished)
+      const tool = publishedTools[Math.floor(Math.random() * publishedTools.length)]
 
       if (tool) {
         const template = await getPostTemplate(tool)

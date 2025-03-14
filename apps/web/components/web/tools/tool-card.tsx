@@ -46,7 +46,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
           {tool.owner && (
             <Tooltip tooltip="Verified">
-              <BadgeCheckIcon className="-ml-1.5 -mb-[0.25em] size-5 fill-blue-500 stroke-background" />
+              <BadgeCheckIcon className="-ml-1.5 -mb-[0.15em] size-5 fill-blue-500 stroke-background" />
             </Tooltip>
           )}
 

@@ -99,7 +99,7 @@ export default async function ToolPage(props: PageProps) {
     <div className="flex flex-col gap-12">
       <Section>
         <Section.Content className="max-md:contents">
-          <div className="flex flex-1 flex-col items-start gap-4 max-md:order-1 md:gap-6 lg:gap-8">
+          <div className="flex flex-1 flex-col items-start gap-6 max-md:order-1 md:gap-8">
             <div className="flex w-full flex-col items-start gap-y-4">
               <Stack className="w-full">
                 <FaviconImage src={tool.faviconUrl} title={tool.name} className="size-8" />

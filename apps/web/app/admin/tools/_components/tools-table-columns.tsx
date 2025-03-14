@@ -3,10 +3,9 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { Tool } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
-import { ShieldIcon } from "lucide-react"
+import { BadgeCheckIcon } from "lucide-react"
 import type { Dispatch, SetStateAction } from "react"
 import { ToolActions } from "~/app/admin/tools/_components/tool-actions"
-import { Badge } from "~/components/common/badge"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
 import type { DataTableRowAction } from "~/types"
@@ -56,9 +55,7 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Tool>[]
         return (
           <DataTableLink href={`/admin/tools/${slug}`} image={faviconUrl} title={name}>
             {ownerId && (
-              <Badge size="sm" variant="outline" prefix={<ShieldIcon />} className="text-blue-500">
-                Claimed
-              </Badge>
+              <BadgeCheckIcon className="-ml-1 -mb-[0.15em] size-4 fill-blue-500 stroke-background" />
             )}
           </DataTableLink>
         )
@@ -96,7 +93,9 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Tool>[]
     {
       accessorKey: "pageviews",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Pageviews" />,
-      cell: ({ row }) => <span className="text-muted-foreground">{row.getValue("pageviews")}</span>,
+      cell: ({ row }) => (
+        <span className="text-muted-foreground">{row.getValue("pageviews")?.toLocaleString()}</span>
+      ),
       size: 0,
     },
     {
