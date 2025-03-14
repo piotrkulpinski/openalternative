@@ -144,7 +144,6 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           <NavLink href="/blog">Blog</NavLink>
           <NavLink href="/advertise">Advertise</NavLink>
           <NavLink href="/submit">Add a Free Listing</NavLink>
-          <NavLink href="/tools/github-stack-analyzer">Stack Analyzer</NavLink>
         </Stack>
 
         <Stack direction="column" className="text-sm/normal md:col-span-3">

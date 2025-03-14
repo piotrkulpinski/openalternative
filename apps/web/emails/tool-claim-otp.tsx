@@ -4,13 +4,13 @@ import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-type ToolClaimOtpEmailProps = EmailWrapperProps & {
+type EmailProps = EmailWrapperProps & {
   tool: Tool | Jsonify<Tool>
   otp: string
   expiresIn: number
 }
 
-export const ToolClaimOtpEmail = ({ tool, otp, expiresIn, ...props }: ToolClaimOtpEmailProps) => {
+const EmailToolClaimOtp = ({ tool, otp, expiresIn, ...props }: EmailProps) => {
   const previewText = `Your OTP code to claim ${tool.name} on ${config.site.name}`
 
   return (
@@ -41,4 +41,4 @@ export const ToolClaimOtpEmail = ({ tool, otp, expiresIn, ...props }: ToolClaimO
   )
 }
 
-export default ToolClaimOtpEmail
+export default EmailToolClaimOtp

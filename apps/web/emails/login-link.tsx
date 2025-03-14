@@ -3,7 +3,7 @@ import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-export type EmailProps = EmailWrapperProps & {
+type EmailProps = EmailWrapperProps & {
   url: string
 }
 

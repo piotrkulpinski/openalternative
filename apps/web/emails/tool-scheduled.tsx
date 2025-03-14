@@ -6,7 +6,7 @@ import { config } from "~/config"
 import { EmailExpediteNudge } from "~/emails/components/expedite-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-export type EmailProps = EmailWrapperProps & {
+type EmailProps = EmailWrapperProps & {
   tool: Tool | Jsonify<Tool>
 }
 

@@ -5,7 +5,7 @@ import { db } from "@openalternative/db"
 import { addMinutes } from "date-fns"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"
-import { ToolClaimOtpEmail } from "~/emails/tool-claim-otp"
+import EmailToolClaimOtp from "~/emails/tool-claim-otp"
 import { sendEmails } from "~/lib/email"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { userProcedure } from "~/lib/safe-actions"
@@ -66,7 +66,7 @@ export const sendToolClaimOtp = userProcedure
     await sendEmails({
       to,
       subject,
-      react: ToolClaimOtpEmail({ tool, otp, expiresIn: OTP_EXPIRATION_MINUTES, to, subject }),
+      react: EmailToolClaimOtp({ tool, otp, expiresIn: OTP_EXPIRATION_MINUTES, to, subject }),
     })
 
     return { success: true }

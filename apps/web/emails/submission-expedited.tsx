@@ -4,7 +4,7 @@ import type { Jsonify } from "inngest/helpers/jsonify"
 import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-export type EmailProps = EmailWrapperProps & {
+type EmailProps = EmailWrapperProps & {
   tool: Tool | Jsonify<Tool>
 }
 

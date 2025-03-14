@@ -61,6 +61,27 @@ export const getProducts = (
 }
 
 /**
+ * Determine if a product should be featured in the UI.
+ *
+ * @param index - The index of the product in the list.
+ * @param products - The list of all products.
+ * @param coupon - The coupon being applied, if any.
+ * @param isDiscounted - Whether the product is eligible for a discount.
+ * @returns Whether the product should be featured.
+ */
+export const isProductFeatured = (
+  index: number,
+  products: Stripe.Product[],
+  coupon?: Stripe.Coupon,
+  isDiscounted = true,
+) => {
+  if (!coupon) return index === products.length - 1
+
+  const lastDiscountedIndex = getLastDiscountedProductIndex(products, coupon)
+  return isDiscounted && index === lastDiscountedIndex
+}
+
+/**
  * Check if a product is eligible for a discount with the given coupon.
  *
  * @param productId - The ID of the product to check.
@@ -86,27 +107,6 @@ export const getLastDiscountedProductIndex = (
     (lastIdx, product, idx) => (isProductDiscounted(product.id, coupon) ? idx : lastIdx),
     -1,
   )
-}
-
-/**
- * Determine if a product should be featured in the UI.
- *
- * @param index - The index of the product in the list.
- * @param products - The list of all products.
- * @param coupon - The coupon being applied, if any.
- * @param isDiscounted - Whether the product is eligible for a discount.
- * @returns Whether the product should be featured.
- */
-export const isProductFeatured = (
-  index: number,
-  products: Stripe.Product[],
-  coupon?: Stripe.Coupon,
-  isDiscounted = true,
-) => {
-  if (!coupon) return index === products.length - 1
-
-  const lastDiscountedIndex = getLastDiscountedProductIndex(products, coupon)
-  return isDiscounted && index === lastDiscountedIndex
 }
 
 /**

@@ -6,12 +6,6 @@ import { redis } from "~/services/redis"
 import { tryCatch } from "~/utils/helpers"
 
 const limiters = {
-  stackAnalysis: new Ratelimit({
-    redis,
-    analytics: true,
-    limiter: Ratelimit.slidingWindow(10, "12 h"), // 5 attempts per 12 hours
-  }),
-
   submission: new Ratelimit({
     redis,
     analytics: true,

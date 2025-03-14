@@ -65,6 +65,7 @@
     "zsa-react": "^0.2.3"
   },
   "devDependencies": {
+    "@specfy/stack-analyser": "^1.8.5",
     "@tailwindcss/postcss": "^4.0.9",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^22.13.9",
