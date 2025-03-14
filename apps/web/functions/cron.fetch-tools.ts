@@ -9,7 +9,7 @@ import { isToolPublished } from "~/lib/tools"
 import { inngest } from "~/services/inngest"
 
 export const fetchTools = inngest.createFunction(
-  { id: "fetch-tools", retries: 1 },
+  { id: "fetch-tools", retries: 0 },
   { cron: "TZ=Europe/Warsaw 0 0 * * *" }, // Every day at midnight
 
   async ({ step, db, logger }) => {

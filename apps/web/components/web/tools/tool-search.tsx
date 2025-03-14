@@ -29,6 +29,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
 
   const sortOptions = [
     { value: "publishedAt.desc", label: "Latest" },
+    { value: "pageviews.desc", label: "Most Popular" },
     { value: "name.asc", label: "Name (A to Z)" },
     { value: "name.desc", label: "Name (Z to A)" },
     { value: "stars.desc", label: "Most Stars" },
