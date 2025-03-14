@@ -1,14 +1,14 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { cx } from "cva"
 import { formatDistanceToNowStrict } from "date-fns"
-import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
+import { BadgeCheckIcon, GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { ComponentProps } from "react"
-import { Badge } from "~/components/common/badge"
 import { Card, CardDescription, CardHeader } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
+import { Tooltip } from "~/components/common/tooltip"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { Favicon } from "~/components/web/ui/favicon"
 import { Insights } from "~/components/web/ui/insights"
@@ -44,9 +44,13 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
             {tool.name}
           </H4>
 
-          <ToolBadges tool={tool} className="ml-auto">
-            {tool.discountAmount && <Badge variant="success">Get {tool.discountAmount}!</Badge>}
-          </ToolBadges>
+          {tool.owner && (
+            <Tooltip tooltip="Verified">
+              <BadgeCheckIcon className="-ml-1.5 -mb-[0.25em] size-5 fill-blue-500 stroke-background" />
+            </Tooltip>
+          )}
+
+          <ToolBadges tool={tool} className="ml-auto" />
         </CardHeader>
 
         <div className="relative size-full flex flex-col">

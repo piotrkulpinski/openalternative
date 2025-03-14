@@ -24,6 +24,10 @@ export const toolStackPayload = Prisma.validator<Prisma.Tool$stacksArgs>()({
   orderBy: [{ tools: { _count: "desc" } }, { slug: "asc" }],
 })
 
+export const toolOwnerPayload = Prisma.validator<Prisma.Tool$ownerArgs>()({
+  select: { id: true },
+})
+
 export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   name: true,
   slug: true,
@@ -48,7 +52,7 @@ export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   publishedAt: true,
   updatedAt: true,
   license: true,
-  owner: true,
+  owner: toolOwnerPayload,
   alternatives: toolAlternativesPayload,
   categories: toolCategoriesPayload,
   topics: toolTopicsPayload,
@@ -64,12 +68,14 @@ export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({
   stars: true,
   forks: true,
   faviconUrl: true,
+  discountCode: true,
   discountAmount: true,
   firstCommitDate: true,
   lastCommitDate: true,
   publishedAt: true,
   createdAt: true,
   updatedAt: true,
+  owner: toolOwnerPayload,
   alternatives: { ...toolAlternativesPayload, take: 1 },
 })
 
@@ -87,7 +93,8 @@ export const toolManyExtendedPayload = Prisma.validator<Prisma.ToolSelect>()({
   publishedAt: true,
   createdAt: true,
   updatedAt: true,
-  categories: true,
+  owner: toolOwnerPayload,
+  categories: toolCategoriesPayload,
 })
 
 export type ToolOne = Prisma.ToolGetPayload<{ select: typeof toolOnePayload }>

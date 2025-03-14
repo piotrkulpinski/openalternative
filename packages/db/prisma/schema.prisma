@@ -180,6 +180,7 @@ model Tool {
   reports      Report[]
   owner        User?         @relation(fields: [ownerId], references: [id])
   ownerId      String?
+  claims       Claim[]
 
   @@index([id, slug])
   @@index([name])
@@ -270,14 +271,14 @@ model Stack {
 
 model Report {
   id        String     @id @default(cuid())
-  toolId    String
   type      ReportType
   message   String?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 
   // Relations
-  tool Tool @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  tool   Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  toolId String
 
   // Indexes
   @@index([toolId])
@@ -297,4 +298,21 @@ model Bookmark {
   @@unique([userId, toolId])
   @@index([userId])
   @@index([toolId])
+}
+
+model Claim {
+  id        String   @id @default(cuid())
+  email     String
+  otp       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tool   Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  toolId String
+
+  // Indexes
+  @@index([toolId])
+  @@index([email])
 }

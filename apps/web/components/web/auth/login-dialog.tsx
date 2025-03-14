@@ -20,7 +20,7 @@ export const LoginDialog = ({ description, isOpen, setIsOpen }: LoginDialogProps
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-xs">
+      <DialogContent className="max-w-sm">
         <DialogHeader>
           <DialogTitle>Sign In</DialogTitle>
 
