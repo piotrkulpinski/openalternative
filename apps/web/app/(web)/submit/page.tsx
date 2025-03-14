@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import { SubmitForm } from "~/app/(web)/submit/form"
-import { Card } from "~/components/common/card"
 import { Link } from "~/components/common/link"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Prose } from "~/components/web/ui/prose"
@@ -29,23 +28,20 @@ export default async function SubmitPage() {
         </Section.Content>
 
         <Section.Sidebar>
-          <Card hover={false}>
-            <Prose className="text-sm/normal">
-              <p>
-                <strong>Note:</strong> Submission alone does not guarantee a feature. Please make
-                sure the software you're submitting is:
-              </p>
+          <Prose className="text-sm/normal">
+            <p>
+              <strong>Note:</strong> Submission alone does not guarantee a feature. We review
+              submissions to ensure they meet the following criteria:
+            </p>
 
-              <ul className="[&_li]:p-0 list-inside p-0">
-                <li>Open source</li>
-                <li>Actively maintained</li>
-                <li>Hosted publicly on GitHub</li>
-                <li>
-                  An <Link href="/alternatives">alternative to popular software</Link>
-                </li>
-              </ul>
-            </Prose>
-          </Card>
+            <ul className="[&_li]:p-0 list-inside p-0">
+              <li>The project is Open Source</li>
+              <li>The project is actively maintained</li>
+              <li>
+                It is an <Link href="/alternatives">alternative to proprietary software</Link>
+              </li>
+            </ul>
+          </Prose>
         </Section.Sidebar>
       </Section>
     </>

@@ -98,8 +98,12 @@ export function ToolForm({
 
   // Update tool
   const { execute: updateToolAction, isPending: isUpdatingTool } = useServerAction(updateTool, {
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       toast.success("Tool successfully updated")
+
+      if (data.slug !== tool?.slug) {
+        redirect(`/admin/tools/${data.slug}`)
+      }
     },
 
     onError: ({ err }) => {
