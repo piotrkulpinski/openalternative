@@ -4,6 +4,7 @@ import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
 import { addDays, differenceInDays } from "date-fns"
 import { z } from "zod"
+import { config } from "~/config"
 import EmailToolExpediteDeal from "~/emails/tool-expedite-deal"
 import { sendEmails } from "~/lib/email"
 import { adminProcedure } from "~/lib/safe-actions"
@@ -44,7 +45,7 @@ export const sendExpediteDealEmails = adminProcedure.createServerAction().handle
     tools.map(tool => {
       const queue = differenceInDays(tool.publishedAt!, new Date())
       const to = tool.submitterEmail!
-      const subject = `Skip the ${queue}-day queue for ${tool.name} (only 25 spots) 🚀`
+      const subject = `Publish ${tool.name} on ${config.site.name} today (10 spots left) 🚀`
       const react = EmailToolExpediteDeal({ to, subject, tool, queueLength })
 
       return { to, subject, react }

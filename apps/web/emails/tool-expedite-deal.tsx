@@ -26,15 +26,19 @@ const EmailToolExpediteDeal = ({ tool, queueLength = 100, ...props }: EmailProps
         on {config.site.name}.
       </Text>
 
-      <Text>We want to reduce this waiting time, so we're running a special campaign today:</Text>
+      <Text>
+        Today is the <strong>last day</strong> of our special campaign to help reduce this waiting
+        time:
+      </Text>
 
       <Text className="text-green-500 font-semibold">
-        We're offering a special <u>50% discount</u> for the <u>first 25 people</u> in the waiting
-        line, to expedite your listing and get it published within 24 hours!
+        We're offering a special <u>50% discount</u> for expedited listing with{" "}
+        <u>only 10 spots left</u>! Get your tool published within 24 hours instead of waiting in
+        line!
       </Text>
 
       <EmailButton href={`${config.site.url}/submit/${tool.slug}?discountCode=SPECIAL50`}>
-        Publish {tool.name} today!
+        Publish {tool.name} - 10 spots left!
       </EmailButton>
 
       <Heading as="h3">Why should you take the deal?</Heading>
@@ -46,11 +50,6 @@ const EmailToolExpediteDeal = ({ tool, queueLength = 100, ...props }: EmailProps
         <strong>{dateFormatted}</strong>, which means you'll lose{" "}
         <strong>{formatNumber(waitingTime * (config.stats.pageviews / 30))} pageviews</strong> of
         potential exposure.
-      </Text>
-
-      <Text>
-        This is the first (and probably last) time we're running this deal, so it's a great way to
-        get your open-source tool in front of more people.
       </Text>
     </EmailWrapper>
   )
