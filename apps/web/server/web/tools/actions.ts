@@ -4,6 +4,7 @@ import { getUrlHostname } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { addMinutes } from "date-fns"
 import { revalidateTag } from "next/cache"
+import { after } from "next/server"
 import { z } from "zod"
 import EmailToolClaimOtp from "~/emails/tool-claim-otp"
 import { sendEmails } from "~/lib/email"
@@ -20,7 +21,7 @@ const OTP_EXPIRATION_MINUTES = 10
 export const sendToolClaimOtp = userProcedure
   .createServerAction()
   .input(z.object({ toolSlug: z.string(), email: z.string().email() }))
-  .handler(async ({ input: { toolSlug: slug, email } }) => {
+  .handler(async ({ input: { toolSlug: slug, email }, ctx: { user } }) => {
     const ip = await getIP()
     const rateLimitKey = `claim-otp:${ip}`
 
@@ -59,14 +60,22 @@ export const sendToolClaimOtp = userProcedure
 
     // Store OTP in database
     await db.claim.create({
-      data: { toolId: tool.id, email, otp, expiresAt },
+      data: {
+        toolId: tool.id,
+        userId: user.id,
+        email,
+        otp,
+        expiresAt,
+      },
     })
 
     // Send OTP email
-    await sendEmails({
-      to,
-      subject,
-      react: EmailToolClaimOtp({ tool, otp, expiresIn: OTP_EXPIRATION_MINUTES, to, subject }),
+    after(async () => {
+      await sendEmails({
+        to,
+        subject,
+        react: EmailToolClaimOtp({ tool, otp, expiresIn: OTP_EXPIRATION_MINUTES, to, subject }),
+      })
     })
 
     return { success: true }
@@ -105,6 +114,7 @@ export const verifyToolClaimOtp = userProcedure
     const otpRecord = await db.claim.findFirst({
       where: {
         toolId: tool.id,
+        userId: user.id,
         email,
         otp,
         expiresAt: { gt: new Date() },

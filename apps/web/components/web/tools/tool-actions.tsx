@@ -9,7 +9,6 @@ import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { ToolClaimDialog } from "~/components/web/dialogs/tool-claim-dialog"
 import { ToolReportDialog } from "~/components/web/dialogs/tool-report-dialog"
-import { Beam } from "~/components/web/ui/beam"
 import { useSession } from "~/lib/auth-client"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
@@ -33,10 +32,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
           className="text-blue-600 dark:text-blue-400"
           asChild
         >
-          <Link href={`/submit/${tool.slug}`}>
-            Promote
-            <Beam />
-          </Link>
+          <Link href={`/submit/${tool.slug}`}>Promote</Link>
         </Button>
       )}
 

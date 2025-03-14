@@ -66,10 +66,12 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   // Relations
-  accounts  Account[]
-  sessions  Session[]
-  bookmarks Bookmark[]
-  tools     Tool[]
+  accounts Account[]
+  sessions Session[]
+  likes    Like[]
+  tools    Tool[]
+  claims   Claim[]
+  reports  Report[]
 
   // Indexes
   @@index([id])
@@ -176,11 +178,11 @@ model Tool {
   stacks       Stack[]
   license      License?      @relation(fields: [licenseId], references: [id])
   licenseId    String?
-  bookmarkedBy Bookmark[]
+  likes        Like[]
   reports      Report[]
+  claims       Claim[]
   owner        User?         @relation(fields: [ownerId], references: [id])
   ownerId      String?
-  claims       Claim[]
 
   @@index([id, slug])
   @@index([name])
@@ -277,22 +279,24 @@ model Report {
   updatedAt DateTime   @updatedAt
 
   // Relations
-  tool   Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
-  toolId String
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  tool   Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  toolId String?
 
   // Indexes
   @@index([toolId])
 }
 
-model Bookmark {
+model Like {
   id        String   @id @default(cuid())
-  userId    String
-  toolId    String
   createdAt DateTime @default(now())
 
   // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tool Tool @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  tool   Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  toolId String
 
   // Indexes
   @@unique([userId, toolId])
@@ -309,6 +313,8 @@ model Claim {
   updatedAt DateTime @updatedAt
 
   // Relations
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
   tool   Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
   toolId String
 

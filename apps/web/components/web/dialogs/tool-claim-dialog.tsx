@@ -146,13 +146,7 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
   }
 
   if (!session?.user) {
-    return (
-      <LoginDialog
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        description="Login or create an account to claim this tool and get access to your dashboard."
-      />
-    )
+    return <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
   }
 
   return (

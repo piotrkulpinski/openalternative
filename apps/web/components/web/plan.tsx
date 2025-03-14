@@ -18,7 +18,6 @@ import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { PlanIntervalSwitch } from "~/components/web/plan-interval-switch"
 import { Price } from "~/components/web/price"
-import { Beam } from "~/components/web/ui/beam"
 import { usePlanPrices } from "~/hooks/use-plan-prices"
 import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
@@ -140,12 +139,7 @@ const Plan = ({
       className={cx(planVariants({ className }), isFeatured && "lg:-my-3 lg:py-8")}
       {...props}
     >
-      {isFeatured && (
-        <>
-          <Beam />
-          <CardBg />
-        </>
-      )}
+      {isFeatured && <CardBg />}
 
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-2">

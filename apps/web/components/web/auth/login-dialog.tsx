@@ -20,12 +20,14 @@ export const LoginDialog = ({ description, isOpen, setIsOpen }: LoginDialogProps
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-sm">
+      <DialogContent className="max-w-xs">
         <DialogHeader>
           <DialogTitle>Sign In</DialogTitle>
 
           <DialogDescription>
-            <p>{description || "Get access to the dashboard and manage your submitted tools."}</p>
+            <p>
+              {description || "Join the open source community and get access to the dashboard."}
+            </p>
           </DialogDescription>
         </DialogHeader>
 

@@ -25,6 +25,8 @@ import {
 } from "~/components/common/form"
 import { RadioGroup, RadioGroupItem } from "~/components/common/radio-group"
 import { TextArea } from "~/components/common/textarea"
+import { LoginDialog } from "~/components/web/auth/login-dialog"
+import { useSession } from "~/lib/auth-client"
 import { type ReportSchema, reportSchema } from "~/server/web/shared/schemas"
 import type { ToolOne } from "~/server/web/tools/payloads"
 
@@ -35,6 +37,8 @@ type ToolReportDialogProps = {
 }
 
 export const ToolReportDialog = ({ tool, isOpen, setIsOpen }: ToolReportDialogProps) => {
+  const { data: session } = useSession()
+
   const form = useForm<ReportSchema>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
@@ -53,6 +57,10 @@ export const ToolReportDialog = ({ tool, isOpen, setIsOpen }: ToolReportDialogPr
       toast.error(err.message)
     },
   })
+
+  if (!session?.user) {
+    return <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
