@@ -56,7 +56,7 @@ export const ToolReportDialog = ({ tool, isOpen, setIsOpen }: ToolReportDialogPr
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-sm">
         <DialogHeader>
           <DialogTitle>Report {tool.name}</DialogTitle>
           <DialogDescription>What is happening with this tool?</DialogDescription>
@@ -116,8 +116,8 @@ export const ToolReportDialog = ({ tool, isOpen, setIsOpen }: ToolReportDialogPr
                 Cancel
               </Button>
 
-              <Button variant="destructive" className="min-w-28" isPending={isPending}>
-                Report
+              <Button type="submit" className="min-w-28" isPending={isPending}>
+                Send
               </Button>
             </DialogFooter>
           </form>

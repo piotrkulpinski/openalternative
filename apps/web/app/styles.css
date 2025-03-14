@@ -30,7 +30,7 @@
   --color-accent: hsl(0 0% 96%);
   --color-accent-foreground: hsl(0 0% 9%);
 
-  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive: hsl(3 71% 52%);
   --color-destructive-foreground: hsl(0 0% 98%);
 
   --color-chart-1: hsl(12 76% 61%);
@@ -152,12 +152,12 @@
 
   svg.lucide:not([class*="stroke"]),
   svg.brand:not([class*="stroke"]) {
-    @apply !stroke-[1.75];
+    @apply stroke-2;
   }
 
   svg.lucide:not([class*="size-"]):not([class*="h-"]),
   svg.brand:not([class*="size-"]):not([class*="h-"]) {
-    @apply !size-[1em];
+    @apply size-[1em];
   }
 
   [href] svg[class*="arrow-up-right"],

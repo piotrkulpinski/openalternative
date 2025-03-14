@@ -1,4 +1,3 @@
-import type { Category } from "@openalternative/db/client"
 import { AwardIcon } from "lucide-react"
 import { ArrowUpRightIcon } from "lucide-react"
 import { SmilePlusIcon } from "lucide-react"
@@ -25,12 +24,21 @@ import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
 import { findAlternative, findAlternativeSlugs } from "~/server/web/alternatives/queries"
+import type { CategoryMany } from "~/server/web/categories/payloads"
 import { findToolsWithCategories } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
   searchParams: Promise<SearchParams>
 }
+
+type CategoryCount = Record<
+  string,
+  {
+    count: number
+    category: CategoryMany
+  }
+>
 
 const getAlternative = cache(async ({ params }: PageProps) => {
   const { slug } = await params
@@ -84,7 +92,7 @@ export default async function AlternativePage(props: PageProps) {
 
   // Sort the categories by count
   const categories = Object.values(
-    tools.reduce<Record<string, { count: number; category: Category }>>((acc, { categories }) => {
+    tools.reduce<CategoryCount>((acc, { categories }) => {
       for (const category of categories) {
         if (!acc[category.name]) {
           acc[category.name] = { count: 0, category }

@@ -3,6 +3,7 @@ import {
   Container,
   type ContainerProps,
   Head,
+  Heading,
   Hr,
   Html,
   Img,
@@ -35,6 +36,8 @@ export const EmailWrapper = ({ to, subject, signature, children, ...props }: Ema
               />
             </Link>
 
+            <Heading as="h2">{subject}</Heading>
+
             {children}
 
             {signature && (
@@ -48,8 +51,8 @@ export const EmailWrapper = ({ to, subject, signature, children, ...props }: Ema
             <Hr />
 
             <Text className="text-xs/normal text-gray-500">
-              This email was intended for <span className="text-foreground">{to}</span>. If you were
-              not expecting this email, you can ignore it. If you are concerned about your accounts
+              This email was intended for <span className="text-black">{to}</span>. If you were not
+              expecting this email, you can ignore it. If you are concerned about your accounts
               safety, please reply to this email to get in touch with us.
             </Text>
 
