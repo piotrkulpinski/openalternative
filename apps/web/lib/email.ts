@@ -16,6 +16,7 @@ export const sendEmails = async (emails: EmailParams | EmailParams[]) => {
   const emailPromises = emailArray.map(async ({ to, subject, react }) => ({
     from: `${config.site.name} <${config.site.email}>`,
     to: isProd ? to : "delivered@resend.dev",
+    reply_to: config.site.email,
     subject,
     react,
     text: await render(react, { plainText: true }),

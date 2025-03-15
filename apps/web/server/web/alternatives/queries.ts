@@ -47,7 +47,7 @@ export const searchAlternatives = async (
     }),
   ])
 
-  console.log("Alternatives search:", performance.now() - start)
+  console.log("Alternatives search:", Math.round(performance.now() - start), "ms")
 
   const pageCount = Math.ceil(totalCount / perPage)
   return { alternatives, totalCount, pageCount }
