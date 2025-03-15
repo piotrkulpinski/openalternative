@@ -14,7 +14,8 @@ export const sendEmails = async (emails: EmailParams | EmailParams[]) => {
   const emailArray = Array.isArray(emails) ? emails : [emails]
 
   const emailPromises = emailArray.map(async ({ to, subject, react }) => ({
-    from: `${config.site.name} <${config.site.email}>`,
+    // TODO: change to store email domain in env variable
+    from: `${config.site.name} <hello@transactional.openalternative.co>`,
     to: isProd ? to : "delivered@resend.dev",
     reply_to: config.site.email,
     subject,
