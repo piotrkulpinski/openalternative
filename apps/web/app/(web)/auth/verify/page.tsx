@@ -64,14 +64,15 @@ export default async function VerifyPage({ searchParams }: PageProps) {
         ))}
       </Stack>
 
-      <p className="text-xs/relaxed text-muted-foreground/75">
-        Can't see the e-mail? Please check the spam folder. Wrong e-mail?{" "}
+      <p className="text-xs text-muted-foreground/75">
+        No email in your inbox? Check your spam folder or{" "}
         <Link
           href="/auth/login"
           className="text-muted-foreground font-medium hover:text-foreground"
         >
-          Please re-enter your address.
+          try a different email address
         </Link>
+        .
       </p>
     </>
   )
