@@ -32,7 +32,7 @@ export const sendMastodonPost = async (text: string, url?: string) => {
       throw new Error(`Mastodon API error: ${response.statusText}`)
     }
 
-    return await response.json()
+    await response.json()
   } catch (error) {
     console.error("Error posting to Mastodon:", error)
     return null
