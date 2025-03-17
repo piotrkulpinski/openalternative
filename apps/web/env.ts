@@ -26,6 +26,7 @@ export const env = createEnv({
     REDIS_REST_URL: z.string().min(1),
     REDIS_REST_TOKEN: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
+    RESEND_SENDER_EMAIL: z.string().min(1).email(),
     S3_BUCKET: z.string().min(1),
     S3_REGION: z.string().min(1),
     S3_ACCESS_KEY: z.string().min(1),

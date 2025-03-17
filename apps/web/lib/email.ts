@@ -1,7 +1,7 @@
 import { render } from "@react-email/components"
 import type { ReactElement } from "react"
 import { config } from "~/config"
-import { isProd } from "~/env"
+import { env, isProd } from "~/env"
 import { resend } from "~/services/resend"
 
 export type EmailParams = {
@@ -10,18 +10,35 @@ export type EmailParams = {
   react: ReactElement
 }
 
+/**
+ * Prepares an email for sending
+ * @param email - The email to prepare
+ * @returns The prepared email
+ */
+const prepareEmail = async (email: EmailParams) => {
+  return {
+    from: `${config.site.name} <${env.RESEND_SENDER_EMAIL}>`,
+    to: email.to,
+    subject: email.subject,
+    react: email.react,
+    text: await render(email.react, { plainText: true }),
+  }
+}
+
+/**
+ * Sends emails to the given recipients using Resend
+ * @param emails - The email/emails to send
+ * @returns The response from Resend
+ */
 export const sendEmails = async (emails: EmailParams | EmailParams[]) => {
-  const emailArray = Array.isArray(emails) ? emails : [emails]
+  const emailArray = await Promise.all(
+    (Array.isArray(emails) ? emails : [emails]).map(prepareEmail),
+  )
 
-  const emailPromises = emailArray.map(async ({ to, subject, react }) => ({
-    // TODO: change to store email domain in env variable
-    from: `${config.site.name} <hello@transactional.openalternative.co>`,
-    to: isProd ? to : "delivered@resend.dev",
-    reply_to: config.site.email,
-    subject,
-    react,
-    text: await render(react, { plainText: true }),
-  }))
+  if (!isProd) {
+    console.log(emailArray)
+    return
+  }
 
-  return resend.batch.send(await Promise.all(emailPromises))
+  return resend.batch.send(emailArray)
 }

@@ -55,7 +55,7 @@ export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhere
     }),
   ])
 
-  console.log("Tools search:", Math.round(performance.now() - start), "ms")
+  console.log(`Tools search: ${Math.round(performance.now() - start)}ms`)
 
   const pageCount = Math.ceil(totalCount / perPage)
   return { tools, totalCount, pageCount }

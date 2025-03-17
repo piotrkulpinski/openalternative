@@ -43,6 +43,7 @@ export const fetchTools = inngest.createFunction(
 
               if (isToolPublished(tool) && result.data.stars > tool.stars) {
                 const milestone = getMilestoneReached(tool.stars, result.data.stars)
+
                 if (milestone) {
                   const template = getPostMilestoneTemplate(tool, milestone)
                   await sendSocialPost(template, tool)
