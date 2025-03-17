@@ -3,8 +3,8 @@
 import { useEffect } from "react"
 import { Button } from "~/components/common/button"
 import { Link } from "~/components/common/link"
+import { Prose } from "~/components/common/prose"
 import { Intro, IntroTitle } from "~/components/web/ui/intro"
-import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
 
 type ErrorProps = {

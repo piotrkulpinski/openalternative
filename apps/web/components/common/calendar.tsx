@@ -31,7 +31,7 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
           "relative w-full px-1 py-[10%] cursor-pointer rounded-md hover:bg-muted hover:group-data-selected/day:bg-transparent",
         selected: "bg-foreground! text-background!",
         range_middle: "bg-muted! text-foreground! rounded-none",
-        today: "font-semibold text-primary bg-accent",
+        today: "font-semibold text-primary opacity-100",
         outside: "opacity-40",
         disabled: "opacity-40 pointer-events-none",
         hidden: "invisible",

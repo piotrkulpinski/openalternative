@@ -50,30 +50,34 @@ export const Nav = ({ className, links, isCollapsed, ...props }: NavProps) => {
 
         const { href, title, label, suffix, ...props } = link
 
-        return isCollapsed ? (
-          <Tooltip
-            key={index}
-            side="right"
-            tooltip={
-              <Stack size="lg">
-                {title}
-                {label && <span className="opacity-60">{label}</span>}
-              </Stack>
-            }
-          >
-            <Button
-              size="md"
-              variant="ghost"
-              aria-label={title}
-              className={cx(isActive(href) && "bg-accent text-foreground")}
-              hover={false}
-              asChild
-              {...props}
+        if (isCollapsed) {
+          return (
+            <Tooltip
+              key={index}
+              side="right"
+              tooltip={
+                <Stack size="lg">
+                  {title}
+                  {label && <span className="opacity-60">{label}</span>}
+                </Stack>
+              }
             >
-              <Link href={href} />
-            </Button>
-          </Tooltip>
-        ) : (
+              <Button
+                size="md"
+                variant="ghost"
+                aria-label={title}
+                className={cx(isActive(href) && "bg-accent text-foreground")}
+                hover={false}
+                asChild
+                {...props}
+              >
+                <Link href={href} />
+              </Button>
+            </Tooltip>
+          )
+        }
+
+        return (
           <Button
             key={index}
             size="md"

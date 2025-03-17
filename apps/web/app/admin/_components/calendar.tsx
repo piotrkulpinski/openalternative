@@ -46,7 +46,12 @@ const CalendarDay = ({ className, day, tools, currentDate, ...props }: CalendarD
       {...props}
     >
       <Stack size="xs" direction="column">
-        <div className={cx("text-xs", isToday ? "text-red-500 opacity-100" : "opacity-50")}>
+        <div
+          className={cx(
+            "text-xs",
+            isToday ? "font-semibold text-primary opacity-100" : "opacity-50",
+          )}
+        >
           {format(day, "d")}
         </div>
 

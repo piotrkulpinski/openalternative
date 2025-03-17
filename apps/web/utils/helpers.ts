@@ -79,12 +79,3 @@ export const getElementPosition = (id?: string) => {
 
   return { id, top }
 }
-
-/**
- * Generate a random string of digits
- * @param length Length of the digits string
- * @returns Random digits string
- */
-export const getRandomDigits = (length: number) => {
-  return Array.from({ length }, () => Math.floor(Math.random() * 10)).join("")
-}

@@ -1,19 +1,17 @@
 "use server"
 
 import { getUrlHostname } from "@curiousleaf/utils"
+import { getRandomDigits } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
-import { addMinutes } from "date-fns"
+import { addSeconds } from "date-fns"
 import { revalidateTag } from "next/cache"
 import { after } from "next/server"
 import { z } from "zod"
+import { claimsConfig } from "~/config/claims"
 import EmailToolClaimOtp from "~/emails/tool-claim-otp"
 import { sendEmails } from "~/lib/email"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { userProcedure } from "~/lib/safe-actions"
-import { getRandomDigits } from "~/utils/helpers"
-
-// OTP expiration time in minutes
-const OTP_EXPIRATION_MINUTES = 10
 
 /**
  * Send OTP to verify domain ownership
@@ -53,8 +51,8 @@ export const sendToolClaimOtp = userProcedure
     }
 
     // Generate OTP
-    const otp = getRandomDigits(6)
-    const expiresAt = addMinutes(new Date(), OTP_EXPIRATION_MINUTES)
+    const otp = getRandomDigits(claimsConfig.otpLength)
+    const expiresAt = addSeconds(new Date(), claimsConfig.otpExpiration)
     const to = email
     const subject = `Verify domain ownership for ${tool.name}`
 
@@ -74,7 +72,7 @@ export const sendToolClaimOtp = userProcedure
       await sendEmails({
         to,
         subject,
-        react: EmailToolClaimOtp({ tool, otp, expiresIn: OTP_EXPIRATION_MINUTES, to, subject }),
+        react: EmailToolClaimOtp({ tool, otp, to, subject }),
       })
     })
 

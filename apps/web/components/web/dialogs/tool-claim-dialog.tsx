@@ -25,6 +25,7 @@ import {
 import { Input } from "~/components/common/input"
 import { Stack } from "~/components/common/stack"
 import { LoginDialog } from "~/components/web/auth/login-dialog"
+import { claimsConfig } from "~/config/claims"
 import { siteConfig } from "~/config/site"
 import { useSession } from "~/lib/auth-client"
 import { sendToolClaimOtp, verifyToolClaimOtp } from "~/server/web/tools/actions"
@@ -43,9 +44,6 @@ const emailSchema = z.object({
 const otpSchema = z.object({
   otp: z.string().min(6, "Please enter a valid OTP code"),
 })
-
-// Cooldown period in seconds before allowing resend
-const RESEND_COOLDOWN = 60
 
 export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProps) => {
   const { data: session } = useSession()
@@ -90,7 +88,7 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
       toast.success("OTP code sent to your email")
       setVerificationEmail(emailForm.getValues().email)
       setStep("otp")
-      setCooldownRemaining(RESEND_COOLDOWN)
+      setCooldownRemaining(claimsConfig.resendCooldown)
     },
     onError: ({ err }) => {
       toast.error(err.message)
@@ -107,9 +105,9 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
     },
   })
 
-  const handleSendOtp = (data: z.infer<typeof emailSchema>) => {
+  const handleSendOtp = ({ email }: z.infer<typeof emailSchema>) => {
     const toolDomain = getUrlHostname(tool.websiteUrl)
-    const emailDomain = data.email.split("@")[1]
+    const emailDomain = email.split("@")[1]
 
     if (toolDomain !== emailDomain) {
       emailForm.setError("email", {
@@ -120,7 +118,7 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
       return
     }
 
-    sendOtp({ toolSlug: tool.slug, email: data.email })
+    sendOtp({ toolSlug: tool.slug, email })
   }
 
   const handleVerifyOtp = (data: z.infer<typeof otpSchema>) => {
@@ -226,7 +224,10 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
                     <FormItem>
                       <FormLabel>Verification Code</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter the 6-digit code" {...field} />
+                        <Input
+                          placeholder={`Enter the ${claimsConfig.otpLength}-digit code`}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

@@ -1,14 +1,12 @@
 "use client"
 
 import { formatDateRange } from "@curiousleaf/utils"
-import type { AdType } from "@openalternative/db/client"
 import { cx } from "cva"
 import { endOfDay, startOfDay } from "date-fns"
 import { XIcon } from "lucide-react"
 import plur from "plur"
 import posthog from "posthog-js"
 import type { ComponentProps } from "react"
-import type { DateRange } from "react-day-picker"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { createStripeAdsCheckout } from "~/actions/stripe"
@@ -24,12 +22,6 @@ import type { AdMany } from "~/server/web/ads/payloads"
 
 type AdsCalendarProps = ComponentProps<"div"> & {
   ads: AdMany[]
-}
-
-type AdsSelection = {
-  type: AdType
-  dateRange?: DateRange
-  duration?: number
 }
 
 export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {

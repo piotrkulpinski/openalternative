@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { Link } from "~/components/common/link"
+import { Prose } from "~/components/common/prose"
 import { ExternalLink } from "~/components/web/external-link"
 import { Featured } from "~/components/web/featured"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
-import { Prose } from "~/components/web/ui/prose"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 

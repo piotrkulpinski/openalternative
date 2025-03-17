@@ -18,6 +18,10 @@ type LoginDialogProps = {
 export const LoginDialog = ({ description, isOpen, setIsOpen }: LoginDialogProps) => {
   const { data: session } = useSession()
 
+  if (session?.user) {
+    return null
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-w-xs">

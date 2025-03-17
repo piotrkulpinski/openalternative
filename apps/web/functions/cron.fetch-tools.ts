@@ -23,65 +23,61 @@ export const fetchTools = inngest.createFunction(
     await Promise.all([
       // Fetch repository data and handle milestones
       step.run("fetch-repository-data", async () => {
-        return await db.$transaction(async tx => {
-          return await Promise.allSettled(
-            tools.map(async tool => {
-              const result = await tryCatch(getToolRepositoryData(tool.repositoryUrl))
+        return await Promise.allSettled(
+          tools.map(async tool => {
+            const result = await tryCatch(getToolRepositoryData(tool.repositoryUrl))
 
-              if (result.error) {
-                logger.error(`Failed to fetch repository data for ${tool.name}`, {
-                  error: result.error,
-                  slug: tool.slug,
-                })
-
-                return null
-              }
-
-              if (!result.data) {
-                return null
-              }
-
-              if (isToolPublished(tool) && result.data.stars > tool.stars) {
-                const milestone = getMilestoneReached(tool.stars, result.data.stars)
-
-                if (milestone) {
-                  const template = getPostMilestoneTemplate(tool, milestone)
-                  await sendSocialPost(template, tool)
-                }
-              }
-
-              return tx.tool.update({
-                where: { id: tool.id },
-                data: result.data,
+            if (result.error) {
+              logger.error(`Failed to fetch repository data for ${tool.name}`, {
+                error: result.error,
+                slug: tool.slug,
               })
-            }),
-          )
-        })
+
+              return null
+            }
+
+            if (!result.data) {
+              return null
+            }
+
+            if (isToolPublished(tool) && result.data.stars > tool.stars) {
+              const milestone = getMilestoneReached(tool.stars, result.data.stars)
+
+              if (milestone) {
+                const template = getPostMilestoneTemplate(tool, milestone)
+                await sendSocialPost(template, tool)
+              }
+            }
+
+            return db.tool.update({
+              where: { id: tool.id },
+              data: result.data,
+            })
+          }),
+        )
       }),
 
       // Fetch analytics data
       step.run("fetch-analytics-data", async () => {
-        return await db.$transaction(async tx => {
-          return await Promise.allSettled(
-            tools.map(async tool => {
-              const result = await tryCatch(getPageAnalytics(`/${tool.slug}`))
+        return await Promise.allSettled(
+          tools.map(async tool => {
+            const result = await tryCatch(getPageAnalytics(`/${tool.slug}`))
 
-              if (result.error) {
-                logger.error(`Failed to fetch analytics data for ${tool.name}`, {
-                  error: result.error,
-                  slug: tool.slug,
-                })
-
-                return null
-              }
-
-              return tx.tool.update({
-                where: { id: tool.id },
-                data: { pageviews: result.data.pageviews ?? tool.pageviews ?? 0 },
+            if (result.error) {
+              logger.error(`Failed to fetch analytics data for ${tool.name}`, {
+                error: result.error,
+                slug: tool.slug,
               })
-            }),
-          )
-        })
+
+              return null
+            }
+
+            return db.tool.update({
+              where: { id: tool.id },
+              data: { pageviews: result.data.pageviews ?? tool.pageviews ?? 0 },
+            })
+          }),
+        )
       }),
     ])
 

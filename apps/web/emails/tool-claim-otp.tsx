@@ -2,15 +2,15 @@ import type { Tool } from "@openalternative/db/client"
 import { Preview, Section, Text } from "@react-email/components"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
+import { claimsConfig } from "~/config/claims"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 type EmailProps = EmailWrapperProps & {
   tool: Tool | Jsonify<Tool>
   otp: string
-  expiresIn: number
 }
 
-const EmailToolClaimOtp = ({ tool, otp, expiresIn, ...props }: EmailProps) => {
+const EmailToolClaimOtp = ({ tool, otp, ...props }: EmailProps) => {
   const previewText = `Your OTP code to claim ${tool.name} on ${config.site.name}`
 
   return (
@@ -31,7 +31,10 @@ const EmailToolClaimOtp = ({ tool, otp, expiresIn, ...props }: EmailProps) => {
         </Text>
       </Section>
 
-      <Text>This code will expire in {expiresIn} minutes. Do not share this code with anyone.</Text>
+      <Text>
+        This code will expire in {claimsConfig.otpExpiration / 60} minutes. Do not share this code
+        with anyone.
+      </Text>
 
       <Text>
         If you did not request this verification, you can ignore this email. If you are concerned

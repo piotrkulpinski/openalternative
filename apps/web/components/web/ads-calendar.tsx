@@ -6,9 +6,9 @@ import type { DateRange } from "react-day-picker"
 import { Button } from "~/components/common/button"
 import { Calendar } from "~/components/common/calendar"
 import { H4 } from "~/components/common/heading"
-import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
+import { ExternalLink } from "~/components/web/external-link"
 import { Price } from "~/components/web/price"
 import type { AdSpot } from "~/config/ads"
 import type { AdsSelection, useAds } from "~/hooks/use-ads"
@@ -109,7 +109,7 @@ export const AdsCalendar = ({
           {adSpot.preview && (
             <Tooltip tooltip="Preview this ad">
               <Button variant="secondary" size="sm" prefix={<EyeIcon />} asChild>
-                <Link href={adSpot.preview} target="_blank" rel="noopener noreferrer nofollow" />
+                <ExternalLink href={adSpot.preview} />
               </Button>
             </Tooltip>
           )}
