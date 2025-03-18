@@ -49,7 +49,7 @@ export const fetchTools = inngest.createFunction(
               }
             }
 
-            return db.tool.update({
+            await db.tool.update({
               where: { id: tool.id },
               data: result.data,
             })
@@ -60,7 +60,7 @@ export const fetchTools = inngest.createFunction(
       // Fetch analytics data
       step.run("fetch-analytics-data", async () => {
         return await Promise.allSettled(
-          tools.map(async tool => {
+          tools.filter(isToolPublished).map(async tool => {
             const result = await tryCatch(getPageAnalytics(`/${tool.slug}`))
 
             if (result.error) {
@@ -72,7 +72,7 @@ export const fetchTools = inngest.createFunction(
               return null
             }
 
-            return db.tool.update({
+            await db.tool.update({
               where: { id: tool.id },
               data: { pageviews: result.data.pageviews ?? tool.pageviews ?? 0 },
             })
