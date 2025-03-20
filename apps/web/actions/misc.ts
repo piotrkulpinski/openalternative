@@ -2,6 +2,7 @@
 
 import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
+import { revalidateTag } from "next/cache"
 import { z } from "zod"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { adminProcedure } from "~/lib/safe-actions"
@@ -31,7 +32,7 @@ export const fetchRepositoryData = adminProcedure.createServerAction().handler(a
     return { success: false, message: "No tools found" }
   }
 
-  return await Promise.allSettled(
+  await Promise.allSettled(
     tools.map(async tool => {
       const result = await tryCatch(getToolRepositoryData(tool.repositoryUrl))
 
@@ -44,7 +45,18 @@ export const fetchRepositoryData = adminProcedure.createServerAction().handler(a
         return null
       }
 
-      return result.data
+      if (!result.data) {
+        return null
+      }
+
+      await db.tool.update({
+        where: { id: tool.id },
+        data: result.data,
+      })
     }),
   )
+
+  // Revalidate cache
+  revalidateTag("tools")
+  revalidateTag("tool")
 })
