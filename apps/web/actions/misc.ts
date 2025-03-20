@@ -2,13 +2,11 @@
 
 import { db } from "@openalternative/db"
 import { ToolStatus } from "@openalternative/db/client"
-import { addDays, differenceInDays } from "date-fns"
 import { z } from "zod"
-import { config } from "~/config"
-import EmailToolExpediteDeal from "~/emails/tool-expedite-deal"
-import { sendEmails } from "~/lib/email"
+import { getToolRepositoryData } from "~/lib/repositories"
 import { adminProcedure } from "~/lib/safe-actions"
 import { getPostTemplate, sendSocialPost } from "~/lib/socials"
+import { tryCatch } from "~/utils/helpers"
 
 export const testSocialPosts = adminProcedure
   .createServerAction()
@@ -22,33 +20,31 @@ export const testSocialPosts = adminProcedure
     }
   })
 
-export const sendExpediteDealEmails = adminProcedure.createServerAction().handler(async () => {
+export const fetchRepositoryData = adminProcedure.createServerAction().handler(async () => {
   const tools = await db.tool.findMany({
     where: {
-      AND: [
-        { status: ToolStatus.Scheduled },
-        { publishedAt: { gte: addDays(new Date(), 14) } },
-        { AND: [{ submitterEmail: { not: null } }, { submitterEmail: { not: "" } }] },
-      ],
+      status: { in: [ToolStatus.Scheduled, ToolStatus.Published] },
     },
   })
 
   if (tools.length === 0) {
-    return { success: false, message: "No tools found in the waiting queue" }
+    return { success: false, message: "No tools found" }
   }
 
-  const queueLength = await db.tool.count({
-    where: { status: { in: [ToolStatus.Draft, ToolStatus.Scheduled] } },
-  })
+  return await Promise.allSettled(
+    tools.map(async tool => {
+      const result = await tryCatch(getToolRepositoryData(tool.repositoryUrl))
 
-  return await sendEmails(
-    tools.map(tool => {
-      const queue = differenceInDays(tool.publishedAt!, new Date())
-      const to = tool.submitterEmail!
-      const subject = `Publish ${tool.name} on ${config.site.name} today (10 spots left) 🚀`
-      const react = EmailToolExpediteDeal({ to, subject, tool, queueLength })
+      if (result.error) {
+        console.error(`Failed to fetch repository data for ${tool.name}`, {
+          error: result.error,
+          slug: tool.slug,
+        })
 
-      return { to, subject, react }
+        return null
+      }
+
+      return result.data
     }),
   )
 })

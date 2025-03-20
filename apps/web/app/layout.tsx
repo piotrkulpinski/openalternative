@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(config.site.url),
   title: {
     template: `%s – ${config.site.name}`,
-    default: config.site.tagline,
+    default: `${config.site.name} – ${config.site.tagline}`,
   },
   description: config.site.description,
   icons: {

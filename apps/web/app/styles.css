@@ -52,6 +52,7 @@
   --grid-template-columns-lg: repeat(auto-fill, minmax(18rem, 1fr));
   --grid-template-columns-xl: repeat(auto-fill, minmax(20rem, 1fr));
 
+  --animate-ping: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
   --animate-shimmer: shimmer 1.25s cubic-bezier(0.5, 0.25, 0.25, 0.5) infinite;
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
