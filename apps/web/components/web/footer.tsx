@@ -107,7 +107,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
             </Tooltip>
 
             <Tooltip tooltip="Follow us on Mastodon">
-              <NavLink href={config.links.mastodon} target="_blank" rel="me nofollow noreferrer">
+              <NavLink href={config.links.mastodon} target="_blank" rel="nofollow noreferrer">
                 <BrandMastodonIcon className="size-[1.44em] stroke-[1.5]" />
               </NavLink>
             </Tooltip>
@@ -123,6 +123,10 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
                 <BrandMediumIcon className="size-[1.44em] stroke-[1.5]" />
               </NavLink>
             </Tooltip>
+
+            <a rel="me" href={config.links.mastodon} className="hidden">
+              Mastodon
+            </a>
           </Stack>
         </Stack>
 

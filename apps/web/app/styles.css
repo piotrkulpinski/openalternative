@@ -142,8 +142,8 @@
   button,
   label[for],
   [href] [class*="group-hover"] {
-    @apply transition;
-    @apply duration-150;
+    @apply ease-out;
+    @apply duration-100;
     @apply cursor-pointer;
   }
 
