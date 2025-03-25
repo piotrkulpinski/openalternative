@@ -54,9 +54,10 @@ const getAlternative = cache(async ({ params }: PageProps) => {
 const getMetadata = (alternative: AlternativeOne): Metadata => {
   const year = 2025
   const count = alternative._count.tools
+  const displayCount = count > 10 ? "10+" : count > 1 ? count : ""
 
   return {
-    title: `${count > 1 ? `${count} ` : ""}Best Open Source ${alternative.name} Alternatives in ${year}`,
+    title: `${displayCount ? `${displayCount} ` : ""}Best Open Source ${alternative.name} Alternatives in ${year}`,
     description: `A curated collection of the best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
   }
 }
