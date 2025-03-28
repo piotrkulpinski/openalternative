@@ -3,7 +3,6 @@ import {
   Container,
   type ContainerProps,
   Head,
-  Heading,
   Hr,
   Html,
   Img,
@@ -35,8 +34,6 @@ export const EmailWrapper = ({ to, subject, signature, children, ...props }: Ema
                 className="h-6 w-auto"
               />
             </Link>
-
-            <Heading as="h2">{subject}</Heading>
 
             {children}
 
