@@ -25,6 +25,7 @@ export const toolScheduled = inngest.createFunction(
       step.run("generate-content", async () => {
         const { categories, alternatives, ...content } = await generateContentWithRelations(
           tool.websiteUrl,
+          tool.submitterNote ? `Suggested alternatives: ${tool.submitterNote}` : undefined,
         )
 
         return await db.tool.update({

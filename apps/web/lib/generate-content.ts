@@ -56,9 +56,10 @@ const scrapeWebsiteData = async (url: string) => {
 /**
  * Generates content for a tool.
  * @param url The URL of the website to scrape.
+ * @params prompt Additional prompt to add to the system prompt.
  * @returns The generated content.
  */
-export const generateContent = async (url: string) => {
+export const generateContent = async (url: string, prompt?: string) => {
   const anthropic = createAnthropic({ apiKey: env.ANTHROPIC_API_KEY })
   const model = anthropic("claude-3-5-sonnet-latest")
   const scrapedData = await scrapeWebsiteData(url)
@@ -74,6 +75,8 @@ export const generateContent = async (url: string) => {
         Title: ${scrapedData.metadata?.title}
         Description: ${scrapedData.metadata?.description}
         Content: ${scrapedData.markdown}
+        
+        ${prompt}
       `,
     }),
   )
@@ -88,9 +91,10 @@ export const generateContent = async (url: string) => {
 /**
  * Generates content for a tool with relations.
  * @param url The URL of the website to scrape.
+ * @params prompt Additional prompt to add to the system prompt.
  * @returns The generated content.
  */
-export const generateContentWithRelations = async (url: string) => {
+export const generateContentWithRelations = async (url: string, prompt?: string) => {
   const anthropic = createAnthropic({ apiKey: env.ANTHROPIC_API_KEY })
   const model = anthropic("claude-3-5-sonnet-latest")
   const scrapedData = await scrapeWebsiteData(url)
@@ -130,6 +134,8 @@ export const generateContentWithRelations = async (url: string) => {
         Title: ${scrapedData.metadata?.title}
         Description: ${scrapedData.metadata?.description}
         Content: ${scrapedData.markdown}
+
+        ${prompt}
         
         Here is the list of categories to assign to the tool:
         ${categories.map(({ name }) => name).join("\n")}
