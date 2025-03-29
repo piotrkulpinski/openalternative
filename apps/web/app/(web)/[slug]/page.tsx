@@ -8,7 +8,7 @@ import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
 import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
-import { H2, H4, H5 } from "~/components/common/heading"
+import { H2, H4 } from "~/components/common/heading"
 import { Stack } from "~/components/common/stack"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
@@ -199,7 +199,7 @@ export default async function ToolPage(props: PageProps) {
           {/* Categories */}
           {!!tool.categories.length && (
             <Stack size="lg" direction="column" className="w-full max-md:order-7">
-              <H5 as="strong">Categories:</H5>
+              <H4 as="strong">Categories:</H4>
 
               <Stack>
                 {tool.categories?.map(({ slug, name }) => (
@@ -214,7 +214,7 @@ export default async function ToolPage(props: PageProps) {
           {/* Topics */}
           {!!tool.topics.length && (
             <Stack size="lg" direction="column" className="w-full max-md:order-8">
-              <H5 as="strong">Related topics:</H5>
+              <H4 as="strong">Related topics:</H4>
 
               <Stack>
                 {tool.topics.map(({ slug }) => (
