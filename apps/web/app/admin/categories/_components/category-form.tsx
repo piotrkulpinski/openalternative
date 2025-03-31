@@ -1,5 +1,6 @@
 "use client"
 
+import { slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { redirect } from "next/navigation"
 import type { ComponentProps } from "react"
@@ -18,6 +19,7 @@ import {
 } from "~/components/common/form"
 import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
+import { useComputedField } from "~/hooks/use-computed-field"
 import { createCategory, updateCategory } from "~/server/admin/categories/actions"
 import type { findCategoryBySlug } from "~/server/admin/categories/queries"
 import { categorySchema } from "~/server/admin/categories/schemas"
@@ -44,6 +46,14 @@ export function CategoryForm({
       label: category?.label ?? "",
       tools: category?.tools.map(t => t.id) ?? [],
     },
+  })
+
+  // Set the slug based on the name
+  useComputedField({
+    form,
+    sourceField: "name",
+    computedField: "slug",
+    callback: slugify,
   })
 
   // Create category

@@ -1,5 +1,6 @@
 "use client"
 
+import { slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { redirect } from "next/navigation"
 import type { ComponentProps } from "react"
@@ -20,6 +21,7 @@ import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
 import { Switch } from "~/components/common/switch"
 import { TextArea } from "~/components/common/textarea"
+import { useComputedField } from "~/hooks/use-computed-field"
 import { createAlternative, updateAlternative } from "~/server/admin/alternatives/actions"
 import type { findAlternativeBySlug } from "~/server/admin/alternatives/queries"
 import { alternativeSchema } from "~/server/admin/alternatives/schemas"
@@ -51,6 +53,14 @@ export function AlternativeForm({
       discountAmount: alternative?.discountAmount ?? "",
       tools: alternative?.tools.map(t => t.id) ?? [],
     },
+  })
+
+  // Set the slug based on the name
+  useComputedField({
+    form,
+    sourceField: "name",
+    computedField: "slug",
+    callback: slugify,
   })
 
   // Create alternative

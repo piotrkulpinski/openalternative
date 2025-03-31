@@ -4,7 +4,7 @@
 
 <p align="center">
   Discover open source alternatives to popular software.
-  <br>
+  <br />
   <a href="https://openalternative.co"><strong>Learn more »</strong></a>
   <br />
   <br />
@@ -14,14 +14,14 @@
 </p>
 
 <p align="center">
-   <a href="https://github.com/piotrkulpinski/openalternative/stargazers"><img src="https://img.shields.io/github/stars/piotrkulpinski/openalternative" alt="Github Stars"></a>
-   <a href="https://uptime.betterstack.com/?utm_source=status_badge"><img src="https://uptime.betterstack.com/status-badges/v1/monitor/1lyos.svg" alt="Better Stack"></a>
-   <a href="https://github.com/piotrkulpinski/openalternative/blob/main/LICENSE"><img src="https://img.shields.io/github/license/piotrkulpinski/openalternative" alt="License"></a>
-   <a href="https://github.com/piotrkulpinski/openalternative/pulse"><img src="https://img.shields.io/github/commit-activity/m/piotrkulpinski/openalternative" alt="Commits-per-month"></a>
+   <a href="https://github.com/piotrkulpinski/openalternative/stargazers"><img src="https://img.shields.io/github/stars/piotrkulpinski/openalternative" alt="Github Stars" /></a>
+   <a href="https://uptime.betterstack.com/?utm_source=status_badge"><img src="https://uptime.betterstack.com/status-badges/v1/monitor/1lyos.svg" alt="Better Stack" /></a>
+   <a href="https://github.com/piotrkulpinski/openalternative/blob/main/LICENSE"><img src="https://img.shields.io/github/license/piotrkulpinski/openalternative" alt="License" /></a>
+   <a href="https://github.com/piotrkulpinski/openalternative/pulse"><img src="https://img.shields.io/github/commit-activity/m/piotrkulpinski/openalternative" alt="Commits-per-month" /></a>
    <a href="https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/piotrkulpinski/openalternative">
    <img alt="open in devcontainer" src="https://img.shields.io/static/v1?label=Dev%20Containers&message=Enabled&color=blue&logo=visualstudiocode" />
    </a>
-   <a href="https://news.ycombinator.com/item?id=39639386"><img src="https://img.shields.io/badge/Hacker%20News-156-%23FF6600" alt="Hacker News"></a>
+   <a href="https://news.ycombinator.com/item?id=39639386"><img src="https://img.shields.io/badge/Hacker%20News-156-%23FF6600" alt="Hacker News" /></a>
 </p>
 
 <p align="center">
@@ -37,15 +37,11 @@ Our goal is to be your first stop when researching for a new open source service
 
 Join us in creating the biggest **directory of open source software**.
 
-## Sponsors
+## Sponsoring
 
-OpenAlternative is an GPL-3.0-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider [sponsoring OpenAlternative's development](https://openalternative.co/advertise).
+OpenAlternative is an GPL-3.0-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider [sponsoring OpenAlternative's development](https://github.com/sponsors/piotrkulpinski).
 
-<p align="center">
-  <a target="_blank" href="https://openalternative.co/advertise#advertisers">
-    <img alt="Sponsors" src="https://openalternative.co/advertisers/advertisers.webp">
-  </a>
-</p>
+If you'd like to support the project, you could also consider [buying our Next.js boilerplate](https://dirstarter.com) which is the foundation of creating directory websites, just like this one.
 
 ## Services
 
