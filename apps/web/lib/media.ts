@@ -144,7 +144,7 @@ export const uploadScreenshot = async (url: string, s3Key: string): Promise<stri
     reduced_motion: "true",
 
     // Blockers
-    delay: "3",
+    delay: "1",
     block_ads: "true",
     block_chats: "true",
     block_trackers: "true",
@@ -154,6 +154,7 @@ export const uploadScreenshot = async (url: string, s3Key: string): Promise<stri
     format: "webp",
     viewport_width: "1280",
     viewport_height: "720",
+    image_quality: "90",
 
     // Storage options
     store: "true",

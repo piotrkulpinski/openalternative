@@ -61,6 +61,7 @@ export function AlternativeForm({
     sourceField: "name",
     computedField: "slug",
     callback: slugify,
+    enabled: !alternative,
   })
 
   // Create alternative

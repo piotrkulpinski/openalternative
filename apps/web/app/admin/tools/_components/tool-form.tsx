@@ -92,6 +92,7 @@ export function ToolForm({
     sourceField: "name",
     computedField: "slug",
     callback: slugify,
+    enabled: !tool,
   })
 
   // Create tool

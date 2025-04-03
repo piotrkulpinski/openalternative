@@ -54,6 +54,16 @@ export function CategoryForm({
     sourceField: "name",
     computedField: "slug",
     callback: slugify,
+    enabled: !category,
+  })
+
+  // Set the label based on the name
+  useComputedField({
+    form,
+    sourceField: "name",
+    computedField: "label",
+    callback: name => name && `${name} Tools`,
+    enabled: !category,
   })
 
   // Create category
