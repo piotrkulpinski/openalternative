@@ -40,7 +40,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
   ]
 
   return (
-    <Stack size="lg" direction="column" className="w-full">
+    <div className="w-full">
       <Stack className="w-full">
         <div className="relative grow min-w-0">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
@@ -88,8 +88,8 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
       </Stack>
 
       <AnimatedContainer height className="w-full">
-        {enableFilters && isFiltersOpen && <ToolFilters className="animate-fade-in" />}
+        {enableFilters && isFiltersOpen && <ToolFilters className="pt-3" />}
       </AnimatedContainer>
-    </Stack>
+    </div>
   )
 }

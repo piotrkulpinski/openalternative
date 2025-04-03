@@ -148,7 +148,7 @@ export const RelationSelector = ({
 
       <AnimatedContainer height transition={{ ease: "linear", duration: 0.1 }}>
         {!!suggestedRelations.length && (
-          <Stack size="sm" className="animate-fade-in items-start">
+          <Stack size="sm" className="items-start">
             <Tooltip tooltip="AI-suggested relations based on the content of the link. Click a suggested relation to add it.">
               <Stack size="xs" className="mt-px text-xs text-muted-foreground">
                 <SparklesIcon />

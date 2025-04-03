@@ -79,7 +79,7 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
 
       <AnimatedContainer height>
         {hasSelections && (
-          <div className="animate-fade-in flex flex-col gap-3 text-sm text-muted-foreground p-4">
+          <div className="flex flex-col gap-3 text-sm text-muted-foreground p-4">
             {selections.map(selection => {
               if (!selection.dateRange?.from || !selection.dateRange?.to || !selection.duration) {
                 return null
