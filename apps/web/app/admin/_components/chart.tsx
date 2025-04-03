@@ -3,6 +3,7 @@
 import { format } from "date-fns"
 import plur from "plur"
 import type { ComponentProps } from "react"
+import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { cx } from "~/utils/cva"
@@ -21,7 +22,7 @@ type ChartProps = Partial<ComponentProps<"div">> & {
 
 export const Chart = ({ className, cellClassName, data, average, label, ...props }: ChartProps) => {
   if (data.length === 0) {
-    return <p className="text-sm text-muted-foreground">No data available.</p>
+    return <Note>No data available.</Note>
   }
 
   const maxValue = Math.max(...data.map(d => d.value), average || 0)
@@ -35,9 +36,7 @@ export const Chart = ({ className, cellClassName, data, average, label, ...props
         >
           <div className="h-px w-full flex-1 border border-dashed border-foreground/15" />
 
-          <span className="absolute right-0 bottom-1 text-sm text-muted-foreground ">
-            {Math.round(average).toLocaleString()}
-          </span>
+          <Note className="absolute right-0 bottom-1 ">{Math.round(average).toLocaleString()}</Note>
         </div>
       )}
 

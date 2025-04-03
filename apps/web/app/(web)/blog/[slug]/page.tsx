@@ -5,6 +5,7 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 import { Suspense, cache } from "react"
 import { H6 } from "~/components/common/heading"
+import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import {
@@ -79,18 +80,17 @@ export default async function BlogPostPage(props: PageProps) {
           <IntroTitle>{post.title}</IntroTitle>
           <IntroDescription>{post.description}</IntroDescription>
 
-          <Stack className="mt-2 text-sm text-muted-foreground">
-            {/* <Badge size="lg" variant="outline">Uncategorized</Badge> */}
-
-            {post.publishedAt && (
-              <time dateTime={post.publishedAt} className="">
-                {formatDate(post.publishedAt)}
-              </time>
-            )}
-
-            <span className="-mx-1">&bull;</span>
-
-            <span>{getReadTime(post.content)} min read</span>
+          <Stack size="sm" className="mt-2" asChild>
+            <Note>
+              {/* <Badge size="lg" variant="outline">Uncategorized</Badge> */}
+              {post.publishedAt && (
+                <time dateTime={post.publishedAt} className="">
+                  {formatDate(post.publishedAt)}
+                </time>
+              )}
+              <span>&bull;</span>
+              <span>{getReadTime(post.content)} min read</span>
+            </Note>
           </Stack>
         </Intro>
 

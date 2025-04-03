@@ -1,3 +1,4 @@
+import { getUrlHostname } from "@curiousleaf/utils"
 import { useDebouncedState } from "@mantine/hooks"
 import type { Alternative, Category, Tool } from "@openalternative/db/client"
 import { LoaderIcon } from "lucide-react"
@@ -125,10 +126,11 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
             {searchResults.tools.map(tool => (
               <CommandItem
                 key={tool.id}
-                value={`tool:${tool.name}`}
+                value={`tool:${tool.slug}`}
                 onSelect={() => handleSelect(`/admin/tools/${tool.slug}`)}
+                className="justify-between"
               >
-                {tool.name}
+                {tool.name} <span className="opacity-50">{getUrlHostname(tool.websiteUrl)}</span>
               </CommandItem>
             ))}
           </CommandGroup>
@@ -139,7 +141,7 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
             {searchResults.alternatives.map(alternative => (
               <CommandItem
                 key={alternative.id}
-                value={`alternative:${alternative.name}`}
+                value={`alternative:${alternative.slug}`}
                 onSelect={() => handleSelect(`/admin/alternatives/${alternative.slug}`)}
               >
                 {alternative.name}
@@ -153,7 +155,7 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
             {searchResults.categories.map(category => (
               <CommandItem
                 key={category.id}
-                value={`category:${category.name}`}
+                value={`category:${category.slug}`}
                 onSelect={() => handleSelect(`/admin/categories/${category.slug}`)}
               >
                 {category.name}

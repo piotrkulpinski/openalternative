@@ -3,6 +3,7 @@
 import { useEffect } from "react"
 import { Button } from "~/components/common/button"
 import { H3 } from "~/components/common/heading"
+import { Note } from "~/components/common/note"
 
 type ErrorProps = {
   error: Error & { digest?: string }
@@ -18,10 +19,7 @@ export default function Error({ error, reset }: ErrorProps) {
   return (
     <div className="flex flex-col items-start gap-2 max-w-lg">
       <H3>Something went wrong!</H3>
-
-      <p className="text-sm text-muted-foreground">
-        Please try again. If the problem persists, contact support.
-      </p>
+      <Note>Please try again. If the problem persists, contact support.</Note>
 
       <Button className="mt-4" onClick={() => reset()}>
         Try again

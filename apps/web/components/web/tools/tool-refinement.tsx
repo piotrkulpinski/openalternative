@@ -12,6 +12,7 @@ import {
 import type { ComponentProps } from "react"
 import { memo } from "react"
 import { Badge } from "~/components/common/badge"
+import { Note } from "~/components/common/note"
 import { useFilters } from "~/contexts/filter-context"
 import type { FilterOption, FilterType } from "~/types/search"
 import { cx } from "~/utils/cva"
@@ -24,7 +25,7 @@ type ToolRefinementProps = Omit<ComponentProps<typeof Command>, "filter"> & {
   defaultValue?: string
 }
 
-export const ToolRefinement = memo(({
+const ToolRefinementComponent = ({
   filter,
   items,
   isPending,
@@ -83,15 +84,19 @@ export const ToolRefinement = memo(({
         </CommandGroup>
 
         {!isPending && (
-          <CommandEmpty className="px-1 text-sm text-muted-foreground">
-            No results found.
+          <CommandEmpty className="px-1" asChild>
+            <Note as="div">No results found.</Note>
           </CommandEmpty>
         )}
 
         {isPending && (
-          <CommandLoading className="px-1 text-sm text-muted-foreground">Loading...</CommandLoading>
+          <CommandLoading className="px-1" asChild>
+            <Note as="div">Loading...</Note>
+          </CommandLoading>
         )}
       </CommandList>
     </Command>
   )
-})
+}
+
+export const ToolRefinement = memo(ToolRefinementComponent)

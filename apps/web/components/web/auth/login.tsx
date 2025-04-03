@@ -2,6 +2,7 @@ import { LoginButton } from "~/components/web/auth/login-button"
 
 import { LoginForm } from "~/components/web/auth/login-form"
 
+import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 
 export const Login = () => {
@@ -9,9 +10,9 @@ export const Login = () => {
     <Stack direction="column" className="items-stretch w-full">
       <LoginForm />
 
-      <div className="flex items-center justify-center gap-3 my-2 text-sm text-muted-foreground before:flex-1 before:border-t after:flex-1 after:border-t">
+      <Note className="flex items-center justify-center gap-3 my-2 before:flex-1 before:border-t after:flex-1 after:border-t">
         or
-      </div>
+      </Note>
 
       <LoginButton
         provider="google"

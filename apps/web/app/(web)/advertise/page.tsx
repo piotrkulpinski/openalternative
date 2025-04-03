@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Button } from "~/components/common/button"
+import { Note } from "~/components/common/note"
 import { AdsPicker } from "~/components/web/ads-picker"
 import { Advertisers } from "~/components/web/advertisers"
 import { ExternalLink } from "~/components/web/external-link"
@@ -44,9 +45,7 @@ export default async function AdvertisePage() {
       ))}
 
       <div className="flex flex-col items-center text-center gap-6 mt-4" id="advertisers">
-        <p className="text-sm text-muted-foreground">
-          Join these companies in advertising their business on {config.site.name}
-        </p>
+        <Note>Join these companies in advertising their business on {config.site.name}</Note>
 
         <Advertisers />
       </div>

@@ -4,6 +4,7 @@ import { getCurrentPage, getPageLink } from "@curiousleaf/utils"
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"
 import { type ComponentProps, useMemo } from "react"
+import { Note } from "~/components/common/note"
 import { PaginationLink } from "~/components/web/pagination-link"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { type UsePaginationProps, usePagination } from "~/hooks/use-pagination"
@@ -49,12 +50,12 @@ export const Pagination = ({
         prev
       </PaginationLink>
 
-      <p className="text-sm text-muted-foreground md:hidden">
+      <Note className=" md:hidden">
         Page {currentPage} of {pageCount}
-      </p>
+      </Note>
 
       <div className="flex items-center flex-wrap gap-3 max-md:hidden">
-        <span className="text-sm text-muted-foreground">Page:</span>
+        <Note>Page:</Note>
 
         {paginationRange.map((page, index) => (
           <div key={`page-${index}`}>

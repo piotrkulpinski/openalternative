@@ -1,4 +1,5 @@
 import type { ComponentProps } from "react"
+import { Note } from "~/components/common/note"
 import { cx } from "~/utils/cva"
 
 const Table = ({ className, ...props }: ComponentProps<"table">) => {
@@ -62,8 +63,8 @@ const TableCell = ({ className, ...props }: ComponentProps<"td">) => {
   )
 }
 
-const TableCaption = ({ className, ...props }: ComponentProps<"caption">) => {
-  return <caption className={cx("mt-4 text-sm text-muted-foreground", className)} {...props} />
+const TableCaption = ({ className, ...props }: ComponentProps<typeof Note>) => {
+  return <Note as="caption" className={cx("mt-4", className)} {...props} />
 }
 
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption }

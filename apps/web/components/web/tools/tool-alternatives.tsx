@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "~/components/common/button"
+import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { AlternativeHoverCard } from "~/components/web/alternatives/alternative-hover-card"
 import { BrandLink } from "~/components/web/ui/brand-link"
@@ -23,7 +24,7 @@ export const ToolAlternatives = ({ alternatives, limit = 4 }: ToolAlternativesPr
 
   return (
     <Stack size="lg" direction="column">
-      <span className="text-sm text-muted-foreground">Open Source Alternative to:</span>
+      <Note>Open Source Alternative to:</Note>
 
       <Stack>
         {visibleAlternatives.map(alternative => (
