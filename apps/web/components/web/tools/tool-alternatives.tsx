@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "~/components/common/button"
 import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { AlternativeHoverCard } from "~/components/web/alternatives/alternative-hover-card"
 import { BrandLink } from "~/components/web/ui/brand-link"
+import { navLinkVariants } from "~/components/web/ui/nav-link"
 import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type ToolAlternativesProps = {
@@ -38,9 +38,9 @@ export const ToolAlternatives = ({ alternatives, limit = 4 }: ToolAlternativesPr
         ))}
 
         {!shouldShowAll && hiddenCount > 0 && (
-          <Button size="sm" variant="ghost" onClick={() => setShowAll(true)}>
+          <button type="button" className={navLinkVariants()} onClick={() => setShowAll(true)}>
             +{hiddenCount} more
-          </Button>
+          </button>
         )}
       </Stack>
     </Stack>

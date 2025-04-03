@@ -4,16 +4,20 @@ import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const badgeVariants = cva({
-  base: "inline-flex items-center rounded-sm text-secondary-foreground leading-tight border border-transparent whitespace-nowrap",
+  base: "inline-flex items-center rounded-sm text-secondary-foreground font-medium leading-tight border border-transparent whitespace-nowrap",
 
   variants: {
     variant: {
-      primary: "bg-primary text-background hover:[&[href]]:bg-primary/75",
-      soft: "bg-border/50 hover:[&[href]]:bg-border/75 hover:[&[type]]:bg-border/75",
-      outline: "bg-background border-border hover:[&[href]]:bg-accent hover:[&[type]]:bg-accent",
-      success: "bg-green-500/50 text-foreground",
-      warning: "bg-yellow-500/50 text-foreground",
-      danger: "bg-red-500/50 text-foreground",
+      primary: "bg-primary text-background hover:[&[href],&[type]]:bg-primary/75",
+      soft: "bg-border/50 hover:[&[href],&[type]]:bg-border/75",
+      outline: "bg-background border-border hover:[&[href],&[type]]:bg-accent",
+      success:
+        "bg-green-100 border-green-200 text-green-800 dark:bg-green-950 dark:border-green-900 dark:text-green-100 hover:[&[href],&[type]]:opacity-75",
+      warning:
+        "bg-orange-100 border-orange-200 text-orange-800 dark:bg-orange-950 dark:border-orange-900 dark:text-orange-100 hover:[&[href],&[type]]:opacity-75",
+      info: "bg-blue-100 border-blue-200 text-blue-800 dark:bg-blue-950 dark:border-blue-900 dark:text-blue-100 hover:[&[href],&[type]]:opacity-75",
+      danger:
+        "bg-red-100 border-red-200 text-red-800 dark:bg-red-950 dark:border-red-900 dark:text-red-100 hover:[&[href],&[type]]:opacity-75",
     },
     size: {
       sm: "px-1 py-px gap-1 text-[0.625rem]",

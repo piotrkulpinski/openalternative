@@ -45,6 +45,7 @@ export const env = createEnv({
     BLUESKY_USERNAME: z.string().optional(),
     BLUESKY_PASSWORD: z.string().optional(),
     MASTODON_ACCESS_TOKEN: z.string().optional(),
+    GOOGLE_GENERATIVE_AI_API_KEY: z.string().min(1),
     ANTHROPIC_API_KEY: z.string().min(1),
     FIRECRAWL_API_KEY: z.string().min(1),
     LOGTAIL_SOURCE_TOKEN: z.string().min(1),

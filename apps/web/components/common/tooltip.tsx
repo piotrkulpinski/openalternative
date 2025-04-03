@@ -20,7 +20,7 @@ const TooltipContent = ({
       <TooltipPrimitive.Content
         sideOffset={sideOffset}
         className={cx(
-          "z-50 inline-flex items-center gap-2 px-3 py-1.5 bg-foreground text-xs/tight text-background text-pretty rounded-md will-change-[transform,opacity]",
+          "z-50 max-w-xs inline-flex items-center gap-2 px-3 py-1.5 bg-foreground text-xs/tight text-background text-center text-pretty rounded-md will-change-[transform,opacity]",
           className,
         )}
         {...props}

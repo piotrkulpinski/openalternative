@@ -12,7 +12,8 @@ datasource db {
 
 enum AdType {
   Banner
-  Homepage
+  Alternatives
+  Tools
   ToolPage
   BlogPost
   All
@@ -133,7 +134,7 @@ model Ad {
   description String?
   websiteUrl  String
   faviconUrl  String?
-  type        AdType   @default(Homepage)
+  type        AdType   @default(All)
   startsAt    DateTime
   endsAt      DateTime
   createdAt   DateTime @default(now())

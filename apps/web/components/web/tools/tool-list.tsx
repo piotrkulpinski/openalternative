@@ -17,7 +17,7 @@ const ToolList = ({ tools, showAd = true, ...props }: ToolListProps) => {
         <Fragment key={tool.slug}>
           {showAd && Math.min(2, tools.length - 1) === order && (
             <Suspense fallback={<AdCardSkeleton className="sm:order-2" />}>
-              <AdCard type="Homepage" className="sm:order-2" />
+              <AdCard type="Tools" className="sm:order-2" />
             </Suspense>
           )}
 

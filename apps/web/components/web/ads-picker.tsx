@@ -10,6 +10,7 @@ import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { createStripeAdsCheckout } from "~/actions/stripe"
+import { AnimatedContainer } from "~/components/common/animated-container"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
 import { Stack } from "~/components/common/stack"
@@ -76,40 +77,42 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
         ))}
       </div>
 
-      {hasSelections && (
-        <div className="flex flex-col gap-3 text-sm text-muted-foreground p-4">
-          {selections.map(selection => {
-            if (!selection.dateRange?.from || !selection.dateRange?.to || !selection.duration) {
-              return null
-            }
+      <AnimatedContainer height>
+        {hasSelections && (
+          <div className="animate-fade-in flex flex-col gap-3 text-sm text-muted-foreground p-4">
+            {selections.map(selection => {
+              if (!selection.dateRange?.from || !selection.dateRange?.to || !selection.duration) {
+                return null
+              }
 
-            const adSpot = findAdSpot(selection.type)
-            const from = startOfDay(selection.dateRange.from)
-            const to = endOfDay(selection.dateRange.to)
+              const adSpot = findAdSpot(selection.type)
+              const from = startOfDay(selection.dateRange.from)
+              const to = endOfDay(selection.dateRange.to)
 
-            return (
-              <div key={selection.type} className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <span className="flex items-center gap-2 mr-auto">
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    aria-label={`Clear ${adSpot.label} selection`}
-                    prefix={<XIcon />}
-                    onClick={() => clearSelection(selection.type)}
-                  />
+              return (
+                <div key={selection.type} className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <span className="flex items-center gap-2 mr-auto">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      aria-label={`Clear ${adSpot.label} selection`}
+                      prefix={<XIcon />}
+                      onClick={() => clearSelection(selection.type)}
+                    />
 
-                  <div>
-                    <strong className="font-medium text-foreground">{adSpot.label}</strong> – (
-                    {selection.duration} {plur("day", selection.duration)})
-                  </div>
-                </span>
+                    <div>
+                      <strong className="font-medium text-foreground">{adSpot.label}</strong> – (
+                      {selection.duration} {plur("day", selection.duration)})
+                    </div>
+                  </span>
 
-                <span>{formatDateRange(from, to)}</span>
-              </div>
-            )
-          })}
-        </div>
-      )}
+                  <span>{formatDateRange(from, to)}</span>
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </AnimatedContainer>
 
       <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground text-center p-4 sm:justify-between sm:text-start">
         {price ? (

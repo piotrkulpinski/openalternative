@@ -1,5 +1,6 @@
 import type { AdType } from "@openalternative/db/client"
 import { ArrowUpRightIcon } from "lucide-react"
+import { Slot } from "radix-ui"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
@@ -13,7 +14,7 @@ import {
 import { H4 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
 import { ExternalLink } from "~/components/web/external-link"
-import { Favicon } from "~/components/web/ui/favicon"
+import { Favicon, FaviconImage } from "~/components/web/ui/favicon"
 import { LogoSymbol } from "~/components/web/ui/logo-symbol"
 import { config } from "~/config"
 import { findAd } from "~/server/web/ads/queries"
@@ -29,11 +30,7 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
   const isDefault = !ad.websiteUrl.startsWith("http")
 
   return (
-    <Card
-      className={cx("group/button", isDefault && "overflow-clip", className)}
-      asChild
-      {...props}
-    >
+    <Card className={cx("group/button", className)} asChild {...props}>
       <ExternalLink
         href={ad.websiteUrl}
         target={isDefault ? "_self" : undefined}
@@ -60,9 +57,11 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
           <span>{isDefault ? "Advertise" : `Visit ${ad.name}`}</span>
         </Button>
 
-        {isDefault && (
-          <LogoSymbol className="absolute -bottom-2/5 -right-1/4 -z-10 size-64 opacity-[3.5%] rotate-45 pointer-events-none transition group-hover/button:rotate-[60deg]" />
-        )}
+        <div className="absolute inset-0 overflow-clip">
+          <Slot.Root className="absolute -top-2/5 -right-1/4 -z-10 size-60 opacity-5 rotate-12 pointer-events-none transition group-hover/button:rotate-[20deg]">
+            {isDefault ? <LogoSymbol /> : <FaviconImage src={ad.faviconUrl} title={ad.name} />}
+          </Slot.Root>
+        </div>
       </ExternalLink>
     </Card>
   )

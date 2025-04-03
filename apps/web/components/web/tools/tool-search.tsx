@@ -3,6 +3,7 @@
 import { useLocalStorage } from "@mantine/hooks"
 import { cx } from "cva"
 import { ListFilterIcon, LoaderIcon, SearchIcon } from "lucide-react"
+import { AnimatedContainer } from "~/components/common/animated-container"
 import { Input } from "~/components/common/input"
 import {
   Select,
@@ -86,7 +87,9 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
         </Select>
       </Stack>
 
-      {enableFilters && isFiltersOpen && <ToolFilters />}
+      <AnimatedContainer height className="w-full">
+        {enableFilters && isFiltersOpen && <ToolFilters className="animate-fade-in" />}
+      </AnimatedContainer>
     </Stack>
   )
 }

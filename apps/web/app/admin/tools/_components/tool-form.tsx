@@ -95,6 +95,13 @@ export function ToolForm({
     enabled: !tool,
   })
 
+  const [websiteUrl, name, description, content] = form.watch([
+    "websiteUrl",
+    "name",
+    "description",
+    "content",
+  ])
+
   // Create tool
   const { execute: createToolAction, isPending: isCreatingTool } = useServerAction(createTool, {
     onSuccess: ({ data }) => {
@@ -470,6 +477,19 @@ export function ToolForm({
                 promise={alternatives}
                 selectedIds={field.value ?? []}
                 onChange={field.onChange}
+                maxSuggestions={10}
+                prompt={
+                  name &&
+                  description &&
+                  content &&
+                  `From the list of available alternative, proprietary software below, suggest relevant alternatives for this open source tool link: 
+                  
+                  - URL: ${websiteUrl}
+                  - Meta title: ${name}
+                  - Meta description: ${description}
+                  - Content: ${content}. 
+                  `
+                }
               />
             </FormItem>
           )}
@@ -485,6 +505,16 @@ export function ToolForm({
                 promise={categories}
                 selectedIds={field.value ?? []}
                 onChange={field.onChange}
+                prompt={
+                  name &&
+                  description &&
+                  `From the list of available categories below, suggest relevant categories for this link: 
+                  
+                  - URL: ${websiteUrl}
+                  - Meta title: ${name}
+                  - Meta description: ${description}.
+                  `
+                }
               />
             </FormItem>
           )}

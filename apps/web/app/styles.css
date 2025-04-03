@@ -52,39 +52,12 @@
   --grid-template-columns-lg: repeat(auto-fill, minmax(18rem, 1fr));
   --grid-template-columns-xl: repeat(auto-fill, minmax(20rem, 1fr));
 
+  --animate-fade-in: fade-in 0.3s ease-in-out;
   --animate-ping: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  --animate-shimmer: shimmer 1.25s cubic-bezier(0.5, 0.25, 0.25, 0.5) infinite;
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
 
-  @keyframes shimmer {
-    from {
-      left: -90%;
-    }
-
-    to {
-      left: 90%;
-    }
-  }
-
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-
-    to {
-      height: 0;
-    }
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
 }
 
