@@ -8,7 +8,7 @@ export const filterParamsSchema = {
   q: parseAsString.withDefault(""),
   sort: parseAsString.withDefault(""),
   page: parseAsInteger.withDefault(1),
-  perPage: parseAsInteger.withDefault(47),
+  perPage: parseAsInteger.withDefault(35),
   alternative: parseAsArrayOf(parseAsString).withDefault([]),
   category: parseAsArrayOf(parseAsString).withDefault([]),
   stack: parseAsArrayOf(parseAsString).withDefault([]),
