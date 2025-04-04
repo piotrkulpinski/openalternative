@@ -9,7 +9,7 @@ type AlternativeHoverCardProps = ComponentProps<typeof HoverCardTrigger> & {
 
 export const AlternativeHoverCard = ({ alternative, ...props }: AlternativeHoverCardProps) => {
   return (
-    <HoverCard openDelay={300}>
+    <HoverCard openDelay={200} closeDelay={100}>
       <HoverCardTrigger asChild {...props} />
 
       <HoverCardContent align="start" asChild>
