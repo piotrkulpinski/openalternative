@@ -1,6 +1,6 @@
 import { lcFirst } from "@curiousleaf/utils"
 import type { Metadata } from "next"
-import { notFound } from "next/navigation"
+import { notFound, permanentRedirect } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
 import { CategoryToolListing } from "~/app/(web)/categories/[slug]/self-hosted/listing"
@@ -8,6 +8,7 @@ import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
+import { categoryRedirects } from "~/lib/categories"
 import type { CategoryOne } from "~/server/web/categories/payloads"
 import { findCategoryBySlug, findCategorySlugs } from "~/server/web/categories/queries"
 
@@ -21,6 +22,13 @@ const getCategory = cache(async ({ params }: PageProps) => {
   const category = await findCategoryBySlug(slug)
 
   if (!category) {
+    const categoryRedirect = categoryRedirects.find(c => c.source === slug)
+
+    if (categoryRedirect) {
+      const url = `/categories/${categoryRedirect.destination.split("/").pop()}/self-hosted`
+      permanentRedirect(url)
+    }
+
     notFound()
   }
 
