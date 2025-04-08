@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { CategoriesDeleteDialog } from "~/app/admin/categories/_components/categories-delete-dialog"
 import { CategoryActions } from "~/app/admin/categories/_components/category-actions"
+import type { findCategoryBySlug } from "~/server/admin/categories/queries"
 import type { DataTableRowAction } from "~/types"
 
 type UpdateCategoryActionProps = {
-  category: Category
+  category: Awaited<ReturnType<typeof findCategoryBySlug>>
 }
 
 export const UpdateCategoryActions = ({ category }: UpdateCategoryActionProps) => {
@@ -17,7 +18,7 @@ export const UpdateCategoryActions = ({ category }: UpdateCategoryActionProps) =
 
   return (
     <>
-      <CategoryActions category={category} setRowAction={setRowAction} />
+      <CategoryActions category={category as Category} setRowAction={setRowAction} />
 
       <CategoriesDeleteDialog
         open={rowAction?.type === "delete"}

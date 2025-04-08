@@ -1,23 +1,28 @@
+import { lcFirst } from "@curiousleaf/utils"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
-import { CategoryToolListing } from "~/app/(web)/categories/[slug]/listing"
+import { CategoryToolListing } from "~/app/(web)/categories/[...slug]/listing"
 import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { CategoryOne } from "~/server/web/categories/payloads"
-import { findCategory, findCategorySlugs } from "~/server/web/categories/queries"
+import {
+  findCategoryByPath,
+  findCategorySlugs,
+  findCategoryTree,
+} from "~/server/web/categories/queries"
 
 type PageProps = {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string[] }>
   searchParams: Promise<SearchParams>
 }
 
 const getCategory = cache(async ({ params }: PageProps) => {
   const { slug } = await params
-  const category = await findCategory({ where: { slug } })
+  const category = await findCategoryByPath(slug.join("/"))
 
   if (!category) {
     notFound()
@@ -31,18 +36,18 @@ const getMetadata = (category: CategoryOne): Metadata => {
 
   return {
     title: `Open Source ${name}`,
-    description: `A curated collection of the ${category._count.tools} best open source ${name} for inspiration and reference. Each listing includes a website screenshot along with a detailed review of its features.`,
+    description: `A curated collection of the best free and open source ${lcFirst(category.description ?? "")}`,
   }
 }
 
 export const generateStaticParams = async () => {
   const categories = await findCategorySlugs({})
-  return categories.map(({ slug }) => ({ slug }))
+  return categories.map(({ fullPath }) => ({ slug: fullPath.split("/") }))
 }
 
 export const generateMetadata = async (props: PageProps) => {
   const category = await getCategory(props)
-  const url = `/categories/${category.slug}`
+  const url = `/categories/${category.fullPath}`
 
   return {
     ...getMetadata(category),
@@ -53,22 +58,23 @@ export const generateMetadata = async (props: PageProps) => {
 
 export default async function CategoryPage(props: PageProps) {
   const category = await getCategory(props)
+  const categoryTree = await findCategoryTree(category.fullPath)
   const { title, description } = getMetadata(category)
+
+  const breadcrumbItems = [
+    {
+      href: "/categories",
+      name: "Categories",
+    },
+    ...categoryTree.map(cat => ({
+      href: `/categories/${cat.fullPath}`,
+      name: cat.label || cat.name,
+    })),
+  ]
 
   return (
     <>
-      <Breadcrumbs
-        items={[
-          {
-            href: "/categories",
-            name: "Categories",
-          },
-          {
-            href: `/categories/${category.slug}`,
-            name: category.label || category.name,
-          },
-        ]}
-      />
+      <Breadcrumbs items={breadcrumbItems} />
 
       <Intro>
         <IntroTitle>{`${title}`}</IntroTitle>

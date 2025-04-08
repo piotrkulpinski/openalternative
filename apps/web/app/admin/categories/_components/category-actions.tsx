@@ -45,7 +45,7 @@ export const CategoryActions = ({
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link href={`/categories/${category.slug}`} target="_blank">
+          <Link href={`/categories/${category.fullPath}`} target="_blank">
             View
           </Link>
         </DropdownMenuItem>

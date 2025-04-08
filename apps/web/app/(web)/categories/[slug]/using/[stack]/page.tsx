@@ -8,9 +8,9 @@ import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { CategoryOne } from "~/server/web/categories/payloads"
-import { findCategory } from "~/server/web/categories/queries"
+import { findCategoryBySlug } from "~/server/web/categories/queries"
 import type { StackOne } from "~/server/web/stacks/payloads"
-import { findStack } from "~/server/web/stacks/queries"
+import { findStackBySlug } from "~/server/web/stacks/queries"
 
 type PageProps = {
   params: Promise<{ slug: string; stack: string }>
@@ -20,8 +20,8 @@ type PageProps = {
 const getCategory = cache(async ({ params }: PageProps) => {
   const { slug: categorySlug, stack: stackSlug } = await params
   const [category, stack] = await Promise.all([
-    findCategory({ where: { slug: categorySlug } }),
-    findStack({ where: { slug: stackSlug } }),
+    findCategoryBySlug(categorySlug),
+    findStackBySlug(stackSlug),
   ])
 
   if (!category || !stack) {
@@ -64,7 +64,7 @@ export default async function CategoryPage(props: PageProps) {
             name: "Categories",
           },
           {
-            href: `/categories/${category.slug}`,
+            href: `/categories/${category.fullPath}`,
             name: category.label || category.name,
           },
           {

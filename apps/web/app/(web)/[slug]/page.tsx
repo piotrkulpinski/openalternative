@@ -202,8 +202,8 @@ export default async function ToolPage(props: PageProps) {
               <H4 as="strong">Categories:</H4>
 
               <Stack>
-                {tool.categories?.map(({ slug, name }) => (
-                  <Tag key={slug} href={`/categories/${slug}`} prefix={<HashIcon />}>
+                {tool.categories?.map(({ name, slug, fullPath }) => (
+                  <Tag key={slug} href={`/categories/${fullPath}`} prefix={<HashIcon />}>
                     {name}
                   </Tag>
                 ))}

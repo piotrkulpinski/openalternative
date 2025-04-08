@@ -1,8 +1,8 @@
 import { CategoryList } from "~/components/web/categories/category-list"
-import { findCategories } from "~/server/web/categories/queries"
+import { findRootCategories } from "~/server/web/categories/queries"
 
 export const CategoryListing = async () => {
-  const categories = await findCategories({})
+  const categories = await findRootCategories({})
 
   return <CategoryList categories={categories} />
 }
