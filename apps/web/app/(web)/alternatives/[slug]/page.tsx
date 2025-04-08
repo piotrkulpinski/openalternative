@@ -113,7 +113,7 @@ export default async function AlternativePage(props: PageProps) {
 
   // Pick the top categories
   const bestCategories = categories.slice(0, 3).map(({ category }) => (
-    <Link key={category.slug} href={`/categories/${category.slug}`}>
+    <Link key={category.slug} href={`/categories/${category.fullPath}`}>
       {category.label || category.name}
     </Link>
   ))

@@ -117,7 +117,7 @@
   [href] [class*="group-hover"] {
     @apply ease-out;
     @apply duration-100;
-    @apply cursor-pointer;
+    @apply not-disabled:cursor-pointer;
   }
 
   strong {

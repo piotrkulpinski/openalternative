@@ -2,8 +2,9 @@
 
 import { slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { XIcon } from "lucide-react"
 import { redirect } from "next/navigation"
-import type { ComponentProps } from "react"
+import { type ComponentProps, use, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -19,9 +20,18 @@ import {
 } from "~/components/common/form"
 import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/common/select"
+import { Stack } from "~/components/common/stack"
 import { useComputedField } from "~/hooks/use-computed-field"
 import { createCategory, updateCategory } from "~/server/admin/categories/actions"
-import type { findCategoryBySlug } from "~/server/admin/categories/queries"
+import type { findCategoryBySlug, findCategoryList } from "~/server/admin/categories/queries"
 import { categorySchema } from "~/server/admin/categories/schemas"
 import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
@@ -29,6 +39,7 @@ import { cx } from "~/utils/cva"
 type CategoryFormProps = ComponentProps<"form"> & {
   category?: Awaited<ReturnType<typeof findCategoryBySlug>>
   tools: ReturnType<typeof findToolList>
+  categories: ReturnType<typeof findCategoryList>
 }
 
 export function CategoryForm({
@@ -36,14 +47,19 @@ export function CategoryForm({
   className,
   category,
   tools,
+  categories,
   ...props
 }: CategoryFormProps) {
+  const parents = use(categories)
+
   const form = useForm({
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: category?.name ?? "",
       slug: category?.slug ?? "",
       label: category?.label ?? "",
+      description: category?.description ?? "",
+      parentId: category?.parentId ?? undefined,
       tools: category?.tools.map(t => t.id) ?? [],
     },
   })
@@ -65,6 +81,26 @@ export function CategoryForm({
     callback: name => name && `${name} Tools`,
     enabled: !category,
   })
+
+  // Group available categories by parent
+  const groupedCategories = useMemo(() => {
+    return parents.reduce(
+      (acc, category) => {
+        // Skip categories with no parent or with path that's too deep
+        if (!category.parentId || category.fullPath.split("/").length >= 3) {
+          return acc
+        }
+
+        if (!acc[category.parentId]) {
+          acc[category.parentId] = []
+        }
+
+        acc[category.parentId].push(category)
+        return acc
+      },
+      {} as Record<string, typeof parents>,
+    )
+  }, [parents])
 
   // Create category
   const { execute: createCategoryAction, isPending: isCreatingCategory } = useServerAction(
@@ -151,6 +187,74 @@ export function CategoryForm({
               <FormLabel>Label</FormLabel>
               <FormControl>
                 <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="parentId"
+          render={({ field }) => (
+            <FormItem className="items-stretch">
+              <Stack className="justify-between">
+                <FormLabel>Parent Category</FormLabel>
+
+                {field.value && (
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => form.setValue("parentId", "")}
+                    prefix={<XIcon />}
+                    className="-my-1"
+                  >
+                    Clear
+                  </Button>
+                )}
+              </Stack>
+
+              <FormControl>
+                <Select
+                  disabled={!!category?.subcategories.length}
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="None (Top Level)" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    {Object.entries(groupedCategories).map(([parentId, categories]) => (
+                      <SelectGroup key={parentId} className="not-first:mt-2">
+                        <SelectItem value={parentId} className="font-semibold text-foreground">
+                          {parents.find(c => c.id === parentId)?.name}
+                        </SelectItem>
+
+                        {categories.map(parent => (
+                          <SelectItem key={parent.id} value={parent.id}>
+                            – {parent.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>

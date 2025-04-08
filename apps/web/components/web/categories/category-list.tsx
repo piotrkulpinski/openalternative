@@ -1,33 +1,103 @@
+import Link from "next/link"
 import type { ComponentProps } from "react"
-import { CategoryCard, CategoryCardSkeleton } from "~/components/web/categories/category-card"
+import { H4, H5 } from "~/components/common/heading"
+import { Skeleton } from "~/components/common/skeleton"
 import { EmptyList } from "~/components/web/empty-list"
-import { Grid } from "~/components/web/ui/grid"
-import type { CategoryMany } from "~/server/web/categories/payloads"
-import { cx } from "~/utils/cva"
+import { Tile, TileCaption, TileDivider, TileTitle } from "~/components/web/ui/tile"
+import type { CategoryManyNested } from "~/server/web/categories/payloads"
 
-type CategoryListProps = ComponentProps<typeof Grid> & {
-  categories: CategoryMany[]
+type CategoryListProps = ComponentProps<"div"> & {
+  categories: CategoryManyNested[]
 }
 
 const CategoryList = ({ categories, className, ...props }: CategoryListProps) => {
-  return (
-    <Grid className={cx("md:gap-8", className)} {...props}>
-      {categories.map(category => (
-        <CategoryCard key={category.slug} category={category} />
-      ))}
+  if (!categories.length) {
+    return <EmptyList>No categories found.</EmptyList>
+  }
 
-      {!categories.length && <EmptyList>No categories found.</EmptyList>}
-    </Grid>
+  return (
+    <div className="columns-3xs -mt-8 gap-6 md:gap-8 md:-mt-12 lg:gap-10" {...props}>
+      {categories.map(({ name, slug, fullPath, subcategories }) => (
+        <div key={slug} className="inline-flex flex-col gap-4 w-full mt-8 md:mt-12">
+          <H4 className="text-lg">
+            <Link href={`/categories/${fullPath}`} prefetch={false}>
+              {name}
+            </Link>
+          </H4>
+
+          {subcategories?.length > 0 &&
+            subcategories.map(({ name, slug, fullPath, subcategories }) => (
+              <div key={slug} className="flex flex-col gap-3 pl-3">
+                <H5 className="text-sm">
+                  <Link href={`/categories/${fullPath}`} prefetch={false}>
+                    {name}
+                  </Link>
+                </H5>
+
+                {subcategories?.length > 0 && (
+                  <div className="contents">
+                    {subcategories.map(({ name, slug, fullPath, _count }) => (
+                      <Tile key={slug} className="pl-3" asChild>
+                        <Link href={`/categories/${fullPath}`} prefetch={false}>
+                          <TileTitle className="text-xs font-normal text-muted-foreground group-hover:text-foreground">
+                            {name}
+                          </TileTitle>
+
+                          <TileDivider />
+
+                          <TileCaption className="tabular-nums">
+                            <span className="text-[10px] mr-0.5 opacity-50">#</span>
+                            {_count.tools}
+                          </TileCaption>
+                        </Link>
+                      </Tile>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+        </div>
+      ))}
+    </div>
   )
 }
 
 const CategoryListSkeleton = () => {
   return (
-    <Grid className="md:gap-8">
-      {[...Array(24)].map((_, index) => (
-        <CategoryCardSkeleton key={index} />
+    <div className="columns-3xs -mt-8 gap-6 md:gap-8 md:-mt-12 lg:gap-10">
+      {[...Array(6)].map((_, index) => (
+        <div key={index} className="inline-flex flex-col gap-4 w-full mt-8 md:mt-12">
+          <H4 className="text-lg">
+            <Skeleton className="w-1/2">&nbsp;</Skeleton>
+          </H4>
+
+          {[...Array(Math.floor(Math.random() * 3) + 2)].map((_, index) => (
+            <div key={index} className="flex flex-col gap-2 pl-2">
+              <H5 className="text-sm">
+                <Skeleton className="w-2/3">&nbsp;</Skeleton>
+              </H5>
+
+              <div className="contents">
+                {[...Array(Math.floor(Math.random() * 3) + 2)].map((_, index) => (
+                  <Tile key={index} className="pl-2">
+                    <TileTitle className="text-xs font-normal text-muted-foreground group-hover:text-foreground">
+                      <Skeleton className="w-20">&nbsp;</Skeleton>
+                    </TileTitle>
+
+                    <TileDivider />
+
+                    <TileCaption className="tabular-nums">
+                      <span className="text-[10px] mr-0.5 opacity-50">#</span>
+                      <Skeleton className="inline-block w-4">&nbsp;</Skeleton>
+                    </TileCaption>
+                  </Tile>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       ))}
-    </Grid>
+    </div>
   )
 }
 

@@ -215,18 +215,26 @@ model Alternative {
 }
 
 model Category {
-  id        String   @id @default(cuid())
-  name      String   @db.Citext
-  slug      String   @unique
-  label     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String   @db.Citext
+  slug        String   @unique
+  fullPath    String   @default("")
+  label       String?
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Hierarchical relations
+  parent        Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  parentId      String?
+  subcategories Category[] @relation("CategoryHierarchy")
 
   // Implicit relation
   tools Tool[]
 
   // Indexes
   @@index([slug])
+  @@index([parentId])
 }
 
 model Topic {

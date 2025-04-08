@@ -4,6 +4,7 @@ import { slugify } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import { revalidatePath, revalidateTag } from "next/cache"
 import { z } from "zod"
+import { getCategoryPath } from "~/lib/categories"
 import { adminProcedure } from "~/lib/safe-actions"
 import { categorySchema } from "~/server/admin/categories/schemas"
 
@@ -17,6 +18,12 @@ export const createCategory = adminProcedure
         slug: input.slug || slugify(input.name),
         tools: { connect: tools?.map(id => ({ id })) },
       },
+    })
+
+    // Set the fullPath based on the category tree path
+    await db.category.update({
+      where: { id: category.id },
+      data: { fullPath: await getCategoryPath(category) },
     })
 
     revalidateTag("categories")
@@ -36,6 +43,17 @@ export const updateCategory = adminProcedure
         tools: { set: tools?.map(id => ({ id })) },
       },
     })
+
+    const categories = await db.category.findMany({})
+
+    await Promise.all(
+      categories.map(async category => {
+        await db.category.update({
+          where: { id: category.id },
+          data: { fullPath: await getCategoryPath(category) },
+        })
+      }),
+    )
 
     revalidateTag("categories")
     revalidateTag(`category-${category.slug}`)

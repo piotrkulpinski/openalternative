@@ -47,9 +47,10 @@ export const findCategories = async (search: CategoriesTableSchema) => {
   return { categories, categoriesTotal, pageCount }
 }
 
-export const findCategoryList = async () => {
+export const findCategoryList = async ({ ...args }: Prisma.CategoryFindManyArgs = {}) => {
   return db.category.findMany({
-    select: { id: true, name: true },
+    ...args,
+    select: { id: true, name: true, fullPath: true, parentId: true },
     orderBy: { name: "asc" },
   })
 }
@@ -57,6 +58,9 @@ export const findCategoryList = async () => {
 export const findCategoryBySlug = async (slug: string) => {
   return db.category.findUnique({
     where: { slug },
-    include: { tools: true },
+    include: {
+      tools: { select: { id: true, name: true } },
+      subcategories: { select: { id: true, name: true } },
+    },
   })
 }
