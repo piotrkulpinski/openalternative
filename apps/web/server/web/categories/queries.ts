@@ -95,26 +95,60 @@ export const findCategoryTree = async (fullPath: string) => {
   return categories.sort((a, b) => a.fullPath.length - b.fullPath.length)
 }
 
-export const getCategoryTreeSlugs = async (parentSlug: string): Promise<string[]> => {
+export const getCategoryDescendants = async (slug: string): Promise<string[]> => {
+  "use cache"
+
+  cacheTag("categories", `category-descendants-${slug}`)
+  cacheLife("max")
+
   const result = await db.$queryRaw<{ slug: string }[]>`
     WITH RECURSIVE category_tree AS (
       -- Base case: start with the parent category
-      SELECT id, slug, "parentId"
+      SELECT id, slug, "parentId", 0 AS depth
       FROM "Category"
-      WHERE slug = ${parentSlug}
+      WHERE slug = ${slug}
       
       UNION ALL
       
       -- Recursive case: get all children
-      SELECT c.id, c.slug, c."parentId"
+      SELECT c.id, c.slug, c."parentId", ct.depth + 1 AS depth
       FROM "Category" c
       INNER JOIN category_tree ct ON c."parentId" = ct.id
     )
     SELECT slug
     FROM category_tree
-    WHERE slug != ${parentSlug}
-    ORDER BY slug;
+    WHERE slug != ${slug}
+    ORDER BY depth ASC;
   `
 
-  return result.map(({ slug }) => slug)
+  return [slug, ...result.map(({ slug }) => slug)]
+}
+
+export const getCategoryAncestors = async (slug: string): Promise<string[]> => {
+  "use cache"
+
+  cacheTag("categories", `category-ancestors-${slug}`)
+  cacheLife("max")
+
+  const result = await db.$queryRaw<{ slug: string }[]>`
+    WITH RECURSIVE category_tree AS (
+      -- Base case: start with the specified category
+      SELECT id, slug, "parentId", 0 AS depth
+      FROM "Category"
+      WHERE slug = ${slug}
+      
+      UNION ALL
+      
+      -- Recursive case: get all parents (ancestors)
+      SELECT c.id, c.slug, c."parentId", ct.depth + 1 AS depth
+      FROM "Category" c
+      INNER JOIN category_tree ct ON c.id = ct."parentId"
+    )
+    SELECT slug
+    FROM category_tree
+    WHERE slug != ${slug}
+    ORDER BY depth DESC;
+  `
+
+  return [...result.map(({ slug }) => slug), slug]
 }
