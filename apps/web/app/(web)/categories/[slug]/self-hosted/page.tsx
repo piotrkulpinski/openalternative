@@ -1,3 +1,4 @@
+import { lcFirst } from "@curiousleaf/utils"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
@@ -8,7 +9,7 @@ import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 import type { CategoryOne } from "~/server/web/categories/payloads"
-import { findCategoryBySlug } from "~/server/web/categories/queries"
+import { findCategoryBySlug, findCategorySlugs } from "~/server/web/categories/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -31,8 +32,13 @@ const getMetadata = (category: CategoryOne): Metadata => {
 
   return {
     title: `Best Self-hosted ${name}`,
-    description: `A curated collection of the best self-hosted ${name}. Each listing includes a website screenshot along with a detailed review of its features.`,
+    description: `A curated collection of the best self-hosted ${lcFirst(category.description ?? "")}`,
   }
+}
+
+export const generateStaticParams = async () => {
+  const categories = await findCategorySlugs({})
+  return categories.map(({ slug }) => ({ slug }))
 }
 
 export const generateMetadata = async (props: PageProps) => {
@@ -70,8 +76,8 @@ export default async function CategoryPage(props: PageProps) {
       />
 
       <Intro>
-        <IntroTitle>{`${title}`}</IntroTitle>
-        <IntroDescription className="max-w-3xl">{description}</IntroDescription>
+        <IntroTitle className="max-w-4xl">{`${title}`}</IntroTitle>
+        <IntroDescription className="max-w-2xl">{description}</IntroDescription>
       </Intro>
 
       <Suspense fallback={<ToolQuerySkeleton />}>

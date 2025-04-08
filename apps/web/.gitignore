@@ -33,3 +33,7 @@ next-env.d.ts
 
 # Content collections
 .content-collections
+
+# sitemap
+public/sitemap*.xml
+public/robots.txt

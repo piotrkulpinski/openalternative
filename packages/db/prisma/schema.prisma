@@ -218,7 +218,7 @@ model Category {
   id          String   @id @default(cuid())
   name        String   @db.Citext
   slug        String   @unique
-  fullPath    String   @default("")
+  fullPath    String   @unique @default("")
   label       String?
   description String?  @db.Text
   createdAt   DateTime @default(now())

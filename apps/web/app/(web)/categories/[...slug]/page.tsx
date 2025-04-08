@@ -78,7 +78,7 @@ export default async function CategoryPage(props: PageProps) {
 
       <Intro>
         <IntroTitle>{`${title}`}</IntroTitle>
-        <IntroDescription className="max-w-3xl">{description}</IntroDescription>
+        <IntroDescription className="max-w-2xl">{description}</IntroDescription>
       </Intro>
 
       <Suspense fallback={<ToolQuerySkeleton />}>
