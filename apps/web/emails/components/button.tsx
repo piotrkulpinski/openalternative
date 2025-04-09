@@ -4,11 +4,13 @@ import { siteConfig } from "~/config/site"
 import { addSearchParams } from "~/utils/search-params"
 
 export const EmailButton = ({ children, href, ...props }: ButtonProps) => {
+  const emailSearchParams = { utm_source: getUrlHostname(siteConfig.url), utm_medium: "email" }
+
   return (
     <Section className="my-8 first:mt-0 last:mb-0">
       <Button
         className="rounded-md bg-neutral-950 px-5 py-3 text-center text-sm font-medium text-white no-underline"
-        href={addSearchParams(href!, { ref: getUrlHostname(siteConfig.url) })}
+        href={addSearchParams(href!, emailSearchParams)}
         {...props}
       >
         {children}
