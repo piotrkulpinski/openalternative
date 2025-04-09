@@ -29,9 +29,12 @@ import { Logo } from "~/components/web/ui/logo"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { UserMenu } from "~/components/web/user-menu"
 import { config } from "~/config"
+import type { Session } from "~/lib/auth-types"
 import { cx } from "~/utils/cva"
 
-export const Header = ({ children, className, ...props }: ComponentProps<typeof Container>) => {
+export const Header = ({ children, className, session, ...props }: ComponentProps<typeof Container> & {
+  session: Session | null
+}) => {
   const pathname = usePathname()
   const [isNavOpen, setNavOpen] = useState(false)
 
@@ -156,7 +159,7 @@ export const Header = ({ children, className, ...props }: ComponentProps<typeof 
           </NavLink>
         </Stack>
 
-        <UserMenu />
+        <UserMenu session={session} />
       </div>
 
       <nav
