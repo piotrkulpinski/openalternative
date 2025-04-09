@@ -2,6 +2,7 @@
 
 import { Ratelimit } from "@upstash/ratelimit"
 import { headers } from "next/headers"
+import { isDev } from "~/env"
 import { redis } from "~/services/redis"
 import { tryCatch } from "~/utils/helpers"
 
@@ -15,7 +16,7 @@ const limiters = {
   report: new Ratelimit({
     redis,
     analytics: true,
-    limiter: Ratelimit.slidingWindow(3, "1 h"), // 3 submissions per hour
+    limiter: Ratelimit.slidingWindow(5, "1 h"), // 5 submissions per hour
   }),
 
   newsletter: new Ratelimit({
@@ -54,6 +55,10 @@ export const getIP = async () => {
  * @returns True if the user is rate limited, false otherwise
  */
 export const isRateLimited = async (id: string, action: keyof typeof limiters) => {
+  if (isDev) {
+    return false // Disable rate limiting in development
+  }
+
   const { data, error } = await tryCatch(limiters[action].limit(id))
 
   if (error) {
