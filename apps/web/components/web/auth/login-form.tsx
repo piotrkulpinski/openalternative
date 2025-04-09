@@ -20,7 +20,8 @@ export const LoginForm = ({ ...props }: LoginFormProps) => {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const [isPending, setIsPending] = useState(false)
-  const callbackURL = searchParams.get("next") || pathname
+  const callbackURL = searchParams.get("next") || "/dashboard"
+  // const callbackURL = searchParams.get("next") || pathname
 
   const schema = z.object({
     email: z.string().email(),
