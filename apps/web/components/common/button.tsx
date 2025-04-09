@@ -8,7 +8,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const buttonVariants = cva({
   base: [
-    "group/button relative inline-flex items-center justify-center border-transparent font-medium text-[0.8125rem] text-start leading-tight rounded-md overflow-clip hover:z-10 hover:border-transparent",
+    "group/button relative inline-flex items-center justify-center border-transparent! font-medium text-[0.8125rem] text-start leading-tight rounded-md overflow-clip hover:z-10 hover:border-transparent",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
@@ -17,7 +17,7 @@ const buttonVariants = cva({
       fancy: "bg-primary text-primary-foreground hover:opacity-90",
       primary: "text-background bg-foreground hover:opacity-90",
       secondary:
-        "border-border bg-background text-secondary-foreground hover:bg-card hover:border-ring",
+        "border-border! bg-background text-secondary-foreground hover:bg-card hover:border-ring!",
       ghost: "text-secondary-foreground hover:bg-accent hover:text-foreground",
       destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
     },

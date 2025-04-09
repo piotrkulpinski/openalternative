@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { UpdateAlternativeActions } from "~/app/admin/alternatives/[slug]/actions"
 import { AlternativeForm } from "~/app/admin/alternatives/_components/alternative-form"
+import { withAdminPage } from "~/components/admin/auth-hoc"
 import { Wrapper } from "~/components/admin/wrapper"
 import { H3 } from "~/components/common/heading"
 import { findAlternativeBySlug } from "~/server/admin/alternatives/queries"
@@ -10,7 +11,7 @@ type PageProps = {
   params: Promise<{ slug: string }>
 }
 
-export default async function UpdateAlternativePage({ params }: PageProps) {
+const UpdateAlternativePage = async ({ params }: PageProps) => {
   const { slug } = await params
   const alternative = await findAlternativeBySlug(slug)
 
@@ -30,3 +31,5 @@ export default async function UpdateAlternativePage({ params }: PageProps) {
     </Wrapper>
   )
 }
+
+export default withAdminPage(UpdateAlternativePage)

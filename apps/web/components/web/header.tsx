@@ -27,6 +27,7 @@ import { Container } from "~/components/web/ui/container"
 import { Hamburger } from "~/components/web/ui/hamburger"
 import { Logo } from "~/components/web/ui/logo"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
+import { UserMenu } from "~/components/web/user-menu"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
 
@@ -155,7 +156,7 @@ export const Header = ({ children, className, ...props }: ComponentProps<typeof 
           </NavLink>
         </Stack>
 
-        {children}
+        <UserMenu />
       </div>
 
       <nav

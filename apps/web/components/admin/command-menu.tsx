@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { fetchRepositoryData, testSocialPosts } from "~/actions/misc"
+import { fetchRepositoryData } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -34,7 +34,7 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
   const [query, setQuery] = useDebouncedState("", 100)
   const [searchResults, setSearchResults] = useState<SearchResult | null>(null)
 
-  const { execute, isPending } = useServerAction(searchItems, {
+  const { execute: search, isPending: isSearching } = useServerAction(searchItems, {
     onSuccess: ({ data }) => {
       setSearchResults(data)
     },
@@ -45,10 +45,21 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
     },
   })
 
+  // Update tool
+  const { execute: fetch, isPending: isFetching } = useServerAction(fetchRepositoryData, {
+    onSuccess: ({ data }) => {
+      toast.success("Repository data fetched")
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
+
   useEffect(() => {
     const performSearch = async () => {
       if (query.length > 1) {
-        execute({ query })
+        search({ query })
       } else {
         setSearchResults(null)
       }
@@ -62,16 +73,6 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
 
     // Clear search results
     !newOpen && clearSearch()
-  }
-
-  const handleSendSocialPost = async () => {
-    await testSocialPosts({ slug: "dub" })
-    toast.success("Social post sent")
-  }
-
-  const handleFetchRepositoryData = async () => {
-    await fetchRepositoryData()
-    toast.success("Repository data fetched")
   }
 
   const handleSelect = (url: string) => {
@@ -90,7 +91,7 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
     <CommandDialog open={isOpen} onOpenChange={handleOpenChange}>
       <CommandInput placeholder="Type to search..." onValueChange={setQuery} />
 
-      {isPending && (
+      {isSearching && (
         <div className="absolute top-4 left-3 bg-background text-muted-foreground">
           <LoaderIcon className="animate-spin" />
         </div>
@@ -117,8 +118,9 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
         </CommandGroup>
 
         <CommandGroup heading="Quick Commands">
-          <CommandItem onSelect={handleSendSocialPost}>Send Social Post</CommandItem>
-          <CommandItem onSelect={handleFetchRepositoryData}>Fetch Repository Data</CommandItem>
+          <CommandItem onSelect={() => fetch()} disabled={isFetching}>
+            Fetch Repository Data
+          </CommandItem>
         </CommandGroup>
 
         {!!searchResults?.tools.length && (

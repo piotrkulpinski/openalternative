@@ -2,8 +2,7 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { auth } from "~/lib/auth"
 
-type Session = typeof auth.$Infer.Session
-type WithAuthHandler = (req: NextRequest, session: Session) => Promise<Response>
+type WithAuthHandler = (req: NextRequest, session: typeof auth.$Infer.Session) => Promise<Response>
 
 /**
  * A higher order function that wraps a handler with authentication.

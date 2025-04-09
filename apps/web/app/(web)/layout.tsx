@@ -7,7 +7,6 @@ import { Bottom } from "~/components/web/bottom"
 import { Footer } from "~/components/web/footer"
 import { Header } from "~/components/web/header"
 import { Container } from "~/components/web/ui/container"
-import { UserMenu, UserMenuSkeleton } from "~/components/web/user-menu"
 import { config } from "~/config"
 import { env } from "~/env"
 
@@ -70,11 +69,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           <AdBanner />
         </Suspense>
 
-        <Header>
-          <Suspense fallback={<UserMenuSkeleton />}>
-            <UserMenu />
-          </Suspense>
-        </Header>
+        <Header />
 
         <Container asChild>
           <main className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">

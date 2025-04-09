@@ -1,10 +1,11 @@
 import { ToolForm } from "~/app/admin/tools/_components/tool-form"
+import { withAdminPage } from "~/components/admin/auth-hoc"
 import { Wrapper } from "~/components/admin/wrapper"
 import { H3 } from "~/components/common/heading"
 import { findAlternativeList } from "~/server/admin/alternatives/queries"
 import { findCategoryList } from "~/server/admin/categories/queries"
 
-export default function CreateToolPage() {
+const CreateToolPage = () => {
   return (
     <Wrapper size="md">
       <H3>Create tool</H3>
@@ -13,3 +14,5 @@ export default function CreateToolPage() {
     </Wrapper>
   )
 }
+
+export default withAdminPage(CreateToolPage)

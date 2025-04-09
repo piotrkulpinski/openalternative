@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { UpdateToolActions } from "~/app/admin/tools/[slug]/actions"
 import { ToolForm } from "~/app/admin/tools/_components/tool-form"
+import { withAdminPage } from "~/components/admin/auth-hoc"
 import { Wrapper } from "~/components/admin/wrapper"
 import { H3 } from "~/components/common/heading"
 import { findAlternativeList } from "~/server/admin/alternatives/queries"
@@ -11,7 +12,7 @@ type PageProps = {
   params: Promise<{ slug: string }>
 }
 
-export default async function UpdateToolPage({ params }: PageProps) {
+const UpdateToolPage = async ({ params }: PageProps) => {
   const { slug } = await params
   const tool = await findToolBySlug(slug)
 
@@ -31,3 +32,5 @@ export default async function UpdateToolPage({ params }: PageProps) {
     </Wrapper>
   )
 }
+
+export default withAdminPage(UpdateToolPage)

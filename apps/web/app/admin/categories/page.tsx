@@ -1,5 +1,6 @@
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
+import { withAdminPage } from "~/components/admin/auth-hoc"
 import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
 import { findCategories } from "~/server/admin/categories/queries"
 import { categoriesTableParamsCache } from "~/server/admin/categories/schemas"
@@ -9,9 +10,8 @@ type CategoriesPageProps = {
   searchParams: Promise<SearchParams>
 }
 
-export default async function CategoriesPage(props: CategoriesPageProps) {
-  const searchParams = await props.searchParams
-  const search = categoriesTableParamsCache.parse(searchParams)
+const CategoriesPage = async ({ searchParams }: CategoriesPageProps) => {
+  const search = categoriesTableParamsCache.parse(await searchParams)
   const categoriesPromise = findCategories(search)
 
   return (
@@ -20,3 +20,5 @@ export default async function CategoriesPage(props: CategoriesPageProps) {
     </Suspense>
   )
 }
+
+export default withAdminPage(CategoriesPage)

@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   title: "Admin Panel",
 }
 
-export default async function DashboardLayout({ children }: PropsWithChildren) {
+export default function DashboardLayout({ children }: PropsWithChildren) {
   return <Shell>{children}</Shell>
 }

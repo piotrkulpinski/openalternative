@@ -1,5 +1,6 @@
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
+import { withAdminPage } from "~/components/admin/auth-hoc"
 import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
 import { findAlternatives } from "~/server/admin/alternatives/queries"
 import { alternativesTableParamsCache } from "~/server/admin/alternatives/schemas"
@@ -9,9 +10,8 @@ type AlternativesPageProps = {
   searchParams: Promise<SearchParams>
 }
 
-export default async function AlternativesPage(props: AlternativesPageProps) {
-  const searchParams = await props.searchParams
-  const search = alternativesTableParamsCache.parse(searchParams)
+const AlternativesPage = async ({ searchParams }: AlternativesPageProps) => {
+  const search = alternativesTableParamsCache.parse(await searchParams)
   const alternativesPromise = findAlternatives(search)
 
   return (
@@ -20,3 +20,5 @@ export default async function AlternativesPage(props: AlternativesPageProps) {
     </Suspense>
   )
 }
+
+export default withAdminPage(AlternativesPage)
