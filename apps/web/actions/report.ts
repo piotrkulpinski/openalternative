@@ -1,10 +1,14 @@
 "use server"
 
 import { db } from "@openalternative/db"
+import { ReportType } from "@openalternative/db/client"
+import { headers } from "next/headers"
 import { z } from "zod"
+import { createServerAction } from "zsa"
+import { auth } from "~/lib/auth"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { userProcedure } from "~/lib/safe-actions"
-import { reportSchema } from "~/server/web/shared/schemas"
+import { feedbackSchema, reportSchema } from "~/server/web/shared/schemas"
 
 export const reportTool = userProcedure
   .createServerAction()
@@ -22,8 +26,31 @@ export const reportTool = userProcedure
       data: {
         type,
         message,
-        tool: { connect: { slug: toolSlug } },
         user: { connect: { id: user.id } },
+        tool: { connect: { slug: toolSlug } },
+      },
+    })
+
+    return { success: true }
+  })
+
+export const reportFeedback = createServerAction()
+  .input(feedbackSchema)
+  .handler(async ({ input: { message } }) => {
+    const session = await auth.api.getSession({ headers: await headers() })
+    const ip = await getIP()
+    const rateLimitKey = `report:${ip}`
+
+    // Rate limiting check
+    if (await isRateLimited(rateLimitKey, "report")) {
+      throw new Error("Too many requests. Please try again later.")
+    }
+
+    await db.report.create({
+      data: {
+        type: ReportType.Other,
+        message,
+        userId: session?.user.id,
       },
     })
 

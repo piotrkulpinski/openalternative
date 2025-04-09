@@ -289,8 +289,8 @@ model Report {
   updatedAt DateTime   @updatedAt
 
   // Relations
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
   tool   Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade)
   toolId String?
 

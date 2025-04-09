@@ -56,6 +56,11 @@ export const reportSchema = z.object({
   message: z.string().optional(),
 })
 
+export const feedbackSchema = z.object({
+  message: z.string().min(1, "Message is required"),
+})
+
 export type SubmitToolSchema = z.infer<typeof submitToolSchema>
 export type NewsletterSchema = z.infer<typeof newsletterSchema>
 export type ReportSchema = z.infer<typeof reportSchema>
+export type FeedbackSchema = z.infer<typeof feedbackSchema>

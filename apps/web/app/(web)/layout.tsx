@@ -6,6 +6,7 @@ import type { Graph } from "schema-dts"
 import Providers from "~/app/(web)/providers"
 import { AdBanner } from "~/components/web/ads/ad-banner"
 import { Bottom } from "~/components/web/bottom"
+import { FeedbackWidget } from "~/components/web/feedback-widget"
 import { Footer } from "~/components/web/footer"
 import { Header } from "~/components/web/header"
 import { Container } from "~/components/web/ui/container"
@@ -87,6 +88,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       </div>
 
       <Bottom />
+      <FeedbackWidget />
 
       {/* JSON-LD */}
       <Script
