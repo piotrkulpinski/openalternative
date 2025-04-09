@@ -17,11 +17,12 @@ import { Link } from "~/components/common/link"
 import { NavLink } from "~/components/web/ui/nav-link"
 import { UserLogout } from "~/components/web/user-logout"
 import { useSession } from "~/lib/auth-client"
+import type { Session } from "~/lib/auth-types"
 
-const UserMenu = () => {
-  const { data: session, isPending } = useSession()
-
-  if (isPending) {
+const UserMenu = (props: { session: Session | null }) => {
+  const { data } = useSession()
+  const session = data ?? props.session
+  if (!session) {
     return <UserMenuSkeleton />
   }
 

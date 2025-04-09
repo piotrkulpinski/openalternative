@@ -2,6 +2,8 @@ import { db } from "@openalternative/db"
 import { betterAuth } from "better-auth"
 import { prismaAdapter } from "better-auth/adapters/prisma"
 import { admin, magicLink } from "better-auth/plugins"
+import { headers } from "next/headers"
+import { cache } from "react"
 import { config } from "~/config"
 import EmailLoginLink from "~/emails/login-link"
 import { env } from "~/env"
@@ -42,4 +44,11 @@ export const auth = betterAuth({
 
     admin(),
   ],
+})
+
+
+export const getServerSession = cache(async () => {
+  return auth.api.getSession({
+    headers: await headers()
+  })
 })
