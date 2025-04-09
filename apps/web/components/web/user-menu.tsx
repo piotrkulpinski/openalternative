@@ -22,11 +22,8 @@ import type { Session } from "~/lib/auth-types"
 const UserMenu = (props: { session: Session | null }) => {
   const { data } = useSession()
   const session = data ?? props.session
-  if (!session) {
-    return <UserMenuSkeleton />
-  }
 
-  if (!session?.user) {
+  if (!session) {
     return (
       <Button size="sm" variant="secondary" asChild>
         <Link href="/auth/login">Sign In</Link>

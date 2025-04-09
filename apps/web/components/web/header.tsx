@@ -32,9 +32,11 @@ import { config } from "~/config"
 import type { Session } from "~/lib/auth-types"
 import { cx } from "~/utils/cva"
 
-export const Header = ({ children, className, session, ...props }: ComponentProps<typeof Container> & {
+type HeaderProps = ComponentProps<typeof Container> & {
   session: Session | null
-}) => {
+}
+
+export const Header = ({ children, className, session, ...props }: HeaderProps) => {
   const pathname = usePathname()
   const [isNavOpen, setNavOpen] = useState(false)
 

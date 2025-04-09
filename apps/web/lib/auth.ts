@@ -28,8 +28,8 @@ export const auth = betterAuth({
 
   session: {
     cookieCache: {
-      enabled: true
-    }
+      enabled: true,
+    },
   },
 
   account: {
@@ -52,9 +52,8 @@ export const auth = betterAuth({
   ],
 })
 
-
 export const getServerSession = cache(async () => {
   return auth.api.getSession({
-    headers: await headers()
+    headers: await headers(),
   })
 })
