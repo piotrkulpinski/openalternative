@@ -1,7 +1,8 @@
 import { db } from "@openalternative/db"
 import { betterAuth } from "better-auth"
 import { prismaAdapter } from "better-auth/adapters/prisma"
-import { admin, magicLink } from "better-auth/plugins"
+import { admin, createAuthMiddleware, magicLink } from "better-auth/plugins"
+import { revalidatePath } from "next/cache"
 import { headers } from "next/headers"
 import { cache } from "react"
 import { config } from "~/config"
@@ -36,6 +37,16 @@ export const auth = betterAuth({
     accountLinking: {
       enabled: true,
     },
+  },
+
+  hooks: {
+    after: createAuthMiddleware(async ({ path, context }) => {
+      const callbackURL = context.responseHeaders?.get("location")
+
+      if (callbackURL && path === "/callback/:id") {
+        revalidatePath(callbackURL)
+      }
+    }),
   },
 
   plugins: [

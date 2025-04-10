@@ -2,7 +2,6 @@
 
 import { RadioGroup as RadioGroupPrimitive } from "radix-ui"
 import type { ComponentProps } from "react"
-import { Icon } from "~/components/common/icon"
 import { cx } from "~/utils/cva"
 
 const RadioGroup = ({ className, ...props }: ComponentProps<typeof RadioGroupPrimitive.Root>) => {
@@ -16,13 +15,13 @@ const RadioGroupItem = ({
   return (
     <RadioGroupPrimitive.Item
       className={cx(
-        "aspect-square size-4 rounded-full border border-foreground text-foreground shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+        "aspect-square size-4 rounded-full border border-ring text-foreground shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <Icon name="lucide/circle" className="size-2.5 fill-current text-current" />
+        <span className="size-2.5 rounded-full bg-current" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )
