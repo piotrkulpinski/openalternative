@@ -28,7 +28,7 @@ export const InlineMenu = ({ children, className, items, ...props }: InlineMenuP
             key={id}
             variant="ghost"
             className={cx(
-              "hover:ring-transparent focus-visible:ring-transparent",
+              "hover:ring-transparent! focus-visible:ring-transparent",
               activeId === id
                 ? "bg-accent text-foreground"
                 : "text-muted-foreground font-normal hover:text-foreground",

@@ -213,7 +213,7 @@ export default async function AlternativePage(props: PageProps) {
                 variant="ghost"
                 prefix={<SmilePlusIcon />}
                 suffix={<ArrowUpRightIcon />}
-                className="font-normal text-muted-foreground hover:ring-transparent focus-visible:ring-transparent"
+                className="font-normal text-muted-foreground hover:ring-transparent! focus-visible:ring-transparent"
                 asChild
               >
                 <Link href="/submit">Suggest an alternative</Link>
