@@ -1,7 +1,7 @@
-import { PlusIcon, StarIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { Card } from "~/components/common/card"
 import { H5 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
@@ -21,7 +21,7 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
     <Card hover={false} focus={false} {...props}>
       <Stack direction="column">
         <Stack size="sm">
-          <StarIcon className="fill-current text-blue-500" />
+          <Icon name="lucide/star" className="fill-current text-blue-500" />
           <H5 as="strong">Featured projects</H5>
         </Stack>
 
@@ -41,7 +41,7 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
           href="/dashboard"
           className="grid place-items-center size-9 p-1 rounded-md border hover:bg-accent"
         >
-          <PlusIcon />
+          <Icon name="lucide/plus" />
         </Link>
       </Stack>
     </Card>

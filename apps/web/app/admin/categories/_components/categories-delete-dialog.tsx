@@ -1,7 +1,6 @@
 "use client"
 
 import type { Category } from "@openalternative/db/client"
-import { TrashIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -16,6 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/common/dialog"
+import { Icon } from "~/components/common/icon"
 import { deleteCategories } from "~/server/admin/categories/actions"
 
 type CategoriesDeleteDialogProps = ComponentProps<typeof Dialog> & {
@@ -46,7 +46,7 @@ export const CategoriesDeleteDialog = ({
     <Dialog {...props}>
       {showTrigger && (
         <DialogTrigger asChild>
-          <Button variant="secondary" size="md" prefix={<TrashIcon />}>
+          <Button variant="secondary" size="md" prefix={<Icon name="lucide/trash" />}>
             Delete ({categories.length})
           </Button>
         </DialogTrigger>

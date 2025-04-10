@@ -1,2 +1,2 @@
-import type { auth } from "./auth";
+import type { auth } from "./auth"
 export type Session = typeof auth.$Infer.Session

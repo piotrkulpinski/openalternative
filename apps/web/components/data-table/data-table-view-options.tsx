@@ -2,7 +2,6 @@
 
 import type { Table } from "@tanstack/react-table"
 import { sentenceCase } from "change-case"
-import { Check, ChevronsUpDown, Settings2 } from "lucide-react"
 import { useRef } from "react"
 import { Button } from "~/components/common/button"
 import {
@@ -13,6 +12,7 @@ import {
   CommandItem,
   CommandList,
 } from "~/components/common/command"
+import { Icon } from "~/components/common/icon"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
 import { cx } from "~/utils/cva"
 
@@ -32,8 +32,8 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           variant="secondary"
           size="md"
           className="ml-auto hidden gap-2 lg:flex"
-          prefix={<Settings2 />}
-          suffix={<ChevronsUpDown />}
+          prefix={<Icon name="lucide/settings-2" />}
+          suffix={<Icon name="lucide/chevrons-up-down" />}
         >
           View
         </Button>
@@ -58,7 +58,8 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
                       onSelect={() => column.toggleVisibility(!column.getIsVisible())}
                     >
                       <span className="truncate">{sentenceCase(column.id)}</span>
-                      <Check
+                      <Icon
+                        name="lucide/check"
                         className={cx(
                           "ml-auto size-4 shrink-0",
                           column.getIsVisible() ? "opacity-100" : "opacity-0",

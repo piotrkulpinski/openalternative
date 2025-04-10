@@ -1,8 +1,8 @@
-import { LoaderIcon } from "lucide-react"
 import { Slot } from "radix-ui"
 import type { ComponentProps, ReactNode } from "react"
 import { Children, isValidElement } from "react"
 import { boxVariants } from "~/components/common/box"
+import { Icon } from "~/components/common/icon"
 import { Slottable } from "~/components/common/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -103,7 +103,9 @@ const Button = ({
 
             <Slot.Root className={buttonAffixVariants()}>{suffix}</Slot.Root>
 
-            {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
+            {!!isPending && (
+              <Icon name="lucide/loader" className="absolute size-[1.25em] animate-spin" />
+            )}
           </>
         )}
       </Slottable>

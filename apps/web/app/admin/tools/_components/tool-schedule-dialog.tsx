@@ -5,7 +5,6 @@ import type { Tool } from "@openalternative/db/client"
 import { isFriday } from "date-fns"
 import { addDays, isWednesday } from "date-fns"
 import { isMonday } from "date-fns"
-import { ClockIcon } from "lucide-react"
 import * as React from "react"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
@@ -22,6 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/common/dialog"
+import { Icon } from "~/components/common/icon"
 import { scheduleTool } from "~/server/admin/tools/actions"
 
 type ToolScheduleDialogProps = ComponentProps<typeof Dialog> & {
@@ -55,7 +55,7 @@ export const ToolScheduleDialog = ({
       {showTrigger && (
         <DialogTrigger asChild>
           <Button variant="secondary" size="md">
-            <ClockIcon className="max-sm:mr-2" aria-hidden="true" />
+            <Icon name="lucide/clock" className="max-sm:mr-2" aria-hidden="true" />
             Schedule
           </Button>
         </DialogTrigger>

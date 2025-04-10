@@ -1,7 +1,6 @@
 "use client"
 
 import type { Category } from "@openalternative/db/client"
-import { PlusIcon } from "lucide-react"
 import { useQueryStates } from "nuqs"
 import { use } from "react"
 import { useMemo, useState } from "react"
@@ -19,6 +18,7 @@ import { categoriesTableParamsSchema } from "~/server/admin/categories/schemas"
 import type { DataTableFilterField, DataTableRowAction } from "~/types"
 import { getColumns } from "./categories-table-columns"
 import { CategoriesTableToolbarActions } from "./categories-table-toolbar-actions"
+import { Icon } from "~/components/common/icon"
 
 type CategoriesTableProps = {
   categoriesPromise: ReturnType<typeof findCategories>
@@ -63,7 +63,7 @@ export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {
           title="Categories"
           total={categoriesTotal}
           callToAction={
-            <Button variant="primary" size="md" prefix={<PlusIcon />} asChild>
+            <Button variant="primary" size="md" prefix={<Icon name="lucide/plus" />} asChild>
               <Link href="/admin/categories/new">
                 <div className="max-sm:sr-only">New category</div>
               </Link>

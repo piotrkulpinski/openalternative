@@ -1,0 +1,26 @@
+{
+  "$schema": "https://sly-cli.fly.dev/registry/config.v2.json",
+  "config": {
+    "icons": {},
+    "components": {},
+    "utils": {}
+  },
+  "libraries": {
+    "iconify:lucide": {
+      "name": "Lucide",
+      "config": {
+        "directory": "./assets/icons/lucide",
+        "postinstall": [],
+        "transformers": []
+      }
+    },
+    "iconify:tabler": {
+      "name": "Tabler Icons",
+      "config": {
+        "directory": "./assets/icons/tabler",
+        "postinstall": [],
+        "transformers": []
+      }
+    }
+  }
+}

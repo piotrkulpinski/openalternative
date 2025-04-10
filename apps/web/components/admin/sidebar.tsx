@@ -2,16 +2,6 @@
 
 import { useHotkeys, useMediaQuery } from "@mantine/hooks"
 import { cx } from "cva"
-import {
-  DockIcon,
-  GalleryHorizontalEndIcon,
-  GemIcon,
-  GlobeIcon,
-  LayoutDashboardIcon,
-  LogOutIcon,
-  ReplaceIcon,
-  UsersIcon,
-} from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -20,6 +10,7 @@ import { Nav } from "~/components/admin/nav"
 import { Kbd } from "~/components/common/kbd"
 import { siteConfig } from "~/config/site"
 import { signOut } from "~/lib/auth-client"
+import { Icon } from "../common/icon"
 
 export const Sidebar = () => {
   const [isCommandOpen, setIsCommandOpen] = useState(false)
@@ -62,7 +53,7 @@ export const Sidebar = () => {
           {
             title: "Dashboard",
             href: "/admin",
-            prefix: <LayoutDashboardIcon />,
+            prefix: <Icon name="lucide/layout-dashboard" />,
           },
 
           undefined, // Separator
@@ -70,22 +61,22 @@ export const Sidebar = () => {
           {
             title: "Tools",
             href: "/admin/tools",
-            prefix: <GemIcon />,
+            prefix: <Icon name="lucide/gem" />,
           },
           {
             title: "Alternatives",
             href: "/admin/alternatives",
-            prefix: <ReplaceIcon />,
+            prefix: <Icon name="lucide/replace" />,
           },
           {
             title: "Categories",
             href: "/admin/categories",
-            prefix: <GalleryHorizontalEndIcon />,
+            prefix: <Icon name="lucide/gallery-horizontal-end" />,
           },
           {
             title: "Users",
             href: "/admin/users",
-            prefix: <UsersIcon />,
+            prefix: <Icon name="lucide/users" />,
           },
 
           undefined, // Separator
@@ -94,7 +85,7 @@ export const Sidebar = () => {
             title: "Quick Menu",
             href: "#",
             onClick: () => setIsCommandOpen(true),
-            prefix: <DockIcon />,
+            prefix: <Icon name="lucide/dock" />,
             suffix: (
               <Kbd meta className="size-auto">
                 K
@@ -104,13 +95,13 @@ export const Sidebar = () => {
           {
             title: "Visit Site",
             href: siteConfig.url,
-            prefix: <GlobeIcon />,
+            prefix: <Icon name="lucide/globe" />,
           },
           {
             title: "Sign Out",
             href: "#",
             onClick: handleSignOut,
-            prefix: <LogOutIcon />,
+            prefix: <Icon name="lucide/log-out" />,
           },
         ]}
       />

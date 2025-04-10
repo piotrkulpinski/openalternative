@@ -3,10 +3,10 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { User } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
-import { BanIcon, ShieldIcon } from "lucide-react"
 import type { Dispatch, SetStateAction } from "react"
 import { UserActions } from "~/app/admin/users/_components/user-actions"
 import { Badge } from "~/components/common/badge"
+import { Icon } from "~/components/common/icon"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
 import type { DataTableRowAction } from "~/types"
@@ -53,13 +53,23 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<User>[]
       cell: ({ row }) => (
         <DataTableLink href={`/admin/users/${row.original.id}`} title={row.original.name}>
           {row.original.banned && (
-            <Badge size="sm" variant="outline" prefix={<BanIcon />} className="text-red-500">
+            <Badge
+              size="sm"
+              variant="outline"
+              prefix={<Icon name="lucide/ban" />}
+              className="text-red-500"
+            >
               Banned
             </Badge>
           )}
 
           {row.original.role === "admin" && (
-            <Badge size="sm" variant="outline" prefix={<ShieldIcon />} className="text-blue-500">
+            <Badge
+              size="sm"
+              variant="outline"
+              prefix={<Icon name="lucide/shield" />}
+              className="text-blue-500"
+            >
               Admin
             </Badge>
           )}

@@ -1,7 +1,6 @@
 "use client"
 
 import { getCurrentPage, getPageLink } from "@curiousleaf/utils"
-import { MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"
 import { type ComponentProps, useMemo } from "react"
 import { Note } from "~/components/common/note"
@@ -9,6 +8,7 @@ import { PaginationLink } from "~/components/web/pagination-link"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { type UsePaginationProps, usePagination } from "~/hooks/use-pagination"
 import { cx } from "~/utils/cva"
+import { Icon } from "../common/icon"
 
 export type PaginationProps = ComponentProps<"nav"> & Omit<UsePaginationProps, "currentPage">
 
@@ -44,7 +44,7 @@ export const Pagination = ({
       <PaginationLink
         href={getPageLink(params, pathname, currentPage - 1)}
         isDisabled={currentPage <= 1}
-        prefix={<MoveLeftIcon />}
+        prefix={<Icon name="lucide/move-left" />}
         rel="prev"
       >
         prev
@@ -77,7 +77,7 @@ export const Pagination = ({
       <PaginationLink
         href={getPageLink(params, pathname, currentPage + 1)}
         isDisabled={currentPage >= pageCount}
-        suffix={<MoveRightIcon />}
+        suffix={<Icon name="lucide/move-right" />}
         rel="prev"
       >
         next

@@ -1,8 +1,8 @@
-import { ArrowUpRightIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { Button } from "~/components/common/button"
 import { Card, CardDescription, CardHeader } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { ExternalLink } from "~/components/web/external-link"
 import { Favicon } from "~/components/web/ui/favicon"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
@@ -53,7 +53,11 @@ export const AlternativeCardExternal = ({
           </p>
         )}
 
-        <Button className="pointer-events-none md:w-full" suffix={<ArrowUpRightIcon />} asChild>
+        <Button
+          className="pointer-events-none md:w-full"
+          suffix={<Icon name="lucide/arrow-up-right" />}
+          asChild
+        >
           <span>Visit {alternative.name}</span>
         </Button>
       </ExternalLink>

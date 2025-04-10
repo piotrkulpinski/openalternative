@@ -1,4 +1,3 @@
-import { ArrowUpRightIcon, HashIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Image from "next/image"
 import { notFound } from "next/navigation"
@@ -9,6 +8,7 @@ import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
 import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
 import { H2, H4 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
@@ -121,7 +121,11 @@ export default async function ToolPage(props: PageProps) {
             <ToolAlternatives alternatives={tool.alternatives} />
 
             <Stack className="w-full">
-              <Button suffix={<ArrowUpRightIcon />} className="sm:min-w-36" asChild>
+              <Button
+                suffix={<Icon name="lucide/arrow-up-right" />}
+                className="sm:min-w-36"
+                asChild
+              >
                 <ExternalLink
                   href={tool.affiliateUrl || tool.websiteUrl}
                   doFollow={tool.isFeatured}
@@ -133,7 +137,7 @@ export default async function ToolPage(props: PageProps) {
               </Button>
 
               {tool.hostingUrl && (
-                <Button variant="secondary" suffix={<ArrowUpRightIcon />} asChild>
+                <Button variant="secondary" suffix={<Icon name="lucide/arrow-up-right" />} asChild>
                   <ExternalLink
                     href={tool.hostingUrl}
                     eventName="click_ad"
@@ -175,7 +179,7 @@ export default async function ToolPage(props: PageProps) {
                 <Button
                   size="md"
                   focus={false}
-                  suffix={<ArrowUpRightIcon />}
+                  suffix={<Icon name="lucide/arrow-up-right" />}
                   className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none shadow-lg group-hover:opacity-100"
                   asChild
                 >
@@ -203,7 +207,11 @@ export default async function ToolPage(props: PageProps) {
 
               <Stack>
                 {tool.categories?.map(({ name, slug, fullPath }) => (
-                  <Tag key={slug} href={`/categories/${fullPath}`} prefix={<HashIcon />}>
+                  <Tag
+                    key={slug}
+                    href={`/categories/${fullPath}`}
+                    prefix={<Icon name="lucide/hash" />}
+                  >
                     {name}
                   </Tag>
                 ))}
@@ -218,7 +226,7 @@ export default async function ToolPage(props: PageProps) {
 
               <Stack>
                 {tool.topics.map(({ slug }) => (
-                  <Tag key={slug} href={`/topics/${slug}`} prefix={<HashIcon />}>
+                  <Tag key={slug} href={`/topics/${slug}`} prefix={<Icon name="lucide/hash" />}>
                     {slug}
                   </Tag>
                 ))}

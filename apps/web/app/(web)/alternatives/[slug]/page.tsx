@@ -1,11 +1,9 @@
-import { AwardIcon } from "lucide-react"
-import { ArrowUpRightIcon } from "lucide-react"
-import { SmilePlusIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Fragment, Suspense, cache } from "react"
 import { Button } from "~/components/common/button"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Prose } from "~/components/common/prose"
 import { AlternativeCardExternal } from "~/components/web/alternatives/alternative-card-external"
@@ -205,14 +203,14 @@ export default async function AlternativePage(props: PageProps) {
                 id: slug,
                 title: name,
                 prefix: <FaviconImage src={faviconUrl} title={name} className="size-4" />,
-                suffix: index < 3 && <AwardIcon className={medalColors[index]} />,
+                suffix: index < 3 && <Icon name="lucide/award" className={medalColors[index]} />,
               }))}
               className="flex-1 mx-5 max-md:hidden"
             >
               <Button
                 variant="ghost"
-                prefix={<SmilePlusIcon />}
-                suffix={<ArrowUpRightIcon />}
+                prefix={<Icon name="lucide/smile-plus" />}
+                suffix={<Icon name="lucide/arrow-up-right" />}
                 className="font-normal text-muted-foreground hover:ring-transparent! focus-visible:ring-transparent"
                 asChild
               >

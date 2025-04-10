@@ -1,11 +1,11 @@
 "use client"
 
-import { XIcon } from "lucide-react"
 import { Dialog as DialogPrimitive } from "radix-ui"
 import type { ComponentProps } from "react"
 import { H4 } from "~/components/common/heading"
 import { Prose } from "~/components/common/prose"
 import { cx } from "~/utils/cva"
+import { Icon } from "./icon"
 
 const Dialog = DialogPrimitive.Root
 const DialogTrigger = DialogPrimitive.Trigger
@@ -46,7 +46,7 @@ const DialogContent = ({
         >
           {children}
           <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-ring disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-            <XIcon className="size-4" />
+            <Icon name="lucide/x" className="size-4" />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
         </DialogPrimitive.Content>

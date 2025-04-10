@@ -1,10 +1,4 @@
 import type { Table } from "@tanstack/react-table"
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeftIcon,
-  ChevronsRightIcon,
-} from "lucide-react"
 
 import { Button } from "~/components/common/button"
 import {
@@ -14,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/common/select"
+import { Icon } from "../common/icon"
 
 type DataTablePaginationProps<TData> = {
   table: Table<TData>
@@ -66,7 +61,7 @@ export function DataTablePagination<TData>({
           className="max-lg:hidden"
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
-          prefix={<ChevronsLeftIcon />}
+          prefix={<Icon name="lucide/chevrons-left" />}
         />
 
         <Button
@@ -75,7 +70,7 @@ export function DataTablePagination<TData>({
           size="md"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          prefix={<ChevronLeftIcon />}
+          prefix={<Icon name="lucide/chevron-left" />}
         />
 
         <Button
@@ -84,7 +79,7 @@ export function DataTablePagination<TData>({
           size="md"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          suffix={<ChevronRightIcon />}
+          suffix={<Icon name="lucide/chevron-right" />}
         />
 
         <Button
@@ -94,7 +89,7 @@ export function DataTablePagination<TData>({
           className="max-lg:hidden"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
-          suffix={<ChevronsRightIcon />}
+          suffix={<Icon name="lucide/chevrons-right" />}
         />
       </div>
     </div>

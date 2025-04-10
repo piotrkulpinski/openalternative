@@ -1,12 +1,12 @@
 "use client"
 
-import { LogOutIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { signOut } from "~/lib/auth-client"
 import { cx } from "~/utils/cva"
+import { Icon } from "../common/icon"
 
 export const UserLogout = ({ className, ...props }: ComponentProps<"button">) => {
   const router = useRouter()
@@ -29,7 +29,7 @@ export const UserLogout = ({ className, ...props }: ComponentProps<"button">) =>
       {...props}
       onClick={handleSignOut}
     >
-      <LogOutIcon className="shrink-0 size-4 opacity-75" />
+      <Icon name="lucide/log-out" className="shrink-0 size-4 opacity-75" />
       Logout
     </button>
   )

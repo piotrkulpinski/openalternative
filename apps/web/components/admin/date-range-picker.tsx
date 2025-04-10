@@ -2,7 +2,6 @@
 
 import { formatDate, formatDateRange } from "@curiousleaf/utils"
 import { parseISO } from "date-fns"
-import { CalendarIcon } from "lucide-react"
 import { parseAsString, useQueryStates } from "nuqs"
 import { type ComponentProps, useMemo } from "react"
 import type { DateRange } from "react-day-picker"
@@ -10,6 +9,7 @@ import { Button, type ButtonProps } from "~/components/common/button"
 import { Calendar } from "~/components/common/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
 import { cx } from "~/utils/cva"
+import { Icon } from "../common/icon"
 
 type DateRangePickerProps = ComponentProps<typeof PopoverContent> & {
   /**
@@ -95,7 +95,7 @@ export function DateRangePicker({
         <Button
           variant={triggerVariant}
           size={triggerSize}
-          prefix={<CalendarIcon />}
+          prefix={<Icon name="lucide/calendar" />}
           className={cx(
             "shrink-0 justify-start truncate text-left",
             !date && "text-muted-foreground",

@@ -4,16 +4,10 @@ import { formatDate } from "@curiousleaf/utils"
 import { type Tool, ToolStatus } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import { differenceInDays, formatDistanceToNowStrict } from "date-fns"
-import {
-  CircleDashedIcon,
-  CircleDotDashedIcon,
-  CircleIcon,
-  PlusIcon,
-  SparklesIcon,
-} from "lucide-react"
 import { useQueryStates } from "nuqs"
 import { use, useMemo } from "react"
 import { Button } from "~/components/common/button"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { DataTable } from "~/components/data-table/data-table"
@@ -66,7 +60,10 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
             case ToolStatus.Published:
               return (
                 <Stack size="sm" wrap={false}>
-                  <CircleIcon className="stroke-3 text-green-600/75 dark:text-green-500/75" />
+                  <Icon
+                    name="lucide/circle"
+                    className="stroke-3 text-green-600/75 dark:text-green-500/75"
+                  />
                   <span className="text-muted-foreground font-medium">
                     {formatDate(publishedAt!)}
                   </span>
@@ -75,7 +72,10 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
             case ToolStatus.Scheduled:
               return (
                 <Stack size="sm" wrap={false} title={formatDate(publishedAt!)}>
-                  <CircleDotDashedIcon className="stroke-3 text-yellow-700/75 dark:text-yellow-500/75" />
+                  <Icon
+                    name="lucide/circle-dot-dashed"
+                    className="stroke-3 text-yellow-700/75 dark:text-yellow-500/75"
+                  />
                   <span className="text-muted-foreground font-medium">
                     Scheduled{" "}
                     {formatDistanceToNowStrict(publishedAt!, {
@@ -89,7 +89,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
             case ToolStatus.Draft:
               return (
                 <Stack size="sm" wrap={false}>
-                  <CircleDashedIcon className="stroke-3 text-muted-foreground/75" />
+                  <Icon name="lucide/circle-dashed" className="stroke-3 text-muted-foreground/75" />
                   <span className="text-muted-foreground/75">Awaiting review</span>
                 </Stack>
               )
@@ -137,7 +137,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
                 <Button
                   size="sm"
                   variant="secondary"
-                  prefix={<SparklesIcon className="text-inherit" />}
+                  prefix={<Icon name="lucide/sparkles" className="text-inherit" />}
                   className="text-blue-600 dark:text-blue-400"
                   asChild
                 >
@@ -179,7 +179,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
   return (
     <DataTable table={table} emptyState="No tools found. Submit or claim a tool to get started.">
       <DataTableToolbar table={table} filterFields={filterFields}>
-        <Button size="md" variant="primary" prefix={<PlusIcon />} asChild>
+        <Button size="md" variant="primary" prefix={<Icon name="lucide/plus" />} asChild>
           <Link href="/submit">Submit a tool</Link>
         </Button>
       </DataTableToolbar>

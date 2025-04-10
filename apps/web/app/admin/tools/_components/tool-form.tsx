@@ -4,7 +4,6 @@ import { slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ToolStatus } from "@openalternative/db/client"
 import { formatDate } from "date-fns"
-import { EyeIcon, PencilIcon } from "lucide-react"
 import { redirect } from "next/navigation"
 import type { ComponentProps } from "react"
 import { useState } from "react"
@@ -21,6 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Icon } from "~/components/common/icon"
 import { Input, inputVariants } from "~/components/common/input"
 import { Link } from "~/components/common/link"
 import {
@@ -255,7 +255,9 @@ export function ToolForm({
                     size="sm"
                     variant="secondary"
                     onClick={() => setIsPreviewing(prev => !prev)}
-                    prefix={isPreviewing ? <PencilIcon /> : <EyeIcon />}
+                    prefix={
+                      isPreviewing ? <Icon name="lucide/pencil" /> : <Icon name="lucide/eye" />
+                    }
                     className="-my-1"
                   >
                     {isPreviewing ? "Edit" : "Preview"}

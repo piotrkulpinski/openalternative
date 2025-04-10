@@ -1,10 +1,10 @@
 "use client"
 
-import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react"
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
 import type { ComponentProps } from "react"
 import { Kbd } from "~/components/common/kbd"
 import { cx, popoverAnimationClasses } from "~/utils/cva"
+import { Icon } from "./icon"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
@@ -64,7 +64,7 @@ const DropdownMenuCheckboxItem = ({
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
-        <CheckIcon />
+        <Icon name="lucide/check" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -85,7 +85,7 @@ const DropdownMenuRadioItem = ({
   >
     <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
-        <CircleIcon className="fill-current size-2" />
+        <Icon name="lucide/circle" className="fill-current size-2" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -109,7 +109,7 @@ const DropdownMenuSubTrigger = ({
     {...props}
   >
     {children}
-    <ChevronRightIcon className="ml-auto" />
+    <Icon name="lucide/chevron-right" className="ml-auto" />
   </DropdownMenuPrimitive.SubTrigger>
 )
 

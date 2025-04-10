@@ -1,8 +1,8 @@
 "use client"
 
-import { Home } from "lucide-react"
 import type { ComponentProps, ReactNode } from "react"
 import type { Graph } from "schema-dts"
+import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { NavLink } from "~/components/web/ui/nav-link"
 import { config } from "~/config"
@@ -32,7 +32,7 @@ export const Breadcrumbs = ({ children, className, items, ...props }: Breadcrumb
   const breadcrumbItems = [
     {
       href: "/",
-      name: <Home aria-label="Home" />,
+      name: <Icon name="lucide/house" aria-label="Home" />,
     },
     ...items,
   ]

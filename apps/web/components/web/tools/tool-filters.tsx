@@ -1,10 +1,10 @@
 "use client"
 
-import { XIcon } from "lucide-react"
 import { type ComponentProps, useCallback, useEffect } from "react"
 import { useServerAction } from "zsa-react"
 import { findFilterOptions } from "~/actions/filters"
 import { Badge } from "~/components/common/badge"
+import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { ToolRefinement } from "~/components/web/tools/tool-refinement"
 import { searchConfig } from "~/config/search"
@@ -68,7 +68,7 @@ export const ToolFilters = ({ className, ...props }: ComponentProps<"div">) => {
                             className="opacity-75 hover:opacity-100"
                             aria-label={`Remove ${item.name} filter`}
                           >
-                            <XIcon />
+                            <Icon name="lucide/x" />
                           </button>
                         }
                       >

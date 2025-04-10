@@ -1,6 +1,6 @@
-import { LoaderIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { Suspense } from "react"
+import { Icon } from "~/components/common/icon"
 import { Login } from "~/components/web/auth/login"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
@@ -20,7 +20,7 @@ export default function LoginPage() {
         <IntroDescription className="md:text-sm">{metadata.description}</IntroDescription>
       </Intro>
 
-      <Suspense fallback={<LoaderIcon className="animate-spin mx-auto" />}>
+      <Suspense fallback={<Icon name="lucide/loader" className="animate-spin mx-auto" />}>
         <Login />
       </Suspense>
     </>

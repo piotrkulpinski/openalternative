@@ -1,9 +1,9 @@
 "use client"
 
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon, ChevronsUpDownIcon } from "lucide-react"
 import { Select as SelectPrimitive } from "radix-ui"
 import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
+import { Icon } from "~/components/common/icon"
 import { type VariantProps, cx, popoverAnimationClasses } from "~/utils/cva"
 import { inputVariants } from "./input"
 
@@ -25,7 +25,7 @@ const SelectTrigger = ({
       >
         {children}
         <SelectPrimitive.Icon asChild>
-          <ChevronsUpDownIcon className="ml-1 size-4 opacity-50" />
+          <Icon name="lucide/chevrons-up-down" className="ml-1 size-4 opacity-50" />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>
     </Box>
@@ -41,7 +41,7 @@ const SelectScrollUpButton = ({
       className={cx("flex cursor-pointer items-center justify-center py-1", className)}
       {...props}
     >
-      <ChevronUpIcon />
+      <Icon name="lucide/chevron-up" />
     </SelectPrimitive.ScrollUpButton>
   )
 }
@@ -55,7 +55,7 @@ const SelectScrollDownButton = ({
       className={cx("flex cursor-pointer items-center justify-center py-1", className)}
       {...props}
     >
-      <ChevronDownIcon />
+      <Icon name="lucide/chevron-down" />
     </SelectPrimitive.ScrollDownButton>
   )
 }
@@ -119,7 +119,7 @@ const SelectItem = ({
     >
       <span className="absolute right-2 flex size-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
+          <Icon name="lucide/check" className="size-4" />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

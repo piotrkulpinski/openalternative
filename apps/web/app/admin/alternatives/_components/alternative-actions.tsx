@@ -1,7 +1,6 @@
 "use client"
 
 import type { Alternative } from "@openalternative/db/client"
-import { EllipsisIcon } from "lucide-react"
 import type { ComponentProps, Dispatch, SetStateAction } from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -13,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { reuploadAlternativeAssets } from "~/server/admin/alternatives/actions"
 import type { DataTableRowAction } from "~/types"
@@ -46,7 +46,7 @@ export const AlternativeActions = ({
           aria-label="Open menu"
           variant="secondary"
           size="sm"
-          prefix={<EllipsisIcon />}
+          prefix={<Icon name="lucide/ellipsis" />}
           className={cx("data-[state=open]:bg-accent", className)}
           {...props}
         />

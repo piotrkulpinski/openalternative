@@ -1,10 +1,10 @@
 "use client"
 
-import { BadgeCheckIcon, SparklesIcon, TriangleAlertIcon } from "lucide-react"
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import { useState } from "react"
 import { Button } from "~/components/common/button"
+import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { ToolClaimDialog } from "~/components/web/dialogs/tool-claim-dialog"
@@ -28,7 +28,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
         <Button
           size="md"
           variant="secondary"
-          prefix={<SparklesIcon className="text-inherit" />}
+          prefix={<Icon name="lucide/sparkles" className="text-inherit" />}
           className="text-blue-600 dark:text-blue-400"
           asChild
         >
@@ -40,7 +40,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
         <Button
           size="md"
           variant="secondary"
-          prefix={<BadgeCheckIcon className="text-inherit" />}
+          prefix={<Icon name="lucide/badge-check" className="text-inherit" />}
           onClick={() => setIsClaimOpen(true)}
           className="text-blue-600 dark:text-blue-400"
         >
@@ -52,7 +52,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
         <Button
           size="md"
           variant="secondary"
-          prefix={<TriangleAlertIcon />}
+          prefix={<Icon name="lucide/triangle-alert" />}
           onClick={() => setIsReportOpen(true)}
           aria-label="Report"
         />

@@ -1,15 +1,5 @@
 "use client"
 
-import {
-  BlocksIcon,
-  CalendarDaysIcon,
-  ChevronDownIcon,
-  CopyrightIcon,
-  GalleryHorizontalEndIcon,
-  SearchIcon,
-  ServerIcon,
-  TagIcon,
-} from "lucide-react"
 import { usePathname } from "next/navigation"
 import { type ComponentProps, Suspense, useEffect, useState } from "react"
 import {
@@ -18,9 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
-import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
-import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
-import { BrandXIcon } from "~/components/common/icons/brand-x"
+import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { SearchForm } from "~/components/web/search-form"
 import { Container } from "~/components/web/ui/container"
@@ -85,38 +73,46 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
           <DropdownMenu>
             <DropdownMenuTrigger className={cx(navLinkVariants({ className: "gap-1" }))}>
               Browse{" "}
-              <ChevronDownIcon className="group-data-[state=open]:-rotate-180 duration-200" />
+              <Icon
+                name="lucide/chevron-down"
+                className="group-data-[state=open]:-rotate-180 duration-200"
+              />
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
                 <NavLink href="/latest">
-                  <CalendarDaysIcon className="shrink-0 size-4 opacity-75" /> Latest tools
+                  <Icon name="lucide/calendar-days" className="shrink-0 size-4 opacity-75" /> Latest
+                  tools
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavLink href="/categories">
-                  <GalleryHorizontalEndIcon className="shrink-0 size-4 opacity-75" /> Categories
+                  <Icon
+                    name="lucide/gallery-horizontal-end"
+                    className="shrink-0 size-4 opacity-75"
+                  />{" "}
+                  Categories
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavLink href="/self-hosted">
-                  <ServerIcon className="shrink-0 size-4 opacity-75" /> Self-hosted
+                  <Icon name="lucide/server" className="shrink-0 size-4 opacity-75" /> Self-hosted
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavLink href="/stacks">
-                  <BlocksIcon className="shrink-0 size-4 opacity-75" /> Tech Stacks
+                  <Icon name="lucide/blocks" className="shrink-0 size-4 opacity-75" /> Tech Stacks
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavLink href="/topics">
-                  <TagIcon className="shrink-0 size-4 opacity-75" /> Topics
+                  <Icon name="lucide/tag" className="shrink-0 size-4 opacity-75" /> Topics
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavLink href="/licenses">
-                  <CopyrightIcon className="shrink-0 size-4 opacity-75" /> Licenses
+                  <Icon name="lucide/copyright" className="shrink-0 size-4 opacity-75" /> Licenses
                 </NavLink>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -129,7 +125,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
         </nav>
 
         <Stack size="sm" className="max-sm:hidden">
-          <Suspense fallback={<SearchIcon className="size-4" />}>
+          <Suspense fallback={<Icon name="lucide/search" className="size-4" />}>
             <SearchForm />
           </Suspense>
 
@@ -139,7 +135,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
             rel="nofollow noreferrer"
             title="Follow us on X"
           >
-            <BrandXIcon className="size-4" />
+            <Icon name="tabler/brand-x" className="size-4" />
           </NavLink>
 
           <NavLink
@@ -148,7 +144,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
             rel="nofollow noreferrer"
             title="Follow us on Bluesky"
           >
-            <BrandBlueskyIcon className="size-4" />
+            <Icon name="tabler/brand-bluesky" className="size-4" />
           </NavLink>
 
           <NavLink
@@ -157,7 +153,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
             rel="nofollow noreferrer"
             title="View source code"
           >
-            <BrandGitHubIcon className="size-4" />
+            <Icon name="tabler/brand-github" className="size-4" />
           </NavLink>
         </Stack>
 
@@ -198,7 +194,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
           About
         </NavLink>
 
-        <Suspense fallback={<SearchIcon className="size-4 sm:hidden" />}>
+        <Suspense fallback={<Icon name="lucide/search" className="size-4 sm:hidden" />}>
           <SearchForm className="sm:hidden" />
         </Suspense>
       </nav>

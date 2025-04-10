@@ -1,9 +1,9 @@
-import { ArrowRightIcon } from "lucide-react"
 import Image from "next/image"
 import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
 import { H2 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { Markdown } from "~/components/web/markdown"
@@ -72,7 +72,7 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
         </div>
       )}
 
-      <Button suffix={<ArrowRightIcon />} className="self-start" asChild>
+      <Button suffix={<Icon name="lucide/arrow-right" />} className="self-start" asChild>
         <Link href={href}>Read more</Link>
       </Button>
     </div>

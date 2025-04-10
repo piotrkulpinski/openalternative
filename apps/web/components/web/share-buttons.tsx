@@ -4,14 +4,7 @@ import { usePathname } from "next/navigation"
 import type { ComponentProps, ReactNode } from "react"
 import { Button } from "~/components/common/button"
 import { H5 } from "~/components/common/heading"
-import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
-import { BrandFacebookIcon } from "~/components/common/icons/brand-facebook"
-import { BrandHackerNewsIcon } from "~/components/common/icons/brand-hackernews"
-import { BrandLinkedInIcon } from "~/components/common/icons/brand-linkedin"
-import { BrandMastodonIcon } from "~/components/common/icons/brand-mastodon"
-import { BrandRedditIcon } from "~/components/common/icons/brand-reddit"
-import { BrandWhatsAppIcon } from "~/components/common/icons/brand-whatsapp"
-import { BrandXIcon } from "~/components/common/icons/brand-x"
+import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { ExternalLink } from "~/components/web/external-link"
@@ -37,42 +30,42 @@ const shareOptions: ShareOption[] = [
   {
     platform: "X",
     url: (url, title) => `https://x.com/intent/post?text=${title}&url=${url}`,
-    icon: <BrandXIcon />,
+    icon: <Icon name="tabler/brand-x" />,
   },
   {
     platform: "Bluesky",
     url: (url, title) => `https://bsky.app/intent/compose?text=${title}+${url}`,
-    icon: <BrandBlueskyIcon />,
+    icon: <Icon name="tabler/brand-bluesky" />,
   },
   {
     platform: "Mastodon",
     url: (url, title) => `https://mastodon.social/share?text=${title}+${url}`,
-    icon: <BrandMastodonIcon />,
+    icon: <Icon name="tabler/brand-mastodon" />,
   },
   {
     platform: "Facebook",
     url: url => `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-    icon: <BrandFacebookIcon />,
+    icon: <Icon name="tabler/brand-facebook" />,
   },
   {
     platform: "LinkedIn",
     url: (url, title) => `https://linkedin.com/sharing/share-offsite?url=${url}&text=${title}`,
-    icon: <BrandLinkedInIcon />,
+    icon: <Icon name="tabler/brand-linkedin" />,
   },
   {
     platform: "HackerNews",
     url: (url, title) => `https://news.ycombinator.com/submitlink?u=${url}&t=${title}`,
-    icon: <BrandHackerNewsIcon />,
+    icon: <Icon name="tabler/brand-ycombinator" />,
   },
   {
     platform: "Reddit",
     url: (url, title) => `https://reddit.com/submit?url=${url}&title=${title}`,
-    icon: <BrandRedditIcon />,
+    icon: <Icon name="tabler/brand-reddit" />,
   },
   {
     platform: "WhatsApp",
     url: (url, title) => `https://api.whatsapp.com/send?text=${title}+${url}`,
-    icon: <BrandWhatsAppIcon />,
+    icon: <Icon name="tabler/brand-whatsapp" />,
   },
 ]
 

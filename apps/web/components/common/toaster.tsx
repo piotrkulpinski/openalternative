@@ -1,8 +1,8 @@
 "use client"
 
-import { CheckCircleIcon, CircleHelpIcon, LoaderIcon, XCircleIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { Toaster as Sonner } from "sonner"
+import { Icon } from "~/components/common/icon"
 import { cx } from "~/utils/cva"
 
 const Toaster = ({ className, ...props }: ComponentProps<typeof Sonner>) => {
@@ -27,10 +27,10 @@ const Toaster = ({ className, ...props }: ComponentProps<typeof Sonner>) => {
         },
       }}
       icons={{
-        info: <CircleHelpIcon className="size-4" />,
-        success: <CheckCircleIcon className="size-4" />,
-        error: <XCircleIcon className="size-4" />,
-        loading: <LoaderIcon className="size-4 animate-spin" />,
+        info: <Icon name="lucide/circle-help" className="size-4" />,
+        success: <Icon name="lucide/circle-check" className="size-4" />,
+        error: <Icon name="lucide/circle-x" className="size-4" />,
+        loading: <Icon name="lucide/loader" className="size-4 animate-spin" />,
       }}
       {...props}
     />

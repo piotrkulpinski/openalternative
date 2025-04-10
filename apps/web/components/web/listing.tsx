@@ -1,8 +1,8 @@
-import { ArrowRightIcon } from "lucide-react"
 import type { ComponentProps, ReactNode } from "react"
-import { H4 } from "~/components/common/heading"
-import { Stack } from "~/components/common/stack"
 import { Button } from "~/components/common/button"
+import { H4 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
+import { Stack } from "~/components/common/stack"
 import { cx } from "~/utils/cva"
 
 type ListingProps = ComponentProps<typeof Stack> & {
@@ -31,7 +31,7 @@ export const Listing = ({
             <Button
               size="md"
               variant="secondary"
-              suffix={<ArrowRightIcon />}
+              suffix={<Icon name="lucide/arrow-right" />}
               className="-my-0.5"
               asChild
             >

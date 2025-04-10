@@ -2,7 +2,6 @@
 
 import { slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { XIcon } from "lucide-react"
 import { redirect } from "next/navigation"
 import { type ComponentProps, use, useMemo } from "react"
 import { useForm } from "react-hook-form"
@@ -18,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
 import {
@@ -221,7 +221,7 @@ export function CategoryForm({
                     size="sm"
                     variant="secondary"
                     onClick={() => form.setValue("parentId", "")}
-                    prefix={<XIcon />}
+                    prefix={<Icon name="lucide/x" />}
                     className="-my-1"
                   >
                     Clear

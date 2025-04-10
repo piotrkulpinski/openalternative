@@ -1,9 +1,9 @@
 "use client"
 
-import { Check } from "lucide-react"
 import { Checkbox as CheckboxPrimitive } from "radix-ui"
 import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
+import { Icon } from "~/components/common/icon"
 import { cx } from "~/utils/cva"
 
 const Checkbox = ({ className, ...props }: ComponentProps<typeof CheckboxPrimitive.Root>) => (
@@ -16,7 +16,7 @@ const Checkbox = ({ className, ...props }: ComponentProps<typeof CheckboxPrimiti
       {...props}
     >
       <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
-        <Check className="size-4" />
+        <Icon name="lucide/check" className="size-4" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   </Box>

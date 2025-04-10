@@ -1,6 +1,6 @@
 "use client"
 
-import { LoaderIcon, SearchIcon } from "lucide-react"
+import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
 import {
   Select,
@@ -30,7 +30,11 @@ export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
     <Stack className="w-full">
       <div className="relative grow min-w-0">
         <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
-          {isLoading ? <LoaderIcon className="animate-spin" /> : <SearchIcon />}
+          {isLoading ? (
+            <Icon name="lucide/loader" className="animate-spin" />
+          ) : (
+            <Icon name="lucide/search" />
+          )}
         </div>
 
         <Input

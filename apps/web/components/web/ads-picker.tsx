@@ -3,7 +3,6 @@
 import { formatDateRange } from "@curiousleaf/utils"
 import { cx } from "cva"
 import { endOfDay, startOfDay } from "date-fns"
-import { XIcon } from "lucide-react"
 import plur from "plur"
 import posthog from "posthog-js"
 import type { ComponentProps } from "react"
@@ -20,6 +19,7 @@ import { Price } from "~/components/web/price"
 import { config } from "~/config"
 import { useAds } from "~/hooks/use-ads"
 import type { AdMany } from "~/server/web/ads/payloads"
+import { Icon } from "../common/icon"
 
 type AdsCalendarProps = ComponentProps<"div"> & {
   ads: AdMany[]
@@ -96,7 +96,7 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
                       variant="secondary"
                       size="sm"
                       aria-label={`Clear ${adSpot.label} selection`}
-                      prefix={<XIcon />}
+                      prefix={<Icon name="lucide/x" />}
                       onClick={() => clearSelection(selection.type)}
                     />
 

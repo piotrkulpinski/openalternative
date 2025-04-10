@@ -12,10 +12,10 @@ import {
   startOfWeek,
   subMonths,
 } from "date-fns"
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { type ComponentProps, useState } from "react"
 import { Button } from "~/components/common/button"
 import { H5 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import type { findScheduledTools } from "~/server/admin/tools/queries"
@@ -94,7 +94,7 @@ export const Calendar = ({ className, tools, ...props }: CalendarProps) => {
         <Button
           variant="secondary"
           size="sm"
-          prefix={<ChevronLeftIcon />}
+          prefix={<Icon name="lucide/chevron-left" />}
           onClick={() => setCurrentDate(date => subMonths(date, 1))}
           disabled={isSameMonth(currentDate, today)}
         />
@@ -104,7 +104,7 @@ export const Calendar = ({ className, tools, ...props }: CalendarProps) => {
         <Button
           variant="secondary"
           size="sm"
-          prefix={<ChevronRightIcon />}
+          prefix={<Icon name="lucide/chevron-right" />}
           onClick={() => setCurrentDate(date => addMonths(date, 1))}
         />
       </Stack>

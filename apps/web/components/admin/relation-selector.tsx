@@ -1,6 +1,5 @@
 import { useCompletion } from "@ai-sdk/react"
 import { isTruthy } from "@curiousleaf/utils"
-import { MousePointerClickIcon, SparklesIcon } from "lucide-react"
 import { use, useEffect, useState } from "react"
 import { AnimatedContainer } from "~/components/common/animated-container"
 import { Badge } from "~/components/common/badge"
@@ -17,6 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/pop
 import { Separator } from "~/components/common/separator"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
+import { Icon } from "../common/icon"
 
 type Relation = {
   id: string
@@ -81,7 +81,7 @@ export const RelationSelector = ({
             variant="secondary"
             size="md"
             className="justify-start w-full px-3 gap-2.5"
-            prefix={<MousePointerClickIcon />}
+            prefix={<Icon name="lucide/mouse-pointer-click" />}
             suffix={
               <Badge variant="outline" className="ml-auto size-auto">
                 {selectedRelations.length}
@@ -151,7 +151,7 @@ export const RelationSelector = ({
           <Stack size="sm" className="items-start">
             <Tooltip tooltip="AI-suggested relations based on the content of the link. Click a suggested relation to add it.">
               <Stack size="xs" className="mt-px text-xs text-muted-foreground">
-                <SparklesIcon />
+                <Icon name="lucide/sparkles" />
                 <span>Suggested:</span>
               </Stack>
             </Tooltip>

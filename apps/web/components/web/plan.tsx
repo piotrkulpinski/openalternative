@@ -1,6 +1,5 @@
 "use client"
 
-import { ArrowUpRightIcon, CheckIcon, XIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
 import { Slot } from "radix-ui"
@@ -22,6 +21,7 @@ import { usePlanPrices } from "~/hooks/use-plan-prices"
 import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { type VariantProps, cva, cx } from "~/utils/cva"
+import { Icon } from "../common/icon"
 
 const planVariants = cva({
   base: "items-stretch gap-8 basis-72 grow max-w-80 bg-transparent overflow-clip",
@@ -179,7 +179,7 @@ const Plan = ({
           {features.map(({ type, name, footnote }) => (
             <div key={name} className={cx(planFeatureVariants())}>
               <Slot.Root className={cx(planFeatureCheckVariants({ type }))}>
-                {type === "negative" ? <XIcon /> : <CheckIcon />}
+                {type === "negative" ? <Icon name="lucide/x" /> : <Icon name="lucide/check" />}
               </Slot.Root>
 
               <span className={cx("truncate", type === "negative" && "opacity-50")}>{name}</span>
@@ -199,7 +199,7 @@ const Plan = ({
         variant={!price ? "secondary" : isFeatured ? "fancy" : "primary"}
         isPending={isPending}
         disabled={!price || isPending}
-        suffix={!price ? <span /> : <ArrowUpRightIcon />}
+        suffix={!price ? <span /> : <Icon name="lucide/arrow-up-right" />}
         onClick={onSubmit}
       >
         {!price

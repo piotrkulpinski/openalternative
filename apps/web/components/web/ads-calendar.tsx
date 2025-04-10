@@ -1,6 +1,5 @@
 import type { AdType } from "@openalternative/db/client"
 import { differenceInDays, endOfDay, startOfDay } from "date-fns"
-import { EyeIcon } from "lucide-react"
 import { type ComponentProps, useCallback, useMemo } from "react"
 import type { DateRange } from "react-day-picker"
 import { Button } from "~/components/common/button"
@@ -15,6 +14,7 @@ import type { AdsSelection, useAds } from "~/hooks/use-ads"
 import type { AdMany } from "~/server/web/ads/payloads"
 import { getFirstAvailableMonth } from "~/utils/ads"
 import { cx } from "~/utils/cva"
+import { Icon } from "../common/icon"
 
 type AdsCalendarProps = ComponentProps<"div"> & {
   adSpot: AdSpot
@@ -108,7 +108,7 @@ export const AdsCalendar = ({
         <Stack size="sm">
           {adSpot.preview && (
             <Tooltip tooltip="Preview this ad">
-              <Button variant="secondary" size="sm" prefix={<EyeIcon />} asChild>
+              <Button variant="secondary" size="sm" prefix={<Icon name="lucide/eye" />} asChild>
                 <ExternalLink href={adSpot.preview} />
               </Button>
             </Tooltip>

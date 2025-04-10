@@ -37,3 +37,7 @@ next-env.d.ts
 # sitemap
 public/sitemap*.xml
 public/robots.txt
+
+# icons
+public/icons/sprite.svg
+types/icons.d.ts

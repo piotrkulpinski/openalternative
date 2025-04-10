@@ -56,8 +56,12 @@
   --animate-ping: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 
   @keyframes fade-in {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 }
 
@@ -124,32 +128,22 @@
     @apply font-medium;
   }
 
-  svg.lucide:not([class*="stroke"]),
-  svg.brand:not([class*="stroke"]) {
-    @apply stroke-2;
-  }
-
-  svg.lucide:not([class*="size-"]):not([class*="h-"]),
-  svg.brand:not([class*="size-"]):not([class*="h-"]) {
-    @apply size-[1em];
-  }
-
-  [href] svg[class*="arrow-up-right"],
-  [href] svg[class*="arrow-right"],
-  [type] svg[class*="arrow-up-right"],
-  [type] svg[class*="arrow-right"] {
+  [href] svg[aria-label*="arrow-up-right"],
+  [href] svg[aria-label*="arrow-right"],
+  [type] svg[aria-label*="arrow-up-right"],
+  [type] svg[aria-label*="arrow-right"] {
     @apply will-change-transform;
     @apply duration-150;
   }
 
-  [href]:hover svg[class*="arrow-up-right"],
-  [type]:hover svg[class*="arrow-up-right"] {
+  [href]:hover svg[aria-label*="arrow-up-right"],
+  [type]:hover svg[aria-label*="arrow-up-right"] {
     @apply translate-x-[0.1em];
     @apply rotate-12;
   }
 
-  [href]:hover svg[class*="arrow-right"],
-  [type]:hover svg[class*="arrow-right"] {
+  [href]:hover svg[aria-label*="arrow-right"],
+  [type]:hover svg[aria-label*="arrow-right"] {
     @apply translate-x-[0.15em];
   }
 }

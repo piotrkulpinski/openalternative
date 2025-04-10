@@ -1,7 +1,6 @@
 "use client"
 
 import { getInitials } from "@curiousleaf/utils"
-import { ShieldHalfIcon, UserIcon } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/common/avatar"
 import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
@@ -13,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { NavLink } from "~/components/web/ui/nav-link"
 import { UserLogout } from "~/components/web/user-logout"
@@ -56,14 +56,14 @@ const UserMenu = (props: { session: Session | null }) => {
         {session.user.role === "admin" && (
           <DropdownMenuItem asChild>
             <NavLink href="/admin">
-              <ShieldHalfIcon className="shrink-0 size-4 opacity-75" /> Admin Panel
+              <Icon name="lucide/shield-half" className="shrink-0 size-4 opacity-75" /> Admin Panel
             </NavLink>
           </DropdownMenuItem>
         )}
 
         <DropdownMenuItem asChild>
           <NavLink href="/dashboard">
-            <UserIcon className="shrink-0 size-4 opacity-75" /> Dashboard
+            <Icon name="lucide/user" className="shrink-0 size-4 opacity-75" /> Dashboard
           </NavLink>
         </DropdownMenuItem>
 

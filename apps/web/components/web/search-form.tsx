@@ -1,11 +1,11 @@
 "use client"
 
-import { SearchIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { parseAsString, useQueryState } from "nuqs"
 import { type ComponentProps, type FormEvent, useEffect, useRef, useState } from "react"
 import { Input } from "~/components/common/input"
 import { cx } from "~/utils/cva"
+import { Icon } from "../common/icon"
 
 export const SearchForm = ({ className, ...props }: ComponentProps<"form">) => {
   const router = useRouter()
@@ -65,7 +65,7 @@ export const SearchForm = ({ className, ...props }: ComponentProps<"form">) => {
           tabIndex={-1}
           aria-label="Search"
         >
-          <SearchIcon className="size-4" />
+          <Icon name="lucide/search" className="size-4" />
         </button>
       </div>
     </form>

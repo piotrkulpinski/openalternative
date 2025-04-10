@@ -8,7 +8,6 @@ export const linksConfig = {
   mastodon: "https://mastodon.social/@openalternative",
   linkedin: "https://linkedin.com/company/openalternative",
   github: "https://github.com/piotrkulpinski/openalternative",
-  medium: "https://medium.com/openalternative",
   analytics: "https://go.openalternative.co/analytics",
   feeds: [
     { title: "Open Source Tools", url: `${siteConfig.url}/rss/tools.xml` },

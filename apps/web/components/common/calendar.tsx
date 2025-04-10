@@ -1,9 +1,9 @@
 "use client"
 
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { DayPicker } from "react-day-picker"
 import { buttonVariants } from "~/components/common/button"
+import { Icon } from "./icon"
 
 export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPicker>) => {
   const buttonClasses = buttonVariants({
@@ -40,9 +40,9 @@ export const Calendar = ({ classNames, ...props }: ComponentProps<typeof DayPick
       components={{
         Chevron: ({ orientation }) => {
           if (orientation === "left") {
-            return <ChevronLeftIcon className="size-4" />
+            return <Icon name="lucide/chevron-left" className="size-4" />
           }
-          return <ChevronRightIcon className="size-4" />
+          return <Icon name="lucide/chevron-right" className="size-4" />
         },
       }}
       {...props}

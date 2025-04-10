@@ -1,7 +1,6 @@
 "use client"
 
 import { formatNumber } from "@curiousleaf/utils"
-import { AtSignIcon, RssIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import {
   DropdownMenu,
@@ -10,12 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
 import { H5, H6 } from "~/components/common/heading"
-import { BrandBlueskyIcon } from "~/components/common/icons/brand-bluesky"
-import { BrandGitHubIcon } from "~/components/common/icons/brand-github"
-import { BrandLinkedInIcon } from "~/components/common/icons/brand-linkedin"
-import { BrandMastodonIcon } from "~/components/common/icons/brand-mastodon"
-import { BrandMediumIcon } from "~/components/common/icons/brand-medium"
-import { BrandXIcon } from "~/components/common/icons/brand-x"
+import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { ExternalLink } from "~/components/web/external-link"
@@ -62,7 +56,10 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
             <DropdownMenu modal={false}>
               <Tooltip tooltip="RSS Feeds">
                 <DropdownMenuTrigger aria-label="RSS Feeds">
-                  <RssIcon className="size-[1.44em] stroke-[1.5] text-muted-foreground hover:text-foreground" />
+                  <Icon
+                    name="lucide/rss"
+                    className="size-[1.44em] opacity-75 text-muted-foreground hover:text-foreground"
+                  />
                 </DropdownMenuTrigger>
               </Tooltip>
 
@@ -84,43 +81,37 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
                 rel="nofollow noreferrer"
                 aria-label="Contact us"
               >
-                <AtSignIcon className="size-[1.44em] stroke-[1.5]" />
+                <Icon name="lucide/at-sign" className="size-[1.44em] opacity-75" />
               </NavLink>
             </Tooltip>
 
             <Tooltip tooltip="View source code">
               <NavLink href={config.links.github} target="_blank" rel="nofollow noreferrer">
-                <BrandGitHubIcon className="size-[1.44em] stroke-[1.5]" />
+                <Icon name="tabler/brand-github" className="size-[1.44em] opacity-75" />
               </NavLink>
             </Tooltip>
 
             <Tooltip tooltip="Follow us on X/Twitter">
               <NavLink href={config.links.twitter} target="_blank" rel="nofollow noreferrer">
-                <BrandXIcon className="size-[1.44em] stroke-[1.5]" />
+                <Icon name="tabler/brand-x" className="size-[1.44em] opacity-75" />
               </NavLink>
             </Tooltip>
 
             <Tooltip tooltip="Follow us on Bluesky">
               <NavLink href={config.links.bluesky} target="_blank" rel="nofollow noreferrer">
-                <BrandBlueskyIcon className="size-[1.44em] stroke-[1.5]" />
+                <Icon name="tabler/brand-bluesky" className="size-[1.44em] opacity-75" />
               </NavLink>
             </Tooltip>
 
             <Tooltip tooltip="Follow us on Mastodon">
               <NavLink href={config.links.mastodon} target="_blank" rel="nofollow noreferrer">
-                <BrandMastodonIcon className="size-[1.44em] stroke-[1.5]" />
+                <Icon name="tabler/brand-mastodon" className="size-[1.44em] opacity-75" />
               </NavLink>
             </Tooltip>
 
             <Tooltip tooltip="Follow us on LinkedIn">
               <NavLink href={config.links.linkedin} target="_blank" rel="nofollow noreferrer">
-                <BrandLinkedInIcon className="size-[1.44em] stroke-[1.5]" />
-              </NavLink>
-            </Tooltip>
-
-            <Tooltip tooltip="Follow us on Medium">
-              <NavLink href={config.links.medium} target="_blank" rel="nofollow noreferrer">
-                <BrandMediumIcon className="size-[1.44em] stroke-[1.5]" />
+                <Icon name="tabler/brand-linkedin" className="size-[1.44em] opacity-75" />
               </NavLink>
             </Tooltip>
 

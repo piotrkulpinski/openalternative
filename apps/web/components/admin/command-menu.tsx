@@ -1,7 +1,6 @@
 import { getUrlHostname } from "@curiousleaf/utils"
 import { useDebouncedState } from "@mantine/hooks"
 import type { Alternative, Category, Tool } from "@openalternative/db/client"
-import { LoaderIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
@@ -17,6 +16,7 @@ import {
   CommandList,
   CommandShortcut,
 } from "~/components/common/command"
+import { Icon } from "../common/icon"
 
 type SearchResult = {
   tools: Tool[]
@@ -93,7 +93,7 @@ export const CommandMenu = ({ isOpen, onOpenChange }: CommandMenuProps) => {
 
       {isSearching && (
         <div className="absolute top-4 left-3 bg-background text-muted-foreground">
-          <LoaderIcon className="animate-spin" />
+          <Icon name="lucide/loader" className="animate-spin" />
         </div>
       )}
 

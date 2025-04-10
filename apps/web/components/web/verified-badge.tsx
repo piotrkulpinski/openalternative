@@ -1,16 +1,17 @@
-import { BadgeCheckIcon } from "lucide-react"
 import type { ComponentProps } from "react"
+import { Icon } from "~/components/common/icon"
 import { Tooltip } from "~/components/common/tooltip"
 import { cx } from "~/utils/cva"
 
-type VerifiedBadgeProps = ComponentProps<typeof BadgeCheckIcon> & {
+type VerifiedBadgeProps = Omit<ComponentProps<typeof Icon>, "name"> & {
   size?: "sm" | "md" | "lg"
 }
 
 export const VerifiedBadge = ({ className, size = "md", ...props }: VerifiedBadgeProps) => {
   return (
     <Tooltip tooltip="Verified">
-      <BadgeCheckIcon
+      <Icon
+        name="lucide/badge-check"
         className={cx(
           "-ml-1 fill-blue-500 stroke-background",
           size === "sm" && "-mb-[0.15em] size-4",

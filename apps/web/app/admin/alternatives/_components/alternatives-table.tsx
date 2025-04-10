@@ -1,7 +1,6 @@
 "use client"
 
 import type { Alternative } from "@openalternative/db/client"
-import { PlusIcon } from "lucide-react"
 import { useQueryStates } from "nuqs"
 import { use, useMemo, useState } from "react"
 import { AlternativesDeleteDialog } from "~/app/admin/alternatives/_components/alternatives-delete-dialog"
@@ -18,6 +17,7 @@ import { alternativesTableParamsSchema } from "~/server/admin/alternatives/schem
 import type { DataTableFilterField, DataTableRowAction } from "~/types"
 import { getColumns } from "./alternatives-table-columns"
 import { AlternativesTableToolbarActions } from "./alternatives-table-toolbar-actions"
+import { Icon } from "~/components/common/icon"
 
 type AlternativesTableProps = {
   alternativesPromise: ReturnType<typeof findAlternatives>
@@ -62,7 +62,7 @@ export function AlternativesTable({ alternativesPromise }: AlternativesTableProp
           title="Alternatives"
           total={alternativesTotal}
           callToAction={
-            <Button variant="primary" size="md" prefix={<PlusIcon />} asChild>
+            <Button variant="primary" size="md" prefix={<Icon name="lucide/plus" />} asChild>
               <Link href="/admin/alternatives/new">
                 <div className="max-sm:sr-only">New alternative</div>
               </Link>

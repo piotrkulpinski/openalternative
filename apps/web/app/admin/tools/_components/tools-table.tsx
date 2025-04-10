@@ -1,7 +1,6 @@
 "use client"
 
 import { type Tool, ToolStatus } from "@openalternative/db/client"
-import { CircleDashedIcon, CircleDotDashedIcon, CircleIcon, PlusIcon } from "lucide-react"
 import { useQueryStates } from "nuqs"
 import { use, useMemo, useState } from "react"
 import { ToolScheduleDialog } from "~/app/admin/tools/_components/tool-schedule-dialog"
@@ -19,6 +18,7 @@ import { toolsTableParamsSchema } from "~/server/admin/tools/schemas"
 import type { DataTableFilterField, DataTableRowAction } from "~/types"
 import { getColumns } from "./tools-table-columns"
 import { ToolsTableToolbarActions } from "./tools-table-toolbar-actions"
+import { Icon } from "~/components/common/icon"
 
 type ToolsTableProps = {
   toolsPromise: ReturnType<typeof findTools>
@@ -46,17 +46,17 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
         {
           label: "Published",
           value: ToolStatus.Published,
-          icon: <CircleIcon className="!text-lime-500" />,
+          icon: <Icon name="lucide/circle" className="!text-lime-500" />,
         },
         {
           label: "Scheduled",
           value: ToolStatus.Scheduled,
-          icon: <CircleDotDashedIcon className="!text-yellow-500" />,
+          icon: <Icon name="lucide/circle-dot-dashed" className="!text-yellow-500" />,
         },
         {
           label: "Draft",
           value: ToolStatus.Draft,
-          icon: <CircleDashedIcon className="!text-gray-500" />,
+          icon: <Icon name="lucide/circle-dashed" className="!text-gray-500" />,
         },
       ],
     },
@@ -85,7 +85,7 @@ export function ToolsTable({ toolsPromise }: ToolsTableProps) {
           title="Tools"
           total={toolsTotal}
           callToAction={
-            <Button variant="primary" size="md" prefix={<PlusIcon />} asChild>
+            <Button variant="primary" size="md" prefix={<Icon name="lucide/plus" />} asChild>
               <Link href="/admin/tools/new">
                 <div className="max-sm:sr-only">New tool</div>
               </Link>

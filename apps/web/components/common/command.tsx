@@ -1,13 +1,13 @@
 "use client"
 
 import { Command as CommandPrimitive } from "cmdk"
-import { SearchIcon } from "lucide-react"
 import type {} from "radix-ui"
 import type { ComponentProps } from "react"
 import { Dialog, DialogContent, DialogTitle } from "~/components/common/dialog"
 import { Kbd } from "~/components/common/kbd"
 import { ScrollArea } from "~/components/common/scroll-area"
 import { cx } from "~/utils/cva"
+import { Icon } from "./icon"
 
 const Command = ({ className, ...props }: ComponentProps<typeof CommandPrimitive>) => {
   return (
@@ -37,7 +37,7 @@ const CommandDialog = ({ children, ...props }: ComponentProps<typeof Dialog>) =>
 const CommandInput = ({ className, ...props }: ComponentProps<typeof CommandPrimitive.Input>) => {
   return (
     <div className="flex items-center gap-2 border-b px-3" cmdk-input-wrapper="">
-      <SearchIcon className="size-4 shrink-0 opacity-50" />
+      <Icon name="lucide/search" className="size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
         className={cx(
           "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",

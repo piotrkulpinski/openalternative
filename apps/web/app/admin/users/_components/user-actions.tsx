@@ -1,7 +1,6 @@
 "use client"
 
 import type { User } from "@openalternative/db/client"
-import { EllipsisIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { type ComponentProps, type Dispatch, type SetStateAction, useTransition } from "react"
 import { toast } from "sonner"
@@ -18,6 +17,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { admin, useSession } from "~/lib/auth-client"
 import { getErrorMessage } from "~/lib/handle-error"
@@ -48,7 +48,7 @@ export const UserActions = ({ user, setRowAction, className, ...props }: UserAct
           aria-label="Open menu"
           variant="secondary"
           size="sm"
-          prefix={<EllipsisIcon />}
+          prefix={<Icon name="lucide/ellipsis" />}
           className={cx("data-[state=open]:bg-accent", className)}
           {...props}
         />

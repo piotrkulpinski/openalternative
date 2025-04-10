@@ -2,8 +2,8 @@
 
 import { useLocalStorage } from "@mantine/hooks"
 import { cx } from "cva"
-import { ListFilterIcon, LoaderIcon, SearchIcon } from "lucide-react"
 import { AnimatedContainer } from "~/components/common/animated-container"
+import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
 import {
   Select,
@@ -44,7 +44,11 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
       <Stack className="w-full">
         <div className="relative grow min-w-0">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
-            {isLoading ? <LoaderIcon className="animate-spin" /> : <SearchIcon />}
+            {isLoading ? (
+              <Icon name="lucide/loader" className="animate-spin" />
+            ) : (
+              <Icon name="lucide/search" />
+            )}
           </div>
 
           <Input
@@ -66,7 +70,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
               )}
               onClick={() => setIsFiltersOpen(prev => !prev)}
             >
-              <ListFilterIcon className="size-4" />
+              <Icon name="lucide/list-filter" className="size-4" />
               <span className="text-sm leading-none max-sm:sr-only">Filters</span>
             </button>
           )}

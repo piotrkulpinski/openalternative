@@ -1,5 +1,4 @@
 import type { AdType } from "@openalternative/db/client"
-import { ArrowUpRightIcon } from "lucide-react"
 import { Slot } from "radix-ui"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/common/badge"
@@ -12,6 +11,7 @@ import {
   type CardProps,
 } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { Skeleton } from "~/components/common/skeleton"
 import { ExternalLink } from "~/components/web/external-link"
 import { Favicon, FaviconImage } from "~/components/web/ui/favicon"
@@ -53,7 +53,11 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
 
         <CardDescription className="mb-auto line-clamp-4">{ad.description}</CardDescription>
 
-        <Button className="w-full pointer-events-none" suffix={<ArrowUpRightIcon />} asChild>
+        <Button
+          className="w-full pointer-events-none"
+          suffix={<Icon name="lucide/arrow-up-right" />}
+          asChild
+        >
           <span>{isDefault ? "Advertise" : `Visit ${ad.name}`}</span>
         </Button>
 
@@ -88,7 +92,11 @@ const AdCardSkeleton = ({ className }: ComponentProps<typeof Card>) => {
         <Skeleton className="h-5 w-2/3">&nbsp;</Skeleton>
       </CardDescription>
 
-      <Button className="w-full pointer-events-none" suffix={<ArrowUpRightIcon />} asChild>
+      <Button
+        className="w-full pointer-events-none"
+        suffix={<Icon name="lucide/arrow-up-right" />}
+        asChild
+      >
         <span>&nbsp;</span>
       </Button>
     </Card>

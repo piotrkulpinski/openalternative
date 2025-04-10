@@ -1,7 +1,7 @@
 import { formatDate } from "@curiousleaf/utils"
 import { differenceInDays } from "date-fns"
-import { BellPlusIcon, ClockIcon, SparklesIcon, SquarePercentIcon } from "lucide-react"
 import type { ComponentProps } from "react"
+import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import type { ToolMany, ToolManyExtended, ToolOne } from "~/server/web/tools/payloads"
@@ -30,19 +30,19 @@ export const ToolBadges = ({ tool, children, className, ...props }: ToolBadgesPr
     >
       {isNew && (
         <Tooltip tooltip="Repo is less than 1 year old">
-          <SparklesIcon className="size-4 text-yellow-500" />
+          <Icon name="lucide/sparkles" className="size-4 text-yellow-500" />
         </Tooltip>
       )}
 
       {isFresh && (
         <Tooltip tooltip="Published in the last 30 days">
-          <BellPlusIcon className="size-4 text-green-500" />
+          <Icon name="lucide/bell-plus" className="size-4 text-green-500" />
         </Tooltip>
       )}
 
       {isScheduled && (
         <Tooltip tooltip={`Scheduled for ${formatDate(publishedAt)}`}>
-          <ClockIcon className="size-4 text-yellow-500" />
+          <Icon name="lucide/clock" className="size-4 text-yellow-500" />
         </Tooltip>
       )}
 
@@ -54,7 +54,7 @@ export const ToolBadges = ({ tool, children, className, ...props }: ToolBadgesPr
               : `Get ${discountAmount} with our link!`
           }
         >
-          <SquarePercentIcon className="size-4 text-green-500" />
+          <Icon name="lucide/square-percent" className="size-4 text-green-500" />
         </Tooltip>
       )}
 

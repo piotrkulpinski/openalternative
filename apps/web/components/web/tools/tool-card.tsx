@@ -1,10 +1,10 @@
 import { formatNumber } from "@curiousleaf/utils"
 import { cx } from "cva"
 import { formatDistanceToNowStrict } from "date-fns"
-import { GitForkIcon, StarIcon, TimerIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { Card, CardDescription, CardHeader } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
@@ -29,9 +29,17 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
     tool.lastCommitDate && formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true })
 
   const insights = [
-    { label: "Stars", value: formatNumber(tool.stars, "standard"), icon: <StarIcon /> },
-    { label: "Forks", value: formatNumber(tool.forks, "standard"), icon: <GitForkIcon /> },
-    { label: "Last commit", value: lastCommitDate, icon: <TimerIcon /> },
+    {
+      label: "Stars",
+      value: formatNumber(tool.stars, "standard"),
+      icon: <Icon name="lucide/star" />,
+    },
+    {
+      label: "Forks",
+      value: formatNumber(tool.forks, "standard"),
+      icon: <Icon name="lucide/git-fork" />,
+    },
+    { label: "Last commit", value: lastCommitDate, icon: <Icon name="lucide/timer" /> },
   ]
 
   return (
@@ -97,9 +105,17 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
 const ToolCardSkeleton = () => {
   const insights = [
-    { label: "Stars", value: <Skeleton className="h-4 w-16" />, icon: <StarIcon /> },
-    { label: "Forks", value: <Skeleton className="h-4 w-14" />, icon: <GitForkIcon /> },
-    { label: "Last commit", value: <Skeleton className="h-4 w-20" />, icon: <TimerIcon /> },
+    { label: "Stars", value: <Skeleton className="h-4 w-16" />, icon: <Icon name="lucide/star" /> },
+    {
+      label: "Forks",
+      value: <Skeleton className="h-4 w-14" />,
+      icon: <Icon name="lucide/git-fork" />,
+    },
+    {
+      label: "Last commit",
+      value: <Skeleton className="h-4 w-20" />,
+      icon: <Icon name="lucide/timer" />,
+    },
   ]
 
   return (

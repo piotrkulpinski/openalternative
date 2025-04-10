@@ -1,7 +1,6 @@
 "use client"
 
 import type { Category } from "@openalternative/db/client"
-import { EllipsisIcon } from "lucide-react"
 import type { ComponentProps, Dispatch, SetStateAction } from "react"
 import { Button } from "~/components/common/button"
 import {
@@ -11,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import type { DataTableRowAction } from "~/types"
 import { cx } from "~/utils/cva"
@@ -33,7 +33,7 @@ export const CategoryActions = ({
           aria-label="Open menu"
           variant="secondary"
           size="sm"
-          prefix={<EllipsisIcon />}
+          prefix={<Icon name="lucide/ellipsis" />}
           className={cx("data-[state=open]:bg-accent", className)}
           {...props}
         />
