@@ -73,10 +73,7 @@ const FeedbackWidgetForm = ({ toastId, setDismissed }: FeedbackWidgetFormProps) 
               size="sm"
               variant="secondary"
               className="text-xs flex-1"
-              onClick={() => {
-                toast.dismiss()
-                setDismissed(true)
-              }}
+              onClick={() => toast.dismiss()}
             >
               Dismiss
             </Button>
@@ -107,6 +104,7 @@ export const FeedbackWidget = () => {
           id: toastId,
           duration: Number.POSITIVE_INFINITY,
           className: "max-w-54 py-3",
+          onDismiss: () => setDismissed(true),
         })
       }, 0)
     }
