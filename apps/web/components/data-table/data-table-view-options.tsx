@@ -32,8 +32,7 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           variant="secondary"
           size="md"
           className="ml-auto hidden gap-2 lg:flex"
-          prefix={<Icon name="lucide/settings-2" />}
-          suffix={<Icon name="lucide/chevrons-up-down" />}
+          prefix={<Icon name="lucide/chevrons-up-down" />}
         >
           View
         </Button>

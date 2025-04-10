@@ -77,7 +77,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
         </div>
 
         <Select value={filters.sort} onValueChange={sort => updateFilters({ sort })}>
-          <SelectTrigger size="lg" className="w-auto min-w-36 max-sm:flex-1">
+          <SelectTrigger size="lg" className="w-auto min-w-36 max-sm:flex-1" aria-label="Order by">
             <SelectValue placeholder="Order by" />
           </SelectTrigger>
 

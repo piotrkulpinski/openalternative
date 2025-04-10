@@ -4,7 +4,7 @@ import { PaginationLink } from "~/components/web/pagination-link"
 
 export const BackButton = ({ ...props }: ComponentProps<typeof PaginationLink>) => {
   return (
-    <PaginationLink className="self-start" prefix={<Icon name="lucide/move-left" />} {...props}>
+    <PaginationLink className="self-start" prefix={<Icon name="lucide/arrow-left" />} {...props}>
       back
     </PaginationLink>
   )

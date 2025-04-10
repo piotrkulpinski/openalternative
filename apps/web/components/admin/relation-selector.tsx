@@ -150,10 +150,7 @@ export const RelationSelector = ({
         {!!suggestedRelations.length && (
           <Stack size="sm" className="items-start">
             <Tooltip tooltip="AI-suggested relations based on the content of the link. Click a suggested relation to add it.">
-              <Stack size="xs" className="mt-px text-xs text-muted-foreground">
-                <Icon name="lucide/sparkles" />
-                <span>Suggested:</span>
-              </Stack>
+              <span className="mt-px text-xs text-muted-foreground">Suggested:</span>
             </Tooltip>
 
             <Stack size="xs" className="flex-1">

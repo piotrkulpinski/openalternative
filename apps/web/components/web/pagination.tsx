@@ -44,13 +44,13 @@ export const Pagination = ({
       <PaginationLink
         href={getPageLink(params, pathname, currentPage - 1)}
         isDisabled={currentPage <= 1}
-        prefix={<Icon name="lucide/move-left" />}
+        prefix={<Icon name="lucide/arrow-left" />}
         rel="prev"
       >
-        prev
+        Prev
       </PaginationLink>
 
-      <Note className=" md:hidden">
+      <Note className="md:hidden">
         Page {currentPage} of {pageCount}
       </Note>
 
@@ -77,10 +77,10 @@ export const Pagination = ({
       <PaginationLink
         href={getPageLink(params, pathname, currentPage + 1)}
         isDisabled={currentPage >= pageCount}
-        suffix={<Icon name="lucide/move-right" />}
+        suffix={<Icon name="lucide/arrow-right" />}
         rel="prev"
       >
-        next
+        Next
       </PaginationLink>
     </nav>
   )
