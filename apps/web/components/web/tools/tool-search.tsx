@@ -24,7 +24,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
   const { filters, isLoading, enableFilters, updateFilters } = useFilters()
 
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage({
-    key: "filtersOpen",
+    key: "oa-filters-open",
     defaultValue: false,
   })
 

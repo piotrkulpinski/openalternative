@@ -3,7 +3,8 @@
 import { getRandomDigits } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useLocalStorage } from "@mantine/hooks"
-import { useEffect, useMemo } from "react"
+import debounce from "debounce"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -19,6 +20,12 @@ type FeedbackWidgetFormProps = {
   toastId: string
   setDismissed: (dismissed: boolean) => void
 }
+
+const ENGAGEMENT_THRESHOLD = 60 // seconds
+const PAGE_VIEW_THRESHOLD = 3 // number of pages
+const SCROLL_THRESHOLD = 66 // percentage
+const TIME_CHECK_INTERVAL = 5 // seconds - how often to check engagement
+const SCROLL_DEBOUNCE = 150 // ms - how often to check scroll position
 
 const FeedbackWidgetForm = ({ toastId, setDismissed }: FeedbackWidgetFormProps) => {
   const form = useForm<FeedbackSchema>({
@@ -93,25 +100,75 @@ const FeedbackWidgetForm = ({ toastId, setDismissed }: FeedbackWidgetFormProps) 
 
 export const FeedbackWidget = () => {
   const toastId = useMemo(() => getRandomDigits(10), [])
+  const startTime = useRef(Date.now())
+  const [shouldShow, setShouldShow] = useState(false)
+  const maxScrollRef = useRef(0)
+  const feedbackKey = "oa-feedback-dismissed"
+  const pageViewsKey = "oa-page-views"
 
   const [dismissed, setDismissed] = useLocalStorage({
-    key: "feedback-widget-dismissed",
+    key: feedbackKey,
     defaultValue: false,
     getInitialValueInEffect: false,
   })
 
-  useEffect(() => {
-    if (!dismissed) {
-      setTimeout(() => {
-        toast(<FeedbackWidgetForm toastId={toastId} setDismissed={setDismissed} />, {
-          id: toastId,
-          duration: Number.POSITIVE_INFINITY,
-          className: "max-w-54 py-3",
-          onDismiss: () => setDismissed(true),
-        })
-      }, 0)
+  // Initialize page views once
+  const pageViews = useMemo(() => {
+    if (typeof sessionStorage === "undefined") {
+      return 1
     }
-  }, [dismissed])
+
+    const storedViews = Number.parseInt(sessionStorage.getItem(pageViewsKey) || "1")
+    sessionStorage.setItem(pageViewsKey, (storedViews + 1).toString())
+    return storedViews + 1
+  }, [])
+
+  // Debounced scroll handler
+  const handleScroll = useMemo(
+    () =>
+      debounce(() => {
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+        const scrolled = (window.scrollY / scrollHeight) * 100
+        maxScrollRef.current = Math.max(maxScrollRef.current, scrolled)
+      }, SCROLL_DEBOUNCE),
+    [],
+  )
+
+  // Check engagement criteria
+  const checkEngagement = useCallback(() => {
+    if (dismissed || shouldShow) return
+
+    const timeSpent = (Date.now() - startTime.current) / 1000
+
+    if (
+      timeSpent >= ENGAGEMENT_THRESHOLD &&
+      pageViews >= PAGE_VIEW_THRESHOLD &&
+      maxScrollRef.current >= SCROLL_THRESHOLD
+    ) {
+      setShouldShow(true)
+
+      toast(<FeedbackWidgetForm toastId={toastId} setDismissed={setDismissed} />, {
+        id: toastId,
+        duration: Number.POSITIVE_INFINITY,
+        className: "max-w-54 py-3",
+        onDismiss: () => setDismissed(true),
+      })
+    }
+  }, [dismissed, shouldShow, pageViews, toastId, setDismissed])
+
+  // Setup scroll listener and engagement checker
+  useEffect(() => {
+    if (dismissed) return
+
+    window.addEventListener("scroll", handleScroll)
+    const interval = setInterval(checkEngagement, TIME_CHECK_INTERVAL * 1000)
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      handleScroll.clear() // Using clear() instead of cancel() for debounce
+      clearInterval(interval)
+    }
+  }, [dismissed, handleScroll, checkEngagement])
 
   return null
 }
