@@ -73,7 +73,10 @@ const FeedbackWidgetForm = ({ toastId, setDismissed }: FeedbackWidgetFormProps) 
               size="sm"
               variant="secondary"
               className="text-xs flex-1"
-              onClick={() => toast.dismiss()}
+              onClick={() => {
+                toast.dismiss()
+                setDismissed(true)
+              }}
             >
               Dismiss
             </Button>
