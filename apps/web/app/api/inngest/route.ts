@@ -1,7 +1,7 @@
 import { serve } from "inngest/next"
 import { alternativeCreated } from "~/functions/alternative-created"
 import { analyzeTools } from "~/functions/cron.analyze-tools"
-import { fetchTools } from "~/functions/cron.fetch-tools"
+import { fetchData } from "~/functions/cron.fetch-data"
 import { publishTools } from "~/functions/cron.publish-tools"
 import { toolExpedited } from "~/functions/tool-expedited"
 import { toolFeatured } from "~/functions/tool-featured"
@@ -14,7 +14,7 @@ export const maxDuration = 60
 export const { GET, POST, PUT } = serve({
   client: inngest,
   functions: [
-    fetchTools,
+    fetchData,
     analyzeTools,
     publishTools,
     toolScheduled,
