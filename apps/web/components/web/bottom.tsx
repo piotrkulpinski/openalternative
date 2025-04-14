@@ -40,10 +40,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
 
                     <TileDivider />
 
-                    <TileCaption className="max-sm:hidden tabular-nums">
-                      <span className="text-[10px] mr-0.5 opacity-50">#</span>
-                      {alternative._count.tools}
-                    </TileCaption>
+                    <TileCaption className="max-sm:hidden">{alternative._count.tools}</TileCaption>
                   </NavLink>
                 </Tile>
               ))}

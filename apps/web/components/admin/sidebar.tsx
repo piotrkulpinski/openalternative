@@ -7,7 +7,9 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { CommandMenu } from "~/components/admin/command-menu"
 import { Nav } from "~/components/admin/nav"
+import { Button } from "~/components/common/button"
 import { Kbd } from "~/components/common/kbd"
+import { Tooltip } from "~/components/common/tooltip"
 import { siteConfig } from "~/config/site"
 import { signOut } from "~/lib/auth-client"
 import { Icon } from "../common/icon"
@@ -31,6 +33,11 @@ export const Sidebar = () => {
   const handleRedirect = (path: string) => {
     router.push(path)
     setIsCommandOpen(false)
+  }
+
+  const handleOpenSite = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    window.open(siteConfig.url, "_blank")
   }
 
   const handleSignOut = async () => {
@@ -82,6 +89,22 @@ export const Sidebar = () => {
           undefined, // Separator
 
           {
+            title: "Visit Site",
+            href: "/admin/site",
+            prefix: <Icon name="lucide/globe" />,
+            suffix: (
+              <Tooltip tooltip="Open site in new tab">
+                <Button
+                  variant="secondary"
+                  onClick={handleOpenSite}
+                  className="-my-0.5 px-1 py-[0.2em] text-xs/tight rounded-sm"
+                >
+                  <Icon name="lucide/arrow-up-right" className="size-3" />
+                </Button>
+              </Tooltip>
+            ),
+          },
+          {
             title: "Quick Menu",
             href: "#",
             onClick: () => setIsCommandOpen(true),
@@ -91,11 +114,6 @@ export const Sidebar = () => {
                 K
               </Kbd>
             ),
-          },
-          {
-            title: "Visit Site",
-            href: siteConfig.url,
-            prefix: <Icon name="lucide/globe" />,
           },
           {
             title: "Sign Out",

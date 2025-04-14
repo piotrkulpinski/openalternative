@@ -1,4 +1,5 @@
 import Link from "next/link"
+import plur from "plur"
 import type { ComponentProps } from "react"
 import { H4, H5 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
@@ -20,16 +21,20 @@ const CategoryList = ({ categories, className, ...props }: CategoryListProps) =>
       {categories.map(({ name, slug, fullPath, subcategories }) => (
         <div key={slug} className="inline-flex flex-col gap-4 w-full mt-8 md:mt-12">
           <H4 className="text-lg">
-            <Link href={`/categories/${fullPath}`} prefetch={false}>
+            <Link href={`/categories/${fullPath}`} prefetch={false} className="hover:text-primary">
               {name}
             </Link>
           </H4>
 
           {subcategories?.length > 0 &&
             subcategories.map(({ name, slug, fullPath, subcategories }) => (
-              <div key={slug} className="flex flex-col gap-3 pl-3">
+              <div key={slug} className="flex flex-col gap-2.5 pl-3">
                 <H5 className="text-sm">
-                  <Link href={`/categories/${fullPath}`} prefetch={false}>
+                  <Link
+                    href={`/categories/${fullPath}`}
+                    prefetch={false}
+                    className="hover:text-primary"
+                  >
                     {name}
                   </Link>
                 </H5>
@@ -39,15 +44,14 @@ const CategoryList = ({ categories, className, ...props }: CategoryListProps) =>
                     {subcategories.map(({ name, slug, fullPath, _count }) => (
                       <Tile key={slug} className="pl-3" asChild>
                         <Link href={`/categories/${fullPath}`} prefetch={false}>
-                          <TileTitle className="text-xs font-normal text-muted-foreground group-hover:text-foreground">
+                          <TileTitle className="text-sm font-normal text-muted-foreground group-hover:text-foreground">
                             {name}
                           </TileTitle>
 
                           <TileDivider />
 
                           <TileCaption className="tabular-nums">
-                            <span className="text-[10px] mr-0.5 opacity-50">#</span>
-                            {_count.tools}
+                            {_count.tools} {plur("tool", _count.tools)}
                           </TileCaption>
                         </Link>
                       </Tile>
