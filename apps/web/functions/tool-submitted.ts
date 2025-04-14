@@ -32,7 +32,7 @@ export const toolSubmitted = inngest.createFunction(
         return await sendEmails({
           to,
           subject,
-          react: EmailSubmission({ tool, to, subject, queueLength }),
+          react: EmailSubmission({ to, tool, queueLength }),
         })
       })
     }

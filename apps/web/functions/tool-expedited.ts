@@ -21,7 +21,7 @@ export const toolExpedited = inngest.createFunction(
         {
           to: adminTo,
           subject: adminSubject,
-          react: EmailAdminNewSubmission({ tool, to: adminTo, subject: adminSubject }),
+          react: EmailAdminNewSubmission({ to: adminTo, tool }),
         },
       ]
 
@@ -32,7 +32,7 @@ export const toolExpedited = inngest.createFunction(
         emails.push({
           to,
           subject,
-          react: EmailSubmissionExpedited({ tool, to, subject }),
+          react: EmailSubmissionExpedited({ to, tool }),
         })
       }
 

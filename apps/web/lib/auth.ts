@@ -7,6 +7,7 @@ import { headers } from "next/headers"
 import { cache } from "react"
 import { config } from "~/config"
 import EmailLoginLink from "~/emails/login-link"
+import EmailWelcome from "~/emails/welcome"
 import { env } from "~/env"
 import { sendEmails } from "~/lib/email"
 
@@ -41,10 +42,26 @@ export const auth = betterAuth({
 
   hooks: {
     after: createAuthMiddleware(async ({ path, context }) => {
-      const callbackURL = context.responseHeaders?.get("location")
+      const { newSession, responseHeaders } = context
 
-      if (callbackURL && path === "/callback/:id") {
-        revalidatePath(callbackURL)
+      // Revalidate the callback URL after login
+      if (path.startsWith("/callback/:id")) {
+        const callbackURL = responseHeaders?.get("location")
+
+        if (callbackURL) {
+          revalidatePath(callbackURL)
+        }
+      }
+
+      // Send a message to the user after registration
+      if (path.startsWith("/sign-up")) {
+        if (newSession) {
+          const to = newSession.user.email
+          const name = newSession.user.name
+          const subject = `Welcome to ${config.site.name}`
+
+          await sendEmails({ to, subject, react: EmailWelcome({ to, name }) })
+        }
       }
     }),
   },
@@ -55,7 +72,7 @@ export const auth = betterAuth({
         const to = email
         const subject = `Your ${config.site.name} Login Link`
 
-        await sendEmails({ to, subject, react: EmailLoginLink({ to, subject, url }) })
+        await sendEmails({ to, subject, react: EmailLoginLink({ to, url }) })
       },
     }),
 

@@ -105,7 +105,7 @@ export const toolScheduled = inngest.createFunction(
       return await sendEmails({
         to,
         subject,
-        react: EmailToolScheduled({ to, subject, tool }),
+        react: EmailToolScheduled({ to, tool }),
       })
     })
 
@@ -121,7 +121,7 @@ export const toolScheduled = inngest.createFunction(
           return await sendEmails({
             to,
             subject,
-            react: EmailToolExpediteReminder({ to, subject, tool, monthsWaiting: 1 }),
+            react: EmailToolExpediteReminder({ to, tool, monthsWaiting: 1 }),
           })
         }
       })
@@ -139,7 +139,7 @@ export const toolScheduled = inngest.createFunction(
           return await sendEmails({
             to,
             subject,
-            react: EmailToolExpediteReminder({ to, subject, tool, monthsWaiting: 2 }),
+            react: EmailToolExpediteReminder({ to, tool, monthsWaiting: 2 }),
           })
         }
       })

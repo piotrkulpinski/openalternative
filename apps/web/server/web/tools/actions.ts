@@ -72,7 +72,7 @@ export const sendToolClaimOtp = userProcedure
       await sendEmails({
         to,
         subject,
-        react: EmailToolClaimOtp({ tool, otp, to, subject }),
+        react: EmailToolClaimOtp({ to, tool, otp }),
       })
     })
 

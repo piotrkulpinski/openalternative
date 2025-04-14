@@ -65,7 +65,7 @@ export const publishTools = inngest.createFunction(
             return await sendEmails({
               to,
               subject,
-              react: EmailToolPublished({ tool, to, subject }),
+              react: EmailToolPublished({ to, tool }),
             })
           }),
         ])
