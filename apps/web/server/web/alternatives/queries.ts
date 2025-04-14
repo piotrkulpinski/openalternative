@@ -33,7 +33,7 @@ export const searchAlternatives = async (
   const [alternatives, totalCount] = await db.$transaction([
     db.alternative.findMany({
       orderBy:
-        sortBy && sortBy !== "popularity"
+        sortBy && sortBy !== "default"
           ? { [sortBy]: sortOrder }
           : [{ tools: { _count: "desc" } }, { isFeatured: "desc" }],
       where: { ...whereQuery, ...where },

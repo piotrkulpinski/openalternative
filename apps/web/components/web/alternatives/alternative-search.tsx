@@ -20,7 +20,8 @@ export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
   const { filters, isLoading, updateFilters } = useFilters()
 
   const sortOptions = [
-    { value: "popularity.desc", label: "Popularity" },
+    { value: "default.desc", label: "Default" },
+    { value: "pageviews.desc", label: "Most Popular" },
     { value: "createdAt.desc", label: "Latest" },
     { value: "name.asc", label: "Name A-Z" },
     { value: "name.desc", label: "Name Z-A" },

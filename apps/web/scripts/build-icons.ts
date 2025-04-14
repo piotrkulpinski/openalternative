@@ -11,11 +11,7 @@ const outputDir = path.join(cwd, "public", "icons")
 await fsExtra.ensureDir(outputDir)
 await fsExtra.ensureDir(typeDir)
 
-const files = glob
-  .sync("**/*.svg", {
-    cwd: inputDir,
-  })
-  .sort((a, b) => a.localeCompare(b))
+const files = glob.sync("**/*.svg", { cwd: inputDir }).sort((a, b) => a.localeCompare(b))
 
 const shouldVerboseLog = process.argv.includes("--log=verbose")
 const logVerbose = shouldVerboseLog ? console.log : () => {}

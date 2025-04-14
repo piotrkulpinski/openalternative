@@ -9,16 +9,22 @@ import { isToolPublished } from "~/lib/tools"
 import { inngest } from "~/services/inngest"
 import { tryCatch } from "~/utils/helpers"
 
-export const fetchTools = inngest.createFunction(
-  { id: "fetch-tools", retries: 0 },
+export const fetchData = inngest.createFunction(
+  { id: "fetch-data", retries: 0 },
   { cron: "TZ=Europe/Warsaw 0 0 * * *" }, // Every day at midnight
 
   async ({ step, db, logger }) => {
-    const tools = await step.run("fetch-tools", async () => {
-      return await db.tool.findMany({
-        where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
-      })
-    })
+    const [tools, alternatives] = await Promise.all([
+      step.run("fetch-tools", async () => {
+        return await db.tool.findMany({
+          where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
+        })
+      }),
+
+      step.run("fetch-alternatives", async () => {
+        return await db.alternative.findMany()
+      }),
+    ])
 
     await Promise.all([
       // Fetch repository data and handle milestones
@@ -57,27 +63,46 @@ export const fetchTools = inngest.createFunction(
         )
       }),
 
-      // Fetch analytics data
-      step.run("fetch-analytics-data", async () => {
-        return await Promise.allSettled(
-          tools.filter(isToolPublished).map(async tool => {
-            const result = await tryCatch(getPageAnalytics(`/${tool.slug}`))
+      // Fetch tool analytics data
+      step.run("fetch-tool-analytics-data", async () => {
+        for (const tool of tools.filter(isToolPublished)) {
+          const result = await tryCatch(getPageAnalytics(`/${tool.slug}`))
 
-            if (result.error) {
-              logger.error(`Failed to fetch analytics data for ${tool.name}`, {
-                error: result.error,
-                slug: tool.slug,
-              })
-
-              return null
-            }
-
-            await db.tool.update({
-              where: { id: tool.id },
-              data: { pageviews: result.data.pageviews ?? tool.pageviews ?? 0 },
+          if (result.error) {
+            logger.error(`Failed to fetch analytics data for ${tool.name}`, {
+              error: result.error,
+              slug: tool.slug,
             })
-          }),
-        )
+
+            return null
+          }
+
+          await db.tool.update({
+            where: { id: tool.id },
+            data: { pageviews: result.data.pageviews ?? tool.pageviews ?? 0 },
+          })
+        }
+      }),
+
+      // Fetch alternative analytics data
+      step.run("fetch-alternative-analytics-data", async () => {
+        for (const alternative of alternatives) {
+          const result = await tryCatch(getPageAnalytics(`/alternatives/${alternative.slug}`))
+
+          if (result.error) {
+            logger.error(`Failed to fetch analytics data for ${alternative.name}`, {
+              error: result.error,
+              slug: alternative.slug,
+            })
+
+            return null
+          }
+
+          await db.alternative.update({
+            where: { id: alternative.id },
+            data: { pageviews: result.data.pageviews ?? alternative.pageviews ?? 0 },
+          })
+        }
       }),
     ])
 
