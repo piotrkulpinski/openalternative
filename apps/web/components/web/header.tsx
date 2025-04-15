@@ -6,6 +6,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
 import { Icon } from "~/components/common/icon"
@@ -83,21 +84,22 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
               <DropdownMenuItem asChild>
                 <NavLink href="/latest">
                   <Icon name="lucide/calendar-days" className="shrink-0 size-4 opacity-75" /> Latest
-                  tools
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <NavLink href="/categories">
-                  <Icon
-                    name="lucide/gallery-horizontal-end"
-                    className="shrink-0 size-4 opacity-75"
-                  />{" "}
-                  Categories
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <NavLink href="/self-hosted">
                   <Icon name="lucide/server" className="shrink-0 size-4 opacity-75" /> Self-hosted
+                </NavLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <NavLink href="/coming-soon">
+                  <Icon name="lucide/clock" className="shrink-0 size-4 opacity-75" /> Coming Soon
+                </NavLink>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <NavLink href="/categories">
+                  <Icon name="lucide/tags" className="shrink-0 size-4 opacity-75" /> Categories
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>

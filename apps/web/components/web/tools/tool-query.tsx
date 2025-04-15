@@ -16,11 +16,12 @@ const ToolQuery = ({
   perPage,
   totalCount,
   placeholder,
+  enableSort,
   enableFilters,
   ...props
 }: ToolQueryProps) => {
   return (
-    <FiltersProvider enableFilters={enableFilters}>
+    <FiltersProvider enableSort={enableSort} enableFilters={enableFilters}>
       <div className="flex flex-col gap-5" id="tools">
         <ToolSearch placeholder={placeholder} />
         <ToolList {...props} />

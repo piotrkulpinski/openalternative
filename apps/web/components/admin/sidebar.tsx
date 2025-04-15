@@ -78,7 +78,7 @@ export const Sidebar = () => {
           {
             title: "Categories",
             href: "/admin/categories",
-            prefix: <Icon name="lucide/gallery-horizontal-end" />,
+            prefix: <Icon name="lucide/tags" />,
           },
           {
             title: "Users",

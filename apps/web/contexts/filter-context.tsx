@@ -7,6 +7,7 @@ import { filterParamsSchema } from "~/server/web/shared/schemas"
 export type FiltersContextType = {
   filters: Values<typeof filterParamsSchema>
   isLoading: boolean
+  enableSort: boolean
   enableFilters: boolean
   updateFilters: (values: Partial<Values<typeof filterParamsSchema>>) => void
 }
@@ -14,11 +15,13 @@ export type FiltersContextType = {
 const FiltersContext = createContext<FiltersContextType>(null!)
 
 export type FiltersProviderProps = {
+  enableSort?: boolean
   enableFilters?: boolean
 }
 
 const FiltersProvider = ({
   children,
+  enableSort = true,
   enableFilters = false,
 }: PropsWithChildren<FiltersProviderProps>) => {
   const [isLoading, startTransition] = useTransition()
@@ -34,7 +37,9 @@ const FiltersProvider = ({
   }
 
   return (
-    <FiltersContext.Provider value={{ filters, isLoading, updateFilters, enableFilters }}>
+    <FiltersContext.Provider
+      value={{ filters, isLoading, updateFilters, enableSort, enableFilters }}
+    >
       {children}
     </FiltersContext.Provider>
   )

@@ -21,7 +21,7 @@ export type ToolSearchProps = {
 }
 
 export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
-  const { filters, isLoading, enableFilters, updateFilters } = useFilters()
+  const { filters, isLoading, enableSort, enableFilters, updateFilters } = useFilters()
 
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage({
     key: "oa-filters-open",
@@ -76,19 +76,25 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
           )}
         </div>
 
-        <Select value={filters.sort} onValueChange={sort => updateFilters({ sort })}>
-          <SelectTrigger size="lg" className="w-auto min-w-36 max-sm:flex-1" aria-label="Order by">
-            <SelectValue placeholder="Order by" />
-          </SelectTrigger>
+        {enableSort && (
+          <Select value={filters.sort} onValueChange={sort => updateFilters({ sort })}>
+            <SelectTrigger
+              size="lg"
+              className="w-auto min-w-36 max-sm:flex-1"
+              aria-label="Order by"
+            >
+              <SelectValue placeholder="Order by" />
+            </SelectTrigger>
 
-          <SelectContent align="end">
-            {sortOptions.map(option => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+            <SelectContent align="end">
+              {sortOptions.map(option => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
       </Stack>
 
       <AnimatedContainer height className="w-full">
