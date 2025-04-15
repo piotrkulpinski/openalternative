@@ -1,7 +1,7 @@
 import { ToolStatus } from "@openalternative/db/client"
 import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
-import { getPageAnalytics } from "~/lib/analytics"
+import { fetchAnalyticsInBatches } from "~/lib/analytics"
 import { getMilestoneReached } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { getPostMilestoneTemplate, getPostTemplate, sendSocialPost } from "~/lib/socials"
@@ -65,44 +65,26 @@ export const fetchData = inngest.createFunction(
 
       // Fetch tool analytics data
       step.run("fetch-tool-analytics-data", async () => {
-        for (const tool of tools.filter(isToolPublished)) {
-          const result = await tryCatch(getPageAnalytics(`/${tool.slug}`))
-
-          if (result.error) {
-            logger.error(`Failed to fetch analytics data for ${tool.name}`, {
-              error: result.error,
-              slug: tool.slug,
-            })
-
-            return null
-          }
-
-          await db.tool.update({
-            where: { id: tool.id },
-            data: { pageviews: result.data.pageviews ?? tool.pageviews ?? 0 },
-          })
-        }
+        await fetchAnalyticsInBatches({
+          data: tools.filter(isToolPublished),
+          pathPrefix: "/",
+          logger,
+          onSuccess: async (id, data) => {
+            await db.tool.update({ where: { id }, data })
+          },
+        })
       }),
 
       // Fetch alternative analytics data
       step.run("fetch-alternative-analytics-data", async () => {
-        for (const alternative of alternatives) {
-          const result = await tryCatch(getPageAnalytics(`/alternatives/${alternative.slug}`))
-
-          if (result.error) {
-            logger.error(`Failed to fetch analytics data for ${alternative.name}`, {
-              error: result.error,
-              slug: alternative.slug,
-            })
-
-            return null
-          }
-
-          await db.alternative.update({
-            where: { id: alternative.id },
-            data: { pageviews: result.data.pageviews ?? alternative.pageviews ?? 0 },
-          })
-        }
+        await fetchAnalyticsInBatches({
+          data: alternatives,
+          pathPrefix: "/alternatives/",
+          logger,
+          onSuccess: async (id, data) => {
+            await db.alternative.update({ where: { id }, data })
+          },
+        })
       }),
     ])
 

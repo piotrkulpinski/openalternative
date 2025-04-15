@@ -65,6 +65,14 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Alterna
       enableSorting: false,
     },
     {
+      accessorKey: "pageviews",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Pageviews" />,
+      cell: ({ row }) => (
+        <span className="text-muted-foreground">{row.getValue("pageviews")?.toLocaleString()}</span>
+      ),
+      size: 0,
+    },
+    {
       accessorKey: "createdAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
       cell: ({ row }) => (

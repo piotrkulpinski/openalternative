@@ -1,3 +1,4 @@
+import type { Logger } from "inngest/middleware/logger"
 import { env } from "~/env"
 import { getPlausibleApi } from "~/services/plausible"
 import { tryCatch } from "~/utils/helpers"
@@ -69,4 +70,50 @@ export const getTotalAnalytics = async (period = "30d") => {
   }))
 
   return { results, totalVisitors, averageVisitors }
+}
+
+type FetchAnalyticsInBatchesParams = {
+  data: {
+    id: string
+    name: string
+    slug: string
+    pageviews?: number | null
+  }[]
+  pathPrefix: string
+  logger: Logger
+  batchSize?: number
+  onSuccess: (id: string, data: { pageviews: number }) => Promise<void>
+}
+
+/**
+ * Fetch analytics data in batches
+ * @param params - The parameters for the fetch
+ */
+export const fetchAnalyticsInBatches = async ({
+  data,
+  pathPrefix,
+  logger,
+  onSuccess,
+  batchSize = 5,
+}: FetchAnalyticsInBatchesParams) => {
+  for (let i = 0; i < data.length; i += batchSize) {
+    const batch = data.slice(i, i + batchSize)
+    await Promise.all(
+      batch.map(async entity => {
+        const result = await tryCatch(getPageAnalytics(`${pathPrefix}${entity.slug}`))
+
+        if (result.error) {
+          logger.error(`Failed to fetch analytics data for ${entity.name}`, {
+            error: result.error,
+            slug: entity.slug,
+          })
+          return null
+        }
+
+        await onSuccess(entity.id, {
+          pageviews: result.data.pageviews ?? entity.pageviews ?? 0,
+        })
+      }),
+    )
+  }
 }
