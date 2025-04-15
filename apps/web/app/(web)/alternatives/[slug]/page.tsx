@@ -189,7 +189,7 @@ export default async function AlternativePage(props: PageProps) {
             </Prose>
 
             {tools.map(tool => (
-              <ToolEntry key={tool.slug} id={tool.slug} tool={tool} className="scroll-m-20" />
+              <ToolEntry key={tool.slug} id={tool.slug} tool={tool} />
             ))}
 
             <BackButton href="/alternatives" />
@@ -208,6 +208,7 @@ export default async function AlternativePage(props: PageProps) {
               className="flex-1 mx-5 max-md:hidden"
             >
               <Button
+                size="md"
                 variant="ghost"
                 prefix={<Icon name="lucide/smile-plus" />}
                 suffix={<Icon name="lucide/arrow-up-right" />}

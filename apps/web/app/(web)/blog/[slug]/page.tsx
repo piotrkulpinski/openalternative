@@ -1,4 +1,4 @@
-import { formatDate, getReadTime } from "@curiousleaf/utils"
+import { formatDate, getReadTime, isTruthy } from "@curiousleaf/utils"
 import { type Post, allPosts } from "content-collections"
 import type { Metadata } from "next"
 import Image from "next/image"
@@ -12,13 +12,16 @@ import {
   AlternativePreview,
   AlternativePreviewSkeleton,
 } from "~/components/web/alternatives/alternative-preview"
+import { InlineMenu } from "~/components/web/inline-menu"
 import { MDX } from "~/components/web/mdx"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { Author } from "~/components/web/ui/author"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
+import { FaviconImage } from "~/components/web/ui/favicon"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
+import { findTool } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -59,6 +62,7 @@ export const generateMetadata = async (props: PageProps) => {
 
 export default async function BlogPostPage(props: PageProps) {
   const post = await findPostBySlug(props)
+  const tools = await Promise.all(post.tools?.map(slug => findTool({ where: { slug } })) ?? [])
 
   return (
     <>
@@ -66,7 +70,7 @@ export default async function BlogPostPage(props: PageProps) {
         items={[
           {
             href: "/blog",
-            name: "Blog",
+            name: "Open Source Blog",
           },
           {
             href: `/blog/${post._meta.path}`,
@@ -136,6 +140,15 @@ export default async function BlogPostPage(props: PageProps) {
             <Suspense fallback={<AdCardSkeleton className="max-md:hidden" />}>
               <AdCard type="BlogPost" className="max-md:hidden" />
             </Suspense>
+
+            <InlineMenu
+              items={tools.filter(isTruthy).map(({ slug, name, faviconUrl }) => ({
+                id: slug,
+                title: name,
+                prefix: <FaviconImage src={faviconUrl} title={name} className="size-4" />,
+              }))}
+              className="flex-1 mx-5 max-md:hidden"
+            />
           </Section.Sidebar>
         </Section>
       </div>

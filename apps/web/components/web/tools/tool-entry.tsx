@@ -10,24 +10,27 @@ import { Markdown } from "~/components/web/markdown"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { VerifiedBadge } from "~/components/web/verified-badge"
-import type { ToolManyExtended } from "~/server/web/tools/payloads"
+import type { ToolManyExtended, ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
 type ToolEntryProps = ComponentProps<"div"> & {
-  tool: ToolManyExtended
+  tool: ToolOne | ToolManyExtended
 }
 
-const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
+const ToolEntry = ({ children, className, tool, ...props }: ToolEntryProps) => {
   const href = `/${tool.slug}`
 
   return (
     <div
-      className={cx("flex flex-col gap-6 md:gap-8 [counter-increment:alternatives]", className)}
+      className={cx(
+        "flex flex-col gap-6 scroll-mt-20 md:gap-8 [counter-increment:entries]",
+        className,
+      )}
       {...props}
     >
-      <Stack size="lg" className="justify-between">
+      <Stack size="lg" className="not-prose relative justify-between">
         <Stack
-          className="self-start before:content-['#'_counter(alternatives)] before:absolute before:right-full before:-mr-4 before:font-semibold before:text-3xl before:opacity-25 max-lg:before:hidden"
+          className="self-start before:content-['#'_counter(entries)] before:absolute before:right-full before:mr-4 before:font-semibold before:text-3xl before:opacity-25 max-lg:before:hidden"
           asChild
         >
           <Link href={href} className="hover:underline">
@@ -43,13 +46,13 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
       </Stack>
 
       {tool.description && (
-        <p className="-mt-4 w-full text-secondary-foreground text-pretty md:text-lg md:-mt-6">
+        <p className="not-prose -mt-4 w-full text-secondary-foreground text-pretty md:text-lg md:-mt-6">
           {tool.description}
         </p>
       )}
 
       {tool.screenshotUrl && (
-        <Link href={href} className="group">
+        <Link href={href} className="not-prose group">
           <Box hover>
             <Image
               key={tool.screenshotUrl}
@@ -64,15 +67,19 @@ const ToolEntry = ({ className, tool, ...props }: ToolEntryProps) => {
         </Link>
       )}
 
-      {tool.content && (
-        <div className="relative max-h-72 overflow-hidden">
-          <Markdown code={tool.content} />
+      {children ? (
+        <div>{children}</div>
+      ) : (
+        tool.content && (
+          <div className="relative max-h-72 overflow-hidden">
+            <Markdown code={tool.content} />
 
-          <div className="absolute inset-0 top-auto h-1/5 bg-linear-to-t from-background pointer-events-none" />
-        </div>
+            <div className="absolute inset-0 top-auto h-1/5 bg-linear-to-t from-background pointer-events-none" />
+          </div>
+        )
       )}
 
-      <Button suffix={<Icon name="lucide/arrow-right" />} className="self-start" asChild>
+      <Button suffix={<Icon name="lucide/arrow-right" />} className="not-prose self-start" asChild>
         <Link href={href}>Read more</Link>
       </Button>
     </div>

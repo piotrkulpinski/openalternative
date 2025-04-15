@@ -3,7 +3,7 @@ import { type ComponentProps, type ElementType, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const headingVariants = cva({
-  base: "font-display font-semibold",
+  base: "font-display font-semibold text-foreground",
 
   variants: {
     size: {

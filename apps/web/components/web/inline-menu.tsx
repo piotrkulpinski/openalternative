@@ -26,6 +26,7 @@ export const InlineMenu = ({ children, className, items, ...props }: InlineMenuP
         {items.map(({ id, title, ...props }) => (
           <Button
             key={id}
+            size="md"
             variant="ghost"
             className={cx(
               "hover:ring-transparent! focus-visible:ring-transparent",

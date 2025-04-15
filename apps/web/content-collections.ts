@@ -10,7 +10,7 @@ const mdxOptions: Options = {
 const posts = defineCollection({
   name: "posts",
   directory: "content/posts",
-  include: "**/*.md",
+  include: "**/*.{md,mdx}",
 
   schema: z => ({
     title: z.string(),
@@ -23,6 +23,7 @@ const posts = defineCollection({
       image: z.string(),
       twitterHandle: z.string(),
     }),
+    tools: z.array(z.string()).optional(),
   }),
 
   transform: async (data, context) => {

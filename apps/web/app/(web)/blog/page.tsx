@@ -7,7 +7,7 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Open Source Blog",
   description:
     "A collection of useful articles for developers and open source enthusiasts. Learn about the latest trends and technologies in the open source community.",
   openGraph: { ...metadataConfig.openGraph, url: "/blog" },
@@ -23,7 +23,7 @@ export default function BlogPage() {
         items={[
           {
             href: "/blog",
-            name: "Blog",
+            name: "Open Source Blog",
           },
         ]}
       />
