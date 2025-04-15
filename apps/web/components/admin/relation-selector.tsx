@@ -73,6 +73,12 @@ export const RelationSelector = ({
     }
   }, [prompt, selectedIds])
 
+  const handleFilter = (value: string, search: string) => {
+    const normalizedValue = value.toLowerCase()
+    const normalizedSearch = search.toLowerCase()
+    return normalizedValue.includes(normalizedSearch) ? 1 : 0
+  }
+
   return (
     <Stack direction="column" className="w-full">
       <Popover>
@@ -103,7 +109,7 @@ export const RelationSelector = ({
         </PopoverTrigger>
 
         <PopoverContent className="p-0" align="start">
-          <Command>
+          <Command filter={handleFilter}>
             <CommandInput placeholder="Search..." />
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
