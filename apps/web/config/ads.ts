@@ -33,6 +33,7 @@ export const adsConfig = {
     name: "Advertise with us",
     description:
       "Reach out to our audience of professional open source/tech enthusiasts to boost your sales.",
+    buttonLabel: "Advertise",
     faviconUrl: null,
   } satisfies AdOne,
 

@@ -4,6 +4,7 @@ export const adOnePayload = Prisma.validator<Prisma.AdSelect>()({
   name: true,
   description: true,
   websiteUrl: true,
+  buttonLabel: true,
   faviconUrl: true,
   type: true,
 })

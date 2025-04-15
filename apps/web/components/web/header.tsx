@@ -171,14 +171,17 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
         <NavLink href="/latest" className="text-base">
           Latest
         </NavLink>
+        <NavLink href="/self-hosted" className="text-base">
+          Self-hosted
+        </NavLink>
+        <NavLink href="/coming-soon" className="text-base">
+          Coming Soon
+        </NavLink>
         <NavLink href="/alternatives" className="text-base">
           Alternatives
         </NavLink>
         <NavLink href="/categories" className="text-base">
           Categories
-        </NavLink>
-        <NavLink href="/self-hosted" className="text-base">
-          Self-hosted
         </NavLink>
         <NavLink href="/stacks" className="text-base">
           Tech Stacks
@@ -196,8 +199,8 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
           About
         </NavLink>
 
-        <Suspense fallback={<Icon name="lucide/search" className="size-4 sm:hidden" />}>
-          <SearchForm className="sm:hidden" />
+        <Suspense>
+          <SearchForm className="col-span-full w-full sm:hidden" />
         </Suspense>
       </nav>
     </Container>

@@ -38,7 +38,7 @@ export const PaginationLink = ({
 
   return (
     <Link
-      className={cx(isActive && "bg-accent rounded-xs", navLinkVariants({ isActive, className }))}
+      className={cx(isActive && "bg-accent rounded-md", navLinkVariants({ isActive, className }))}
       {...props}
     >
       <Slot.Root className={affixVariants()}>{prefix}</Slot.Root>

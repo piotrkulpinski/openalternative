@@ -58,10 +58,10 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
           suffix={<Icon name="lucide/arrow-up-right" />}
           asChild
         >
-          <span>{isDefault ? "Advertise" : `Visit ${ad.name}`}</span>
+          <span>{ad.buttonLabel ?? `Visit ${ad.name}`}</span>
         </Button>
 
-        <div className="absolute inset-0 overflow-clip">
+        <div className="absolute inset-0 overflow-clip rounded-md">
           <Slot.Root className="absolute -top-2/5 -right-1/4 -z-10 size-60 opacity-5 rotate-12 pointer-events-none transition group-hover/button:rotate-[20deg]">
             {isDefault ? <LogoSymbol /> : <FaviconImage src={ad.faviconUrl} title={ad.name} />}
           </Slot.Root>

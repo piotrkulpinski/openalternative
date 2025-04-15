@@ -133,6 +133,7 @@ model Ad {
   name        String
   description String?
   websiteUrl  String
+  buttonLabel String?
   faviconUrl  String?
   type        AdType   @default(All)
   startsAt    DateTime

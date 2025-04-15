@@ -7,6 +7,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 const cardVariants = cva({
   base: [
     "relative flex flex-col items-start gap-4 w-full border bg-card p-5 rounded-lg transform-gpu",
+    "before:absolute before:inset-0 before:rounded-lg before:ring-4 before:ring-inset before:ring-background",
     "hover:[&[href]]:bg-accent",
   ],
 })

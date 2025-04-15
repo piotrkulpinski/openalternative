@@ -40,7 +40,7 @@ export const SearchForm = ({ className, ...props }: ComponentProps<"form">) => {
       noValidate
       {...props}
     >
-      <div className="relative flex">
+      <div className="relative flex w-full">
         <Input
           ref={inputRef}
           size="sm"
@@ -50,16 +50,16 @@ export const SearchForm = ({ className, ...props }: ComponentProps<"form">) => {
           onFocus={handleExpand}
           onBlur={handleCollapse}
           className={cx(
-            "transition-[max-width,opacity,transform] duration-200 ease-in-out",
-            isExpanded ? "max-w-24 sm:max-w-32 opacity-100" : "max-w-0 opacity-0",
+            "transition-[max-width,opacity,transform] duration-200 ease-in-out max-sm:text-base max-sm:px-3 max-sm:py-2",
+            isExpanded ? "sm:max-w-32 sm:opacity-100" : "sm:max-w-0 sm:opacity-0",
           )}
         />
 
         <button
           type="button"
           className={cx(
-            "p-0.5 -m-0.5 text-muted-foreground hover:text-foreground duration-200 ease-in-out will-change-transform absolute inset-y-0 right-0",
-            isExpanded ? "opacity-0 translate-x-1 pointer-events-none" : "opacity-100",
+            "p-0.5 -m-0.5 text-muted-foreground hover:text-foreground duration-200 ease-in-out will-change-transform absolute inset-y-0 right-0 max-sm:hidden",
+            isExpanded ? "sm:opacity-0 sm:translate-x-1 sm:pointer-events-none" : "sm:opacity-100",
           )}
           onClick={handleExpand}
           tabIndex={-1}
