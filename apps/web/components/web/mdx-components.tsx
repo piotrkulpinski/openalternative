@@ -1,5 +1,5 @@
 import Image from "next/image"
-import type { ComponentProps } from "react"
+import { type ComponentProps, Suspense } from "react"
 import { Link } from "~/components/common/link"
 import { ExternalLink } from "~/components/web/external-link"
 import { ToolEntry as ToolEntryPrimitive } from "~/components/web/tools/tool-entry"
@@ -46,7 +46,7 @@ type ToolEntryProps = ComponentProps<typeof ToolEntryPrimitive> & {
   screenshotUrl: string | null
 }
 
-const ToolEntry = async ({ tool: toolSlug, screenshotUrl, ...props }: ToolEntryProps) => {
+const ToolEntryRSC = async ({ tool: toolSlug, screenshotUrl, ...props }: ToolEntryProps) => {
   "use server"
 
   const tool = await findTool({ where: { slug: toolSlug } })
@@ -56,6 +56,14 @@ const ToolEntry = async ({ tool: toolSlug, screenshotUrl, ...props }: ToolEntryP
   }
 
   return <ToolEntryPrimitive id={tool.slug} tool={{ ...tool, screenshotUrl }} {...props} />
+}
+
+const ToolEntry = ({ ...props }: ToolEntryProps) => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ToolEntryRSC {...props} />
+    </Suspense>
+  )
 }
 
 export const MDXComponents = { a, img, ToolEntry }
