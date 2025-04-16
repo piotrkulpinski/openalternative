@@ -30,13 +30,15 @@ const ToolEntry = ({ children, className, tool, ...props }: ToolEntryProps) => {
     >
       <Stack size="lg" className="not-prose relative justify-between">
         <Stack
-          className="self-start before:content-['#'_counter(entries)] before:absolute before:right-full before:mr-4 before:font-semibold before:text-3xl before:opacity-25 max-lg:before:hidden"
+          className="self-start before:content-['#'_counter(entries)] before:font-semibold before:text-3xl before:opacity-25 xl:before:absolute xl:before:right-full xl:before:mr-4"
           asChild
         >
-          <Link href={href} className="hover:underline">
+          <Link href={href} className="group">
             <FaviconImage src={tool.faviconUrl} title={tool.name} className="size-8" />
 
-            <H2 className="!leading-tight truncate">{tool.name}</H2>
+            <H2 className="!leading-tight truncate underline decoration-transparent group-hover:decoration-foreground/30">
+              {tool.name}
+            </H2>
 
             {tool.owner && <VerifiedBadge size="lg" />}
           </Link>

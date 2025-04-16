@@ -30,6 +30,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" />
+      </head>
       <body className="min-h-dvh flex flex-col bg-background text-foreground">
         <NuqsAdapter>
           <TooltipProvider delayDuration={250}>{children}</TooltipProvider>

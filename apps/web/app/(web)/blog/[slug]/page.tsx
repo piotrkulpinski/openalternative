@@ -116,7 +116,7 @@ export default async function BlogPostPage(props: PageProps) {
           </Section.Content>
 
           <Section.Sidebar>
-            <Stack direction="column">
+            <Stack direction="column" className="lg:mx-5 mb-1">
               <H6 as="strong" className="text-muted-foreground">
                 Written by
               </H6>

@@ -205,7 +205,7 @@ export default async function AlternativePage(props: PageProps) {
                 prefix: <FaviconImage src={faviconUrl} title={name} className="size-4" />,
                 suffix: index < 3 && <Icon name="lucide/award" className={medalColors[index]} />,
               }))}
-              className="flex-1 mx-5 max-md:hidden"
+              className="flex-1 lg:mx-5 max-md:hidden"
             >
               <Button
                 size="md"
