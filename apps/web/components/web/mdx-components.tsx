@@ -1,9 +1,10 @@
+import { db } from "@openalternative/db"
 import Image from "next/image"
 import { type ComponentProps, Suspense } from "react"
 import { Link } from "~/components/common/link"
 import { ExternalLink } from "~/components/web/external-link"
 import { ToolEntry as ToolEntryPrimitive } from "~/components/web/tools/tool-entry"
-import { findTool } from "~/server/web/tools/queries"
+import { toolOnePayload } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 import { Icon } from "../common/icon"
 
@@ -47,7 +48,10 @@ type ToolEntryProps = ComponentProps<typeof ToolEntryPrimitive> & {
 }
 
 const ToolEntryRSC = async ({ tool: toolSlug, screenshotUrl, ...props }: ToolEntryProps) => {
-  const tool = await findTool({ where: { slug: toolSlug } })
+  const tool = await db.tool.findUnique({
+    where: { slug: toolSlug },
+    select: toolOnePayload,
+  })
 
   if (!tool) {
     return null
