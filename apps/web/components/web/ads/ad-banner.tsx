@@ -20,6 +20,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
       <Container
         className={cx(
           "group/button relative -top-px z-50 flex items-center justify-between gap-3 py-2 bg-card hover:bg-accent lg:rounded-b-lg",
+          "before:absolute before:inset-0 before:rounded-[inherit] before:border-4 before:border-t-0 before:border-background",
           className,
         )}
         asChild

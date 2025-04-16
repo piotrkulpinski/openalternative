@@ -2,9 +2,9 @@ import { formatDate, getReadTime } from "@curiousleaf/utils"
 import type { Post } from "content-collections"
 import Image from "next/image"
 import type { ComponentProps } from "react"
+import { Card, CardDescription, CardFooter, CardHeader } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
-import { Card, CardDescription, CardFooter, CardHeader } from "~/components/common/card"
 
 type PostCardProps = ComponentProps<typeof Card> & {
   post: Post
@@ -20,7 +20,7 @@ export const PostCard = ({ className, post, ...props }: PostCardProps) => {
             alt={post.title}
             width={1200}
             height={630}
-            className="-m-5 mb-0 w-[calc(100%+2.5rem)] max-w-none aspect-video object-cover"
+            className="-m-4 mb-0 w-[calc(100%+2rem)] rounded-t-md max-w-none aspect-video object-cover"
           />
         )}
 
