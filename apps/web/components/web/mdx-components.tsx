@@ -47,8 +47,6 @@ type ToolEntryProps = ComponentProps<typeof ToolEntryPrimitive> & {
 }
 
 const ToolEntryRSC = async ({ tool: toolSlug, screenshotUrl, ...props }: ToolEntryProps) => {
-  "use server"
-
   const tool = await findTool({ where: { slug: toolSlug } })
 
   if (!tool) {
