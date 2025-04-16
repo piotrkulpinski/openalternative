@@ -1,12 +1,11 @@
-import Image from "next/image"
 import type { ComponentProps } from "react"
-import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
 import { H2 } from "~/components/common/heading"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { Markdown } from "~/components/web/markdown"
+import { OverlayImage } from "~/components/web/overlay-image"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { VerifiedBadge } from "~/components/web/verified-badge"
@@ -54,19 +53,16 @@ const ToolEntry = ({ children, className, tool, ...props }: ToolEntryProps) => {
       )}
 
       {tool.screenshotUrl && (
-        <Link href={href} className="not-prose group">
-          <Box hover>
-            <Image
-              key={tool.screenshotUrl}
-              src={tool.screenshotUrl}
-              alt={`Screenshot of ${tool.name} website`}
-              width={1280}
-              height={1024}
-              loading="lazy"
-              className="aspect-video h-auto w-full rounded-md object-cover object-top group-hover:brightness-95"
-            />
-          </Box>
-        </Link>
+        <OverlayImage
+          href={href}
+          target="_self"
+          doFollow={true}
+          src={tool.screenshotUrl}
+          alt={`Screenshot of ${tool.name} website`}
+          className="not-prose"
+        >
+          Read more
+        </OverlayImage>
       )}
 
       {children ? (

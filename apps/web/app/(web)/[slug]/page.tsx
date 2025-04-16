@@ -1,11 +1,9 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import { notFound } from "next/navigation"
 import { Suspense, cache } from "react"
 import type { ImageObject } from "schema-dts"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
-import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"
 import { H2, H4 } from "~/components/common/heading"
 import { Icon } from "~/components/common/icon"
@@ -14,6 +12,7 @@ import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
 import { Listing } from "~/components/web/listing"
 import { Markdown } from "~/components/web/markdown"
+import { OverlayImage } from "~/components/web/overlay-image"
 import { RepositoryDetails } from "~/components/web/repository-details"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { StackList } from "~/components/web/stacks/stack-list"
@@ -159,34 +158,17 @@ export default async function ToolPage(props: PageProps) {
           </div>
 
           {tool.screenshotUrl && (
-            <Box hover>
-              <ExternalLink
-                href={tool.affiliateUrl || tool.websiteUrl}
-                doFollow={tool.isFeatured}
-                eventName="click_website"
-                eventProps={{ url: tool.websiteUrl }}
-                className="group relative rounded-md overflow-clip max-md:order-2"
-              >
-                <Image
-                  src={tool.screenshotUrl}
-                  alt={`A screenshot of ${tool.name}`}
-                  width={1280}
-                  height={720}
-                  loading="lazy"
-                  className="aspect-video h-auto w-full object-cover will-change-transform group-hover:opacity-75 group-hover:scale-[102%] group-hover:blur-[1px]"
-                />
-
-                <Button
-                  size="md"
-                  focus={false}
-                  suffix={<Icon name="lucide/arrow-up-right" />}
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none shadow-lg group-hover:opacity-100"
-                  asChild
-                >
-                  <span>Visit</span>
-                </Button>
-              </ExternalLink>
-            </Box>
+            <OverlayImage
+              href={tool.affiliateUrl || tool.websiteUrl}
+              doFollow={tool.isFeatured}
+              eventName="click_website"
+              eventProps={{ url: tool.websiteUrl }}
+              src={tool.screenshotUrl}
+              alt={`Screenshot of ${tool.name} website`}
+              className="max-md:order-2"
+            >
+              Visit {tool.name}
+            </OverlayImage>
           )}
 
           {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
