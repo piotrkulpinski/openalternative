@@ -4,7 +4,7 @@ import type { ComponentProps } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const boxVariants = cva({
-  base: "border",
+  base: "border duration-100 ease-out",
 
   variants: {
     hover: {

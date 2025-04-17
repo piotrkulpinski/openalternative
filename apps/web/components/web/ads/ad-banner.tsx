@@ -19,8 +19,8 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
     <Box hover focus>
       <Container
         className={cx(
-          "group/button relative -top-px z-50 flex items-center justify-between gap-3 py-2 bg-card hover:bg-accent lg:rounded-b-lg",
-          "before:absolute before:inset-0 before:rounded-[inherit] before:border-4 before:border-t-0 before:border-background",
+          "group/button relative -top-px z-50 flex items-center justify-between gap-3 pt-2 pb-2.5 bg-card hover:bg-accent lg:rounded-b-lg",
+          "before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:border-4 before:border-t-0 before:border-background",
           className,
         )}
         asChild
@@ -54,7 +54,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Co
             className="shrink-0 leading-none pointer-events-none max-sm:hidden"
             asChild
           >
-            <span>Learn More</span>
+            <span>{ad.buttonLabel ?? "Learn More"}</span>
           </Button>
         </ExternalLink>
       </Container>
