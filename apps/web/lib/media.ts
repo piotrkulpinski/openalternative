@@ -107,7 +107,7 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
 
   if (faviconResponse.error) {
     console.error("Error fetching favicon:", faviconResponse.error)
-    return null
+    throw faviconResponse.error
   }
 
   // Upload to S3
@@ -115,7 +115,7 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
 
   if (error) {
     console.error("Error uploading favicon:", error)
-    return null
+    throw error
   }
 
   return `${data}?v=${timestamp}`
