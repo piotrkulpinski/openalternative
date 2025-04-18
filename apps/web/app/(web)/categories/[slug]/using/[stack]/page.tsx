@@ -1,3 +1,4 @@
+import { lcFirst } from "@curiousleaf/utils"
 import type { Metadata } from "next"
 import { notFound, permanentRedirect } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
@@ -44,7 +45,7 @@ const getMetadata = (category: CategoryOne, stack: StackOne): Metadata => {
 
   return {
     title: `Open Source ${name} using ${stack.name}`,
-    description: `A curated collection of the best open source ${name} using ${stack.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
+    description: `A curated collection of the best free and open source ${lcFirst(category.description?.replace(".", "") ?? "")} using ${stack.name}.`,
   }
 }
 

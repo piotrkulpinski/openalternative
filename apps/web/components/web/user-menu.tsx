@@ -37,7 +37,7 @@ const UserMenu = (props: { session: Session | null }) => {
         <Box hover focus>
           <Avatar className="size-6 duration-100">
             <AvatarImage src={session.user.image ?? undefined} />
-            <AvatarFallback>{getInitials(session.user.name)}</AvatarFallback>
+            <AvatarFallback>{getInitials(session.user.name || session.user.email)}</AvatarFallback>
           </Avatar>
         </Box>
       </DropdownMenuTrigger>
