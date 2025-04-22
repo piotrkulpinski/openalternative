@@ -52,7 +52,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
             {tool.name}
           </H4>
 
-          {tool.owner && <VerifiedBadge size="md" className="-ml-1.5" />}
+          {tool.ownerId && <VerifiedBadge size="md" className="-ml-1.5" />}
 
           <ToolBadges tool={tool} className="ml-auto" />
         </CardHeader>

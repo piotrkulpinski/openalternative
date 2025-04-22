@@ -42,7 +42,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
         </Tooltip>
       )}
 
-      {!tool.isFeatured && tool.owner && tool.owner.id === session?.user.id && (
+      {!tool.isFeatured && tool.ownerId && tool.ownerId === session?.user.id && (
         <Tooltip tooltip="Promote this tool on the website to get more visibility.">
           <Button
             size="md"
@@ -56,7 +56,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
         </Tooltip>
       )}
 
-      {!tool.owner && (
+      {!tool.ownerId && (
         <Tooltip tooltip="Claim this tool to get a verified badge and be able to edit it.">
           <Button
             size="md"
@@ -84,7 +84,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
 
       <ToolReportDialog tool={tool} isOpen={isReportOpen} setIsOpen={setIsReportOpen} />
 
-      {!tool.owner && (
+      {!tool.ownerId && (
         <ToolClaimDialog tool={tool} isOpen={isClaimOpen} setIsOpen={setIsClaimOpen} />
       )}
     </Stack>

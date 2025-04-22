@@ -39,7 +39,7 @@ const ToolEntry = ({ children, className, tool, ...props }: ToolEntryProps) => {
               {tool.name}
             </H2>
 
-            {tool.owner && <VerifiedBadge size="lg" />}
+            {tool.ownerId && <VerifiedBadge size="lg" />}
           </Link>
         </Stack>
 
