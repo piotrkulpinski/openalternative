@@ -69,7 +69,7 @@ const shareOptions: ShareOption[] = [
   },
 ]
 
-type ShareButtonsProps = Omit<ComponentProps<"div">, "title"> & {
+type ShareButtonsProps = Omit<ComponentProps<typeof Stack>, "title"> & {
   title: string
 }
 

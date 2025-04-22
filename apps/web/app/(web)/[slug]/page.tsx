@@ -4,9 +4,12 @@ import { Suspense, cache } from "react"
 import type { ImageObject } from "schema-dts"
 import { FeaturedTools } from "~/app/(web)/[slug]/featured-tools"
 import { RelatedTools } from "~/app/(web)/[slug]/related-tools"
+import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
-import { H2, H4 } from "~/components/common/heading"
+import { H2, H5 } from "~/components/common/heading"
 import { Icon } from "~/components/common/icon"
+import { Link } from "~/components/common/link"
+import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { ExternalLink } from "~/components/web/external-link"
@@ -15,10 +18,10 @@ import { Markdown } from "~/components/web/markdown"
 import { OverlayImage } from "~/components/web/overlay-image"
 import { RepositoryDetails } from "~/components/web/repository-details"
 import { ShareButtons } from "~/components/web/share-buttons"
-import { StackList } from "~/components/web/stacks/stack-list"
 import { ToolActions } from "~/components/web/tools/tool-actions"
 import { ToolAlternatives } from "~/components/web/tools/tool-alternatives"
 import { ToolListSkeleton } from "~/components/web/tools/tool-list"
+import { ToolStacks } from "~/components/web/tools/tool-stacks"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { IntroDescription } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
@@ -117,7 +120,11 @@ export default async function ToolPage(props: PageProps) {
               {tool.description && <IntroDescription>{tool.description}</IntroDescription>}
             </div>
 
-            <ToolAlternatives alternatives={tool.alternatives} />
+            <Stack size="lg" direction="column">
+              <Note>Open Source Alternative to:</Note>
+
+              <ToolAlternatives alternatives={tool.alternatives} />
+            </Stack>
 
             <Stack className="w-full">
               <Button
@@ -173,29 +180,16 @@ export default async function ToolPage(props: PageProps) {
 
           {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
 
-          {/* Stacks */}
-          {!!tool.stacks.length && (
-            <Stack size="lg" direction="column" className="w-full max-md:order-6 md:gap-y-6">
-              <H4 as="strong">Technical Stack:</H4>
-
-              <StackList stacks={tool.stacks} />
-            </Stack>
-          )}
-
           {/* Categories */}
           {!!tool.categories.length && (
             <Stack size="lg" direction="column" className="w-full max-md:order-7">
-              <H4 as="strong">Categories:</H4>
+              <H5 as="strong">Categories:</H5>
 
-              <Stack>
+              <Stack className="gap-2">
                 {tool.categories?.map(({ name, slug, fullPath }) => (
-                  <Tag
-                    key={slug}
-                    href={`/categories/${fullPath}`}
-                    prefix={<Icon name="lucide/hash" />}
-                  >
-                    {name}
-                  </Tag>
+                  <Badge key={slug} size="lg" asChild>
+                    <Link href={`/categories/${fullPath}`}>{name}</Link>
+                  </Badge>
                 ))}
               </Stack>
             </Stack>
@@ -204,7 +198,7 @@ export default async function ToolPage(props: PageProps) {
           {/* Topics */}
           {!!tool.topics.length && (
             <Stack size="lg" direction="column" className="w-full max-md:order-8">
-              <H4 as="strong">Related topics:</H4>
+              <H5 as="strong">Topics:</H5>
 
               <Stack>
                 {tool.topics.map(({ slug }) => (
@@ -216,7 +210,16 @@ export default async function ToolPage(props: PageProps) {
             </Stack>
           )}
 
-          <ShareButtons title={`${title}`} className="max-md:order-9" />
+          {/* Stacks */}
+          {!!tool.stacks.length && (
+            <Stack size="lg" direction="column" className="w-full max-md:order-6">
+              <H5 as="strong">Technical Stack:</H5>
+
+              <ToolStacks stacks={tool.stacks} />
+            </Stack>
+          )}
+
+          <ShareButtons title={`${title}`} direction="column" className="max-md:order-9" />
         </Section.Content>
 
         <Section.Sidebar className="max-md:contents">

@@ -203,7 +203,7 @@ export default async function AlternativePage(props: PageProps) {
                 id: slug,
                 title: name,
                 prefix: <FaviconImage src={faviconUrl} title={name} className="size-4" />,
-                suffix: index < 3 && <Icon name="lucide/award" className={medalColors[index]} />,
+                suffix: index < 3 && <Icon name="lucide/crown" className={medalColors[index]} />,
               }))}
               className="flex-1 lg:mx-5 max-md:hidden"
             >
