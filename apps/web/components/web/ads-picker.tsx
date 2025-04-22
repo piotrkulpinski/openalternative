@@ -41,23 +41,25 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
   })
 
   const handleCheckout = () => {
-    const checkoutData = selections.map(selection => {
-      const adSpot = findAdSpot(selection.type)
+    const checkoutData = selections
+      .filter(({ dateRange, duration }) => dateRange?.from && dateRange?.to && duration)
+      .map(selection => {
+        const adSpot = findAdSpot(selection.type)
 
-      const discountedPrice = price?.discountPercentage
-        ? adSpot.price * (1 - price.discountPercentage / 100)
-        : adSpot.price
+        const discountedPrice = price?.discountPercentage
+          ? adSpot.price * (1 - price.discountPercentage / 100)
+          : adSpot.price
 
-      return {
-        type: selection.type,
-        price: discountedPrice,
-        duration: selection.duration ?? 0,
-        metadata: {
-          startDate: selection.dateRange?.from?.getTime() ?? 0,
-          endDate: selection.dateRange?.to?.getTime() ?? 0,
-        },
-      }
-    })
+        return {
+          type: selection.type,
+          price: discountedPrice,
+          duration: selection.duration ?? 0,
+          metadata: {
+            startDate: selection.dateRange?.from?.getTime() ?? 0,
+            endDate: selection.dateRange?.to?.getTime() ?? 0,
+          },
+        }
+      })
 
     execute(checkoutData)
   }

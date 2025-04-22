@@ -198,10 +198,6 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
         <NavLink href="/about" className="text-base">
           About
         </NavLink>
-
-        <Suspense>
-          <SearchForm className="col-span-full w-full sm:hidden" />
-        </Suspense>
       </nav>
     </Container>
   )

@@ -7,6 +7,7 @@ import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { ToolHoverCard } from "~/components/web/tools/tool-hover-card"
 import { Favicon } from "~/components/web/ui/favicon"
+import { VerifiedBadge } from "~/components/web/verified-badge"
 import { siteConfig } from "~/config/site"
 import { findTools } from "~/server/web/tools/queries"
 
@@ -21,7 +22,7 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
     <Card hover={false} focus={false} {...props}>
       <Stack direction="column">
         <Stack size="sm">
-          <Icon name="lucide/star" className="fill-current text-blue-500" />
+          <VerifiedBadge size="md" className="m-0" />
           <H5 as="strong">Featured projects</H5>
         </Stack>
 
