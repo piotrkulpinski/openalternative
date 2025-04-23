@@ -16,7 +16,7 @@ const Checkbox = ({ className, ...props }: ComponentProps<typeof CheckboxPrimiti
       {...props}
     >
       <CheckboxPrimitive.Indicator className="grid place-items-center">
-        <Icon name="lucide/check" className="size-4" />
+        <Icon name="lucide/check" className="size-3" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   </Box>

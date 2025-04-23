@@ -21,7 +21,7 @@ export default function Home({ searchParams }: PageProps) {
     <>
       <section className="flex flex-col gap-y-6 w-full mb-[2vh]">
         <Intro alignment="center">
-          <IntroTitle className="max-w-[15em] lg:text-5xl/[1.1]!">
+          <IntroTitle className="max-w-[16em] font-bold sm:text-4xl md:text-5xl lg:text-6xl">
             Discover {config.site.tagline}
           </IntroTitle>
 

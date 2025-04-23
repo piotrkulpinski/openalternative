@@ -40,17 +40,17 @@ export const getProducts = (
   coupon: Stripe.Coupon | undefined,
   isPublished: boolean,
 ) => {
+  const getPriceAmount = (price?: Stripe.Price | string | null) => {
+    return typeof price === "object" && price !== null ? (price.unit_amount ?? 0) : 0
+  }
+
   return (
     products
       // Sort by price
-      .sort((a, b) => {
-        const aPrice = a.default_price as Stripe.Price
-        const bPrice = b.default_price as Stripe.Price
-        return (aPrice.unit_amount ?? 0) - (bPrice.unit_amount ?? 0)
-      })
+      .sort((a, b) => getPriceAmount(a.default_price) - getPriceAmount(b.default_price))
 
       // Filter out expedited products if the tool is published
-      .filter(product => !isPublished || !product.name.includes("Expedited"))
+      .filter(({ name }) => !isPublished || !name.includes("Expedited"))
 
       // Filter out products that are not eligible for the coupon
       .filter(product => isProductDiscounted(product.id, coupon) || product.name.includes("Free"))
@@ -69,7 +69,7 @@ export const getProducts = (
  * @param isDiscounted - Whether the product is eligible for a discount.
  * @returns Whether the product should be featured.
  */
-export const isProductFeatured = (
+const isProductFeatured = (
   index: number,
   products: Stripe.Product[],
   coupon?: Stripe.Coupon,
@@ -88,7 +88,7 @@ export const isProductFeatured = (
  * @param coupon - The coupon to check against.
  * @returns Whether the product is eligible for the discount.
  */
-export const isProductDiscounted = (productId: string, coupon?: Stripe.Coupon) => {
+const isProductDiscounted = (productId: string, coupon?: Stripe.Coupon) => {
   return !coupon?.applies_to || coupon.applies_to.products.includes(productId)
 }
 
@@ -99,14 +99,8 @@ export const isProductDiscounted = (productId: string, coupon?: Stripe.Coupon) =
  * @param coupon - The coupon to check against.
  * @returns The index of the last discounted product, or -1 if none are discounted.
  */
-export const getLastDiscountedProductIndex = (
-  products: Stripe.Product[],
-  coupon?: Stripe.Coupon,
-) => {
-  return products.reduce(
-    (lastIdx, product, idx) => (isProductDiscounted(product.id, coupon) ? idx : lastIdx),
-    -1,
-  )
+const getLastDiscountedProductIndex = (products: Stripe.Product[], coupon?: Stripe.Coupon) => {
+  return products.reduce((lastId, p, id) => (isProductDiscounted(p.id, coupon) ? id : lastId), -1)
 }
 
 /**
