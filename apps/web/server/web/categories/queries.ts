@@ -5,6 +5,7 @@ import {
   categoryManyNestedPayload,
   categoryManyPayload,
   categoryOnePayload,
+  categoryWithTools,
 } from "~/server/web/categories/payloads"
 
 export const findCategories = async ({ where, orderBy, ...args }: Prisma.CategoryFindManyArgs) => {
@@ -76,7 +77,7 @@ export const findCategoryByPath = async (fullPath: string) => {
   cacheLife("max")
 
   return db.category.findFirst({
-    where: { fullPath },
+    where: { fullPath, ...categoryWithTools },
     select: categoryOnePayload,
   })
 }

@@ -1,5 +1,12 @@
 import { Prisma, ToolStatus } from "@openalternative/db/client"
 
+export const categoryWithTools = Prisma.validator<Prisma.CategoryWhereInput>()({
+  OR: [
+    { tools: { some: { status: ToolStatus.Published } } },
+    { subcategories: { some: { tools: { some: { status: ToolStatus.Published } } } } },
+  ],
+})
+
 export const categoryOnePayload = Prisma.validator<Prisma.CategorySelect>()({
   name: true,
   slug: true,
@@ -7,6 +14,7 @@ export const categoryOnePayload = Prisma.validator<Prisma.CategorySelect>()({
   description: true,
   fullPath: true,
   parentId: true,
+  subcategories: { where: categoryWithTools },
   _count: { select: { tools: { where: { status: ToolStatus.Published } } } },
 })
 
@@ -23,11 +31,13 @@ export const categoryManyNestedPayload = Prisma.validator<Prisma.CategorySelect>
   slug: true,
   fullPath: true,
   subcategories: {
+    where: categoryWithTools,
     select: {
       name: true,
       slug: true,
       fullPath: true,
       subcategories: {
+        where: categoryWithTools,
         select: {
           name: true,
           slug: true,
