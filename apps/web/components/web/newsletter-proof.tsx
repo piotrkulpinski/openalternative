@@ -26,8 +26,8 @@ export const NewsletterProof = ({ className, ...props }: ComponentProps<"div">) 
       ))}
 
       <p className="w-full text-xs text-muted-foreground">
-        Join {formatNumber(config.stats.subscribers + config.stats.stars, "standard")}+ open source
-        enthusiasts
+        Trusted by {formatNumber(config.stats.subscribers + config.stats.stars, "compact")}+ open
+        source enthusiasts
       </p>
     </div>
   )

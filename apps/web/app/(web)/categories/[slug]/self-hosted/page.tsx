@@ -49,7 +49,7 @@ export const generateStaticParams = async () => {
   return categories.map(({ slug }) => ({ slug }))
 }
 
-export const generateMetadata = async (props: PageProps) => {
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const category = await getCategory(props)
   const url = `/categories/${category.slug}/self-hosted`
 

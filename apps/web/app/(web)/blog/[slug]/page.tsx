@@ -49,7 +49,7 @@ const getMetadata = (post: Post): Metadata => {
   }
 }
 
-export const generateMetadata = async (props: PageProps) => {
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const post = await findPostBySlug(props)
   const url = `/blog/${post._meta.path}`
 

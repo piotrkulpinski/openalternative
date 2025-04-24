@@ -49,7 +49,7 @@ const getMetadata = (category: CategoryOne, stack: StackOne): Metadata => {
   }
 }
 
-export const generateMetadata = async (props: PageProps) => {
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const { category, stack } = await getCategory(props)
   const url = `/categories/${category.slug}/using/${stack.slug}`
 
