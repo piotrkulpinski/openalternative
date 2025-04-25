@@ -78,13 +78,7 @@ export function DataTable<TData>({
               table.getRowModel().rows.map(row => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map(cell => (
-                    <TableCell
-                      key={cell.id}
-                      style={getColumnPinningStyle({ column: cell.column })}
-                      className={cx(
-                        cell.column.getIsPinned() ? "sticky z-10 max-md:relative!" : "relative",
-                      )}
-                    >
+                    <TableCell key={cell.id} style={getColumnPinningStyle({ column: cell.column })}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

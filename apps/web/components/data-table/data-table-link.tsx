@@ -20,11 +20,13 @@ export const DataTableLink = ({
     <Stack size="sm" wrap={false}>
       <Link
         className={cx(
-          "block max-w-40 truncate font-medium underline underline-offset-4 decoration-foreground/10 hover:decoration-foreground/25",
+          "block max-w-40 truncate font-medium underline underline-offset-4 decoration-foreground/10 hover:decoration-foreground/35",
           className,
         )}
         {...props}
       >
+        <span className="absolute inset-0" />
+
         {image && (
           <Image
             src={image}

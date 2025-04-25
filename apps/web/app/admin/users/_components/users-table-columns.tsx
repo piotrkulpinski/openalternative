@@ -5,6 +5,7 @@ import type { User } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import type { Dispatch, SetStateAction } from "react"
 import { UserActions } from "~/app/admin/users/_components/user-actions"
+import { RowCheckbox } from "~/components/admin/row-checkbox"
 import { Badge } from "~/components/common/badge"
 import { Icon } from "~/components/common/icon"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
@@ -20,8 +21,7 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<User>[]
     {
       id: "select",
       header: ({ table }) => (
-        <input
-          type="checkbox"
+        <RowCheckbox
           checked={table.getIsAllPageRowsSelected()}
           ref={input => {
             if (input) {
@@ -31,16 +31,13 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<User>[]
           }}
           onChange={e => table.toggleAllPageRowsSelected(e.target.checked)}
           aria-label="Select all"
-          className="translate-y-0.5 ml-1.5"
         />
       ),
       cell: ({ row }) => (
-        <input
-          type="checkbox"
+        <RowCheckbox
           checked={row.getIsSelected()}
           onChange={e => row.toggleSelected(e.target.checked)}
           aria-label="Select row"
-          className="translate-y-0.5 ml-1.5"
         />
       ),
       size: 0,
