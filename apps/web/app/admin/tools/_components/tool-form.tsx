@@ -417,11 +417,23 @@ export function ToolForm({
           control={form.control}
           name="faviconUrl"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="items-stretch">
               <FormLabel>Favicon URL</FormLabel>
-              <FormControl>
-                <Input type="url" {...field} />
-              </FormControl>
+
+              <Stack size="sm">
+                {field.value && (
+                  <img
+                    src={field.value}
+                    alt="Favicon"
+                    className="h-8 max-w-32 border box-content rounded-md object-contain"
+                  />
+                )}
+
+                <FormControl>
+                  <Input type="url" className="flex-1" {...field} />
+                </FormControl>
+              </Stack>
+
               <FormMessage />
             </FormItem>
           )}
@@ -431,11 +443,23 @@ export function ToolForm({
           control={form.control}
           name="screenshotUrl"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="items-stretch">
               <FormLabel>Screenshot URL</FormLabel>
-              <FormControl>
-                <Input type="url" {...field} />
-              </FormControl>
+
+              <Stack size="sm">
+                {field.value && (
+                  <img
+                    src={field.value}
+                    alt="Screenshot"
+                    className="h-8 max-w-32 border box-content rounded-md object-contain"
+                  />
+                )}
+
+                <FormControl>
+                  <Input type="url" className="flex-1" {...field} />
+                </FormControl>
+              </Stack>
+
               <FormMessage />
             </FormItem>
           )}
