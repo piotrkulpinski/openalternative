@@ -7,7 +7,10 @@ import { adminProcedure } from "~/lib/safe-actions"
 
 const mediaSchema = z.object({
   url: z.string().min(1).url(),
-  path: z.string().min(1),
+  path: z
+    .string()
+    .min(1)
+    .regex(/^[a-z0-9/_-]+$/i),
 })
 
 export const generateFavicon = adminProcedure
