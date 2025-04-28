@@ -1,11 +1,10 @@
 import type { Tool } from "@openalternative/db/client"
 import { Hr, Link, Text } from "@react-email/components"
-import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
 
 type EmailFeatureNudgeProps = {
-  tool: Tool | Jsonify<Tool>
+  tool: Tool
   showButton?: boolean
 }
 

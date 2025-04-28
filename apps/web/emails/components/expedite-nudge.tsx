@@ -1,19 +1,18 @@
 import type { Tool } from "@openalternative/db/client"
 import { Text } from "@react-email/components"
-import { differenceInDays } from "date-fns"
-import type { Jsonify } from "inngest/helpers/jsonify"
 import type { PropsWithChildren } from "react"
 import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
+import { isToolWithinExpediteThreshold } from "~/lib/tools"
 
 type EmailExpediteNudgeProps = PropsWithChildren<{
-  tool: Tool | Jsonify<Tool>
+  tool: Tool
 }>
 
 export const EmailExpediteNudge = ({ children, tool }: EmailExpediteNudgeProps) => {
   const link = `${config.site.url}/submit/${tool.slug}`
 
-  if (tool.publishedAt && differenceInDays(tool.publishedAt, new Date()) < 7) {
+  if (isToolWithinExpediteThreshold(tool)) {
     return null
   }
 

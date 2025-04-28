@@ -1,5 +1,5 @@
 import { db } from "@openalternative/db"
-import { type Tool, ToolStatus } from "@prisma/client"
+import { type Tool, ToolStatus } from "@openalternative/db/client"
 import { config } from "~/config"
 import EmailAdminSubmissionPremium from "~/emails/admin-submission-premium"
 import EmailSubmission from "~/emails/submission"

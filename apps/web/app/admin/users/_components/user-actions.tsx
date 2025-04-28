@@ -1,6 +1,6 @@
 "use client"
 
-import type { User } from "@prisma/client"
+import type { User } from "@openalternative/db/client"
 import { usePathname, useRouter } from "next/navigation"
 import { type ComponentProps, useState, useTransition } from "react"
 import { toast } from "sonner"
