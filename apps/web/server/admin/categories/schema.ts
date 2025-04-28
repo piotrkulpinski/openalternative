@@ -22,11 +22,12 @@ export const categoriesTableParamsCache = createSearchParamsCache(categoriesTabl
 export type CategoriesTableSchema = Awaited<ReturnType<typeof categoriesTableParamsCache.parse>>
 
 export const categorySchema = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, "Name is required"),
   slug: z.string().optional(),
   label: z.string().optional(),
   description: z.string().optional(),
-  parentId: z.string().nullable().optional(),
+  parentId: z.string().nullish(),
   tools: z.array(z.string()).optional(),
 })
 

@@ -9,7 +9,7 @@ import { config } from "~/config"
 import EmailLoginLink from "~/emails/login-link"
 import EmailWelcome from "~/emails/welcome"
 import { env } from "~/env"
-import { sendEmails } from "~/lib/email"
+import { sendEmail } from "~/lib/email"
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
@@ -60,7 +60,7 @@ export const auth = betterAuth({
           const name = newSession.user.name
           const subject = `Welcome to ${config.site.name}`
 
-          await sendEmails({ to, subject, react: EmailWelcome({ to, name }) })
+          await sendEmail({ to, subject, react: EmailWelcome({ to, name }) })
         }
       }
     }),
@@ -72,7 +72,7 @@ export const auth = betterAuth({
         const to = email
         const subject = `Your ${config.site.name} Login Link`
 
-        await sendEmails({ to, subject, react: EmailLoginLink({ to, url }) })
+        await sendEmail({ to, subject, react: EmailLoginLink({ to, url }) })
       },
     }),
 

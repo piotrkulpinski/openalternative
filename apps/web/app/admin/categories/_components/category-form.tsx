@@ -7,6 +7,7 @@ import { type ComponentProps, use, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
+import { CategoryActions } from "~/app/admin/categories/_components/category-actions"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/common/button"
 import {
@@ -17,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { H3 } from "~/components/common/heading"
 import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
@@ -30,9 +32,9 @@ import {
 } from "~/components/common/select"
 import { Stack } from "~/components/common/stack"
 import { useComputedField } from "~/hooks/use-computed-field"
-import { createCategory, updateCategory } from "~/server/admin/categories/actions"
+import { upsertCategory } from "~/server/admin/categories/actions"
 import type { findCategoryBySlug, findCategoryList } from "~/server/admin/categories/queries"
-import { categorySchema } from "~/server/admin/categories/schemas"
+import { categorySchema } from "~/server/admin/categories/schema"
 import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
 
@@ -45,6 +47,7 @@ type CategoryFormProps = ComponentProps<"form"> & {
 export function CategoryForm({
   children,
   className,
+  title,
   category,
   tools,
   categories,
@@ -102,54 +105,41 @@ export function CategoryForm({
     )
   }, [parents])
 
-  // Create category
-  const { execute: createCategoryAction, isPending: isCreatingCategory } = useServerAction(
-    createCategory,
-    {
-      onSuccess: ({ data }) => {
-        toast.success("Category successfully created")
+  // Upsert category
+  const upsertAction = useServerAction(upsertCategory, {
+    onSuccess: ({ data }) => {
+      toast.success(`Category successfully ${category ? "updated" : "created"}`)
+
+      // If not updating a category, or slug has changed, redirect to the new category
+      if (!category || data.slug !== category?.slug) {
         redirect(`/admin/categories/${data.slug}`)
-      },
-
-      onError: ({ err }) => {
-        toast.error(err.message)
-      },
+      }
     },
-  )
 
-  // Update category
-  const { execute: updateCategoryAction, isPending: isUpdatingCategory } = useServerAction(
-    updateCategory,
-    {
-      onSuccess: ({ data }) => {
-        toast.success("Category successfully updated")
-
-        if (data.slug !== category?.slug) {
-          redirect(`/admin/categories/${data.slug}`)
-        }
-      },
-
-      onError: ({ err }) => {
-        toast.error(err.message)
-      },
-    },
-  )
-
-  const onSubmit = form.handleSubmit(data => {
-    category ? updateCategoryAction({ id: category.id, ...data }) : createCategoryAction(data)
+    onError: ({ err }) => toast.error(err.message),
   })
 
-  const isPending = isCreatingCategory || isUpdatingCategory
+  const handleSubmit = form.handleSubmit(data => {
+    upsertAction.execute({ id: category?.id, ...data })
+  })
 
   return (
     <Form {...form}>
+      <Stack className="justify-between">
+        <H3 className="flex-1 truncate">{title}</H3>
+
+        <Stack size="sm" className="-my-0.5">
+          {category && <CategoryActions category={category} size="md" />}
+        </Stack>
+      </Stack>
+
       <form
-        onSubmit={onSubmit}
-        className={cx("grid grid-cols-1 gap-4 max-w-3xl sm:grid-cols-2", className)}
+        onSubmit={handleSubmit}
+        className={cx("grid gap-4 @sm:grid-cols-2", className)}
         noValidate
         {...props}
       >
-        <div className="flex flex-col gap-4 sm:flex-row">
+        <div className="grid gap-4 @sm:grid-cols-2">
           <FormField
             control={form.control}
             name="name"
@@ -222,6 +212,7 @@ export function CategoryForm({
                     variant="secondary"
                     onClick={() => form.setValue("parentId", "")}
                     prefix={<Icon name="lucide/x" />}
+                    disabled={!!category?.subcategories.length}
                     className="-my-1"
                   >
                     Clear
@@ -281,7 +272,7 @@ export function CategoryForm({
             <Link href="/admin/categories">Cancel</Link>
           </Button>
 
-          <Button size="md" variant="primary" isPending={isPending}>
+          <Button size="md" isPending={upsertAction.isPending}>
             {category ? "Update category" : "Create category"}
           </Button>
         </div>

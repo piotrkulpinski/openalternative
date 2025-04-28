@@ -22,6 +22,7 @@ export const alternativesTableParamsCache = createSearchParamsCache(alternatives
 export type AlternativesTableSchema = Awaited<ReturnType<typeof alternativesTableParamsCache.parse>>
 
 export const alternativeSchema = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, "Name is required"),
   slug: z.string().optional(),
   websiteUrl: z.string().min(1, "Website is required").url(),

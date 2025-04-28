@@ -2,7 +2,7 @@ import { isTruthy } from "@curiousleaf/utils"
 import { db } from "@openalternative/db"
 import type { Prisma } from "@openalternative/db/client"
 import { endOfDay, startOfDay } from "date-fns"
-import type { CategoriesTableSchema } from "./schemas"
+import type { CategoriesTableSchema } from "./schema"
 
 export const findCategories = async (search: CategoriesTableSchema) => {
   const { name, page, perPage, sort, from, to, operator } = search

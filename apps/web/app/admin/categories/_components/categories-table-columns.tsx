@@ -3,18 +3,13 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { Category } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
-import type { Dispatch, SetStateAction } from "react"
 import { CategoryActions } from "~/app/admin/categories/_components/category-actions"
 import { RowCheckbox } from "~/components/admin/row-checkbox"
+import { Note } from "~/components/common/note"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
-import type { DataTableRowAction } from "~/types"
 
-type GetColumnsProps = {
-  setRowAction: Dispatch<SetStateAction<DataTableRowAction<Category> | null>>
-}
-
-export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Category>[] => {
+export const getColumns = (): ColumnDef<Category>[] => {
   return [
     {
       id: "select",
@@ -52,27 +47,17 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Categor
     {
       accessorKey: "tagline",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Label" />,
-      cell: ({ row }) => (
-        <span className="max-w-96 truncate text-muted-foreground">{row.original.label}</span>
-      ),
+      cell: ({ row }) => <Note className="max-w-96 truncate">{row.original.label}</Note>,
     },
     {
       accessorKey: "createdAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
-      cell: ({ cell }) => (
-        <span className="text-muted-foreground">{formatDate(cell.getValue() as Date)}</span>
-      ),
+      cell: ({ cell }) => <Note>{formatDate(cell.getValue() as Date)}</Note>,
       size: 0,
     },
     {
       id: "actions",
-      cell: ({ row }) => (
-        <CategoryActions
-          category={row.original}
-          setRowAction={setRowAction}
-          className="float-right -my-1"
-        />
-      ),
+      cell: ({ row }) => <CategoryActions category={row.original} className="float-right -my-1" />,
       size: 0,
     },
   ]

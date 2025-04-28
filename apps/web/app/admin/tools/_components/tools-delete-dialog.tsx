@@ -64,7 +64,9 @@ export const ToolsDeleteDialog = ({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button size="md" variant="secondary">
+              Cancel
+            </Button>
           </DialogClose>
 
           <Button

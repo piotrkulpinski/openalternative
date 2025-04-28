@@ -1,5 +1,3 @@
-"use client"
-
 import { type ComponentProps, useState } from "react"
 import { Button } from "~/components/common/button"
 import { Stack } from "~/components/common/stack"

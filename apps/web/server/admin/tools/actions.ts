@@ -6,50 +6,57 @@ import { ToolStatus } from "@openalternative/db/client"
 import { revalidatePath, revalidateTag } from "next/cache"
 import { after } from "next/server"
 import { z } from "zod"
-import { isProd } from "~/env"
-import { generateContent } from "~/lib/generate-content"
-import { removeS3Directories, uploadFavicon, uploadScreenshot } from "~/lib/media"
+import { removeS3Directories } from "~/lib/media"
+import { notifySubmitterOfToolPublished } from "~/lib/notifications"
+import { notifySubmitterOfToolScheduled } from "~/lib/notifications"
 import { adminProcedure } from "~/lib/safe-actions"
 import { analyzeRepositoryStack } from "~/lib/stack-analysis"
-import { toolSchema } from "~/server/admin/tools/schemas"
-import { inngest } from "~/services/inngest"
+import { toolSchema } from "~/server/admin/tools/schema"
 
-export const createTool = adminProcedure
+export const upsertTool = adminProcedure
   .createServerAction()
   .input(toolSchema)
-  .handler(async ({ input: { alternatives, categories, ...input } }) => {
-    const tool = await db.tool.create({
-      data: {
-        ...input,
-        slug: input.slug || slugify(input.name),
-        alternatives: { connect: alternatives?.map(id => ({ id })) },
-        categories: { connect: categories?.map(id => ({ id })) },
-      },
-    })
+  .handler(async ({ input: { id, alternatives, categories, notifySubmitter, ...input } }) => {
+    const alternativeIds = alternatives?.map(id => ({ id }))
+    const categoryIds = categories?.map(id => ({ id }))
 
-    // Send an event to the Inngest pipeline
-    if (tool.publishedAt) {
-      isProd && (await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } }))
-    }
+    const tool = id
+      ? // If the tool exists, update it
+        await db.tool.update({
+          where: { id },
+          data: {
+            ...input,
+            slug: input.slug || slugify(input.name),
+            alternatives: { set: alternativeIds },
+            categories: { set: categoryIds },
+          },
+        })
+      : // Otherwise, create it
+        await db.tool.create({
+          data: {
+            ...input,
+            slug: input.slug || slugify(input.name),
+            alternatives: { connect: alternativeIds },
+            categories: { connect: categoryIds },
+          },
+        })
 
-    return tool
-  })
-
-export const updateTool = adminProcedure
-  .createServerAction()
-  .input(toolSchema.extend({ id: z.string() }))
-  .handler(async ({ input: { id, alternatives, categories, ...input } }) => {
-    const tool = await db.tool.update({
-      where: { id },
-      data: {
-        ...input,
-        alternatives: { set: alternatives?.map(id => ({ id })) },
-        categories: { set: categories?.map(id => ({ id })) },
-      },
-    })
-
+    // Revalidate the tools
     revalidateTag("tools")
     revalidateTag(`tool-${tool.slug}`)
+
+    if (tool.status === ToolStatus.Scheduled) {
+      // Revalidate the schedule if the tool is scheduled
+      revalidateTag("schedule")
+    }
+
+    if (notifySubmitter) {
+      // Notify the submitter of the tool published
+      after(async () => await notifySubmitterOfToolPublished(tool))
+
+      // Notify the submitter of the tool scheduled for publication
+      after(async () => await notifySubmitterOfToolScheduled(tool))
+    }
 
     return tool
   })
@@ -78,64 +85,6 @@ export const deleteTools = adminProcedure
     return true
   })
 
-export const scheduleTool = adminProcedure
-  .createServerAction()
-  .input(z.object({ id: z.string(), publishedAt: z.coerce.date() }))
-  .handler(async ({ input: { id, publishedAt } }) => {
-    const tool = await db.tool.update({
-      where: { id },
-      data: { status: ToolStatus.Scheduled, publishedAt },
-    })
-
-    revalidateTag("schedule")
-    revalidateTag(`tool-${tool.slug}`)
-
-    // Send an event to the Inngest pipeline
-    isProd && (await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } }))
-
-    return true
-  })
-
-export const reuploadToolAssets = adminProcedure
-  .createServerAction()
-  .input(z.object({ id: z.string() }))
-  .handler(async ({ input: { id } }) => {
-    const tool = await db.tool.findUniqueOrThrow({ where: { id } })
-
-    const [faviconUrl, screenshotUrl] = await Promise.all([
-      uploadFavicon(tool.websiteUrl, `tools/${tool.slug}/favicon`),
-      uploadScreenshot(tool.websiteUrl, `tools/${tool.slug}/screenshot`),
-    ])
-
-    await db.tool.update({
-      where: { id: tool.id },
-      data: { faviconUrl, screenshotUrl },
-    })
-
-    revalidateTag("tools")
-    revalidateTag(`tool-${tool.slug}`)
-
-    return true
-  })
-
-export const regenerateToolContent = adminProcedure
-  .createServerAction()
-  .input(z.object({ id: z.string() }))
-  .handler(async ({ input: { id } }) => {
-    const tool = await db.tool.findUniqueOrThrow({ where: { id } })
-    const data = await generateContent(tool.websiteUrl)
-
-    await db.tool.update({
-      where: { id: tool.id },
-      data,
-    })
-
-    revalidateTag("tools")
-    revalidateTag(`tool-${tool.slug}`)
-
-    return true
-  })
-
 export const analyzeToolStack = adminProcedure
   .createServerAction()
   .input(z.object({ id: z.string() }))
@@ -146,8 +95,11 @@ export const analyzeToolStack = adminProcedure
     const { stack } = await analyzeRepositoryStack(tool.repositoryUrl)
 
     // Update tool with new stack
-    return await db.tool.update({
+    await db.tool.update({
       where: { id: tool.id },
       data: { stacks: { set: stack.map(slug => ({ slug })) } },
     })
+
+    // Revalidate the tool
+    revalidateTag(`tool-${tool.slug}`)
   })

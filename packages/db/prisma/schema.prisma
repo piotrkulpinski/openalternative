@@ -23,7 +23,6 @@ enum ToolStatus {
   Draft
   Scheduled
   Published
-  Deleted
 }
 
 enum StackType {

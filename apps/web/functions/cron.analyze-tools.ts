@@ -5,7 +5,7 @@ import { inngest } from "~/services/inngest"
 
 export const analyzeTools = inngest.createFunction(
   { id: "analyze-tools" },
-  { cron: "TZ=Europe/Warsaw 0 0 1 * *" }, // Start of the month at midnight
+  { cron: "TZ=Europe/Warsaw 0 0 * * 1" }, // Every Monday at midnight
 
   async ({ step, db, logger }) => {
     const batchSize = 5

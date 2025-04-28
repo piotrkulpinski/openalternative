@@ -9,6 +9,7 @@ import { use, useMemo } from "react"
 import { Button } from "~/components/common/button"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
+import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { DataTable } from "~/components/data-table/data-table"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
@@ -17,7 +18,7 @@ import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
 import { VerifiedBadge } from "~/components/web/verified-badge"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { findTools } from "~/server/admin/tools/queries"
-import { toolsTableParamsSchema } from "~/server/admin/tools/schemas"
+import { toolsTableParamsSchema } from "~/server/admin/tools/schema"
 import type { DataTableFilterField } from "~/types"
 
 type DashboardTableProps = {
@@ -39,7 +40,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
           const { name, slug, status, faviconUrl, ownerId } = row.original
 
           if (status === ToolStatus.Draft) {
-            return <span className="text-muted-foreground font-medium">{name}</span>
+            return <Note className="font-medium">{name}</Note>
           }
 
           return (
@@ -64,9 +65,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
                     name="lucide/circle"
                     className="stroke-3 text-green-600/75 dark:text-green-500/75"
                   />
-                  <span className="text-muted-foreground font-medium">
-                    {formatDate(publishedAt!)}
-                  </span>
+                  <Note className="font-medium">{formatDate(publishedAt!)}</Note>
                 </Stack>
               )
             case ToolStatus.Scheduled:
@@ -76,14 +75,14 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
                     name="lucide/circle-dot-dashed"
                     className="stroke-3 text-yellow-700/75 dark:text-yellow-500/75"
                   />
-                  <span className="text-muted-foreground font-medium">
+                  <Note className="font-medium">
                     Scheduled{" "}
                     {formatDistanceToNowStrict(publishedAt!, {
                       unit: "day",
                       roundingMethod: "ceil",
                       addSuffix: true,
                     })}
-                  </span>
+                  </Note>
                 </Stack>
               )
             case ToolStatus.Draft:
@@ -102,21 +101,13 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
         accessorKey: "pageviews",
         enableHiding: false,
         header: ({ column }) => <DataTableColumnHeader column={column} title="Views (last 30d)" />,
-        cell: ({ row }) => (
-          <span className="text-muted-foreground">
-            {row.getValue<number>("pageviews")?.toLocaleString()}
-          </span>
-        ),
+        cell: ({ row }) => <Note>{row.getValue<number>("pageviews")?.toLocaleString()}</Note>,
       },
       {
         accessorKey: "createdAt",
         enableHiding: false,
         header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
-        cell: ({ row }) => (
-          <span className="text-muted-foreground">
-            {formatDate(row.getValue<Date>("createdAt"))}
-          </span>
-        ),
+        cell: ({ row }) => <Note>{formatDate(row.getValue<Date>("createdAt"))}</Note>,
       },
       {
         id: "actions",

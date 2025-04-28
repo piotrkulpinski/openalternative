@@ -31,8 +31,3 @@ export type DataTableFilterOption<TData> = {
   filterOperator?: string
   isMulti?: boolean
 }
-
-export type DataTableRowAction<TData> = {
-  data: TData
-  type: "schedule" | "delete"
-}

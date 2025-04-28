@@ -8,7 +8,7 @@ import { createServerAction } from "zsa"
 import { auth } from "~/lib/auth"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { userProcedure } from "~/lib/safe-actions"
-import { feedbackSchema, reportSchema } from "~/server/web/shared/schemas"
+import { feedbackSchema, reportSchema } from "~/server/web/shared/schema"
 
 export const reportTool = userProcedure
   .createServerAction()

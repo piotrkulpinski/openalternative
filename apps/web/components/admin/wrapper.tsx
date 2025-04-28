@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const wrapperVariants = cva({
-  base: "flex flex-col gap-8 w-full",
+  base: "@container flex flex-col gap-8 w-full",
   variants: {
     size: {
       sm: "max-w-screen-sm",

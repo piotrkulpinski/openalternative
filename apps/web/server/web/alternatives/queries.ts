@@ -3,7 +3,7 @@ import { db } from "@openalternative/db"
 import { type Prisma, ToolStatus } from "@openalternative/db/client"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/web/alternatives/payloads"
-import type { FilterSchema } from "~/server/web/shared/schemas"
+import type { FilterSchema } from "~/server/web/shared/schema"
 
 export const searchAlternatives = async (
   search: FilterSchema,

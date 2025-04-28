@@ -1,12 +1,14 @@
 "use client"
 
-import { slugify } from "@curiousleaf/utils"
+import { isValidUrl, slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { redirect } from "next/navigation"
 import type { ComponentProps } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
+import { generateFavicon } from "~/actions/media"
+import { AlternativeActions } from "~/app/admin/alternatives/_components/alternative-actions"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/common/button"
 import {
@@ -17,14 +19,17 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/form"
+import { H3 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
+import { Stack } from "~/components/common/stack"
 import { Switch } from "~/components/common/switch"
 import { TextArea } from "~/components/common/textarea"
 import { useComputedField } from "~/hooks/use-computed-field"
-import { createAlternative, updateAlternative } from "~/server/admin/alternatives/actions"
+import { upsertAlternative } from "~/server/admin/alternatives/actions"
 import type { findAlternativeBySlug } from "~/server/admin/alternatives/queries"
-import { alternativeSchema } from "~/server/admin/alternatives/schemas"
+import { alternativeSchema } from "~/server/admin/alternatives/schema"
 import type { findToolList } from "~/server/admin/tools/queries"
 import { cx } from "~/utils/cva"
 
@@ -36,6 +41,7 @@ type AlternativeFormProps = ComponentProps<"form"> & {
 export function AlternativeForm({
   children,
   className,
+  title,
   alternative,
   tools,
   ...props
@@ -64,56 +70,54 @@ export function AlternativeForm({
     enabled: !alternative,
   })
 
-  // Create alternative
-  const { execute: createAlternativeAction, isPending: isCreatingAlternative } = useServerAction(
-    createAlternative,
-    {
-      onSuccess: ({ data }) => {
-        toast.success("Alternative successfully created")
-        redirect(`/admin/alternatives/${data.slug}`)
-      },
+  // Keep track of the form values
+  const [websiteUrl] = form.watch(["websiteUrl"])
 
-      onError: ({ err }) => {
-        toast.error(err.message)
-      },
+  // Upsert alternative
+  const upsertAction = useServerAction(upsertAlternative, {
+    onSuccess: ({ data }) => {
+      toast.success(`Alternative successfully ${alternative ? "updated" : "created"}`)
+
+      // If not updating a alternative, or slug has changed, redirect to the new alternative
+      if (!alternative || data.slug !== alternative?.slug) {
+        redirect(`/admin/categories/${data.slug}`)
+      }
     },
-  )
 
-  // Update alternative
-  const { execute: updateAlternativeAction, isPending: isUpdatingAlternative } = useServerAction(
-    updateAlternative,
-    {
-      onSuccess: ({ data }) => {
-        toast.success("Alternative successfully updated")
-
-        if (data.slug !== alternative?.slug) {
-          redirect(`/admin/alternatives/${data.slug}`)
-        }
-      },
-
-      onError: ({ err }) => {
-        toast.error(err.message)
-      },
-    },
-  )
-
-  const onSubmit = form.handleSubmit(data => {
-    alternative
-      ? updateAlternativeAction({ id: alternative.id, ...data })
-      : createAlternativeAction(data)
+    onError: ({ err }) => toast.error(err.message),
   })
 
-  const isPending = isCreatingAlternative || isUpdatingAlternative
+  // Generate favicon
+  const faviconAction = useServerAction(generateFavicon, {
+    onSuccess: ({ data }) => {
+      toast.success("Favicon successfully generated. Please save the tool to update.")
+      form.setValue("faviconUrl", data)
+    },
+
+    onError: ({ err }) => toast.error(err.message),
+  })
+
+  const handleSubmit = form.handleSubmit(data => {
+    upsertAction.execute({ id: alternative?.id, ...data })
+  })
 
   return (
     <Form {...form}>
+      <Stack className="justify-between">
+        <H3 className="flex-1 truncate">{title}</H3>
+
+        <Stack size="sm" className="-my-0.5">
+          {alternative && <AlternativeActions alternative={alternative} size="md" />}
+        </Stack>
+      </Stack>
+
       <form
-        onSubmit={onSubmit}
-        className={cx("grid grid-cols-1 gap-4 max-w-3xl sm:grid-cols-2", className)}
+        onSubmit={handleSubmit}
+        className={cx("grid gap-4 @sm:grid-cols-2", className)}
         noValidate
         {...props}
       >
-        <div className="flex flex-col gap-4 sm:flex-row">
+        <div className="grid gap-4 @sm:grid-cols-2">
           <FormField
             control={form.control}
             name="name"
@@ -189,11 +193,47 @@ export function AlternativeForm({
           control={form.control}
           name="faviconUrl"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Favicon URL</FormLabel>
-              <FormControl>
-                <Input type="url" {...field} />
-              </FormControl>
+            <FormItem className="items-stretch">
+              <Stack className="justify-between">
+                <FormLabel>Favicon URL</FormLabel>
+
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="secondary"
+                  prefix={
+                    <Icon
+                      name="lucide/refresh-cw"
+                      className={cx(faviconAction.isPending && "animate-spin")}
+                    />
+                  }
+                  className="-my-1"
+                  disabled={!isValidUrl(websiteUrl) || faviconAction.isPending}
+                  onClick={() => {
+                    faviconAction.execute({
+                      url: websiteUrl,
+                      path: `alternatives/${alternative?.slug}`,
+                    })
+                  }}
+                >
+                  {field.value ? "Regenerate" : "Generate"}
+                </Button>
+              </Stack>
+
+              <Stack size="sm">
+                {field.value && (
+                  <img
+                    src={field.value}
+                    alt="Favicon"
+                    className="h-8 max-w-32 border box-content rounded-md object-contain"
+                  />
+                )}
+
+                <FormControl>
+                  <Input type="url" className="flex-1" {...field} />
+                </FormControl>
+              </Stack>
+
               <FormMessage />
             </FormItem>
           )}
@@ -247,7 +287,7 @@ export function AlternativeForm({
             <Link href="/admin/alternatives">Cancel</Link>
           </Button>
 
-          <Button size="md" variant="primary" isPending={isPending}>
+          <Button size="md" isPending={upsertAction.isPending}>
             {alternative ? "Update alternative" : "Create alternative"}
           </Button>
         </div>

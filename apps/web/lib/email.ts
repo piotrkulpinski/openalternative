@@ -9,6 +9,7 @@ export type EmailParams = {
   to: string
   subject: string
   react: ReactElement
+  replyTo?: string
 }
 
 /**
@@ -19,7 +20,7 @@ export type EmailParams = {
 const prepareEmail = async (email: EmailParams): Promise<CreateEmailOptions> => {
   return {
     from: `${config.site.name} <${env.RESEND_SENDER_EMAIL}>`,
-    replyTo: config.site.email,
+    replyTo: email.replyTo ?? (email.to !== config.site.email ? email.to : undefined),
     to: email.to,
     subject: email.subject,
     react: email.react,
@@ -28,19 +29,17 @@ const prepareEmail = async (email: EmailParams): Promise<CreateEmailOptions> => 
 }
 
 /**
- * Sends emails to the given recipients using Resend
- * @param emails - The email/emails to send
+ * Sends an email to the given recipient using Resend
+ * @param email - The email to send
  * @returns The response from Resend
  */
-export const sendEmails = async (emails: EmailParams | EmailParams[]) => {
-  const emailArray = await Promise.all(
-    (Array.isArray(emails) ? emails : [emails]).map(prepareEmail),
-  )
+export const sendEmail = async (email: EmailParams) => {
+  const preparedEmail = await prepareEmail(email)
 
   if (!isProd) {
-    console.log(emailArray)
+    console.log(preparedEmail)
     return
   }
 
-  return resend.batch.send(emailArray)
+  return resend.emails.send(preparedEmail)
 }

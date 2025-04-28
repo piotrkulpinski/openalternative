@@ -1,12 +1,11 @@
 import type { Tool } from "@openalternative/db/client"
 import { Text } from "@react-email/components"
-import type { Jsonify } from "inngest/helpers/jsonify"
 import { EmailExpediteNudge } from "~/emails/components/expedite-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 import { getQueueLength } from "~/lib/products"
 
 type EmailProps = EmailWrapperProps & {
-  tool: Tool | Jsonify<Tool>
+  tool: Tool
   queueLength?: number
 }
 

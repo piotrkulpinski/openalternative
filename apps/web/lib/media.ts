@@ -97,7 +97,7 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
   const cleanedUrl = encodeURIComponent(stripURLSubpath(url) ?? "")
   const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain_url=${cleanedUrl}`
 
-  const faviconResponse = await tryCatch(
+  const response = await tryCatch(
     wretch(faviconUrl)
       .get()
       .badRequest(console.error)
@@ -105,13 +105,13 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
       .then(buffer => Buffer.from(buffer)),
   )
 
-  if (faviconResponse.error) {
-    console.error("Error fetching favicon:", faviconResponse.error)
-    throw faviconResponse.error
+  if (response.error) {
+    console.error("Error fetching favicon:", response.error)
+    throw response.error
   }
 
   // Upload to S3
-  const { data, error } = await tryCatch(uploadToS3Storage(faviconResponse.data, `${s3Key}.png`))
+  const { data, error } = await tryCatch(uploadToS3Storage(response.data, `${s3Key}/favicon.png`))
 
   if (error) {
     console.error("Error uploading favicon:", error)
@@ -158,10 +158,11 @@ export const uploadScreenshot = async (url: string, s3Key: string): Promise<stri
 
     // Storage options
     store: "true",
-    storage_path: s3Key,
+    storage_path: `${s3Key}/screenshot`,
     storage_bucket: env.S3_BUCKET,
     storage_access_key_id: env.S3_ACCESS_KEY,
     storage_secret_access_key: env.S3_SECRET_ACCESS_KEY,
+    storage_endpoint: `https://s3.${env.S3_REGION}.amazonaws.com`,
     storage_return_location: "true",
   }
 
