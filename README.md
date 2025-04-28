@@ -50,6 +50,7 @@ OpenAlternative uses the following third-party services:
 - Database: [Neon](https://neon.tech)
 - Analytics: [Plausible](https://plausible.io), [PostHog](https://posthog.com)
 - Newsletter: [Beehiiv](https://go.openalternative.co/beehiiv)
+- Scraping: [Firecrawl](https://go.openalternative.co/firecrawl)
 - Background Jobs: [Inngest](https://inngest.com)
 - File Storage: [AWS S3](https://aws.amazon.com/s3)
 - Payments: [Stripe](https://stripe.com)

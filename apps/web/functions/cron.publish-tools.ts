@@ -8,6 +8,7 @@ import { inngest } from "~/services/inngest"
 export const publishTools = inngest.createFunction(
   { id: "publish-tools" },
   { cron: "TZ=Europe/Warsaw */15 * * * *" }, // Every 15 minutes
+
   async ({ step, db, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return await db.tool.findMany({
@@ -53,13 +54,13 @@ export const publishTools = inngest.createFunction(
           }),
         ])
       }
-    }
 
-    // Revalidate cache
-    await step.run("revalidate-cache", async () => {
-      revalidateTag("tools")
-      revalidateTag("schedule")
-    })
+      // Revalidate cache
+      await step.run("revalidate-cache", async () => {
+        revalidateTag("tools")
+        revalidateTag("schedule")
+      })
+    }
 
     // Cleanup expired claims
     await step.run("cleanup-claims", async () => {
