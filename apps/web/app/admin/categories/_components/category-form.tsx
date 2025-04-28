@@ -2,7 +2,7 @@
 
 import { slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { type ComponentProps, use, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -53,6 +53,7 @@ export function CategoryForm({
   categories,
   ...props
 }: CategoryFormProps) {
+  const router = useRouter()
   const parents = use(categories)
 
   const form = useForm({
@@ -112,7 +113,7 @@ export function CategoryForm({
 
       // If not updating a category, or slug has changed, redirect to the new category
       if (!category || data.slug !== category?.slug) {
-        redirect(`/admin/categories/${data.slug}`)
+        router.push(`/admin/categories/${data.slug}`)
       }
     },
 

@@ -1,9 +1,9 @@
 "use client"
 
-import { formatDateTime, isValidUrl, slugify } from "@curiousleaf/utils"
+import { formatDateTime, getRandomString, isValidUrl, slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { type Tool, ToolStatus } from "@openalternative/db/client"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import type { ComponentProps } from "react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -77,6 +77,7 @@ export function ToolForm({
   categories,
   ...props
 }: ToolFormProps) {
+  const router = useRouter()
   const [isPreviewing, setIsPreviewing] = useState(false)
   const [isStatusPending, setIsStatusPending] = useState(false)
   const [originalStatus, setOriginalStatus] = useState(tool?.status ?? ToolStatus.Draft)
@@ -120,9 +121,10 @@ export function ToolForm({
   })
 
   // Keep track of the form values
-  const [websiteUrl, name, description, content] = form.watch([
-    "websiteUrl",
+  const [name, slug, websiteUrl, description, content] = form.watch([
     "name",
+    "slug",
+    "websiteUrl",
     "description",
     "content",
   ])
@@ -143,7 +145,7 @@ export function ToolForm({
 
       // If not updating a tool, or slug has changed, redirect to the new tool
       if (!tool || data.slug !== tool?.slug) {
-        redirect(`/admin/tools/${data.slug}`)
+        router.push(`/admin/tools/${data.slug}`)
       }
     },
 
@@ -459,7 +461,7 @@ export function ToolForm({
                   onClick={() => {
                     faviconAction.execute({
                       url: websiteUrl,
-                      path: `tools/${tool?.slug}`,
+                      path: `tools/${slug || getRandomString(12)}`,
                     })
                   }}
                 >
@@ -509,7 +511,7 @@ export function ToolForm({
                   onClick={() => {
                     screenshotAction.execute({
                       url: websiteUrl,
-                      path: `tools/${tool?.slug}`,
+                      path: `tools/${slug || getRandomString(12)}`,
                     })
                   }}
                 >

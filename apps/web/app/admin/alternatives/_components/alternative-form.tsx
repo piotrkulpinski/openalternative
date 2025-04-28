@@ -1,8 +1,8 @@
 "use client"
 
-import { isValidUrl, slugify } from "@curiousleaf/utils"
+import { getRandomString, isValidUrl, slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import type { ComponentProps } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -46,6 +46,8 @@ export function AlternativeForm({
   tools,
   ...props
 }: AlternativeFormProps) {
+  const router = useRouter()
+
   const form = useForm({
     resolver: zodResolver(alternativeSchema),
     defaultValues: {
@@ -71,7 +73,7 @@ export function AlternativeForm({
   })
 
   // Keep track of the form values
-  const [websiteUrl] = form.watch(["websiteUrl"])
+  const [slug, websiteUrl] = form.watch(["slug", "websiteUrl"])
 
   // Upsert alternative
   const upsertAction = useServerAction(upsertAlternative, {
@@ -80,7 +82,7 @@ export function AlternativeForm({
 
       // If not updating a alternative, or slug has changed, redirect to the new alternative
       if (!alternative || data.slug !== alternative?.slug) {
-        redirect(`/admin/categories/${data.slug}`)
+        router.push(`/admin/alternatives/${data.slug}`)
       }
     },
 
@@ -212,7 +214,7 @@ export function AlternativeForm({
                   onClick={() => {
                     faviconAction.execute({
                       url: websiteUrl,
-                      path: `alternatives/${alternative?.slug}`,
+                      path: `alternatives/${slug || getRandomString(12)}`,
                     })
                   }}
                 >
