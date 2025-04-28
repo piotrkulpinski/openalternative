@@ -16,6 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/pop
 import { Separator } from "~/components/common/separator"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
+import { cx } from "~/utils/cva"
 import { Icon } from "../common/icon"
 
 type Relation = {
@@ -120,11 +121,13 @@ export const RelationSelector = <T extends Relation>({
         <PopoverContent className="p-0" align="start">
           <Command filter={handleFilter}>
             <CommandInput placeholder="Search..." />
-            <CommandList>
+
+            <CommandList className="min-w-72 w-[var(--radix-popper-anchor-width)]">
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
                 {getDisplayRelations(relations, true).map(relation => {
                   const isSelected = selectedIds.includes(relation.id)
+                  const isSuggested = suggestedRelations.find(r => r.id === relation.id)
 
                   return (
                     <CommandItem
@@ -134,8 +137,9 @@ export const RelationSelector = <T extends Relation>({
                           ? selectedIds.filter(id => id !== relation.id)
                           : [...selectedIds, relation.id]
                         onChange(newSelected)
+                        setSuggestedRelations(rel => rel.filter(({ id }) => id !== relation.id))
                       }}
-                      className="gap-2"
+                      className={cx("gap-2", isSuggested && "bg-orange-50 dark:bg-orange-950")}
                     >
                       <input
                         type="checkbox"
@@ -143,7 +147,15 @@ export const RelationSelector = <T extends Relation>({
                         readOnly
                         className="pointer-events-none"
                       />
-                      <span>{relation.name}</span>
+
+                      <span className="flex-1 truncate">{relation.name}</span>
+
+                      {isSuggested && (
+                        <Icon
+                          name="lucide/sparkles"
+                          className="text-orange-800 dark:text-orange-100"
+                        />
+                      )}
                     </CommandItem>
                   )
                 })}

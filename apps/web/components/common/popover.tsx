@@ -20,7 +20,7 @@ const PopoverContent = ({
         align={align}
         sideOffset={sideOffset}
         className={cx(
-          "z-50 min-w-72 w-[--radix-popper-anchor-width] rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden",
+          "z-50 min-w-72 w-[var(--radix-popper-anchor-width)] rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden",
           popoverAnimationClasses,
           className,
         )}
