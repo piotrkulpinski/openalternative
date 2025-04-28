@@ -4,7 +4,7 @@ import wretch from "wretch"
 import { createServerAction } from "zsa"
 import { env } from "~/env"
 import { getIP, isRateLimited } from "~/lib/rate-limiter"
-import { newsletterSchema } from "~/server/web/shared/schemas"
+import { newsletterSchema } from "~/server/web/shared/schema"
 import { isDisposableEmail, tryCatch } from "~/utils/helpers"
 
 /**
@@ -14,7 +14,7 @@ import { isDisposableEmail, tryCatch } from "~/utils/helpers"
  */
 export const subscribeToNewsletter = createServerAction()
   .input(newsletterSchema)
-  .handler(async ({ input: { value: email, ...input } }) => {
+  .handler(async ({ input: { value: email, captcha, ...input } }) => {
     const ip = await getIP()
     const rateLimitKey = `newsletter:${ip}`
 

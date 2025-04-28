@@ -5,7 +5,7 @@ import RSS from "rss"
 import { config } from "~/config"
 import { addSearchParams } from "~/utils/search-params"
 
-export async function GET() {
+export const GET = async () => {
   const { url, name, tagline } = config.site
   const rssSearchParams = { utm_source: getUrlHostname(url), utm_medium: "rss" }
 

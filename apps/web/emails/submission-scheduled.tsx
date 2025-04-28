@@ -1,16 +1,15 @@
-import type { Tool } from "@openalternative/db/client"
+import type { Tool } from "@prisma/client"
 import { Text } from "@react-email/components"
 import { addHours, differenceInDays, format, formatDistanceToNowStrict } from "date-fns"
-import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
 import { EmailExpediteNudge } from "~/emails/components/expedite-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-type EmailProps = EmailWrapperProps & {
-  tool: Tool | Jsonify<Tool>
+export type EmailProps = EmailWrapperProps & {
+  tool: Tool
 }
 
-const EmailToolScheduled = ({ tool, ...props }: EmailProps) => {
+const EmailSubmissionScheduled = ({ tool, ...props }: EmailProps) => {
   const publishedAt = addHours(tool.publishedAt || new Date(), 2)
   const isLongQueue = differenceInDays(publishedAt, new Date()) > 7
   const dateRelative = formatDistanceToNowStrict(publishedAt, { addSuffix: true })
@@ -38,4 +37,4 @@ const EmailToolScheduled = ({ tool, ...props }: EmailProps) => {
   )
 }
 
-export default EmailToolScheduled
+export default EmailSubmissionScheduled

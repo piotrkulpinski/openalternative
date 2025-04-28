@@ -1,6 +1,6 @@
 import type { SearchParams } from "nuqs/server"
 import { ToolQuery } from "~/components/web/tools/tool-query"
-import { filterParamsCache } from "~/server/web/shared/schemas"
+import { filterParamsCache } from "~/server/web/shared/schema"
 import { searchTools } from "~/server/web/tools/queries"
 
 type HomeToolListingProps = {

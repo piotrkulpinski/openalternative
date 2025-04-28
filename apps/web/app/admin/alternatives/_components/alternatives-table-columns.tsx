@@ -3,18 +3,13 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { Alternative } from "@openalternative/db/client"
 import type { ColumnDef } from "@tanstack/react-table"
-import type { Dispatch, SetStateAction } from "react"
 import { AlternativeActions } from "~/app/admin/alternatives/_components/alternative-actions"
 import { RowCheckbox } from "~/components/admin/row-checkbox"
+import { Note } from "~/components/common/note"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
-import type { DataTableRowAction } from "~/types"
 
-type GetColumnsProps = {
-  setRowAction: Dispatch<SetStateAction<DataTableRowAction<Alternative> | null>>
-}
-
-export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Alternative>[] => {
+export const getColumns = (): ColumnDef<Alternative>[] => {
   return [
     {
       id: "select",
@@ -56,35 +51,25 @@ export const getColumns = ({ setRowAction }: GetColumnsProps): ColumnDef<Alterna
     {
       accessorKey: "description",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Description" />,
-      cell: ({ row }) => (
-        <div className="max-w-96 truncate text-muted-foreground">{row.getValue("description")}</div>
-      ),
+      cell: ({ row }) => <Note className="max-w-96 truncate">{row.getValue("description")}</Note>,
       enableSorting: false,
     },
     {
       accessorKey: "pageviews",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Pageviews" />,
-      cell: ({ row }) => (
-        <span className="text-muted-foreground">{row.getValue("pageviews")?.toLocaleString()}</span>
-      ),
+      cell: ({ row }) => <Note>{row.getValue("pageviews")?.toLocaleString()}</Note>,
       size: 0,
     },
     {
       accessorKey: "createdAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
-      cell: ({ row }) => (
-        <span className="text-muted-foreground">{formatDate(row.getValue<Date>("createdAt"))}</span>
-      ),
+      cell: ({ row }) => <Note>{formatDate(row.getValue<Date>("createdAt"))}</Note>,
       size: 0,
     },
     {
       id: "actions",
       cell: ({ row }) => (
-        <AlternativeActions
-          alternative={row.original}
-          setRowAction={setRowAction}
-          className="float-right -my-1"
-        />
+        <AlternativeActions alternative={row.original} className="float-right -my-1" />
       ),
       size: 0,
     },

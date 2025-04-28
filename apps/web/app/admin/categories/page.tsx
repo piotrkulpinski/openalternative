@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { withAdminPage } from "~/components/admin/auth-hoc"
 import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
 import { findCategories } from "~/server/admin/categories/queries"
-import { categoriesTableParamsCache } from "~/server/admin/categories/schemas"
+import { categoriesTableParamsCache } from "~/server/admin/categories/schema"
 import { CategoriesTable } from "./_components/categories-table"
 
 type CategoriesPageProps = {

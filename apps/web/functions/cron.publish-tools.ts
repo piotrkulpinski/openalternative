@@ -1,15 +1,13 @@
-import { ToolStatus } from "@openalternative/db/client"
+import { type Tool, ToolStatus } from "@openalternative/db/client"
 import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
-import { config } from "~/config"
-import EmailToolPublished from "~/emails/tool-published"
-import { sendEmails } from "~/lib/email"
+import { notifySubmitterOfToolPublished } from "~/lib/notifications"
 import { getPostLaunchTemplate, sendSocialPost } from "~/lib/socials"
 import { inngest } from "~/services/inngest"
 
 export const publishTools = inngest.createFunction(
   { id: "publish-tools" },
-  { cron: "TZ=Europe/Warsaw 5 0,12 * * *" }, // Every 12 hours at minute 5 (00:05 and 12:05)
+  { cron: "TZ=Europe/Warsaw */15 * * * *" }, // Every 15 minutes
   async ({ step, db, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return await db.tool.findMany({
@@ -25,24 +23,18 @@ export const publishTools = inngest.createFunction(
 
       for (const tool of tools) {
         // Update tool status
-        await step.run(`update-tool-status-${tool.slug}`, async () => {
-          const updatedTool = await db.tool.update({
+        const updatedTool = await step.run(`update-tool-status-${tool.slug}`, async () => {
+          return db.tool.update({
             where: { id: tool.id },
             data: { status: ToolStatus.Published },
           })
-
-          // Revalidate cache
-          revalidateTag(`tool-${tool.slug}`)
-
-          return updatedTool
         })
 
         // Run steps in parallel
         await Promise.all([
           // Revalidate cache
           step.run("revalidate-cache", async () => {
-            revalidateTag("tools")
-            revalidateTag("schedule")
+            revalidateTag(`tool-${tool.slug}`)
           }),
 
           // Post on socials
@@ -55,22 +47,19 @@ export const publishTools = inngest.createFunction(
             })
           }),
 
-          // Send email
+          // Notify the submitter of the tool published
           step.run(`send-email-${tool.slug}`, async () => {
-            if (!tool.submitterEmail) return
-
-            const to = tool.submitterEmail
-            const subject = `${tool.name} has been published on ${config.site.name} 🎉`
-
-            return await sendEmails({
-              to,
-              subject,
-              react: EmailToolPublished({ to, tool }),
-            })
+            return notifySubmitterOfToolPublished(updatedTool as unknown as Tool)
           }),
         ])
       }
     }
+
+    // Revalidate cache
+    await step.run("revalidate-cache", async () => {
+      revalidateTag("tools")
+      revalidateTag("schedule")
+    })
 
     // Cleanup expired claims
     await step.run("cleanup-claims", async () => {

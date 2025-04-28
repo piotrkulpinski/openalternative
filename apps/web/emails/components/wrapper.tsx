@@ -49,6 +49,16 @@ export const EmailWrapper = ({ to, signature, preview, children }: EmailWrapperP
                 from {config.site.name}
               </Text>
             )}
+
+            <Text className="text-xs/normal text-gray-500">
+              This email was intended for <span className="text-black">{to}</span>. If you were not
+              expecting this email, you can ignore it. If you are concerned about your accounts
+              safety, please reply to this email to get in touch with us.
+            </Text>
+
+            <Text className="text-xs/normal text-gray-500">
+              Any questions? Please feel free to reach us at {config.site.email}.
+            </Text>
           </Container>
         </Body>
       </Tailwind>

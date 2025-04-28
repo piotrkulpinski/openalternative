@@ -5,43 +5,32 @@ import { db } from "@openalternative/db"
 import { revalidatePath, revalidateTag } from "next/cache"
 import { after } from "next/server"
 import { z } from "zod"
-import { isProd } from "~/env"
 import { removeS3Directories, uploadFavicon } from "~/lib/media"
 import { adminProcedure } from "~/lib/safe-actions"
-import { alternativeSchema } from "~/server/admin/alternatives/schemas"
-import { inngest } from "~/services/inngest"
+import { alternativeSchema } from "~/server/admin/alternatives/schema"
 
-export const createAlternative = adminProcedure
+export const upsertAlternative = adminProcedure
   .createServerAction()
   .input(alternativeSchema)
-  .handler(async ({ input: { tools, ...input } }) => {
-    const alternative = await db.alternative.create({
-      data: {
-        ...input,
-        slug: input.slug || slugify(input.name),
-        tools: { connect: tools?.map(id => ({ id })) },
-      },
-    })
-
-    revalidateTag("alternatives")
-
-    isProd &&
-      (await inngest.send({ name: "alternative.created", data: { slug: alternative.slug } }))
-
-    return alternative
-  })
-
-export const updateAlternative = adminProcedure
-  .createServerAction()
-  .input(alternativeSchema.extend({ id: z.string() }))
   .handler(async ({ input: { id, tools, ...input } }) => {
-    const alternative = await db.alternative.update({
-      where: { id },
-      data: {
-        ...input,
-        tools: { set: tools?.map(id => ({ id })) },
-      },
-    })
+    const toolIds = tools?.map(id => ({ id }))
+
+    const alternative = id
+      ? await db.alternative.update({
+          where: { id },
+          data: {
+            ...input,
+            slug: input.slug || slugify(input.name),
+            tools: { set: toolIds },
+          },
+        })
+      : await db.alternative.create({
+          data: {
+            ...input,
+            slug: input.slug || slugify(input.name),
+            tools: { connect: toolIds },
+          },
+        })
 
     revalidateTag("alternatives")
     revalidateTag(`alternative-${alternative.slug}`)

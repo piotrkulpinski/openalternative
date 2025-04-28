@@ -1,9 +1,9 @@
 "use client"
 
 import type { Alternative } from "@openalternative/db/client"
-import type { ComponentProps, Dispatch, SetStateAction } from "react"
-import { toast } from "sonner"
-import { useServerAction } from "zsa-react"
+import { usePathname, useRouter } from "next/navigation"
+import { type ComponentProps, useState } from "react"
+import { AlternativesDeleteDialog } from "~/app/admin/alternatives/_components/alternatives-delete-dialog"
 import { Button } from "~/components/common/button"
 import {
   DropdownMenu,
@@ -14,30 +14,20 @@ import {
 } from "~/components/common/dropdown-menu"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
-import { reuploadAlternativeAssets } from "~/server/admin/alternatives/actions"
-import type { DataTableRowAction } from "~/types"
 import { cx } from "~/utils/cva"
 
 type AlternativeActionsProps = ComponentProps<typeof Button> & {
   alternative: Alternative
-  setRowAction: Dispatch<SetStateAction<DataTableRowAction<Alternative> | null>>
 }
 
 export const AlternativeActions = ({
   alternative,
-  setRowAction,
   className,
   ...props
 }: AlternativeActionsProps) => {
-  const { execute: reuploadAssets } = useServerAction(reuploadAlternativeAssets, {
-    onSuccess: () => {
-      toast.success("Alternative assets reuploaded")
-    },
-
-    onError: ({ err }) => {
-      toast.error(err.message)
-    },
-  })
+  const pathname = usePathname()
+  const router = useRouter()
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
 
   return (
     <DropdownMenu modal={false}>
@@ -53,18 +43,16 @@ export const AlternativeActions = ({
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
-        <DropdownMenuItem asChild>
-          <Link href={`/admin/alternatives/${alternative.slug}`}>Edit</Link>
-        </DropdownMenuItem>
+        {pathname !== `/admin/alternatives/${alternative.slug}` && (
+          <DropdownMenuItem asChild>
+            <Link href={`/admin/alternatives/${alternative.slug}`}>Edit</Link>
+          </DropdownMenuItem>
+        )}
 
         <DropdownMenuItem asChild>
           <Link href={`/alternatives/${alternative.slug}`} target="_blank">
             View
           </Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem onSelect={() => reuploadAssets({ id: alternative.id })}>
-          Reupload Assets
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
@@ -77,13 +65,18 @@ export const AlternativeActions = ({
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem
-          onSelect={() => setRowAction({ data: alternative, type: "delete" })}
-          className="text-red-500"
-        >
+        <DropdownMenuItem onSelect={() => setIsDeleteOpen(true)} className="text-red-500">
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
+
+      <AlternativesDeleteDialog
+        open={isDeleteOpen}
+        onOpenChange={() => setIsDeleteOpen(false)}
+        alternatives={[alternative]}
+        showTrigger={false}
+        onSuccess={() => router.push("/admin/alternatives")}
+      />
     </DropdownMenu>
   )
 }

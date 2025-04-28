@@ -7,7 +7,7 @@ import { DashboardTable } from "~/app/(web)/dashboard/table"
 import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
 import { auth } from "~/lib/auth"
 import { findTools } from "~/server/admin/tools/queries"
-import { toolsTableParamsCache } from "~/server/admin/tools/schemas"
+import { toolsTableParamsCache } from "~/server/admin/tools/schema"
 
 export const DashboardToolListing = async ({ searchParams }: DashboardPageProps) => {
   const parsedParams = toolsTableParamsCache.parse(await searchParams)

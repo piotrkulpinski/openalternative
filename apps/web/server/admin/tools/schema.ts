@@ -8,7 +8,7 @@ import {
 } from "nuqs/server"
 import { z } from "zod"
 import { getSortingStateParser } from "~/lib/parsers"
-import { repositorySchema } from "~/server/web/shared/schemas"
+import { repositorySchema } from "~/server/web/shared/schema"
 
 export const toolsTableParamsSchema = {
   name: parseAsString.withDefault(""),
@@ -25,6 +25,7 @@ export const toolsTableParamsCache = createSearchParamsCache(toolsTableParamsSch
 export type ToolsTableSchema = Awaited<ReturnType<typeof toolsTableParamsCache.parse>>
 
 export const toolSchema = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, "Name is required"),
   slug: z.string().optional(),
   websiteUrl: z.string().min(1, "Website is required").url(),
@@ -37,16 +38,17 @@ export const toolSchema = z.object({
   screenshotUrl: z.string().optional().or(z.literal("")),
   isFeatured: z.boolean().default(false),
   isSelfHosted: z.boolean().default(false),
+  hostingUrl: z.string().url().optional().or(z.literal("")),
   submitterName: z.string().optional(),
   submitterEmail: z.string().email().optional().or(z.literal("")),
   submitterNote: z.string().optional(),
-  hostingUrl: z.string().url().optional().or(z.literal("")),
   discountCode: z.string().optional(),
   discountAmount: z.string().optional(),
   publishedAt: z.coerce.date().nullish(),
   status: z.nativeEnum(ToolStatus).default("Draft"),
   alternatives: z.array(z.string()).optional(),
   categories: z.array(z.string()).optional(),
+  notifySubmitter: z.boolean().default(true),
 })
 
 export type ToolSchema = z.infer<typeof toolSchema>

@@ -1,7 +1,9 @@
 "use client"
 
 import type { Category } from "@openalternative/db/client"
-import type { ComponentProps, Dispatch, SetStateAction } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { type ComponentProps, useState } from "react"
+import { CategoriesDeleteDialog } from "~/app/admin/categories/_components/categories-delete-dialog"
 import { Button } from "~/components/common/button"
 import {
   DropdownMenu,
@@ -12,20 +14,17 @@ import {
 } from "~/components/common/dropdown-menu"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
-import type { DataTableRowAction } from "~/types"
 import { cx } from "~/utils/cva"
 
 type CategoryActionsProps = ComponentProps<typeof Button> & {
   category: Category
-  setRowAction: Dispatch<SetStateAction<DataTableRowAction<Category> | null>>
 }
 
-export const CategoryActions = ({
-  category,
-  setRowAction,
-  className,
-  ...props
-}: CategoryActionsProps) => {
+export const CategoryActions = ({ category, className, ...props }: CategoryActionsProps) => {
+  const pathname = usePathname()
+  const router = useRouter()
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
@@ -40,9 +39,11 @@ export const CategoryActions = ({
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
-        <DropdownMenuItem asChild>
-          <Link href={`/admin/categories/${category.slug}`}>Edit</Link>
-        </DropdownMenuItem>
+        {pathname !== `/admin/categories/${category.slug}` && (
+          <DropdownMenuItem asChild>
+            <Link href={`/admin/categories/${category.slug}`}>Edit</Link>
+          </DropdownMenuItem>
+        )}
 
         <DropdownMenuItem asChild>
           <Link href={`/categories/${category.fullPath}`} target="_blank">
@@ -52,13 +53,18 @@ export const CategoryActions = ({
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem
-          onSelect={() => setRowAction({ data: category, type: "delete" })}
-          className="text-red-500"
-        >
+        <DropdownMenuItem onSelect={() => setIsDeleteOpen(true)} className="text-red-500">
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
+
+      <CategoriesDeleteDialog
+        open={isDeleteOpen}
+        onOpenChange={() => setIsDeleteOpen(false)}
+        categories={[category]}
+        showTrigger={false}
+        onSuccess={() => router.push("/admin/categories")}
+      />
     </DropdownMenu>
   )
 }

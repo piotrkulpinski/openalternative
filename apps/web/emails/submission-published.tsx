@@ -1,16 +1,15 @@
-import type { Tool } from "@openalternative/db/client"
+import type { Tool } from "@prisma/client"
 import { Text } from "@react-email/components"
-import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
 import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-type EmailProps = EmailWrapperProps & {
-  tool: Tool | Jsonify<Tool>
+export type EmailProps = EmailWrapperProps & {
+  tool: Tool
 }
 
-const EmailToolPublished = ({ tool, ...props }: EmailProps) => {
+const EmailSubmissionPublished = ({ tool, ...props }: EmailProps) => {
   return (
     <EmailWrapper signature {...props}>
       <Text>Hey {tool.submitterName?.trim()}!</Text>
@@ -25,8 +24,8 @@ const EmailToolPublished = ({ tool, ...props }: EmailProps) => {
 
       <Text>
         We'd love it if you could spread the word. A quick post on your favorite social platform or
-        dev community about {tool.name} would mean a lot to us. It helps other developers discover
-        cool tools like yours!
+        community about {tool.name} would mean a lot to us. It helps other people discover cool
+        tools like yours!
       </Text>
 
       <EmailButton href={`${config.site.url}/${tool.slug}`}>
@@ -38,4 +37,4 @@ const EmailToolPublished = ({ tool, ...props }: EmailProps) => {
   )
 }
 
-export default EmailToolPublished
+export default EmailSubmissionPublished

@@ -6,7 +6,7 @@ import { after } from "next/server"
 import { z } from "zod"
 import { removeS3Directories } from "~/lib/media"
 import { adminProcedure } from "~/lib/safe-actions"
-import { userSchema } from "~/server/admin/users/schemas"
+import { userSchema } from "~/server/admin/users/schema"
 
 export const updateUser = adminProcedure
   .createServerAction()
@@ -27,7 +27,7 @@ export const deleteUsers = adminProcedure
   .input(z.object({ ids: z.array(z.string()) }))
   .handler(async ({ input: { ids } }) => {
     await db.user.deleteMany({
-      where: { id: { in: ids } },
+      where: { id: { in: ids }, role: { not: "admin" } },
     })
 
     revalidatePath("/admin/users")

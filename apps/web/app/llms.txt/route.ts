@@ -6,7 +6,7 @@ import { siteConfig } from "~/config/site"
 import { getToolSuffix } from "~/lib/tools"
 import { toolAlternativesPayload } from "~/server/web/tools/payloads"
 
-export async function GET() {
+export const GET = async () => {
   const tools = await db.tool.findMany({
     where: { status: ToolStatus.Published },
     orderBy: { pageviews: "desc" },

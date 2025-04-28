@@ -14,7 +14,7 @@ import { Form, FormControl, FormField, FormItem } from "~/components/common/form
 import { Stack } from "~/components/common/stack"
 import { TextArea } from "~/components/common/textarea"
 import { siteConfig } from "~/config/site"
-import { type FeedbackSchema, feedbackSchema } from "~/server/web/shared/schemas"
+import { type FeedbackSchema, feedbackSchema } from "~/server/web/shared/schema"
 
 type FeedbackWidgetFormProps = {
   toastId: string

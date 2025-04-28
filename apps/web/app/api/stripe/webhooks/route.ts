@@ -1,15 +1,16 @@
 import { db } from "@openalternative/db"
-import { AdType } from "@openalternative/db/client"
+import { AdType } from "@prisma/client"
 import { revalidateTag } from "next/cache"
+import { after } from "next/server"
 import type Stripe from "stripe"
 import { z } from "zod"
-import { env, isProd } from "~/env"
-import { inngest } from "~/services/inngest"
+import { env } from "~/env"
+import { notifyAdminOfPremiumTool, notifySubmitterOfPremiumTool } from "~/lib/notifications"
 import { stripe } from "~/services/stripe"
 
-export async function POST(request: Request) {
-  const body = await request.text()
-  const signature = request.headers.get("stripe-signature") as string
+export const POST = async (req: Request) => {
+  const body = await req.text()
+  const signature = req.headers.get("stripe-signature") as string
   const webhookSecret = env.STRIPE_WEBHOOK_SECRET
   let event: Stripe.Event
 
@@ -39,8 +40,14 @@ export async function POST(request: Request) {
             where: { slug: metadata.tool },
           })
 
-          // Send an event to the Inngest pipeline
-          isProd && (await inngest.send({ name: "tool.expedited", data: { slug: tool.slug } }))
+          // Revalidate the tools
+          revalidateTag("tools")
+
+          // Notify the submitter of the premium tool
+          after(async () => await notifySubmitterOfPremiumTool(tool))
+
+          // Notify the admin of the premium tool
+          after(async () => await notifyAdminOfPremiumTool(tool))
         }
 
         // Handle sponsoring/ads payment
@@ -87,9 +94,15 @@ export async function POST(request: Request) {
           data: { isFeatured: subscription.status === "active" },
         })
 
+        // Revalidate the tools
+        revalidateTag("tools")
+
         if (event.type === "customer.subscription.created") {
-          // Send an event to the Inngest pipeline
-          isProd && (await inngest.send({ name: "tool.featured", data: { slug: tool.slug } }))
+          // Notify the submitter of the premium tool
+          after(async () => await notifySubmitterOfPremiumTool(tool))
+
+          // Notify the admin of the premium tool
+          after(async () => await notifyAdminOfPremiumTool(tool))
         }
 
         if (event.type === "customer.subscription.deleted") {

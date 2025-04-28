@@ -1,12 +1,11 @@
 import type { Tool } from "@openalternative/db/client"
 import { Preview, Section, Text } from "@react-email/components"
-import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
 import { claimsConfig } from "~/config/claims"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 type EmailProps = EmailWrapperProps & {
-  tool: Tool | Jsonify<Tool>
+  tool: Tool
   otp: string
 }
 

@@ -27,7 +27,7 @@ import { RadioGroup, RadioGroupItem } from "~/components/common/radio-group"
 import { TextArea } from "~/components/common/textarea"
 import { LoginDialog } from "~/components/web/auth/login-dialog"
 import { useSession } from "~/lib/auth-client"
-import { type ReportSchema, reportSchema } from "~/server/web/shared/schemas"
+import { type ReportSchema, reportSchema } from "~/server/web/shared/schema"
 import type { ToolOne } from "~/server/web/tools/payloads"
 
 type ToolReportDialogProps = {

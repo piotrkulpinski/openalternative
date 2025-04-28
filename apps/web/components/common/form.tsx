@@ -12,6 +12,7 @@ import {
 } from "react-hook-form"
 import { Hint } from "~/components/common/hint"
 import { Label } from "~/components/common/label"
+import { Stack } from "~/components/common/stack"
 import { cx } from "~/utils/cva"
 
 const Form = FormProvider
@@ -67,19 +68,20 @@ type FormItemContextValue = {
 
 const FormItemContext = createContext<FormItemContextValue>({} as FormItemContextValue)
 
-const FormItem = ({ className, ...props }: ComponentProps<"div">) => {
+const FormItem = ({ direction = "column", ...props }: ComponentProps<typeof Stack>) => {
   const id = useId()
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div className={cx("flex flex-col items-start gap-2 w-full", className)} {...props} />
+      <Stack direction={direction} {...props} />
     </FormItemContext.Provider>
   )
 }
 
-const FormLabel = (props: ComponentProps<typeof Label>) => {
+const FormLabel = ({ className, ...props }: ComponentProps<typeof Label>) => {
   const { formItemId } = useFormField()
-  return <Label htmlFor={formItemId} {...props} />
+
+  return <Label htmlFor={formItemId} className={cx("truncate", className)} {...props} />
 }
 
 const FormControl = (props: ComponentProps<typeof Slot.Root>) => {
