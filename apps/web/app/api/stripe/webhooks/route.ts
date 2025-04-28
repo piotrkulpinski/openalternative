@@ -1,5 +1,5 @@
 import { db } from "@openalternative/db"
-import { AdType } from "@prisma/client"
+import { AdType } from "@openalternative/db/client"
 import { revalidateTag } from "next/cache"
 import { after } from "next/server"
 import type Stripe from "stripe"

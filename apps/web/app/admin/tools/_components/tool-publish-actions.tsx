@@ -1,5 +1,5 @@
 import { formatDateTime, isTruthy } from "@curiousleaf/utils"
-import { ToolStatus } from "@prisma/client"
+import { ToolStatus } from "@openalternative/db/client"
 import { addDays, formatDate, isFriday, isMonday, isWednesday } from "date-fns"
 import { type ComponentProps, type ReactNode, useState } from "react"
 import { useFormContext } from "react-hook-form"

@@ -1,4 +1,4 @@
-import { type Tool, ToolStatus } from "@prisma/client"
+import { type Tool, ToolStatus } from "@openalternative/db/client"
 import { Text } from "@react-email/components"
 import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"

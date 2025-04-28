@@ -13,7 +13,7 @@ type AnalyticsPageResponse = {
  * @param period - The period to get the analytics for
  * @returns The page analytics
  */
-export const getPageAnalytics = async (page: string, period = "30d") => {
+const getPageAnalytics = async (page: string, period = "30d") => {
   const query = {
     site_id: env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     metrics: ["visitors", "pageviews"],

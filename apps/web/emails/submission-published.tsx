@@ -1,4 +1,4 @@
-import type { Tool } from "@prisma/client"
+import type { Tool } from "@openalternative/db/client"
 import { Text } from "@react-email/components"
 import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
