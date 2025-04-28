@@ -120,11 +120,13 @@ export default async function ToolPage(props: PageProps) {
               {tool.description && <IntroDescription>{tool.description}</IntroDescription>}
             </div>
 
-            <Stack size="lg" direction="column">
-              <Note>Open Source Alternative to:</Note>
+            {!!tool.alternatives.length && (
+              <Stack size="lg" direction="column">
+                <Note>Open Source Alternative to:</Note>
 
-              <ToolAlternatives alternatives={tool.alternatives} />
-            </Stack>
+                <ToolAlternatives alternatives={tool.alternatives} />
+              </Stack>
+            )}
 
             <Stack className="w-full">
               <Button
