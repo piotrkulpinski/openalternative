@@ -6,7 +6,7 @@ import { findToolList } from "~/server/admin/tools/queries"
 const CreateAlternativePage = () => {
   return (
     <Wrapper size="md">
-      <AlternativeForm title="Create alternative" tools={findToolList()} />
+      <AlternativeForm title="Create alternative" toolsPromise={findToolList()} />
     </Wrapper>
   )
 }

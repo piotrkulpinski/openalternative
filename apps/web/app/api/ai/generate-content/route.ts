@@ -1,6 +1,8 @@
 import { anthropic } from "@ai-sdk/anthropic"
+import { google } from "@ai-sdk/google"
 import { streamObject } from "ai"
 import { z } from "zod"
+import { isDev } from "~/env"
 import { withAdminAuth } from "~/lib/auth-hoc"
 import { scrapeWebsiteData } from "~/lib/scraper"
 import { contentSchema } from "~/server/admin/shared/schema"
@@ -16,7 +18,7 @@ export const POST = withAdminAuth(async req => {
   const scrapedData = await scrapeWebsiteData(url)
 
   const result = streamObject({
-    model: anthropic("claude-3-5-sonnet-latest"),
+    model: isDev ? google("gemini-2.0-pro-exp-02-05") : anthropic("claude-3-5-sonnet-latest"),
     schema: contentSchema,
     system: `
       You are an expert content creator specializing in open source products.

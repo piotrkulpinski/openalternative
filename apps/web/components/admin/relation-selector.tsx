@@ -1,6 +1,6 @@
 import { useCompletion } from "@ai-sdk/react"
 import { isTruthy } from "@curiousleaf/utils"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { AnimatedContainer } from "~/components/common/animated-container"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
@@ -23,27 +23,31 @@ type Relation = {
   name: string
 }
 
-type RelationSelectorProps = {
-  promise: Promise<Relation[]>
+type RelationSelectorProps<T> = {
+  relations: T[]
   selectedIds: string[]
   prompt?: string
   maxSuggestions?: number
+  mapFunction?: (relation: T) => Relation
+  sortFunction?: (a: T, b: T) => number
   onChange: (selectedIds: string[]) => void
 }
 
-export const RelationSelector = ({
-  promise,
+export const RelationSelector = <T extends Relation>({
+  relations,
   selectedIds,
   prompt,
   maxSuggestions = 5,
+  mapFunction,
+  sortFunction,
   onChange,
-}: RelationSelectorProps) => {
-  const relations = use(promise)
-  const [suggestedRelations, setSuggestedRelations] = useState<Relation[]>([])
+}: RelationSelectorProps<T>) => {
+  const [suggestedRelations, setSuggestedRelations] = useState<T[]>([])
   const selectedRelations = relations?.filter(({ id }) => selectedIds.includes(id))
 
   const { complete } = useCompletion({
     api: "/api/ai/completion",
+    experimental_throttle: 1000,
 
     onFinish: (_, completion) => {
       if (completion) {
@@ -79,6 +83,11 @@ export const RelationSelector = ({
     return normalizedValue.includes(normalizedSearch) ? 1 : 0
   }
 
+  const getDisplayRelations = (relations: T[], sort = false): Relation[] => {
+    const sortedRelations = sort && sortFunction ? [...relations].sort(sortFunction) : relations
+    return sortedRelations.map(relation => (mapFunction ? mapFunction(relation) : relation))
+  }
+
   return (
     <Stack direction="column" className="w-full">
       <Popover>
@@ -101,9 +110,9 @@ export const RelationSelector = ({
                 <span className="font-normal text-muted-foreground">Select</span>
               )}
 
-              {selectedRelations.map(relation => (
-                <Badge key={relation.id}>{relation.name}</Badge>
-              ))}
+              {getDisplayRelations(selectedRelations).map(relation => {
+                return <Badge key={relation.id}>{relation.name}</Badge>
+              })}
             </Stack>
           </Button>
         </PopoverTrigger>
@@ -114,16 +123,16 @@ export const RelationSelector = ({
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
-                {relations.map(alt => {
-                  const isSelected = selectedIds.includes(alt.id)
+                {getDisplayRelations(relations, true).map(relation => {
+                  const isSelected = selectedIds.includes(relation.id)
 
                   return (
                     <CommandItem
-                      key={alt.id}
+                      key={relation.id}
                       onSelect={() => {
                         const newSelected = isSelected
-                          ? selectedIds.filter(id => id !== alt.id)
-                          : [...selectedIds, alt.id]
+                          ? selectedIds.filter(id => id !== relation.id)
+                          : [...selectedIds, relation.id]
                         onChange(newSelected)
                       }}
                       className="gap-2"
@@ -134,20 +143,20 @@ export const RelationSelector = ({
                         readOnly
                         className="pointer-events-none"
                       />
-                      <span>{alt.name}</span>
+                      <span>{relation.name}</span>
                     </CommandItem>
                   )
                 })}
               </CommandGroup>
-            </CommandList>
 
-            {!!selectedIds.length && (
-              <div className="p-1 border-t">
-                <Button variant="ghost" onClick={() => onChange([])} className="w-full">
-                  Clear selection
-                </Button>
-              </div>
-            )}
+              {!!selectedIds.length && (
+                <div className="p-1 border-t sticky -bottom-px bg-background">
+                  <Button size="md" variant="ghost" onClick={() => onChange([])} className="w-full">
+                    Clear selection
+                  </Button>
+                </div>
+              )}
+            </CommandList>
           </Command>
         </PopoverContent>
       </Popover>
@@ -160,7 +169,7 @@ export const RelationSelector = ({
             </Tooltip>
 
             <Stack size="xs" className="flex-1">
-              {suggestedRelations.map(relation => (
+              {getDisplayRelations(suggestedRelations).map(relation => (
                 <Badge key={relation.id} size="sm" variant="warning" asChild>
                   <button
                     type="button"

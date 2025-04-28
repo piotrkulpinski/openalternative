@@ -9,8 +9,8 @@ const CreateCategoryPage = () => {
     <Wrapper size="md">
       <CategoryForm
         title="Create category"
-        tools={findToolList()}
-        categories={findCategoryList()}
+        toolsPromise={findToolList()}
+        categoriesPromise={findCategoryList()}
       />
     </Wrapper>
   )

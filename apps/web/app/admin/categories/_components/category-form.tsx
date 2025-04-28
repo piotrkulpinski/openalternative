@@ -40,8 +40,8 @@ import { cx } from "~/utils/cva"
 
 type CategoryFormProps = ComponentProps<"form"> & {
   category?: Awaited<ReturnType<typeof findCategoryBySlug>>
-  tools: ReturnType<typeof findToolList>
-  categories: ReturnType<typeof findCategoryList>
+  toolsPromise: ReturnType<typeof findToolList>
+  categoriesPromise: ReturnType<typeof findCategoryList>
 }
 
 export function CategoryForm({
@@ -49,12 +49,13 @@ export function CategoryForm({
   className,
   title,
   category,
-  tools,
-  categories,
+  toolsPromise,
+  categoriesPromise,
   ...props
 }: CategoryFormProps) {
   const router = useRouter()
-  const parents = use(categories)
+  const tools = use(toolsPromise)
+  const parents = use(categoriesPromise)
 
   const form = useForm({
     resolver: zodResolver(categorySchema),
@@ -260,7 +261,7 @@ export function CategoryForm({
             <FormItem className="col-span-full">
               <FormLabel>Tools</FormLabel>
               <RelationSelector
-                promise={tools}
+                relations={tools}
                 selectedIds={field.value ?? []}
                 onChange={field.onChange}
               />

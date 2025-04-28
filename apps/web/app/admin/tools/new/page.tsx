@@ -9,8 +9,8 @@ const CreateToolPage = () => {
     <Wrapper size="md">
       <ToolForm
         title="Create tool"
-        alternatives={findAlternativeList()}
-        categories={findCategoryList()}
+        alternativesPromise={findAlternativeList()}
+        categoriesPromise={findCategoryList()}
       />
     </Wrapper>
   )

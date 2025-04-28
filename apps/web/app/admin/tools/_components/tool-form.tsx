@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { type Tool, ToolStatus } from "@openalternative/db/client"
 import { useRouter } from "next/navigation"
 import type { ComponentProps } from "react"
-import { useState } from "react"
+import { use, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -64,8 +64,8 @@ const ToolStatusChange = ({ tool }: { tool: Tool }) => {
 
 type ToolFormProps = ComponentProps<"form"> & {
   tool?: NonNullable<Awaited<ReturnType<typeof findToolBySlug>>>
-  alternatives: ReturnType<typeof findAlternativeList>
-  categories: ReturnType<typeof findCategoryList>
+  alternativesPromise: ReturnType<typeof findAlternativeList>
+  categoriesPromise: ReturnType<typeof findCategoryList>
 }
 
 export function ToolForm({
@@ -73,11 +73,14 @@ export function ToolForm({
   className,
   title,
   tool,
-  alternatives,
-  categories,
+  alternativesPromise,
+  categoriesPromise,
   ...props
 }: ToolFormProps) {
   const router = useRouter()
+  const alternatives = use(alternativesPromise)
+  const categories = use(categoriesPromise)
+
   const [isPreviewing, setIsPreviewing] = useState(false)
   const [isStatusPending, setIsStatusPending] = useState(false)
   const [originalStatus, setOriginalStatus] = useState(tool?.status ?? ToolStatus.Draft)
@@ -573,7 +576,7 @@ export function ToolForm({
             <FormItem>
               <FormLabel>Alternatives</FormLabel>
               <RelationSelector
-                promise={alternatives}
+                relations={alternatives}
                 selectedIds={field.value ?? []}
                 onChange={field.onChange}
                 maxSuggestions={10}
@@ -601,9 +604,30 @@ export function ToolForm({
             <FormItem>
               <FormLabel>Categories</FormLabel>
               <RelationSelector
-                promise={categories}
+                relations={categories}
                 selectedIds={field.value ?? []}
                 onChange={field.onChange}
+                mapFunction={({ id, name, fullPath }) => {
+                  const depth = fullPath.split("/").length - 1
+                  const prefix = "- ".repeat(depth)
+                  return { id, name: `${prefix}${name}` }
+                }}
+                sortFunction={(a, b) => {
+                  // Split paths into segments for comparison
+                  const aSegments = a.fullPath.split("/")
+                  const bSegments = b.fullPath.split("/")
+
+                  // Compare each segment
+                  for (let i = 0; i < Math.min(aSegments.length, bSegments.length); i++) {
+                    if (aSegments[i] !== bSegments[i]) {
+                      return aSegments[i].localeCompare(bSegments[i])
+                    }
+                  }
+
+                  // If all segments match up to the shorter path length,
+                  // the shorter path comes first
+                  return aSegments.length - bSegments.length
+                }}
                 prompt={
                   name &&
                   description &&

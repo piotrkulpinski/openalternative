@@ -23,8 +23,8 @@ const UpdateToolPage = async ({ params }: PageProps) => {
       <ToolForm
         title={`Edit ${tool.name}`}
         tool={tool}
-        alternatives={findAlternativeList()}
-        categories={findCategoryList()}
+        alternativesPromise={findAlternativeList()}
+        categoriesPromise={findCategoryList()}
       />
     </Wrapper>
   )

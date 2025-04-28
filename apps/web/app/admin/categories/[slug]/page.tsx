@@ -22,8 +22,8 @@ const UpdateCategoryPage = async ({ params }: PageProps) => {
       <CategoryForm
         title="Update category"
         category={category}
-        tools={findToolList()}
-        categories={findCategoryList({ where: { slug: { not: slug } } })}
+        toolsPromise={findToolList()}
+        categoriesPromise={findCategoryList({ where: { slug: { not: slug } } })}
       />
     </Wrapper>
   )

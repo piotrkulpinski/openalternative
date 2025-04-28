@@ -22,7 +22,7 @@ const UpdateAlternativePage = async ({ params }: PageProps) => {
       <AlternativeForm
         title="Update alternative"
         alternative={alternative}
-        tools={findToolList()}
+        toolsPromise={findToolList()}
       />
     </Wrapper>
   )
