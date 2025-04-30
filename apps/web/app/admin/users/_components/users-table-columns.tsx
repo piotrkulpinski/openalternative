@@ -82,7 +82,7 @@ export const getColumns = (): ColumnDef<User>[] => {
     },
     {
       id: "actions",
-      cell: ({ row }) => <UserActions user={row.original} className="float-right -my-1" />,
+      cell: ({ row }) => <UserActions user={row.original} className="float-right" />,
       size: 0,
     },
   ]

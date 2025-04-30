@@ -57,7 +57,7 @@ export const getColumns = (): ColumnDef<Category>[] => {
     },
     {
       id: "actions",
-      cell: ({ row }) => <CategoryActions category={row.original} className="float-right -my-1" />,
+      cell: ({ row }) => <CategoryActions category={row.original} className="float-right" />,
       size: 0,
     },
   ]

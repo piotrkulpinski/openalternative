@@ -68,9 +68,7 @@ export const getColumns = (): ColumnDef<Alternative>[] => {
     },
     {
       id: "actions",
-      cell: ({ row }) => (
-        <AlternativeActions alternative={row.original} className="float-right -my-1" />
-      ),
+      cell: ({ row }) => <AlternativeActions alternative={row.original} className="float-right" />,
       size: 0,
     },
   ]

@@ -139,7 +139,6 @@ export const RelationSelector = <T extends Relation>({
                         onChange(newSelected)
                         setSuggestedRelations(rel => rel.filter(({ id }) => id !== relation.id))
                       }}
-                      className={cx("gap-2", isSuggested && "bg-orange-50 dark:bg-orange-950")}
                     >
                       <input
                         type="checkbox"
@@ -148,14 +147,16 @@ export const RelationSelector = <T extends Relation>({
                         className="pointer-events-none"
                       />
 
-                      <span className="flex-1 truncate">{relation.name}</span>
-
-                      {isSuggested && (
-                        <Icon
-                          name="lucide/sparkles"
-                          className="text-orange-800 dark:text-orange-100"
-                        />
-                      )}
+                      <Stack
+                        wrap={false}
+                        className={cx(
+                          "flex-1 justify-between truncate",
+                          isSuggested && "font-medium text-orange-800 dark:text-orange-200",
+                        )}
+                      >
+                        {relation.name}
+                        {isSuggested && <Icon name="lucide/sparkles" />}
+                      </Stack>
                     </CommandItem>
                   )
                 })}
