@@ -305,6 +305,10 @@ export function useDataTable<TData>({
       rowSelection,
       columnFilters: enableAdvancedFilter ? [] : columnFilters,
     },
+    defaultColumn: {
+      size: 0,
+      minSize: 0,
+    },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onPaginationChange,

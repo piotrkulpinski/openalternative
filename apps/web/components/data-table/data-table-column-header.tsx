@@ -8,10 +8,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
-import { cx } from "~/utils/cva"
+import { cva, cx } from "~/utils/cva"
 import { Icon } from "../common/icon"
 
-type DataTableColumnHeaderProps<TData, TValue> = ComponentProps<"div"> & {
+const dataTableColumnHeaderVariants = cva({
+  base: "text-start font-medium text-muted-foreground whitespace-nowrap",
+
+  variants: {
+    toggleable: {
+      true: "flex items-center gap-1 hover:text-foreground data-[state=open]:text-foreground",
+    },
+  },
+})
+
+type DataTableColumnHeaderProps<TData, TValue> = ComponentProps<typeof DropdownMenuTrigger> & {
   column: Column<TData, TValue>
   title: string
 }
@@ -20,9 +30,10 @@ export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
   className,
+  ...props
 }: DataTableColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort() && !column.getCanHide()) {
-    return <div className={cx(className)}>{title}</div>
+    return <div className={cx(dataTableColumnHeaderVariants({ className }))}>{title}</div>
   }
 
   const buttonLabel =
@@ -42,60 +53,56 @@ export function DataTableColumnHeader<TData, TValue>({
     )
 
   return (
-    <div className={cx("flex items-center space-x-2", className)}>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          className="flex items-center gap-1 text-muted-foreground/70 whitespace-nowrap rounded-md hover:text-foreground data-[state=open]:text-foreground"
-          aria-label={buttonLabel}
-        >
-          {title}
-          {buttonSuffix}
-        </DropdownMenuTrigger>
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className={cx(dataTableColumnHeaderVariants({ toggleable: true, className }))}
+        aria-label={buttonLabel}
+        {...props}
+      >
+        {title}
+        {buttonSuffix}
+      </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="start">
-          {column.getCanSort() && (
-            <>
-              <DropdownMenuItem
-                aria-label="Sort ascending"
-                onClick={() => column.toggleSorting(false)}
-              >
-                <Icon
-                  name="lucide/arrow-up"
-                  className="mr-2 text-muted-foreground/70"
-                  aria-hidden="true"
-                />
-                Asc
-              </DropdownMenuItem>
-
-              <DropdownMenuItem
-                aria-label="Sort descending"
-                onClick={() => column.toggleSorting(true)}
-              >
-                <Icon
-                  name="lucide/arrow-down"
-                  className="mr-2 text-muted-foreground/70"
-                  aria-hidden="true"
-                />
-                Desc
-              </DropdownMenuItem>
-            </>
-          )}
-          {column.getCanSort() && column.getCanHide() && <DropdownMenuSeparator />}
-          {column.getCanHide() && (
+      <DropdownMenuContent align="start">
+        {column.getCanSort() && (
+          <>
             <DropdownMenuItem
-              aria-label="Hide column"
-              onClick={() => column.toggleVisibility(false)}
+              aria-label="Sort ascending"
+              onClick={() => column.toggleSorting(false)}
             >
               <Icon
-                name="lucide/eye-off"
+                name="lucide/arrow-up"
                 className="mr-2 text-muted-foreground/70"
                 aria-hidden="true"
               />
-              Hide
+              Asc
             </DropdownMenuItem>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+
+            <DropdownMenuItem
+              aria-label="Sort descending"
+              onClick={() => column.toggleSorting(true)}
+            >
+              <Icon
+                name="lucide/arrow-down"
+                className="mr-2 text-muted-foreground/70"
+                aria-hidden="true"
+              />
+              Desc
+            </DropdownMenuItem>
+          </>
+        )}
+        {column.getCanSort() && column.getCanHide() && <DropdownMenuSeparator />}
+        {column.getCanHide() && (
+          <DropdownMenuItem aria-label="Hide column" onClick={() => column.toggleVisibility(false)}>
+            <Icon
+              name="lucide/eye-off"
+              className="mr-2 text-muted-foreground/70"
+              aria-hidden="true"
+            />
+            Hide
+          </DropdownMenuItem>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

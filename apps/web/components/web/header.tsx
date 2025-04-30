@@ -46,7 +46,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
   return (
     <Container
       className={cx(
-        "group/menu sticky top-[var(--header-top)] inset-x-0 z-[49] duration-300",
+        "group/menu sticky top-(--header-top) inset-x-0 z-[49] duration-300",
         "max-lg:data-[state=open]:bg-background/90",
         className,
       )}
@@ -57,7 +57,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
     >
       <div className="absolute top-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-linear-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
 
-      <div className="relative flex items-center py-3.5 gap-x-3 text-sm h-[var(--header-height)] isolate duration-300 lg:gap-4">
+      <div className="relative flex items-center py-3.5 gap-x-3 text-sm h-(--header-height) isolate duration-300 lg:gap-4">
         <Stack size="sm" wrap={false} className="mr-auto">
           <button
             type="button"

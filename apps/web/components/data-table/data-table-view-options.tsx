@@ -31,7 +31,7 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           aria-label="Toggle columns"
           variant="secondary"
           size="md"
-          className="ml-auto hidden gap-2 lg:flex"
+          className="ml-auto flex gap-2 max-md:hidden"
           prefix={<Icon name="lucide/chevrons-up-down" />}
         >
           View

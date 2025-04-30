@@ -1,0 +1,754 @@
+diff --git a/app/(web)/dashboard/table.tsx b/app/(web)/dashboard/table.tsx
+index 395a73f..3d4dbb3 100644
+--- a/app/(web)/dashboard/table.tsx
++++ b/app/(web)/dashboard/table.tsx
+@@ -41,6 +41,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTabl
+eProps) => {
+       {
+         accessorKey: "name",
+         enableHiding: false,
++        size: 160,
+         header: ({ column }) => <DataTableColumnHeader column={column} title="N
+ame" />,
+         cell: ({ row }) => {
+           const { name, slug, status, faviconUrl, ownerId } = row.original
+diff --git a/app/admin/categories/_components/categories-table-columns.tsx b/app
+/admin/categories/_co
+mponents/categories-table-columns.tsx
+                     index 1ac2dc4..ecee999 100644
+--- a/app/admin/categories/_components/categories-table-columns.tsx
++++ b/app/admin/categories/_components/categories-table-columns.tsx
+@@ -13,6 +13,8 @@ export const getColumns = (): ColumnDef<Category>[] => {
+   return [
+     {
+       id: "select",
++      enableSorting: false,
++      enableHiding: false,
+       header: ({ table }) => (
+         <RowCheckbox
+           checked={table.getIsAllPageRowsSelected()}
+@@ -33,12 +35,11 @@ export const getColumns = (): ColumnDef<Category>[] => {
+           aria-label="Select row"
+         />
+       ),
+-      size: 0,
+-      enableSorting: false,
+-      enableHiding: false,
+     },
+     {
+       accessorKey: "name",
++      enableHiding: false,
++      size: 160,
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Nam
+e" />,
+       cell: ({ row }) => (
+         <DataTableLink href={`/admin/categories/${row.original.slug}`} title={r
+ow.original.name} />
+@@ -53,12 +54,10 @@ export const getColumns = (): ColumnDef<Category>[] => {
+       accessorKey: "createdAt",
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Cre
+ated At" />,
+       cell: ({ cell }) => <Note>{formatDate(cell.getValue() as Date)}</Note>,
+-      size: 0,
+     },
+     {
+       id: "actions",
+       cell: ({ row }) => <CategoryActions category={row.original} className="fl
+oat-right" />,
+-      size: 0,
+     },
+   ]
+ }
+diff --git a/app/admin/tags/_components/tags-table-columns.tsx b/app/admin/tags/
+_components/tags-tabl
+e-columns.tsx
+                     index c549879..fae2ade 100644
+--- a/app/admin/tags/_components/tags-table-columns.tsx
++++ b/app/admin/tags/_components/tags-table-columns.tsx
+@@ -13,6 +13,8 @@ export const getColumns = (): ColumnDef<Tag>[] => {
+   return [
+     {
+       id: "select",
++      enableSorting: false,
++      enableHiding: false,
+       header: ({ table }) => (
+         <RowCheckbox
+           checked={table.getIsAllPageRowsSelected()}
+@@ -33,12 +35,11 @@ export const getColumns = (): ColumnDef<Tag>[] => {
+           aria-label="Select row"
+         />
+       ),
+-      size: 0,
+-      enableSorting: false,
+-      enableHiding: false,
+     },
+     {
+       accessorKey: "name",
++      enableHiding: false,
++      size: 160,
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Nam
+e" />,
+       cell: ({ row }) => (
+         <DataTableLink href={`/admin/tags/${row.original.slug}`} title={row.ori
+ginal.name} />
+@@ -48,12 +49,10 @@ export const getColumns = (): ColumnDef<Tag>[] => {
+       accessorKey: "createdAt",
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Cre
+ated At" />,
+       cell: ({ cell }) => <Note>{formatDate(cell.getValue() as Date)}</Note>,
+-      size: 0,
+     },
+     {
+       id: "actions",
+       cell: ({ row }) => <TagActions tag={row.original} className="float-right"
+ />,
+-      size: 0,
+     },
+   ]
+ }
+diff --git a/app/admin/tools/_components/tools-table-columns.tsx b/app/admin/too
+ls/_components/tools-
+table-columns.tsx
+                     index 292579d..e9de260 100644
+--- a/app/admin/tools/_components/tools-table-columns.tsx
++++ b/app/admin/tools/_components/tools-table-columns.tsx
+@@ -30,6 +30,8 @@ export const getColumns = (): ColumnDef<Tool>[] => {
+   return [
+     {
+       id: "select",
++      enableSorting: false,
++      enableHiding: false,
+       header: ({ table }) => (
+         <RowCheckbox
+           checked={table.getIsAllPageRowsSelected()}
+@@ -50,12 +52,11 @@ export const getColumns = (): ColumnDef<Tool>[] => {
+           aria-label="Select row"
+         />
+       ),
+-      size: 0,
+-      enableSorting: false,
+-      enableHiding: false,
+     },
+     {
+       accessorKey: "name",
++      enableHiding: false,
++      size: 160,
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Nam
+e" />,
+       cell: ({ row }) => {
+         const { name, slug, faviconUrl, ownerId } = row.original
+@@ -69,15 +70,15 @@ export const getColumns = (): ColumnDef<Tool>[] => {
+     },
+     {
+       accessorKey: "tagline",
++      enableSorting: false,
++      size: 320,
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Tag
+line" />,
+       cell: ({ row }) => <Note className="max-w-96 truncate">{row.getValue("tag
+line")}</Note>,
+-      enableSorting: false,
+     },
+     {
+       accessorKey: "submitterEmail",
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Sub
+mitter" />,
+       cell: ({ row }) => <Note>{row.getValue("submitterEmail")}</Note>,
+-      size: 0,
+     },
+     {
+       accessorKey: "status",
+@@ -85,7 +86,6 @@ export const getColumns = (): ColumnDef<Tool>[] => {
+       cell: ({ row }) => (
+         <Badge {...statusBadges[row.original.status]}>{row.original.status}</Ba
+dge>
+       ),
+-      size: 0,
+     },
+     {
+       accessorKey: "publishedAt",
+@@ -96,18 +96,15 @@ export const getColumns = (): ColumnDef<Tool>[] => {
+         ) : (
+           <Note>—</Note>
+         ),
+-      size: 0,
+     },
+     {
+       accessorKey: "createdAt",
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Cre
+ated At" />,
+       cell: ({ row }) => <Note>{formatDate(row.getValue<Date>("createdAt"))}</N
+ote>,
+-      size: 0,
+     },
+     {
+       id: "actions",
+       cell: ({ row }) => <ToolActions tool={row.original} className="float-righ
+t" />,
+-      size: 0,
+     },
+   ]
+ }
+diff --git a/app/admin/users/_components/users-table-columns.tsx b/app/admin/use
+rs/_components/users-
+table-columns.tsx
+                     index 0b56c20..a4618ac 100644
+--- a/app/admin/users/_components/users-table-columns.tsx
++++ b/app/admin/users/_components/users-table-columns.tsx
+@@ -15,6 +15,8 @@ export const getColumns = (): ColumnDef<User>[] => {
+   return [
+     {
+       id: "select",
++      enableSorting: false,
++      enableHiding: false,
+       header: ({ table }) => (
+         <RowCheckbox
+           checked={table.getIsAllPageRowsSelected()}
+@@ -36,12 +38,11 @@ export const getColumns = (): ColumnDef<User>[] => {
+           aria-label="Select row"
+         />
+       ),
+-      size: 0,
+-      enableSorting: false,
+-      enableHiding: false,
+     },
+     {
+       accessorKey: "name",
++      enableHiding: false,
++      size: 160,
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Nam
+e" />,
+       cell: ({ row }) => (
+         <DataTableLink href={`/admin/users/${row.original.id}`} title={row.orig
+inal.name}>
+@@ -69,12 +70,10 @@ export const getColumns = (): ColumnDef<User>[] => {
+       accessorKey: "createdAt",
+       header: ({ column }) => <DataTableColumnHeader column={column} title="Cre
+ated At" />,
+       cell: ({ row }) => <Note>{formatDate(row.getValue<Date>("createdAt"))}</N
+ote>,
+-      size: 0,
+     },
+     {
+       id: "actions",
+       cell: ({ row }) => <UserActions user={row.original} className="float-righ
+t" />,
+-      size: 0,
+     },
+   ]
+ }
+diff --git a/components/admin/relation-selector.tsx b/components/admin/relation-
+selector.tsx
+index 3c58d94..55205db 100644
+--- a/components/admin/relation-selector.tsx
++++ b/components/admin/relation-selector.tsx
+@@ -107,7 +107,7 @@ export const RelationSelector = ({
+           <Command>
+             <CommandInput placeholder="Search..." />
+ 
+-            <CommandList className="min-w-72 w-[var(--radix-popper-anchor-width
+)]">
++            <CommandList className="min-w-72 w-(--radix-popper-anchor-width)">
+               <CommandEmpty>No results found.</CommandEmpty>
+               <CommandGroup>
+                 {relations.map(relation => {
+diff --git a/components/admin/row-checkbox.tsx b/components/admin/row-checkbox.t
+sx
+index 23abdb0..7ca5d42 100644
+--- a/components/admin/row-checkbox.tsx
++++ b/components/admin/row-checkbox.tsx
+@@ -5,7 +5,7 @@ export const RowCheckbox = ({ className, ...props }: ComponentPr
+ops<"input">) =>
+   return (
+     <input
+       type="checkbox"
+-      className={cx("relative z-10 translate-y-0.5 ml-1.5", className)}
++      className={cx("block relative z-10 translate-x-1", className)}
+       {...props}
+     />
+   )
+diff --git a/components/common/popover.tsx b/components/common/popover.tsx
+index bdf41d8..33cb461 100644
+--- a/components/common/popover.tsx
++++ b/components/common/popover.tsx
+@@ -20,7 +20,7 @@ const PopoverContent = ({
+         align={align}
+         sideOffset={sideOffset}
+         className={cx(
+-          "z-50 min-w-72 w-[var(--radix-popper-anchor-width)] rounded-md border
+ bg-popover p-4 text-
+popover-foreground shadow-md outline-hidden",
++          "z-50 min-w-72 w-(--radix-popper-anchor-width) rounded-md border bg-popover p-4 text-popov
+er-foreground shadow-md outline-hidden",
+           popoverAnimationClasses,
+           className,
+         )}
+diff --git a/components/common/select.tsx b/components/common/select.tsx
+index 0a147b5..ed77569 100644
+--- a/components/common/select.tsx
++++ b/components/common/select.tsx
+@@ -84,7 +84,7 @@ const SelectContent = ({
+           className={cx(
+             "p-1",
+             position === "popper" &&
+-              "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix
+-select-trigger-width
+)]",
++              "h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width)",
+           )}
+         >
+           {children}
+diff --git a/components/common/table.tsx b/components/common/table.tsx
+index c2953e0..45a2cd2 100644
+--- a/components/common/table.tsx
++++ b/components/common/table.tsx
+@@ -4,34 +4,27 @@ import { cx } from "~/utils/cva"
+ 
+ const Table = ({ className, ...props }: ComponentProps<"table">) => {
+   return (
+-    <div className="relative w-full overflow-auto">
+-      <table className={cx("w-full caption-bottom text-sm", className)} {...pro
+ps} />
+-    </div>
++    <table
++      className={cx("w-full text-sm grid grid-cols-(--table-columns) overflow-a
+uto", className)}
++      {...props}
++    />
+   )
+ }
+ 
+ const TableHeader = ({ className, ...props }: ComponentProps<"thead">) => {
+-  return <thead className={cx("[&_tr]:border-b", className)} {...props} />
++  return <thead className={cx("contents", className)} {...props} />
+ }
+ 
+ const TableBody = ({ className, ...props }: ComponentProps<"tbody">) => {
+-  return <tbody className={cx("[&_tr:last-child]:border-0", className)} {...pro
+ps} />
+-}
+-
+-const TableFooter = ({ className, ...props }: ComponentProps<"tfoot">) => {
+-  return (
+-    <tfoot
+-      className={cx("border-t bg-muted font-medium [&>tr]:last:border-b-0", cla
+ssName)}
+-      {...props}
+-    />
+-  )
++  return <tbody className={cx("contents", className)} {...props} />
+ }
+ 
+ const TableRow = ({ className, ...props }: ComponentProps<"tr">) => {
+   return (
+     <tr
+       className={cx(
+-        "group/row relative h-9 border-b [tbody>&:not([aria-disabled])]:hover:b
+g-muted data-[state=s
+elected]:bg-accent",
++        "relative grid grid-cols-subgrid col-span-full items-center h-9 border-t",
++        "[thead>&:first-child,tbody:first-child>&:first-child]:border-t-0 [tbod
+y>&:not([aria-disable
+d])]:hover:bg-accent data-[state=selected]:bg-accent",
+         className,
+       )}
+       {...props}
+@@ -43,7 +36,7 @@ const TableHead = ({ className, ...props }: ComponentProps<"th
+">) => {
+   return (
+     <th
+-      className={cx(
+-        "px-2 text-left align-middle font-medium text-muted-foreground [&:has([
+type=checkbox])]:pr-0
+ first:not-[&:has([type=checkbox])]:pl-4",
++        "px-2 text-left font-medium text-muted-foreground first:not-[&:has([type=checkbox])]:pl-4",
+         className,
+       )}
+       {...props}
+@@ -52,19 +45,11 @@ const TableHead = ({ className, ...props }: ComponentProps<"
+th">) => {
+ }
+ 
+ const TableCell = ({ className, ...props }: ComponentProps<"td">) => {
+-  return (
+-    <td
+-      className={cx(
+-        "px-2 align-middle whitespace-nowrap [&:has([type=checkbox])]:pr-0 firs
+t:not-[&:has([type=ch
+eckbox])]:pl-4",
+-        className,
+-      )}
+-      {...props}
+-    />
+-  )
++  return <td className={cx("px-2 first:not-[&:has([type=checkbox])]:pl-4", clas
+sName)} {...props} />
+ }
+ 
+ const TableCaption = ({ className, ...props }: ComponentProps<typeof Note>) =>
+{
+   return <Note as="caption" className={cx("mt-4", className)} {...props} />
+ }
+ 
+-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, Table
+Cell, TableCaption }
++export { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, TableCa
+ption }
+diff --git a/components/data-table/data-table-link.tsx b/components/data-table/d
+ata-table-link.tsx
+index 2d5a0d6..d77920b 100644
+--- a/components/data-table/data-table-link.tsx
++++ b/components/data-table/data-table-link.tsx
+@@ -36,6 +36,7 @@ export const DataTableLink = ({
+             className="inline-block align-text-bottom mr-2 size-4 rounded"
+           />
+         )}
++
+         {title}
+       </Link>
+ 
+diff --git a/components/data-table/data-table-skeleton.tsx b/components/data-tab
+le/data-table-skeleto
+n.tsx
+                     index 15ded72..c13d39c 100644
+--- a/components/data-table/data-table-skeleton.tsx
++++ b/components/data-table/data-table-skeleton.tsx
+@@ -1,4 +1,4 @@
+-import type { ComponentProps } from "react"
++import type { CSSProperties, ComponentProps } from "react"
+ import { H3 } from "~/components/common/heading"
+ import { Skeleton } from "~/components/common/skeleton"
+ import {
+@@ -112,45 +112,46 @@ export function DataTableSkeleton(props: DataTableSkeleton
+Props) {
+         {showViewOptions && <Skeleton className="ml-auto hidden h-8 w-[4.5rem]
+lg:flex" />}
+       </div>
+ 
+-      <div className="rounded-md border">
+-        <Table>
+-          <TableHeader>
+-            {Array.from({ length: 1 }).map((_, i) => (
+-              <TableRow key={i} className="hover:bg-transparent">
+-                {Array.from({ length: columnCount }).map((_, j) => (
+-                  <TableHead
+-                    key={j}
+-                    style={{
+-                      width: cellWidths[j],
+-                      minWidth: shrinkZero ? cellWidths[j] : "auto",
+-                    }}
+-                  >
+-                    <Skeleton className="h-6 w-full" />
+-                  </TableHead>
+-                ))}
+-              </TableRow>
+-            ))}
+-          </TableHeader>
+-
+-          <TableBody>
+-            {Array.from({ length: rowCount }).map((_, i) => (
+-              <TableRow key={i} className="hover:bg-transparent">
+-                {Array.from({ length: columnCount }).map((_, j) => (
+-                  <TableCell
+-                    key={j}
+-                    style={{
+-                      width: cellWidths[j],
+-                      minWidth: shrinkZero ? cellWidths[j] : "auto",
+-                    }}
+-                  >
+-                    <Skeleton className="h-6 w-full" />
+-                  </TableCell>
+-                ))}
+-              </TableRow>
+-            ))}
+-          </TableBody>
+-        </Table>
+-      </div>
++      <Table
++        className="rounded-md border"
++        style={{ "--table-columns": `repeat(${columnCount}, minmax(0, 1fr))` }
+as CSSProperties}
++      >
++        <TableHeader>
++          {Array.from({ length: 1 }).map((_, i) => (
++            <TableRow key={i} className="hover:bg-transparent">
++              {Array.from({ length: columnCount }).map((_, j) => (
++                <TableHead
++                  key={j}
++                  style={{
++                    width: cellWidths[j],
++                    minWidth: shrinkZero ? cellWidths[j] : "auto",
++                  }}
++                >
++                  <Skeleton className="h-6 w-full" />
++                </TableHead>
++              ))}
++            </TableRow>
++          ))}
++        </TableHeader>
++
++        <TableBody>
++          {Array.from({ length: rowCount }).map((_, i) => (
++            <TableRow key={i} className="hover:bg-transparent">
++              {Array.from({ length: columnCount }).map((_, j) => (
++                <TableCell
++                  key={j}
++                  style={{
++                    width: cellWidths[j],
++                    minWidth: shrinkZero ? cellWidths[j] : "auto",
++                    }}
++                  >
++                    <Skeleton className="h-6 w-full" />
++                  </TableCell>
++                ))}
++              </TableRow>
++            ))}
++          </TableBody>
++        </Table>
++      </Table>
+ 
+       {withPagination && (
+         <div className="flex w-full items-center justify-between gap-4 overflow
+-auto sm:gap-8">
+diff --git a/components/data-table/data-table-view-options.tsx b/components/data
+-table/data-table-vie
+w-options.tsx
+                     index 2572192..05916a8 100644
+--- a/components/data-table/data-table-view-options.tsx
++++ b/components/data-table/data-table-view-options.tsx
+@@ -31,7 +31,7 @@ export function DataTableViewOptions<TData>({ table }: DataTab
+leViewOptionsProps
+           aria-label="Toggle columns"
+           variant="secondary"
+           size="md"
+-          className="ml-auto hidden gap-2 lg:flex"
++          className="ml-auto flex gap-2 max-md:hidden"
+           prefix={<Settings2 />}
+           suffix={<ChevronsUpDown />}
+         >
+diff --git a/components/data-table/data-table.tsx b/components/data-table/data-t
+able.tsx
+index 85fc840..ee87ad4 100644
+--- a/components/data-table/data-table.tsx
++++ b/components/data-table/data-table.tsx
+@@ -1,6 +1,5 @@
+ import { type Table as TanstackTable, flexRender } from "@tanstack/react-table"
+-import type * as React from "react"
+-import type { ComponentProps } from "react"
++import type { CSSProperties, ComponentProps, ReactNode } from "react"
+ import {
+   Table,
+   TableBody,
+@@ -13,7 +12,7 @@ import { DataTablePagination } from "~/components/data-table/d
+ata-table-paginati
+ import { getColumnPinningStyle } from "~/lib/data-table"
+ import { cx } from "~/utils/cva"
+ 
+-type DataTableProps<TData> = ComponentProps<"div"> & {
++type DataTableProps<TData> = ComponentProps<typeof Table> & {
+   /**
+    * The table instance returned from useDataTable hook with pagination, sortin
+g, filtering, etc.
+    * @type TanstackTable<TData>
+@@ -23,18 +22,18 @@ type DataTableProps<TData> = ComponentProps<"div"> & {
+   /**
+    * The floating bar to render at the bottom of the table on row selection.
+    * @default null
+-   * @type React.ReactNode | null
++   * @type ReactNode | null
+    * @example floatingBar={<TasksTableFloatingBar table={table} />}
+    */
+-  floatingBar?: React.ReactNode | null
++  floatingBar?: ReactNode | null
+ 
+   /**
+    * The empty state to render when the table has no data.
+    * @default null
+-   * @type React.ReactNode | null
++   * @type ReactNode | null
+    * @example emptyState={<div>No data</div>}
+    */
+-  emptyState?: React.ReactNode | null
++  emptyState?: ReactNode | null
+ }
+ 
+ export function DataTable<TData>({
+@@ -45,55 +44,64 @@ export function DataTable<TData>({
+   className,
+   ...props
+ }: DataTableProps<TData>) {
++  const visibleColumns = table.getVisibleLeafColumns()
++
++  // Calculate grid columns based on the visible columns and their sizes
++  const gridColumns = visibleColumns.map(column => {
++    // If column has a size, use 'minmax'
++    if (column.getSize() > 0) return `minmax(${column.getSize()}px, 1fr)`
++    // For other columns, use 'auto'
++    return "auto"
++  })
++
+   return (
+     <>
+       {children}
+ 
+-      <div className={cx("overflow-hidden rounded-md border", className)} {...p
+rops}>
+-        <Table>
+-          {!!table.getRowModel().rows?.length && (
+-            <TableHeader>
+-              {table.getHeaderGroups().map(headerGroup => (
+-                <TableRow key={headerGroup.id}>
+-                  {headerGroup.headers.map(header => {
+-                    return (
+-                      <TableHead
+-                        key={header.id}
+-                        colSpan={header.colSpan}
+-                        style={getColumnPinningStyle({ column: header.column })
+}
+-                      >
+-                        {header.isPlaceholder
+-                          ? null
+-                          : flexRender(header.column.columnDef.header, header.g
+etContext())}
+-                      </TableHead>
+-                    )
+-                  })}
+-                </TableRow>
+-              ))}
+-            </TableHeader>
+-          )}
++      <Table
++        className={cx("rounded-md border", className)}
++        style={{ "--table-columns": gridColumns.join(" ") } as CSSProperties}
++        {...props}
++      >
++        {!!table.getRowModel().rows?.length && (
++          <TableHeader>
++            {table.getHeaderGroups().map(headerGroup => (
++              <TableRow key={headerGroup.id}>
++                {headerGroup.headers.map(header => {
++                  return (
++                    <TableHead key={header.id} style={getColumnPinningStyle(hea
+der)}>
++                      {header.isPlaceholder
++                        ? null
++                        : flexRender(header.column.columnDef.header, header.get
+Context())}
++                    </TableHead>
++                  )
++                })}
++              </TableRow>
++            ))}
++          </TableHeader>
++        )}
+ 
+-          <TableBody>
+-            {table.getRowModel().rows?.length ? (
+-              table.getRowModel().rows.map(row => (
+-                <TableRow key={row.id} data-state={row.getIsSelected() && "sele
+cted"}>
+-                  {row.getVisibleCells().map(cell => (
+-                    <TableCell key={cell.id} style={getColumnPinningStyle({ col
+umn: cell.column })}>
+-                      {flexRender(cell.column.columnDef.cell, cell.getContext()
+)}
+-                    </TableCell>
+-                  ))}
+-                </TableRow>
+-              ))
+-            ) : (
+-              <TableRow aria-disabled>
+-                <TableCell colSpan={table.getAllColumns().length} className="h-
+24 text-center">
+-                  {emptyState}
+-                </TableCell>
++        <TableBody>
++          {table.getRowModel().rows?.length ? (
++            table.getRowModel().rows.map(row => (
++              <TableRow key={row.id} data-state={row.getIsSelected() && "select
+ed"}>
++                {row.getVisibleCells().map(cell => (
++                  <TableCell
++                    key={cell.id}
++                    style={getColumnPinningStyle({ column: cell.column, withBor
+der: true })}
++                  >
++                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
++                  </TableCell>
++                ))}
+               </TableRow>
+-            )}
+-          </TableBody>
+-        </Table>
+-      </div>
++            ))
++          ) : (
++            <TableRow className="h-24" aria-disabled>
++              <TableCell className="col-span-full text-center">{emptyState}</Ta
+bleCell>
++            </TableRow>
++          )}
++        </TableBody>
++      </Table>
+ 
+       <div className="flex flex-col gap-2.5">
+         <DataTablePagination table={table} />
+diff --git a/components/web/header.tsx b/components/web/header.tsx
+index 6811484..3252721 100644
+--- a/components/web/header.tsx
++++ b/components/web/header.tsx
+@@ -46,7 +46,7 @@ export const Header = ({ children, className, ...props }: Comp
+onentProps<typeof
+   return (
+     <Container
+       className={cx(
+-        "group/menu sticky top-[var(--header-top)] inset-x-0 z-[49] duration-30
+0",
++        "group/menu sticky top-(--header-top) inset-x-0 z-[49] duration-300",
+         "max-lg:data-[state=open]:bg-background/90",
+         className,
+       )}
+@@ -57,7 +57,7 @@ export const Header = ({ children, className, ...props }: Comp
+onentProps<typeof
+     >
+       <div className="absolute top-0 inset-x-0 h-[calc(var(--header-top)+var(--
+header-height)+2rem)]
+ pointer-events-none bg-linear-to-b from-background via-background to-transparen
+t lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
+                                           
+-      <div className="relative flex items-center py-3.5 gap-4 text-sm h-[var(--
+header-height)] isola
+te duration-300 md:gap-6 lg:gap-8">
++      <div className="relative flex items-center py-3.5 gap-4 text-sm h-(--header-height) isolate du
+ration-300 md:gap-6 lg:gap-8">
+                              <Stack size="sm" wrap={false}>
+           <button
+             type="button"
+diff --git a/hooks/use-data-table.ts b/hooks/use-data-table.ts
+index 113ba58..97d223d 100644
+--- a/hooks/use-data-table.ts
++++ b/hooks/use-data-table.ts
+@@ -305,6 +305,10 @@ export function useDataTable<TData>({
+       rowSelection,
+       columnFilters: enableAdvancedFilter ? [] : columnFilters,
+     },
++    defaultColumn: {
++      size: 0,
++      minSize: 0,
++    },
+     enableRowSelection: true,
+     onRowSelectionChange: setRowSelection,
+     onPaginationChange,
+diff --git a/lib/data-table.ts b/lib/data-table.ts
+index b598e29..8ba72ec 100644
+--- a/lib/data-table.ts
++++ b/lib/data-table.ts
+@@ -27,7 +27,6 @@ export function getColumnPinningStyle<TData>({
+     left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
+     right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
+     position: isPinned ? "sticky" : undefined,
+-    width: column.getSize(),
+-    zIndex: isPinned ? 1 : 0,
++    zIndex: isPinned ? 10 : undefined,
+   }
+ } 

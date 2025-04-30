@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react"
+import type { CSSProperties, ComponentProps } from "react"
 import { H3 } from "~/components/common/heading"
 import { Skeleton } from "~/components/common/skeleton"
 import {
@@ -112,45 +112,46 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
         {showViewOptions && <Skeleton className="ml-auto hidden h-8 w-[4.5rem] lg:flex" />}
       </div>
 
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {Array.from({ length: 1 }).map((_, i) => (
-              <TableRow key={i} className="hover:bg-transparent">
-                {Array.from({ length: columnCount }).map((_, j) => (
-                  <TableHead
-                    key={j}
-                    style={{
-                      width: cellWidths[j],
-                      minWidth: shrinkZero ? cellWidths[j] : "auto",
-                    }}
-                  >
-                    <Skeleton className="h-6 w-full" />
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
+      <Table
+        className="rounded-md border"
+        style={{ "--table-columns": `repeat(${columnCount}, minmax(0, 1fr))` } as CSSProperties}
+      >
+        <TableHeader>
+          {Array.from({ length: 1 }).map((_, i) => (
+            <TableRow key={i} className="hover:bg-transparent">
+              {Array.from({ length: columnCount }).map((_, j) => (
+                <TableHead
+                  key={j}
+                  style={{
+                    width: cellWidths[j],
+                    minWidth: shrinkZero ? cellWidths[j] : "auto",
+                  }}
+                >
+                  <Skeleton className="h-6 w-full" />
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
 
-          <TableBody>
-            {Array.from({ length: rowCount }).map((_, i) => (
-              <TableRow key={i} className="hover:bg-transparent">
-                {Array.from({ length: columnCount }).map((_, j) => (
-                  <TableCell
-                    key={j}
-                    style={{
-                      width: cellWidths[j],
-                      minWidth: shrinkZero ? cellWidths[j] : "auto",
-                    }}
-                  >
-                    <Skeleton className="h-6 w-full" />
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+        <TableBody>
+          {Array.from({ length: rowCount }).map((_, i) => (
+            <TableRow key={i} className="hover:bg-transparent">
+              {Array.from({ length: columnCount }).map((_, j) => (
+                <TableCell
+                  key={j}
+                  style={{
+                    width: cellWidths[j],
+                    minWidth: shrinkZero ? cellWidths[j] : "auto",
+                  }}
+                >
+                  <Skeleton className="h-6 w-full" />
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
 
       {withPagination && (
         <div className="flex w-full items-center justify-between gap-4 overflow-auto sm:gap-8">

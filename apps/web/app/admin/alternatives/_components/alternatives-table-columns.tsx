@@ -13,6 +13,8 @@ export const getColumns = (): ColumnDef<Alternative>[] => {
   return [
     {
       id: "select",
+      enableSorting: false,
+      enableHiding: false,
       header: ({ table }) => (
         <RowCheckbox
           checked={table.getIsAllPageRowsSelected()}
@@ -33,12 +35,11 @@ export const getColumns = (): ColumnDef<Alternative>[] => {
           aria-label="Select row"
         />
       ),
-      size: 0,
-      enableSorting: false,
-      enableHiding: false,
     },
     {
       accessorKey: "name",
+      enableHiding: false,
+      size: 160,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => {
         const { name, slug, faviconUrl } = row.original
@@ -58,18 +59,15 @@ export const getColumns = (): ColumnDef<Alternative>[] => {
       accessorKey: "pageviews",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Pageviews" />,
       cell: ({ row }) => <Note>{row.getValue("pageviews")?.toLocaleString()}</Note>,
-      size: 0,
     },
     {
       accessorKey: "createdAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
       cell: ({ row }) => <Note>{formatDate(row.getValue<Date>("createdAt"))}</Note>,
-      size: 0,
     },
     {
       id: "actions",
       cell: ({ row }) => <AlternativeActions alternative={row.original} className="float-right" />,
-      size: 0,
     },
   ]
 }

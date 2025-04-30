@@ -20,7 +20,7 @@ export const DataTableLink = ({
     <Stack size="sm" wrap={false}>
       <Link
         className={cx(
-          "block max-w-40 truncate font-medium underline underline-offset-4 decoration-foreground/10 hover:decoration-foreground/35",
+          "block truncate font-medium underline underline-offset-4 decoration-foreground/10 hover:decoration-foreground/35",
           className,
         )}
         {...props}
@@ -37,6 +37,7 @@ export const DataTableLink = ({
             className="inline-block align-text-bottom mr-2 size-4 rounded"
           />
         )}
+
         {title}
       </Link>
 

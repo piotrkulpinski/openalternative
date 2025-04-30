@@ -4,26 +4,22 @@ import { cx } from "~/utils/cva"
 
 const Table = ({ className, ...props }: ComponentProps<"table">) => {
   return (
-    <div className="relative w-full overflow-auto">
-      <table className={cx("w-full caption-bottom text-sm", className)} {...props} />
-    </div>
+    <table
+      className={cx("grid grid-cols-(--table-columns) divide-y text-sm overflow-auto", className)}
+      {...props}
+    />
   )
 }
 
 const TableHeader = ({ className, ...props }: ComponentProps<"thead">) => {
-  return <thead className={cx("[&_tr]:border-b", className)} {...props} />
+  return (
+    <thead className={cx("grid grid-cols-subgrid col-span-full divide-y", className)} {...props} />
+  )
 }
 
 const TableBody = ({ className, ...props }: ComponentProps<"tbody">) => {
-  return <tbody className={cx("[&_tr:last-child]:border-0", className)} {...props} />
-}
-
-const TableFooter = ({ className, ...props }: ComponentProps<"tfoot">) => {
   return (
-    <tfoot
-      className={cx("border-t bg-muted font-medium [&>tr]:last:border-b-0", className)}
-      {...props}
-    />
+    <tbody className={cx("grid grid-cols-subgrid col-span-full divide-y", className)} {...props} />
   )
 }
 
@@ -31,7 +27,7 @@ const TableRow = ({ className, ...props }: ComponentProps<"tr">) => {
   return (
     <tr
       className={cx(
-        "group/row relative h-9 border-b [tbody>&:not([aria-disabled])]:hover:bg-muted data-[state=selected]:bg-accent",
+        "relative grid grid-cols-subgrid col-span-full items-center h-9 [tbody>&:not([aria-disabled])]:hover:bg-accent data-[state=selected]:bg-accent",
         className,
       )}
       {...props}
@@ -40,31 +36,15 @@ const TableRow = ({ className, ...props }: ComponentProps<"tr">) => {
 }
 
 const TableHead = ({ className, ...props }: ComponentProps<"th">) => {
-  return (
-    <th
-      className={cx(
-        "px-2 text-left align-middle font-medium text-muted-foreground [&:has([type=checkbox])]:pr-0 first:not-[&:has([type=checkbox])]:pl-4",
-        className,
-      )}
-      {...props}
-    />
-  )
+  return <th className={cx("px-2 first:not-[&:has([type=checkbox])]:pl-4", className)} {...props} />
 }
 
 const TableCell = ({ className, ...props }: ComponentProps<"td">) => {
-  return (
-    <td
-      className={cx(
-        "px-2 align-middle whitespace-nowrap [&:has([type=checkbox])]:pr-0 first:not-[&:has([type=checkbox])]:pl-4",
-        className,
-      )}
-      {...props}
-    />
-  )
+  return <td className={cx("px-2 first:not-[&:has([type=checkbox])]:pl-4", className)} {...props} />
 }
 
 const TableCaption = ({ className, ...props }: ComponentProps<typeof Note>) => {
   return <Note as="caption" className={cx("mt-4", className)} {...props} />
 }
 
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption }
+export { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, TableCaption }

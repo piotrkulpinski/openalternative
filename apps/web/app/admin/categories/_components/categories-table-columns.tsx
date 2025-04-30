@@ -13,6 +13,8 @@ export const getColumns = (): ColumnDef<Category>[] => {
   return [
     {
       id: "select",
+      enableSorting: false,
+      enableHiding: false,
       header: ({ table }) => (
         <RowCheckbox
           checked={table.getIsAllPageRowsSelected()}
@@ -33,19 +35,19 @@ export const getColumns = (): ColumnDef<Category>[] => {
           aria-label="Select row"
         />
       ),
-      size: 0,
-      enableSorting: false,
-      enableHiding: false,
     },
     {
       accessorKey: "name",
+      enableHiding: false,
+      size: 160,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => (
         <DataTableLink href={`/admin/categories/${row.original.slug}`} title={row.original.name} />
       ),
     },
     {
-      accessorKey: "tagline",
+      accessorKey: "label",
+      size: 160,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Label" />,
       cell: ({ row }) => <Note className="max-w-96 truncate">{row.original.label}</Note>,
     },
@@ -53,12 +55,10 @@ export const getColumns = (): ColumnDef<Category>[] => {
       accessorKey: "createdAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
       cell: ({ cell }) => <Note>{formatDate(cell.getValue() as Date)}</Note>,
-      size: 0,
     },
     {
       id: "actions",
       cell: ({ row }) => <CategoryActions category={row.original} className="float-right" />,
-      size: 0,
     },
   ]
 }

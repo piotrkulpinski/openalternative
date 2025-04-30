@@ -30,6 +30,8 @@ export const getColumns = (): ColumnDef<Tool>[] => {
   return [
     {
       id: "select",
+      enableSorting: false,
+      enableHiding: false,
       header: ({ table }) => (
         <RowCheckbox
           checked={table.getIsAllPageRowsSelected()}
@@ -50,12 +52,11 @@ export const getColumns = (): ColumnDef<Tool>[] => {
           aria-label="Select row"
         />
       ),
-      size: 0,
-      enableSorting: false,
-      enableHiding: false,
     },
     {
       accessorKey: "name",
+      enableHiding: false,
+      size: 160,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => {
         const { name, slug, faviconUrl, ownerId } = row.original
@@ -69,17 +70,17 @@ export const getColumns = (): ColumnDef<Tool>[] => {
     },
     {
       accessorKey: "tagline",
+      enableSorting: false,
+      size: 320,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Tagline" />,
       cell: ({ row }) => (
         <div className="max-w-96 truncate text-muted-foreground">{row.getValue("tagline")}</div>
       ),
-      enableSorting: false,
     },
     {
       accessorKey: "submitterEmail",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Submitter" />,
       cell: ({ row }) => <Note className="text-sm">{row.getValue("submitterEmail")}</Note>,
-      size: 0,
     },
     {
       accessorKey: "status",
@@ -87,7 +88,6 @@ export const getColumns = (): ColumnDef<Tool>[] => {
       cell: ({ row }) => (
         <Badge {...statusBadges[row.original.status]}>{row.original.status}</Badge>
       ),
-      size: 0,
     },
     {
       accessorKey: "publishedAt",
@@ -98,24 +98,20 @@ export const getColumns = (): ColumnDef<Tool>[] => {
         ) : (
           <Note>—</Note>
         ),
-      size: 0,
     },
     {
       accessorKey: "createdAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
       cell: ({ row }) => <Note>{formatDate(row.getValue<Date>("createdAt"))}</Note>,
-      size: 0,
     },
     {
       accessorKey: "pageviews",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Pageviews" />,
       cell: ({ row }) => <Note>{row.getValue("pageviews")?.toLocaleString()}</Note>,
-      size: 0,
     },
     {
       id: "actions",
       cell: ({ row }) => <ToolActions tool={row.original} className="float-right" />,
-      size: 0,
     },
   ]
 }

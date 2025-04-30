@@ -5,7 +5,7 @@ export const RowCheckbox = ({ className, ...props }: ComponentProps<"input">) =>
   return (
     <input
       type="checkbox"
-      className={cx("relative z-10 translate-y-0.5 ml-1.5", className)}
+      className={cx("block relative z-10 translate-x-1", className)}
       {...props}
     />
   )

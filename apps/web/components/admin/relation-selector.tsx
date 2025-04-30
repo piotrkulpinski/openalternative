@@ -122,7 +122,7 @@ export const RelationSelector = <T extends Relation>({
           <Command filter={handleFilter}>
             <CommandInput placeholder="Search..." />
 
-            <CommandList className="min-w-72 w-[var(--radix-popper-anchor-width)]">
+            <CommandList className="min-w-72 w-(--radix-popper-anchor-width)">
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
                 {getDisplayRelations(relations, true).map(relation => {
