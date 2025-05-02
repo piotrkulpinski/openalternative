@@ -113,7 +113,7 @@
   }
 
   * {
-    @apply underline-offset-2;
+    @apply underline-offset-[0.25em];
   }
 
   a,

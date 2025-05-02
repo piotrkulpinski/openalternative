@@ -73,9 +73,7 @@ export const getColumns = (): ColumnDef<Tool>[] => {
       enableSorting: false,
       size: 320,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Tagline" />,
-      cell: ({ row }) => (
-        <div className="max-w-96 truncate text-muted-foreground">{row.getValue("tagline")}</div>
-      ),
+      cell: ({ row }) => <Note className="truncate">{row.getValue("tagline")}</Note>,
     },
     {
       accessorKey: "submitterEmail",

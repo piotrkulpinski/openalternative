@@ -180,11 +180,11 @@ export default async function ToolPage(props: PageProps) {
             </OverlayImage>
           )}
 
-          {tool.content && <Markdown code={tool.content} className="max-md:order-5" />}
+          {tool.content && <Markdown code={tool.content} className="max-md:order-4" />}
 
           {/* Categories */}
           {!!tool.categories.length && (
-            <Stack size="lg" direction="column" className="w-full max-md:order-7">
+            <Stack size="lg" direction="column" className="w-full max-md:order-6">
               <H5 as="strong">Categories:</H5>
 
               <Stack className="gap-2">
@@ -199,7 +199,7 @@ export default async function ToolPage(props: PageProps) {
 
           {/* Topics */}
           {!!tool.topics.length && (
-            <Stack size="lg" direction="column" className="w-full max-md:order-8">
+            <Stack size="lg" direction="column" className="w-full max-md:order-7">
               <H5 as="strong">Topics:</H5>
 
               <Stack>
@@ -214,7 +214,7 @@ export default async function ToolPage(props: PageProps) {
 
           {/* Stacks */}
           {!!tool.stacks.length && (
-            <Stack size="lg" direction="column" className="w-full max-md:order-6">
+            <Stack size="lg" direction="column" className="w-full max-md:order-8">
               <H5 as="strong">Technical Stack:</H5>
 
               <ToolStacks stacks={tool.stacks} />
@@ -225,11 +225,11 @@ export default async function ToolPage(props: PageProps) {
         </Section.Content>
 
         <Section.Sidebar className="max-md:contents">
-          <RepositoryDetails tool={tool} className="max-md:order-3" />
+          <RepositoryDetails tool={tool} className="max-md:order-5" />
 
           {/* Advertisement */}
-          <Suspense fallback={<AdCardSkeleton className="max-md:order-4" />}>
-            <AdCard type="ToolPage" className="max-md:order-4" />
+          <Suspense fallback={<AdCardSkeleton className="max-md:order-3" />}>
+            <AdCard type="ToolPage" className="max-md:order-3" />
           </Suspense>
 
           {/* Featured */}

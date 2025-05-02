@@ -36,11 +36,21 @@ const TableRow = ({ className, ...props }: ComponentProps<"tr">) => {
 }
 
 const TableHead = ({ className, ...props }: ComponentProps<"th">) => {
-  return <th className={cx("px-2 first:not-[&:has([type=checkbox])]:pl-4", className)} {...props} />
+  return (
+    <th
+      className={cx("px-2 first:has-[input]:pr-0 first:not-has-[input]:pl-4 lg:px-3", className)}
+      {...props}
+    />
+  )
 }
 
 const TableCell = ({ className, ...props }: ComponentProps<"td">) => {
-  return <td className={cx("px-2 first:not-[&:has([type=checkbox])]:pl-4", className)} {...props} />
+  return (
+    <td
+      className={cx("px-2 first:has-[input]:pr-0 first:not-has-[input]:pl-4 lg:px-3", className)}
+      {...props}
+    />
+  )
 }
 
 const TableCaption = ({ className, ...props }: ComponentProps<typeof Note>) => {

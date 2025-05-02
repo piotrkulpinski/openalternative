@@ -54,31 +54,35 @@ export const getColumns = (): ColumnDef<User>[] => {
       enableHiding: false,
       size: 160,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
-      cell: ({ row }) => {
-        const { id, name, email, banned } = row.original
-
-        return (
-          <DataTableLink href={`/admin/users/${id}`} title={name || email}>
-            {banned && (
-              <Badge size="sm" variant="outline" className="text-red-500">
-                Banned
-              </Badge>
-            )}
-          </DataTableLink>
-        )
-      },
+      cell: ({ row }) => (
+        <DataTableLink
+          href={`/admin/users/${row.original.id}`}
+          title={row.original.name || row.original.email}
+        />
+      ),
     },
     {
       accessorKey: "email",
+      enableSorting: false,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
-      cell: ({ row }) => <Note className="text-sm">{row.getValue("email")}</Note>,
+      cell: ({ row }) => <Note>{row.getValue("email")}</Note>,
     },
     {
       accessorKey: "role",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
       cell: ({ row }) => {
-        const role = row.getValue<string>("role")
-        return <Badge {...roleBadges[role as keyof typeof roleBadges]}>{role}</Badge>
+        const role = row.getValue<"admin" | "user">("role")
+        const isBanned = row.original.banned
+
+        if (isBanned) {
+          return (
+            <Badge size="sm" variant="outline" className="text-red-500">
+              Banned
+            </Badge>
+          )
+        }
+
+        return <Badge {...roleBadges[role]}>{role}</Badge>
       },
     },
     {
