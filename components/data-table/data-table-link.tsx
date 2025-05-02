@@ -23,6 +23,7 @@ export const DataTableLink = ({
       <Link
         className={cx(
           "block truncate font-medium underline decoration-foreground/10 hover:decoration-foreground/35",
+          !isOverlay && "relative z-10",
           className,
         )}
         {...props}
