@@ -60,33 +60,24 @@ Make sure to set up accounts with these services and add the necessary environme
 
 ## Project Structure
 
-OpenAlternative is built as a Turborepo monorepo with multiple packages. The project structure is organized as follows:
+OpenAlternative is built in Next.js App Router. The project structure is organized as follows:
 
-- `/apps` - Turborepo apps
-  - `/app` - Main Next.js application using the App Router architecture
-    - `/app` - Application routes and layouts (Next.js App Router)
-    - `/components` - Reusable React components
-    - `/lib` - Core utilities and business logic
-    - `/actions` - Server actions
-    - `/utils` - Helper functions and utilities
-    - `/hooks` - React hooks
-    - `/contexts` - React context providers
-    - `/services` - Service integrations
-    - `/emails` - Email templates
-    - `/server` - Server-side code
-    - `/functions` - Utility functions
-    - `/config` - Configuration files
-    - `/content` - Content management
-    - `/types` - TypeScript type definitions
-    - `/public` - Static assets
-
-  - `/analyzer` - Data analysis tools
-
-- `/packages` - Shared packages
-  - `/db` - Database schema and utilities
-  - `/github` - GitHub integration utilities
-
-The project uses Turborepo for task orchestration and dependency management across the monorepo.
+- `/app` - Application routes and layouts (Next.js App Router)
+- `/components` - Reusable React components
+- `/lib` - Core utilities and business logic
+- `/actions` - Server actions
+- `/utils` - Helper functions and utilities
+- `/hooks` - React hooks
+- `/contexts` - React context providers
+- `/services` - Service integrations
+- `/emails` - Email templates
+- `/server` - Server-side code
+- `/functions` - Utility functions
+- `/config` - Configuration files
+- `/content` - Content management
+- `/prisma` - Prisma schema and utilities
+- `/types` - TypeScript type definitions
+- `/public` - Static assets
 
 ## Development
 
