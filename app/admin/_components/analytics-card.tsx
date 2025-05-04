@@ -11,7 +11,7 @@ const getAnalytics = async () => {
   cacheTag("analytics")
   cacheLife("minutes")
 
-  return getTotalAnalytics()
+  return await getTotalAnalytics()
 }
 
 const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {

@@ -79,7 +79,6 @@ model User {
 
 model Session {
   id             String   @id @default(cuid())
-  userId         String
   token          String   @unique
   expiresAt      DateTime
   ipAddress      String?
@@ -89,7 +88,8 @@ model Session {
   updatedAt      DateTime @updatedAt
 
   // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   // Indexes
   @@index([userId])
@@ -97,7 +97,6 @@ model Session {
 
 model Account {
   id                    String    @id @default(cuid())
-  userId                String
   accountId             String
   providerId            String
   accessToken           String?
@@ -111,7 +110,8 @@ model Account {
   updatedAt             DateTime  @updatedAt
 
   // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   // Indexes
   @@index([userId])

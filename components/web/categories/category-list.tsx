@@ -1,10 +1,10 @@
-import Link from "next/link"
-import plur from "plur"
 import type { ComponentProps } from "react"
-import { H4, H5 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
+import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
+import { Stack } from "~/components/common/stack"
 import { EmptyList } from "~/components/web/empty-list"
-import { Tile, TileCaption, TileDivider, TileTitle } from "~/components/web/ui/tile"
+import { Tile, TileTitle } from "~/components/web/ui/tile"
 import type { CategoryManyNested } from "~/server/web/categories/payloads"
 
 type CategoryListProps = ComponentProps<"div"> & {
@@ -17,50 +17,28 @@ const CategoryList = ({ categories, className, ...props }: CategoryListProps) =>
   }
 
   return (
-    <div className="columns-3xs -mt-8 gap-6 md:gap-8 md:-mt-12 lg:gap-10" {...props}>
+    <div className="columns-3xs -mt-8 gap-6 md:gap-8 md:-mt-10" {...props}>
       {categories.map(({ name, slug, fullPath, subcategories }) => (
-        <div key={slug} className="inline-flex flex-col gap-4 w-full mt-8 md:mt-12">
-          <H4 className="text-lg">
-            <Link href={`/categories/${fullPath}`} prefetch={false} className="hover:text-primary">
-              {name}
+        <Stack key={slug} size="lg" direction="column" className="inline-flex w-full mt-8 md:mt-10">
+          <Tile key={slug} className="gap-3" asChild>
+            <Link href={`/categories/${fullPath}`} className="hover:text-primary">
+              <TileTitle className="text-lg group-hover:text-primary">{name}</TileTitle>
             </Link>
-          </H4>
+          </Tile>
 
           {subcategories?.length > 0 &&
-            subcategories.map(({ name, slug, fullPath, subcategories }) => (
-              <div key={slug} className="flex flex-col gap-2.5 pl-3">
-                <H5 className="text-sm">
-                  <Link
-                    href={`/categories/${fullPath}`}
-                    prefetch={false}
-                    className="hover:text-primary"
-                  >
+            subcategories.map(({ name, slug, fullPath }) => (
+              <Tile key={slug} className="gap-3 pl-2" asChild>
+                <Link href={`/categories/${fullPath}`}>
+                  <Icon name="lucide/arrow-right" className="size-3.5 opacity-25" />
+
+                  <TileTitle className="font-normal text-secondary-foreground text-sm group-hover:text-primary group-hover:font-medium">
                     {name}
-                  </Link>
-                </H5>
-
-                {subcategories?.length > 0 && (
-                  <div className="contents">
-                    {subcategories.map(({ name, slug, fullPath, _count }) => (
-                      <Tile key={slug} className="pl-3" asChild>
-                        <Link href={`/categories/${fullPath}`} prefetch={false}>
-                          <TileTitle className="text-sm font-normal text-muted-foreground group-hover:text-foreground">
-                            {name}
-                          </TileTitle>
-
-                          <TileDivider />
-
-                          <TileCaption className="tabular-nums">
-                            {_count.tools} {plur("tool", _count.tools)}
-                          </TileCaption>
-                        </Link>
-                      </Tile>
-                    ))}
-                  </div>
-                )}
-              </div>
+                  </TileTitle>
+                </Link>
+              </Tile>
             ))}
-        </div>
+        </Stack>
       ))}
     </div>
   )
@@ -68,38 +46,25 @@ const CategoryList = ({ categories, className, ...props }: CategoryListProps) =>
 
 const CategoryListSkeleton = () => {
   return (
-    <div className="columns-3xs -mt-8 gap-6 md:gap-8 md:-mt-12 lg:gap-10">
-      {[...Array(6)].map((_, index) => (
-        <div key={index} className="inline-flex flex-col gap-4 w-full mt-8 md:mt-12">
-          <H4 className="text-lg">
-            <Skeleton className="w-1/2">&nbsp;</Skeleton>
-          </H4>
+    <div className="columns-3xs -mt-8 gap-6 md:gap-8 md:-mt-10">
+      {[...Array(6)].map((_, i) => (
+        <Stack key={i} size="lg" direction="column" className="inline-flex w-full mt-8 md:mt-10">
+          <Tile>
+            <TileTitle className="text-lg">
+              <Skeleton className="w-40">&nbsp;</Skeleton>
+            </TileTitle>
+          </Tile>
 
-          {[...Array(Math.floor(Math.random() * 3) + 2)].map((_, index) => (
-            <div key={index} className="flex flex-col gap-2 pl-2">
-              <H5 className="text-sm">
-                <Skeleton className="w-2/3">&nbsp;</Skeleton>
-              </H5>
+          {[...Array(5)].map((_, i) => (
+            <Tile key={i} className="gap-3 pl-2">
+              <Icon name="lucide/arrow-right" className="size-3.5 opacity-25" />
 
-              <div className="contents">
-                {[...Array(Math.floor(Math.random() * 3) + 2)].map((_, index) => (
-                  <Tile key={index} className="pl-2">
-                    <TileTitle className="text-xs font-normal text-muted-foreground group-hover:text-foreground">
-                      <Skeleton className="w-20">&nbsp;</Skeleton>
-                    </TileTitle>
-
-                    <TileDivider />
-
-                    <TileCaption className="tabular-nums">
-                      <span className="text-[10px] mr-0.5 opacity-50">#</span>
-                      <Skeleton className="inline-block w-4">&nbsp;</Skeleton>
-                    </TileCaption>
-                  </Tile>
-                ))}
-              </div>
-            </div>
+              <TileTitle className="text-sm">
+                <Skeleton className="w-24">&nbsp;</Skeleton>
+              </TileTitle>
+            </Tile>
           ))}
-        </div>
+        </Stack>
       ))}
     </div>
   )

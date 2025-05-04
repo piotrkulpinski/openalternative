@@ -36,15 +36,6 @@ export const categoryManyNestedPayload = Prisma.validator<Prisma.CategorySelect>
       name: true,
       slug: true,
       fullPath: true,
-      subcategories: {
-        where: categoryWithTools,
-        select: {
-          name: true,
-          slug: true,
-          fullPath: true,
-          _count: { select: { tools: { where: { status: ToolStatus.Published } } } },
-        },
-      },
     },
   },
 })
