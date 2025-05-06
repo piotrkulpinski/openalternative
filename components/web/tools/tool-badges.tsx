@@ -15,10 +15,7 @@ export const ToolBadges = ({ tool, children, className, ...props }: ToolBadgesPr
   const { firstCommitDate, publishedAt, discountCode, discountAmount } = tool
 
   const commitDiff = firstCommitDate ? differenceInDays(new Date(), firstCommitDate) : null
-  const publishedDiff = publishedAt ? differenceInDays(new Date(), publishedAt) : null
-
   const isNew = commitDiff !== null && commitDiff <= 365
-  const isFresh = publishedDiff !== null && publishedDiff <= 30 && publishedDiff >= 0
   const isScheduled = publishedAt !== null && publishedAt > new Date()
 
   return (
@@ -31,12 +28,6 @@ export const ToolBadges = ({ tool, children, className, ...props }: ToolBadgesPr
       {isNew && (
         <Tooltip tooltip="Repo is less than 1 year old">
           <Icon name="lucide/sparkles" className="size-4 text-yellow-500" />
-        </Tooltip>
-      )}
-
-      {isFresh && (
-        <Tooltip tooltip="Published in the last 30 days">
-          <Icon name="lucide/bell-plus" className="size-4 text-green-500" />
         </Tooltip>
       )}
 
