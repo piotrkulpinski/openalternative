@@ -244,13 +244,7 @@ export default async function ToolPage(props: PageProps) {
                 speed up the process, you can expedite the review below.
               </Note>
 
-              <Button
-                size="md"
-                variant="fancy"
-                prefix={<Icon name="lucide/clock" />}
-                className="w-fit"
-                asChild
-              >
+              <Button size="md" variant="fancy" prefix={<Icon name="lucide/clock" />} asChild>
                 <Link href={`/submit/${tool.slug}`}>Publish within 24h</Link>
               </Button>
             </Card>

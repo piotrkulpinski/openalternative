@@ -70,7 +70,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
               )}
 
               {!!tool.alternatives.length && (
-                <Stack className="mt-auto text-sm">
+                <Stack size="sm" className="mt-auto text-sm">
                   <span>
                     <span className="sr-only">Open Source </span>Alternative to:
                   </span>

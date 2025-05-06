@@ -32,7 +32,7 @@ const Card = ({ className, hover = true, focus = true, asChild, ...props }: Card
 }
 
 const CardHeader = ({ className, ...props }: ComponentProps<typeof Stack>) => {
-  return <Stack className={cx("w-full", className)} {...props} />
+  return <Stack className={cx("w-full", className)} wrap={false} {...props} />
 }
 
 const CardFooter = ({ className, ...props }: ComponentProps<typeof Stack>) => {
