@@ -14,6 +14,8 @@ import { tryCatch } from "~/utils/helpers"
  * @returns The S3 location of the uploaded file.
  */
 export const uploadToS3Storage = async (file: Buffer, key: string) => {
+  const endpoint = env.S3_PUBLIC_URL ?? `https://${env.S3_BUCKET}.s3.${env.S3_REGION}.amazonaws.com`
+
   const upload = new Upload({
     client: s3Client,
     params: {
@@ -29,11 +31,11 @@ export const uploadToS3Storage = async (file: Buffer, key: string) => {
 
   const result = await upload.done()
 
-  if (!result.Location) {
+  if (!result.Key) {
     throw new Error("Failed to upload")
   }
 
-  return `https://${env.S3_BUCKET}.s3.${env.S3_REGION}.amazonaws.com/${result.Key}`
+  return `${endpoint}/${key}?v=${Date.now()}`
 }
 
 /**
@@ -87,18 +89,24 @@ export const removeS3File = async (key: string) => {
 }
 
 /**
- * Uploads a favicon to S3 and returns the S3 location.
- * @param url - The URL of the website to fetch the favicon from.
- * @param s3Key - The S3 key to upload the favicon to.
- * @returns The S3 location of the uploaded favicon.
+ * Types for media upload
  */
-export const uploadFavicon = async (url: string, s3Key: string): Promise<string | null> => {
-  const timestamp = Date.now()
-  const cleanedUrl = encodeURIComponent(stripURLSubpath(url) ?? "")
-  const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain_url=${cleanedUrl}`
+type MediaUploadParams = {
+  endpointUrl: string
+  s3Key: string
+  options?: Record<string, string>
+}
 
+/**
+ * Uploads media to S3 and returns the S3 location.
+ * @param params - The parameters for uploading media.
+ * @returns The S3 location of the uploaded media.
+ */
+export const uploadMedia = async ({ endpointUrl, s3Key, options = {} }: MediaUploadParams) => {
   const response = await tryCatch(
-    wretch(faviconUrl)
+    wretch(endpointUrl)
+      .addon(QueryStringAddon)
+      .query(options)
       .get()
       .badRequest(console.error)
       .arrayBuffer()
@@ -106,19 +114,38 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
   )
 
   if (response.error) {
-    console.error("Error fetching favicon:", response.error)
+    console.error("Error fetching media:", response.error)
     throw response.error
   }
 
   // Upload to S3
-  const { data, error } = await tryCatch(uploadToS3Storage(response.data, `${s3Key}/favicon.png`))
+  const { data, error } = await tryCatch(uploadToS3Storage(response.data, s3Key))
 
   if (error) {
-    console.error("Error uploading favicon:", error)
+    console.error("Error uploading media:", error)
     throw error
   }
 
-  return `${data}?v=${timestamp}`
+  return data
+}
+
+/**
+ * Uploads a favicon to S3 and returns the S3 location.
+ * @param url - The URL of the website to fetch the favicon from.
+ * @param s3Key - The S3 key to upload the favicon to.
+ * @returns The S3 location of the uploaded favicon.
+ */
+export const uploadFavicon = async (url: string, s3Key: string) => {
+  const options = {
+    domain_url: stripURLSubpath(url),
+    sz: "128",
+  }
+
+  return uploadMedia({
+    endpointUrl: "https://www.google.com/s2/favicons",
+    s3Key: `${s3Key}/favicon.png`,
+    options,
+  })
 }
 
 /**
@@ -127,13 +154,10 @@ export const uploadFavicon = async (url: string, s3Key: string): Promise<string 
  * @param s3Key - The S3 key to upload the screenshot to.
  * @returns The S3 location of the uploaded screenshot.
  */
-export const uploadScreenshot = async (url: string, s3Key: string): Promise<string> => {
-  const timestamp = Date.now()
-
-  const query = {
+export const uploadScreenshot = async (url: string, s3Key: string) => {
+  const options = {
     url,
     access_key: env.SCREENSHOTONE_ACCESS_KEY,
-    response_type: "json",
 
     // Cache
     cache: "true",
@@ -155,29 +179,11 @@ export const uploadScreenshot = async (url: string, s3Key: string): Promise<stri
     viewport_width: "1280",
     viewport_height: "720",
     image_quality: "90",
-
-    // Storage options
-    store: "true",
-    storage_path: `${s3Key}/screenshot`,
-    storage_bucket: env.S3_BUCKET,
-    storage_access_key_id: env.S3_ACCESS_KEY,
-    storage_secret_access_key: env.S3_SECRET_ACCESS_KEY,
-    storage_endpoint: `https://s3.${env.S3_REGION}.amazonaws.com`,
-    storage_return_location: "true",
   }
 
-  const { data, error } = await tryCatch(
-    wretch("https://api.screenshotone.com/take")
-      .addon(QueryStringAddon)
-      .query(query)
-      .get()
-      .json<{ store: { location: string } }>(),
-  )
-
-  if (error) {
-    console.error("Error fetching screenshot:", error)
-    throw error
-  }
-
-  return `${data.store.location}?v=${timestamp}`
+  return uploadMedia({
+    endpointUrl: "https://api.screenshotone.com/take",
+    s3Key: `${s3Key}/screenshot.webp`,
+    options,
+  })
 }
