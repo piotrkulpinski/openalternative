@@ -3,7 +3,7 @@ import { Plan } from "~/components/web/plan"
 import { getProductFeatures, getProducts, prepareProductsWithPrices } from "~/lib/products"
 import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
-import { countUpcomingTools } from "~/server/web/tools/queries"
+import { countSubmittedTools } from "~/server/web/tools/queries"
 import { stripe } from "~/services/stripe"
 
 type SubmitProductsProps = {
@@ -33,7 +33,7 @@ export const SubmitProducts = async ({ tool, searchParams }: SubmitProductsProps
       : undefined,
 
     // Queue length
-    countUpcomingTools({}),
+    countSubmittedTools({}),
   ])
 
   const isPublished = isToolPublished(tool)

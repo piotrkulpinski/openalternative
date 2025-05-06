@@ -6,7 +6,7 @@ import EmailSubmissionPremium from "~/emails/submission-premium"
 import EmailSubmissionPublished from "~/emails/submission-published"
 import EmailSubmissionScheduled from "~/emails/submission-scheduled"
 import { sendEmail } from "~/lib/email"
-import { db } from "~/services/db"
+import { countSubmittedTools } from "~/server/web/tools/queries"
 
 /**
  * Notify the submitter of a tool submission
@@ -21,10 +21,7 @@ export const notifySubmitterOfToolSubmitted = async (tool: Tool) => {
 
   const to = tool.submitterEmail
   const subject = `🙌 Thanks for submitting ${tool.name}!`
-
-  const queueLength = await db.tool.count({
-    where: { status: { in: [ToolStatus.Draft, ToolStatus.Scheduled] } },
-  })
+  const queueLength = await countSubmittedTools({})
 
   return await sendEmail({
     to,

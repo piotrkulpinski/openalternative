@@ -138,10 +138,14 @@ export const findToolSlugs = async ({ where, orderBy, ...args }: Prisma.ToolFind
   })
 }
 
-export const countUpcomingTools = async ({ where, ...args }: Prisma.ToolCountArgs) => {
+export const countSubmittedTools = async ({ where, ...args }: Prisma.ToolCountArgs) => {
   return db.tool.count({
     ...args,
-    where: { status: { in: [ToolStatus.Scheduled, ToolStatus.Draft] }, ...where },
+    where: {
+      status: { in: [ToolStatus.Scheduled, ToolStatus.Draft] },
+      submitterEmail: { not: null },
+      ...where,
+    },
   })
 }
 

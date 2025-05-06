@@ -19,7 +19,7 @@ export const upsertTool = adminProcedure
   .handler(async ({ input: { id, alternatives, categories, notifySubmitter, ...input } }) => {
     const alternativeIds = alternatives?.map(id => ({ id }))
     const categoryIds = categories?.map(id => ({ id }))
-    const existingTool = await db.tool.findUnique({ where: { id } })
+    const existingTool = id ? await db.tool.findUnique({ where: { id } }) : null
 
     const tool = id
       ? // If the tool exists, update it
