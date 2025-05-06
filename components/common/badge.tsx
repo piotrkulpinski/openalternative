@@ -12,12 +12,12 @@ const badgeVariants = cva({
       soft: "bg-border/50 hover:[&[href],&[type]]:bg-border/75",
       outline: "bg-background border-border hover:[&[href],&[type]]:bg-accent",
       success:
-        "bg-green-100 border-green-200 text-green-800 dark:bg-green-950 dark:border-green-900 dark:text-green-100 hover:[&[href],&[type]]:opacity-75",
+        "bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-100 hover:[&[href],&[type]]:opacity-75",
       warning:
-        "bg-orange-100 border-orange-200 text-orange-800 dark:bg-orange-950 dark:border-orange-900 dark:text-orange-100 hover:[&[href],&[type]]:opacity-75",
-      info: "bg-blue-100 border-blue-200 text-blue-800 dark:bg-blue-950 dark:border-blue-900 dark:text-blue-100 hover:[&[href],&[type]]:opacity-75",
+        "bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-100 hover:[&[href],&[type]]:opacity-75",
+      info: "bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-100 hover:[&[href],&[type]]:opacity-75",
       danger:
-        "bg-red-100 border-red-200 text-red-800 dark:bg-red-950 dark:border-red-900 dark:text-red-100 hover:[&[href],&[type]]:opacity-75",
+        "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-100 hover:[&[href],&[type]]:opacity-75",
     },
     size: {
       sm: "px-1 py-px gap-1 text-[0.625rem]",

@@ -15,7 +15,7 @@ import { VerifiedBadge } from "~/components/web/verified-badge"
 export const getColumns = (): ColumnDef<Tool>[] => {
   const statusBadges: Record<ToolStatus, ComponentProps<typeof Badge>> = {
     [ToolStatus.Draft]: {
-      variant: "warning",
+      variant: "soft",
     },
 
     [ToolStatus.Scheduled]: {

@@ -52,7 +52,7 @@ export const ToolPublishActions = ({
   children,
   ...props
 }: ToolPublishActionsProps) => {
-  const { control, watch, resetField } = useFormContext<ToolSchema>()
+  const { control, watch } = useFormContext<ToolSchema>()
   const formValues = watch(["slug", "status", "submitterEmail", "publishedAt"])
   const [slug, status, submitterEmail, publishedAt] = formValues
   const publishedAtDate = new Date(publishedAt ?? new Date())
