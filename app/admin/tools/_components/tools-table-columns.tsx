@@ -10,7 +10,6 @@ import { Badge } from "~/components/common/badge"
 import { Note } from "~/components/common/note"
 import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/data-table/data-table-link"
-import { VerifiedBadge } from "~/components/web/verified-badge"
 
 export const getColumns = (): ColumnDef<Tool>[] => {
   const statusBadges: Record<ToolStatus, ComponentProps<typeof Badge>> = {
@@ -59,13 +58,9 @@ export const getColumns = (): ColumnDef<Tool>[] => {
       size: 160,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => {
-        const { name, slug, faviconUrl, ownerId } = row.original
+        const { name, slug, faviconUrl } = row.original
 
-        return (
-          <DataTableLink href={`/admin/tools/${slug}`} image={faviconUrl} title={name}>
-            {ownerId && <VerifiedBadge size="sm" />}
-          </DataTableLink>
-        )
+        return <DataTableLink href={`/admin/tools/${slug}`} image={faviconUrl} title={name} />
       },
     },
     {

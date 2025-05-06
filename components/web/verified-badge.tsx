@@ -13,7 +13,7 @@ export const VerifiedBadge = ({ className, size = "md", ...props }: VerifiedBadg
       <Icon
         name="verified-badge"
         className={cx(
-          "-ml-1 stroke-transparent",
+          "-ml-1 stroke-0",
           size === "sm" && "-mb-[0.15em] size-4",
           size === "md" && "-mb-[0.2em] size-5",
           size === "lg" && "-mb-[0.25em] size-6",

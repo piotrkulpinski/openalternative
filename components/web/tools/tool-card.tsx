@@ -42,6 +42,10 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
     { label: "Last commit", value: lastCommitDate, icon: <Icon name="lucide/timer" /> },
   ]
 
+  if (tool.ownerId) {
+    console.log(`${tool.name}: ${tool.ownerId}`)
+  }
+
   return (
     <Card asChild {...props}>
       <Link href={`/${tool.slug}`} className="group">
