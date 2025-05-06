@@ -115,6 +115,49 @@ export default function AboutPage() {
           newcomers in the open source community.
         </p>
 
+        <h3 id="why-open-source">Why open source?</h3>
+
+        <p>
+          Open source software offers <strong>unmatched transparency</strong> that proprietary
+          solutions simply cannot provide. With access to the source code, you can verify exactly
+          what a program does—ensuring your <strong>privacy is protected</strong> and your data
+          isn't being harvested for profit. This transparency isn't just theoretical; it's why open
+          source projects like Firefox and Linux are often more secure and respect user rights more
+          than their closed-source counterparts.
+        </p>
+
+        <p>
+          The <strong>collaborative community</strong> behind open source creates software that
+          evolves based on real needs rather than corporate profit motives. When thousands of
+          passionate developers and users contribute to a project, the result is often more
+          innovative and resilient. Take{" "}
+          <Link href="/coolify" className="text-primary hover:underline">
+            Coolify
+          </Link>
+          , which began as an open source project and revolutionized how we deploy applications—or{" "}
+          <Link href="/alternatives/nextcloud" className="text-primary hover:underline">
+            Nextcloud
+          </Link>
+          , which continues to add features requested by its community while respecting user privacy
+          and control.
+        </p>
+
+        <p>
+          Perhaps most importantly, open source eliminates the <strong>vendor lock-in</strong> and
+          restrictive licensing that plague proprietary software. You gain:
+        </p>
+
+        <ul>
+          <li>Freedom to modify the software for your specific needs</li>
+          <li>Independence from any single company's business decisions</li>
+          <li>Control over your digital infrastructure and data</li>
+        </ul>
+
+        <p>
+          As technology increasingly mediates our lives, these freedoms aren't just
+          convenient—they're essential for maintaining autonomy in the digital age.
+        </p>
+
         <h3 id="tools-used">Tools Used</h3>
 
         <ul>
