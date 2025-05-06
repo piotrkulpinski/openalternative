@@ -27,13 +27,15 @@ import { H3 } from "~/components/common/heading"
 import { Icon } from "~/components/common/icon"
 import { Input, inputVariants } from "~/components/common/input"
 import { Link } from "~/components/common/link"
+import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { Switch } from "~/components/common/switch"
 import { TextArea } from "~/components/common/textarea"
 import { ExternalLink } from "~/components/web/external-link"
 import { Markdown } from "~/components/web/markdown"
+import { siteConfig } from "~/config/site"
 import { useComputedField } from "~/hooks/use-computed-field"
-import { isToolVisible } from "~/lib/tools"
+import { isToolPublished } from "~/lib/tools"
 import type { findAlternativeList } from "~/server/admin/alternatives/queries"
 import type { findCategoryList } from "~/server/admin/categories/queries"
 import { upsertTool } from "~/server/admin/tools/actions"
@@ -44,13 +46,9 @@ import { cx } from "~/utils/cva"
 const ToolStatusChange = ({ tool }: { tool: Tool }) => {
   return (
     <>
-      {isToolVisible(tool) ? (
-        <ExternalLink href={`/${tool.slug}`} className="font-semibold underline inline-block">
-          {tool.name}
-        </ExternalLink>
-      ) : (
-        tool.name
-      )}{" "}
+      <ExternalLink href={`/${tool.slug}`} className="font-semibold underline inline-block">
+        {tool.name}
+      </ExternalLink>{" "}
       is now {tool.status.toLowerCase()}.{" "}
       {tool.status === "Scheduled" && (
         <>
@@ -206,6 +204,22 @@ export function ToolForm({
 
           {tool && <ToolActions tool={tool} size="md" />}
         </Stack>
+
+        {tool && (
+          <Note className="w-full">
+            {isToolPublished(tool) ? "View:" : "Preview:"}{" "}
+            <ExternalLink href={`/${tool.slug}`} className="text-primary underline">
+              {siteConfig.url}/{tool.slug}
+            </ExternalLink>
+            {tool.status === ToolStatus.Scheduled && tool.publishedAt && (
+              <>
+                <br />
+                Scheduled to be published on{" "}
+                <strong className="text-foreground">{formatDateTime(tool.publishedAt)}</strong>
+              </>
+            )}
+          </Note>
+        )}
       </Stack>
 
       <form

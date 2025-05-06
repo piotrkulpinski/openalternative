@@ -1,7 +1,5 @@
 "use client"
 
-import { formatDate } from "@curiousleaf/utils"
-import { ToolStatus } from "@prisma/client"
 import Link from "next/link"
 import type { ComponentProps } from "react"
 import { useState } from "react"
@@ -26,22 +24,6 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
 
   return (
     <Stack size="sm" wrap={false} className={cx("justify-end", className)} {...props}>
-      {tool.status === ToolStatus.Scheduled && (
-        <Tooltip
-          tooltip={`Scheduled for ${formatDate(tool.publishedAt!)}. Can be expedited to publish within 24h.`}
-        >
-          <Button
-            size="md"
-            variant="secondary"
-            prefix={<Icon name="lucide/clock" className="text-inherit" />}
-            className="text-yellow-600 dark:text-yellow-400"
-            asChild
-          >
-            <Link href={`/submit/${tool.slug}`}>Expedite</Link>
-          </Button>
-        </Tooltip>
-      )}
-
       {!tool.isFeatured && tool.ownerId && tool.ownerId === session?.user.id && (
         <Tooltip tooltip="Promote this tool on the website to get more visibility.">
           <Button

@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ToolStatus } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
 import type { ComponentProps } from "react"
@@ -23,6 +22,7 @@ import { Hint } from "~/components/common/hint"
 import { Input } from "~/components/common/input"
 import { FeatureNudge } from "~/components/web/feature-nudge"
 import { useSession } from "~/lib/auth-client"
+import { isToolPublished } from "~/lib/tools"
 import { type SubmitToolSchema, submitToolSchema } from "~/server/web/shared/schema"
 import { cx } from "~/utils/cva"
 
@@ -50,7 +50,7 @@ export const SubmitForm = ({ className, ...props }: ComponentProps<"form">) => {
       // Capture event
       posthog.capture("submit_tool", { slug: data.slug })
 
-      if (data.status === ToolStatus.Published) {
+      if (isToolPublished(data)) {
         if (data.isFeatured) {
           toast.info(`${data.name} has already been published.`)
         } else {

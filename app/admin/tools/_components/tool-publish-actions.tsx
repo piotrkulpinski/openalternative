@@ -1,4 +1,4 @@
-import { formatDateTime, isTruthy } from "@curiousleaf/utils"
+import { isTruthy } from "@curiousleaf/utils"
 import { ToolStatus } from "@prisma/client"
 import { addDays, formatDate, isFriday, isMonday, isWednesday } from "date-fns"
 import { type ComponentProps, type ReactNode, useState } from "react"
@@ -16,8 +16,6 @@ import { Note } from "~/components/common/note"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
 import { RadioGroup, RadioGroupItem } from "~/components/common/radio-group"
 import { Stack } from "~/components/common/stack"
-import { ExternalLink } from "~/components/web/external-link"
-import { siteConfig } from "~/config/site"
 import type { findToolBySlug } from "~/server/admin/tools/queries"
 import type { ToolSchema } from "~/server/admin/tools/schema"
 import { cx } from "~/utils/cva"
@@ -53,8 +51,7 @@ export const ToolPublishActions = ({
   ...props
 }: ToolPublishActionsProps) => {
   const { control, watch } = useFormContext<ToolSchema>()
-  const formValues = watch(["slug", "status", "submitterEmail", "publishedAt"])
-  const [slug, status, submitterEmail, publishedAt] = formValues
+  const [status, submitterEmail, publishedAt] = watch(["status", "submitterEmail", "publishedAt"])
   const publishedAtDate = new Date(publishedAt ?? new Date())
 
   const [isOpen, setIsOpen] = useState(false)
@@ -124,16 +121,6 @@ export const ToolPublishActions = ({
         prefix: <Icon name="lucide/calendar" />,
         popover: {
           title: "Update tool status",
-          description: (
-            <>
-              Preview:{" "}
-              <ExternalLink href={`/${slug}`} className="text-primary underline">
-                {siteConfig.url}/{slug}
-              </ExternalLink>
-              <br />
-              Will be published on <strong>{formatDateTime(publishedAt ?? new Date())}</strong>
-            </>
-          ),
           options: [
             {
               status: ToolStatus.Draft,
@@ -180,14 +167,6 @@ export const ToolPublishActions = ({
         prefix: <Icon name="lucide/badge-check" />,
         popover: {
           title: "Update tool status",
-          description: (
-            <>
-              View:{" "}
-              <ExternalLink href={`/${slug}`} className="text-primary underline">
-                {siteConfig.url}/{slug}
-              </ExternalLink>
-            </>
-          ),
           options: [
             {
               status: ToolStatus.Draft,

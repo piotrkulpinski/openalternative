@@ -1,7 +1,8 @@
-import { type Tool, ToolStatus } from "@prisma/client"
+import type { Tool } from "@prisma/client"
 import { Text } from "@react-email/components"
 import { EmailFeatureNudge } from "~/emails/components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
+import { isToolPublished } from "~/lib/tools"
 
 export type EmailProps = EmailWrapperProps & {
   tool: Tool
@@ -13,7 +14,7 @@ const EmailSubmissionPremium = ({ tool, ...props }: EmailProps) => {
       <Text>Hey {tool.submitterName?.trim()}!</Text>
 
       {tool.isFeatured ? (
-        tool.publishedAt && tool.status === ToolStatus.Published ? (
+        tool.publishedAt && isToolPublished(tool) ? (
           <Text>
             Thanks for featuring {tool.name}, it should soon be displayed at a prominent place on
             our listings. If that's not the case, please clear your cache and refresh the page.

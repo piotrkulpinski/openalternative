@@ -18,7 +18,6 @@ import {
 } from "~/components/common/dropdown-menu"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
-import { isToolVisible } from "~/lib/tools"
 import { analyzeToolStack } from "~/server/admin/tools/actions"
 import { cx } from "~/utils/cva"
 
@@ -67,13 +66,11 @@ export const ToolActions = ({ className, tool, ...props }: ToolActionsProps) => 
           </DropdownMenuItem>
         )}
 
-        {isToolVisible(tool) && (
-          <DropdownMenuItem asChild>
-            <Link href={`/${tool.slug}`} target="_blank">
-              View
-            </Link>
-          </DropdownMenuItem>
-        )}
+        <DropdownMenuItem asChild>
+          <Link href={`/${tool.slug}`} target="_blank">
+            View
+          </Link>
+        </DropdownMenuItem>
 
         {toolActions.map(({ label, execute }) => (
           <DropdownMenuItem key={label} onSelect={() => execute({ id: tool.id })}>
