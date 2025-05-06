@@ -177,7 +177,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
         </Stack>
 
         <p>
-          &copy; {new Date().getFullYear()}{" "}
+          Made by{" "}
           <ExternalLink href={config.links.author} data-link doFollow>
             Piotr Kulpinski
           </ExternalLink>

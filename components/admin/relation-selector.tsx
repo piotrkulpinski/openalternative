@@ -1,6 +1,6 @@
 import { useCompletion } from "@ai-sdk/react"
 import { isTruthy } from "@curiousleaf/utils"
-import { useEffect, useState } from "react"
+import { type ReactNode, useEffect, useState } from "react"
 import { AnimatedContainer } from "~/components/common/animated-container"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
@@ -21,7 +21,7 @@ import { Icon } from "../common/icon"
 
 type Relation = {
   id: string
-  name: string
+  name: ReactNode
 }
 
 type RelationSelectorProps<T> = {
@@ -111,9 +111,9 @@ export const RelationSelector = <T extends Relation>({
                 <span className="font-normal text-muted-foreground">Select</span>
               )}
 
-              {getDisplayRelations(selectedRelations).map(relation => {
-                return <Badge key={relation.id}>{relation.name}</Badge>
-              })}
+              {getDisplayRelations(selectedRelations).map(relation => (
+                <Badge key={relation.id}>{relation.name}</Badge>
+              ))}
             </Stack>
           </Button>
         </PopoverTrigger>

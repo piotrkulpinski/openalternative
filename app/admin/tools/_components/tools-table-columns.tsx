@@ -88,6 +88,11 @@ export const getColumns = (): ColumnDef<Tool>[] => {
       ),
     },
     {
+      accessorKey: "pageviews",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Pageviews" />,
+      cell: ({ row }) => <Note>{row.getValue("pageviews")?.toLocaleString()}</Note>,
+    },
+    {
       accessorKey: "publishedAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Published At" />,
       cell: ({ row }) =>
@@ -101,11 +106,6 @@ export const getColumns = (): ColumnDef<Tool>[] => {
       accessorKey: "createdAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
       cell: ({ row }) => <Note>{formatDate(row.getValue<Date>("createdAt"))}</Note>,
-    },
-    {
-      accessorKey: "pageviews",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Pageviews" />,
-      cell: ({ row }) => <Note>{row.getValue("pageviews")?.toLocaleString()}</Note>,
     },
     {
       id: "actions",
