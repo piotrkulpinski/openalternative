@@ -43,7 +43,7 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
           </CardBadges>
         )}
 
-        <CardHeader>
+        <CardHeader wrap={false}>
           <Favicon src={ad.faviconUrl} title={ad.name} />
 
           <H4 as="strong" className="truncate">

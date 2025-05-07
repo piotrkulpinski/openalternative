@@ -24,7 +24,7 @@ export const PostCard = ({ className, post, ...props }: PostCardProps) => {
           />
         )}
 
-        <CardHeader>
+        <CardHeader wrap={false}>
           <H4 as="h3" className="leading-snug!">
             {post.title}
           </H4>

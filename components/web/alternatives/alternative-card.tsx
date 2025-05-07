@@ -16,7 +16,7 @@ const AlternativeCard = ({ alternative, showCount, ...props }: AlternativeCardPr
   return (
     <Card asChild {...props}>
       <Link href={`/alternatives/${alternative.slug}`}>
-        <CardHeader>
+        <CardHeader wrap={false}>
           <Favicon src={alternative.faviconUrl} title={alternative.name} />
 
           <H4 as="h3" className="truncate">

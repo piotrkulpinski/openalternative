@@ -24,7 +24,7 @@ export const AlternativeCardExternal = ({
         eventName="click_alternative"
         eventProps={{ url: alternative.websiteUrl }}
       >
-        <CardHeader>
+        <CardHeader wrap={false}>
           <Favicon src={alternative.faviconUrl} title={alternative.name} />
 
           <H4 as="h3" className="truncate flex-1">
