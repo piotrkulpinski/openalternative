@@ -1,10 +1,8 @@
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { CountBadge, CountBadgeSkeleton } from "~/app/(web)/(home)/count-badge"
-import {
-  AlternativePreview,
-  AlternativePreviewSkeleton,
-} from "~/components/web/alternatives/alternative-preview"
+import { AlternativePreviewSkeleton } from "~/components/web/alternatives/alternative-preview"
+import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
 import { NewsletterForm } from "~/components/web/newsletter-form"
 import { NewsletterProof } from "~/components/web/newsletter-proof"
 import { ToolListingSkeleton } from "~/components/web/tools/tool-listing"

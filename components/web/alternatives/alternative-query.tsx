@@ -1,47 +1,36 @@
-import { Input } from "~/components/common/input"
+import type { Prisma } from "@prisma/client"
+import type { SearchParams } from "nuqs/server"
 import {
-  AlternativeList,
-  AlternativeListSkeleton,
-} from "~/components/web/alternatives/alternative-list"
-import { AlternativeSearch } from "~/components/web/alternatives/alternative-search"
-import { Pagination } from "~/components/web/pagination"
-import { FiltersProvider } from "~/contexts/filter-context"
-import type { AlternativeMany } from "~/server/web/alternatives/payloads"
+  AlternativeListing,
+  type AlternativeListingProps,
+} from "~/components/web/alternatives/alternative-listing"
+import { searchAlternatives } from "~/server/web/alternatives/queries"
+import { filterParamsCache } from "~/server/web/shared/schema"
+import type { FilterSchema } from "~/server/web/shared/schema"
 
-type AlternativeQueryProps = {
-  alternatives: AlternativeMany[]
-  perPage: number
-  totalCount: number
-  placeholder?: string
+type AlternativeQueryProps = Omit<AlternativeListingProps, "list" | "pagination"> & {
+  searchParams: Promise<SearchParams>
+  overrideParams?: Partial<FilterSchema>
+  where?: Prisma.AlternativeWhereInput
 }
 
-const AlternativeQuery = ({
-  alternatives,
-  perPage,
-  totalCount,
-  placeholder,
+const AlternativeQuery = async ({
+  searchParams,
+  overrideParams,
+  where,
+  ...props
 }: AlternativeQueryProps) => {
-  return (
-    <>
-      <FiltersProvider>
-        <div className="flex flex-col gap-5">
-          <AlternativeSearch placeholder={placeholder} />
-          <AlternativeList alternatives={alternatives} />
-        </div>
-      </FiltersProvider>
+  const parsedParams = filterParamsCache.parse(await searchParams)
+  const params = { ...parsedParams, ...overrideParams }
+  const { alternatives, totalCount } = await searchAlternatives(params, where)
 
-      <Pagination pageSize={perPage} totalCount={totalCount} />
-    </>
+  return (
+    <AlternativeListing
+      list={{ alternatives }}
+      pagination={{ totalCount, pageSize: params.perPage }}
+      {...props}
+    />
   )
 }
 
-const AlternativeQuerySkeleton = () => {
-  return (
-    <div className="flex flex-col gap-5">
-      <Input size="lg" placeholder="Loading..." disabled />
-      <AlternativeListSkeleton />
-    </div>
-  )
-}
-
-export { AlternativeQuery, AlternativeQuerySkeleton }
+export { AlternativeQuery, type AlternativeQueryProps }

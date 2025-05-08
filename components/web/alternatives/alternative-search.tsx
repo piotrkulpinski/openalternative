@@ -1,5 +1,6 @@
 "use client"
 
+import type { ComponentProps } from "react"
 import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
 import {
@@ -11,12 +12,13 @@ import {
 } from "~/components/common/select"
 import { Stack } from "~/components/common/stack"
 import { useFilters } from "~/contexts/filter-context"
+import { cx } from "~/utils/cva"
 
-export type AlternativeSearchProps = {
+export type AlternativeSearchProps = ComponentProps<typeof Stack> & {
   placeholder?: string
 }
 
-export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
+export const AlternativeSearch = ({ className, placeholder, ...props }: AlternativeSearchProps) => {
   const { filters, isLoading, updateFilters } = useFilters()
 
   const sortOptions = [
@@ -28,7 +30,7 @@ export const AlternativeSearch = ({ placeholder }: AlternativeSearchProps) => {
   ]
 
   return (
-    <Stack className="w-full">
+    <Stack className={cx("w-full", className)} {...props}>
       <div className="relative grow min-w-0">
         <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
           {isLoading ? (

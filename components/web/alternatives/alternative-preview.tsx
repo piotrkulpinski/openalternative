@@ -33,7 +33,7 @@ const AlternativePreview = async () => {
       button={<Link href="/alternatives">View all alternatives</Link>}
       separated
     >
-      <AlternativeList alternatives={alternatives} showAd={false} />
+      <AlternativeList alternatives={alternatives} enableAds={false} />
     </Listing>
   )
 }

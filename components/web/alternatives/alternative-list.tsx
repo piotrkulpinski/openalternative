@@ -10,15 +10,15 @@ import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type AlternativeListProps = ComponentProps<typeof Grid> & {
   alternatives: AlternativeMany[]
-  showAd?: boolean
+  enableAds?: boolean
 }
 
-const AlternativeList = ({ alternatives, showAd = true, ...props }: AlternativeListProps) => {
+const AlternativeList = ({ alternatives, enableAds = true, ...props }: AlternativeListProps) => {
   return (
     <Grid {...props}>
       {alternatives.map((alternative, order) => (
         <Fragment key={alternative.slug}>
-          {showAd && Math.min(2, alternatives.length - 1) === order && (
+          {enableAds && Math.min(2, alternatives.length - 1) === order && (
             <Suspense fallback={<AdCardSkeleton className="sm:order-2" />}>
               <AdCard type="Alternatives" className="sm:order-2" />
             </Suspense>
@@ -48,4 +48,4 @@ const AlternativeListSkeleton = () => {
   )
 }
 
-export { AlternativeList, AlternativeListSkeleton }
+export { AlternativeList, AlternativeListSkeleton, type AlternativeListProps }

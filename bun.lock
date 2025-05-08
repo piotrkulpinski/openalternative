@@ -13,7 +13,7 @@
         "@content-collections/core": "0.7.3",
         "@content-collections/mdx": "^0.2.2",
         "@content-collections/next": "0.2.4",
-        "@curiousleaf/utils": "^1.1.5",
+        "@curiousleaf/utils": "^1.1.6",
         "@hookform/resolvers": "^3.10.0",
         "@logtail/node": "^0.5.4",
         "@mantine/hooks": "^7.17.5",
@@ -238,7 +238,7 @@
 
     "@corex/deepmerge": ["@corex/deepmerge@4.0.43", "", {}, "sha512-N8uEMrMPL0cu/bdboEWpQYb/0i2K5Qn8eCsxzOmxSggJbbQte7ljMRoXm917AbntqTGOzdTu+vP3KOOzoC70HQ=="],
 
-    "@curiousleaf/utils": ["@curiousleaf/utils@1.1.5", "", { "dependencies": { "@sindresorhus/slugify": "^2.2.1" } }, "sha512-3Ug4GlT+edBrVSsY8nYMA4YV6cpl4snuuKypfTvzfgqOMaFrkI83autV7vrle9DbtGDalIOK/MP2Q/r/pZZ5Qw=="],
+    "@curiousleaf/utils": ["@curiousleaf/utils@1.1.6", "", { "dependencies": { "@sindresorhus/slugify": "^2.2.1" } }, "sha512-F9jxt3ETTdON9C1wypoJBDo4fjGs+45TRZbl3pzFIiskQGoYkA3XsDqhxzPZs7Zdsm7682TZ9fhzDlfiE8XZZg=="],
 
     "@date-fns/tz": ["@date-fns/tz@1.2.0", "", {}, "sha512-LBrd7MiJZ9McsOgxqWX7AaxrDjcFVjWH/tIKJd7pnR7McaslGYOP1QmmiBXdJH/H/yLCT+rcQ7FaPBUxRGUtrg=="],
 

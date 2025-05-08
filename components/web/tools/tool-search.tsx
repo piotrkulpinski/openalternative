@@ -2,6 +2,7 @@
 
 import { useLocalStorage } from "@mantine/hooks"
 import { cx } from "cva"
+import type { ComponentProps } from "react"
 import { AnimatedContainer } from "~/components/common/animated-container"
 import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
@@ -16,11 +17,11 @@ import { Stack } from "~/components/common/stack"
 import { ToolFilters } from "~/components/web/tools/tool-filters"
 import { useFilters } from "~/contexts/filter-context"
 
-export type ToolSearchProps = {
+export type ToolSearchProps = ComponentProps<"div"> & {
   placeholder?: string
 }
 
-export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
+export const ToolSearch = ({ className, placeholder, ...props }: ToolSearchProps) => {
   const { filters, isLoading, enableSort, enableFilters, updateFilters } = useFilters()
 
   const [isFiltersOpen, setIsFiltersOpen] = useLocalStorage({
@@ -40,8 +41,8 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
   ]
 
   return (
-    <div className="w-full">
-      <Stack className="w-full">
+    <div className={cx("w-full", className)} {...props}>
+      <Stack>
         <div className="relative grow min-w-0">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
             {isLoading ? (
@@ -97,7 +98,7 @@ export const ToolSearch = ({ placeholder }: ToolSearchProps) => {
         )}
       </Stack>
 
-      <AnimatedContainer height className="w-full">
+      <AnimatedContainer height>
         {enableFilters && isFiltersOpen && <ToolFilters className="pt-3" />}
       </AnimatedContainer>
     </div>

@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client"
-import type { SearchParams } from "nuqs"
+import type { SearchParams } from "nuqs/server"
 import { ToolListing, type ToolListingProps } from "~/components/web/tools/tool-listing"
 import { filterParamsCache } from "~/server/web/shared/schema"
 import type { FilterSchema } from "~/server/web/shared/schema"
@@ -11,7 +11,7 @@ type ToolQueryProps = Omit<ToolListingProps, "list" | "pagination"> & {
   where?: Prisma.ToolWhereInput
 }
 
-const ToolQuery = async ({ searchParams, where, overrideParams, ...props }: ToolQueryProps) => {
+const ToolQuery = async ({ searchParams, overrideParams, where, ...props }: ToolQueryProps) => {
   const parsedParams = filterParamsCache.parse(await searchParams)
   const params = { ...parsedParams, ...overrideParams }
   const { tools, totalCount } = await searchTools(params, where)
@@ -25,4 +25,4 @@ const ToolQuery = async ({ searchParams, where, overrideParams, ...props }: Tool
   )
 }
 
-export { ToolQuery }
+export { ToolQuery, type ToolQueryProps }
