@@ -112,10 +112,6 @@
     }
   }
 
-  * {
-    @apply underline-offset-[0.25em];
-  }
-
   a,
   button,
   label[for],
@@ -123,6 +119,8 @@
     @apply ease-out;
     @apply duration-100;
     @apply not-disabled:cursor-pointer;
+    @apply underline-offset-[3px];
+    @apply decoration-[0.075em];
   }
 
   strong {

@@ -8,13 +8,7 @@ type ShowMoreProps<T> = ComponentProps<typeof Stack> & {
   renderItem: (item: T) => React.ReactNode
 }
 
-export const ShowMore = <T,>({
-  items,
-  limit = 4,
-  renderItem,
-  className,
-  ...props
-}: ShowMoreProps<T>) => {
+export const ShowMore = <T,>({ items, limit = 4, renderItem, ...props }: ShowMoreProps<T>) => {
   const [showAll, setShowAll] = useState(false)
 
   const shouldShowAll = showAll || items.length <= limit + 1
@@ -26,7 +20,9 @@ export const ShowMore = <T,>({
   return (
     <Stack {...props}>
       {visibleItems.map((item, index) => (
-        <div key={index}>{renderItem(item)}</div>
+        <div key={index} className="contents">
+          {renderItem(item)}
+        </div>
       ))}
 
       {!shouldShowAll && hiddenCount > 0 && (
