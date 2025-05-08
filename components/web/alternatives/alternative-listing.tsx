@@ -20,16 +20,14 @@ type AlternativeListingProps = {
 
 const AlternativeListing = ({ list, pagination, search, options }: AlternativeListingProps) => {
   return (
-    <>
-      <FiltersProvider {...options}>
-        <div className="space-y-5" id="alternatives">
-          <AlternativeSearch {...search} />
-          <AlternativeList {...list} />
-        </div>
+    <FiltersProvider {...options}>
+      <div className="space-y-5" id="alternatives">
+        <AlternativeSearch {...search} />
+        <AlternativeList {...list} />
+      </div>
 
-        <Pagination {...pagination} />
-      </FiltersProvider>
-    </>
+      <Pagination {...pagination} />
+    </FiltersProvider>
   )
 }
 

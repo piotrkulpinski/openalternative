@@ -9,6 +9,7 @@ import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
+import { BrandLink } from "~/components/web/ui/brand-link"
 import { Favicon } from "~/components/web/ui/favicon"
 import { Insights } from "~/components/web/ui/insights"
 import { VerifiedBadge } from "~/components/web/verified-badge"
@@ -44,61 +45,65 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
   return (
     <Card asChild {...props}>
-      <Link href={`/${tool.slug}`} className="group">
-        <CardHeader wrap={false}>
-          <Favicon src={tool.faviconUrl} title={tool.name} />
+      <CardHeader wrap={false}>
+        <Favicon src={tool.faviconUrl} title={tool.name} />
 
-          <H4 as="h3" className="truncate">
+        <H4 as="h3" className="truncate">
+          <Link href={`/${tool.slug}`}>
+            <span className="absolute inset-0 z-10" />
             {tool.name}
-          </H4>
+          </Link>
+        </H4>
 
-          {tool.ownerId && <VerifiedBadge size="md" className="-ml-1.5" />}
+        {tool.ownerId && <VerifiedBadge size="md" className="-ml-1.5" />}
 
-          <ToolBadges tool={tool} className="ml-auto" />
-        </CardHeader>
+        <ToolBadges tool={tool} className="ml-auto" />
+      </CardHeader>
 
-        <div className="relative size-full flex flex-col">
-          {hasMoreInfo && (
-            <Stack
-              size="lg"
-              direction="column"
-              wrap={false}
-              className="items-stretch absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100"
-            >
-              {tool.description && (
-                <CardDescription className="line-clamp-4">{tool.description}</CardDescription>
-              )}
-
-              {!!tool.alternatives.length && (
-                <Stack size="sm" className="mt-auto text-sm">
-                  <span>
-                    <span className="sr-only">Open Source </span>Alternative to:
-                  </span>
-
-                  {tool.alternatives.map(({ slug, name, faviconUrl }) => (
-                    <Stack key={slug} size="xs" className="flex-1 min-w-0" wrap={false}>
-                      <Favicon src={faviconUrl} title={name} className="size-6 p-[3px]" />
-                      <strong className="font-medium truncate">{name}</strong>
-                    </Stack>
-                  ))}
-                </Stack>
-              )}
-            </Stack>
-          )}
-
+      <div className="relative size-full flex flex-col">
+        {hasMoreInfo && (
           <Stack
             size="lg"
             direction="column"
-            className={cx(
-              "flex-1",
-              hasMoreInfo && "transition-opacity duration-200 group-hover:opacity-0",
-            )}
+            wrap={false}
+            className="absolute inset-0 z-10 opacity-0 pointer-events-none transition-opacity group-hover:opacity-100"
           >
-            {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
-            <Insights insights={insights.filter(i => i.value)} className="mt-auto" />
+            {tool.description && (
+              <CardDescription className="line-clamp-4">{tool.description}</CardDescription>
+            )}
+
+            {!!tool.alternatives.length && (
+              <Stack size="sm" className="mt-auto">
+                <span className="text-sm text-muted-foreground whitespace-nowrap">
+                  <span className="sr-only">Open Source </span>Alternative to:
+                </span>
+
+                {tool.alternatives.map(({ slug, name, faviconUrl }) => (
+                  <BrandLink
+                    key={slug}
+                    href={`/alternatives/${slug}`}
+                    name={name}
+                    faviconUrl={faviconUrl}
+                    className="pointer-events-auto"
+                  />
+                ))}
+              </Stack>
+            )}
           </Stack>
-        </div>
-      </Link>
+        )}
+
+        <Stack
+          size="lg"
+          direction="column"
+          className={cx(
+            "flex-1",
+            hasMoreInfo && "transition-opacity duration-200 group-hover:opacity-0",
+          )}
+        >
+          {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
+          <Insights insights={insights.filter(i => i.value)} className="mt-auto" />
+        </Stack>
+      </div>
     </Card>
   )
 }
