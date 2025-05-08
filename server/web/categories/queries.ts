@@ -96,7 +96,7 @@ export const findCategoryTree = async (fullPath: string) => {
   return categories.sort((a, b) => a.fullPath.length - b.fullPath.length)
 }
 
-export const getCategoryDescendants = async (slug: string): Promise<string[]> => {
+export const findCategoryDescendants = async (slug: string): Promise<string[]> => {
   "use cache"
 
   cacheTag("categories", `category-descendants-${slug}`)
@@ -125,7 +125,7 @@ export const getCategoryDescendants = async (slug: string): Promise<string[]> =>
   return [slug, ...result.map(({ slug }) => slug)]
 }
 
-export const getCategoryAncestors = async (slug: string): Promise<string[]> => {
+export const findCategoryAncestors = async (slug: string): Promise<string[]> => {
   "use cache"
 
   cacheTag("categories", `category-ancestors-${slug}`)

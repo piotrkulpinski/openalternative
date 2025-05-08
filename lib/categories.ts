@@ -1,5 +1,5 @@
 import type { Category } from "@prisma/client"
-import { getCategoryAncestors } from "~/server/web/categories/queries"
+import { findCategoryAncestors } from "~/server/web/categories/queries"
 
 export const categoryRedirects = [
   {
@@ -279,7 +279,7 @@ export const getCategoryPath = async (category: Pick<Category, "slug" | "parentI
     return category.slug
   }
 
-  const categoryAncestors = await getCategoryAncestors(category.slug)
+  const categoryAncestors = await findCategoryAncestors(category.slug)
 
   return categoryAncestors.join("/")
 }

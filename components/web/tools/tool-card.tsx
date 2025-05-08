@@ -76,9 +76,9 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
                   </span>
 
                   {tool.alternatives.map(({ slug, name, faviconUrl }) => (
-                    <Stack size="xs" key={slug}>
+                    <Stack key={slug} size="xs" className="flex-1 min-w-0" wrap={false}>
                       <Favicon src={faviconUrl} title={name} className="size-6 p-[3px]" />
-                      <strong className="font-medium">{name}</strong>
+                      <strong className="font-medium truncate">{name}</strong>
                     </Stack>
                   ))}
                 </Stack>

@@ -30,7 +30,7 @@ export const ShowMore = <T,>({
       ))}
 
       {!shouldShowAll && hiddenCount > 0 && (
-        <Button size="sm" variant="ghost" className="py-[3px]" onClick={() => setShowAll(true)}>
+        <Button size="sm" variant="ghost" className="py-0.5" onClick={() => setShowAll(true)}>
           +{hiddenCount} more
         </Button>
       )}

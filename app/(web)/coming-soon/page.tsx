@@ -1,8 +1,9 @@
+import { ToolStatus } from "@prisma/client"
 import type { Metadata } from "next"
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
-import { ComingSoonToolListing } from "~/app/(web)/coming-soon/listing"
-import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
+import { ToolListingSkeleton } from "~/components/web/tools/tool-listing"
+import { ToolQuery } from "~/components/web/tools/tool-query"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
@@ -36,8 +37,14 @@ export default async function ComingSoonPage(props: PageProps) {
         <IntroDescription>{metadata.description}</IntroDescription>
       </Intro>
 
-      <Suspense fallback={<ToolQuerySkeleton />}>
-        <ComingSoonToolListing searchParams={props.searchParams} />
+      <Suspense fallback={<ToolListingSkeleton />}>
+        <ToolQuery
+          searchParams={props.searchParams}
+          overrideParams={{ sort: "publishedAt.asc" }}
+          where={{ status: ToolStatus.Scheduled }}
+          search={{ placeholder: "Search scheduled tools..." }}
+          options={{ enableSort: false }}
+        />
       </Suspense>
     </>
   )

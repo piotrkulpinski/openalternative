@@ -4,7 +4,7 @@ import { Select as SelectPrimitive } from "radix-ui"
 import type { ComponentProps } from "react"
 import { Box } from "~/components/common/box"
 import { Icon } from "~/components/common/icon"
-import { type VariantProps, cx, popoverAnimationClasses } from "~/utils/cva"
+import { type VariantProps, cva, cx, popoverAnimationClasses } from "~/utils/cva"
 import { inputVariants } from "./input"
 
 const Select = SelectPrimitive.Root
@@ -60,6 +60,16 @@ const SelectScrollDownButton = ({
   )
 }
 
+const selectScrollButtonVariants = cva({
+  base: "absolute inset-x-0 z-10 from-accent via-accent/80 to-transparent animate-in fade-in-0 duration-300",
+  variants: {
+    position: {
+      top: "top-0 bg-linear-to-b ",
+      bottom: "bottom-0 bg-linear-to-t",
+    },
+  },
+})
+
 const SelectContent = ({
   className,
   children,
@@ -70,7 +80,7 @@ const SelectContent = ({
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
         className={cx(
-          "relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md",
+          "relative z-50 isolate max-h-96 min-w-32 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md",
           popoverAnimationClasses,
           position === "popper" &&
             "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
@@ -79,7 +89,7 @@ const SelectContent = ({
         position={position}
         {...props}
       >
-        <SelectScrollUpButton />
+        <SelectScrollUpButton className={selectScrollButtonVariants({ position: "top" })} />
         <SelectPrimitive.Viewport
           className={cx(
             "p-1",
@@ -89,7 +99,7 @@ const SelectContent = ({
         >
           {children}
         </SelectPrimitive.Viewport>
-        <SelectScrollDownButton />
+        <SelectScrollDownButton className={selectScrollButtonVariants({ position: "bottom" })} />
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
   )

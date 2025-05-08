@@ -3,12 +3,12 @@ import type { Metadata } from "next"
 import { notFound, permanentRedirect } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Suspense, cache } from "react"
-import { CategoryToolListing } from "~/app/(web)/categories/[...slug]/listing"
 import { Badge } from "~/components/common/badge"
 import { H6 } from "~/components/common/heading"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
-import { ToolQuerySkeleton } from "~/components/web/tools/tool-query"
+import { ToolListingSkeleton } from "~/components/web/tools/tool-listing"
+import { ToolQuery } from "~/components/web/tools/tool-query"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
@@ -16,6 +16,7 @@ import { categoryRedirects } from "~/lib/categories"
 import type { CategoryOne } from "~/server/web/categories/payloads"
 import {
   findCategoryByPath,
+  findCategoryDescendants,
   findCategorySlugs,
   findCategoryTree,
 } from "~/server/web/categories/queries"
@@ -70,15 +71,19 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
 
 export default async function CategoryPage(props: PageProps) {
   const category = await getCategory(props)
-  const categoryTree = await findCategoryTree(category.fullPath)
   const { title, description } = getMetadata(category)
+
+  const [descendants, tree] = await Promise.all([
+    findCategoryDescendants(category.slug),
+    findCategoryTree(category.fullPath),
+  ])
 
   const breadcrumbItems = [
     {
       href: "/categories",
       name: "Categories",
     },
-    ...categoryTree.map(cat => ({
+    ...tree.map(cat => ({
       href: `/categories/${cat.fullPath}`,
       name: cat.label || cat.name,
     })),
@@ -107,8 +112,12 @@ export default async function CategoryPage(props: PageProps) {
         )}
       </Intro>
 
-      <Suspense fallback={<ToolQuerySkeleton />}>
-        <CategoryToolListing category={category} searchParams={props.searchParams} />
+      <Suspense fallback={<ToolListingSkeleton />}>
+        <ToolQuery
+          searchParams={props.searchParams}
+          where={{ categories: { some: { slug: { in: descendants } } } }}
+          search={{ placeholder: `Search ${category.label}...` }}
+        />
       </Suspense>
     </>
   )
