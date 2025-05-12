@@ -45,7 +45,7 @@ const ToolRefinementComponent = ({
     >
       <CommandInput
         placeholder={`Search ${filter}`}
-        className="w-full !text-xs !min-w-[0] px-3 py-2 font-normal border-b outline-none disabled:opacity-50"
+        className="w-full text-xs! min-w-[0]! px-3 py-2 font-normal border-b outline-none disabled:opacity-50"
         disabled={disabled}
       />
 

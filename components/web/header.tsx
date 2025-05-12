@@ -46,7 +46,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
   return (
     <Container
       className={cx(
-        "group/menu sticky top-(--header-top) inset-x-0 z-[49] duration-300",
+        "group/menu sticky top-(--header-top) inset-x-0 z-49 duration-300",
         "max-lg:data-[state=open]:bg-background/90",
         className,
       )}

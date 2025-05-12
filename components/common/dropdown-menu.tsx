@@ -22,7 +22,7 @@ const DropdownMenuContent = ({
     <DropdownMenuPrimitive.Content
       sideOffset={sideOffset}
       className={cx(
-        "z-50 min-w-[10rem] flex flex-col overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-sm",
+        "z-50 min-w-40 flex flex-col overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-sm",
         popoverAnimationClasses,
         className,
       )}
@@ -119,7 +119,7 @@ const DropdownMenuSubContent = ({
 }: ComponentProps<typeof DropdownMenuPrimitive.SubContent>) => (
   <DropdownMenuPrimitive.SubContent
     className={cx(
-      "z-50 min-w-[10rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-sm",
+      "z-50 min-w-40 overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-sm",
       popoverAnimationClasses,
       className,
     )}

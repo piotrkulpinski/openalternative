@@ -5,9 +5,9 @@ const wrapperVariants = cva({
   base: "@container flex flex-col gap-8 w-full",
   variants: {
     size: {
-      sm: "max-w-screen-sm",
-      md: "max-w-screen-md",
-      lg: "max-w-screen-lg",
+      sm: "max-w-(--breakpoint-sm)",
+      md: "max-w-(--breakpoint-md)",
+      lg: "max-w-(--breakpoint-lg)",
     },
   },
 })

@@ -20,7 +20,7 @@ export const Stats = ({ className, ...props }: ComponentProps<"div">) => {
       {stats.map(({ value, label }, index) => (
         <MDXComponents.a
           key={`${index}-${label}`}
-          className="flex flex-col items-center gap-1 basis-[12rem] hover:[&[href]]:opacity-80"
+          className="flex flex-col items-center gap-1 basis-48 hover:[&[href]]:opacity-80"
         >
           <Stat
             value={value}

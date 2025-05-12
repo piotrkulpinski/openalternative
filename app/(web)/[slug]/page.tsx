@@ -109,7 +109,7 @@ export default async function ToolPage(props: PageProps) {
                 <FaviconImage src={tool.faviconUrl} title={tool.name} className="size-8" />
 
                 <Stack className="flex-1 min-w-0">
-                  <H2 as="h1" className="!leading-tight truncate">
+                  <H2 as="h1" className="leading-tight! truncate">
                     {tool.name}
                   </H2>
 

@@ -30,7 +30,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
     >
       <div
         className={cx(
-          "grid grid-cols-3 gap-y-8 gap-x-4 md:gap-x-6 md:grid-cols-[repeat(16,minmax(0,1fr))]",
+          "grid grid-cols-3 gap-y-8 gap-x-4 md:gap-x-6 md:grid-cols-16",
           className,
         )}
         {...props}

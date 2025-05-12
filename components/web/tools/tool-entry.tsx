@@ -35,7 +35,7 @@ const ToolEntry = ({ children, className, tool, ...props }: ToolEntryProps) => {
           <Link href={href} className="group">
             <FaviconImage src={tool.faviconUrl} title={tool.name} className="size-8" />
 
-            <H2 className="!leading-tight truncate underline decoration-transparent group-hover:decoration-foreground/30">
+            <H2 className="leading-tight! truncate underline decoration-transparent group-hover:decoration-foreground/30">
               {tool.name}
             </H2>
 

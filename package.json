@@ -76,7 +76,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@tailwindcss/postcss": "^4.1.4",
+    "@tailwindcss/postcss": "^4.1.6",
     "@tailwindcss/typography": "^0.5.16",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.15.3",
@@ -90,7 +90,7 @@
     "postcss": "^8.5.3",
     "prisma": "6.5.0",
     "schema-dts": "^1.1.5",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^4.1.6",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.8.3"
   },
