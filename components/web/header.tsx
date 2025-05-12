@@ -1,7 +1,8 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { type ComponentProps, Suspense, useEffect, useState } from "react"
+import { type ComponentProps, useEffect, useState } from "react"
+import { Button } from "~/components/common/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,13 +12,12 @@ import {
 } from "~/components/common/dropdown-menu"
 import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
-import { SearchForm } from "~/components/web/search-form"
 import { Container } from "~/components/web/ui/container"
 import { Hamburger } from "~/components/web/ui/hamburger"
 import { Logo } from "~/components/web/ui/logo"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { UserMenu } from "~/components/web/user-menu"
-import { config } from "~/config"
+import { useSearch } from "~/contexts/search-context"
 import type { Session } from "~/lib/auth-types"
 import { cx } from "~/utils/cva"
 
@@ -27,6 +27,7 @@ type HeaderProps = ComponentProps<typeof Container> & {
 
 export const Header = ({ children, className, session, ...props }: HeaderProps) => {
   const pathname = usePathname()
+  const search = useSearch()
   const [isNavOpen, setNavOpen] = useState(false)
 
   // Close the mobile navigation when the user presses the "Escape" key
@@ -126,38 +127,13 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
           <NavLink href="/submit">Submit</NavLink>
         </nav>
 
-        <Stack size="sm" className="max-sm:hidden">
-          <Suspense fallback={<Icon name="lucide/search" className="size-4" />}>
-            <SearchForm />
-          </Suspense>
-
-          <NavLink
-            href={config.links.twitter}
-            target="_blank"
-            rel="nofollow noreferrer"
-            title="Follow us on X"
-          >
-            <Icon name="tabler/brand-x" className="size-4" />
-          </NavLink>
-
-          <NavLink
-            href={config.links.bluesky}
-            target="_blank"
-            rel="nofollow noreferrer"
-            title="Follow us on Bluesky"
-          >
-            <Icon name="tabler/brand-bluesky" className="size-4" />
-          </NavLink>
-
-          <NavLink
-            href={config.links.github}
-            target="_blank"
-            rel="nofollow noreferrer"
-            title="View source code"
-          >
-            <Icon name="tabler/brand-github" className="size-4" />
-          </NavLink>
-        </Stack>
+        <Button
+          size="sm"
+          variant="ghost"
+          className="-ml-1 -mr-2 text-sm"
+          onClick={search.open}
+          prefix={<Icon name="lucide/search" />}
+        />
 
         <UserMenu session={session} />
       </div>

@@ -67,7 +67,6 @@ export const Nav = ({ className, links, isCollapsed, ...props }: NavProps) => {
                 variant="ghost"
                 aria-label={title}
                 className={cx(isActive(href) && "bg-accent text-foreground")}
-                hover={false}
                 asChild
                 {...props}
               >
@@ -91,7 +90,6 @@ export const Nav = ({ className, links, isCollapsed, ...props }: NavProps) => {
               ))
             }
             className={cx("justify-start", isActive(href) && "bg-accent text-foreground")}
-            hover={false}
             asChild
             {...props}
           >
