@@ -30,15 +30,12 @@ export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhere
     ...(!!license.length && { license: { slug: { in: license } } }),
   }
 
-  // Use full-text search when query exists
   if (q) {
-    const searchQuery: { id: string }[] = await db.$queryRaw`
-      SELECT id
-      FROM "Tool", plainto_tsquery('english', ${q}) query
-      WHERE "searchVector" @@ query
-    `
-
-    whereQuery.id = { in: searchQuery.map(r => r.id) }
+    whereQuery.OR = [
+      { name: { contains: q, mode: "insensitive" } },
+      { tagline: { contains: q, mode: "insensitive" } },
+      { description: { contains: q, mode: "insensitive" } },
+    ]
   }
 
   const [tools, totalCount] = await db.$transaction([
