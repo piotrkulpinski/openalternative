@@ -218,7 +218,9 @@ export const Search = () => {
           name="Categories"
           items={categories?.hits}
           onItemSelect={navigateTo}
-          getHref={({ slug }) => `${isAdmin ? "/admin" : ""}/categories/${slug}`}
+          getHref={({ slug, fullPath }) =>
+            isAdmin ? `/admin/categories/${slug}` : `/categories/${fullPath}`
+          }
           renderItemDisplay={({ name }) => name}
         />
       </CommandList>
