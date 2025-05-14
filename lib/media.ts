@@ -159,10 +159,6 @@ export const uploadScreenshot = async (url: string, s3Key: string) => {
     url,
     access_key: env.SCREENSHOTONE_ACCESS_KEY,
 
-    // Cache
-    cache: "true",
-    cache_ttl: "2592000",
-
     // Emulations
     dark_mode: "true",
     reduced_motion: "true",
