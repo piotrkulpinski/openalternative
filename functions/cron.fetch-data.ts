@@ -1,6 +1,7 @@
 import { ToolStatus } from "@prisma/client"
 import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
+import { config } from "~/config"
 import { fetchAnalyticsInBatches } from "~/lib/analytics"
 import { getMilestoneReached } from "~/lib/milestones"
 import { getToolRepositoryData } from "~/lib/repositories"
@@ -10,7 +11,7 @@ import { inngest } from "~/services/inngest"
 import { tryCatch } from "~/utils/helpers"
 
 export const fetchData = inngest.createFunction(
-  { id: "fetch-data", retries: 0 },
+  { id: `${config.site.slug}.fetch-data`, retries: 0 },
   { cron: "TZ=Europe/Warsaw 0 0 * * *" }, // Every day at midnight
 
   async ({ step, db, logger }) => {

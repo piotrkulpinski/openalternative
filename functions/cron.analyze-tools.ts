@@ -1,10 +1,11 @@
 import { ToolStatus } from "@prisma/client"
 import { revalidateTag } from "next/cache"
+import { config } from "~/config"
 import { analyzeRepositoryStack } from "~/lib/stack-analysis"
 import { inngest } from "~/services/inngest"
 
 export const analyzeTools = inngest.createFunction(
-  { id: "analyze-tools" },
+  { id: `${config.site.slug}.analyze-tools` },
   { cron: "TZ=Europe/Warsaw 0 0 * * 1" }, // Every Monday at midnight
 
   async ({ step, db, logger }) => {
