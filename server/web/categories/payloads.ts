@@ -8,6 +8,7 @@ export const categoryWithTools = Prisma.validator<Prisma.CategoryWhereInput>()({
 })
 
 export const categoryOnePayload = Prisma.validator<Prisma.CategorySelect>()({
+  id: true,
   name: true,
   slug: true,
   label: true,

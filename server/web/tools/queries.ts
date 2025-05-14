@@ -8,7 +8,7 @@ import {
   toolOnePayload,
 } from "~/server/web/tools/payloads"
 import { db } from "~/services/db"
-import { meilisearch } from "~/services/meilisearch"
+import { getMeilisearchIndex } from "~/services/meilisearch"
 
 export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhereInput) => {
   "use cache"
@@ -62,9 +62,9 @@ export const findRelatedTools = async (id: string) => {
   "use cache"
 
   cacheTag(`related-tools-${id}`)
-  cacheLife("minutes")
+  cacheLife("hours")
 
-  const similarTools = await meilisearch.index("tools").searchSimilarDocuments<{ id: string }>({
+  const similarTools = await getMeilisearchIndex("tools").searchSimilarDocuments<{ id: string }>({
     id,
     embedder: "openai",
     limit: 3,

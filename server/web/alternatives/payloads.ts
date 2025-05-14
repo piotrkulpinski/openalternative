@@ -1,6 +1,7 @@
 import { Prisma, ToolStatus } from "@prisma/client"
 
 export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeSelect>()({
+  id: true,
   name: true,
   slug: true,
   description: true,
