@@ -2,19 +2,12 @@
 
 import { getUrlHostname } from "@curiousleaf/utils"
 import { type HotkeyItem, useDebouncedState, useHotkeys } from "@mantine/hooks"
-import { capitalCase } from "change-case"
 import { usePathname, useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
-import { type ReactNode, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { inferServerActionReturnData } from "zsa"
 import { useServerAction } from "zsa-react"
-import {
-  type AlternativeSearchResult,
-  type CategorySearchResult,
-  type SearchResult,
-  type ToolSearchResult,
-  searchItems,
-} from "~/actions/search"
+import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
   CommandEmpty,
@@ -42,8 +35,10 @@ export const Search = () => {
   const pathname = usePathname()
   const search = useSearch()
   const [results, setResults] = useState<inferServerActionReturnData<typeof searchItems>>()
-  const [query, setQuery] = useDebouncedState("", 250)
+  const [query, setQuery] = useDebouncedState("", 500)
   const listRef = useRef<HTMLDivElement>(null)
+
+  const [tools, alternatives, categories] = results || []
   const isAdmin = pathname.startsWith("/admin")
   const hasQuery = !!query.length
 
@@ -133,65 +128,6 @@ export const Search = () => {
     performSearch()
   }, [query, execute])
 
-  const isToolResult = (result: SearchResult): result is ToolSearchResult => {
-    return result._federation.indexUid === "tools"
-  }
-
-  const isAlternativeResult = (result: SearchResult): result is AlternativeSearchResult => {
-    return result._federation.indexUid === "alternatives"
-  }
-
-  const isCategoryResult = (result: SearchResult): result is CategorySearchResult => {
-    return result._federation.indexUid === "categories"
-  }
-
-  const getHref = (result: SearchResult) => {
-    if (isToolResult(result)) {
-      return `${isAdmin ? "/admin/tools" : ""}/${result.slug}`
-    }
-
-    if (isAlternativeResult(result)) {
-      return `${isAdmin ? "/admin" : ""}/alternatives/${result.slug}`
-    }
-
-    if (isCategoryResult(result)) {
-      return `${isAdmin ? "/admin" : ""}/categories/${result.fullPath}`
-    }
-
-    return ""
-  }
-
-  const renderItemDisplay = (result: SearchResult): ReactNode => {
-    if (isToolResult(result)) {
-      return (
-        <>
-          {result.faviconUrl && <img src={result.faviconUrl} alt="" width={16} height={16} />}
-          <span className="flex-1 truncate">{result.name}</span>
-          <span className="opacity-50">{getUrlHostname(result.websiteUrl || "")}</span>
-        </>
-      )
-    }
-
-    if (isAlternativeResult(result)) {
-      return (
-        <>
-          {result.faviconUrl && <img src={result.faviconUrl} alt="" width={16} height={16} />}
-          <span className="flex-1 truncate">{result.name}</span>
-        </>
-      )
-    }
-
-    if (isCategoryResult(result)) {
-      return (
-        <>
-          <span className="flex-1 truncate">{result.name}</span>
-        </>
-      )
-    }
-
-    return null
-  }
-
   return (
     <CommandDialog open={search.isOpen} onOpenChange={handleOpenChange} shouldFilter={false}>
       <CommandInput
@@ -219,21 +155,61 @@ export const Search = () => {
             </CommandGroup>
           ))}
 
-        {hasQuery &&
-          Object.entries(results || {}).map(([key, items]) => (
-            <CommandGroup key={key} heading={capitalCase(key)}>
-              {items.map(result => (
-                <CommandItem
-                  key={result.slug}
-                  value={`${key}:${result.slug}`}
-                  onSelect={() => navigateTo(getHref(result))}
-                >
-                  {renderItemDisplay(result)}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          ))}
+        {!!tools?.hits.length && (
+          <CommandGroup heading="Tools">
+            {tools.hits.map(({ slug, name, faviconUrl, websiteUrl }) => (
+              <CommandItem
+                key={slug}
+                value={`tools:${slug}`}
+                onSelect={() => navigateTo(`${isAdmin ? "/admin/tools" : ""}/${slug}`)}
+              >
+                <>
+                  {faviconUrl && <img src={faviconUrl} alt="" width={16} height={16} />}
+                  <span className="flex-1 truncate">{name}</span>
+                  <span className="opacity-50">{getUrlHostname(websiteUrl || "")}</span>
+                </>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
+
+        {!!alternatives?.hits.length && (
+          <CommandGroup heading="Alternatives">
+            {alternatives.hits.map(({ slug, name, faviconUrl }) => (
+              <CommandItem
+                key={slug}
+                value={`alternatives:${slug}`}
+                onSelect={() => navigateTo(`${isAdmin ? "/admin" : ""}/alternatives/${slug}`)}
+              >
+                <>
+                  {faviconUrl && <img src={faviconUrl} alt="" width={16} height={16} />}
+                  <span className="flex-1 truncate">{name}</span>
+                </>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
+
+        {!!categories?.hits.length && (
+          <CommandGroup heading="Categories">
+            {categories.hits.map(({ slug, name, fullPath }) => (
+              <CommandItem
+                key={slug}
+                value={`categories:${slug}`}
+                onSelect={() => navigateTo(`${isAdmin ? "/admin" : ""}/categories/${fullPath}`)}
+              >
+                <span className="flex-1 truncate">{name}</span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
       </CommandList>
+
+      {!!results?.length && (
+        <div className="px-3 py-2 text-[10px] text-muted-foreground/50 not-first:border-t">
+          Search took {Math.max(...results.map(r => r.processingTimeMs))}ms
+        </div>
+      )}
     </CommandDialog>
   )
 }
