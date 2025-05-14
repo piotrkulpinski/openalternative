@@ -25,6 +25,7 @@ export const toolStackPayload = Prisma.validator<Prisma.Tool$stacksArgs>()({
 })
 
 export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
+  id: true,
   name: true,
   slug: true,
   websiteUrl: true,
