@@ -48,6 +48,8 @@ export const searchItems = createServerAction()
       }),
     ])
 
+    console.log(results)
+
     console.log(`Search: ${Math.round(performance.now() - start)}ms`)
 
     return results

@@ -4,7 +4,7 @@ import { getUrlHostname } from "@curiousleaf/utils"
 import { type HotkeyItem, useDebouncedState, useHotkeys } from "@mantine/hooks"
 import { usePathname, useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
-import { useEffect, useRef, useState } from "react"
+import { type ReactNode, useEffect, useRef, useState } from "react"
 import type { inferServerActionReturnData } from "zsa"
 import { useServerAction } from "zsa-react"
 import { searchItems } from "~/actions/search"
@@ -20,6 +20,38 @@ import {
 import { Icon } from "~/components/common/icon"
 import { Kbd } from "~/components/common/kbd"
 import { useSearch } from "~/contexts/search-context"
+
+type SearchResultsProps<T> = {
+  name: string
+  items: T[] | undefined
+  onItemSelect: (url: string) => void
+  getHref: (item: T) => string
+  renderItemDisplay: (item: T) => ReactNode
+}
+
+const SearchResults = <T extends { slug: string }>({
+  name,
+  items,
+  onItemSelect,
+  getHref,
+  renderItemDisplay,
+}: SearchResultsProps<T>) => {
+  if (!items?.length) return null
+
+  return (
+    <CommandGroup heading={name}>
+      {items.map(item => (
+        <CommandItem
+          key={item.slug}
+          value={`${name.toLowerCase()}:${item.slug}`}
+          onSelect={() => onItemSelect(getHref(item))}
+        >
+          {renderItemDisplay(item)}
+        </CommandItem>
+      ))}
+    </CommandGroup>
+  )
+}
 
 type CommandSection = {
   name: string
@@ -92,7 +124,7 @@ export const Search = () => {
     // User command sections & hotkeys
   } else {
     commandSections.push({
-      name: "Browse",
+      name: "Quick Links",
       items: [
         { label: "Tools", path: "/" },
         { label: "Alternatives", path: "/alternatives" },
@@ -155,59 +187,46 @@ export const Search = () => {
             </CommandGroup>
           ))}
 
-        {!!tools?.hits.length && (
-          <CommandGroup heading="Tools">
-            {tools.hits.map(({ slug, name, faviconUrl, websiteUrl }) => (
-              <CommandItem
-                key={slug}
-                value={`tools:${slug}`}
-                onSelect={() => navigateTo(`${isAdmin ? "/admin/tools" : ""}/${slug}`)}
-              >
-                <>
-                  {faviconUrl && <img src={faviconUrl} alt="" width={16} height={16} />}
-                  <span className="flex-1 truncate">{name}</span>
-                  <span className="opacity-50">{getUrlHostname(websiteUrl || "")}</span>
-                </>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        )}
+        <SearchResults
+          name="Tools"
+          items={tools?.hits}
+          onItemSelect={navigateTo}
+          getHref={({ slug }) => `${isAdmin ? "/admin/tools" : ""}/${slug}`}
+          renderItemDisplay={({ name, faviconUrl, websiteUrl }) => (
+            <>
+              {faviconUrl && <img src={faviconUrl} alt="" width={16} height={16} />}
+              <span className="flex-1 truncate">{name}</span>
+              <span className="opacity-50">{getUrlHostname(websiteUrl)}</span>
+            </>
+          )}
+        />
 
-        {!!alternatives?.hits.length && (
-          <CommandGroup heading="Alternatives">
-            {alternatives.hits.map(({ slug, name, faviconUrl }) => (
-              <CommandItem
-                key={slug}
-                value={`alternatives:${slug}`}
-                onSelect={() => navigateTo(`${isAdmin ? "/admin" : ""}/alternatives/${slug}`)}
-              >
-                <>
-                  {faviconUrl && <img src={faviconUrl} alt="" width={16} height={16} />}
-                  <span className="flex-1 truncate">{name}</span>
-                </>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        )}
+        <SearchResults
+          name="Alternatives"
+          items={alternatives?.hits}
+          onItemSelect={navigateTo}
+          getHref={({ slug }) => `${isAdmin ? "/admin" : ""}/alternatives/${slug}`}
+          renderItemDisplay={({ name, faviconUrl }) => (
+            <>
+              {faviconUrl && <img src={faviconUrl} alt="" width={16} height={16} />}
+              <span className="flex-1 truncate">{name}</span>
+            </>
+          )}
+        />
 
-        {!!categories?.hits.length && (
-          <CommandGroup heading="Categories">
-            {categories.hits.map(({ slug, name, fullPath }) => (
-              <CommandItem
-                key={slug}
-                value={`categories:${slug}`}
-                onSelect={() => navigateTo(`${isAdmin ? "/admin" : ""}/categories/${fullPath}`)}
-              >
-                <span className="flex-1 truncate">{name}</span>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        )}
+        <SearchResults
+          name="Categories"
+          items={categories?.hits}
+          onItemSelect={navigateTo}
+          getHref={({ slug }) => `${isAdmin ? "/admin" : ""}/categories/${slug}`}
+          renderItemDisplay={({ name }) => name}
+        />
       </CommandList>
 
-      {!!results?.length && (
+      {!!results && (
         <div className="px-3 py-2 text-[10px] text-muted-foreground/50 not-first:border-t">
-          Search took {Math.max(...results.map(r => r.processingTimeMs))}ms
+          Found {results.reduce((acc, curr) => acc + curr.estimatedTotalHits, 0)} results in{" "}
+          {Math.max(...results.map(r => r.processingTimeMs))}ms
         </div>
       )}
     </CommandDialog>
