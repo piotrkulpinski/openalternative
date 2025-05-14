@@ -2,6 +2,7 @@ import { env } from "~/env"
 
 export const siteConfig = {
   name: "OpenAlternative",
+  slug: "openalternative",
   tagline: "Open Source Alternatives to Popular Software",
   description:
     "A curated collection of the best open source alternatives to everyday SaaS products. Save money with reliable tools hand-picked for you.",

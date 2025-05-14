@@ -4,20 +4,20 @@ import { z } from "zod"
 import { createServerAction } from "zsa"
 import { getMeilisearchIndex } from "~/services/meilisearch"
 
-export type ToolSearchResult = {
+type ToolSearchResult = {
   slug: string
   name: string
   websiteUrl: string
   faviconUrl?: string
 }
 
-export type AlternativeSearchResult = {
+type AlternativeSearchResult = {
   slug: string
   name: string
   faviconUrl?: string
 }
 
-export type CategorySearchResult = {
+type CategorySearchResult = {
   slug: string
   name: string
   fullPath: string
@@ -47,8 +47,6 @@ export const searchItems = createServerAction()
         attributesToRetrieve: ["slug", "name", "fullPath"],
       }),
     ])
-
-    console.log(results)
 
     console.log(`Search: ${Math.round(performance.now() - start)}ms`)
 

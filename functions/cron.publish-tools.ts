@@ -1,12 +1,13 @@
 import { type Tool, ToolStatus } from "@prisma/client"
 import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
+import { config } from "~/config"
 import { notifySubmitterOfToolPublished } from "~/lib/notifications"
 import { getPostLaunchTemplate, sendSocialPost } from "~/lib/socials"
 import { inngest } from "~/services/inngest"
 
 export const publishTools = inngest.createFunction(
-  { id: "publish-tools" },
+  { id: `${config.site.slug}.publish-tools` },
   { cron: "TZ=Europe/Warsaw */15 * * * *" }, // Every 15 minutes
 
   async ({ step, db, logger }) => {
