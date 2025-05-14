@@ -1,5 +1,4 @@
 import { performance } from "node:perf_hooks"
-import { getRandomElement } from "@curiousleaf/utils"
 import { type Prisma, ToolStatus } from "@prisma/client"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import type { FilterSchema } from "~/server/web/shared/schema"
@@ -9,6 +8,7 @@ import {
   toolOnePayload,
 } from "~/server/web/tools/payloads"
 import { db } from "~/services/db"
+import { meilisearch } from "~/services/meilisearch"
 
 export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhereInput) => {
   "use cache"
@@ -58,39 +58,23 @@ export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhere
   return { tools, totalCount, pageCount }
 }
 
-export const findRelatedTools = async ({
-  where,
-  slug,
-  ...args
-}: Prisma.ToolFindManyArgs & { slug: string }) => {
+export const findRelatedTools = async (id: string) => {
   "use cache"
 
-  cacheTag("related-tools")
+  cacheTag(`related-tools-${id}`)
   cacheLife("minutes")
 
-  const relatedWhereClause = {
-    ...where,
-    AND: [
-      { status: ToolStatus.Published },
-      { slug: { not: slug } },
-      { alternatives: { some: { tools: { some: { slug } } } } },
-    ],
-  } satisfies Prisma.ToolWhereInput
+  const similarTools = await meilisearch.index("tools").searchSimilarDocuments<{ id: string }>({
+    id,
+    embedder: "openai",
+    limit: 3,
+    attributesToRetrieve: ["id"],
+    rankingScoreThreshold: 0.7,
+  })
 
-  const take = 3
-  const itemCount = await db.tool.count({ where: relatedWhereClause })
-  const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
-  const properties = ["id", "name", "score"] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
-  const orderBy = getRandomElement(properties)
-  const orderDir = getRandomElement(["asc", "desc"] as const)
-
-  return db.tool.findMany({
-    ...args,
-    where: relatedWhereClause,
+  return await db.tool.findMany({
+    where: { id: { in: similarTools.hits.map(hit => hit.id) } },
     select: toolManyPayload,
-    orderBy: { [orderBy]: orderDir },
-    take,
-    skip,
   })
 }
 
