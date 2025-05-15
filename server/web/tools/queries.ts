@@ -8,7 +8,8 @@ import {
   toolOnePayload,
 } from "~/server/web/tools/payloads"
 import { db } from "~/services/db"
-import { getMeilisearchIndex } from "~/services/meilisearch"
+import { getMeiliIndex } from "~/services/meilisearch"
+import { tryCatch } from "~/utils/helpers"
 
 export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhereInput) => {
   "use cache"
@@ -64,16 +65,23 @@ export const findRelatedTools = async (id: string) => {
   cacheTag(`related-tools-${id}`)
   cacheLife("hours")
 
-  const similarTools = await getMeilisearchIndex("tools").searchSimilarDocuments<{ id: string }>({
-    id,
-    embedder: "openai",
-    limit: 3,
-    attributesToRetrieve: ["id"],
-    rankingScoreThreshold: 0.7,
-  })
+  const { data, error } = await tryCatch(
+    getMeiliIndex("tools").searchSimilarDocuments<{ id: string }>({
+      id,
+      embedder: "openai",
+      limit: 3,
+      attributesToRetrieve: ["id"],
+      rankingScoreThreshold: 0.7,
+    }),
+  )
+
+  if (error) {
+    console.error(error)
+    return []
+  }
 
   return await db.tool.findMany({
-    where: { id: { in: similarTools.hits.map(hit => hit.id) } },
+    where: { id: { in: data.hits.map(hit => hit.id) } },
     select: toolManyPayload,
   })
 }

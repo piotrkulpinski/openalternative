@@ -2,24 +2,12 @@
 
 import { ToolStatus } from "@prisma/client"
 import { revalidateTag } from "next/cache"
-import { z } from "zod"
+import { indexTools } from "~/lib/indexing"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { adminProcedure } from "~/lib/safe-actions"
-import { getPostTemplate, sendSocialPost } from "~/lib/socials"
+import { toolOnePayload } from "~/server/web/tools/payloads"
 import { db } from "~/services/db"
 import { tryCatch } from "~/utils/helpers"
-
-export const testSocialPosts = adminProcedure
-  .createServerAction()
-  .input(z.object({ slug: z.string() }))
-  .handler(async ({ input: { slug } }) => {
-    const tool = await db.tool.findFirst({ where: { slug } })
-
-    if (tool) {
-      const template = await getPostTemplate(tool)
-      return sendSocialPost(template, tool)
-    }
-  })
 
 export const fetchRepositoryData = adminProcedure.createServerAction().handler(async () => {
   const tools = await db.tool.findMany({
@@ -59,4 +47,15 @@ export const fetchRepositoryData = adminProcedure.createServerAction().handler(a
   // Revalidate cache
   revalidateTag("tools")
   revalidateTag("tool")
+})
+
+export const indexData = adminProcedure.createServerAction().handler(async () => {
+  const tools = await db.tool.findMany({
+    where: { status: ToolStatus.Published },
+    select: toolOnePayload,
+  })
+
+  if (tools.length) {
+    await indexTools(tools)
+  }
 })

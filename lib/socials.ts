@@ -1,14 +1,16 @@
 import { formatNumber } from "@curiousleaf/utils"
-import type { Tool } from "@prisma/client"
+import type { Tool as PrismaTool } from "@prisma/client"
 import { formatDistanceToNowStrict } from "date-fns"
 import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
 import { brandLinkApi } from "~/lib/apis"
+import type { ToolMany, ToolOne } from "~/server/web/tools/payloads"
 import { sendBlueskyPost } from "~/services/bluesky"
 import { sendMastodonPost } from "~/services/mastodon"
 import { sendTwitterPost } from "~/services/twitter"
 import { tryCatch } from "~/utils/helpers"
 
+type Tool = PrismaTool | ToolOne | ToolMany
 const socialHandle = "{social handle}"
 
 /**

@@ -2,8 +2,10 @@ import { type Tool, ToolStatus } from "@prisma/client"
 import { NonRetriableError } from "inngest"
 import { revalidateTag } from "next/cache"
 import { config } from "~/config"
+import { indexTools } from "~/lib/indexing"
 import { notifySubmitterOfToolPublished } from "~/lib/notifications"
 import { getPostLaunchTemplate, sendSocialPost } from "~/lib/socials"
+import { type ToolOne, toolOnePayload } from "~/server/web/tools/payloads"
 import { inngest } from "~/services/inngest"
 
 export const publishTools = inngest.createFunction(
@@ -13,10 +15,8 @@ export const publishTools = inngest.createFunction(
   async ({ step, db, logger }) => {
     const tools = await step.run("fetch-tools", async () => {
       return await db.tool.findMany({
-        where: {
-          status: ToolStatus.Scheduled,
-          publishedAt: { lte: new Date() },
-        },
+        where: { status: ToolStatus.Scheduled, publishedAt: { lte: new Date() } },
+        select: toolOnePayload,
       })
     })
 
@@ -62,6 +62,11 @@ export const publishTools = inngest.createFunction(
         revalidateTag("schedule")
       })
     }
+
+    // Index tools
+    await step.run("index-tools", async () => {
+      await indexTools(tools as unknown as ToolOne[])
+    })
 
     // Cleanup expired claims
     await step.run("cleanup-claims", async () => {

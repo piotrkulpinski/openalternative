@@ -5,8 +5,10 @@ import { type HotkeyItem, useDebouncedState, useHotkeys } from "@mantine/hooks"
 import { usePathname, useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
 import { type ReactNode, useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
 import type { inferServerActionReturnData } from "zsa"
 import { useServerAction } from "zsa-react"
+import { fetchRepositoryData, indexData } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -73,6 +75,27 @@ export const Search = () => {
   const [tools, alternatives, categories] = results || []
   const isAdmin = pathname.startsWith("/admin")
   const hasQuery = !!query.length
+
+  const actions = [
+    {
+      action: fetchRepositoryData,
+      label: "Fetch Repository Data",
+      successMessage: "Repository data fetched",
+    },
+    {
+      action: indexData,
+      label: "Index Data",
+      successMessage: "Data indexed",
+    },
+  ] as const
+
+  const adminActions = actions.map(({ label, action, successMessage }) => ({
+    label,
+    execute: useServerAction(action, {
+      onSuccess: () => toast.success(successMessage),
+      onError: ({ err }) => toast.error(err.message),
+    }).execute,
+  }))
 
   const clearSearch = () => {
     setTimeout(() => {
@@ -186,6 +209,16 @@ export const Search = () => {
               ))}
             </CommandGroup>
           ))}
+
+        {isAdmin && (
+          <CommandGroup heading="Admin">
+            {adminActions.map(({ label, execute }) => (
+              <CommandItem key={label} onSelect={() => execute()}>
+                {label}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
 
         <SearchResults
           name="Tools"
