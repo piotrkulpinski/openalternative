@@ -164,7 +164,7 @@ export const Search = () => {
 
       if (data.some(r => r.hits.length > 0)) {
         listRef.current?.scrollTo({ top: 0, behavior: "smooth" })
-        posthog.capture("search", { query })
+        query.length > 2 && posthog.capture("search", { query })
       }
     },
 
@@ -213,7 +213,7 @@ export const Search = () => {
             </CommandGroup>
           ))}
 
-        {isAdmin && (
+        {!hasQuery && isAdmin && (
           <CommandGroup heading="Admin">
             {adminActions.map(({ label, execute }) => (
               <CommandItem key={label} onSelect={() => execute()}>
