@@ -29,7 +29,7 @@ export default async function Image({ params }: PageProps) {
             display: "flex",
             alignItems: "center",
             gap: "8",
-            fontSize: "2.4rem",
+            fontSize: "2.2rem",
           }}
         >
           <svg
