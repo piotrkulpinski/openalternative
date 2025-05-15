@@ -161,7 +161,11 @@ export const Search = () => {
   const { execute, isPending } = useServerAction(searchItems, {
     onSuccess: ({ data }) => {
       setResults(data)
-      listRef.current?.scrollTo({ top: 0, behavior: "smooth" })
+
+      if (data.some(r => r.hits.length > 0)) {
+        listRef.current?.scrollTo({ top: 0, behavior: "smooth" })
+        posthog.capture("search", { query })
+      }
     },
 
     onError: ({ err }) => {
@@ -174,7 +178,6 @@ export const Search = () => {
     const performSearch = async () => {
       if (hasQuery) {
         execute({ query })
-        posthog.capture("search", { query })
       } else {
         setResults(undefined)
       }
