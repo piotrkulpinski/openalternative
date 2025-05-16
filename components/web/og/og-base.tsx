@@ -17,7 +17,7 @@ export const OgBase = ({ faviconUrl, name, description, children }: OgBaseProps)
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        backgroundColor: "#fff",
+        backgroundColor: "#fafafa",
         color: "#1F1F1F",
         fontFamily: "Geist",
       }}
@@ -41,7 +41,7 @@ export const OgBase = ({ faviconUrl, name, description, children }: OgBaseProps)
           justifyContent: "space-between",
           gap: "3rem",
           padding: "3rem 3.5rem",
-          backgroundImage: "linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.2))",
+          backgroundImage: "linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.05))",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "24" }}>
@@ -66,7 +66,7 @@ export const OgBase = ({ faviconUrl, name, description, children }: OgBaseProps)
             lineHeight: "1.33",
             letterSpacing: "-0.015em",
             marginTop: "-1rem",
-            opacity: 0.65,
+            opacity: 0.75,
           }}
         >
           {getExcerpt(description, 125)}

@@ -8,10 +8,12 @@ import { z } from "zod"
 import { removeS3Directories } from "~/lib/media"
 import { notifySubmitterOfToolPublished } from "~/lib/notifications"
 import { notifySubmitterOfToolScheduled } from "~/lib/notifications"
+import { getToolRepositoryData } from "~/lib/repositories"
 import { adminProcedure } from "~/lib/safe-actions"
 import { analyzeRepositoryStack } from "~/lib/stack-analysis"
 import { toolSchema } from "~/server/admin/tools/schema"
 import { db } from "~/services/db"
+import { tryCatch } from "~/utils/helpers"
 
 export const upsertTool = adminProcedure
   .createServerAction()
@@ -84,6 +86,37 @@ export const deleteTools = adminProcedure
     })
 
     return true
+  })
+
+export const fetchToolRepositoryData = adminProcedure
+  .createServerAction()
+  .input(z.object({ id: z.string() }))
+  .handler(async ({ input: { id } }) => {
+    const tool = await db.tool.findUniqueOrThrow({ where: { id } })
+    const result = await tryCatch(getToolRepositoryData(tool.repositoryUrl))
+
+    if (result.error) {
+      console.error(`Failed to fetch repository data for ${tool.name}`, {
+        error: result.error,
+        slug: tool.slug,
+      })
+
+      return null
+    }
+
+    if (!result.data) {
+      return null
+    }
+
+    // Update the tool with the new repository data
+    await db.tool.update({
+      where: { id: tool.id },
+      data: result.data,
+    })
+
+    // Revalidate cache
+    revalidateTag("tools")
+    revalidateTag(`tool-${tool.slug}`)
   })
 
 export const analyzeToolStack = adminProcedure

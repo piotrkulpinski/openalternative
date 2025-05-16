@@ -18,7 +18,7 @@ import {
 } from "~/components/common/dropdown-menu"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
-import { analyzeToolStack } from "~/server/admin/tools/actions"
+import { analyzeToolStack, fetchToolRepositoryData } from "~/server/admin/tools/actions"
 import { cx } from "~/utils/cva"
 
 type ToolActionsProps = ComponentProps<typeof Button> & {
@@ -32,9 +32,14 @@ export const ToolActions = ({ className, tool, ...props }: ToolActionsProps) => 
 
   const actions = [
     {
+      action: fetchToolRepositoryData,
+      label: "Fetch Repository Data",
+      successMessage: "Repository data fetched successfully",
+    },
+    {
       action: analyzeToolStack,
       label: "Analyze Stack",
-      successMessage: "Tool stack analyzed",
+      successMessage: "Tool stack analyzed successfully",
     },
   ] as const
 
