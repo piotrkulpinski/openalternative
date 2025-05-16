@@ -1,3 +1,4 @@
+import { anthropic } from "@ai-sdk/anthropic"
 import { google } from "@ai-sdk/google"
 import { streamObject } from "ai"
 import { z } from "zod"
@@ -15,7 +16,7 @@ export const POST = withAdminAuth(async req => {
   const { url } = generateContentSchema.parse(await req.json())
 
   const result = streamObject({
-    model: isDev ? google("gemini-2.5-pro-preview-05-06") : google("claude-3-5-sonnet-latest"),
+    model: isDev ? google("gemini-2.5-pro-preview-05-06") : anthropic("claude-3-5-sonnet-latest"),
     schema: descriptionSchema,
     system: `
       You are an expert content creator specializing in reasearching and writing about software.

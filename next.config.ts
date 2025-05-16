@@ -4,6 +4,7 @@ import type { NextConfig } from "next"
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   devIndicators: false,
+  allowedDevOrigins: ["openalternative.local"],
 
   experimental: {
     ppr: true,

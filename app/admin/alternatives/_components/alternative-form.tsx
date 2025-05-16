@@ -231,7 +231,7 @@ export function AlternativeForm({
                   <img
                     src={field.value}
                     alt="Favicon"
-                    className="h-8 max-w-32 border box-content rounded-md object-contain"
+                    className="size-8 border box-content rounded-md object-contain"
                   />
                 )}
 
