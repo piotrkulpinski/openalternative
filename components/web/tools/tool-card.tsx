@@ -45,65 +45,58 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
   return (
     <Card asChild {...props}>
-      <CardHeader wrap={false}>
-        <Favicon src={tool.faviconUrl} title={tool.name} />
+      <Link href={`/${tool.slug}`}>
+        <CardHeader wrap={false}>
+          <Favicon src={tool.faviconUrl} title={tool.name} />
 
-        <H4 as="h3" className="truncate">
-          <Link href={`/${tool.slug}`}>
-            <span className="absolute inset-0 z-10" />
+          <H4 as="h3" className="truncate">
             {tool.name}
-          </Link>
-        </H4>
+          </H4>
 
-        {tool.ownerId && <VerifiedBadge size="md" className="-ml-1.5" />}
+          {tool.ownerId && <VerifiedBadge size="md" className="-ml-1.5" />}
 
-        <ToolBadges tool={tool} className="ml-auto" />
-      </CardHeader>
+          <ToolBadges tool={tool} className="ml-auto" />
+        </CardHeader>
 
-      <div className="relative size-full flex flex-col">
-        {hasMoreInfo && (
+        <div className="relative size-full flex flex-col">
+          {hasMoreInfo && (
+            <Stack
+              size="lg"
+              direction="column"
+              wrap={false}
+              className="absolute inset-0 z-10 opacity-0 transition-opacity group-hover:opacity-100"
+            >
+              {tool.description && (
+                <CardDescription className="line-clamp-4">{tool.description}</CardDescription>
+              )}
+
+              {!!tool.alternatives.length && (
+                <Stack size="sm" className="mt-auto">
+                  <span className="text-sm text-muted-foreground whitespace-nowrap">
+                    <span className="sr-only">Open Source </span>Alternative to:
+                  </span>
+
+                  {tool.alternatives.map(({ slug, name, faviconUrl }) => (
+                    <BrandLink key={slug} name={name} faviconUrl={faviconUrl} />
+                  ))}
+                </Stack>
+              )}
+            </Stack>
+          )}
+
           <Stack
             size="lg"
             direction="column"
-            wrap={false}
-            className="absolute inset-0 z-10 opacity-0 pointer-events-none transition-opacity group-hover:opacity-100"
+            className={cx(
+              "flex-1",
+              hasMoreInfo && "transition-opacity duration-200 group-hover:opacity-0",
+            )}
           >
-            {tool.description && (
-              <CardDescription className="line-clamp-4">{tool.description}</CardDescription>
-            )}
-
-            {!!tool.alternatives.length && (
-              <Stack size="sm" className="mt-auto">
-                <span className="text-sm text-muted-foreground whitespace-nowrap">
-                  <span className="sr-only">Open Source </span>Alternative to:
-                </span>
-
-                {tool.alternatives.map(({ slug, name, faviconUrl }) => (
-                  <BrandLink
-                    key={slug}
-                    href={`/alternatives/${slug}`}
-                    name={name}
-                    faviconUrl={faviconUrl}
-                    className="pointer-events-auto"
-                  />
-                ))}
-              </Stack>
-            )}
+            {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
+            <Insights insights={insights.filter(i => i.value)} className="mt-auto" />
           </Stack>
-        )}
-
-        <Stack
-          size="lg"
-          direction="column"
-          className={cx(
-            "flex-1",
-            hasMoreInfo && "transition-opacity duration-200 group-hover:opacity-0",
-          )}
-        >
-          {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
-          <Insights insights={insights.filter(i => i.value)} className="mt-auto" />
-        </Stack>
-      </div>
+        </div>
+      </Link>
     </Card>
   )
 }

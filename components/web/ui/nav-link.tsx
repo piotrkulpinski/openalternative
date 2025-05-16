@@ -20,7 +20,7 @@ const navLinkVariants = cva({
   },
 })
 
-const isItemActive = (href: string | undefined, pathname: string, exact = false) => {
+const isItemActive = (href: string, pathname: string, exact = false) => {
   if (href && href !== "/") {
     return exact ? pathname === href : pathname.startsWith(href)
   }

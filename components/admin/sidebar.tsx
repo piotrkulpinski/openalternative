@@ -20,7 +20,7 @@ export const Sidebar = () => {
 
   const handleOpenSite = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
-    window.open(siteConfig.url, "_blank")
+    window.open(siteConfig.url, "_self")
   }
 
   const handleSignOut = async () => {
