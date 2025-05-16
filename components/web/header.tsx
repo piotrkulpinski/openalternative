@@ -21,7 +21,7 @@ import { useSearch } from "~/contexts/search-context"
 import type { Session } from "~/lib/auth-types"
 import { cx } from "~/utils/cva"
 
-type HeaderProps = ComponentProps<typeof Container> & {
+type HeaderProps = ComponentProps<"div"> & {
   session: Session | null
 }
 
@@ -45,7 +45,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
   }, [pathname])
 
   return (
-    <Container
+    <div
       className={cx(
         "group/menu sticky top-(--header-top) inset-x-0 z-49 duration-300",
         "max-lg:data-[state=open]:bg-background/90",
@@ -58,123 +58,126 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
     >
       <div className="absolute top-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-linear-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
 
-      <div className="relative flex items-center py-3.5 gap-x-3 text-sm h-(--header-height) isolate duration-300 lg:gap-4">
-        <Stack size="sm" wrap={false} className="mr-auto">
-          <button
-            type="button"
-            onClick={() => setNavOpen(!isNavOpen)}
-            className="block -m-1 -ml-1.5 lg:hidden"
-          >
-            <Hamburger className="size-7" />
-          </button>
+      <Container>
+        <div className="relative flex items-center py-3.5 gap-x-3 text-sm h-(--header-height) isolate duration-300 lg:gap-4">
+          <Stack size="sm" wrap={false} className="mr-auto">
+            <button
+              type="button"
+              onClick={() => setNavOpen(!isNavOpen)}
+              className="block -m-1 -ml-1.5 lg:hidden"
+            >
+              <Hamburger className="size-7" />
+            </button>
 
-          <Logo />
-        </Stack>
+            <Logo />
+          </Stack>
 
-        <nav className="contents max-lg:hidden">
-          <DropdownMenu>
-            <DropdownMenuTrigger className={cx(navLinkVariants({ className: "gap-1" }))}>
-              Browse{" "}
-              <Icon
-                name="lucide/chevron-down"
-                className="group-data-[state=open]:-rotate-180 duration-200"
-              />
-            </DropdownMenuTrigger>
+          <nav className="contents max-lg:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger className={cx(navLinkVariants({ className: "gap-1" }))}>
+                Browse{" "}
+                <Icon
+                  name="lucide/chevron-down"
+                  className="group-data-[state=open]:-rotate-180 duration-200"
+                />
+              </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="start">
-              <DropdownMenuItem asChild>
-                <NavLink href="/latest">
-                  <Icon name="lucide/calendar-days" className="shrink-0 size-4 opacity-75" /> Latest
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <NavLink href="/self-hosted">
-                  <Icon name="lucide/server" className="shrink-0 size-4 opacity-75" /> Self-hosted
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <NavLink href="/coming-soon">
-                  <Icon name="lucide/clock" className="shrink-0 size-4 opacity-75" /> Coming Soon
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <NavLink href="/categories">
-                  <Icon name="lucide/tags" className="shrink-0 size-4 opacity-75" /> Categories
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <NavLink href="/stacks">
-                  <Icon name="lucide/blocks" className="shrink-0 size-4 opacity-75" /> Tech Stacks
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <NavLink href="/topics">
-                  <Icon name="lucide/tag" className="shrink-0 size-4 opacity-75" /> Topics
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <NavLink href="/licenses">
-                  <Icon name="lucide/copyright" className="shrink-0 size-4 opacity-75" /> Licenses
-                </NavLink>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem asChild>
+                  <NavLink href="/latest">
+                    <Icon name="lucide/calendar-days" className="shrink-0 size-4 opacity-75" />{" "}
+                    Latest
+                  </NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <NavLink href="/self-hosted">
+                    <Icon name="lucide/server" className="shrink-0 size-4 opacity-75" /> Self-hosted
+                  </NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <NavLink href="/coming-soon">
+                    <Icon name="lucide/clock" className="shrink-0 size-4 opacity-75" /> Coming Soon
+                  </NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <NavLink href="/categories">
+                    <Icon name="lucide/tags" className="shrink-0 size-4 opacity-75" /> Categories
+                  </NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <NavLink href="/stacks">
+                    <Icon name="lucide/blocks" className="shrink-0 size-4 opacity-75" /> Tech Stacks
+                  </NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <NavLink href="/topics">
+                    <Icon name="lucide/tag" className="shrink-0 size-4 opacity-75" /> Topics
+                  </NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <NavLink href="/licenses">
+                    <Icon name="lucide/copyright" className="shrink-0 size-4 opacity-75" /> Licenses
+                  </NavLink>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-          <NavLink href="/alternatives">Alternatives</NavLink>
-          <NavLink href="/self-hosted">Self-hosted</NavLink>
-          <NavLink href="/advertise">Advertise</NavLink>
-          <NavLink href="/submit">Submit</NavLink>
+            <NavLink href="/alternatives">Alternatives</NavLink>
+            <NavLink href="/self-hosted">Self-hosted</NavLink>
+            <NavLink href="/advertise">Advertise</NavLink>
+            <NavLink href="/submit">Submit</NavLink>
+          </nav>
+
+          <Button
+            size="sm"
+            variant="ghost"
+            className="-ml-1 -mr-2 text-sm"
+            onClick={search.open}
+            prefix={<Icon name="lucide/search" />}
+          />
+
+          <UserMenu session={session} />
+        </div>
+
+        <nav
+          className={cx(
+            "absolute top-full inset-x-0 h-[calc(100dvh-var(--header-top)-var(--header-height))] -mt-px py-4 px-6 grid grid-cols-2 place-items-start place-content-start gap-x-4 gap-y-6 bg-background/90 backdrop-blur-lg transition-opacity lg:hidden",
+            isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none",
+          )}
+        >
+          <NavLink href="/latest" className="text-base">
+            Latest
+          </NavLink>
+          <NavLink href="/self-hosted" className="text-base">
+            Self-hosted
+          </NavLink>
+          <NavLink href="/coming-soon" className="text-base">
+            Coming Soon
+          </NavLink>
+          <NavLink href="/alternatives" className="text-base">
+            Alternatives
+          </NavLink>
+          <NavLink href="/categories" className="text-base">
+            Categories
+          </NavLink>
+          <NavLink href="/stacks" className="text-base">
+            Tech Stacks
+          </NavLink>
+          <NavLink href="/topics" className="text-base">
+            Topics
+          </NavLink>
+          <NavLink href="/submit" className="text-base">
+            Submit
+          </NavLink>
+          <NavLink href="/advertise" className="text-base">
+            Advertise
+          </NavLink>
+          <NavLink href="/about" className="text-base">
+            About
+          </NavLink>
         </nav>
-
-        <Button
-          size="sm"
-          variant="ghost"
-          className="-ml-1 -mr-2 text-sm"
-          onClick={search.open}
-          prefix={<Icon name="lucide/search" />}
-        />
-
-        <UserMenu session={session} />
-      </div>
-
-      <nav
-        className={cx(
-          "absolute top-full inset-x-0 h-[calc(100dvh-var(--header-top)-var(--header-height))] -mt-px py-4 px-6 grid grid-cols-2 place-items-start place-content-start gap-x-4 gap-y-6 bg-background/90 backdrop-blur-lg transition-opacity lg:hidden",
-          isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none",
-        )}
-      >
-        <NavLink href="/latest" className="text-base">
-          Latest
-        </NavLink>
-        <NavLink href="/self-hosted" className="text-base">
-          Self-hosted
-        </NavLink>
-        <NavLink href="/coming-soon" className="text-base">
-          Coming Soon
-        </NavLink>
-        <NavLink href="/alternatives" className="text-base">
-          Alternatives
-        </NavLink>
-        <NavLink href="/categories" className="text-base">
-          Categories
-        </NavLink>
-        <NavLink href="/stacks" className="text-base">
-          Tech Stacks
-        </NavLink>
-        <NavLink href="/topics" className="text-base">
-          Topics
-        </NavLink>
-        <NavLink href="/submit" className="text-base">
-          Submit
-        </NavLink>
-        <NavLink href="/advertise" className="text-base">
-          Advertise
-        </NavLink>
-        <NavLink href="/about" className="text-base">
-          About
-        </NavLink>
-      </nav>
-    </Container>
+      </Container>
+    </div>
   )
 }

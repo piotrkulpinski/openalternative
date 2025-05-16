@@ -22,6 +22,7 @@ import {
 import { Icon } from "~/components/common/icon"
 import { Kbd } from "~/components/common/kbd"
 import { useSearch } from "~/contexts/search-context"
+import { useSession } from "~/lib/auth-client"
 
 type SearchResultsProps<T> = {
   name: string
@@ -65,6 +66,7 @@ type CommandSection = {
 }
 
 export const Search = () => {
+  const { data: session } = useSession()
   const router = useRouter()
   const pathname = usePathname()
   const search = useSearch()
@@ -73,7 +75,8 @@ export const Search = () => {
   const listRef = useRef<HTMLDivElement>(null)
 
   const [tools, alternatives, categories] = results || []
-  const isAdmin = pathname.startsWith("/admin")
+  const isAdmin = session?.user.role === "admin"
+  const isAdminPath = pathname.startsWith("/admin")
   const hasQuery = !!query.length
 
   const actions = [
@@ -227,7 +230,7 @@ export const Search = () => {
           name="Tools"
           items={tools?.hits}
           onItemSelect={navigateTo}
-          getHref={({ slug }) => `${isAdmin ? "/admin/tools" : ""}/${slug}`}
+          getHref={({ slug }) => `${isAdminPath ? "/admin/tools" : ""}/${slug}`}
           renderItemDisplay={({ name, faviconUrl, websiteUrl }) => (
             <>
               {faviconUrl && <img src={faviconUrl} alt="" width={16} height={16} />}
@@ -241,7 +244,7 @@ export const Search = () => {
           name="Alternatives"
           items={alternatives?.hits}
           onItemSelect={navigateTo}
-          getHref={({ slug }) => `${isAdmin ? "/admin" : ""}/alternatives/${slug}`}
+          getHref={({ slug }) => `${isAdminPath ? "/admin" : ""}/alternatives/${slug}`}
           renderItemDisplay={({ name, faviconUrl }) => (
             <>
               {faviconUrl && <img src={faviconUrl} alt="" width={16} height={16} />}
@@ -255,7 +258,7 @@ export const Search = () => {
           items={categories?.hits}
           onItemSelect={navigateTo}
           getHref={({ slug, fullPath }) =>
-            isAdmin ? `/admin/categories/${slug}` : `/categories/${fullPath}`
+            isAdminPath ? `/admin/categories/${slug}` : `/categories/${fullPath}`
           }
           renderItemDisplay={({ name }) => name}
         />
