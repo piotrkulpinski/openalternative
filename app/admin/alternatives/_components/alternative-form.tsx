@@ -9,6 +9,7 @@ import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { generateFavicon } from "~/actions/media"
 import { AlternativeActions } from "~/app/admin/alternatives/_components/alternative-actions"
+import { AlternativeGenerateDescription } from "~/app/admin/alternatives/_components/alternative-generate-content"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/common/button"
 import {
@@ -110,6 +111,8 @@ export function AlternativeForm({
         <H3 className="flex-1 truncate">{title}</H3>
 
         <Stack size="sm" className="-my-0.5">
+          <AlternativeGenerateDescription />
+
           {alternative && <AlternativeActions alternative={alternative} size="md" />}
         </Stack>
       </Stack>

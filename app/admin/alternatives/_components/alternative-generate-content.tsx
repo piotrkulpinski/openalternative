@@ -5,19 +5,20 @@ import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 import { Button } from "~/components/common/button"
 import { Icon } from "~/components/common/icon"
-import { contentSchema } from "~/server/admin/shared/schema"
-import type { ToolSchema } from "~/server/admin/tools/schema"
+import type { AlternativeSchema } from "~/server/admin/alternatives/schema"
+import { descriptionSchema } from "~/server/admin/shared/schema"
 
-export const ToolGenerateContent = () => {
-  const { watch, setValue } = useFormContext<ToolSchema>()
-
-  const [url] = watch(["websiteUrl"])
+export const AlternativeGenerateDescription = () => {
   const errorMessage = "Something went wrong. Please check the console for more details."
-  const successMessage = "Content generated successfully. Please save the tool to update."
+  const successMessage =
+    "Description generated successfully. Please save the alternative to update."
+
+  const { watch, setValue } = useFormContext<AlternativeSchema>()
+  const [url] = watch(["websiteUrl"])
 
   const { object, submit, stop, isLoading } = useObject({
-    api: "/api/ai/generate-content",
-    schema: contentSchema,
+    api: "/api/ai/generate-description",
+    schema: descriptionSchema,
 
     onFinish: ({ error }) => {
       error ? toast.error(errorMessage) : toast.success(successMessage)
@@ -31,13 +32,11 @@ export const ToolGenerateContent = () => {
   // Handle streaming updates from AI SDK
   useEffect(() => {
     if (object) {
-      setValue("tagline", object.tagline)
       setValue("description", object.description)
-      setValue("content", object.content)
     }
   }, [object])
 
-  const handleGenerateContent = () => {
+  const handleGenerateDescription = () => {
     if (isValidUrl(url)) {
       submit({ url })
     } else {
@@ -58,9 +57,9 @@ export const ToolGenerateContent = () => {
         )
       }
       disabled={!isValidUrl(url)}
-      onClick={() => (isLoading ? stop() : handleGenerateContent())}
+      onClick={() => (isLoading ? stop() : handleGenerateDescription())}
     >
-      {isLoading ? "Stop Generating" : "Generate Content"}
+      {isLoading ? "Stop Generating" : "Generate Description"}
     </Button>
   )
 }

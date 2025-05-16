@@ -20,3 +20,8 @@ export const contentSchema = z.object({
       "A detailed and engaging longer description with key benefits (up to 1000 characters). Can be Markdown formatted, but should start with paragraph and not use headings. Highlight important points with bold text. Make sure the lists use correct Markdown syntax.",
     ),
 })
+
+/**
+ * The schema for the description generator.
+ */
+export const descriptionSchema = contentSchema.pick({ description: true })
