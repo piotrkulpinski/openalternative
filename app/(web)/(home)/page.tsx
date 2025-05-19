@@ -18,7 +18,7 @@ type PageProps = {
 export default function Home(props: PageProps) {
   return (
     <>
-      <section className="relative flex flex-col justify-center gap-y-6 h-[30vw] min-h-fit max-h-100 pb-8 md:pb-10 lg:pb-12">
+      <section className="relative flex flex-col justify-center gap-y-6 pb-8 md:pb-10 lg:pb-12 lg:min-h-fit lg:h-[30vw] lg:max-h-100">
         <div className="absolute left-1/2 bottom-0 -z-10 w-dvw h-2/3 border-b bg-gradient-to-t from-card to-transparent -translate-x-1/2 select-none overflow-clip dark:from-background/95 dark:border-card-dark">
           <Image
             src="/contribution-graph.webp"
