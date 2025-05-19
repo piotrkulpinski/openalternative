@@ -25,7 +25,7 @@ export default function Home(props: PageProps) {
             alt=""
             width={753}
             height={104}
-            className="size-full object-cover blur-[2px] mask-t-from-0% opacity-10 translate-y-3"
+            className="size-full object-cover blur-[2px] mask-t-from-0% opacity-10 translate-y-3 dark:invert"
             loading="lazy"
           />
         </div>
