@@ -29,6 +29,7 @@ import { IntroDescription } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { Tag } from "~/components/web/ui/tag"
 import { VerifiedBadge } from "~/components/web/verified-badge"
+import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import { getToolSuffix, isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
@@ -146,12 +147,12 @@ export default async function ToolPage(props: PageProps) {
                 </ExternalLink>
               </Button>
 
-              {tool.hostingUrl && (
+              {tool.isSelfHosted && (
                 <Button variant="secondary" suffix={<Icon name="lucide/arrow-up-right" />} asChild>
                   <ExternalLink
-                    href={tool.hostingUrl}
+                    href={config.links.selfHost}
                     eventName="click_ad"
-                    eventProps={{ url: tool.hostingUrl, type: "ToolPage", method: "button" }}
+                    eventProps={{ url: config.links.selfHost, type: "ToolPage", source: "button" }}
                   >
                     Self-host with Easypanel
                   </ExternalLink>

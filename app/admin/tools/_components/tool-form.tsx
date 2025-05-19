@@ -98,7 +98,6 @@ export function ToolForm({
       screenshotUrl: tool?.screenshotUrl ?? "",
       isFeatured: tool?.isFeatured ?? false,
       isSelfHosted: tool?.isSelfHosted ?? false,
-      hostingUrl: tool?.hostingUrl ?? "",
       submitterName: tool?.submitterName ?? "",
       submitterEmail: tool?.submitterEmail ?? "",
       submitterNote: tool?.submitterNote ?? "",
@@ -395,19 +394,35 @@ export function ToolForm({
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name="hostingUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Hosting URL</FormLabel>
-              <FormControl>
-                <Input type="url" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid gap-4 @2xl:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="discountCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Discount Code</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="discountAmount"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Discount Amount</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {tool?.submitterEmail && (
           <>
@@ -550,34 +565,6 @@ export function ToolForm({
                 </FormControl>
               </Stack>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="discountCode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Discount Code</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="discountAmount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Discount Amount</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
               <FormMessage />
             </FormItem>
           )}

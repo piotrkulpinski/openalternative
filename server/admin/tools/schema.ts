@@ -38,7 +38,6 @@ export const toolSchema = z.object({
   screenshotUrl: z.string().optional().or(z.literal("")),
   isFeatured: z.boolean().default(false),
   isSelfHosted: z.boolean().default(false),
-  hostingUrl: z.string().url().optional().or(z.literal("")),
   submitterName: z.string().optional(),
   submitterEmail: z.string().email().optional().or(z.literal("")),
   submitterNote: z.string().optional(),

@@ -160,7 +160,6 @@ model Tool {
   submitterName   String?
   submitterEmail  String?
   submitterNote   String?
-  hostingUrl      String?
   discountCode    String?
   discountAmount  String?
   firstCommitDate DateTime?
