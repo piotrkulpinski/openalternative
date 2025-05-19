@@ -72,6 +72,7 @@ export const findRelatedTools = async (id: string) => {
       limit: 3,
       attributesToRetrieve: ["id"],
       rankingScoreThreshold: 0.7,
+      filter: ["status = 'Published'"],
     }),
   )
 

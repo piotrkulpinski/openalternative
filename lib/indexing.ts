@@ -18,6 +18,7 @@ export const indexTools = async (tools: ToolOne[]) => {
       description: tool.description,
       websiteUrl: tool.websiteUrl,
       faviconUrl: tool.faviconUrl,
+      status: tool.status,
       alternatives: tool.alternatives?.map(a => a.name) ?? [],
       categories: tool.categories?.map(c => c.name) ?? [],
       topics: tool.topics?.map(t => t.slug) ?? [],

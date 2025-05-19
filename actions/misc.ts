@@ -51,7 +51,7 @@ export const fetchRepositoryData = adminProcedure.createServerAction().handler(a
 
 export const indexData = adminProcedure.createServerAction().handler(async () => {
   const tools = await db.tool.findMany({
-    where: { status: ToolStatus.Published },
+    where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
     select: toolOnePayload,
   })
 
