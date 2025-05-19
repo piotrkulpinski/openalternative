@@ -122,11 +122,7 @@ export const ToolClaimDialog = ({ tool, isOpen, setIsOpen }: ToolClaimDialogProp
   }
 
   const handleVerifyOtp = (data: z.infer<typeof otpSchema>) => {
-    verifyOtp({
-      toolSlug: tool.slug,
-      email: verificationEmail,
-      otp: data.otp,
-    })
+    verifyOtp({ toolSlug: tool.slug, otp: data.otp })
   }
 
   const handleResendOtp = () => {

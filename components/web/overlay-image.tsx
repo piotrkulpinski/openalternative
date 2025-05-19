@@ -24,7 +24,7 @@ export const OverlayImage = ({ children, className, src, alt, ...props }: Overla
           width={1280}
           height={1024}
           loading="lazy"
-          className="aspect-video h-auto w-full object-cover object-top will-change-transform group-hover:opacity-75 group-hover:scale-[102%] group-hover:blur-[1px]"
+          className="aspect-video h-auto w-full object-cover object-top will-change-transform group-hover:opacity-75 group-hover:scale-[101%] group-hover:blur-[1px]"
         />
 
         <Button

@@ -3,11 +3,11 @@ import { config } from "~/config"
 import { EmailButton } from "~/emails/components/button"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
-type EmailProps = EmailWrapperProps & {
+export type EmailProps = EmailWrapperProps & {
   url: string
 }
 
-const EmailLoginLink = ({ url, ...props }: EmailProps) => {
+const EmailMagicLink = ({ url, ...props }: EmailProps) => {
   return (
     <EmailWrapper {...props}>
       <Text>Welcome to {config.site.name}!</Text>
@@ -23,4 +23,4 @@ const EmailLoginLink = ({ url, ...props }: EmailProps) => {
   )
 }
 
-export default EmailLoginLink
+export default EmailMagicLink

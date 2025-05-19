@@ -1,16 +1,14 @@
-import type { Tool } from "@prisma/client"
 import { Preview, Section, Text } from "@react-email/components"
 import { config } from "~/config"
 import { claimsConfig } from "~/config/claims"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"
 
 type EmailProps = EmailWrapperProps & {
-  tool: Tool
   otp: string
 }
 
-const EmailToolClaimOtp = ({ tool, otp, ...props }: EmailProps) => {
-  const previewText = `Your OTP code to claim ${tool.name} on ${config.site.name}`
+const EmailVerifyDomain = ({ otp, ...props }: EmailProps) => {
+  const previewText = `Your code to verify domain ownership on ${config.site.name}`
 
   return (
     <EmailWrapper {...props}>
@@ -19,9 +17,9 @@ const EmailToolClaimOtp = ({ tool, otp, ...props }: EmailProps) => {
       <Text>Hello,</Text>
 
       <Text>
-        You're receiving this email to verify ownership of the domain for{" "}
-        <strong>{tool.name}</strong>. Please use the following one-time password (OTP) to complete
-        the verification process:
+        You're receiving this email to verify ownership of the domain to claim a tool on{" "}
+        <strong>{config.site.name}</strong>. Please use the following one-time password (OTP) to
+        complete the verification process:
       </Text>
 
       <Section className="my-4">
@@ -31,8 +29,8 @@ const EmailToolClaimOtp = ({ tool, otp, ...props }: EmailProps) => {
       </Section>
 
       <Text>
-        This code will expire in {claimsConfig.otpExpiration / 60} minutes. Do not share this code
-        with anyone.
+        This code will expire in {claimsConfig.otpExpiration} minutes. Do not share this code with
+        anyone.
       </Text>
 
       <Text>
@@ -43,4 +41,4 @@ const EmailToolClaimOtp = ({ tool, otp, ...props }: EmailProps) => {
   )
 }
 
-export default EmailToolClaimOtp
+export default EmailVerifyDomain

@@ -70,7 +70,6 @@ model User {
   sessions Session[]
   likes    Like[]
   tools    Tool[]
-  claims   Claim[]
   reports  Report[]
 
   // Indexes
@@ -181,7 +180,6 @@ model Tool {
   licenseId    String?
   likes        Like[]
   reports      Report[]
-  claims       Claim[]
   owner        User?         @relation(fields: [ownerId], references: [id])
   ownerId      String?
 
@@ -311,23 +309,4 @@ model Like {
   @@unique([userId, toolId])
   @@index([userId])
   @@index([toolId])
-}
-
-model Claim {
-  id        String   @id @default(cuid())
-  email     String
-  otp       String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-  tool   Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
-  toolId String
-
-  // Indexes
-  @@index([toolId])
-  @@index([email])
 }
