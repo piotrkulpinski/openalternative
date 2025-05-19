@@ -66,7 +66,7 @@ export const NewsletterForm = ({
         />
 
         <Box focusWithin>
-          <div className="flex w-full rounded-lg overflow-clip">
+          <div className="flex w-full rounded-lg bg-background">
             <FormField
               control={form.control}
               name="value"

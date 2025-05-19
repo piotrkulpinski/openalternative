@@ -151,7 +151,7 @@ export default async function ToolPage(props: PageProps) {
                   <ExternalLink
                     href={tool.hostingUrl}
                     eventName="click_ad"
-                    eventProps={{ url: tool.hostingUrl, type: "ToolPage" }}
+                    eventProps={{ url: tool.hostingUrl, type: "ToolPage", method: "button" }}
                   >
                     Self-host with Easypanel
                   </ExternalLink>
