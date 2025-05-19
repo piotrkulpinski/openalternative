@@ -68,13 +68,6 @@ export const publishTools = inngest.createFunction(
       await indexTools(tools as unknown as ToolOne[])
     })
 
-    // Cleanup expired claims
-    await step.run("cleanup-claims", async () => {
-      await db.claim.deleteMany({
-        where: { expiresAt: { lte: new Date() } },
-      })
-    })
-
     // Disconnect from DB
     await step.run("disconnect-from-db", async () => {
       return await db.$disconnect()
