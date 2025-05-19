@@ -4,6 +4,7 @@ import { Suspense } from "react"
 import { CountBadge, CountBadgeSkeleton } from "~/app/(web)/(home)/count-badge"
 import { AlternativePreviewSkeleton } from "~/components/web/alternatives/alternative-preview"
 import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
+import { BuiltWith } from "~/components/web/built-with"
 import { NewsletterForm } from "~/components/web/newsletter-form"
 import { NewsletterProof } from "~/components/web/newsletter-proof"
 import { ToolListingSkeleton } from "~/components/web/tools/tool-listing"
@@ -49,6 +50,8 @@ export default function Home(props: PageProps) {
         >
           <NewsletterProof />
         </NewsletterForm>
+
+        <BuiltWith source="hero" className="mx-auto text-xs translate-y-4 md:-mb-2 lg:-mb-4" />
       </section>
 
       <Suspense fallback={<ToolListingSkeleton />}>

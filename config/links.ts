@@ -1,7 +1,8 @@
 import { siteConfig } from "~/config/site"
 
 export const linksConfig = {
-  madeWith: "https://dirstarter.com",
+  builtWith: "https://dirstarter.com",
+  selfHost: "https://easypanel.io",
   author: "https://kulpinski.pl",
   twitter: "https://x.com/ossalternative",
   bluesky: "https://bsky.app/profile/openalternative.co",
