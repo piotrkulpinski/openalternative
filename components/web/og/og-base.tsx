@@ -40,7 +40,7 @@ export const OgBase = ({ faviconUrl, name, description, children }: OgBaseProps)
           flexDirection: "column",
           justifyContent: "space-between",
           gap: "3rem",
-          padding: "3rem 3.5rem",
+          padding: "3.5rem 4rem",
           backgroundImage: "linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.05))",
         }}
       >

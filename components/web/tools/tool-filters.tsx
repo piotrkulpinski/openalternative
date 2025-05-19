@@ -36,7 +36,7 @@ export const ToolFilters = ({ className, ...props }: ComponentProps<"div">) => {
   }, [updateFilters])
 
   return (
-    <div className={cx("grid grid-cols-xs gap-4", className)} {...props}>
+    <div className={cx("grid grid-cols-sm gap-4", className)} {...props}>
       {searchConfig.filters.map(type => (
         <ToolRefinement key={type} filter={type} items={data?.[type] ?? []} isPending={isPending} />
       ))}

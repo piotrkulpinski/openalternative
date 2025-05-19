@@ -32,7 +32,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
           <Stack className="gap-x-4 text-sm/normal">
             <H6 as="strong">Popular Proprietary Tools:</H6>
 
-            <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs">
+            <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs md:grid-cols-sm">
               {alternatives.map(alternative => (
                 <Tile key={alternative.slug} className="gap-2" asChild>
                   <NavLink href={`/alternatives/${alternative.slug}`}>

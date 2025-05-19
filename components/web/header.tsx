@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
 import { Icon } from "~/components/common/icon"
+import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { Container } from "~/components/web/ui/container"
 import { Hamburger } from "~/components/web/ui/hamburger"
@@ -59,7 +60,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
       <div className="absolute top-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-linear-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
 
       <Container>
-        <div className="relative flex items-center py-3.5 gap-x-3 text-sm h-(--header-height) isolate duration-300 lg:gap-4">
+        <div className="relative flex items-center py-3.5 gap-4 text-sm h-(--header-height) isolate duration-300 md:gap-6">
           <Stack size="sm" wrap={false} className="mr-auto">
             <button
               type="button"
@@ -72,7 +73,7 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
             <Logo />
           </Stack>
 
-          <nav className="contents max-lg:hidden">
+          <nav className="flex flex-wrap gap-4 max-md:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger className={cx(navLinkVariants({ className: "gap-1" }))}>
                 Browse{" "}
@@ -126,18 +127,25 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
             <NavLink href="/alternatives">Alternatives</NavLink>
             <NavLink href="/self-hosted">Self-hosted</NavLink>
             <NavLink href="/advertise">Advertise</NavLink>
-            <NavLink href="/submit">Submit</NavLink>
           </nav>
 
-          <Button
-            size="sm"
-            variant="ghost"
-            className="-ml-1 -mr-2 text-sm"
-            onClick={search.open}
-            prefix={<Icon name="lucide/search" />}
-          />
+          <Stack size="sm" wrap={false}>
+            <Button
+              size="sm"
+              variant="ghost"
+              aria-label="Search"
+              className="p-1"
+              onClick={search.open}
+            >
+              <Icon name="lucide/search" className="size-4" />
+            </Button>
 
-          <UserMenu session={session} />
+            <Button size="sm" variant="secondary" asChild>
+              <Link href="/submit">Submit</Link>
+            </Button>
+
+            <UserMenu session={session} />
+          </Stack>
         </div>
 
         <nav
