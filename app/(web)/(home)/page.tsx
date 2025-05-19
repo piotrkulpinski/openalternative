@@ -51,7 +51,7 @@ export default function Home(props: PageProps) {
           <NewsletterProof />
         </NewsletterForm>
 
-        <BuiltWith source="hero" className="mx-auto text-xs translate-y-4 md:-mb-2 lg:-mb-4" />
+        <BuiltWith medium="hero" className="mx-auto text-xs translate-y-4 md:-mb-2 lg:-mb-4" />
       </section>
 
       <Suspense fallback={<ToolListingSkeleton />}>

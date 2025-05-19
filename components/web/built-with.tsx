@@ -1,14 +1,19 @@
+import { getUrlHostname } from "@curiousleaf/utils"
 import type { ComponentProps } from "react"
 import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
 import { config } from "~/config"
 import { cx } from "~/utils/cva"
+import { addSearchParams } from "~/utils/search-params"
 
 type BuiltWithProps = ComponentProps<typeof Stack> & {
-  source?: string
+  medium?: string
 }
 
-export const BuiltWith = ({ className, source, ...props }: BuiltWithProps) => {
+export const BuiltWith = ({ className, medium, ...props }: BuiltWithProps) => {
+  const rssSearchParams = { utm_source: getUrlHostname(config.site.url), utm_medium: medium ?? "" }
+  const href = addSearchParams(config.links.builtWith, rssSearchParams)
+
   return (
     <Stack size="sm" className={cx("text-sm text-muted-foreground", className)} {...props}>
       <span>Built with</span>
@@ -19,12 +24,7 @@ export const BuiltWith = ({ className, source, ...props }: BuiltWithProps) => {
         className="font-medium text-foreground hover:text-secondary-foreground"
         asChild
       >
-        <ExternalLink
-          href={config.links.builtWith}
-          eventName="click_built_with"
-          eventProps={{ source }}
-          doFollow
-        >
+        <ExternalLink href={href} doFollow>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 216 251"

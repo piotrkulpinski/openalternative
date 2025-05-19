@@ -157,7 +157,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
       </div>
 
       <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full text-sm text-muted-foreground **:[&[href]]:font-medium **:[&[href]]:text-foreground **:[&[href]]:hover:text-secondary-foreground">
-        <BuiltWith source="footer" />
+        <BuiltWith medium="footer" />
 
         <p>
           Made by{" "}
