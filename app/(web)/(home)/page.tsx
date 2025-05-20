@@ -1,10 +1,10 @@
-import Image from "next/image"
 import type { SearchParams } from "nuqs/server"
 import { Suspense } from "react"
 import { CountBadge, CountBadgeSkeleton } from "~/app/(web)/(home)/count-badge"
 import { AlternativePreviewSkeleton } from "~/components/web/alternatives/alternative-preview"
 import { AlternativePreview } from "~/components/web/alternatives/alternative-preview"
 import { BuiltWith } from "~/components/web/built-with"
+import { ContributionGraph } from "~/components/web/contribution-graph"
 import { NewsletterForm } from "~/components/web/newsletter-form"
 import { NewsletterProof } from "~/components/web/newsletter-proof"
 import { ToolListingSkeleton } from "~/components/web/tools/tool-listing"
@@ -20,15 +20,8 @@ export default function Home(props: PageProps) {
   return (
     <>
       <section className="relative flex flex-col justify-center gap-y-6 pb-8 md:pb-10 lg:pb-12 lg:min-h-fit lg:h-[30vw] lg:max-h-100">
-        <div className="absolute left-1/2 bottom-0 -z-10 w-dvw h-2/3 border-b bg-gradient-to-t from-card to-transparent -translate-x-1/2 select-none overflow-clip dark:from-background/95 dark:border-card-dark">
-          <Image
-            src="/contribution-graph.webp"
-            alt=""
-            width={753}
-            height={104}
-            className="size-full object-cover blur-[2px] mask-t-from-0% opacity-10 translate-y-3 dark:invert"
-            loading="lazy"
-          />
+        <div className="absolute left-1/2 bottom-0 -z-10 w-dvw h-3/5 border-b bg-gradient-to-t from-card to-transparent -translate-x-1/2 select-none overflow-clip dark:from-background/95 dark:border-card-dark">
+          <ContributionGraph className="size-full object-cover mask-t-from-0% opacity-10 translate-y-1 dark:mix-blend-color-dodge dark:opacity-5" />
         </div>
 
         <Intro alignment="center">
