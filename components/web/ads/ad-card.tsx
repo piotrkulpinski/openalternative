@@ -1,5 +1,4 @@
 import type { AdType } from "@prisma/client"
-import { Slot } from "radix-ui"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
@@ -8,6 +7,7 @@ import {
   CardBadges,
   CardDescription,
   CardHeader,
+  CardIcon,
   type CardProps,
 } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
@@ -37,14 +37,12 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
         eventName="click_ad"
         eventProps={{ url: ad.websiteUrl, type: ad.type, source: "card" }}
       >
-        {!isDefault && (
-          <CardBadges>
-            <Badge variant="outline">Ad</Badge>
-          </CardBadges>
-        )}
+        <CardBadges>
+          <Badge variant="outline">Ad</Badge>
+        </CardBadges>
 
         <CardHeader wrap={false}>
-          <Favicon src={ad.faviconUrl} title={ad.name} />
+          <Favicon src={ad.faviconUrl ?? "/favicon.png"} title={ad.name} />
 
           <H4 as="strong" className="truncate">
             {ad.name}
@@ -61,11 +59,9 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
           <span>{ad.buttonLabel ?? `Visit ${ad.name}`}</span>
         </Button>
 
-        <div className="absolute inset-0 overflow-clip rounded-md">
-          <Slot.Root className="absolute -top-2/5 -right-1/4 -z-10 size-60 opacity-5 rotate-12 pointer-events-none transition group-hover/button:rotate-20">
-            {isDefault ? <LogoSymbol /> : <FaviconImage src={ad.faviconUrl} title={ad.name} />}
-          </Slot.Root>
-        </div>
+        <CardIcon>
+          {isDefault ? <LogoSymbol /> : <FaviconImage src={ad.faviconUrl} title={ad.name} />}
+        </CardIcon>
       </ExternalLink>
     </Card>
   )

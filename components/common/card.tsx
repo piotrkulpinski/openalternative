@@ -7,7 +7,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 const cardVariants = cva({
   base: [
     "group relative flex flex-col items-start gap-4 w-full border bg-card p-5 rounded-lg transform-gpu",
-    "before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:border-4 before:border-background",
+    "before:absolute before:inset-0 before:z-1 before:rounded-[inherit] before:border-4 before:border-background",
     "hover:[&[href]]:bg-accent",
   ],
 })
@@ -72,9 +72,23 @@ const CardBg = ({ className, ...props }: ComponentProps<"div">) => {
   )
 }
 
+const CardIcon = ({ children, className, ...props }: ComponentProps<"div">) => {
+  return (
+    <div
+      className={cx("absolute inset-0 overflow-clip mask-b-from-0 mask-l-from-0", className)}
+      {...props}
+    >
+      <Slot.Root className="absolute -top-2/5 -right-1/4 -z-10 size-60 opacity-10 rotate-12 pointer-events-none">
+        {children}
+      </Slot.Root>
+    </div>
+  )
+}
+
 export {
   Card,
   CardBg,
+  CardIcon,
   CardBadges,
   CardDescription,
   CardFooter,

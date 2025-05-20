@@ -1,11 +1,11 @@
 import type { ComponentProps } from "react"
 import { Button } from "~/components/common/button"
-import { Card, CardDescription, CardHeader } from "~/components/common/card"
+import { Card, CardDescription, CardHeader, CardIcon } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
 import { Icon } from "~/components/common/icon"
 import { Discount } from "~/components/web/discount"
 import { ExternalLink } from "~/components/web/external-link"
-import { Favicon } from "~/components/web/ui/favicon"
+import { Favicon, FaviconImage } from "~/components/web/ui/favicon"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
 import { cx } from "~/utils/cva"
 
@@ -52,6 +52,12 @@ export const AlternativeCardExternal = ({
         >
           <span>Visit {alternative.name}</span>
         </Button>
+
+        {alternative.faviconUrl && (
+          <CardIcon>
+            <FaviconImage src={alternative.faviconUrl} title={alternative.name} />
+          </CardIcon>
+        )}
       </ExternalLink>
     </Card>
   )
