@@ -38,7 +38,7 @@ export default async function AdvertisePage() {
       </Intro>
 
       <div className="flex flex-col items-center gap-4 md:gap-6">
-        <AdsPicker ads={ads} className="w-full max-w-2xl mx-auto" />
+        <AdsPicker ads={ads} className="mx-auto" />
 
         <Stack
           size="sm"

@@ -65,8 +65,8 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
   }
 
   return (
-    <div className={cx("flex flex-col w-full border divide-y rounded-md", className)} {...props}>
-      <div className="flex flex-col w-full sm:flex-row sm:divide-x max-sm:divide-y">
+    <div className={cx("flex flex-col border divide-y rounded-md", className)} {...props}>
+      <div className="flex flex-wrap overflow-clip">
         {config.ads.adSpots.map(adSpot => (
           <AdsCalendar
             key={adSpot.type}
@@ -75,6 +75,7 @@ export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
             price={price}
             selections={selections}
             updateSelection={updateSelection}
+            className="border-l border-t -ml-px -mt-px"
           />
         ))}
       </div>

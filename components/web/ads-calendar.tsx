@@ -97,7 +97,7 @@ export const AdsCalendar = ({
     : adSpot.price
 
   return (
-    <div className={cx("flex flex-col w-full divide-y", className)} {...props}>
+    <div className={cx("flex flex-col flex-1 divide-y", className)} {...props}>
       <Stack size="sm" direction="column" className="items-stretch py-2 px-4">
         <Stack>
           <H4 as="h3">{adSpot.label}</H4>
@@ -127,7 +127,7 @@ export const AdsCalendar = ({
         disabled={[date => date < new Date(), ...booked]}
         modifiers={{ booked }}
         modifiersClassNames={{ booked: "*:line-through" }}
-        className="w-full p-4"
+        className="w-full p-4 min-w-82"
       />
     </div>
   )

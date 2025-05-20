@@ -18,13 +18,6 @@ export const adsConfig = {
       price: 15,
       preview: "https://share.cleanshot.com/7CFqSw0b",
     },
-    {
-      label: "Banner Ad",
-      type: "Banner",
-      description: "Visible on every page of the website",
-      price: 25,
-      preview: "https://share.cleanshot.com/SvqTztKT",
-    },
   ] satisfies AdSpot[],
 
   defaultAd: {
