@@ -1,3 +1,4 @@
+import type { AdType } from "@prisma/client"
 import { type ComponentProps, Fragment, Suspense } from "react"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { EmptyList } from "~/components/web/empty-list"
@@ -7,17 +8,18 @@ import type { ToolMany } from "~/server/web/tools/payloads"
 
 type ToolListProps = ComponentProps<typeof Grid> & {
   tools: ToolMany[]
+  adType?: AdType
   enableAds?: boolean
 }
 
-const ToolList = ({ tools, enableAds = true, ...props }: ToolListProps) => {
+const ToolList = ({ tools, adType = "Tools", enableAds = true, ...props }: ToolListProps) => {
   return (
     <Grid {...props}>
       {tools.map((tool, order) => (
         <Fragment key={tool.slug}>
           {enableAds && Math.min(2, tools.length - 1) === order && (
             <Suspense fallback={<AdCardSkeleton className="sm:order-2" />}>
-              <AdCard type="Tools" className="sm:order-2" />
+              <AdCard type={adType} className="sm:order-2" />
             </Suspense>
           )}
 

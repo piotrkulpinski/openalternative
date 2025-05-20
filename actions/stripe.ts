@@ -59,6 +59,7 @@ export const createStripeAdsCheckout = createServerAction()
       mode: "payment",
       customer: customer.id,
       customer_update: { name: "auto", address: "auto" },
+      customer_creation: "if_required",
       line_items: ads.map(({ type, price, duration }) => ({
         price_data: {
           product_data: { name: `${type} Advertisement` },

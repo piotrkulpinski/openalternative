@@ -35,7 +35,7 @@ const AdCard = async ({ className, type, ...props }: AdCardProps) => {
         href={ad.websiteUrl}
         target={isDefault ? "_self" : undefined}
         eventName="click_ad"
-        eventProps={{ url: ad.websiteUrl, type: ad.type }}
+        eventProps={{ url: ad.websiteUrl, type: ad.type, source: "card" }}
       >
         {!isDefault && (
           <CardBadges>

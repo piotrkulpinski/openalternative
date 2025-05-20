@@ -43,6 +43,7 @@ export default async function SelfHostedPage(props: PageProps) {
           where={{ isSelfHosted: true }}
           search={{ placeholder: "Search self-hosted tools..." }}
           options={{ enableFilters: true }}
+          list={{ adType: "SelfHosted" }}
         />
       </Suspense>
 

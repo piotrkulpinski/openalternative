@@ -93,6 +93,7 @@ export default async function CategoryPage(props: PageProps) {
           searchParams={props.searchParams}
           where={{ categories: { some: { slug: category.slug } }, isSelfHosted: true }}
           search={{ placeholder: `Search self-hosted ${category.label}...` }}
+          list={{ adType: "SelfHosted" }}
         />
       </Suspense>
     </>

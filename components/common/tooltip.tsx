@@ -34,16 +34,14 @@ type TooltipProps = ComponentProps<typeof TooltipPrimitive.Root> &
     tooltip: ReactNode
   }
 
-const TooltipBase = ({ children, className, delayDuration, tooltip, ...rest }: TooltipProps) => {
+const TooltipBase = ({ children, delayDuration, tooltip, ...rest }: TooltipProps) => {
   if (!tooltip) {
     return children
   }
 
   return (
     <TooltipRoot delayDuration={delayDuration}>
-      <TooltipTrigger className={className} asChild>
-        {children}
-      </TooltipTrigger>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
 
       <TooltipPortal>
         <TooltipContent {...rest}>

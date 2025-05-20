@@ -4,6 +4,7 @@ import type { ComponentProps } from "react"
 import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
+import { Discount } from "~/components/web/discount"
 import type { ToolMany, ToolManyExtended, ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
 
@@ -38,13 +39,7 @@ export const ToolBadges = ({ tool, children, className, ...props }: ToolBadgesPr
       )}
 
       {discountAmount && (
-        <Tooltip
-          tooltip={
-            discountCode
-              ? `Use code ${discountCode} for ${discountAmount}!`
-              : `Get ${discountAmount} with our link!`
-          }
-        >
+        <Tooltip tooltip={<Discount amount={discountAmount} code={discountCode} />}>
           <Icon name="lucide/square-percent" className="size-4 text-green-500" />
         </Tooltip>
       )}

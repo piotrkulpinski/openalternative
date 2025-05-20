@@ -15,6 +15,7 @@ enum AdType {
   Alternatives
   Tools
   ToolPage
+  SelfHosted
   BlogPost
   All
 }

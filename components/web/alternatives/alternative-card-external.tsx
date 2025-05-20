@@ -3,6 +3,7 @@ import { Button } from "~/components/common/button"
 import { Card, CardDescription, CardHeader } from "~/components/common/card"
 import { H4 } from "~/components/common/heading"
 import { Icon } from "~/components/common/icon"
+import { Discount } from "~/components/web/discount"
 import { ExternalLink } from "~/components/web/external-link"
 import { Favicon } from "~/components/web/ui/favicon"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
@@ -38,20 +39,11 @@ export const AlternativeCardExternal = ({
           </CardDescription>
         )}
 
-        {alternative.discountAmount && (
-          <p className="*:underline *:font-semibold text-pretty text-sm text-green-600 dark:text-green-400">
-            {alternative.discountCode ? (
-              <>
-                Use code <strong>{alternative.discountCode}</strong> to get{" "}
-                <strong>{alternative.discountAmount}</strong>
-              </>
-            ) : (
-              <>
-                Get <strong>{alternative.discountAmount}</strong> with this link
-              </>
-            )}
-          </p>
-        )}
+        <Discount
+          amount={alternative.discountAmount}
+          code={alternative.discountCode}
+          className="text-sm"
+        />
 
         <Button
           className="pointer-events-none md:w-full"

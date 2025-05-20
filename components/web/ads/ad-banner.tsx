@@ -28,7 +28,7 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Ca
         <ExternalLink
           href={ad.websiteUrl}
           eventName="click_ad"
-          eventProps={{ url: ad.websiteUrl, type: ad.type }}
+          eventProps={{ url: ad.websiteUrl, type: ad.type, source: "banner" }}
         >
           <Badge variant="outline" className="leading-none max-sm:order-last">
             Ad

@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client"
 import type { SearchParams } from "nuqs/server"
+import type { AlternativeListProps } from "~/components/web/alternatives/alternative-list"
 import {
   AlternativeListing,
   type AlternativeListingProps,
@@ -12,12 +13,14 @@ type AlternativeQueryProps = Omit<AlternativeListingProps, "list" | "pagination"
   searchParams: Promise<SearchParams>
   overrideParams?: Partial<FilterSchema>
   where?: Prisma.AlternativeWhereInput
+  list?: Partial<AlternativeListProps>
 }
 
 const AlternativeQuery = async ({
   searchParams,
   overrideParams,
   where,
+  list,
   ...props
 }: AlternativeQueryProps) => {
   const parsedParams = filterParamsCache.parse(await searchParams)
@@ -26,7 +29,7 @@ const AlternativeQuery = async ({
 
   return (
     <AlternativeListing
-      list={{ alternatives }}
+      list={{ alternatives, ...list }}
       pagination={{ totalCount, pageSize: params.perPage }}
       {...props}
     />

@@ -38,7 +38,7 @@ const FaviconImage = ({ className, src, title, ...props }: FaviconImageProps) =>
       loading="lazy"
       width="64"
       height="64"
-      className={cx("aspect-square size-9 rounded-sm bg-accent", className)}
+      className={cx("aspect-square size-9 rounded-sm", className)}
       {...props}
     />
   )

@@ -13,7 +13,9 @@ import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
+import { AdButton } from "~/components/web/ads/ad-button"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
+import { Discount } from "~/components/web/discount"
 import { ExternalLink } from "~/components/web/external-link"
 import { Listing } from "~/components/web/listing"
 import { Markdown } from "~/components/web/markdown"
@@ -29,7 +31,6 @@ import { IntroDescription } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { Tag } from "~/components/web/ui/tag"
 import { VerifiedBadge } from "~/components/web/verified-badge"
-import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import { getToolSuffix, isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
@@ -109,7 +110,7 @@ export default async function ToolPage(props: PageProps) {
               <Stack className="w-full">
                 <FaviconImage src={tool.faviconUrl} title={tool.name} className="size-8" />
 
-                <Stack className="flex-1 min-w-0">
+                <Stack className="flex-1">
                   <H2 as="h1" className="leading-tight! truncate">
                     {tool.name}
                   </H2>
@@ -131,41 +132,31 @@ export default async function ToolPage(props: PageProps) {
               </Stack>
             )}
 
-            <Stack className="w-full">
-              <Button
-                suffix={<Icon name="lucide/arrow-up-right" />}
-                className="sm:min-w-36"
-                asChild
-              >
-                <ExternalLink
-                  href={tool.affiliateUrl || tool.websiteUrl}
-                  doFollow={tool.isFeatured}
-                  eventName="click_website"
-                  eventProps={{ url: tool.websiteUrl }}
+            <Stack direction="column">
+              <Stack className="w-full">
+                <Button
+                  suffix={<Icon name="lucide/arrow-up-right" />}
+                  className="sm:min-w-36"
+                  asChild
                 >
-                  Visit {tool.name}
-                </ExternalLink>
-              </Button>
-
-              {tool.isSelfHosted && (
-                <Button variant="secondary" suffix={<Icon name="lucide/arrow-up-right" />} asChild>
                   <ExternalLink
-                    href={config.links.selfHost}
-                    eventName="click_ad"
-                    eventProps={{ url: config.links.selfHost, type: "ToolPage", source: "button" }}
+                    href={tool.affiliateUrl || tool.websiteUrl}
+                    doFollow={tool.isFeatured}
+                    eventName="click_website"
+                    eventProps={{ url: tool.websiteUrl }}
                   >
-                    Self-host with Easypanel
+                    Visit {tool.name}
                   </ExternalLink>
                 </Button>
-              )}
 
-              {tool.discountAmount && (
-                <p className="pl-2 flex-1 text-sm text-balance text-green-600 dark:text-green-500">
-                  {tool.discountCode
-                    ? `Use code ${tool.discountCode} for ${tool.discountAmount}!`
-                    : `Get ${tool.discountAmount} with our link!`}
-                </p>
-              )}
+                {tool.isSelfHosted && <AdButton type="SelfHosted" />}
+              </Stack>
+
+              <Discount
+                amount={tool.discountAmount}
+                code={tool.discountCode}
+                className="text-xs/tight"
+              />
             </Stack>
           </div>
 
