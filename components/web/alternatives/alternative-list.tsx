@@ -38,10 +38,10 @@ const AlternativeList = ({ alternatives, enableAds = true, ...props }: Alternati
   )
 }
 
-const AlternativeListSkeleton = () => {
+const AlternativeListSkeleton = ({ count = 6 }: { count?: number }) => {
   return (
     <Grid>
-      {[...Array(6)].map((_, index) => (
+      {[...Array(count)].map((_, index) => (
         <AlternativeCardSkeleton key={index} />
       ))}
     </Grid>

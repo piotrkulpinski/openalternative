@@ -51,6 +51,7 @@ const AlternativeCardSkeleton = () => {
 
       <CardDescription className="flex flex-col gap-0.5">
         <Skeleton className="h-5 w-4/5">&nbsp;</Skeleton>
+        <Skeleton className="h-5 w-3/4">&nbsp;</Skeleton>
         <Skeleton className="h-5 w-1/2">&nbsp;</Skeleton>
       </CardDescription>
 

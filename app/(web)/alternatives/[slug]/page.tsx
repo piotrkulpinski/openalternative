@@ -2,16 +2,15 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Fragment, Suspense, cache } from "react"
+import { RelatedAlternatives } from "~/app/(web)/alternatives/[slug]/related"
 import { Button } from "~/components/common/button"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Prose } from "~/components/common/prose"
 import { AlternativeCardExternal } from "~/components/web/alternatives/alternative-card-external"
-import {
-  AlternativePreview,
-  AlternativePreviewSkeleton,
-} from "~/components/web/alternatives/alternative-preview"
+import { AlternativeListSkeleton } from "~/components/web/alternatives/alternative-list"
 import { InlineMenu } from "~/components/web/inline-menu"
+import { Listing } from "~/components/web/listing"
 import { ShareButtons } from "~/components/web/share-buttons"
 import { ToolEntry } from "~/components/web/tools/tool-entry"
 import { BackButton } from "~/components/web/ui/back-button"
@@ -50,7 +49,7 @@ const getAlternative = cache(async ({ params }: PageProps) => {
 })
 
 const getMetadata = (alternative: AlternativeOne): Metadata => {
-  const year = 2025
+  const year = new Date().getFullYear()
   const count = alternative._count.tools
   const displayCount = count > 10 ? "10+" : count > 1 ? count : ""
 
@@ -131,63 +130,71 @@ export default async function AlternativePage(props: PageProps) {
         ]}
       />
 
-      <Intro>
-        <IntroTitle>Open Source {alternative.name} Alternatives</IntroTitle>
+      <Section>
+        <Section.Content>
+          <Intro>
+            <IntroTitle>Open Source {alternative.name} Alternatives</IntroTitle>
 
-        <IntroDescription className="max-w-4xl">
-          {alternative._count.tools
-            ? `A curated collection of the ${alternative._count.tools} best open source alternatives to ${alternative.name}.`
-            : `No open source ${alternative.name} alternatives found yet.`}
-        </IntroDescription>
-      </Intro>
+            <IntroDescription className="max-w-4xl">
+              {alternative._count.tools
+                ? `A curated collection of the ${alternative._count.tools} best open source alternatives to ${alternative.name}.`
+                : `No open source ${alternative.name} alternatives found yet.`}
+            </IntroDescription>
+          </Intro>
 
-      {!!tools.length && (
-        <Section>
-          <Section.Content className="gap-12 md:gap-14 lg:gap-16">
-            <Prose>
-              <p>
-                The best open source alternative to {alternative.name} is {bestTools.shift()}. If
-                that doesn't suit you, we've compiled a{" "}
-                <Link href="/about#how-are-rankings-calculated">ranked list</Link> of other open
-                source {alternative.name} alternatives to help you find a suitable replacement.
-                {!!bestTools.length && (
-                  <>
-                    {" "}
-                    Other interesting open source
-                    {bestTools.length === 1
-                      ? ` alternative to ${alternative.name} is `
-                      : ` alternatives to ${alternative.name} are: `}
-                    {bestTools.map((alt, index) => (
-                      <Fragment key={index}>
-                        {index > 0 && index !== bestTools.length - 1 && ", "}
-                        {index > 0 && index === bestTools.length - 1 && " and "}
-                        {alt}
-                      </Fragment>
-                    ))}
-                    .
-                  </>
-                )}
-              </p>
-
-              {!!bestCategories.length && (
-                <p>
-                  {alternative.name} alternatives are mainly {bestCategories.shift()}
-                  {!!bestCategories.length && " but may also be "}
-                  {bestCategories.map((category, index) => (
+          <Prose>
+            <p>
+              The best open source alternative to {alternative.name} is {bestTools.shift()}. If that
+              doesn't suit you, we've compiled a{" "}
+              <Link href="/about#how-are-rankings-calculated">ranked list</Link> of other open
+              source {alternative.name} alternatives to help you find a suitable replacement.
+              {!!bestTools.length && (
+                <>
+                  {" "}
+                  Other interesting open source
+                  {bestTools.length === 1
+                    ? ` alternative to ${alternative.name} is `
+                    : ` alternatives to ${alternative.name} are: `}
+                  {bestTools.map((alt, index) => (
                     <Fragment key={index}>
-                      {index > 0 && index !== bestCategories.length - 1 && ", "}
-                      {index > 0 && index === bestCategories.length - 1 && " or "}
-                      {category}
+                      {index > 0 && index !== bestTools.length - 1 && ", "}
+                      {index > 0 && index === bestTools.length - 1 && " and "}
+                      {alt}
                     </Fragment>
                   ))}
-                  . Browse these if you want a narrower list of alternatives or looking for a
-                  specific functionality of {alternative.name}.
-                </p>
+                  .
+                </>
               )}
+            </p>
 
-              <ShareButtons title={`${title}`} className="not-prose" />
-            </Prose>
+            {!!bestCategories.length && (
+              <p>
+                {alternative.name} alternatives are mainly {bestCategories.shift()}
+                {!!bestCategories.length && " but may also be "}
+                {bestCategories.map((category, index) => (
+                  <Fragment key={index}>
+                    {index > 0 && index !== bestCategories.length - 1 && ", "}
+                    {index > 0 && index === bestCategories.length - 1 && " or "}
+                    {category}
+                  </Fragment>
+                ))}
+                . Browse these if you want a narrower list of alternatives or looking for a specific
+                functionality of {alternative.name}.
+              </p>
+            )}
 
+            <ShareButtons title={`${title}`} className="not-prose" />
+          </Prose>
+        </Section.Content>
+
+        <Section.Sidebar>
+          <AlternativeCardExternal alternative={alternative} />
+        </Section.Sidebar>
+      </Section>
+
+      {!!tools.length && (
+        <Section className="mt-4">
+          <Section.Content>
             {tools.map(tool => (
               <ToolEntry key={tool.slug} id={tool.slug} tool={tool} />
             ))}
@@ -196,7 +203,7 @@ export default async function AlternativePage(props: PageProps) {
           </Section.Content>
 
           <Section.Sidebar className="order-first md:order-last md:max-h-[calc(100vh-5rem)]">
-            <AlternativeCardExternal alternative={alternative} />
+            {/* <AdCard type="All" /> */}
 
             <InlineMenu
               items={tools.map(({ slug, name, faviconUrl }, index) => ({
@@ -212,7 +219,7 @@ export default async function AlternativePage(props: PageProps) {
                 variant="ghost"
                 prefix={<Icon name="lucide/smile-plus" />}
                 suffix={<Icon name="lucide/arrow-up-right" />}
-                className="font-normal text-muted-foreground hover:ring-transparent! focus-visible:ring-transparent"
+                className="font-normal text-muted-foreground hover:outline-none focus-visible:outline-none"
                 asChild
               >
                 <Link href="/submit">Suggest an alternative</Link>
@@ -222,8 +229,15 @@ export default async function AlternativePage(props: PageProps) {
         </Section>
       )}
 
-      <Suspense fallback={<AlternativePreviewSkeleton />}>
-        <AlternativePreview />
+      {/* Related */}
+      <Suspense
+        fallback={
+          <Listing title="Similar proprietary alternatives:">
+            <AlternativeListSkeleton count={3} />
+          </Listing>
+        }
+      >
+        <RelatedAlternatives alternative={alternative} />
       </Suspense>
     </>
   )

@@ -4,6 +4,8 @@ import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/web/alternatives/payloads"
 import type { FilterSchema } from "~/server/web/shared/schema"
 import { db } from "~/services/db"
+import { getMeiliIndex } from "~/services/meilisearch"
+import { tryCatch } from "~/utils/helpers"
 
 export const searchAlternatives = async (
   search: FilterSchema,
@@ -51,6 +53,61 @@ export const searchAlternatives = async (
 
   const pageCount = Math.ceil(totalCount / perPage)
   return { alternatives, totalCount, pageCount }
+}
+
+export const findRelatedAlternatives = async (id: string) => {
+  "use cache"
+
+  cacheTag(`related-alternatives-${id}`)
+  cacheLife("hours")
+
+  const limit = 6
+
+  const { data, error } = await tryCatch(
+    getMeiliIndex("alternatives").searchSimilarDocuments<{ id: string }>({
+      id,
+      limit,
+      embedder: "openai",
+      attributesToRetrieve: ["id"],
+      rankingScoreThreshold: 0.6,
+    }),
+  )
+
+  if (error) {
+    console.error(error)
+    return []
+  }
+
+  return await db.alternative.findMany({
+    where: { id: { in: data.hits.map(hit => hit.id) } },
+    select: alternativeManyPayload,
+  })
+}
+
+export const findFeaturedAlternatives = async ({
+  where,
+  ...args
+}: Prisma.AlternativeFindManyArgs) => {
+  "use cache"
+
+  cacheTag("featured-alternatives")
+  cacheLife("max")
+
+  const list = [
+    "monday",
+    "notion",
+    "airtable",
+    "typeform",
+    "teamwork",
+    "todoist",
+    "kissmetrics",
+    "fathom-analytics",
+  ]
+
+  return await findAlternatives({
+    where: { slug: { in: list }, ...where },
+    ...args,
+  })
 }
 
 export const findAlternatives = async ({
