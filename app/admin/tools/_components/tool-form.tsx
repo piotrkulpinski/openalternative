@@ -579,7 +579,7 @@ export function ToolForm({
               <RelationSelector
                 relations={alternatives}
                 selectedIds={field.value ?? []}
-                onChange={field.onChange}
+                setSelectedIds={field.onChange}
                 maxSuggestions={10}
                 prompt={
                   name &&
@@ -607,7 +607,7 @@ export function ToolForm({
               <RelationSelector
                 relations={categories}
                 selectedIds={field.value ?? []}
-                onChange={field.onChange}
+                setSelectedIds={field.onChange}
                 mapFunction={({ id, name, fullPath }) => {
                   const depth = fullPath.split("/").length - 1
                   const prefix = "- ".repeat(depth)

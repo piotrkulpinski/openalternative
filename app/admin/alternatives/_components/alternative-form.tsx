@@ -282,7 +282,7 @@ export function AlternativeForm({
               <RelationSelector
                 relations={tools}
                 selectedIds={field.value ?? []}
-                onChange={field.onChange}
+                setSelectedIds={field.onChange}
               />
             </FormItem>
           )}

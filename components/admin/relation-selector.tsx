@@ -31,7 +31,7 @@ type RelationSelectorProps<T> = {
   maxSuggestions?: number
   mapFunction?: (relation: T) => Relation
   sortFunction?: (a: T, b: T) => number
-  onChange: (selectedIds: string[]) => void
+  setSelectedIds: (selectedIds: string[]) => void
 }
 
 export const RelationSelector = <T extends Relation>({
@@ -41,7 +41,7 @@ export const RelationSelector = <T extends Relation>({
   maxSuggestions = 5,
   mapFunction,
   sortFunction,
-  onChange,
+  setSelectedIds,
 }: RelationSelectorProps<T>) => {
   const [suggestedRelations, setSuggestedRelations] = useState<T[]>([])
   const selectedRelations = relations?.filter(({ id }) => selectedIds.includes(id))
@@ -104,7 +104,7 @@ export const RelationSelector = <T extends Relation>({
               </Badge>
             }
           >
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="h-5" />
 
             <Stack size="xs">
               {!selectedRelations.length && (
@@ -136,7 +136,7 @@ export const RelationSelector = <T extends Relation>({
                         const newSelected = isSelected
                           ? selectedIds.filter(id => id !== relation.id)
                           : [...selectedIds, relation.id]
-                        onChange(newSelected)
+                        setSelectedIds(newSelected)
                         setSuggestedRelations(rel => rel.filter(({ id }) => id !== relation.id))
                       }}
                     >
@@ -164,7 +164,12 @@ export const RelationSelector = <T extends Relation>({
 
               {!!selectedIds.length && (
                 <div className="p-1 border-t sticky -bottom-px bg-background">
-                  <Button size="md" variant="ghost" onClick={() => onChange([])} className="w-full">
+                  <Button
+                    size="md"
+                    variant="ghost"
+                    onClick={() => setSelectedIds([])}
+                    className="w-full"
+                  >
                     Clear selection
                   </Button>
                 </div>
@@ -174,31 +179,33 @@ export const RelationSelector = <T extends Relation>({
         </PopoverContent>
       </Popover>
 
-      <AnimatedContainer height transition={{ ease: "linear", duration: 0.1 }}>
-        {!!suggestedRelations.length && (
-          <Stack size="sm" className="items-start">
-            <Tooltip tooltip="AI-suggested relations based on the content of the link. Click a suggested relation to add it.">
-              <span className="mt-px text-xs text-muted-foreground">Suggested:</span>
-            </Tooltip>
+      {prompt && (
+        <AnimatedContainer height transition={{ ease: "linear", duration: 0.1 }}>
+          {!!suggestedRelations.length && (
+            <Stack size="sm" className="items-start">
+              <Tooltip tooltip="AI-suggested relations based on the content of the link. Click a suggested relation to add it.">
+                <span className="mt-px text-xs text-muted-foreground">Suggested:</span>
+              </Tooltip>
 
-            <Stack size="xs" className="flex-1">
-              {getDisplayRelations(suggestedRelations).map(relation => (
-                <Badge key={relation.id} size="sm" variant="warning" asChild>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      onChange(selectedIds.concat(relation.id))
-                      setSuggestedRelations(rel => rel.filter(({ id }) => id !== relation.id))
-                    }}
-                  >
-                    {relation.name}
-                  </button>
-                </Badge>
-              ))}
+              <Stack size="xs" className="flex-1">
+                {getDisplayRelations(suggestedRelations).map(relation => (
+                  <Badge key={relation.id} size="sm" variant="warning" asChild>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedIds(selectedIds.concat(relation.id))
+                        setSuggestedRelations(rel => rel.filter(({ id }) => id !== relation.id))
+                      }}
+                    >
+                      {relation.name}
+                    </button>
+                  </Badge>
+                ))}
+              </Stack>
             </Stack>
-          </Stack>
-        )}
-      </AnimatedContainer>
+          )}
+        </AnimatedContainer>
+      )}
     </Stack>
   )
 }
