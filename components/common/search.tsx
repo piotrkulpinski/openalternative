@@ -167,7 +167,7 @@ export const Search = () => {
 
       const q = query.toLowerCase().trim()
 
-      if (q.length > 2) {
+      if (q.length > 1) {
         posthog.capture("search", { query: q })
       }
     },
