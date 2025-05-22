@@ -7,6 +7,7 @@ import { Button } from "~/components/common/button"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Prose } from "~/components/common/prose"
+import { AdCard } from "~/components/web/ads/ad-card"
 import { AlternativeCardExternal } from "~/components/web/alternatives/alternative-card-external"
 import { AlternativeListSkeleton } from "~/components/web/alternatives/alternative-list"
 import { InlineMenu } from "~/components/web/inline-menu"
@@ -203,7 +204,12 @@ export default async function AlternativePage(props: PageProps) {
           </Section.Content>
 
           <Section.Sidebar className="order-first md:order-last md:max-h-[calc(100vh-5rem)]">
-            {/* <AdCard type="All" /> */}
+            {(alternative.pageviews || 0) > 50 && (
+              <AdCard
+                type="All"
+                fallbackAd={{ websiteUrl: `/advertise/alternatives?id=${alternative.id}` }}
+              />
+            )}
 
             <InlineMenu
               items={tools.map(({ slug, name, faviconUrl }, index) => ({

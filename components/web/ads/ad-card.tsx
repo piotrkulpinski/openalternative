@@ -17,16 +17,18 @@ import { ExternalLink } from "~/components/web/external-link"
 import { Favicon, FaviconImage } from "~/components/web/ui/favicon"
 import { LogoSymbol } from "~/components/web/ui/logo-symbol"
 import { config } from "~/config"
+import type { AdOne } from "~/server/web/ads/payloads"
 import { findAd } from "~/server/web/ads/queries"
 import { cx } from "~/utils/cva"
 
 type AdCardProps = CardProps & {
   rel?: string
   type: AdType
+  fallbackAd?: Partial<AdOne>
 }
 
-const AdCard = async ({ className, type, ...props }: AdCardProps) => {
-  const ad = (await findAd({ where: { type } })) ?? config.ads.defaultAd
+const AdCard = async ({ className, type, fallbackAd, ...props }: AdCardProps) => {
+  const ad = (await findAd({ where: { type } })) ?? { ...config.ads.defaultAd, ...fallbackAd }
   const isDefault = !ad.websiteUrl.startsWith("http")
 
   return (
