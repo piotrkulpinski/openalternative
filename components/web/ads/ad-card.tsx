@@ -1,4 +1,4 @@
-import type { AdType } from "@prisma/client"
+import type { AdType, Prisma } from "@prisma/client"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
@@ -24,11 +24,13 @@ import { cx } from "~/utils/cva"
 type AdCardProps = CardProps & {
   rel?: string
   type: AdType
+  where?: Prisma.AdWhereInput
   fallbackAd?: Partial<AdOne>
 }
 
-const AdCard = async ({ className, type, fallbackAd, ...props }: AdCardProps) => {
-  const ad = (await findAd({ where: { type } })) ?? { ...config.ads.defaultAd, ...fallbackAd }
+const AdCard = async ({ className, type, where, fallbackAd, ...props }: AdCardProps) => {
+  const defaultAd = { ...config.ads.defaultAd, ...fallbackAd }
+  const ad = (await findAd({ where: { type, ...where } })) ?? defaultAd
   const isDefault = !ad.websiteUrl.startsWith("http")
 
   return (

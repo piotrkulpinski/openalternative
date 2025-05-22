@@ -1,5 +1,6 @@
 "use client"
 
+import { AdType } from "@prisma/client"
 import { useQueryState } from "nuqs"
 import { parseAsString } from "nuqs"
 import posthog from "posthog-js"
@@ -16,7 +17,6 @@ import { Stack } from "~/components/common/stack"
 import { ExternalLink } from "~/components/web/external-link"
 import { Price } from "~/components/web/price"
 import { config } from "~/config"
-import { formatPrice } from "~/lib/pricing"
 import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type AlternativesAdPickerProps = {
@@ -47,6 +47,17 @@ export const AlternativesAdPicker = ({ alternatives }: AlternativesAdPickerProps
     },
   })
 
+  const handleCheckout = () => {
+    execute({
+      type: AdType.AlternativePage,
+      alternatives: selectedAlternatives.map(({ slug, name, adPrice }) => ({
+        slug,
+        name: `${name} Alternatives Ad`,
+        price: adPrice ?? 0,
+      })),
+    })
+  }
+
   return (
     <Stack size="lg" direction="column" className="w-full max-w-md mx-auto">
       <Card hover={false} className="bg-transparent">
@@ -76,7 +87,7 @@ export const AlternativesAdPicker = ({ alternatives }: AlternativesAdPickerProps
 
                   <span className="truncate">{name}</span>
 
-                  {adPrice && `(${formatPrice(adPrice)}/mo)`}
+                  {adPrice && `($${adPrice}/mo)`}
                 </Stack>
               ),
             }
@@ -99,7 +110,7 @@ export const AlternativesAdPicker = ({ alternatives }: AlternativesAdPickerProps
             disabled={!selectedIds.length || isPending}
             isPending={isPending}
             className="ml-auto"
-            onClick={() => execute(selectedAlternatives)}
+            onClick={handleCheckout}
           >
             Purchase Now
           </Button>

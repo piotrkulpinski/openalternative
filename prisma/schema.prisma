@@ -13,6 +13,7 @@ datasource db {
 enum AdType {
   Banner
   Alternatives
+  AlternativePage
   Tools
   ToolPage
   SelfHosted
@@ -127,18 +128,22 @@ model Verification {
 }
 
 model Ad {
-  id          String   @id @default(cuid())
-  email       String
-  name        String
-  description String?
-  websiteUrl  String
-  buttonLabel String?
-  faviconUrl  String?
-  type        AdType   @default(All)
-  startsAt    DateTime
-  endsAt      DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             String   @id @default(cuid())
+  email          String
+  name           String
+  description    String?
+  websiteUrl     String
+  buttonLabel    String?
+  faviconUrl     String?
+  type           AdType   @default(All)
+  startsAt       DateTime
+  endsAt         DateTime
+  subscriptionId String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  alternatives Alternative[]
 }
 
 model Tool {
@@ -201,14 +206,18 @@ model Alternative {
   discountCode   String?
   discountAmount String?
   pageviews      Int?     @default(0)
+  adPrice        Float?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
   // Implicit relation
   tools Tool[]
+  ad    Ad?     @relation(fields: [adId], references: [id])
+  adId  String?
 
   // Indexes
   @@index([slug])
+  @@index([adId])
 }
 
 model Category {

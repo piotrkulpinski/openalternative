@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function AdvertiseAlternativesPage() {
   const alternatives = await findAlternatives({
-    where: { pageviews: { gte: 50 }, adPrice: { not: null } },
+    where: { pageviews: { gte: 50 }, adPrice: { not: null }, ad: null },
     orderBy: { pageviews: "desc" },
   })
 
