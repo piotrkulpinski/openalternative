@@ -2,7 +2,11 @@
 
 import { useQueryState } from "nuqs"
 import { parseAsString } from "nuqs"
-import { useState } from "react"
+import posthog from "posthog-js"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
+import { createStripeAlternativeAdsCheckout } from "~/actions/stripe"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/common/button"
 import { Card, CardBg, CardHeader } from "~/components/common/card"
@@ -22,9 +26,26 @@ type AlternativesAdPickerProps = {
 export const AlternativesAdPicker = ({ alternatives }: AlternativesAdPickerProps) => {
   const [id] = useQueryState("id", parseAsString)
   const [selectedIds, setSelectedIds] = useState<string[]>(id ? [id] : [])
+  const [selectedAlternatives, setSelectedAlternatives] = useState<AlternativeMany[]>([])
+  const [totalPrice, setTotalPrice] = useState(0)
 
-  const selectedAlternatives = alternatives.filter(({ id }) => selectedIds.includes(id))
-  const totalPrice = selectedAlternatives.reduce((sum, alt) => sum + (alt.adPrice || 0), 0)
+  useEffect(() => {
+    const alts = alternatives.filter(({ id }) => selectedIds.includes(id))
+    setSelectedAlternatives(alts)
+    setTotalPrice(alts.reduce((sum, alt) => sum + (alt.adPrice || 0), 0))
+  }, [alternatives, selectedIds, id])
+
+  const { execute, isPending } = useServerAction(createStripeAlternativeAdsCheckout, {
+    onSuccess: ({ data }) => {
+      posthog.capture("stripe_checkout_ad", { totalPrice })
+
+      window.open(data, "_blank")?.focus()
+    },
+
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
   return (
     <Stack size="lg" direction="column" className="w-full max-w-md mx-auto">
@@ -75,9 +96,10 @@ export const AlternativesAdPicker = ({ alternatives }: AlternativesAdPickerProps
           <Button
             variant="fancy"
             size="md"
-            onClick={() => {}}
-            disabled={selectedIds.length === 0}
+            disabled={!selectedIds.length || isPending}
+            isPending={isPending}
             className="ml-auto"
+            onClick={() => execute(selectedAlternatives)}
           >
             Purchase Now
           </Button>
