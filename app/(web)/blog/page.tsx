@@ -34,7 +34,7 @@ export default function BlogPage() {
       </Intro>
 
       {posts.length ? (
-        <Grid size="lg">
+        <Grid>
           {allPosts.map(post => (
             <PostCard key={post._meta.path} post={post} />
           ))}

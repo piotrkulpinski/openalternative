@@ -18,8 +18,8 @@ const ToolList = ({ tools, adType = "Tools", enableAds = true, ...props }: ToolL
       {tools.map((tool, order) => (
         <Fragment key={tool.slug}>
           {enableAds && Math.min(2, tools.length - 1) === order && (
-            <Suspense fallback={<AdCardSkeleton className="sm:order-2" />}>
-              <AdCard type={adType} className="sm:order-2" />
+            <Suspense fallback={<AdCardSkeleton className="lg:order-2" />}>
+              <AdCard type={adType} className="lg:order-2" />
             </Suspense>
           )}
 

@@ -19,8 +19,8 @@ const AlternativeList = ({ alternatives, enableAds = true, ...props }: Alternati
       {alternatives.map((alternative, order) => (
         <Fragment key={alternative.slug}>
           {enableAds && Math.min(2, alternatives.length - 1) === order && (
-            <Suspense fallback={<AdCardSkeleton className="sm:order-2" />}>
-              <AdCard type="Alternatives" className="sm:order-2" />
+            <Suspense fallback={<AdCardSkeleton className="lg:order-2" />}>
+              <AdCard type="Alternatives" className="lg:order-2" />
             </Suspense>
           )}
 
