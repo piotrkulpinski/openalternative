@@ -1,10 +1,30 @@
 "use server"
 
 import { AdType } from "@prisma/client"
+import type Stripe from "stripe"
 import { z } from "zod"
 import { createServerAction } from "zsa"
 import { env } from "~/env"
 import { stripe } from "~/services/stripe"
+
+const adCheckoutCustomFields = [
+  {
+    key: "name",
+    label: { type: "custom", custom: "Company Name" },
+    type: "text",
+  },
+  {
+    key: "description",
+    label: { type: "custom", custom: "Description" },
+    type: "text",
+    optional: true,
+  },
+  {
+    key: "website",
+    label: { type: "custom", custom: "Website URL" },
+    type: "text",
+  },
+] satisfies Stripe.Checkout.SessionCreateParams.CustomField[]
 
 export const createStripeToolCheckout = createServerAction()
   .input(
@@ -53,39 +73,18 @@ export const createStripeAdsCheckout = createServerAction()
     ),
   )
   .handler(async ({ input: ads }) => {
-    const customer = await stripe.customers.create()
-
     const checkout = await stripe.checkout.sessions.create({
       mode: "payment",
-      customer: customer.id,
-      customer_update: { name: "auto", address: "auto" },
       customer_creation: "if_required",
       line_items: ads.map(({ type, price, duration }) => ({
         price_data: {
-          product_data: { name: `${type} Advertisement` },
+          product_data: { name: `${type} Ad` },
           unit_amount: Math.round(price * 100),
           currency: "usd",
         },
         quantity: duration,
       })),
-      custom_fields: [
-        {
-          key: "name",
-          label: { type: "custom", custom: "Company Name" },
-          type: "text",
-        },
-        {
-          key: "description",
-          label: { type: "custom", custom: "Description" },
-          type: "text",
-          optional: true,
-        },
-        {
-          key: "website",
-          label: { type: "custom", custom: "Website URL" },
-          type: "text",
-        },
-      ],
+      custom_fields: adCheckoutCustomFields,
       metadata: {
         ads: JSON.stringify(
           ads.map(({ type, metadata }) => ({
@@ -101,6 +100,39 @@ export const createStripeAdsCheckout = createServerAction()
       invoice_creation: { enabled: true },
       success_url: `${env.NEXT_PUBLIC_SITE_URL}/advertise?subscribed=true`,
       cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/advertise?cancelled=true`,
+    })
+
+    if (!checkout.url) {
+      throw new Error("Unable to create a new Stripe Checkout Session.")
+    }
+
+    // Return the checkout session url
+    return checkout.url
+  })
+
+export const createStripeAlternativeAdsCheckout = createServerAction()
+  .input(z.array(z.object({ id: z.string(), name: z.string(), adPrice: z.number().nullable() })))
+  .handler(async ({ input }) => {
+    const checkout = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      line_items: input.map(({ name, adPrice }) => ({
+        price_data: {
+          product_data: { name: `${name} Alternatives Ad` },
+          unit_amount: Math.round(adPrice ?? 0) * 100,
+          currency: "usd",
+          recurring: { interval: "month" },
+        },
+        quantity: 1,
+      })),
+      custom_fields: adCheckoutCustomFields,
+      metadata: {
+        alternativeIds: JSON.stringify(input.map(({ id }) => id)),
+      },
+      allow_promotion_codes: true,
+      automatic_tax: { enabled: true },
+      tax_id_collection: { enabled: true },
+      success_url: `${env.NEXT_PUBLIC_SITE_URL}/advertise/alternatives?success=true`,
+      cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/advertise/alternatives?cancelled=true`,
     })
 
     if (!checkout.url) {
