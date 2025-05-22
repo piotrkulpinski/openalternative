@@ -16,7 +16,7 @@ export const Author = ({ name, image, title, ...props }: AuthorProps) => {
         alt={`${name}'s profile`}
         width={48}
         height={48}
-        className="size-12 rounded-full group-hover:brightness-90"
+        className="size-12 rounded-full group-hover:[&[href]]:brightness-90"
       />
 
       <div>

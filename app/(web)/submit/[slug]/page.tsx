@@ -5,8 +5,7 @@ import type { SearchParams } from "nuqs/server"
 import { createSearchParamsCache, parseAsBoolean, parseAsString } from "nuqs/server"
 import { Suspense, cache } from "react"
 import { SubmitProducts } from "~/app/(web)/submit/[slug]/products"
-import { Link } from "~/components/common/link"
-import { Prose } from "~/components/common/prose"
+import { Advertisers } from "~/components/web/advertisers"
 import { PlanSkeleton } from "~/components/web/plan"
 import { Stats } from "~/components/web/stats"
 import { Testimonial } from "~/components/web/testimonial"
@@ -116,16 +115,7 @@ export default async function SubmitPackages(props: PageProps) {
         <Testimonial key={testimonial.quote} {...testimonial} className="my-4" />
       ))}
 
-      <Intro alignment="center">
-        <IntroTitle size="h3">Have questions?</IntroTitle>
-
-        <Prose>
-          <p>
-            If you have any questions, please contact us at{" "}
-            <Link href={`mailto:${config.site.email}`}>{config.site.email}</Link>.
-          </p>
-        </Prose>
-      </Intro>
+      <Advertisers />
     </>
   )
 }

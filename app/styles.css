@@ -54,6 +54,7 @@
   --grid-template-columns-xl: repeat(auto-fill, minmax(20rem, 1fr));
 
   --animate-fade-in: fade-in 0.3s ease-in-out;
+  --animate-marquee: marquee 45s linear infinite;
   --animate-ping: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 
   @keyframes fade-in {
@@ -62,6 +63,12 @@
     }
     100% {
       opacity: 1;
+    }
+  }
+  
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
     }
   }
 }
