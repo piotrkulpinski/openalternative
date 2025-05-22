@@ -125,7 +125,7 @@ export const createStripeAlternativeAdsCheckout = createServerAction()
       line_items: alternatives.map(({ name, price }) => ({
         price_data: {
           product_data: { name },
-          unit_amount: price * 100,
+          unit_amount: Math.round(price * 100),
           currency: "usd",
           recurring: { interval: "month" },
         },
