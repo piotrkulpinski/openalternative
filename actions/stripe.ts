@@ -39,7 +39,7 @@ export const createStripeToolCheckout = createServerAction()
     const checkout = await stripe.checkout.sessions.create({
       mode,
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${env.NEXT_PUBLIC_SITE_URL}/submit/${tool}?success=true`,
+      success_url: `${env.NEXT_PUBLIC_SITE_URL}/success?sessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/submit/${tool}?cancelled=true`,
       automatic_tax: { enabled: true },
       tax_id_collection: { enabled: true },
@@ -98,7 +98,7 @@ export const createStripeAdsCheckout = createServerAction()
       automatic_tax: { enabled: true },
       tax_id_collection: { enabled: true },
       invoice_creation: { enabled: true },
-      success_url: `${env.NEXT_PUBLIC_SITE_URL}/advertise?subscribed=true`,
+      success_url: `${env.NEXT_PUBLIC_SITE_URL}/success?sessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/advertise?cancelled=true`,
     })
 
@@ -136,7 +136,7 @@ export const createStripeAlternativeAdsCheckout = createServerAction()
       allow_promotion_codes: true,
       automatic_tax: { enabled: true },
       tax_id_collection: { enabled: true },
-      success_url: `${env.NEXT_PUBLIC_SITE_URL}/advertise/alternatives?success=true`,
+      success_url: `${env.NEXT_PUBLIC_SITE_URL}/success?sessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${env.NEXT_PUBLIC_SITE_URL}/advertise/alternatives?cancelled=true`,
     })
 
