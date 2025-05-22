@@ -39,7 +39,7 @@ export const PlanIntervalSwitch = ({
     if (activeLabel) {
       setIndicatorStyle({
         opacity: 1,
-        width: `${activeLabel.offsetWidth}px`,
+        width: `${activeLabel.offsetWidth - 1}px`,
         transform: `translateX(${activeLabel.offsetLeft - 2}px)`,
       })
     }

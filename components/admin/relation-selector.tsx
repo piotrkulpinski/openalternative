@@ -104,7 +104,7 @@ export const RelationSelector = <T extends Relation>({
               </Badge>
             }
           >
-            <Separator orientation="vertical" className="h-5" />
+            <Separator orientation="vertical" className="self-stretch" />
 
             <Stack size="xs">
               {!selectedRelations.length && (
