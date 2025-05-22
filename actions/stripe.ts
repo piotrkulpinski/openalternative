@@ -111,23 +111,28 @@ export const createStripeAdsCheckout = createServerAction()
   })
 
 export const createStripeAlternativeAdsCheckout = createServerAction()
-  .input(z.array(z.object({ id: z.string(), name: z.string(), adPrice: z.number().nullable() })))
-  .handler(async ({ input }) => {
+  .input(
+    z.object({
+      type: z.nativeEnum(AdType),
+      alternatives: z.array(z.object({ slug: z.string(), name: z.string(), price: z.number() })),
+    }),
+  )
+  .handler(async ({ input: { type, alternatives } }) => {
+    const ads = [{ type, alternatives: alternatives.map(({ slug }) => slug) }]
+
     const checkout = await stripe.checkout.sessions.create({
       mode: "subscription",
-      line_items: input.map(({ name, adPrice }) => ({
+      line_items: alternatives.map(({ name, price }) => ({
         price_data: {
-          product_data: { name: `${name} Alternatives Ad` },
-          unit_amount: Math.round(adPrice ?? 0) * 100,
+          product_data: { name },
+          unit_amount: price * 100,
           currency: "usd",
           recurring: { interval: "month" },
         },
         quantity: 1,
       })),
       custom_fields: adCheckoutCustomFields,
-      metadata: {
-        alternativeIds: JSON.stringify(input.map(({ id }) => id)),
-      },
+      subscription_data: { metadata: { ads: JSON.stringify(ads) } },
       allow_promotion_codes: true,
       automatic_tax: { enabled: true },
       tax_id_collection: { enabled: true },

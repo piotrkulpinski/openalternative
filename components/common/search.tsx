@@ -8,7 +8,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import type { inferServerActionReturnData } from "zsa"
 import { useServerAction } from "zsa-react"
-import { fetchRepositoryData, indexData } from "~/actions/misc"
+import { fetchRepositoryData, indexData, recalculatePricesData } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -89,6 +89,11 @@ export const Search = () => {
       action: indexData,
       label: "Index Data",
       successMessage: "Data indexed",
+    },
+    {
+      action: recalculatePricesData,
+      label: "Recalculate Prices",
+      successMessage: "Prices recalculated",
     },
   ] as const
 

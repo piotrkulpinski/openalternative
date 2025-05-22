@@ -4,6 +4,7 @@ import { revalidateTag } from "next/cache"
 import { config } from "~/config"
 import { fetchAnalyticsInBatches } from "~/lib/analytics"
 import { getMilestoneReached } from "~/lib/milestones"
+import { recalculatePrices } from "~/lib/pricing"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { getPostMilestoneTemplate, getPostTemplate, sendSocialPost } from "~/lib/socials"
 import { isToolPublished } from "~/lib/tools"
@@ -89,6 +90,13 @@ export const fetchData = inngest.createFunction(
       }),
     ])
 
+    // Calculate advertising prices based on pageviews
+    await step.run("calculate-alternative-prices", async () => {
+      await recalculatePrices(alternatives, async ({ id, adPrice }) => {
+        await db.alternative.update({ where: { id }, data: { adPrice } })
+      })
+    })
+
     // Post on Socials about a random tool
     await step.run("post-on-socials", async () => {
       const publishedTools = tools.filter(isToolPublished)
@@ -117,6 +125,7 @@ export const fetchData = inngest.createFunction(
     await step.run("revalidate-cache", async () => {
       revalidateTag("tools")
       revalidateTag("tool")
+      revalidateTag("alternatives")
     })
   },
 )

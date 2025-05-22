@@ -9,14 +9,18 @@ export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeSelect>(
   faviconUrl: true,
   discountCode: true,
   discountAmount: true,
+  pageviews: true,
+  adId: true,
   _count: { select: { tools: { where: { status: ToolStatus.Published } } } },
 })
 
 export const alternativeManyPayload = Prisma.validator<Prisma.AlternativeSelect>()({
+  id: true,
   name: true,
   slug: true,
   description: true,
   faviconUrl: true,
+  adPrice: true,
   _count: { select: { tools: { where: { status: ToolStatus.Published } } } },
 })
 

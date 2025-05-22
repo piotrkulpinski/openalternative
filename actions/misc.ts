@@ -3,6 +3,7 @@
 import { ToolStatus } from "@prisma/client"
 import { revalidateTag } from "next/cache"
 import { indexTools } from "~/lib/indexing"
+import { recalculatePrices } from "~/lib/pricing"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { adminProcedure } from "~/lib/safe-actions"
 import { toolOnePayload } from "~/server/web/tools/payloads"
@@ -58,4 +59,14 @@ export const indexData = adminProcedure.createServerAction().handler(async () =>
   if (tools.length) {
     await indexTools(tools)
   }
+})
+
+export const recalculatePricesData = adminProcedure.createServerAction().handler(async () => {
+  const alternatives = await db.alternative.findMany()
+
+  await recalculatePrices(alternatives, async ({ id, adPrice }) => {
+    await db.alternative.update({ where: { id }, data: { adPrice } })
+  })
+
+  revalidateTag("alternatives")
 })
