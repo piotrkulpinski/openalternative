@@ -186,8 +186,11 @@ export const POST = async (req: Request) => {
 
         // Handle alternative ads
         if (metadata?.ads) {
-          // Delete all ads for the subscription
-          await db.ad.deleteMany({ where: { subscriptionId: subscription.id } })
+          // Update the ad for the subscription
+          await db.ad.update({
+            where: { subscriptionId: subscription.id },
+            data: { endsAt: new Date(), alternatives: { set: [] } },
+          })
 
           // Revalidate the cache
           revalidateTag("ads")
