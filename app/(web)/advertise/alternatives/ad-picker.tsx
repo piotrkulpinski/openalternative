@@ -1,8 +1,6 @@
 "use client"
 
 import { AdType } from "@prisma/client"
-import { useQueryState } from "nuqs"
-import { parseAsString } from "nuqs"
 import posthog from "posthog-js"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
@@ -21,11 +19,11 @@ import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type AlternativesAdPickerProps = {
   alternatives: AlternativeMany[]
+  defaultIds?: string[]
 }
 
-export const AlternativesAdPicker = ({ alternatives }: AlternativesAdPickerProps) => {
-  const [id] = useQueryState("id", parseAsString)
-  const [selectedIds, setSelectedIds] = useState<string[]>(id ? [id] : [])
+export const AlternativesAdPicker = ({ alternatives, defaultIds }: AlternativesAdPickerProps) => {
+  const [selectedIds, setSelectedIds] = useState<string[]>(defaultIds ?? [])
   const [selectedAlternatives, setSelectedAlternatives] = useState<AlternativeMany[]>([])
   const [totalPrice, setTotalPrice] = useState(0)
 
@@ -33,7 +31,7 @@ export const AlternativesAdPicker = ({ alternatives }: AlternativesAdPickerProps
     const alts = alternatives.filter(({ id }) => selectedIds.includes(id))
     setSelectedAlternatives(alts)
     setTotalPrice(alts.reduce((sum, alt) => sum + (alt.adPrice || 0), 0))
-  }, [alternatives, selectedIds, id])
+  }, [alternatives, selectedIds])
 
   const { execute, isPending } = useServerAction(createStripeAlternativeAdsCheckout, {
     onSuccess: ({ data }) => {

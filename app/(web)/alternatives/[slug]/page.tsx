@@ -1,9 +1,11 @@
+import { getUrlHostname } from "@curiousleaf/utils"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"
 import { Fragment, Suspense, cache } from "react"
 import { RelatedAlternatives } from "~/app/(web)/alternatives/[slug]/related"
 import { Button } from "~/components/common/button"
+import { Card } from "~/components/common/card"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Prose } from "~/components/common/prose"
@@ -19,6 +21,7 @@ import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
+import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
 import { findAlternative, findAlternativeSlugs } from "~/server/web/alternatives/queries"
@@ -196,8 +199,24 @@ export default async function AlternativePage(props: PageProps) {
       {!!tools.length && (
         <Section className="mt-4">
           <Section.Content>
-            {tools.map(tool => (
-              <ToolEntry key={tool.slug} id={tool.slug} tool={tool} />
+            {tools.map((tool, order) => (
+              <Fragment key={tool.slug}>
+                {(order - 1) % 5 === 0 && order > 0 && (
+                  <Card hover={false} className="bg-yellow-500/10 border-foreground/10" asChild>
+                    <Prose>
+                      <p>
+                        Looking for open source alternatives to other popular services? Check out
+                        other posts in the <Link href="/alternatives">alternatives series</Link> and{" "}
+                        <Link href="/">{getUrlHostname(config.site.url)}</Link>, a directory of open
+                        source software with filters for tags and alternatives for easy browsing and
+                        discovery.
+                      </p>
+                    </Prose>
+                  </Card>
+                )}
+
+                <ToolEntry id={tool.slug} tool={tool} />
+              </Fragment>
             ))}
 
             <BackButton href="/alternatives" />
@@ -208,7 +227,7 @@ export default async function AlternativePage(props: PageProps) {
               <AdCard
                 type="AlternativePage"
                 where={{ alternatives: { some: { slug: alternative.slug } } }}
-                fallbackAd={{ websiteUrl: `/advertise/alternatives?id=${alternative.id}` }}
+                fallbackAd={{ websiteUrl: `/advertise/alternatives?slug=${alternative.slug}` }}
               />
             )}
 
