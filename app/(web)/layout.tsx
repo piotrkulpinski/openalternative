@@ -103,19 +103,6 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         data-domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
         src={`${env.NEXT_PUBLIC_PLAUSIBLE_URL}/js/script.js`}
       />
-
-      {/* Google Analytics */}
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-8KPPXJCSJY" />
-
-      <Script>
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-8KPPXJCSJY');
-        `}
-      </Script>
     </Providers>
   )
 }

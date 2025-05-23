@@ -55,7 +55,7 @@ export const RelationSelector = <T extends Relation>({
 
     onFinish: (_, completion) => {
       if (completion) {
-        const cats = completion
+        const suggestions = completion
           .split(",")
           .map(name => name.trim())
           .map(name => relations.find(c => c.name === name) || null)
@@ -63,7 +63,7 @@ export const RelationSelector = <T extends Relation>({
           .filter(isTruthy)
           .slice(0, maxSuggestions)
 
-        setSuggestedRelations(cats)
+        setSuggestedRelations(suggestions)
       }
     },
   })
