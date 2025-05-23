@@ -69,11 +69,10 @@ const ToolEntry = ({ children, className, tool, ...props }: ToolEntryProps) => {
         <div>{children}</div>
       ) : (
         tool.content && (
-          <div className="relative max-h-72 overflow-hidden">
-            <Markdown code={tool.content} />
-
-            <div className="absolute inset-0 top-auto h-1/5 bg-linear-to-t from-background pointer-events-none" />
-          </div>
+          <Markdown
+            code={tool.content}
+            className="relative max-h-72 overflow-hidden mask-b-from-80%"
+          />
         )
       )}
 

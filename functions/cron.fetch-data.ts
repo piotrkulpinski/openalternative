@@ -92,6 +92,8 @@ export const fetchData = inngest.createFunction(
 
     // Calculate advertising prices based on pageviews
     await step.run("calculate-alternative-prices", async () => {
+      const alternatives = await db.alternative.findMany()
+
       await recalculatePrices(alternatives, async ({ id, adPrice }) => {
         await db.alternative.update({ where: { id }, data: { adPrice } })
       })
