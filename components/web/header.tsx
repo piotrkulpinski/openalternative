@@ -47,18 +47,14 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
 
   return (
     <div
-      className={cx(
-        "group/menu sticky top-(--header-top) inset-x-0 z-50 bg-background duration-300",
-        // "max-lg:data-[state=open]:bg-background/90",
-        className,
-      )}
+      className={cx("sticky top-(--header-top) inset-x-0 z-50 bg-background", className)}
       id="header"
       role="banner"
       data-state={isNavOpen ? "open" : "close"}
       {...props}
     >
       <Container>
-        <div className="relative z-41 flex items-center py-3.5 gap-4 text-sm h-(--header-height) isolate duration-300 md:gap-6">
+        <div className="flex items-center py-3.5 gap-4 text-sm h-(--header-height) md:gap-6">
           <Stack size="sm" wrap={false} className="mr-auto">
             <button
               type="button"
