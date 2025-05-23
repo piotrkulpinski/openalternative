@@ -4,7 +4,7 @@ import type { ToolOne } from "~/server/web/tools/payloads"
 import { findRelatedTools } from "~/server/web/tools/queries"
 
 export const RelatedTools = async ({ tool }: { tool: ToolOne }) => {
-  const tools = await findRelatedTools(tool.id)
+  const tools = await findRelatedTools({ id: tool.id })
 
   if (!tools.length) {
     return null

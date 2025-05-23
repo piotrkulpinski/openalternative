@@ -201,7 +201,7 @@ export default async function AlternativePage(props: PageProps) {
           <Section.Content>
             {tools.map((tool, order) => (
               <Fragment key={tool.slug}>
-                {(order - 1) % 5 === 0 && order > 0 && (
+                {(order - 1) % 5 === 0 && (
                   <Card hover={false} className="bg-yellow-500/10 border-foreground/10" asChild>
                     <Prose>
                       <p>
@@ -227,7 +227,7 @@ export default async function AlternativePage(props: PageProps) {
               <AdCard
                 type="AlternativePage"
                 where={{ alternatives: { some: { slug: alternative.slug } } }}
-                fallbackAd={{ websiteUrl: `/advertise/alternatives?slug=${alternative.slug}` }}
+                fallbackAd={{ websiteUrl: `/advertise/alternatives?id=${alternative.id}` }}
               />
             )}
 

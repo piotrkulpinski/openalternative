@@ -8,7 +8,7 @@ import { useServerAction } from "zsa-react"
 import { createStripeAlternativeAdsCheckout } from "~/actions/stripe"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/common/button"
-import { Card, CardBg, CardHeader } from "~/components/common/card"
+import { Card } from "~/components/common/card"
 import { H5 } from "~/components/common/heading"
 import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
@@ -19,11 +19,16 @@ import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
 type AlternativesAdPickerProps = {
   alternatives: AlternativeMany[]
-  defaultIds?: string[]
+  selectedId?: string
+  relatedIds?: string[]
 }
 
-export const AlternativesAdPicker = ({ alternatives, defaultIds }: AlternativesAdPickerProps) => {
-  const [selectedIds, setSelectedIds] = useState<string[]>(defaultIds ?? [])
+export const AlternativesAdPicker = ({
+  alternatives,
+  selectedId,
+  relatedIds,
+}: AlternativesAdPickerProps) => {
+  const [selectedIds, setSelectedIds] = useState<string[]>(selectedId ? [selectedId] : [])
   const [selectedAlternatives, setSelectedAlternatives] = useState<AlternativeMany[]>([])
   const [totalPrice, setTotalPrice] = useState(0)
 
@@ -58,27 +63,24 @@ export const AlternativesAdPicker = ({ alternatives, defaultIds }: AlternativesA
 
   return (
     <Stack size="lg" direction="column" className="w-full max-w-md mx-auto">
-      <Card hover={false} className="bg-transparent">
-        <CardBg />
-
-        <CardHeader wrap={false}>
-          <H5 className="w-full text-center">Select the alternatives to advertise on</H5>
-        </CardHeader>
+      <Card hover={false}>
+        <H5 className="w-full">Select the alternatives to advertise on:</H5>
 
         <RelationSelector
           relations={alternatives}
           selectedIds={selectedIds}
           setSelectedIds={setSelectedIds}
+          suggestedIds={relatedIds}
           mapFunction={({ id, name, faviconUrl, adPrice }) => {
             return {
               id,
               name: (
-                <Stack size="sm">
+                <Stack size="xs" className="text-foreground">
                   {faviconUrl && (
                     <img
                       src={faviconUrl}
                       alt=""
-                      className="shrink-0 size-4 rounded-sm"
+                      className="shrink-0 size-4 rounded-sm mr-0.5"
                       loading="lazy"
                     />
                   )}
@@ -116,7 +118,8 @@ export const AlternativesAdPicker = ({ alternatives, defaultIds }: AlternativesA
       </Card>
 
       <Note className="w-full text-xs text-center">
-        You can cancel at any time. Have any questions? Please{" "}
+        Pricing is calculated based on the number of pageviews.
+        <br /> You can cancel at any time. Have any questions? Please{" "}
         <ExternalLink
           href={`mailto:${config.site.email}`}
           className="underline hover:text-foreground"

@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
-import { type SearchParams, createLoader, parseAsArrayOf, parseAsString } from "nuqs/server"
+import { type SearchParams, createLoader, parseAsString } from "nuqs/server"
 import { AlternativesAdPicker } from "~/app/(web)/advertise/alternatives/ad-picker"
 import { metadataConfig } from "~/config/metadata"
-import { findAlternatives } from "~/server/web/alternatives/queries"
+import { findAlternatives, findRelatedAlternativeIds } from "~/server/web/alternatives/queries"
 
 type PageProps = {
   searchParams: Promise<SearchParams>
@@ -14,15 +14,28 @@ export const metadata: Metadata = {
 }
 
 export default async function AdvertiseAlternativesPage({ searchParams }: PageProps) {
-  const searchParamsLoader = createLoader({ slug: parseAsArrayOf(parseAsString).withDefault([]) })
-  const { slug } = await searchParamsLoader(searchParams)
+  const searchParamsLoader = createLoader({ id: parseAsString.withDefault("") })
+  const { id } = await searchParamsLoader(searchParams)
 
   const alternatives = await findAlternatives({
     where: { pageviews: { gte: 50 }, adPrice: { not: null }, ad: null },
     orderBy: { pageviews: "desc" },
   })
 
-  const ids = alternatives.filter(a => slug.includes(a.slug)).map(({ id }) => id)
+  const relatedIds: string[] = []
 
-  return <AlternativesAdPicker alternatives={alternatives} defaultIds={ids} />
+  if (id) {
+    const ids = await findRelatedAlternativeIds({
+      id,
+      limit: 10,
+      rankingScoreThreshold: 0.5,
+      filter: `id IN [${alternatives.map(a => a.id).join(",")}]`,
+    })
+
+    relatedIds.push(...ids)
+  }
+
+  return (
+    <AlternativesAdPicker alternatives={alternatives} selectedId={id} relatedIds={relatedIds} />
+  )
 }

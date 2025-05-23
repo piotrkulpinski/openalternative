@@ -1,5 +1,6 @@
 import { performance } from "node:perf_hooks"
 import { type Prisma, ToolStatus } from "@prisma/client"
+import type { SearchSimilarDocumentsParams } from "meilisearch"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/web/alternatives/payloads"
 import type { FilterSchema } from "~/server/web/shared/schema"
@@ -55,21 +56,23 @@ export const searchAlternatives = async (
   return { alternatives, totalCount, pageCount }
 }
 
-export const findRelatedAlternatives = async (id: string) => {
+export const findRelatedAlternativeIds = async ({
+  id,
+  ...params
+}: SearchSimilarDocumentsParams) => {
   "use cache"
 
-  cacheTag(`related-alternatives-${id}`)
+  cacheTag(`related-alternative-ids-${id}`)
   cacheLife("hours")
-
-  const limit = 6
 
   const { data, error } = await tryCatch(
     getMeiliIndex("alternatives").searchSimilarDocuments<{ id: string }>({
       id,
-      limit,
+      limit: 6,
       embedder: "openai",
       attributesToRetrieve: ["id"],
       rankingScoreThreshold: 0.6,
+      ...params,
     }),
   )
 
@@ -78,8 +81,20 @@ export const findRelatedAlternatives = async (id: string) => {
     return []
   }
 
+  return data.hits.map(hit => hit.id)
+}
+
+export const findRelatedAlternatives = async ({ id, ...params }: SearchSimilarDocumentsParams) => {
+  "use cache"
+
+  cacheTag(`related-alternatives-${id}`)
+  cacheLife("hours")
+
+  // Find related alternative ids in MeiliSearch
+  const ids = await findRelatedAlternativeIds({ id, ...params })
+
   return await db.alternative.findMany({
-    where: { id: { in: data.hits.map(hit => hit.id) } },
+    where: { id: { in: ids } },
     select: alternativeManyPayload,
   })
 }

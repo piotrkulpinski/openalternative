@@ -1,5 +1,6 @@
 import { performance } from "node:perf_hooks"
 import { type Prisma, ToolStatus } from "@prisma/client"
+import type { SearchSimilarDocumentsParams } from "meilisearch"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import type { FilterSchema } from "~/server/web/shared/schema"
 import {
@@ -59,20 +60,21 @@ export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhere
   return { tools, totalCount, pageCount }
 }
 
-export const findRelatedTools = async (id: string) => {
+export const findRelatedToolIds = async ({ id, ...params }: SearchSimilarDocumentsParams) => {
   "use cache"
 
-  cacheTag(`related-tools-${id}`)
+  cacheTag(`related-tool-ids-${id}`)
   cacheLife("hours")
 
   const { data, error } = await tryCatch(
     getMeiliIndex("tools").searchSimilarDocuments<{ id: string }>({
       id,
-      embedder: "openai",
       limit: 3,
+      embedder: "openai",
       attributesToRetrieve: ["id"],
       rankingScoreThreshold: 0.7,
       filter: ["status = 'Published'"],
+      ...params,
     }),
   )
 
@@ -81,8 +83,20 @@ export const findRelatedTools = async (id: string) => {
     return []
   }
 
+  return data.hits.map(hit => hit.id)
+}
+
+export const findRelatedTools = async ({ id, ...params }: SearchSimilarDocumentsParams) => {
+  "use cache"
+
+  cacheTag(`related-tools-${id}`)
+  cacheLife("hours")
+
+  // Find related tool ids in MeiliSearch
+  const ids = await findRelatedToolIds({ id, ...params })
+
   return await db.tool.findMany({
-    where: { id: { in: data.hits.map(hit => hit.id) } },
+    where: { id: { in: ids } },
     select: toolManyPayload,
   })
 }

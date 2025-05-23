@@ -9,7 +9,7 @@ import {
 
 export const RelatedAlternatives = async ({ alternative }: { alternative: AlternativeOne }) => {
   let title = "Similar proprietary alternatives:"
-  let alternatives = await findRelatedAlternatives(alternative.id)
+  let alternatives = await findRelatedAlternatives({ id: alternative.id })
 
   if (!alternatives.length) {
     title = "Featured alternatives:"
