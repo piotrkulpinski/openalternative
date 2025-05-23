@@ -5,6 +5,7 @@
 @theme {
   --header-height: 3.125rem;
   --header-top: 0rem;
+  --header-offset: calc(var(--header-top) + var(--header-height));
 
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(0 0% 12%);

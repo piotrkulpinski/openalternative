@@ -1,3 +1,4 @@
+import { isExternalUrl } from "@curiousleaf/utils"
 import type { AdType, Prisma } from "@prisma/client"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/common/badge"
@@ -31,7 +32,7 @@ type AdCardProps = CardProps & {
 const AdCard = async ({ className, type, where, fallbackAd, ...props }: AdCardProps) => {
   const defaultAd = { ...config.ads.defaultAd, ...fallbackAd }
   const ad = (await findAd({ where: { type, ...where } })) ?? defaultAd
-  const isDefault = !ad.websiteUrl.startsWith("http")
+  const isDefault = !isExternalUrl(ad.websiteUrl)
 
   return (
     <Card className={cx("group/button", className)} asChild {...props}>
@@ -56,7 +57,7 @@ const AdCard = async ({ className, type, where, fallbackAd, ...props }: AdCardPr
         <CardDescription className="mb-auto line-clamp-4">{ad.description}</CardDescription>
 
         <Button
-          className="w-full pointer-events-none"
+          className="pointer-events-none md:w-full"
           suffix={<Icon name="lucide/arrow-up-right" />}
           asChild
         >
@@ -91,7 +92,7 @@ const AdCardSkeleton = ({ className }: ComponentProps<typeof Card>) => {
         <Skeleton className="h-5 w-2/3">&nbsp;</Skeleton>
       </CardDescription>
 
-      <Button size="md" className="pointer-events-none opacity-10 text-transparent" asChild>
+      <Button className="pointer-events-none opacity-10 text-transparent md:w-full" asChild>
         <span>&nbsp;</span>
       </Button>
     </Card>

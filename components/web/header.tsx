@@ -26,7 +26,7 @@ type HeaderProps = ComponentProps<"div"> & {
   session: Session | null
 }
 
-export const Header = ({ children, className, session, ...props }: HeaderProps) => {
+const Header = ({ children, className, session, ...props }: HeaderProps) => {
   const pathname = usePathname()
   const search = useSearch()
   const [isNavOpen, setNavOpen] = useState(false)
@@ -48,8 +48,8 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
   return (
     <div
       className={cx(
-        "group/menu sticky top-(--header-top) inset-x-0 z-49 duration-300",
-        "max-lg:data-[state=open]:bg-background/90",
+        "group/menu sticky top-(--header-top) inset-x-0 z-50 bg-background duration-300",
+        // "max-lg:data-[state=open]:bg-background/90",
         className,
       )}
       id="header"
@@ -57,10 +57,8 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
       data-state={isNavOpen ? "open" : "close"}
       {...props}
     >
-      <div className="absolute top-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height)+2rem)] pointer-events-none bg-linear-to-b from-background via-background to-transparent lg:h-[calc(var(--header-top)+var(--header-height)+3rem)]" />
-
       <Container>
-        <div className="relative flex items-center py-3.5 gap-4 text-sm h-(--header-height) isolate duration-300 md:gap-6">
+        <div className="relative z-41 flex items-center py-3.5 gap-4 text-sm h-(--header-height) isolate duration-300 md:gap-6">
           <Stack size="sm" wrap={false} className="mr-auto">
             <button
               type="button"
@@ -189,3 +187,11 @@ export const Header = ({ children, className, session, ...props }: HeaderProps) 
     </div>
   )
 }
+
+const HeaderBackdrop = () => {
+  return (
+    <div className="fixed top-(--header-offset) inset-x-0 z-40 h-8 pointer-events-none bg-linear-to-b from-background to-transparent" />
+  )
+}
+
+export { Header, HeaderBackdrop, type HeaderProps }
