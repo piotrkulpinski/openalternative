@@ -7,6 +7,7 @@ import { Toaster } from "~/components/common/toaster"
 import { TooltipProvider } from "~/components/common/tooltip"
 import { config } from "~/config"
 import { SearchProvider } from "~/contexts/search-context"
+import { geist } from "~/lib/fonts"
 
 export const metadata: Metadata = {
   metadataBase: new URL(config.site.url),
@@ -31,7 +32,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className={`${geist.variable} scroll-smooth`} suppressHydrationWarning>
       <body className="min-h-dvh flex flex-col bg-background text-foreground">
         <NuqsAdapter>
           <TooltipProvider delayDuration={250}>

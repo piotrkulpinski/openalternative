@@ -8,8 +8,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
+import { Icon } from "~/components/common/icon"
 import { cva, cx } from "~/utils/cva"
-import { Icon } from "../common/icon"
 
 const dataTableColumnHeaderVariants = cva({
   base: "text-start font-medium text-muted-foreground whitespace-nowrap",

@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Nav } from "~/components/admin/nav"
 import { Button } from "~/components/common/button"
+import { Icon } from "~/components/common/icon"
 import { Kbd } from "~/components/common/kbd"
 import { Tooltip } from "~/components/common/tooltip"
 import { siteConfig } from "~/config/site"
 import { useSearch } from "~/contexts/search-context"
 import { signOut } from "~/lib/auth-client"
-import { Icon } from "../common/icon"
 
 export const Sidebar = () => {
   const isMobile = useMediaQuery("(max-width: 768px)")

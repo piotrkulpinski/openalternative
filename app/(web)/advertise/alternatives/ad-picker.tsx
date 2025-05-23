@@ -75,7 +75,7 @@ export const AlternativesAdPicker = ({
             return {
               id,
               name: (
-                <Stack size="xs" className="text-foreground">
+                <Stack size="xs">
                   {faviconUrl && (
                     <img
                       src={faviconUrl}

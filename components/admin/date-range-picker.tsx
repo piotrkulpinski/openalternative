@@ -7,9 +7,9 @@ import { type ComponentProps, useMemo } from "react"
 import type { DateRange } from "react-day-picker"
 import { Button, type ButtonProps } from "~/components/common/button"
 import { Calendar } from "~/components/common/calendar"
+import { Icon } from "~/components/common/icon"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
 import { cx } from "~/utils/cva"
-import { Icon } from "../common/icon"
 
 type DateRangePickerProps = ComponentProps<typeof PopoverContent> & {
   /**

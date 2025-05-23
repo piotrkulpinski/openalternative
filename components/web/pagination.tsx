@@ -3,12 +3,12 @@
 import { getCurrentPage, getPageLink } from "@curiousleaf/utils"
 import { usePathname, useSearchParams } from "next/navigation"
 import { type ComponentProps, useMemo } from "react"
+import { Icon } from "~/components/common/icon"
 import { Note } from "~/components/common/note"
 import { PaginationLink } from "~/components/web/pagination-link"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { type UsePaginationProps, usePagination } from "~/hooks/use-pagination"
 import { cx } from "~/utils/cva"
-import { Icon } from "../common/icon"
 
 export type PaginationProps = ComponentProps<"nav"> & Omit<UsePaginationProps, "currentPage">
 

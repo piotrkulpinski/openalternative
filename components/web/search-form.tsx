@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation"
 import { parseAsString, useQueryState } from "nuqs"
 import { type ComponentProps, type FormEvent, useEffect, useRef, useState } from "react"
+import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
 import { cx } from "~/utils/cva"
-import { Icon } from "../common/icon"
 
 export const SearchForm = ({ className, ...props }: ComponentProps<"form">) => {
   const router = useRouter()

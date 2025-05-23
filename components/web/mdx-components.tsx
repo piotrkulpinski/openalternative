@@ -1,12 +1,12 @@
 import Image from "next/image"
 import { type ComponentProps, Suspense } from "react"
+import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { ExternalLink } from "~/components/web/external-link"
 import { ToolEntry as ToolEntryPrimitive } from "~/components/web/tools/tool-entry"
 import { toolOnePayload } from "~/server/web/tools/payloads"
 import { db } from "~/services/db"
 import { cx } from "~/utils/cva"
-import { Icon } from "../common/icon"
 
 const a = ({ href, ...props }: ComponentProps<"a">) => {
   if (typeof href !== "string") {

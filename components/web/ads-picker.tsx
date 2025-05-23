@@ -12,6 +12,7 @@ import { createStripeAdsCheckout } from "~/actions/stripe"
 import { AnimatedContainer } from "~/components/common/animated-container"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
+import { Icon } from "~/components/common/icon"
 import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
@@ -20,7 +21,6 @@ import { Price } from "~/components/web/price"
 import { config } from "~/config"
 import { useAds } from "~/hooks/use-ads"
 import type { AdMany } from "~/server/web/ads/payloads"
-import { Icon } from "../common/icon"
 
 type AdsCalendarProps = ComponentProps<"div"> & {
   ads: AdMany[]

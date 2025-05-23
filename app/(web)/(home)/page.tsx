@@ -25,7 +25,7 @@ export default function Home(props: PageProps) {
         </div>
 
         <Intro alignment="center">
-          <IntroTitle className="max-w-[15em] sm:text-4xl md:text-5xl lg:text-6xl">
+          <IntroTitle className="max-w-[16em] sm:text-4xl md:text-5xl lg:text-6xl">
             Discover {config.site.tagline}
           </IntroTitle>
 

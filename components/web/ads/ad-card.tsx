@@ -54,7 +54,7 @@ const AdCard = async ({ className, type, where, fallbackAd, ...props }: AdCardPr
           </H4>
         </CardHeader>
 
-        <CardDescription className="mb-auto line-clamp-4">{ad.description}</CardDescription>
+        <CardDescription className="mb-auto pr-2 line-clamp-4">{ad.description}</CardDescription>
 
         <Button
           className="pointer-events-none md:w-full"

@@ -38,7 +38,7 @@ export const Insights = ({ className, insights, ...props }: InsightsProps) => {
                   {value}
                 </Link>
               ) : (
-                <Slot.Root className="shrink-0 font-medium" title={title}>
+                <Slot.Root className="shrink-0 font-medium tabular-nums" title={title}>
                   {valueComp}
                 </Slot.Root>
               )}

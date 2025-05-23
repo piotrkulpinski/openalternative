@@ -5,6 +5,7 @@ import type { DateRange } from "react-day-picker"
 import { Button } from "~/components/common/button"
 import { Calendar } from "~/components/common/calendar"
 import { H4 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { ExternalLink } from "~/components/web/external-link"
@@ -14,7 +15,6 @@ import type { AdsSelection, useAds } from "~/hooks/use-ads"
 import type { AdMany } from "~/server/web/ads/payloads"
 import { getFirstAvailableMonth } from "~/utils/ads"
 import { cx } from "~/utils/cva"
-import { Icon } from "../common/icon"
 
 type AdsCalendarProps = ComponentProps<"div"> & {
   adSpot: AdSpot

@@ -5,13 +5,13 @@ import type { Table } from "@tanstack/react-table"
 import * as React from "react"
 import { type ComponentProps, useRef } from "react"
 import { Button } from "~/components/common/button"
+import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
 import { Kbd } from "~/components/common/kbd"
 import { Stack } from "~/components/common/stack"
 import { DataTableFacetedFilter } from "~/components/data-table/data-table-faceted-filter"
 import type { DataTableFilterField } from "~/types"
 import { cx } from "~/utils/cva"
-import { Icon } from "../common/icon"
 
 type DataTableToolbarProps<TData> = ComponentProps<"div"> & {
   table: Table<TData>

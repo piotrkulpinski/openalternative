@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation"
 import type { ComponentProps } from "react"
 import { toast } from "sonner"
+import { Icon } from "~/components/common/icon"
 import { navLinkVariants } from "~/components/web/ui/nav-link"
 import { signOut } from "~/lib/auth-client"
 import { cx } from "~/utils/cva"
-import { Icon } from "../common/icon"
 
 export const UserLogout = ({ className, ...props }: ComponentProps<"button">) => {
   const router = useRouter()

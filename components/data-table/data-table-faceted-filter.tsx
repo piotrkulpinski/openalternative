@@ -11,10 +11,10 @@ import {
   CommandList,
   CommandSeparator,
 } from "~/components/common/command"
+import { Icon } from "~/components/common/icon"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/common/popover"
 import { Separator } from "~/components/common/separator"
 import type { Option } from "~/types"
-import { Icon } from "../common/icon"
 
 type DataTableFacetedFilterProps<TData, TValue> = {
   column?: Column<TData, TValue>

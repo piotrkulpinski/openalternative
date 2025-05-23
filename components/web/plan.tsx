@@ -11,6 +11,7 @@ import { createStripeToolCheckout } from "~/actions/stripe"
 import { Button } from "~/components/common/button"
 import { Card, CardBg, type cardVariants } from "~/components/common/card"
 import { H5 } from "~/components/common/heading"
+import { Icon } from "~/components/common/icon"
 import { Ping } from "~/components/common/ping"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
@@ -21,7 +22,6 @@ import { usePlanPrices } from "~/hooks/use-plan-prices"
 import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { type VariantProps, cva, cx } from "~/utils/cva"
-import { Icon } from "../common/icon"
 
 const planVariants = cva({
   base: "items-stretch gap-8 basis-72 grow max-w-80 bg-transparent overflow-clip",
