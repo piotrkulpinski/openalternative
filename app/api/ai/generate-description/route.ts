@@ -16,7 +16,7 @@ export const POST = withAdminAuth(async req => {
   const { url } = generateContentSchema.parse(await req.json())
 
   const result = streamObject({
-    model: isDev ? google("gemini-2.5-pro-preview-05-06") : anthropic("claude-3-5-sonnet-latest"),
+    model: isDev ? google("gemini-2.5-pro-preview-05-06") : anthropic("claude-4-sonnet-20250514"),
     schema: descriptionSchema,
     system: `
       You are an expert content creator specializing in reasearching and writing about software.

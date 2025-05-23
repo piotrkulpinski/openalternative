@@ -70,28 +70,13 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/topics",
-        destination: "/topics/letter/a",
-        permanent: true,
-      },
-      {
-        source: "/languages/:path*",
-        destination: "/stacks/:path*",
-        permanent: true,
-      },
-      {
-        source: "/licenses/:path*/tools",
-        destination: "/licenses/:path*",
-        permanent: true,
-      },
-      {
         source: "/newsletter",
         destination: "/",
         permanent: true,
       },
       {
-        source: "/sponsor",
-        destination: "/advertise",
+        source: "/hoarder",
+        destination: "/karakeep",
         permanent: true,
       },
     ]

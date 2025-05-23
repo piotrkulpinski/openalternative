@@ -18,7 +18,7 @@ export const POST = withAdminAuth(async req => {
   const scrapedData = await scrapeWebsiteData(url)
 
   const result = streamObject({
-    model: isDev ? google("gemini-2.5-pro-preview-05-06") : anthropic("claude-3-5-sonnet-latest"),
+    model: isDev ? google("gemini-2.5-pro-preview-05-06") : anthropic("claude-4-sonnet-20250514"),
     schema: contentSchema,
     system: `
       You are an expert content creator specializing in open source products.
