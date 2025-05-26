@@ -146,49 +146,51 @@ export default async function AlternativePage(props: PageProps) {
             </IntroDescription>
           </Intro>
 
-          <Prose>
-            <p>
-              The best open source alternative to {alternative.name} is {bestTools.shift()}. If that
-              doesn't suit you, we've compiled a{" "}
-              <Link href="/about#how-are-rankings-calculated">ranked list</Link> of other open
-              source {alternative.name} alternatives to help you find a suitable replacement.
-              {!!bestTools.length && (
-                <>
-                  {" "}
-                  Other interesting open source
-                  {bestTools.length === 1
-                    ? ` alternative to ${alternative.name} is `
-                    : ` alternatives to ${alternative.name} are: `}
-                  {bestTools.map((alt, index) => (
+          {!!tools.length && (
+            <Prose>
+              <p>
+                The best open source alternative to {alternative.name} is {bestTools.shift()}. If
+                that doesn't suit you, we've compiled a{" "}
+                <Link href="/about#how-are-rankings-calculated">ranked list</Link> of other open
+                source {alternative.name} alternatives to help you find a suitable replacement.
+                {!!bestTools.length && (
+                  <>
+                    {" "}
+                    Other interesting open source
+                    {bestTools.length === 1
+                      ? ` alternative to ${alternative.name} is `
+                      : ` alternatives to ${alternative.name} are: `}
+                    {bestTools.map((alt, index) => (
+                      <Fragment key={index}>
+                        {index > 0 && index !== bestTools.length - 1 && ", "}
+                        {index > 0 && index === bestTools.length - 1 && " and "}
+                        {alt}
+                      </Fragment>
+                    ))}
+                    .
+                  </>
+                )}
+              </p>
+
+              {!!bestCategories.length && (
+                <p>
+                  {alternative.name} alternatives are mainly {bestCategories.shift()}
+                  {!!bestCategories.length && " but may also be "}
+                  {bestCategories.map((category, index) => (
                     <Fragment key={index}>
-                      {index > 0 && index !== bestTools.length - 1 && ", "}
-                      {index > 0 && index === bestTools.length - 1 && " and "}
-                      {alt}
+                      {index > 0 && index !== bestCategories.length - 1 && ", "}
+                      {index > 0 && index === bestCategories.length - 1 && " or "}
+                      {category}
                     </Fragment>
                   ))}
-                  .
-                </>
+                  . Browse these if you want a narrower list of alternatives or looking for a
+                  specific functionality of {alternative.name}.
+                </p>
               )}
-            </p>
 
-            {!!bestCategories.length && (
-              <p>
-                {alternative.name} alternatives are mainly {bestCategories.shift()}
-                {!!bestCategories.length && " but may also be "}
-                {bestCategories.map((category, index) => (
-                  <Fragment key={index}>
-                    {index > 0 && index !== bestCategories.length - 1 && ", "}
-                    {index > 0 && index === bestCategories.length - 1 && " or "}
-                    {category}
-                  </Fragment>
-                ))}
-                . Browse these if you want a narrower list of alternatives or looking for a specific
-                functionality of {alternative.name}.
-              </p>
-            )}
-
-            <ShareButtons title={`${title}`} className="not-prose" />
-          </Prose>
+              <ShareButtons title={`${title}`} className="not-prose" />
+            </Prose>
+          )}
         </Section.Content>
 
         <Section.Sidebar>
@@ -202,7 +204,7 @@ export default async function AlternativePage(props: PageProps) {
             {tools.map((tool, order) => (
               <Fragment key={tool.slug}>
                 {(order - 1) % 5 === 0 && (
-                  <Card hover={false} className="bg-yellow-500/10 border-foreground/10" asChild>
+                  <Card hover={false} className="bg-yellow-500/10" asChild>
                     <Prose>
                       <p>
                         Looking for open source alternatives to other popular services? Check out

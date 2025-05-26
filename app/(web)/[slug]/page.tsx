@@ -220,11 +220,7 @@ export default async function ToolPage(props: PageProps) {
 
         <Section.Sidebar className="max-md:contents">
           {!isToolPublished(tool) && (
-            <Card
-              hover={false}
-              focus={false}
-              className="bg-yellow-500/10 border-foreground/10 max-md:order-first"
-            >
+            <Card hover={false} className="bg-yellow-500/10 max-md:order-first">
               <H5>
                 This is a preview only.{" "}
                 {tool.publishedAt &&
