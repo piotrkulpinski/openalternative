@@ -16,12 +16,9 @@ export const AdBanner = async ({ className, ...props }: ComponentProps<typeof Ca
   }
 
   return (
-    <Container asChild>
+    <Container className="z-49 mt-1">
       <Card
-        className={cx(
-          "z-51 flex-row items-center gap-3 py-2.5 rounded-t-none border-t-0 max-lg:rounded-b-none",
-          className,
-        )}
+        className={cx("flex-row items-center gap-3 px-3 py-2.5 md:px-4", className)}
         asChild
         {...props}
       >

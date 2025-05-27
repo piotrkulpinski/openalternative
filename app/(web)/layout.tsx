@@ -72,12 +72,12 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <Providers>
       <div className="flex flex-col min-h-dvh">
+        <Header session={session} />
+        <HeaderBackdrop />
+
         <Suspense>
           <AdBanner />
         </Suspense>
-
-        <Header session={session} />
-        <HeaderBackdrop />
 
         <Container asChild>
           <main className="flex flex-col grow py-8 gap-8 md:gap-10 md:py-10 lg:gap-12 lg:py-12">
