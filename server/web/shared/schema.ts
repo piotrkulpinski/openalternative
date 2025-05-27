@@ -60,7 +60,15 @@ export const feedbackSchema = z.object({
   message: z.string().min(1, "Message is required"),
 })
 
+export const adDetailsSchema = z.object({
+  name: z.string().min(1, "Company name is required"),
+  description: z.string().min(1, "Description is required").max(160),
+  websiteUrl: z.string().url("Please enter a valid website URL"),
+  buttonLabel: z.string().optional(),
+})
+
 export type SubmitToolSchema = z.infer<typeof submitToolSchema>
 export type NewsletterSchema = z.infer<typeof newsletterSchema>
 export type ReportSchema = z.infer<typeof reportSchema>
 export type FeedbackSchema = z.infer<typeof feedbackSchema>
+export type AdDetailsSchema = z.infer<typeof adDetailsSchema>

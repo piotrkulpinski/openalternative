@@ -22,11 +22,11 @@ import { config } from "~/config"
 import { useAds } from "~/hooks/use-ads"
 import type { AdMany } from "~/server/web/ads/payloads"
 
-type AdsCalendarProps = ComponentProps<"div"> & {
+type AdsPickerProps = ComponentProps<"div"> & {
   ads: AdMany[]
 }
 
-export const AdsPicker = ({ className, ads, ...props }: AdsCalendarProps) => {
+export const AdsPicker = ({ className, ads, ...props }: AdsPickerProps) => {
   const { price, selections, hasSelections, findAdSpot, clearSelection, updateSelection } = useAds()
 
   const { execute, isPending } = useServerAction(createStripeAdsCheckout, {

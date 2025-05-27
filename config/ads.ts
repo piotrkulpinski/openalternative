@@ -11,6 +11,8 @@ export type AdSpot = {
 }
 
 export const adsConfig = {
+  minPageviewThreshold: 100,
+
   adSpots: [
     {
       label: "Listing Ad",
