@@ -1,6 +1,6 @@
 "use client"
 
-import { formatDate } from "@curiousleaf/utils"
+import { formatDate } from "@primoui/utils"
 import { type Tool, ToolStatus } from "@prisma/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import { differenceInDays, formatDistanceToNowStrict } from "date-fns"

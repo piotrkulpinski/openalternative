@@ -1,6 +1,6 @@
 "use client"
 
-import { getRandomDigits } from "@curiousleaf/utils"
+import { getRandomDigits } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useLocalStorage } from "@mantine/hooks"
 import debounce from "debounce"

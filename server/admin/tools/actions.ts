@@ -1,6 +1,6 @@
 "use server"
 
-import { slugify } from "@curiousleaf/utils"
+import { slugify } from "@primoui/utils"
 import { ToolStatus } from "@prisma/client"
 import { revalidatePath, revalidateTag } from "next/cache"
 import { after } from "next/server"

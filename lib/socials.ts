@@ -1,4 +1,4 @@
-import { formatNumber } from "@curiousleaf/utils"
+import { formatNumber } from "@primoui/utils"
 import type { Tool as PrismaTool } from "@prisma/client"
 import { formatDistanceToNowStrict } from "date-fns"
 import type { Jsonify } from "inngest/helpers/jsonify"

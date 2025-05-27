@@ -1,4 +1,4 @@
-import { formatDate } from "@curiousleaf/utils"
+import { formatDate } from "@primoui/utils"
 import { differenceInDays } from "date-fns"
 import type { ComponentProps } from "react"
 import { Icon } from "~/components/common/icon"

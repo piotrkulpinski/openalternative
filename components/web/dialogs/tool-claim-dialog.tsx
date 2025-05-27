@@ -1,4 +1,4 @@
-import { getUrlHostname } from "@curiousleaf/utils"
+import { getUrlHostname } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"

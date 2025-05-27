@@ -1,4 +1,4 @@
-import { range } from "@curiousleaf/utils"
+import { range } from "@primoui/utils"
 import { useMemo } from "react"
 
 export type UsePaginationProps = {

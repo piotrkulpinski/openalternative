@@ -1,4 +1,4 @@
-import { formatDate, getReadTime, isTruthy } from "@curiousleaf/utils"
+import { formatDate, getReadTime, isTruthy } from "@primoui/utils"
 import { type Post, allPosts } from "content-collections"
 import type { Metadata } from "next"
 import Image from "next/image"

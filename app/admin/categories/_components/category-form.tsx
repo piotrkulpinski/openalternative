@@ -1,6 +1,6 @@
 "use client"
 
-import { slugify } from "@curiousleaf/utils"
+import { slugify } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { type ComponentProps, use, useMemo } from "react"

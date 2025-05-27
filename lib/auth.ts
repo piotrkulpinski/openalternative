@@ -1,4 +1,4 @@
-import { getRandomDigits } from "@curiousleaf/utils"
+import { getRandomDigits } from "@primoui/utils"
 import { betterAuth } from "better-auth"
 import { prismaAdapter } from "better-auth/adapters/prisma"
 import { admin, createAuthMiddleware, magicLink, oneTimeToken } from "better-auth/plugins"

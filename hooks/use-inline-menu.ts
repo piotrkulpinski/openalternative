@@ -1,6 +1,6 @@
 "use client"
 
-import { isTruthy } from "@curiousleaf/utils"
+import { isTruthy } from "@primoui/utils"
 import { useCallback, useEffect, useState } from "react"
 import { getElementPosition } from "~/utils/helpers"
 

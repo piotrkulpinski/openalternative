@@ -71,7 +71,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 
   return (
     <Providers>
-      <div className="flex flex-col min-h-dvh">
+      <div className="flex flex-col min-h-dvh overflow-clip pt-(--header-offset)">
         <Header session={session} />
         <HeaderBackdrop />
 

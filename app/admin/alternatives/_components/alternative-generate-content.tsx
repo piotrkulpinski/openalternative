@@ -1,5 +1,5 @@
 import { experimental_useObject as useObject } from "@ai-sdk/react"
-import { isValidUrl } from "@curiousleaf/utils"
+import { isValidUrl } from "@primoui/utils"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"

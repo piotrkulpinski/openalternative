@@ -1,4 +1,4 @@
-import { formatDate, getReadTime } from "@curiousleaf/utils"
+import { formatDate, getReadTime } from "@primoui/utils"
 import type { Post } from "content-collections"
 import Image from "next/image"
 import type { ComponentProps } from "react"

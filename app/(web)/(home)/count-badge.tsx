@@ -1,4 +1,4 @@
-import { formatNumber } from "@curiousleaf/utils"
+import { formatNumber } from "@primoui/utils"
 import { ToolStatus } from "@prisma/client"
 import { subDays } from "date-fns"
 import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"

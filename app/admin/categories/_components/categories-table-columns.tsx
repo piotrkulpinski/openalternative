@@ -1,6 +1,6 @@
 "use client"
 
-import { formatDate } from "@curiousleaf/utils"
+import { formatDate } from "@primoui/utils"
 import type { Category } from "@prisma/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import { CategoryActions } from "~/app/admin/categories/_components/category-actions"

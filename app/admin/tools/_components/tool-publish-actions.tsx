@@ -1,4 +1,4 @@
-import { isTruthy } from "@curiousleaf/utils"
+import { isTruthy } from "@primoui/utils"
 import { ToolStatus } from "@prisma/client"
 import { addDays, formatDate, isFriday, isMonday, isWednesday } from "date-fns"
 import { type ComponentProps, type ReactNode, useState } from "react"

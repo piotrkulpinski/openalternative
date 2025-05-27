@@ -1,4 +1,4 @@
-import { isTruthy } from "@curiousleaf/utils"
+import { isTruthy } from "@primoui/utils"
 import type { Prisma } from "@prisma/client"
 import { endOfDay, startOfDay } from "date-fns"
 import { db } from "~/services/db"

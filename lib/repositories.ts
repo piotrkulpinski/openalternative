@@ -1,4 +1,4 @@
-import { slugify } from "@curiousleaf/utils"
+import { slugify } from "@primoui/utils"
 import type { Prisma } from "@prisma/client"
 import { githubClient } from "~/services/github"
 

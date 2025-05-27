@@ -1,4 +1,4 @@
-import { formatDate, formatNumber, isTruthy } from "@curiousleaf/utils"
+import { formatDate, formatNumber, isTruthy } from "@primoui/utils"
 import { formatDistanceToNowStrict, formatISO } from "date-fns"
 import type { ComponentProps } from "react"
 import { Button } from "~/components/common/button"

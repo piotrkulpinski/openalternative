@@ -1,6 +1,6 @@
 "use client"
 
-import { formatNumber } from "@curiousleaf/utils"
+import { formatNumber } from "@primoui/utils"
 import type { ComponentProps } from "react"
 import {
   DropdownMenu,

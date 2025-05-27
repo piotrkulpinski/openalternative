@@ -1,4 +1,4 @@
-import { getUrlHostname } from "@curiousleaf/utils"
+import { getUrlHostname } from "@primoui/utils"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { SearchParams } from "nuqs/server"

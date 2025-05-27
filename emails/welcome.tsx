@@ -1,4 +1,4 @@
-import { getUrlHostname } from "@curiousleaf/utils"
+import { getUrlHostname } from "@primoui/utils"
 import { Link, Text } from "@react-email/components"
 import { config } from "~/config"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/components/wrapper"

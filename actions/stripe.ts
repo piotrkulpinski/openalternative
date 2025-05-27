@@ -1,6 +1,6 @@
 "use server"
 
-import { getUrlHostname } from "@curiousleaf/utils"
+import { getUrlHostname } from "@primoui/utils"
 import { AdType, type Prisma } from "@prisma/client"
 import { revalidateTag } from "next/cache"
 import { z } from "zod"

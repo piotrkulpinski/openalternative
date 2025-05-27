@@ -1,6 +1,6 @@
 "use client"
 
-import { getInitials } from "@curiousleaf/utils"
+import { getInitials } from "@primoui/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/common/avatar"
 import { Box } from "~/components/common/box"
 import { Button } from "~/components/common/button"

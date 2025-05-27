@@ -1,6 +1,6 @@
 "use client"
 
-import { getRandomString, isValidUrl, slugify } from "@curiousleaf/utils"
+import { getRandomString, isValidUrl, slugify } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { type ComponentProps, use } from "react"

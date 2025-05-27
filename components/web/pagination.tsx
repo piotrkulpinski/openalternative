@@ -1,6 +1,6 @@
 "use client"
 
-import { getCurrentPage, getPageLink } from "@curiousleaf/utils"
+import { getCurrentPage, getPageLink } from "@primoui/utils"
 import { usePathname, useSearchParams } from "next/navigation"
 import { type ComponentProps, useMemo } from "react"
 import { Icon } from "~/components/common/icon"

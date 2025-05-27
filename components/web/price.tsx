@@ -1,4 +1,4 @@
-import { formatNumber } from "@curiousleaf/utils"
+import { formatNumber } from "@primoui/utils"
 import NumberFlow, { continuous, type Format } from "@number-flow/react"
 import type { ComponentProps } from "react"
 import type Stripe from "stripe"

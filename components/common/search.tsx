@@ -1,6 +1,6 @@
 "use client"
 
-import { getUrlHostname } from "@curiousleaf/utils"
+import { getUrlHostname } from "@primoui/utils"
 import { type HotkeyItem, useDebouncedState, useHotkeys } from "@mantine/hooks"
 import { usePathname, useRouter } from "next/navigation"
 import { posthog } from "posthog-js"

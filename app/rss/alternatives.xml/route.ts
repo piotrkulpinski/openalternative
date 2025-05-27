@@ -1,4 +1,4 @@
-import { getUrlHostname } from "@curiousleaf/utils"
+import { getUrlHostname } from "@primoui/utils"
 import { ToolStatus } from "@prisma/client"
 import RSS from "rss"
 import { config } from "~/config"

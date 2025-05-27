@@ -1,4 +1,4 @@
-import { getExcerpt } from "@curiousleaf/utils"
+import { getExcerpt } from "@primoui/utils"
 import type { PropsWithChildren } from "react"
 import { LogoSymbol } from "~/components/web/ui/logo-symbol"
 import { config } from "~/config"

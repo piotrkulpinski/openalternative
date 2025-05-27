@@ -1,6 +1,6 @@
 "use server"
 
-import { getRandomString } from "@curiousleaf/utils"
+import { getRandomString } from "@primoui/utils"
 import { z } from "zod"
 import { uploadToS3Storage } from "~/lib/media"
 import { userProcedure } from "~/lib/safe-actions"

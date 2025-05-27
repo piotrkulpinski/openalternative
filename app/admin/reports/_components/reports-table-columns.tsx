@@ -1,6 +1,6 @@
 "use client"
 
-import { formatDate } from "@curiousleaf/utils"
+import { formatDate } from "@primoui/utils"
 import type { Report, Tool, User } from "@prisma/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import { ReportActions } from "~/app/admin/reports/_components/report-actions"

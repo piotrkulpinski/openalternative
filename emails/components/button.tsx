@@ -1,4 +1,4 @@
-import { getUrlHostname } from "@curiousleaf/utils"
+import { getUrlHostname } from "@primoui/utils"
 import { Button, type ButtonProps, Section } from "@react-email/components"
 import { siteConfig } from "~/config/site"
 import { addSearchParams } from "~/utils/search-params"

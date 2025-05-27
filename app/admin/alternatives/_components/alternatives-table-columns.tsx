@@ -1,6 +1,6 @@
 "use client"
 
-import { formatDate } from "@curiousleaf/utils"
+import { formatDate } from "@primoui/utils"
 import type { Alternative } from "@prisma/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import { AlternativeActions } from "~/app/admin/alternatives/_components/alternative-actions"

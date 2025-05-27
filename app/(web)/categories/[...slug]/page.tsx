@@ -1,4 +1,4 @@
-import { lcFirst } from "@curiousleaf/utils"
+import { lcFirst } from "@primoui/utils"
 import type { Metadata } from "next"
 import { notFound, permanentRedirect } from "next/navigation"
 import type { SearchParams } from "nuqs/server"

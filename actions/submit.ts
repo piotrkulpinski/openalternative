@@ -1,6 +1,6 @@
 "use server"
 
-import { getUrlHostname, slugify } from "@curiousleaf/utils"
+import { getUrlHostname, slugify } from "@primoui/utils"
 import { headers } from "next/headers"
 import { after } from "next/server"
 import { createServerAction } from "zsa"

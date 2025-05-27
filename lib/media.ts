@@ -1,6 +1,6 @@
 import { DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3"
 import { Upload } from "@aws-sdk/lib-storage"
-import { stripURLSubpath } from "@curiousleaf/utils"
+import { stripURLSubpath } from "@primoui/utils"
 import wretch from "wretch"
 import QueryStringAddon from "wretch/addons/queryString"
 import { env, isProd } from "~/env"

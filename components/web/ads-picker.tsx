@@ -1,6 +1,6 @@
 "use client"
 
-import { formatDateRange } from "@curiousleaf/utils"
+import { formatDateRange } from "@primoui/utils"
 import { cx } from "cva"
 import { endOfDay, startOfDay } from "date-fns"
 import plur from "plur"

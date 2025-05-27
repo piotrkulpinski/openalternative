@@ -1,6 +1,6 @@
 "use server"
 
-import { slugify } from "@curiousleaf/utils"
+import { slugify } from "@primoui/utils"
 import { revalidatePath, revalidateTag } from "next/cache"
 import { after } from "next/server"
 import { z } from "zod"

@@ -1,6 +1,6 @@
 "use client"
 
-import { isValidUrl } from "@curiousleaf/utils"
+import { isValidUrl } from "@primoui/utils"
 import type { Tool } from "@prisma/client"
 import { usePathname } from "next/navigation"
 import { useRouter } from "next/navigation"

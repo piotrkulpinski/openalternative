@@ -1,6 +1,6 @@
 "use client"
 
-import { formatDateTime, getRandomString, isValidUrl, slugify } from "@curiousleaf/utils"
+import { formatDateTime, getRandomString, isValidUrl, slugify } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { type Tool, ToolStatus } from "@prisma/client"
 import { useRouter } from "next/navigation"

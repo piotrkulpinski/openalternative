@@ -1,4 +1,4 @@
-import { isExternalUrl } from "@curiousleaf/utils"
+import { isExternalUrl } from "@primoui/utils"
 import type { Prisma } from "@prisma/client"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/common/badge"

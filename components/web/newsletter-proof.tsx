@@ -1,4 +1,4 @@
-import { formatNumber } from "@curiousleaf/utils"
+import { formatNumber } from "@primoui/utils"
 import Image from "next/image"
 import type { ComponentProps } from "react"
 import { Note } from "~/components/common/note"

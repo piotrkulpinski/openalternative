@@ -1,4 +1,4 @@
-import { formatNumber } from "@curiousleaf/utils"
+import { formatNumber } from "@primoui/utils"
 import { cx } from "cva"
 import { formatDistanceToNowStrict } from "date-fns"
 import type { ComponentProps } from "react"

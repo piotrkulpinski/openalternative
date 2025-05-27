@@ -1,4 +1,4 @@
-import { formatDate } from "@curiousleaf/utils"
+import { formatDate } from "@primoui/utils"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense, cache } from "react"

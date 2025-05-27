@@ -47,7 +47,7 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
 
   return (
     <div
-      className={cx("sticky top-(--header-top) inset-x-0 z-50 bg-background", className)}
+      className={cx("fixed top-(--header-top) inset-x-0 z-50 bg-background", className)}
       id="header"
       role="banner"
       data-state={isNavOpen ? "open" : "close"}

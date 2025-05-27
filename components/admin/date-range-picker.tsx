@@ -1,6 +1,6 @@
 "use client"
 
-import { formatDate, formatDateRange } from "@curiousleaf/utils"
+import { formatDate, formatDateRange } from "@primoui/utils"
 import { parseISO } from "date-fns"
 import { parseAsString, useQueryStates } from "nuqs"
 import { type ComponentProps, useMemo } from "react"

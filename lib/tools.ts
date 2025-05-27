@@ -1,4 +1,4 @@
-import { joinAsSentence } from "@curiousleaf/utils"
+import { joinAsSentence } from "@primoui/utils"
 import type { Tool } from "@prisma/client"
 import { differenceInDays } from "date-fns"
 import { config } from "~/config"
