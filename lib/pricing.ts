@@ -1,3 +1,5 @@
+import { adsConfig } from "~/config/ads"
+
 /**
  * Calculates the advertising price for an item based on its monthly pageviews
  * relative to the maximum pageviews across all items.
@@ -5,7 +7,7 @@
  */
 const calculatePrice = (pageviews: number | null, maxPageviews: number) => {
   // If pageviews are null, undefined, or negative, return null
-  if (!pageviews || pageviews < 50 || maxPageviews <= 0) {
+  if (!pageviews || pageviews < adsConfig.minPageviewThreshold || maxPageviews <= 0) {
     return null
   }
 

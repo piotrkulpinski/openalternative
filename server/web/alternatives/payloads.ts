@@ -1,4 +1,5 @@
 import { Prisma, ToolStatus } from "@prisma/client"
+import { adOnePayload } from "~/server/web/ads/payloads"
 
 export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeSelect>()({
   id: true,
@@ -9,8 +10,8 @@ export const alternativeOnePayload = Prisma.validator<Prisma.AlternativeSelect>(
   faviconUrl: true,
   discountCode: true,
   discountAmount: true,
-  pageviews: true,
-  adId: true,
+  adPrice: true,
+  ad: { select: adOnePayload },
   _count: { select: { tools: { where: { status: ToolStatus.Published } } } },
 })
 

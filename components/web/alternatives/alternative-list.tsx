@@ -20,7 +20,7 @@ const AlternativeList = ({ alternatives, enableAds = true, ...props }: Alternati
         <Fragment key={alternative.slug}>
           {enableAds && Math.min(2, alternatives.length - 1) === order && (
             <Suspense fallback={<AdCardSkeleton className="lg:order-2" />}>
-              <AdCard type="Alternatives" className="lg:order-2" />
+              <AdCard where={{ type: "Alternatives" }} className="lg:order-2" />
             </Suspense>
           )}
 

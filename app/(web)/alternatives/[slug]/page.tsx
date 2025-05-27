@@ -225,11 +225,10 @@ export default async function AlternativePage(props: PageProps) {
           </Section.Content>
 
           <Section.Sidebar className="order-first md:order-last md:max-h-[calc(100vh-5rem)]">
-            {(alternative.adId || (alternative.pageviews || 0) > 50) && (
+            {(alternative.ad || alternative.adPrice) && (
               <AdCard
-                type="AlternativePage"
-                where={{ alternatives: { some: { slug: alternative.slug } } }}
-                fallbackAd={{ websiteUrl: `/advertise/alternatives?id=${alternative.id}` }}
+                overrideAd={alternative.ad}
+                defaultOverride={{ websiteUrl: `/advertise?alternative=${alternative.id}` }}
               />
             )}
 

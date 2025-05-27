@@ -17,17 +17,17 @@ import { Price } from "~/components/web/price"
 import { config } from "~/config"
 import type { AlternativeMany } from "~/server/web/alternatives/payloads"
 
-type AlternativesAdPickerProps = {
+type AdsPickerAlternativesProps = {
   alternatives: AlternativeMany[]
   selectedId?: string
   relatedIds?: string[]
 }
 
-export const AlternativesAdPicker = ({
+export const AdsPickerAlternatives = ({
   alternatives,
   selectedId,
   relatedIds,
-}: AlternativesAdPickerProps) => {
+}: AdsPickerAlternativesProps) => {
   const [selectedIds, setSelectedIds] = useState<string[]>(selectedId ? [selectedId] : [])
   const [selectedAlternatives, setSelectedAlternatives] = useState<AlternativeMany[]>([])
   const [totalPrice, setTotalPrice] = useState(0)

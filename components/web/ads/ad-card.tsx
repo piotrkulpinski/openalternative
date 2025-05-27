@@ -1,5 +1,5 @@
 import { isExternalUrl } from "@curiousleaf/utils"
-import type { AdType, Prisma } from "@prisma/client"
+import type { Prisma } from "@prisma/client"
 import type { ComponentProps } from "react"
 import { Badge } from "~/components/common/badge"
 import { Button } from "~/components/common/button"
@@ -23,22 +23,32 @@ import { findAd } from "~/server/web/ads/queries"
 import { cx } from "~/utils/cva"
 
 type AdCardProps = CardProps & {
-  rel?: string
-  type: AdType
+  // Database query conditions to find a specific ad
   where?: Prisma.AdWhereInput
-  fallbackAd?: Partial<AdOne>
+  // Override ad data without database query
+  overrideAd?: AdOne | null
+  // Default values to merge with the fallback ad
+  defaultOverride?: Partial<AdOne>
 }
 
-const AdCard = async ({ className, type, where, fallbackAd, ...props }: AdCardProps) => {
-  const defaultAd = { ...config.ads.defaultAd, ...fallbackAd }
-  const ad = (await findAd({ where: { type, ...where } })) ?? defaultAd
-  const isDefault = !isExternalUrl(ad.websiteUrl)
+const AdCard = async ({ className, where, overrideAd, defaultOverride, ...props }: AdCardProps) => {
+  // Default ad values to display if no ad is found
+  const defaultAd = { ...config.ads.defaultAd, ...defaultOverride }
+
+  // Resolve the ad data from the override or database (don't query if override is defined)
+  const resolvedAd = overrideAd !== undefined ? overrideAd : await findAd({ where })
+
+  // Final ad data to display
+  const ad = resolvedAd ?? defaultAd
+
+  // Determine if the ad is internal or external
+  const isInternalAd = !isExternalUrl(ad.websiteUrl)
 
   return (
     <Card className={cx("group/button", className)} asChild {...props}>
       <ExternalLink
         href={ad.websiteUrl}
-        target={isDefault ? "_self" : undefined}
+        target={isInternalAd ? "_self" : undefined}
         eventName="click_ad"
         eventProps={{ url: ad.websiteUrl, type: ad.type, source: "card" }}
       >
@@ -61,20 +71,20 @@ const AdCard = async ({ className, type, where, fallbackAd, ...props }: AdCardPr
           suffix={<Icon name="lucide/arrow-up-right" />}
           asChild
         >
-          <span>{ad.buttonLabel ?? `Visit ${ad.name}`}</span>
+          <span>{ad.buttonLabel || `Visit ${ad.name}`}</span>
         </Button>
 
         <CardIcon>
-          {isDefault ? <LogoSymbol /> : <FaviconImage src={ad.faviconUrl} title={ad.name} />}
+          {isInternalAd ? <LogoSymbol /> : <FaviconImage src={ad.faviconUrl} title={ad.name} />}
         </CardIcon>
       </ExternalLink>
     </Card>
   )
 }
 
-const AdCardSkeleton = ({ className }: ComponentProps<typeof Card>) => {
+const AdCardSkeleton = ({ className, ...props }: ComponentProps<typeof Card>) => {
   return (
-    <Card hover={false} className={cx("items-stretch select-none", className)}>
+    <Card hover={false} className={cx("items-stretch select-none", className)} {...props}>
       <CardBadges>
         <Badge variant="outline">Ad</Badge>
       </CardBadges>

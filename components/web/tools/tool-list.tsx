@@ -19,7 +19,7 @@ const ToolList = ({ tools, adType = "Tools", enableAds = true, ...props }: ToolL
         <Fragment key={tool.slug}>
           {enableAds && Math.min(2, tools.length - 1) === order && (
             <Suspense fallback={<AdCardSkeleton className="lg:order-2" />}>
-              <AdCard type={adType} className="lg:order-2" />
+              <AdCard where={{ type: adType }} className="lg:order-2" />
             </Suspense>
           )}
 

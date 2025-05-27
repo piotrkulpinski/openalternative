@@ -117,7 +117,7 @@ export default async function BlogPostPage(props: PageProps) {
 
           <Section.Sidebar>
             <Suspense fallback={<AdCardSkeleton className="max-md:hidden" />}>
-              <AdCard type="BlogPost" className="max-md:hidden" />
+              <AdCard where={{ type: "BlogPost" }} className="max-md:hidden" />
             </Suspense>
 
             <Stack direction="column" className="lg:mx-5">

@@ -138,6 +138,7 @@ model Ad {
   type           AdType   @default(All)
   startsAt       DateTime
   endsAt         DateTime
+  sessionId      String?
   subscriptionId String?  @unique
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
