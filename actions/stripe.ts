@@ -10,6 +10,7 @@ import { uploadFavicon } from "~/lib/media"
 import { adDetailsSchema } from "~/server/web/shared/schema"
 import { db } from "~/services/db"
 import { stripe } from "~/services/stripe"
+import { tryCatch } from "~/utils/helpers"
 
 export const createStripeToolCheckout = createServerAction()
   .input(
@@ -146,7 +147,7 @@ export const createAdFromCheckout = createServerAction()
 
     // Upload favicon
     const websiteUrl = getUrlHostname(adDetails.websiteUrl)
-    const faviconUrl = await uploadFavicon(websiteUrl, `ads/${websiteUrl}`)
+    const { data: faviconUrl } = await tryCatch(uploadFavicon(websiteUrl, `ads/${websiteUrl}`))
 
     // Check if ads already exist for specific sessionId
     const existingAds = await db.ad.findMany({
@@ -228,11 +229,10 @@ export const createAdFromCheckout = createServerAction()
       }
     }
 
-    for (const ad of ads) {
-      await db.ad.create({
-        data: { ...ad, ...adDetails, email, faviconUrl, sessionId },
-      })
-    }
+    // Create ads in a transaction
+    await db.$transaction(
+      ads.map(ad => db.ad.create({ data: { ...ad, ...adDetails, email, faviconUrl, sessionId } })),
+    )
 
     // Revalidate the cache
     revalidateTag("ads")
