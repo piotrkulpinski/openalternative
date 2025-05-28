@@ -21,7 +21,13 @@ export const searchAlternatives = async (
   const start = performance.now()
   const skip = (page - 1) * perPage
   const take = perPage
-  const [sortBy, sortOrder] = sort.split(".")
+
+  let orderBy: Prisma.AlternativeFindManyArgs["orderBy"] = { pageviews: "desc" }
+
+  if (sort !== "default") {
+    const [sortBy, sortOrder] = sort.split(".") as [keyof typeof orderBy, Prisma.SortOrder]
+    orderBy = sortBy === "tools" ? { tools: { _count: sortOrder } } : { [sortBy]: sortOrder }
+  }
 
   const whereQuery: Prisma.AlternativeWhereInput = {
     tools: { some: { status: ToolStatus.Published } },
@@ -35,12 +41,9 @@ export const searchAlternatives = async (
 
   const [alternatives, totalCount] = await db.$transaction([
     db.alternative.findMany({
-      orderBy:
-        sortBy && sortBy !== "default"
-          ? { [sortBy]: sortOrder }
-          : [{ tools: { _count: "desc" } }, { isFeatured: "desc" }],
       where: { ...whereQuery, ...where },
       select: alternativeManyPayload,
+      orderBy,
       take,
       skip,
     }),

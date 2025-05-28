@@ -203,7 +203,6 @@ model Alternative {
   description    String?
   websiteUrl     String   @unique
   faviconUrl     String?
-  isFeatured     Boolean  @default(false)
   discountCode   String?
   discountAmount String?
   pageviews      Int?     @default(0)
@@ -211,7 +210,7 @@ model Alternative {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  // Implicit relation
+  // Relation
   tools Tool[]
   ad    Ad?     @relation(fields: [adId], references: [id])
   adId  String?
@@ -231,13 +230,11 @@ model Category {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  // Hierarchical relations
+  // Relations
+  tools         Tool[]
   parent        Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
   parentId      String?
   subcategories Category[] @relation("CategoryHierarchy")
-
-  // Implicit relation
-  tools Tool[]
 
   // Indexes
   @@index([slug])
@@ -249,7 +246,7 @@ model Topic {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Implicit relation
+  // Relation
   tools Tool[]
 
   // Indexes

@@ -30,6 +30,7 @@ export const ToolSearch = ({ className, placeholder, ...props }: ToolSearchProps
   })
 
   const sortOptions = [
+    { value: "default", label: "Order by" },
     { value: "publishedAt.desc", label: "Latest" },
     { value: "pageviews.desc", label: "Most Popular" },
     { value: "name.asc", label: "Name (A to Z)" },

@@ -6,7 +6,7 @@ import { topicManyPayload } from "~/server/web/topics/payloads"
 
 export const toolAlternativesPayload = Prisma.validator<Prisma.Tool$alternativesArgs>()({
   select: alternativeManyPayload,
-  orderBy: [{ isFeatured: "desc" }, { tools: { _count: "desc" } }, { name: "asc" }],
+  orderBy: [{ pageviews: "desc" }],
 })
 
 export const toolCategoriesPayload = Prisma.validator<Prisma.Tool$categoriesArgs>()({

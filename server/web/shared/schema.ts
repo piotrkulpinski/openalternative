@@ -6,7 +6,7 @@ import { githubRegex } from "~/lib/github/utils"
 
 export const filterParamsSchema = {
   q: parseAsString.withDefault(""),
-  sort: parseAsString.withDefault(""),
+  sort: parseAsString.withDefault("default"),
   page: parseAsInteger.withDefault(1),
   perPage: parseAsInteger.withDefault(35),
   alternative: parseAsArrayOf(parseAsString).withDefault([]),

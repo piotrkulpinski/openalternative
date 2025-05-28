@@ -22,7 +22,13 @@ export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhere
   const start = performance.now()
   const skip = (page - 1) * perPage
   const take = perPage
-  const [sortBy, sortOrder] = sort.split(".")
+
+  let orderBy: Prisma.ToolFindManyArgs["orderBy"] = [{ isFeatured: "desc" }, { score: "desc" }]
+
+  if (sort !== "default") {
+    const [sortBy, sortOrder] = sort.split(".") as [keyof typeof orderBy, Prisma.SortOrder]
+    orderBy = { [sortBy]: sortOrder }
+  }
 
   const whereQuery: Prisma.ToolWhereInput = {
     status: ToolStatus.Published,
@@ -42,9 +48,9 @@ export const searchTools = async (search: FilterSchema, where?: Prisma.ToolWhere
 
   const [tools, totalCount] = await db.$transaction([
     db.tool.findMany({
-      orderBy: sortBy ? { [sortBy]: sortOrder } : [{ isFeatured: "desc" }, { score: "desc" }],
       where: { ...whereQuery, ...where },
       select: toolManyPayload,
+      orderBy,
       take,
       skip,
     }),

@@ -28,7 +28,6 @@ export const alternativeSchema = z.object({
   websiteUrl: z.string().min(1, "Website is required").url(),
   description: z.string().optional(),
   faviconUrl: z.string().optional(),
-  isFeatured: z.boolean().optional(),
   discountCode: z.string().optional(),
   discountAmount: z.string().optional(),
   tools: z.array(z.string()).optional(),

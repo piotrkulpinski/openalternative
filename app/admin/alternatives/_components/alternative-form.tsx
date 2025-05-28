@@ -1,7 +1,7 @@
 "use client"
 
-import { getRandomString, isValidUrl, slugify } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { getRandomString, isValidUrl, slugify } from "@primoui/utils"
 import { useRouter } from "next/navigation"
 import { type ComponentProps, use } from "react"
 import { useForm } from "react-hook-form"
@@ -25,7 +25,6 @@ import { Icon } from "~/components/common/icon"
 import { Input } from "~/components/common/input"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
-import { Switch } from "~/components/common/switch"
 import { TextArea } from "~/components/common/textarea"
 import { useComputedField } from "~/hooks/use-computed-field"
 import { upsertAlternative } from "~/server/admin/alternatives/actions"
@@ -58,7 +57,6 @@ export function AlternativeForm({
       websiteUrl: alternative?.websiteUrl ?? "",
       description: alternative?.description ?? "",
       faviconUrl: alternative?.faviconUrl ?? "",
-      isFeatured: alternative?.isFeatured ?? false,
       discountCode: alternative?.discountCode ?? "",
       discountAmount: alternative?.discountAmount ?? "",
       tools: alternative?.tools.map(t => t.id) ?? [],
@@ -123,42 +121,26 @@ export function AlternativeForm({
         noValidate
         {...props}
       >
-        <div className="grid gap-4 @sm:grid-cols-2">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input data-1p-ignore {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Slug</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input data-1p-ignore {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
-          name="websiteUrl"
+          name="slug"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Website</FormLabel>
+              <FormLabel>Slug</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -169,26 +151,12 @@ export function AlternativeForm({
 
         <FormField
           control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem className="col-span-full">
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <TextArea {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="isFeatured"
+          name="websiteUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Featured</FormLabel>
+              <FormLabel>Website</FormLabel>
               <FormControl>
-                <Switch onCheckedChange={field.onChange} checked={field.value} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -240,6 +208,20 @@ export function AlternativeForm({
                 </FormControl>
               </Stack>
 
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem className="col-span-full">
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <TextArea {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
