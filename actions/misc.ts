@@ -2,11 +2,10 @@
 
 import { ToolStatus } from "@prisma/client"
 import { revalidateTag } from "next/cache"
-import { indexTools } from "~/lib/indexing"
+import { indexAlternatives, indexCategories, indexTools } from "~/lib/indexing"
 import { recalculatePrices } from "~/lib/pricing"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { adminProcedure } from "~/lib/safe-actions"
-import { toolOnePayload } from "~/server/web/tools/payloads"
 import { db } from "~/services/db"
 import { tryCatch } from "~/utils/helpers"
 
@@ -50,15 +49,8 @@ export const fetchRepositoryData = adminProcedure.createServerAction().handler(a
   revalidateTag("tool")
 })
 
-export const indexData = adminProcedure.createServerAction().handler(async () => {
-  const tools = await db.tool.findMany({
-    where: { status: { in: [ToolStatus.Published, ToolStatus.Scheduled] } },
-    select: toolOnePayload,
-  })
-
-  if (tools.length) {
-    await indexTools(tools)
-  }
+export const indexAllData = adminProcedure.createServerAction().handler(async () => {
+  await Promise.all([indexTools({}), indexAlternatives({}), indexCategories({})])
 })
 
 export const recalculatePricesData = adminProcedure.createServerAction().handler(async () => {

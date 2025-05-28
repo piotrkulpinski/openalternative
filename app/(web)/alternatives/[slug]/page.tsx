@@ -193,7 +193,7 @@ export default async function AlternativePage(props: PageProps) {
           )}
         </Section.Content>
 
-        <Section.Sidebar>
+        <Section.Sidebar className="max-md:hidden">
           <AlternativeCardExternal alternative={alternative} />
         </Section.Sidebar>
       </Section>

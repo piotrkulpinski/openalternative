@@ -5,7 +5,7 @@ import { config } from "~/config"
 import { indexTools } from "~/lib/indexing"
 import { notifySubmitterOfToolPublished } from "~/lib/notifications"
 import { getPostLaunchTemplate, sendSocialPost } from "~/lib/socials"
-import { type ToolOne, toolOnePayload } from "~/server/web/tools/payloads"
+import { toolOnePayload } from "~/server/web/tools/payloads"
 import { inngest } from "~/services/inngest"
 
 export const publishTools = inngest.createFunction(
@@ -65,7 +65,7 @@ export const publishTools = inngest.createFunction(
 
     // Index tools
     await step.run("index-tools", async () => {
-      await indexTools(tools as unknown as ToolOne[])
+      await indexTools({ where: { id: { in: tools.map(tool => tool.id) } } })
     })
 
     // Disconnect from DB

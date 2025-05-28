@@ -1,14 +1,14 @@
 "use client"
 
-import { getUrlHostname } from "@primoui/utils"
 import { type HotkeyItem, useDebouncedState, useHotkeys } from "@mantine/hooks"
+import { getUrlHostname } from "@primoui/utils"
 import { usePathname, useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
 import { type ReactNode, useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import type { inferServerActionReturnData } from "zsa"
 import { useServerAction } from "zsa-react"
-import { fetchRepositoryData, indexData, recalculatePricesData } from "~/actions/misc"
+import { fetchRepositoryData, indexAllData, recalculatePricesData } from "~/actions/misc"
 import { searchItems } from "~/actions/search"
 import {
   CommandDialog,
@@ -86,8 +86,8 @@ export const Search = () => {
       successMessage: "Repository data fetched",
     },
     {
-      action: indexData,
-      label: "Index Data",
+      action: indexAllData,
+      label: "Index All Data",
       successMessage: "Data indexed",
     },
     {
