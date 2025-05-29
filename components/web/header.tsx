@@ -19,11 +19,11 @@ import { Logo } from "~/components/web/ui/logo"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { UserMenu } from "~/components/web/user-menu"
 import { useSearch } from "~/contexts/search-context"
-import type { Session } from "~/lib/auth-types"
+import type { auth } from "~/lib/auth"
 import { cx } from "~/utils/cva"
 
 type HeaderProps = ComponentProps<"div"> & {
-  session: Session | null
+  session: typeof auth.$Infer.Session | null
 }
 
 const Header = ({ children, className, session, ...props }: HeaderProps) => {

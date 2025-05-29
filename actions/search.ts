@@ -36,12 +36,14 @@ export const searchItems = createServerAction()
           hybrid: { embedder: "openai", semanticRatio: 0.5 },
           attributesToRetrieve: ["slug", "name", "websiteUrl", "faviconUrl"],
           filter: ["status = 'Published'"],
+          sort: ["isFeatured:desc", "score:desc"],
         }),
 
         getMeiliIndex("alternatives").search<AlternativeSearchResult>(query, {
           rankingScoreThreshold: 0.5,
           hybrid: { embedder: "openai", semanticRatio: 0.5 },
           attributesToRetrieve: ["slug", "name", "faviconUrl"],
+          sort: ["pageviews:desc"],
         }),
 
         getMeiliIndex("categories").search<CategorySearchResult>(query, {
