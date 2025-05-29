@@ -8,7 +8,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const buttonVariants = cva({
   base: [
-    "group/button relative inline-flex items-center justify-center border-transparent! font-display font-medium text-[0.8125rem] text-start leading-tight rounded-md overflow-clip hover:z-10 hover:border-transparent",
+    "group/button relative inline-flex items-center justify-center border-transparent! font-medium text-[0.8125rem] text-start leading-tight rounded-md overflow-clip hover:z-10 hover:border-transparent",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
