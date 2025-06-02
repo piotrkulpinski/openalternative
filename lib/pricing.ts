@@ -32,7 +32,7 @@ const calculatePrice = (pageviews: number | null) => {
 
   // Between thresholds: calculate proportionally
   const range = maxThreshold - minThreshold
-  const priceRange = maxPrice - basePrice
+  const priceRange = maxPrice - (basePrice + stepSize)
   const ratio = (pageviews - minThreshold) / range
   const steps = Math.floor((ratio * priceRange) / stepSize)
 
