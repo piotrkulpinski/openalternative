@@ -1,6 +1,6 @@
 "use client"
 
-import { getUrlHostname } from "@primoui/utils"
+import { getUrlHostname, isExternalUrl } from "@primoui/utils"
 import Link from "next/link"
 import { type Properties, posthog } from "posthog-js"
 import type { ComponentProps } from "react"
@@ -24,13 +24,14 @@ export const ExternalLink = ({
   const hostname = getUrlHostname(siteConfig.url)
   const hasTracking = href?.includes("ref=") || href?.includes("utm_")
   const finalHref = hasTracking ? href : addSearchParams(href!, { ref: hostname })
+  const isExternal = isExternalUrl(finalHref)
 
   return (
     <Link
       href={finalHref!}
       target={target}
       rel={`noopener noreferrer ${doFollow ? "" : "nofollow"}`}
-      onClick={() => eventName && posthog.capture(eventName, eventProps)}
+      onClick={() => isExternal && eventName && posthog.capture(eventName, eventProps)}
       {...props}
     />
   )
