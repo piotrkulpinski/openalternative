@@ -2,46 +2,51 @@ import { adsConfig } from "~/config/ads"
 
 /**
  * Calculates the advertising price for an item based on its monthly pageviews
- * relative to the maximum pageviews across all items.
- * Pricing ranges from $19 to $199, in $10 increments.
  */
-const calculatePrice = (pageviews: number | null, maxPageviews: number) => {
-  // If pageviews are null, undefined, or negative, return null
-  if (!pageviews || pageviews < adsConfig.minPageviewThreshold || maxPageviews <= 0) {
+const calculatePrice = (pageviews: number | null) => {
+  // If pageviews are null, undefined, or below minimum threshold, return null
+  if (!pageviews || pageviews < adsConfig.minPageviewThreshold) {
     return null
   }
 
-  // Base price starts at $29
+  // Pricing options
   const basePrice = 29
-
-  // Maximum price
   const maxPrice = 199
 
-  // Define the step size for price increases
+  // The step size for price increases
   const stepSize = 10
 
-  // Calculate the ratio of current pageviews to max pageviews (0 to 1)
-  const ratio = Math.min((pageviews || 0) / maxPageviews, 1)
+  // Fixed thresholds
+  const minThreshold = 500
+  const maxThreshold = 10000
 
-  // Calculate how many steps to take based on the ratio
-  const steps = Math.floor((ratio * (maxPrice - basePrice)) / stepSize)
+  // Below minimum threshold: base price
+  if (pageviews < minThreshold) {
+    return basePrice
+  }
 
-  // Calculate final price by adding the appropriate number of steps
+  // Above maximum threshold: max price
+  if (pageviews >= maxThreshold) {
+    return maxPrice
+  }
+
+  // Between thresholds: calculate proportionally
+  const range = maxThreshold - minThreshold
+  const priceRange = maxPrice - basePrice
+  const ratio = (pageviews - minThreshold) / range
+  const steps = Math.floor((ratio * priceRange) / stepSize)
+
   return basePrice + steps * stepSize
 }
 
 /**
- * Recalculates prices for all items
+ * Recalculates prices for all items using fixed thresholds
  */
 export const recalculatePrices = async <T extends { id: string; pageviews: number | null }>(
   items: T[],
   update: (item: T & { adPrice: number | null }) => Promise<void>,
 ) => {
-  // Find the maximum pageviews
-  const maxPageviews = Math.max(...items.map(({ pageviews }) => pageviews || 0).filter(Boolean), 10)
-
-  // Update all alternatives with new prices
-  await Promise.all(
-    items.map(item => update({ ...item, adPrice: calculatePrice(item.pageviews, maxPageviews) })),
+  return await Promise.all(
+    items.map(item => update({ ...item, adPrice: calculatePrice(item.pageviews) })),
   )
 }
