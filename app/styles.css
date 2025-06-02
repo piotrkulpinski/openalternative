@@ -42,8 +42,8 @@
 
   --tracking-micro: -0.0125em;
 
-  --font-sans: var(--font-geist);
-  --font-display: var(--font-geist);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
 
   --text-5xl: 2.75rem;
   --text-6xl: 3rem;

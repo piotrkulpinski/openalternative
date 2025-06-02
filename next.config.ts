@@ -79,6 +79,11 @@ const nextConfig: NextConfig = {
         destination: "/karakeep",
         permanent: true,
       },
+      {
+        source: "/advertise/alternatives",
+        destination: "/advertise?alternative=",
+        permanent: true,
+      },
     ]
   },
 }

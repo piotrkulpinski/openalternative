@@ -12,7 +12,7 @@ const ScheduledCard = async ({ ...props }: ComponentProps<typeof Card>) => {
     <Card hover={false} focus={false} {...props}>
       <CardHeader direction="column">
         <CardDescription>Scheduled Tools</CardDescription>
-        <H2 className="">{tools.length}</H2>
+        <H2>{tools.length}</H2>
       </CardHeader>
 
       {tools.length ? (

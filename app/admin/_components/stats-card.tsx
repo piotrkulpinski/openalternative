@@ -20,7 +20,7 @@ export const StatsCard = async () => {
           <Link href={stat.href}>
             <CardHeader direction="column">
               <CardDescription>{stat.label}</CardDescription>
-              <H2 className="tabular-nums">{counts[index].toLocaleString()}</H2>
+              <H2>{counts[index].toLocaleString()}</H2>
             </CardHeader>
           </Link>
         </Card>
