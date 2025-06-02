@@ -13,6 +13,9 @@ const calculatePrice = (pageviews: number | null) => {
   const basePrice = 29
   const maxPrice = 199
   const stepSize = 10
+
+  // Fixed thresholds
+  const minThreshold = adsConfig.minPageviewThreshold
   const maxThreshold = 10000
 
   // Above maximum threshold: max price
@@ -21,8 +24,9 @@ const calculatePrice = (pageviews: number | null) => {
   }
 
   // Between thresholds: calculate proportionally
+  const range = maxThreshold - minThreshold
   const priceRange = maxPrice - basePrice
-  const ratio = (pageviews - adsConfig.minPageviewThreshold) / maxThreshold
+  const ratio = (pageviews - minThreshold) / range
   const steps = Math.floor((ratio * priceRange) / stepSize)
 
   return basePrice + steps * stepSize
