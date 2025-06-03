@@ -41,7 +41,7 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
                 source: "supporter",
               }}
             >
-              <Favicon src={tool.faviconUrl} title={tool.name} className="size-10" />
+              <Favicon src={tool.faviconUrl} title={tool.name} className="size-10 rounded-lg" />
             </ExternalLink>
           </ToolHoverCard>
         ))}
@@ -52,7 +52,7 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
               href={`mailto:${config.site.email}`}
               target="_blank"
               rel="nofollow noreferrer"
-              className="grid place-items-center size-9 p-1 rounded-md border hover:bg-accent"
+              className="grid place-items-center size-10 p-1 rounded-lg border hover:bg-accent"
             >
               <Icon name="lucide/plus" className="size-6" />
             </Link>
