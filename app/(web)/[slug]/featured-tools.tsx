@@ -5,14 +5,17 @@ import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
+import { Tooltip } from "~/components/common/tooltip"
+import { ExternalLink } from "~/components/web/external-link"
 import { ToolHoverCard } from "~/components/web/tools/tool-hover-card"
 import { Favicon } from "~/components/web/ui/favicon"
-import { VerifiedBadge } from "~/components/web/verified-badge"
+import { config } from "~/config"
 import { siteConfig } from "~/config/site"
 import { findTools } from "~/server/web/tools/queries"
 
 export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await findTools({ where: { isFeatured: true } })
+  const showAddButton = tools.length < 12
 
   if (!tools.length) {
     return null
@@ -20,30 +23,41 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
 
   return (
     <Card hover={false} focus={false} {...props}>
-      <Stack direction="column">
-        <Stack size="sm">
-          <VerifiedBadge size="md" className="m-0" />
-          <H5 as="strong">Featured projects</H5>
-        </Stack>
-
+      <Stack size="sm" direction="column">
+        <H5 as="strong">Featured projects</H5>
         <Note>{siteConfig.name} is made possible by the following supporters:</Note>
       </Stack>
 
-      <Stack className="gap-2">
+      <Stack className="gap-[7px]">
         {tools.map(tool => (
           <ToolHoverCard key={tool.slug} tool={tool}>
-            <Link href={`/${tool.slug}`}>
-              <Favicon src={tool.faviconUrl} title={tool.name} className="size-9" />
-            </Link>
+            <ExternalLink
+              href={tool.affiliateUrl || tool.websiteUrl}
+              doFollow={tool.isFeatured}
+              eventName="click_website"
+              eventProps={{
+                url: tool.websiteUrl,
+                isFeatured: tool.isFeatured,
+                source: "supporter",
+              }}
+            >
+              <Favicon src={tool.faviconUrl} title={tool.name} className="size-10" />
+            </ExternalLink>
           </ToolHoverCard>
         ))}
 
-        <Link
-          href="/dashboard"
-          className="grid place-items-center size-9 p-1 rounded-md border hover:bg-accent"
-        >
-          <Icon name="lucide/plus" />
-        </Link>
+        {showAddButton && (
+          <Tooltip tooltip="Contact us to get your project featured">
+            <Link
+              href={`mailto:${config.site.email}`}
+              target="_blank"
+              rel="nofollow noreferrer"
+              className="grid place-items-center size-9 p-1 rounded-md border hover:bg-accent"
+            >
+              <Icon name="lucide/plus" className="size-6" />
+            </Link>
+          </Tooltip>
+        )}
       </Stack>
     </Card>
   )

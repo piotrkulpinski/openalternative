@@ -10,7 +10,6 @@ export const Icon = ({ name, className, ...props }: IconProps) => {
   return (
     <svg
       className={cx("size-[1em]", className)}
-      fill="none"
       role="img"
       stroke="currentColor"
       aria-label={`${name} icon`}

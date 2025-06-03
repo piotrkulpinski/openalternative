@@ -143,7 +143,11 @@ export default async function ToolPage(props: PageProps) {
                     href={tool.affiliateUrl || tool.websiteUrl}
                     doFollow={tool.isFeatured}
                     eventName="click_website"
-                    eventProps={{ url: tool.websiteUrl }}
+                    eventProps={{
+                      url: tool.websiteUrl,
+                      isFeatured: tool.isFeatured,
+                      source: "button",
+                    }}
                   >
                     Visit {tool.name}
                   </ExternalLink>
@@ -165,7 +169,7 @@ export default async function ToolPage(props: PageProps) {
               href={tool.affiliateUrl || tool.websiteUrl}
               doFollow={tool.isFeatured}
               eventName="click_website"
-              eventProps={{ url: tool.websiteUrl }}
+              eventProps={{ url: tool.websiteUrl, isFeatured: tool.isFeatured, source: "image" }}
               src={tool.screenshotUrl}
               alt={`Screenshot of ${tool.name} website`}
               className="max-md:order-2"
