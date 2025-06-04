@@ -28,7 +28,7 @@ export const PaginationLink = ({
 }: PaginationLinkProps) => {
   if (isDisabled) {
     return (
-      <span className={cx(navLinkVariants({ className: "pointer-events-none invisible" }))}>
+      <span className={cx(navLinkVariants({ className: "pointer-events-none opacity-40" }))}>
         <Slot.Root className={affixVariants()}>{prefix}</Slot.Root>
         <span>{children}</span>
         <Slot.Root className={affixVariants()}>{suffix}</Slot.Root>
@@ -38,7 +38,7 @@ export const PaginationLink = ({
 
   return (
     <Link
-      className={cx(isActive && "bg-accent rounded-md", navLinkVariants({ isActive, className }))}
+      className={cx(isActive && "bg-accent rounded-xs", navLinkVariants({ isActive, className }))}
       {...props}
     >
       <Slot.Root className={affixVariants()}>{prefix}</Slot.Root>
