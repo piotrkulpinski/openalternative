@@ -6,7 +6,7 @@ import { Link } from "~/components/common/link"
 import { cva, cx } from "~/utils/cva"
 
 const navLinkVariants = cva({
-  base: "group flex items-center gap-2 p-0.5 -m-0.5 text-sm cursor-pointer disabled:opacity-50",
+  base: "group flex items-center gap-2 p-0.5 -m-0.5 cursor-pointer disabled:opacity-50",
 
   variants: {
     isActive: {

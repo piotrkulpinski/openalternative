@@ -12,6 +12,7 @@ import {
   AlternativePreview,
   AlternativePreviewSkeleton,
 } from "~/components/web/alternatives/alternative-preview"
+import { ExternalLink } from "~/components/web/external-link"
 import { InlineMenu } from "~/components/web/inline-menu"
 import { MDX } from "~/components/web/mdx"
 import { ShareButtons } from "~/components/web/share-buttons"
@@ -125,10 +126,8 @@ export default async function BlogPostPage(props: PageProps) {
                 Written by
               </H6>
 
-              <a
+              <ExternalLink
                 href={`https://twitter.com/${post.author.twitterHandle}`}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
                 className="group"
               >
                 <Author
@@ -136,7 +135,7 @@ export default async function BlogPostPage(props: PageProps) {
                   image={post.author.image}
                   title={`@${post.author.twitterHandle}`}
                 />
-              </a>
+              </ExternalLink>
             </Stack>
 
             {/* <TOC title="On this page" content={post.content} className="flex-1 overflow-y-auto" /> */}

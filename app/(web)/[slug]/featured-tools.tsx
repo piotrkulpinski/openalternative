@@ -2,7 +2,6 @@ import type { ComponentProps } from "react"
 import { Card } from "~/components/common/card"
 import { H5 } from "~/components/common/heading"
 import { Icon } from "~/components/common/icon"
-import { Link } from "~/components/common/link"
 import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
@@ -48,14 +47,12 @@ export const FeaturedTools = async ({ ...props }: ComponentProps<typeof Card>) =
 
         {showAddButton && (
           <Tooltip tooltip="Contact us to get your project featured">
-            <Link
+            <ExternalLink
               href={`mailto:${config.site.email}`}
-              target="_blank"
-              rel="nofollow noreferrer"
               className="grid place-items-center size-10 p-1 rounded-lg border hover:bg-accent"
             >
               <Icon name="lucide/plus" className="size-6" />
-            </Link>
+            </ExternalLink>
           </Tooltip>
         )}
       </Stack>

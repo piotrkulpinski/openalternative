@@ -29,7 +29,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
         {...props}
       >
         {!!alternatives?.length && (
-          <Stack className="gap-x-4 text-sm/normal">
+          <Stack className="gap-x-4 text-sm">
             <H6 as="strong">Popular Proprietary Tools:</H6>
 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs md:grid-cols-sm">

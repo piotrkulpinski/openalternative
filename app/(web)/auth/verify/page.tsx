@@ -3,6 +3,7 @@ import Image from "next/image"
 import type { SearchParams } from "nuqs/server"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
+import { ExternalLink } from "~/components/web/external-link"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
@@ -51,16 +52,14 @@ export default async function VerifyPage({ searchParams }: PageProps) {
 
       <Stack size="lg" className="my-3">
         {inboxes.map(({ provider, icon, link }) => (
-          <a
+          <ExternalLink
             key={provider}
             href={link}
-            target="_blank"
-            rel="nofollow noopener noreferrer"
             title={`Open ${provider}`}
             className="size-14 flex justify-center items-center border bg-border/[0.05] rounded-xl hover:border-ring hover:bg-ring/[0.15]"
           >
             <Image src={icon} alt={`Open ${provider}`} width="30" height="30" />
-          </a>
+          </ExternalLink>
         ))}
       </Stack>
 

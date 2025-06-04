@@ -58,7 +58,7 @@ export const Breadcrumbs = ({ children, className, items, ...props }: Breadcrumb
   return (
     <Stack
       size="lg"
-      className={cx("w-full justify-between -mb-2 md:-mb-6 lg:-mb-8", className)}
+      className={cx("w-full justify-between -mb-2 text-sm md:-mb-6 lg:-mb-8", className)}
       {...props}
     >
       <Stack size="sm" asChild>

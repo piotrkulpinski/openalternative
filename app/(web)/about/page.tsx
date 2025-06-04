@@ -42,17 +42,11 @@ export default function AboutPage() {
         <p>
           The project started as a weekend project to learn a new technology and try something new
           and fun from scratch. It gained a lot of traction early on (
-          <a href="https://kulp.in/launch" target="_blank" rel="noreferrer">
-            100k unique visitors
-          </a>{" "}
-          in one week,{" "}
-          <a
-            href="https://news.ycombinator.com/item?id=39639386"
-            target="_blank"
-            rel="nofollow noreferrer"
-          >
+          <ExternalLink href="https://kulp.in/launch">100k unique visitors</ExternalLink> in one
+          week,{" "}
+          <ExternalLink href="https://news.ycombinator.com/item?id=39639386">
             #1 on Hacker News
-          </a>
+          </ExternalLink>
           ) so it was clear that there was a need for a site like this.
         </p>
 
@@ -177,10 +171,7 @@ export default function AboutPage() {
           If you have any suggestions for open source alternatives to proprietary software and
           applications, feel free to contribute to the list. You can also contribute by suggesting
           new categories or improving the website. The source code is available on{" "}
-          <a href={config.links.github} target="_blank" rel="nofollow noreferrer">
-            GitHub
-          </a>
-          .
+          <ExternalLink href={config.links.github}>GitHub</ExternalLink>.
         </p>
 
         <p>Enjoy and feel free to contribute!</p>

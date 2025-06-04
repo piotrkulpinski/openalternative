@@ -33,10 +33,7 @@ export default async function AdvertisePage({ searchParams }: PageProps) {
 
         <IntroDescription className="max-w-3xl">
           Promote your business or software and reach a wide audience of open source enthusiasts.
-          Check our{" "}
-          <a href={config.links.analytics} target="_blank" rel="noopener noreferrer nofollow">
-            real-time analytics
-          </a>{" "}
+          Check our <ExternalLink href={config.links.analytics}>real-time analytics</ExternalLink>{" "}
           to see what impact it could have on your business.
         </IntroDescription>
       </Intro>

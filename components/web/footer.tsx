@@ -50,82 +50,70 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
             <NewsletterForm medium="footer_form" />
           </Stack>
 
-          <Stack className="text-sm/normal">
+          <Stack className="text-xl opacity-75">
             <DropdownMenu modal={false}>
               <Tooltip tooltip="RSS Feeds">
                 <DropdownMenuTrigger aria-label="RSS Feeds">
-                  <Icon
-                    name="lucide/rss"
-                    className="size-[1.44em] opacity-75 text-muted-foreground hover:text-foreground"
-                  />
+                  <Icon name="lucide/rss" className="text-muted-foreground hover:text-foreground" />
                 </DropdownMenuTrigger>
               </Tooltip>
 
               <DropdownMenuContent align="start" side="top">
                 {config.links.feeds.map(({ url, title }) => (
                   <DropdownMenuItem key={url} asChild>
-                    <NavLink href={url} target="_blank" rel="nofollow noreferrer">
+                    <ExternalLink href={url} className={navLinkVariants()}>
                       RSS &raquo; {title}
-                    </NavLink>
+                    </ExternalLink>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
             <Tooltip tooltip="Contact us">
-              <NavLink
-                href={`mailto:${config.site.email}`}
-                target="_blank"
-                rel="nofollow noreferrer"
-                aria-label="Contact us"
-              >
-                <Icon name="lucide/at-sign" className="size-[1.44em] opacity-75" />
-              </NavLink>
+              <ExternalLink href={`mailto:${config.site.email}`} className={navLinkVariants()}>
+                <Icon name="lucide/at-sign" />
+              </ExternalLink>
             </Tooltip>
 
             <Tooltip tooltip="View source code">
-              <NavLink href={config.links.github} target="_blank" rel="nofollow noreferrer">
-                <Icon name="tabler/brand-github" className="size-[1.44em] opacity-75" />
-              </NavLink>
+              <ExternalLink href={config.links.github} className={navLinkVariants()}>
+                <Icon name="tabler/brand-github" />
+              </ExternalLink>
             </Tooltip>
 
             <Tooltip tooltip="Follow us on X/Twitter">
-              <NavLink href={config.links.twitter} target="_blank" rel="nofollow noreferrer">
-                <Icon name="tabler/brand-x" className="size-[1.44em] opacity-75" />
-              </NavLink>
+              <ExternalLink href={config.links.twitter} className={navLinkVariants()}>
+                <Icon name="tabler/brand-x" />
+              </ExternalLink>
             </Tooltip>
 
             <Tooltip tooltip="Follow us on Bluesky">
-              <NavLink href={config.links.bluesky} target="_blank" rel="nofollow noreferrer">
-                <Icon name="tabler/brand-bluesky" className="size-[1.44em] opacity-75" />
-              </NavLink>
+              <ExternalLink href={config.links.bluesky} className={navLinkVariants()}>
+                <Icon name="tabler/brand-bluesky" />
+              </ExternalLink>
             </Tooltip>
 
             <Tooltip tooltip="Follow us on Mastodon">
-              <NavLink href={config.links.mastodon} target="_blank" rel="nofollow noreferrer">
-                <Icon name="tabler/brand-mastodon" className="size-[1.44em] opacity-75" />
-              </NavLink>
+              <ExternalLink href={config.links.mastodon} className={navLinkVariants()}>
+                <Icon name="tabler/brand-mastodon" />
+              </ExternalLink>
             </Tooltip>
 
             <Tooltip tooltip="Follow us on LinkedIn">
-              <NavLink href={config.links.linkedin} target="_blank" rel="nofollow noreferrer">
-                <Icon name="tabler/brand-linkedin" className="size-[1.44em] opacity-75" />
-              </NavLink>
+              <ExternalLink href={config.links.linkedin} className={navLinkVariants()}>
+                <Icon name="tabler/brand-linkedin" />
+              </ExternalLink>
             </Tooltip>
 
             <Tooltip tooltip="Join our community on Reddit">
-              <NavLink href={config.links.reddit} target="_blank" rel="nofollow noreferrer">
-                <Icon name="tabler/brand-reddit" className="size-[1.44em] opacity-75" />
-              </NavLink>
+              <ExternalLink href={config.links.reddit} className={navLinkVariants()}>
+                <Icon name="tabler/brand-reddit" />
+              </ExternalLink>
             </Tooltip>
-
-            <a rel="me" href={config.links.mastodon} className="hidden">
-              Mastodon
-            </a>
           </Stack>
         </Stack>
 
-        <Stack direction="column" className="text-sm/normal md:col-span-3 md:col-start-8">
+        <Stack direction="column" className="text-sm md:col-span-3 md:col-start-8">
           <H6 as="strong">Browse:</H6>
 
           <NavLink href="/alternatives">Alternatives</NavLink>
@@ -136,7 +124,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           <NavLink href="/licenses">Licenses</NavLink>
         </Stack>
 
-        <Stack direction="column" className="text-sm/normal md:col-span-3">
+        <Stack direction="column" className="text-sm md:col-span-3">
           <H6 as="strong">Quick Links:</H6>
 
           <NavLink href="/about">About Us</NavLink>
@@ -145,7 +133,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           <NavLink href="/submit">Add a Free Listing</NavLink>
         </Stack>
 
-        <Stack direction="column" className="text-sm/normal md:col-span-3">
+        <Stack direction="column" className="text-sm md:col-span-3">
           <H6 as="strong">Other Products:</H6>
 
           {config.links.family.map(({ href, title, description }) => (
