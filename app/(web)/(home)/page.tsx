@@ -19,7 +19,7 @@ type PageProps = {
 export default function Home(props: PageProps) {
   return (
     <>
-      <section className="relative flex flex-col justify-center gap-y-6 pb-8 md:pb-10 lg:pb-12 lg:min-h-fit lg:h-[30vw] lg:max-h-100">
+      <section className="relative flex flex-col justify-center gap-y-6 pb-12 lg:min-h-fit lg:h-[30vw] lg:max-h-100">
         <div className="absolute left-1/2 bottom-0 -z-10 w-dvw h-3/5 border-b bg-gradient-to-t from-card to-transparent -translate-x-1/2 select-none overflow-clip dark:from-background/95 dark:border-card-dark">
           <ContributionGraph className="size-full object-cover mask-t-from-0% opacity-10 translate-y-1 dark:mix-blend-color-dodge dark:opacity-5" />
         </div>
@@ -44,7 +44,7 @@ export default function Home(props: PageProps) {
           <NewsletterProof />
         </NewsletterForm>
 
-        <BuiltWith medium="hero" className="mx-auto text-xs translate-y-4 md:-mb-2 lg:-mb-4" />
+        <BuiltWith medium="hero" className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs" />
       </section>
 
       <Suspense fallback={<ToolListingSkeleton />}>

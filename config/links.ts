@@ -9,12 +9,18 @@ export const linksConfig = {
   mastodon: "https://mastodon.social/@openalternative",
   linkedin: "https://linkedin.com/company/openalternative",
   github: "https://github.com/piotrkulpinski/openalternative",
+  reddit: "https://www.reddit.com/r/openalternative/",
   analytics: "https://go.openalternative.co/analytics",
   feeds: [
     { title: "Open Source Tools", url: `${siteConfig.url}/rss/tools.xml` },
     { title: "Proprietary Alternatives", url: `${siteConfig.url}/rss/alternatives.xml` },
   ],
   family: [
+    {
+      title: "EuroAlternative",
+      href: "https://euroalternative.co",
+      description: "Discover European alternatives to big tech companies",
+    },
     {
       title: "DevSuite",
       href: "https://devsuite.co",

@@ -113,6 +113,12 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               </NavLink>
             </Tooltip>
 
+            <Tooltip tooltip="Join our community on Reddit">
+              <NavLink href={config.links.reddit} target="_blank" rel="nofollow noreferrer">
+                <Icon name="tabler/brand-reddit" className="size-[1.44em] opacity-75" />
+              </NavLink>
+            </Tooltip>
+
             <a rel="me" href={config.links.mastodon} className="hidden">
               Mastodon
             </a>
