@@ -9,6 +9,7 @@ import { getIP, isRateLimited } from "~/lib/rate-limiter"
 import { userProcedure } from "~/lib/safe-actions"
 import { feedbackSchema, reportSchema } from "~/server/web/shared/schema"
 import { db } from "~/services/db"
+import { tryCatch } from "~/utils/helpers"
 
 export const reportTool = userProcedure
   .createServerAction()
@@ -17,19 +18,26 @@ export const reportTool = userProcedure
     const ip = await getIP()
     const rateLimitKey = `report:${ip}`
 
-    // Rate limiting check
     if (await isRateLimited(rateLimitKey, "report")) {
+      // Rate limiting check
       throw new Error("Too many requests. Please try again later.")
     }
 
-    await db.report.create({
-      data: {
-        type,
-        message,
-        user: { connect: { id: user.id } },
-        tool: { connect: { slug: toolSlug } },
-      },
-    })
+    const result = await tryCatch(
+      db.report.create({
+        data: {
+          type,
+          message,
+          tool: { connect: { slug: toolSlug } },
+          user: { connect: { id: user.id } },
+        },
+      }),
+    )
+
+    if (result.error) {
+      console.error("Failed to report tool:", result.error)
+      return { success: false, error: "Failed to report tool. Please try again later." }
+    }
 
     return { success: true }
   })
@@ -46,13 +54,20 @@ export const reportFeedback = createServerAction()
       throw new Error("Too many requests. Please try again later.")
     }
 
-    await db.report.create({
-      data: {
-        type: ReportType.Other,
-        message,
-        userId: session?.user.id,
-      },
-    })
+    const result = await tryCatch(
+      db.report.create({
+        data: {
+          type: ReportType.Other,
+          message,
+          userId: session?.user.id,
+        },
+      }),
+    )
+
+    if (result.error) {
+      console.error("Failed to send feedback:", result.error)
+      return { success: false, error: "Failed to send feedback. Please try again later." }
+    }
 
     return { success: true }
   })

@@ -1,8 +1,8 @@
 "use client"
 
-import { getRandomDigits } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useLocalStorage } from "@mantine/hooks"
+import { useHotkeys, useLocalStorage } from "@mantine/hooks"
+import { getRandomDigits } from "@primoui/utils"
 import debounce from "debounce"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -32,6 +32,9 @@ const FeedbackWidgetForm = ({ toastId, setDismissed }: FeedbackWidgetFormProps) 
     resolver: zodResolver(feedbackSchema),
     defaultValues: { message: "" },
   })
+
+  // Add a hotkey to submit the feedback widget
+  useHotkeys([["mod+enter", () => form.handleSubmit(execute)]], [], true)
 
   const { execute, isPending } = useServerAction(reportFeedback, {
     onSuccess: () => {
@@ -103,8 +106,8 @@ export const FeedbackWidget = () => {
   const startTime = useRef(Date.now())
   const [shouldShow, setShouldShow] = useState(false)
   const maxScrollRef = useRef(0)
-  const feedbackKey = "oa-feedback-dismissed"
-  const pageViewsKey = "oa-page-views"
+  const feedbackKey = `${siteConfig.slug}-feedback-dismissed`
+  const pageViewsKey = `${siteConfig.slug}-page-views`
 
   const [dismissed, setDismissed] = useLocalStorage({
     key: feedbackKey,

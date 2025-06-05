@@ -37,6 +37,14 @@ Our goal is to be your first stop when researching for a new open source service
 
 Join us in creating the biggest **directory of open source software**.
 
+## Other projects
+
+We are also working on other projects you might be interested in:
+
+- [EuroAlternatives](https://euroalternative.co) - A directory of European alternatives to Big Tech giants.
+- [DevSuite](https://devsuite.co) - A collection of tools for developers.
+- [Dirstarter](https://dirstarter.com) - A Next.js boilerplate for creating directory websites.
+
 ## Sponsoring
 
 OpenAlternative is an GPL-3.0-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider [sponsoring OpenAlternative's development](https://github.com/sponsors/piotrkulpinski).
