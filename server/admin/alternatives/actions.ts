@@ -4,7 +4,7 @@ import { slugify } from "@primoui/utils"
 import { revalidatePath, revalidateTag } from "next/cache"
 import { after } from "next/server"
 import { z } from "zod"
-import { removeS3Directories, uploadFavicon } from "~/lib/media"
+import { removeS3Directories } from "~/lib/media"
 import { adminProcedure } from "~/lib/safe-actions"
 import { alternativeSchema } from "~/server/admin/alternatives/schema"
 import { db } from "~/services/db"
@@ -58,30 +58,6 @@ export const deleteAlternatives = adminProcedure
     after(async () => {
       await removeS3Directories(alternatives.map(alt => `alternatives/${alt.slug}`))
     })
-
-    return true
-  })
-
-export const reuploadAlternativeAssets = adminProcedure
-  .createServerAction()
-  .input(z.object({ id: z.string() }))
-  .handler(async ({ input: { id } }) => {
-    const alternative = await db.alternative.findUniqueOrThrow({
-      where: { id },
-    })
-
-    const faviconUrl = await uploadFavicon(
-      alternative.websiteUrl,
-      `alternatives/${alternative.slug}/favicon`,
-    )
-
-    await db.alternative.update({
-      where: { id: alternative.id },
-      data: { faviconUrl },
-    })
-
-    revalidateTag("alternatives")
-    revalidateTag(`alternative-${alternative.slug}`)
 
     return true
   })

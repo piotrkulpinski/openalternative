@@ -1,4 +1,5 @@
-import type { SearchParams } from "nuqs/server"
+import { redirect } from "next/navigation"
+import { type SearchParams, createLoader, parseAsString } from "nuqs/server"
 import { Plan } from "~/components/web/plan"
 import { getProductFeatures, getProducts, prepareProductsWithPrices } from "~/lib/products"
 import { isToolPublished } from "~/lib/tools"
@@ -12,13 +13,13 @@ type SubmitProductsProps = {
 }
 
 export const SubmitProducts = async ({ tool, searchParams }: SubmitProductsProps) => {
-  const { discountCode } = await searchParams
+  const loadSearchParams = createLoader({ discountCode: parseAsString.withDefault("") })
+  const { discountCode } = await loadSearchParams(searchParams)
 
   const [stripeProducts, stripePromo, queueLength] = await Promise.all([
     // Products
     stripe.products.list({
       active: true,
-      ids: process.env.STRIPE_PRODUCT_IDS?.split(",").map(e => e.trim()),
       expand: ["data.default_price"],
     }),
 
@@ -35,6 +36,11 @@ export const SubmitProducts = async ({ tool, searchParams }: SubmitProductsProps
     // Queue length
     countSubmittedTools({}),
   ])
+
+  if (stripeProducts.data.length === 0) {
+    // If there are no products, redirect to the success page
+    redirect(`/submit/${tool.slug}/success`)
+  }
 
   const isPublished = isToolPublished(tool)
   const coupon = stripePromo?.data[0]?.coupon

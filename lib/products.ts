@@ -46,6 +46,9 @@ export const getProducts = (
 
   return (
     products
+      // Filter out products that are not listings
+      .filter(({ name }) => name.includes("Listing"))
+
       // Sort by price
       .sort((a, b) => getPriceAmount(a.default_price) - getPriceAmount(b.default_price))
 

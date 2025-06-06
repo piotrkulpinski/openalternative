@@ -22,7 +22,6 @@ export const AnimatedContainer = (props: AnimatedContainerProps) => {
   }
 
   const motionProps: HTMLMotionProps<"div"> = {
-    style: { visibility: height && rect.height === 0 ? "hidden" : undefined },
     transition: transition ?? { type: "spring", duration: 0.3 },
     animate: {
       width: width ? rect.width : undefined,
