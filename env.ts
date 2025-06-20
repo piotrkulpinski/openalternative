@@ -52,7 +52,6 @@ export const env = createEnv({
     GOOGLE_GENERATIVE_AI_API_KEY: z.string().min(1),
     ANTHROPIC_API_KEY: z.string().min(1),
     JINA_API_KEY: z.string().optional(),
-    LOGTAIL_SOURCE_TOKEN: z.string().min(1),
     STACK_ANALYZER_API_URL: z.string().min(1).url(),
     STACK_ANALYZER_API_KEY: z.string().min(1),
   },

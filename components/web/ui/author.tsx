@@ -1,5 +1,6 @@
 import Image from "next/image"
 import type { ComponentProps } from "react"
+import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
 
 type AuthorProps = ComponentProps<typeof Stack> & {
@@ -21,7 +22,7 @@ export const Author = ({ name, image, title, ...props }: AuthorProps) => {
 
       <div>
         <h3 className="font-medium text-base truncate">{name}</h3>
-        {title && <div className="text-muted-foreground text-sm/tight">{title}</div>}
+        {title && <Note>{title}</Note>}
       </div>
     </Stack>
   )

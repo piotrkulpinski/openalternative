@@ -41,7 +41,7 @@ Join us in creating the biggest **directory of open source software**.
 
 We are also working on other projects you might be interested in:
 
-- [EuroAlternatives](https://euroalternative.co) - A directory of European alternatives to Big Tech giants.
+- [EuroAlternative](https://euroalternative.co) - A directory of European alternatives to Big Tech giants.
 - [DevSuite](https://devsuite.co) - A collection of tools for developers.
 - [Dirstarter](https://dirstarter.com) - A Next.js boilerplate for creating directory websites.
 
