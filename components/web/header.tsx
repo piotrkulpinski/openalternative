@@ -136,7 +136,13 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
               <Icon name="lucide/search" className="size-4" />
             </Button>
 
-            <Button size="sm" variant="ghost" aria-label="GitHub" className="p-1 -ml-1.5" asChild>
+            <Button
+              size="sm"
+              variant="ghost"
+              aria-label="GitHub"
+              className="p-1 -ml-1.5 max-sm:hidden"
+              asChild
+            >
               <ExternalLink href={config.links.github}>
                 <Icon name="tabler/brand-github" className="size-4" />
               </ExternalLink>
