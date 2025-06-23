@@ -77,7 +77,7 @@ const indexes = [
         "faviconUrl",
         "pageviews",
       ],
-      filterableAttributes: ["name"],
+      filterableAttributes: ["id", "name"],
       sortableAttributes: ["pageviews"],
       rankingRules: [
         "words",

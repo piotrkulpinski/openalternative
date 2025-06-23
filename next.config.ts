@@ -80,6 +80,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/kelia",
+        destination: "/keila",
+        permanent: true,
+      },
+      {
         source: "/advertise/alternatives",
         destination: "/advertise?alternative=",
         permanent: true,
