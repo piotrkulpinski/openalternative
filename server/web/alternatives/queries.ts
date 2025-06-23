@@ -72,7 +72,7 @@ export const findRelatedAlternativeIds = async ({
     getMeiliIndex("alternatives").searchSimilarDocuments<{ id: string }>({
       id,
       limit: 6,
-      embedder: "openai",
+      embedder: "openAi",
       attributesToRetrieve: ["id"],
       rankingScoreThreshold: 0.6,
       ...params,

@@ -76,7 +76,7 @@ export const findRelatedToolIds = async ({ id, ...params }: SearchSimilarDocumen
     getMeiliIndex("tools").searchSimilarDocuments<{ id: string }>({
       id,
       limit: 3,
-      embedder: "openai",
+      embedder: "openAi",
       attributesToRetrieve: ["id"],
       rankingScoreThreshold: 0.7,
       filter: ["status = 'Published'"],
