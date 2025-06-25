@@ -8,7 +8,6 @@ export const linksConfig = {
   bluesky: "https://bsky.app/profile/openalternative.co",
   mastodon: "https://mastodon.social/@openalternative",
   linkedin: "https://linkedin.com/company/openalternative",
-  github: "https://github.com/piotrkulpinski/openalternative",
   reddit: "https://www.reddit.com/r/openalternative/",
   analytics: "https://go.openalternative.co/analytics",
   feeds: [

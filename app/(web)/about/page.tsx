@@ -170,8 +170,7 @@ export default function AboutPage() {
         <p>
           If you have any suggestions for open source alternatives to proprietary software and
           applications, feel free to contribute to the list. You can also contribute by suggesting
-          new categories or improving the website. The source code is available on{" "}
-          <ExternalLink href={config.links.github}>GitHub</ExternalLink>.
+          new categories or ideas for improving the website.
         </p>
 
         <p>Enjoy and feel free to contribute!</p>

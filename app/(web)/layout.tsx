@@ -29,7 +29,6 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           config.links.bluesky,
           config.links.mastodon,
           config.links.linkedin,
-          config.links.github,
         ],
         logo: {
           "@type": "ImageObject",

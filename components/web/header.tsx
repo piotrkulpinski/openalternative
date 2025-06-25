@@ -13,13 +13,11 @@ import {
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
-import { ExternalLink } from "~/components/web/external-link"
 import { Container } from "~/components/web/ui/container"
 import { Hamburger } from "~/components/web/ui/hamburger"
 import { Logo } from "~/components/web/ui/logo"
 import { NavLink, navLinkVariants } from "~/components/web/ui/nav-link"
 import { UserMenu } from "~/components/web/user-menu"
-import { config } from "~/config"
 import { useSearch } from "~/contexts/search-context"
 import type { auth } from "~/lib/auth"
 import { cx } from "~/utils/cva"
@@ -134,18 +132,6 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
               onClick={search.open}
             >
               <Icon name="lucide/search" className="size-4" />
-            </Button>
-
-            <Button
-              size="sm"
-              variant="ghost"
-              aria-label="GitHub"
-              className="p-1 -ml-1.5 max-sm:hidden"
-              asChild
-            >
-              <ExternalLink href={config.links.github}>
-                <Icon name="tabler/brand-github" className="size-4" />
-              </ExternalLink>
             </Button>
 
             <Button size="sm" variant="secondary" asChild>

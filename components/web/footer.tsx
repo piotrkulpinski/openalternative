@@ -75,12 +75,6 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               </ExternalLink>
             </Tooltip>
 
-            <Tooltip tooltip="View source code">
-              <ExternalLink href={config.links.github} className={navLinkVariants()}>
-                <Icon name="tabler/brand-github" />
-              </ExternalLink>
-            </Tooltip>
-
             <Tooltip tooltip="Follow us on X/Twitter">
               <ExternalLink href={config.links.twitter} className={navLinkVariants()}>
                 <Icon name="tabler/brand-x" />
