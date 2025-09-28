@@ -50,7 +50,7 @@
     "inngest": "^3.39.2",
     "meilisearch": "^0.50.0",
     "motion": "^12.18.1",
-    "next": "canary",
+    "next": "^15.6.0-canary.32",
     "nuqs": "^2.4.3",
     "plur": "^5.1.0",
     "posthog-js": "^1.255.0",
