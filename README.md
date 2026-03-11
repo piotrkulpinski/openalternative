@@ -730,6 +730,7 @@
 - [UnKey](https://www.unkey.com/?utm_source=openalternative.co) - Secure, scalable API key management for developers ([source](https://github.com/unkeyed/unkey?utm_source=openalternative.co)) `AGPL-3.0` `⭐ 5.2K`
 - [WunderGraph](https://wundergraph.com/?utm_source=openalternative.co) - Unify APIs, databases, and services effortlessly ([source](https://github.com/wundergraph/cosmo?utm_source=openalternative.co)) `Apache-2.0` `⭐ 1.2K`
 - [Yaak](https://yaak.app/?utm_source=openalternative.co) - Fast, secure, offline API client with Git integration ([source](https://github.com/yaakapp/app?utm_source=openalternative.co)) `MIT` `⭐ 18K`
+- [Voiden](https://voiden.md/?utm_source=openalternative.co) - Offline, markdown-based API client with reusable blocks for building and testing API workflows ([source](https://github.com/voiden/voiden?utm_source=openalternative.co)) `Apache-2.0` `⭐ 629`
 
 ### Testing & Quality Assurance
 
