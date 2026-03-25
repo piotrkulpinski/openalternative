@@ -590,6 +590,7 @@
 - [Metabase](https://metabase.com/?utm_source=openalternative.co) - Unlock data insights with powerful, user-friendly analytics ([source](https://github.com/metabase/metabase?utm_source=openalternative.co)) `⭐ 47K`
 - [OpenBB](https://openbb.co/?utm_source=openalternative.co) - AI-powered research and analytics workspace ([source](https://github.com/OpenBB-finance/OpenBB?utm_source=openalternative.co)) `⭐ 64K`
 - [Redash](http://redash.io/?utm_source=openalternative.co) - Connect, query, visualize, and share your data ([source](https://github.com/getredash/redash?utm_source=openalternative.co)) `BSD-2-Clause` `⭐ 28K`
+- [ReportBurster](http://reportburster.com/?utm_source=openalternative.co) - Business Intelligence For The New Era ([source](https://github.com/flowkraft/reportburster?utm_source=openalternative.co)) `SSPL-1.0` `⭐ 10`
 
 ### Data Engineering & Integration
 
