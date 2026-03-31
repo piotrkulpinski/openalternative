@@ -609,6 +609,7 @@
 - [Mage](https://openalternative.co/mage) - Magical data pipeline tool for seamless transformations `Apache-2.0` `⭐ 8.7K`
 - [Open Wearables](https://openalternative.co/open-wearables) - Democratize health data with unified wearable integration `MIT` `⭐ 1.2K`
 - [Orbital](https://openalternative.co/orbital) - Connect APIs, databases, and streams without glue code `⭐ 351`
+- [Provero](https://provero.org/?utm_source=openalternative.co) - Vendor-neutral, declarative data quality engine ([source](https://github.com/provero-org/provero?utm_source=openalternative.co)) `Apache-2.0` `⭐ 7`
 - [Timeplus](https://openalternative.co/timeplus) - Real-time stream processing made simple and affordable `Apache-2.0` `⭐ 2.2K`
 
 ### Data Warehousing & Processing
