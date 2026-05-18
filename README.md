@@ -129,7 +129,7 @@
 
 ### AI Development Platforms
 
-- **[AgentOS](https://openalternative.co/agentos)** - Build production-ready autonomous AI agents with adaptive intelligence `Apache-2.0` `⭐ 353`
+- **[AgentOS](https://openalternative.co/agentos)** - Build production-ready autonomous AI agents with adaptive intelligence `Apache-2.0` `⭐ 393`
 - **[Open Mercato](https://openalternative.co/open-mercato)** - AI-Engineering Foundation Framework built with AI and designed for AI `MIT` `⭐ 1.3K`
 - **[Parlant](https://openalternative.co/parlant)** - Build compliant customer-facing AI agents with control `Apache-2.0` `⭐ 18K`
 - [ACI.dev](https://openalternative.co/aci-dev) - Build reliable AI agents with unified tool integration `Apache-2.0` `⭐ 4.8K`
@@ -148,7 +148,7 @@
 - [Envoy AI Gateway](https://openalternative.co/envoy-ai-gateway) - Route GenAI traffic with confidence using open source `Apache-2.0` `⭐ 1.6K`
 - [FastGPT](https://openalternative.co/fastgpt) - Build powerful AI knowledge bases with ease `⭐ 28K`
 - [Flowise AI](https://openalternative.co/flowise-ai) - Build AI agents and workflows with visual drag-and-drop `Apache-2.0` `⭐ 53K`
-- [Giselle](https://openalternative.co/giselle) - Build and deploy AI agents through visual workflows `Apache-2.0` `⭐ 527`
+- [Giselle](https://openalternative.co/giselle) - Build and deploy AI agents through visual workflows `Apache-2.0` `⭐ 528`
 - [Laminar](https://openalternative.co/laminar) - AI-powered platform for engineering LLM products `Apache-2.0` `⭐ 2.9K`
 - [Langflow](https://openalternative.co/langflow) - Visual builder for AI-powered applications and workflows `MIT` `⭐ 148K`
 - [Langfuse](https://openalternative.co/langfuse) - Open source LLM engineering platform for AI-powered applications `⭐ 27K`
@@ -162,6 +162,7 @@
 - [Nango](https://openalternative.co/nango) - Build product integrations with 500+ APIs in hours `⭐ 7.4K`
 - [OpenLIT ](https://openalternative.co/openlit) - Monitor, debug, and scale LLM applications with ease `Apache-2.0` `⭐ 2.4K`
 - [OpenLLMetry](https://openalternative.co/openllmetry) - Monitor LLM performance with open-source observability `Apache-2.0` `⭐ 7.1K`
+- [Pipeshub](https://openalternative.co/pipeshub) - Open-source AI platform that unifies data and powers trustworthy agents `Apache-2.0` `⭐ 2.9K`
 - [Portkey AI Gateway](https://openalternative.co/portkey-ai-gateway) - Complete production stack for AI teams `MIT` `⭐ 12K`
 - [Qdrant](https://openalternative.co/qdrant) - Fast, scalable vector database for AI applications `Apache-2.0` `⭐ 31K`
 - [Rivet](https://openalternative.co/rivet) - Build stateful backends with in-memory actors `Apache-2.0` `⭐ 5.5K`
@@ -199,7 +200,7 @@
 - [Browser Use](https://openalternative.co/browser-use) - AI-powered browser automation for seamless web interactions `MIT` `⭐ 94K`
 - [Cherry Studio](https://openalternative.co/cherry-studio) - Multi-platform AI client with unified model management `AGPL-3.0` `⭐ 46K`
 - [CopilotKit](https://openalternative.co/copilotkit) - Build AI copilots for your product in hours, not months `MIT` `⭐ 31K`
-- [CrawlChat](https://openalternative.co/crawlchat) - Transform docs into AI-powered knowledge assistants `⭐ 120`
+- [CrawlChat](https://openalternative.co/crawlchat) - Transform docs into AI-powered knowledge assistants `⭐ 121`
 - [Fullmoon](https://openalternative.co/fullmoon) - Chat with private and local large language models `MIT` `⭐ 2.3K`
 - [Inbox Zero](https://openalternative.co/inboxzero) - AI assistant that organizes, drafts, and cleans your inbox `AGPL-3.0` `⭐ 11K`
 - [Jan](https://openalternative.co/jan) - Your AI-powered local assistant for seamless productivity `Apache-2.0` `⭐ 43K`
@@ -216,11 +217,10 @@
 - [Morphic](https://openalternative.co/morphic) - AI-powered answer engine with dynamic interface generation `Apache-2.0` `⭐ 8.8K`
 - [Onyx](https://openalternative.co/onyx) - Unified AI-powered enterprise search across company data `⭐ 29K`
 - [Open WebUI](https://openalternative.co/open-webui) - Extensible, self-hosted AI interface for your workflow `BSD-3-Clause` `⭐ 137K`
-- [OpenClaw](https://openalternative.co/openclaw) - AI assistant that actually executes tasks across platforms `MIT` `⭐ 372K`
+- [OpenClaw](https://openalternative.co/openclaw) - AI assistant that actually executes tasks across platforms `MIT` `⭐ 373K`
 - [OpenWispr](https://openalternative.co/openwispr) - Transform speech to text instantly with AI privacy `MIT` `⭐ 3.2K`
 - [Orama](https://openalternative.co/orama) - Full-text & vector search at the edge. `⭐ 10K`
 - [Pearl](https://openalternative.co/pearl) - AI-powered automation that lives in your Slack workspace `Apache-2.0` `⭐ 1.1K`
-- [PipesHub](https://openalternative.co/pipeshub) - Open-source AI platform for enterprise search & workflow `Apache-2.0` `⭐ 2.9K`
 - [Scira](https://openalternative.co/scira) - Minimalistic AI-powered search engine for instant answers `AGPL-3.0` `⭐ 12K`
 - [screenpipe ](https://openalternative.co/screenpipe) - 24/7 AI screen memory that remembers everything `MIT` `⭐ 19K`
 - [Skyvern](https://openalternative.co/skyvern) - Automate any website workflow with AI and computer vision `AGPL-3.0` `⭐ 22K`
@@ -284,7 +284,7 @@
 - [OpenBB](https://openalternative.co/openbb) - AI-powered research and analytics workspace `⭐ 68K`
 - [OpenMeter](https://openalternative.co/openmeter) - Real-time usage metering and billing for AI companies `Apache-2.0` `⭐ 2K`
 - [Paymenter](https://openalternative.co/paymenter) - Modern open-source billing platform for hosting businesses `MIT` `⭐ 1.7K`
-- [Polar](https://openalternative.co/polar) - Modern payment infrastructure for digital products and SaaS `Apache-2.0` `⭐ 9.8K`
+- [Polar](https://openalternative.co/polar) - Modern payment infrastructure for digital products and SaaS `Apache-2.0` `⭐ 9.9K`
 - [Spliit](https://openalternative.co/spliit) - Effortlessly split expenses with friends and roommates `MIT` `⭐ 2.7K`
 - [Suprascribe](https://openalternative.co/suprascribe) - Automatically discover hidden subscriptions from your inbox `⭐ 2`
 - [UniBee](https://openalternative.co/unibee) - Cut billing costs with open-source subscription management `AGPL-3.0` `⭐ 197`
@@ -293,7 +293,7 @@
 
 - [Ever Gauzy](https://openalternative.co/ever-gauzy) - Comprehensive open-source business management platform `AGPL-3.0` `⭐ 3.7K`
 - [Horilla](https://openalternative.co/horilla) - Comprehensive open-source HR management solution `LGPL-2.1` `⭐ 1.2K`
-- [Reqcore](https://openalternative.co/reqcore) - Own your hiring data with unlimited seats forever `AGPL-3.0` `⭐ 27`
+- [Reqcore](https://openalternative.co/reqcore) - Own your hiring data with unlimited seats forever `AGPL-3.0` `⭐ 28`
 
 ### Marketing & Customer Engagement
 
@@ -305,7 +305,7 @@
 - [Chaskiq](https://openalternative.co/chaskiq) - Open-source customer communication platform `⭐ 3.5K`
 - [Chatwoot](https://openalternative.co/chatwoot) - Elevate customer conversations with open-source excellence `⭐ 29K`
 - [Contentport](https://openalternative.co/contentport) - Your content engine for growing on Twitter at scale `AGPL-3.0` `⭐ 763`
-- [Cossistant](https://openalternative.co/cossistant) - AI-native support infrastructure for modern SaaS `AGPL-3.0` `⭐ 659`
+- [Cossistant](https://openalternative.co/cossistant) - AI-native support infrastructure for modern SaaS `AGPL-3.0` `⭐ 660`
 - [Dittofeed](https://openalternative.co/dittofeed) - Open-source customer engagement platform for automation `MIT` `⭐ 2.8K`
 - [Erxes](https://openalternative.co/erxes) - Open-source growth platform for customer-centric teams `⭐ 4K`
 - [Fonoster](https://openalternative.co/fonoster) - Open-source cloud communications platform for developers `MIT` `⭐ 7.9K`
@@ -331,7 +331,7 @@
 - [Shlink](https://openalternative.co/shlink) - The definitive self-hosted URL shortener `MIT` `⭐ 5K`
 - [Sink](https://openalternative.co/sink) - Simple, speedy, and secure link shortener with analytics `AGPL-3.0` `⭐ 6.6K`
 - [Slugy](https://openalternative.co/slugy) - Transform long URLs into beautiful, trackable short links `MIT` `⭐ 88`
-- [Tiledesk](https://openalternative.co/tiledesk) - Elevate customer support with AI-powered chat solutions `MIT` `⭐ 316`
+- [Tiledesk](https://openalternative.co/tiledesk) - Elevate customer support with AI-powered chat solutions `MIT` `⭐ 317`
 - [Usertour](https://openalternative.co/usertour) - Create engaging product tours and user onboarding experiences `AGPL-3.0` `⭐ 2K`
 - [useSend](https://openalternative.co/usesend) - Pay per email sent, not for contact storage `AGPL-3.0` `⭐ 4.3K`
 - [WR.DO](https://openalternative.co/wr-do) - Free DNS management and URL shortening platform `MIT` `⭐ 2.2K`
@@ -343,7 +343,7 @@
 - [Chaskiq](https://openalternative.co/chaskiq) - Open-source customer communication platform `⭐ 3.5K`
 - [Chatwoot](https://openalternative.co/chatwoot) - Elevate customer conversations with open-source excellence `⭐ 29K`
 - [ClearFlask](https://openalternative.co/clearflask) - Open-source ideation tool for product feedback management `Apache-2.0` `⭐ 440`
-- [Cossistant](https://openalternative.co/cossistant) - AI-native support infrastructure for modern SaaS `AGPL-3.0` `⭐ 659`
+- [Cossistant](https://openalternative.co/cossistant) - AI-native support infrastructure for modern SaaS `AGPL-3.0` `⭐ 660`
 - [Fider](https://openalternative.co/fider) - Open-source platform for collecting and prioritizing feedback `AGPL-3.0` `⭐ 4.3K`
 - [Formbricks](https://openalternative.co/formbricks) - Privacy-first surveys that respect your data ownership `⭐ 12K`
 - [Frappe Helpdesk](https://openalternative.co/frappe-helpdesk) - Open-source ticketing system for streamlined support `AGPL-3.0` `⭐ 3.1K`
@@ -351,7 +351,7 @@
 - [LogChimp](https://openalternative.co/logchimp) - Open-source feedback management for product teams `Apache-2.0` `⭐ 1.1K`
 - [Reflet](https://openalternative.co/reflet) - Turn user feedback into features that matter `⭐ 22`
 - [SAMA](https://openalternative.co/sama) - Secure, scalable chat server for modern applications `GPL-3.0` `⭐ 154`
-- [Tiledesk](https://openalternative.co/tiledesk) - Elevate customer support with AI-powered chat solutions `MIT` `⭐ 316`
+- [Tiledesk](https://openalternative.co/tiledesk) - Elevate customer support with AI-powered chat solutions `MIT` `⭐ 317`
 - [Usertour](https://openalternative.co/usertour) - Create engaging product tours and user onboarding experiences `AGPL-3.0` `⭐ 2K`
 - [UserTourKit](https://openalternative.co/usertourkit) - Lightweight, accessible product tours built for React developers `MIT` `⭐ 3`
 - [Zammad](https://openalternative.co/zammad) - Powerful helpdesk solution for streamlined customer service `AGPL-3.0` `⭐ 5.6K`
@@ -380,7 +380,7 @@
 - [GitLab](https://openalternative.co/gitlab) - AI-powered DevSecOps for faster, secure software delivery `⭐ 24K`
 - [Huly](https://openalternative.co/huly) - Unified workspace for seamless team collaboration `EPL-2.0` `⭐ 26K`
 - [Kan](https://openalternative.co/kan) - Open source kanban boards with unlimited everything `AGPL-3.0` `⭐ 4.9K`
-- [Kanba](https://openalternative.co/kanba) - Beautiful Kanban boards with seamless payment integration `MIT` `⭐ 615`
+- [Kanba](https://openalternative.co/kanba) - Beautiful Kanban boards with seamless payment integration `MIT` `⭐ 616`
 - [Kaneo](https://openalternative.co/kaneo) - Simple, secure project management for development teams `MIT` `⭐ 3.5K`
 - [Kanri](https://openalternative.co/kanri) - Simplify your workflow with offline Kanban boards `GPL-3.0` `⭐ 1.9K`
 - [Leantime](https://openalternative.co/leantime) - Goal-driven project management for all brains `AGPL-3.0` `⭐ 9.8K`
@@ -395,7 +395,7 @@
 - [Shelve](https://openalternative.co/shelve) - Simplify project management for developers `Apache-2.0` `⭐ 418`
 - [ShipShipShip](https://openalternative.co/shipshipship) - Open-source changelog & roadmap platform for teams `Apache-2.0` `⭐ 285`
 - [Super Productivity](https://openalternative.co/super-productivity) - Deep work made simple with privacy-first task management `MIT` `⭐ 19K`
-- [Taiga](https://openalternative.co/taiga) - Free and open-source project management for agile teams `MPL-2.0` `⭐ 831`
+- [Taiga](https://openalternative.co/taiga) - Free and open-source project management for agile teams `MPL-2.0` `⭐ 832`
 - [Tuleap](https://openalternative.co/tuleap) - Complete agile project management with compliance built-in `⭐ 1.1K`
 - [Vikunja](https://openalternative.co/vikunja) - Organize, collaborate, and conquer your tasks `AGPL-3.0` `⭐ 4.3K`
 - [Wekan](https://openalternative.co/wekan) - Visual project management with complete data control `MIT` `⭐ 21K`
@@ -473,13 +473,13 @@
 - [Ballerine](https://openalternative.co/ballerine) - AI agents that transform merchant risk decisions at scale `⭐ 2.4K`
 - [c15t](https://openalternative.co/c15t) - Build privacy-compliant cookie banners with full control `Apache-2.0` `⭐ 1.7K`
 - [Comp AI](https://openalternative.co/comp) - Automate SOC 2, HIPAA, GDPR & ISO 27001 and beyond `AGPL-3.0` `⭐ 1.6K`
-- [OpenPolicy](https://openalternative.co/openpolicy) - Generate legal policies directly from TypeScript code `Apache-2.0` `⭐ 147`
+- [OpenPolicy](https://openalternative.co/openpolicy) - Generate legal policies directly from TypeScript code `Apache-2.0` `⭐ 148`
 - [Titan](https://openalternative.co/titan) - Simplify Snowflake access management with ease `Apache-2.0` `⭐ 481`
-- [VerifyWise](https://openalternative.co/verifywise) - AI governance made simple, secure, and compliant `AGPL-3.0` `⭐ 282`
+- [VerifyWise](https://openalternative.co/verifywise) - AI governance made simple, secure, and compliant `AGPL-3.0` `⭐ 283`
 
 ### Legal
 
-- [Mike](https://openalternative.co/mike) - Open-source legal AI that law firms control and extend `AGPL-3.0` `⭐ 3K`
+- [Mike](https://openalternative.co/mike) - Open-source legal AI that law firms control and extend `AGPL-3.0` `⭐ 3.1K`
 
 ## Community & Social
 
@@ -519,7 +519,7 @@
 - [Drupal](https://openalternative.co/drupal) - Build powerful websites with the open-source CMS `⭐ 4.3K`
 - [Ghost](https://openalternative.co/ghost) - Modern publishing platform for creators and businesses `MIT` `⭐ 53K`
 - [KeystoneJS](https://openalternative.co/keystonejs) - Flexible, scalable Node.js CMS and app framework `MIT` `⭐ 9.9K`
-- [Marble CMS](https://openalternative.co/marble-cms) - Simple content management for modern sites `AGPL-3.0` `⭐ 364`
+- [Marble CMS](https://openalternative.co/marble-cms) - Simple content management for modern sites `AGPL-3.0` `⭐ 365`
 - [Payload](https://openalternative.co/payload) - Headless CMS for developers, built with Node.js `MIT` `⭐ 42K`
 - [ProcessWire](https://openalternative.co/processwire) - Flexible CMS for developers, powerful for clients `⭐ 1.1K`
 - [Statamic](https://openalternative.co/statamic) - Craft flexible, powerful websites with ease `⭐ 4.8K`
@@ -554,7 +554,7 @@
 - [Vrite](https://openalternative.co/vrite) - Collaborative content creation for technical teams `⭐ 2K`
 - [XWiki](https://openalternative.co/xwiki) - Open-source knowledge management and collaboration platform `LGPL-2.1` `⭐ 1.2K`
 - [xyd](https://openalternative.co/xyd) - Transform documentation with developer-focused simplicity `MIT` `⭐ 109`
-- [Zenblog](https://openalternative.co/zenblog) - Effortless blogging for developers and tech enthusiasts `AGPL-3.0` `⭐ 249`
+- [Zenblog](https://openalternative.co/zenblog) - Effortless blogging for developers and tech enthusiasts `AGPL-3.0` `⭐ 250`
 
 ### Learning Management Systems (LMS)
 
@@ -569,7 +569,7 @@
 - [Ente](https://openalternative.co/ente) - Secure, private photo storage and sharing solution `AGPL-3.0` `⭐ 26K`
 - [Immich](https://openalternative.co/immich) - Self-hosted photo and video backup solution `AGPL-3.0` `⭐ 101K`
 - [Lychee](https://openalternative.co/lychee) - Self-hosted photo management with full control `MIT` `⭐ 4.2K`
-- [Openinary](https://openalternative.co/openinary) - Self-hosted media processing with full control `AGPL-3.0` `⭐ 302`
+- [Openinary](https://openalternative.co/openinary) - Self-hosted media processing with full control `AGPL-3.0` `⭐ 303`
 - [Piwigo](https://openalternative.co/piwigo) - Organize thousands of photos with ease `GPL-2.0` `⭐ 3.8K`
 
 ### Publishing
@@ -586,10 +586,10 @@
 
 - [Fountain](https://openalternative.co/fountain) - Where your writing journey begins with simplicity `AGPL-3.0` `⭐ 63`
 - [Ghost](https://openalternative.co/ghost) - Modern publishing platform for creators and businesses `MIT` `⭐ 53K`
-- [Pagecord](https://openalternative.co/pagecord) - A free and independent sanctuary for your writing `MIT` `⭐ 170`
+- [Pagecord](https://openalternative.co/pagecord) - A free and independent sanctuary for your writing `MIT` `⭐ 171`
 - [Sigle](https://openalternative.co/sigle) - Web3 writing platform for content creators and crypto enthusiasts `MIT` `⭐ 486`
 - [WordPress](https://openalternative.co/wordpress) - Create, customize, and manage your website with ease `⭐ 21K`
-- [Zenblog](https://openalternative.co/zenblog) - Effortless blogging for developers and tech enthusiasts `AGPL-3.0` `⭐ 249`
+- [Zenblog](https://openalternative.co/zenblog) - Effortless blogging for developers and tech enthusiasts `AGPL-3.0` `⭐ 250`
 
 ## Data & Analytics
 
@@ -597,13 +597,13 @@
 
 - **[OpenPanel](https://openalternative.co/openpanel)** - Privacy-first analytics with powerful insights `AGPL-3.0` `⭐ 5.8K`
 - [Aptabase](https://openalternative.co/aptabase) - Privacy-first analytics for mobile and desktop apps `AGPL-3.0` `⭐ 1.7K`
-- [Betterlytics](https://openalternative.co/betterlytics) - Privacy-first, cookieless analytics without consent banners `AGPL-3.0` `⭐ 157`
-- [Bklit](https://openalternative.co/bklit) - Privacy-first web analytics with 3-line setup `⭐ 250`
+- [Betterlytics](https://openalternative.co/betterlytics) - Privacy-first, cookieless analytics without consent banners `AGPL-3.0` `⭐ 158`
+- [Bklit](https://openalternative.co/bklit) - Privacy-first web analytics with 3-line setup `⭐ 251`
 - [Countly](https://openalternative.co/countly) - Comprehensive analytics for data-driven decisions `⭐ 5.9K`
 - [Databuddy](https://openalternative.co/databuddy) - Privacy-first analytics without cookies or tracking `AGPL-3.0` `⭐ 1K`
 - [Fathom Lite](https://openalternative.co/fathom) - Privacy-focused analytics without the complexity `MIT` `⭐ 8K`
 - [GrowthBook](https://openalternative.co/growthbook) - Open-source A/B testing and feature flagging platform `⭐ 7.8K`
-- [HitKeep](https://openalternative.co/hitkeep) - Privacy-first analytics you own completely `MIT` `⭐ 53`
+- [HitKeep](https://openalternative.co/hitkeep) - Privacy-first analytics you own completely `MIT` `⭐ 54`
 - [Litlyx](https://openalternative.co/litlyx) - Cookie-less analytics for privacy-focused insights `Apache-2.0` `⭐ 1.7K`
 - [Lua.sh](https://openalternative.co/lua-sh) - Professional link management for modern teams `AGPL-3.0` `⭐ 332`
 - [Matomo](https://openalternative.co/matomo) - Empower your digital strategy with actionable insights `GPL-3.0` `⭐ 22K`
@@ -613,7 +613,7 @@
 - [PostHog](https://openalternative.co/posthog) - Unlock Product Insights with Open-Source Analytics `⭐ 35K`
 - [Prisme Analytics](https://openalternative.co/prisme-analytics) - Privacy-friendly web analytics for data-driven decisions `AGPL-3.0` `⭐ 125`
 - [Rybbit](https://openalternative.co/rybbit) - Understand your audience with privacy-first analytics. `AGPL-3.0` `⭐ 12K`
-- [Swetrix](https://openalternative.co/swetrix) - Privacy-focused analytics for data-driven decisions `AGPL-3.0` `⭐ 984`
+- [Swetrix](https://openalternative.co/swetrix) - Privacy-focused analytics for data-driven decisions `AGPL-3.0` `⭐ 985`
 - [Trench](https://openalternative.co/trench) - Fast, scalable analytics infrastructure `MIT` `⭐ 1.6K`
 - [Umami](https://openalternative.co/umami) - Empower your website with privacy-focused analytics `MIT` `⭐ 37K`
 - [Vemetric](https://openalternative.co/vemetric) - Simple, powerful web & product analytics for user insights `AGPL-3.0` `⭐ 349`
@@ -681,12 +681,12 @@
 - [Builder](https://openalternative.co/builder) - Visual development platform for modern web experiences `MIT` `⭐ 8.7K`
 - [Frappe Builder](https://openalternative.co/frappe-builder) - Visual website builder for effortless web design `AGPL-3.0` `⭐ 2K`
 - [Linky](https://openalternative.co/linky) - A delightfully rich and dynamic link-in-bio. `MIT` `⭐ 789`
-- [Nordcraft](https://openalternative.co/nordcraft) - Craft AAA web apps that delight your users `Apache-2.0` `⭐ 468`
+- [Nordcraft](https://openalternative.co/nordcraft) - Craft AAA web apps that delight your users `Apache-2.0` `⭐ 470`
 - [Silex](https://openalternative.co/silex) - Free, open-source visual website builder for designers `AGPL-3.0` `⭐ 2.8K`
 - [Vvveb CMS](https://openalternative.co/vvveb-cms) - Open source CMS with powerful drag-and-drop builder `AGPL-3.0` `⭐ 1.1K`
 - [WebStudio](https://openalternative.co/webstudio) - Visual web development with code-level control `AGPL-3.0` `⭐ 8.6K`
 - [WordPress](https://openalternative.co/wordpress) - Create, customize, and manage your website with ease `⭐ 21K`
-- [Ycode](https://openalternative.co/ycode) - Design, host, and manage websites with complete control and transparency `MIT` `⭐ 161`
+- [Ycode](https://openalternative.co/ycode) - Design, host, and manage websites with complete control and transparency `MIT` `⭐ 164`
 
 ### IDEs & Code Editors
 
@@ -718,27 +718,27 @@
 - [Encore](https://openalternative.co/encore) - Accelerate backend development with effortless scalability `MPL-2.0` `⭐ 12K`
 - [Fonoster](https://openalternative.co/fonoster) - Open-source cloud communications platform for developers `MIT` `⭐ 7.9K`
 - [Frappe Builder](https://openalternative.co/frappe-builder) - Visual website builder for effortless web design `AGPL-3.0` `⭐ 2K`
-- [Giselle](https://openalternative.co/giselle) - Build and deploy AI agents through visual workflows `Apache-2.0` `⭐ 527`
+- [Giselle](https://openalternative.co/giselle) - Build and deploy AI agents through visual workflows `Apache-2.0` `⭐ 528`
 - [Grida](https://openalternative.co/grida) - Design and build web apps with a versatile canvas editor `Apache-2.0` `⭐ 2.5K`
 - [Grist](https://openalternative.co/grist) - Flexible spreadsheets with database power `Apache-2.0` `⭐ 11K`
 - [Hatchet](https://openalternative.co/hatchet) - Effortless CI/CD for modern cloud applications `MIT` `⭐ 7.2K`
 - [Hercules](https://openalternative.co/hercules) - Open-source vertical testing agent for effortless QA `AGPL-3.0` `⭐ 1K`
-- [Hexabot](https://openalternative.co/hexabot) - Build and manage AI-powered chatbots with ease `AGPL-3.0` `⭐ 953`
+- [Hexabot](https://openalternative.co/hexabot) - Build and manage AI-powered chatbots with ease `AGPL-3.0` `⭐ 954`
 - [HeyForm](https://openalternative.co/heyform) - Create powerful forms with ease and flexibility `AGPL-3.0` `⭐ 8.8K`
 - [Inngest](https://openalternative.co/inngest) - Effortless event-driven workflows for modern applications `⭐ 5.4K`
 - [Instant](https://openalternative.co/instant) - Realtime client-side database for collaborative apps `Apache-2.0` `⭐ 10K`
-- [Juno](https://openalternative.co/juno) - Build and deploy secure serverless apps with zero setup `MIT` `⭐ 410`
+- [Juno](https://openalternative.co/juno) - Build and deploy secure serverless apps with zero setup `MIT` `⭐ 411`
 - [KeystoneJS](https://openalternative.co/keystonejs) - Flexible, scalable Node.js CMS and app framework `MIT` `⭐ 9.9K`
 - [Langflow](https://openalternative.co/langflow) - Visual builder for AI-powered applications and workflows `MIT` `⭐ 148K`
 - [LiveKit](https://openalternative.co/livekit) - Real-time communication infrastructure for developers `Apache-2.0` `⭐ 19K`
-- [LyteNyte Grid](https://openalternative.co/lytenyte-grid) - Lightning-fast React data grid for enterprise scale `⭐ 673`
+- [LyteNyte Grid](https://openalternative.co/lytenyte-grid) - Lightning-fast React data grid for enterprise scale `⭐ 704`
 - [Mathesar](https://openalternative.co/mathesar) - Spreadsheet-like interface for PostgreSQL databases `GPL-3.0` `⭐ 5K`
 - [Mockoon](https://openalternative.co/mockoon) - Effortless API mocking for seamless development `MIT` `⭐ 8.3K`
 - [n8n](https://openalternative.co/n8n) - AI-powered workflow automation for technical teams `⭐ 188K`
 - [NHost](https://openalternative.co/nhost) - Serverless backend platform for modern app development `MIT` `⭐ 9.2K`
 - [NocoBase](https://openalternative.co/nocobase) - Build custom apps without code, deploy with ease `⭐ 22K`
 - [NocoDB](https://openalternative.co/nocodb) - Transform databases into intuitive spreadsheets instantly `AGPL-3.0` `⭐ 63K`
-- [Nordcraft](https://openalternative.co/nordcraft) - Craft AAA web apps that delight your users `Apache-2.0` `⭐ 468`
+- [Nordcraft](https://openalternative.co/nordcraft) - Craft AAA web apps that delight your users `Apache-2.0` `⭐ 470`
 - [Onlook](https://openalternative.co/onlook) - Visual React editor with real-time code updates `Apache-2.0` `⭐ 26K`
 - [OpnForm](https://openalternative.co/opnform) - Create powerful forms with ease and flexibility `AGPL-3.0` `⭐ 3.3K`
 - [Palform](https://openalternative.co/palform) - Secure, encrypted forms with advanced features `AGPL-3.0` `⭐ 42`
@@ -750,7 +750,7 @@
 - [Rowy](https://openalternative.co/rowy) - Build powerful backends without leaving your browser `⭐ 6.8K`
 - [Silex](https://openalternative.co/silex) - Free, open-source visual website builder for designers `AGPL-3.0` `⭐ 2.8K`
 - [Structr](https://openalternative.co/structr) - Build complete web apps with integrated graph database `⭐ 823`
-- [Supabase](https://openalternative.co/supabase) - Open-source Firebase alternative for modern app development `Apache-2.0` `⭐ 102K`
+- [Supabase](https://openalternative.co/supabase) - Open-source Firebase alternative for modern app development `Apache-2.0` `⭐ 103K`
 - [Tailcall](https://openalternative.co/tailcall) - The modern GraphQL runtime `Apache-2.0` `⭐ 1.4K`
 - [Teable](https://openalternative.co/teable) - Flexible database meets intuitive spreadsheet interface `AGPL-3.0` `⭐ 21K`
 - [TipTap](https://openalternative.co/tiptap) - Craft rich text experiences with ease `MIT` `⭐ 37K`
@@ -838,7 +838,7 @@
 - [Rivet](https://openalternative.co/rivet) - Build stateful backends with in-memory actors `Apache-2.0` `⭐ 5.5K`
 - [Semaphore](https://openalternative.co/semaphore) - Open source CI/CD platform that's faster and costs less `⭐ 1.5K`
 - [Stormkit](https://openalternative.co/stormkit) - Deploy web apps with automated CI/CD and full infrastructure control `GPL-3.0` `⭐ 224`
-- [Temps](https://openalternative.co/temps) - Replace $500/mo SaaS with one self-hosted platform `Apache-2.0` `⭐ 443`
+- [Temps](https://openalternative.co/temps) - Replace $500/mo SaaS with one self-hosted platform `Apache-2.0` `⭐ 444`
 - [Terrateam](https://openalternative.co/terrateam) - GitOps orchestration for infrastructure as code `MPL-2.0` `⭐ 1.2K`
 - [Unleash](https://openalternative.co/unleash) - Feature flags for rapid, risk-free software deployment `Apache-2.0` `⭐ 13K`
 - [Windmill](https://openalternative.co/windmill) - Open-source workflow automation for developers `⭐ 16K`
@@ -864,12 +864,12 @@
 - [Cody](https://openalternative.co/cody) - AI-powered coding assistant for enterprise development teams `Apache-2.0` `⭐ 84`
 - [Continue](https://openalternative.co/continue) - AI-powered code assistant for amplified development `Apache-2.0` `⭐ 33K`
 - [Dyad](https://openalternative.co/dyad) - Build unlimited AI apps locally with zero vendor lock-in `⭐ 20K`
-- [Emdash](https://openalternative.co/emdash) - Code Smarter with Parallel Agents `Apache-2.0` `⭐ 4.4K`
+- [Emdash](https://openalternative.co/emdash) - Code Smarter with Parallel Agents `Apache-2.0` `⭐ 4.5K`
 - [Forgecode](https://openalternative.co/forgecode) - AI pair programming directly in your terminal `Apache-2.0` `⭐ 7.3K`
 - [Kilo](https://openalternative.co/kilocode) - AI coding agent with multiple specialized modes `MIT` `⭐ 19K`
 - [Kodus](https://openalternative.co/kodus) - Effortless Code Reviews, Tailored for You `⭐ 1.1K`
 - [OmoiOS](https://openalternative.co/omoios) - Ship features while you sleep with autonomous AI agents `Apache-2.0` `⭐ 59`
-- [OpenCode](https://openalternative.co/opencode) - AI coding agent with native terminal interface `MIT` `⭐ 161K`
+- [OpenCode](https://openalternative.co/opencode) - AI coding agent with native terminal interface `MIT` `⭐ 162K`
 - [OpenHands](https://openalternative.co/openhands) - Open-source platform for scalable cloud coding agents `MIT` `⭐ 74K`
 - [PearAI](https://openalternative.co/pearai) - Open-source AI-powered code editor for fast development `⭐ 746`
 - [Plandex](https://openalternative.co/plandex) - AI coding agent that handles large-scale development tasks `MIT` `⭐ 15K`
@@ -927,9 +927,9 @@
 - [Coolify](https://openalternative.co/coolify) - Self-hosted cloud platform for effortless deployment `Apache-2.0` `⭐ 55K`
 - [Cosmos Server](https://openalternative.co/cosmos-server) - Self-hosted cloud platform with automated security `⭐ 5.9K`
 - [Dokploy](https://openalternative.co/dokploy) - Effortless deployment and management for any VPS `⭐ 34K`
-- [OpenPanel](https://openalternative.co/openpanel-co) - Simplify server management with an intuitive interface `MIT` `⭐ 669`
+- [OpenPanel](https://openalternative.co/openpanel-co) - Simplify server management with an intuitive interface `MIT` `⭐ 670`
 - [Refine](https://openalternative.co/refine) - Build data-rich React apps with ease and flexibility `MIT` `⭐ 35K`
-- [Temps](https://openalternative.co/temps) - Replace $500/mo SaaS with one self-hosted platform `Apache-2.0` `⭐ 443`
+- [Temps](https://openalternative.co/temps) - Replace $500/mo SaaS with one self-hosted platform `Apache-2.0` `⭐ 444`
 - [YunoHost](https://openalternative.co/yunohost) - Self-host your digital life with ease `AGPL-3.0` `⭐ 2.9K`
 
 ### Monitoring & Observability
@@ -964,7 +964,7 @@
 - [ProjectDiscovery](https://openalternative.co/projectdiscovery) - Advanced vulnerability detection and management platform `MIT` `⭐ 29K`
 - [Sentry](https://openalternative.co/sentry) - Real-time error tracking and performance monitoring `⭐ 44K`
 - [SigNoz](https://openalternative.co/signoz) - Open-source observability platform for cloud-native apps `⭐ 27K`
-- [Statusnook](https://openalternative.co/statusnook) - Monitor, manage, and communicate service status effortlessly `MIT` `⭐ 975`
+- [Statusnook](https://openalternative.co/statusnook) - Monitor, manage, and communicate service status effortlessly `MIT` `⭐ 976`
 - [StatusScout](https://openalternative.co/statusscout) - Complete website health monitoring and security scanning `⭐ 15`
 - [Uptime Kuma](https://openalternative.co/uptime-kuma) - Self-hosted monitoring tool for websites and services `MIT` `⭐ 87K`
 - [Uptrace](https://openalternative.co/uptrace) - Open source observability platform for modern applications `AGPL-3.0` `⭐ 4.2K`
@@ -1031,7 +1031,7 @@
 - [Digger](https://openalternative.co/digger) - Terraform automation with pull request workflows `MIT` `⭐ 4.9K`
 - [dstack](https://openalternative.co/dstack) - Simplify AI workload orchestration across any cloud `MPL-2.0` `⭐ 2.1K`
 - [Dyrector](https://openalternative.co/dyrector) - Simplify container deployment across environments `Apache-2.0` `⭐ 1.8K`
-- [Giselle](https://openalternative.co/giselle) - Build and deploy AI agents through visual workflows `Apache-2.0` `⭐ 527`
+- [Giselle](https://openalternative.co/giselle) - Build and deploy AI agents through visual workflows `Apache-2.0` `⭐ 528`
 - [Hatchet](https://openalternative.co/hatchet) - Effortless CI/CD for modern cloud applications `MIT` `⭐ 7.2K`
 - [Inngest](https://openalternative.co/inngest) - Effortless event-driven workflows for modern applications `⭐ 5.4K`
 - [Kestra](https://openalternative.co/kestra) - Orchestrate data workflows with ease and precision `Apache-2.0` `⭐ 27K`
@@ -1070,12 +1070,12 @@
 - [Puter](https://openalternative.co/puter) - Your personal cloud for files, apps, and games `AGPL-3.0` `⭐ 41K`
 - [Spacedrive](https://openalternative.co/spacedrive) - Your personal distributed filesystem `AGPL-3.0` `⭐ 38K`
 - [Storj](https://openalternative.co/storj) - Secure, decentralized cloud storage for your data `AGPL-3.0` `⭐ 3.2K`
-- [Twake Drive](https://openalternative.co/twake-drive) - Secure open source file storage with end-to-end encryption `AGPL-3.0` `⭐ 834`
+- [Twake Drive](https://openalternative.co/twake-drive) - Secure open source file storage with end-to-end encryption `AGPL-3.0` `⭐ 838`
 
 ### Backup & Recovery
 
 - [Plakar](https://openalternative.co/plakar) - Encrypted, queryable backups for engineers who value time `ISC` `⭐ 1.8K`
-- [Pluton](https://openalternative.co/pluton) - Self-hosted encrypted backups with 70+ cloud storage options `Apache-2.0` `⭐ 425`
+- [Pluton](https://openalternative.co/pluton) - Self-hosted encrypted backups with 70+ cloud storage options `Apache-2.0` `⭐ 426`
 
 ## Miscellaneous
 
@@ -1100,7 +1100,7 @@
 - [Graphite](https://openalternative.co/graphite) - Professional vector graphics with procedural design power `Apache-2.0` `⭐ 26K`
 - [Grida](https://openalternative.co/grida) - Design and build web apps with a versatile canvas editor `Apache-2.0` `⭐ 2.5K`
 - [Krita](https://openalternative.co/krita) - Professional digital painting made accessible to everyone `GPL-3.0` `⭐ 9.7K`
-- [OpenPencil](https://openalternative.co/openpencil) - Open-source Figma alternative with AI and full programmability `MIT` `⭐ 4.9K`
+- [OpenPencil](https://openalternative.co/openpencil) - Open-source Figma alternative with AI and full programmability `MIT` `⭐ 5K`
 - [Penpot](https://openalternative.co/penpot) - Design freedom meets open-source collaboration `MPL-2.0` `⭐ 48K`
 - [Quant-UX](https://openalternative.co/quant-ux) - Design, prototype, and test user experiences with ease `GPL-3.0` `⭐ 2.5K`
 
@@ -1133,14 +1133,14 @@
 - [Jellyfin](https://openalternative.co/jellyfin) - Your media, your server, your way `GPL-2.0` `⭐ 52K`
 - [Navidrome](https://openalternative.co/navidrome) - Stream your music collection anywhere with modern web UI `GPL-3.0` `⭐ 21K`
 - [Nuclear](https://openalternative.co/nuclear) - Free music streaming without ads, tracking, or limits `AGPL-3.0` `⭐ 18K`
-- [Openinary](https://openalternative.co/openinary) - Self-hosted media processing with full control `AGPL-3.0` `⭐ 302`
+- [Openinary](https://openalternative.co/openinary) - Self-hosted media processing with full control `AGPL-3.0` `⭐ 303`
 - [PeerTube](https://openalternative.co/peertube) - Decentralized video platform for true digital freedom `AGPL-3.0` `⭐ 15K`
 
 ### Photo & Video Editors
 
 - [Audacity](https://openalternative.co/audacity) - Professional audio editing made simple and free `⭐ 17K`
 - [Darktable](https://openalternative.co/darktable) - Professional RAW photo editing and workflow management `GPL-3.0` `⭐ 12K`
-- [Kdenlive](https://openalternative.co/kdenlive) - Professional video editing without the price tag `GPL-3.0` `⭐ 5K`
+- [Kdenlive](https://openalternative.co/kdenlive) - Professional video editing without the price tag `GPL-3.0` `⭐ 5.1K`
 - [LosslessCut](https://openalternative.co/losslesscut) - Cut video & audio files in seconds without quality loss `GPL-2.0` `⭐ 40K`
 - [OpenCut](https://openalternative.co/opencut) - Simple, powerful video editing in your browser `MIT` `⭐ 51K`
 - [RawTherapee](https://openalternative.co/rawtherapee) - Professional raw photo processing made free and powerful `GPL-3.0` `⭐ 3.9K`
@@ -1155,7 +1155,7 @@
 - [AppFlowy](https://openalternative.co/appflowy) - Your personal workspace for seamless note-taking and planning `AGPL-3.0` `⭐ 71K`
 - [Beaver Notes](https://openalternative.co/beaver-notes) - Privacy-focused note-taking app with Markdown support `MIT` `⭐ 1.3K`
 - [Blinko](https://openalternative.co/blinko) - AI-Powered Note Taking App `GPL-3.0` `⭐ 10K`
-- [Darkwrite](https://openalternative.co/darkwrite) - Distraction-free note-taking with powerful features `AGPL-3.0` `⭐ 282`
+- [Darkwrite](https://openalternative.co/darkwrite) - Distraction-free note-taking with powerful features `AGPL-3.0` `⭐ 283`
 - [Deta Surf](https://openalternative.co/deta-surf) - Search less. Think better. `Apache-2.0` `⭐ 3.4K`
 - [Docmost](https://openalternative.co/docmost) - Real-time collaborative documentation for modern teams `AGPL-3.0` `⭐ 20K`
 - [Hyprnote](https://openalternative.co/hyprnote) - AI-powered notepad that transforms meeting notes into clear summaries `MIT` `⭐ 8.5K`
@@ -1181,7 +1181,7 @@
 
 - [Bitwarden](https://openalternative.co/bitwarden) - Secure password management for individuals and businesses `⭐ 19K`
 - [KeePassXC](https://openalternative.co/keepassxc) - Cross-platform, secure password manager `⭐ 27K`
-- [Keyshade](https://openalternative.co/keyshade) - Secure secret management with public key encryption `MPL-2.0` `⭐ 750`
+- [Keyshade](https://openalternative.co/keyshade) - Secure secret management with public key encryption `MPL-2.0` `⭐ 751`
 - [Padloc](https://openalternative.co/padloc) - Secure password manager with end-to-end encryption `AGPL-3.0` `⭐ 2.9K`
 - [Passbolt](https://openalternative.co/passbolt) - Secure password management for teams `AGPL-3.0` `⭐ 5.9K`
 - [PearPass](https://openalternative.co/pearpass) - Complete password control, zero cloud dependency `Apache-2.0` `⭐ 440`
@@ -1210,7 +1210,7 @@
 - [Seafile](https://openalternative.co/seafile) - Self-hosted file sync with AI-powered organization `⭐ 15K`
 - [Spacedrive](https://openalternative.co/spacedrive) - Your personal distributed filesystem `AGPL-3.0` `⭐ 38K`
 - [Sync-in](https://openalternative.co/sync-in) - Open-source file storage with complete data sovereignty `AGPL-3.0` `⭐ 1.2K`
-- [Twake Drive](https://openalternative.co/twake-drive) - Secure open source file storage with end-to-end encryption `AGPL-3.0` `⭐ 834`
+- [Twake Drive](https://openalternative.co/twake-drive) - Secure open source file storage with end-to-end encryption `AGPL-3.0` `⭐ 838`
 
 ### Email & Communication
 
@@ -1224,7 +1224,7 @@
 - [Plunk](https://openalternative.co/plunk) - The open-source, affordable email platform `AGPL-3.0` `⭐ 5.1K`
 - [Postal](https://openalternative.co/postal) - Robust, scalable email delivery for your applications `MIT` `⭐ 17K`
 - [Sendportal](https://openalternative.co/sendportal) - Self-hosted email marketing with unlimited everything `MIT` `⭐ 2.1K`
-- [Sessy](https://openalternative.co/sessy) - Own your SES email analytics, from send to inbox `⭐ 860`
+- [Sessy](https://openalternative.co/sessy) - Own your SES email analytics, from send to inbox `⭐ 862`
 - [Tuta](https://openalternative.co/tuta) - Secure email, calendar and contacts with end-to-end encryption `GPL-3.0` `⭐ 7.6K`
 - [Twake Mail](https://openalternative.co/twake-mail) - Secure open source email with advanced encryption & AI `AGPL-3.0` `⭐ 612`
 - [UnInbox](https://openalternative.co/uninbox) - Transform team email into efficient collaborative workflows `⭐ 1.7K`
@@ -1241,9 +1241,9 @@
 - [Browser Use](https://openalternative.co/browser-use) - AI-powered browser automation for seamless web interactions `MIT` `⭐ 94K`
 - [ByteChef](https://openalternative.co/bytechef) - Build AI agents and automate complex workflows seamlessly `⭐ 757`
 - [CodeZero](https://openalternative.co/codezero) - Build complex automations without code, deploy anywhere with full control `⭐ 31`
-- [CrawlChat](https://openalternative.co/crawlchat) - Transform docs into AI-powered knowledge assistants `⭐ 120`
+- [CrawlChat](https://openalternative.co/crawlchat) - Transform docs into AI-powered knowledge assistants `⭐ 121`
 - [Hatchet](https://openalternative.co/hatchet) - Effortless CI/CD for modern cloud applications `MIT` `⭐ 7.2K`
-- [Hexabot](https://openalternative.co/hexabot) - Build and manage AI-powered chatbots with ease `AGPL-3.0` `⭐ 953`
+- [Hexabot](https://openalternative.co/hexabot) - Build and manage AI-powered chatbots with ease `AGPL-3.0` `⭐ 954`
 - [Home Assistant](https://openalternative.co/home-assistant) - Local control smart home automation with privacy first `Apache-2.0` `⭐ 87K`
 - [Keep](https://openalternative.co/keep) - Unify, automate, and elevate your monitoring workflow `MIT` `⭐ 12K`
 - [Leon](https://openalternative.co/leon) - Your open-source personal assistant for server automation `MIT` `⭐ 17K`
@@ -1253,10 +1253,10 @@
 - [n8n](https://openalternative.co/n8n) - AI-powered workflow automation for technical teams `⭐ 188K`
 - [OpenWork](https://openalternative.co/openwork) - Open source AI automation with your own models and tools `MIT` `⭐ 15K`
 - [Orgnise](https://openalternative.co/orgnise) - Effortlessly manage tasks, projects, and teams `AGPL-3.0` `⭐ 237`
-- [PipesHub](https://openalternative.co/pipeshub) - Open-source AI platform for enterprise search & workflow `Apache-2.0` `⭐ 2.9K`
+- [Pipeshub](https://openalternative.co/pipeshub) - Open-source AI platform that unifies data and powers trustworthy agents `Apache-2.0` `⭐ 2.9K`
 - [Skyvern](https://openalternative.co/skyvern) - Automate any website workflow with AI and computer vision `AGPL-3.0` `⭐ 22K`
 - [Steel](https://openalternative.co/steel) - Control browser fleets in the cloud for AI automation `Apache-2.0` `⭐ 7K`
-- [Tiledesk](https://openalternative.co/tiledesk) - Elevate customer support with AI-powered chat solutions `MIT` `⭐ 316`
+- [Tiledesk](https://openalternative.co/tiledesk) - Elevate customer support with AI-powered chat solutions `MIT` `⭐ 317`
 - [Typebot](https://openalternative.co/typebot) - Create powerful chatbots without coding `⭐ 9.9K`
 - [Windmill](https://openalternative.co/windmill) - Open-source workflow automation for developers `⭐ 16K`
 
@@ -1271,7 +1271,7 @@
 - [Sol](https://openalternative.co/sol) - Fast and beautiful launcher for quick access to apps and tools `MIT` `⭐ 2.9K`
 - [SolidTime](https://openalternative.co/solidtime) - Effortless time tracking for open source projects `AGPL-3.0` `⭐ 8.6K`
 - [Super Productivity](https://openalternative.co/super-productivity) - Deep work made simple with privacy-first task management `MIT` `⭐ 19K`
-- [TimeScribe](https://openalternative.co/timescribe) - Transform your time tracking into actionable insights `GPL-3.0` `⭐ 817`
+- [TimeScribe](https://openalternative.co/timescribe) - Transform your time tracking into actionable insights `GPL-3.0` `⭐ 821`
 - [Ueli](https://openalternative.co/ueli) - Quick access to apps and files with keyboard shortcuts `MIT` `⭐ 4.5K`
 - [Wakapi](https://openalternative.co/wakapi) - Track coding time effortlessly, gain insights instantly `MIT` `⭐ 4.3K`
 - [Ziit](https://openalternative.co/ziit) - Track coding time and boost developer productivity `AGPL-3.0` `⭐ 227`
@@ -1283,10 +1283,10 @@
 - [Fincept Terminal ](https://openalternative.co/fincept-terminal) - Open-source financial terminal for data-driven insights `⭐ 21K`
 - [Firefly III](https://openalternative.co/firefly-iii) - Track every dollar with double-entry bookkeeping and smart automation `AGPL-3.0` `⭐ 23K`
 - [Ghostfolio](https://openalternative.co/ghostfolio) - Track, analyze, and optimize your investments effortlessly `AGPL-3.0` `⭐ 8.5K`
-- [Monetr](https://openalternative.co/monetr) - Take control of your finances, paycheck by paycheck `⭐ 660`
+- [Monetr](https://openalternative.co/monetr) - Take control of your finances, paycheck by paycheck `⭐ 661`
 - [Spliit](https://openalternative.co/spliit) - Effortlessly split expenses with friends and roommates `MIT` `⭐ 2.7K`
 - [Splitpro](https://openalternative.co/splitpro) - Effortlessly split expenses with friends and groups `MIT` `⭐ 1.2K`
-- [Sure.am](https://openalternative.co/sure-am) - The personal finance app for everyone `AGPL-3.0` `⭐ 8.2K`
+- [Sure.am](https://openalternative.co/sure-am) - The personal finance app for everyone `AGPL-3.0` `⭐ 8.3K`
 - [Wealthfolio](https://openalternative.co/wealthfolio) - Secure desktop investment tracker for private wealth management `AGPL-3.0` `⭐ 7.4K`
 - [YAFFA](https://openalternative.co/yaffa) - Free, self-hosted personal finance app for long-term planning `MIT` `⭐ 101`
 
@@ -1308,7 +1308,7 @@
 - [Karakeep](https://openalternative.co/karakeep) - Effortlessly save and organize your digital discoveries `AGPL-3.0` `⭐ 25K`
 - [Linkding](https://openalternative.co/linkding) - Self-hosted bookmark manager built for speed and simplicity `MIT` `⭐ 11K`
 - [Linkwarden](https://openalternative.co/linkwarden) - Collaborative bookmark manager for teams and individuals `AGPL-3.0` `⭐ 18K`
-- [Readeck](https://openalternative.co/readeck) - Save, organize and revisit web content effortlessly `⭐ 961`
+- [Readeck](https://openalternative.co/readeck) - Save, organize and revisit web content effortlessly `⭐ 960`
 - [Ryot](https://openalternative.co/ryot) - Track your life, your way `GPL-3.0` `⭐ 3.3K`
 - [Wallabag](https://openalternative.co/wallabag) - Save articles for later reading with complete privacy `MIT` `⭐ 13K`
 
@@ -1323,7 +1323,7 @@
 - [Cloudmark](https://openalternative.co/cloudmark) - Organize and access your bookmarks seamlessly in the cloud `AGPL-3.0` `⭐ 71`
 - [Deta Surf](https://openalternative.co/deta-surf) - Search less. Think better. `Apache-2.0` `⭐ 3.4K`
 - [Flow](https://openalternative.co/flow) - Fast, secure browsing with powerful organization features `GPL-3.0` `⭐ 976`
-- [Harper](https://openalternative.co/harper) - Fast grammar checking that respects your privacy `Apache-2.0` `⭐ 10K`
+- [Harper](https://openalternative.co/harper) - Fast grammar checking that respects your privacy `Apache-2.0` `⭐ 11K`
 - [Helium](https://openalternative.co/helium) - Privacy-first browser with no ads, trackers, or bloat `GPL-3.0` `⭐ 16K`
 - [Ladybird](https://openalternative.co/ladybird) - A truly independent web browser backed by a non-profit `BSD-2-Clause` `⭐ 63K`
 - [LanguageTool](https://openalternative.co/languagetool) - AI-powered grammar checker for 30+ languages `LGPL-2.1` `⭐ 14K`
@@ -1360,7 +1360,7 @@
 
 - [HashiCorp Vault](https://openalternative.co/vault) - Secure, store, and control access to sensitive data `⭐ 36K`
 - [Infisical](https://openalternative.co/infisical) - Secure secret management for modern development teams `⭐ 27K`
-- [Keyshade](https://openalternative.co/keyshade) - Secure secret management with public key encryption `MPL-2.0` `⭐ 750`
+- [Keyshade](https://openalternative.co/keyshade) - Secure secret management with public key encryption `MPL-2.0` `⭐ 751`
 - [Phase](https://openalternative.co/phase) - Secure, deploy, and manage application secrets effortlessly `⭐ 860`
 - [UnKey](https://openalternative.co/unkey) - Secure, scalable API key management for developers `AGPL-3.0` `⭐ 5.3K`
 - [Werbot](https://openalternative.co/werbot) - Secure, scalable server access management for DevOps `⭐ 169`
@@ -1373,7 +1373,7 @@
 - [Opengrep](https://openalternative.co/opengrep) - Open-source code security engine for developers `LGPL-2.1` `⭐ 2.6K`
 - [ProjectDiscovery](https://openalternative.co/projectdiscovery) - Advanced vulnerability detection and management platform `MIT` `⭐ 29K`
 - [Sentry](https://openalternative.co/sentry) - Real-time error tracking and performance monitoring `⭐ 44K`
-- [Temps](https://openalternative.co/temps) - Replace $500/mo SaaS with one self-hosted platform `Apache-2.0` `⭐ 443`
+- [Temps](https://openalternative.co/temps) - Replace $500/mo SaaS with one self-hosted platform `Apache-2.0` `⭐ 444`
 - [Tirreno](https://openalternative.co/tirreno) - Security framework that protects from within your product `AGPL-3.0` `⭐ 1.3K`
 - [Tracecat](https://openalternative.co/tracecat) - Open source security automation platform for builders `AGPL-3.0` `⭐ 3.6K`
 
@@ -1423,7 +1423,7 @@
 
 ### Fraud Prevention
 
-- [Marble](https://openalternative.co/marble) - Real-time fraud detection and AML compliance engine `⭐ 520`
+- [Marble](https://openalternative.co/marble) - Real-time fraud detection and AML compliance engine `⭐ 522`
 - [Tirreno](https://openalternative.co/tirreno) - Security framework that protects from within your product `AGPL-3.0` `⭐ 1.3K`
 
 ---
@@ -1437,5 +1437,5 @@ Want to add a project? Submit it on [OpenAlternative](https://openalternative.co
 - **Total Projects:** 711
 - **Categories:** 81
 - **Total Stars:** 12M
-- **Last Updated:** May 17, 2026
+- **Last Updated:** May 18, 2026
 
